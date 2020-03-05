@@ -1,0 +1,99 @@
+{
+  "name": "cine-tasty-mobile",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build-android": "cd android && ./gradlew assembleRelease && cd ..",
+    "e2e:ios": "detox build && detox test",
+    "android-release": "npx react-native run-android --variant=release",
+    "ios-se": "npx react-native run-ios --simulator=\"iPhone SE\"",
+    "start:clean": "npx react-native start --reset-cache",
+    "android": "npx react-native run-android",
+    "lint:fix": "eslint --fix --ext .js,.ts,.tsx .",
+    "prettier:fix": "prettier '**/*.+(ts|js|tsx)' --write",
+    "start": "npx react-native start",
+    "ios": "npx react-native run-ios",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "clear:ios": "cd ios && rm -rf build && cd ..",
+    "clear:android": "cd android && ./gradlew clean && cd ..",
+    "clear:cache": "watchman watch-del-all",
+    "clear": "kill $(lsof -t -i:8081); yarn clear:ios; yarn clear:android; yarn clear:cache"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.+(ts|tsx)": [
+      "yarn test",
+      "yarn prettier:fix",
+      "yarn lint:fix"
+    ]
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.8.0",
+    "@react-native-community/masked-view": "^0.1.6",
+    "@react-navigation/bottom-tabs": "^5.1.0",
+    "@react-navigation/native": "^5.0.8",
+    "@react-navigation/stack": "^5.1.0",
+    "react": "16.9.0",
+    "react-native": "0.61.5",
+    "react-native-gesture-handler": "^1.6.0",
+    "react-native-reanimated": "^1.7.0",
+    "react-native-safe-area-context": "^0.7.3",
+    "react-native-screens": "^2.2.0",
+    "react-native-vector-icons": "^6.6.0",
+    "styled-components": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "@testing-library/react-hooks": "^3.2.1",
+    "@types/jest": "^24.0.24",
+    "@types/react-native": "^0.60.25",
+    "@types/react-test-renderer": "16.9.1",
+    "@types/styled-components": "^5.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "babel-jest": "^24.9.0",
+    "detox": "^15.4.1",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-detox": "^1.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "husky": "^4.2.3",
+    "jest": "^24.9.0",
+    "lint-staged": "^10.0.8",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "prettier": "^1.19.1",
+    "react-native-testing-library": "^1.12.0",
+    "react-test-renderer": "16.9.0",
+    "typescript": "^3.7.3"
+  },
+  "detox": {
+    "test-runner": "jest",
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/CineTasty.app",
+        "build": "xcodebuild -workspace ios/CineTasty.xcworkspace -scheme CineTasty -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone 11 Pro"
+        }
+      }
+    }
+  }
+}
