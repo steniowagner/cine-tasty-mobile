@@ -6,6 +6,8 @@ import {
 } from '../utils/async-storage-adapter/AsyncStorageAdapter';
 import CONSTANTS from '../utils/constants';
 
+// Android format: x_Y
+// iOS format: x-Y
 const normalizeLanguage = (language: string): string => {
   const languagesMapping = {
     // Portuguese (Brazil)
@@ -62,16 +64,4 @@ const handleLanguageDetection = async (): Promise<string> => {
   return languageToUse;
 };
 
-const languageDetector = {
-  type: 'languageDetector',
-  async: true,
-  detect: async (callback) => {
-    const language = await handleLanguageDetection();
-
-    callback(language);
-  },
-  cacheUserLanguage: () => {},
-  init: () => {},
-};
-
-export default languageDetector;
+export default handleLanguageDetection;
