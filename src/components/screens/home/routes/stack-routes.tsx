@@ -9,7 +9,7 @@ import LOCAL_ROUTES from './route-names';
 
 const Stack = createStackNavigator();
 
-const HomeStack = () => {
+const DiscoverStack = () => {
   const { t } = useTranslation();
 
   return (
@@ -19,7 +19,7 @@ const HomeStack = () => {
           ...DEFAULT_HEADER_OPTIONS,
           headerTitle: t('translations:tabs:discover'),
         }}
-        name={LOCAL_ROUTES.HOME.id}
+        name={LOCAL_ROUTES.DISCOVER.id}
         component={Discover}
       />
     </Stack.Navigator>
@@ -28,13 +28,13 @@ const HomeStack = () => {
 
 const Wrapper = (props: any) => (
   <RouteSuspenseWrapper>
-    <HomeStack
+    <DiscoverStack
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />
   </RouteSuspenseWrapper>
 );
 
-export const TabID = LOCAL_ROUTES.HOME.id;
+export const TabID = LOCAL_ROUTES.DISCOVER.id;
 
 export default Wrapper;

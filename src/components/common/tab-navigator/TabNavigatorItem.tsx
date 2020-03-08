@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Platform, Text } from 'react-native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import metrics from '../../../styles/metrics';
@@ -20,12 +20,20 @@ const Wrapper = styled(TouchableOpacity)<WrapperButtonProps>`
   justify-content: center;
 `;
 
+const ItemText = styled(Text)<ItemTextProps>`
+  margin-top: ${({ theme }) => (Platform.OS === 'android' ? theme.metrics.extraSmallSize : 0)}px;
+  font-family: CircularStd-Medium;
+  color: ${({ color }) => color};
+  font-size: ${({ theme }) => theme.metrics.mediumSize * 1.1}px;
+`;
+
 type Props = {
   inactiveIcon: string;
   onPress: () => void;
   isSelected: boolean;
   theme: DefaultTheme;
   activeIcon: string;
+  title: string;
   width: number;
 };
 
@@ -34,22 +42,28 @@ const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean 
 
 const NavigatorItem = withTheme(
   ({
-    inactiveIcon, activeIcon, isSelected, onPress, theme, width,
+    inactiveIcon, activeIcon, isSelected, onPress, theme, width, title,
   }: Props) => {
     const color = isSelected ? theme.colors.primary : theme.colors.inactiveWhite;
     const icon = isSelected ? activeIcon : inactiveIcon;
 
     return (
       <Wrapper
-        onPress={onPress}
         testID="button-wrapper"
+        onPress={onPress}
         width={width}
       >
         <Icon
+          size={metrics.getWidthFromDP('8%')}
           color={color}
           name={icon}
-          size={metrics.getWidthFromDP('8%')}
         />
+        <ItemText
+          testID="item-title"
+          color={color}
+        >
+          {title}
+        </ItemText>
       </Wrapper>
     );
   },

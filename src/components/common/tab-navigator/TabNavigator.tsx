@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { View } from 'react-native';
-import styled from 'styled-components';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 import isEqualsOrLargestThanIphoneX from '../../../utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import TabNavigatorItem from './TabNavigatorItem';
@@ -18,21 +19,37 @@ const Wrapper = styled(View)`
 
 const ITEM_WIDTH = metrics.width / items.length;
 
-const TabNavigator = ({ navigation, state }: BottomTabBarProps) => (
-  <Wrapper
-    testID="tab-wrapper"
+const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <Wrapper
+      testID="tab-wrapper"
+    >
+      {items.map((item, index) => (
+        <TabNavigatorItem
+          onPress={() => navigation.navigate(state.routeNames[index])}
+          title={t(`translations:tabs:${item.id.toLowerCase()}`)}
+          isSelected={index === state.index}
+          inactiveIcon={item.inactiveIcon}
+          activeIcon={item.activeIcon}
+          width={ITEM_WIDTH}
+          key={item.id}
+        />
+      ))}
+    </Wrapper>
+  );
+};
+
+const TabNavigatorWrapper = (props: any) => (
+  <Suspense
+    fallback={<View />}
   >
-    {items.map((item, index) => (
-      <TabNavigatorItem
-        onPress={() => navigation.navigate(state.routeNames[index])}
-        isSelected={index === state.index}
-        inactiveIcon={item.inactiveIcon}
-        activeIcon={item.activeIcon}
-        width={ITEM_WIDTH}
-        key={item.id}
-      />
-    ))}
-  </Wrapper>
+    <TabNavigator
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+    />
+  </Suspense>
 );
 
-export default TabNavigator;
+export default TabNavigatorWrapper;

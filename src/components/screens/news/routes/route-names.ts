@@ -4,7 +4,6 @@ type Routes = 'NEWS';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute> = {
   NEWS: {
-    title: 'News',
     id: 'NEWS',
   },
 };

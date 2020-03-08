@@ -2,15 +2,14 @@ import { TabID as HomeTabID } from '../../screens/home/routes/stack-routes';
 import { TabID as PeopleTabID } from '../../screens/people/routes/stack-routes';
 import { TabID as QuizTabID } from '../../screens/quiz/routes/stack-routes';
 import { TabID as NewsTabID } from '../../screens/news/routes/stack-routes';
-import { TabID as SettingsTabID } from '../../screens/settings/routes/stack-routes';
 
 import { TabNavigatorItem } from '../../../types';
 
 const items: TabNavigatorItem[] = [
   {
     id: HomeTabID,
-    activeIcon: 'home-variant',
-    inactiveIcon: 'home-variant-outline',
+    activeIcon: 'compass',
+    inactiveIcon: 'compass-outline',
   },
   {
     id: PeopleTabID,
@@ -26,11 +25,6 @@ const items: TabNavigatorItem[] = [
     id: NewsTabID,
     activeIcon: 'newspaper',
     inactiveIcon: 'newspaper',
-  },
-  {
-    id: SettingsTabID,
-    activeIcon: 'settings',
-    inactiveIcon: 'settings-outline',
   },
 ];
 

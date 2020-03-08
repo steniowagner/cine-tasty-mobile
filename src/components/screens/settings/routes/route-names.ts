@@ -4,7 +4,6 @@ type Routes = 'SETTINGS';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute> = {
   SETTINGS: {
-    title: 'Settings',
     id: 'SETTINGS',
   },
 };

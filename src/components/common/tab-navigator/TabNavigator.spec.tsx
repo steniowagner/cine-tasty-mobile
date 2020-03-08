@@ -17,6 +17,10 @@ const state = {
   index,
 };
 
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
 describe('Testing <TabNavigator />', () => {
   beforeEach(() => {
     jest.clearAllMocks();

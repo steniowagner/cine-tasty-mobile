@@ -15,10 +15,10 @@ const Text = styled.Text`
   font-family: CircularStd-Black;
 `;
 
-const Home = () => (
+const Discover = () => (
   <Wrapper>
-    <Text>Home</Text>
+    <Text>Discover</Text>
   </Wrapper>
 );
 
-export default Home;
+export default Discover;

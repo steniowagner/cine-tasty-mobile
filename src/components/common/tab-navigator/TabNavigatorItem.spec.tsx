@@ -26,6 +26,7 @@ describe('Testing <TabNavigatorItem />', () => {
             inactiveIcon={item.inactiveIcon}
             activeIcon={item.activeIcon}
             onPress={jest.fn()}
+            title="ItemTitle"
             width={12}
             isSelected
           />
@@ -33,6 +34,8 @@ describe('Testing <TabNavigatorItem />', () => {
       );
 
       expect(queryByTestId('button-wrapper')).not.toBeNull();
+
+      expect(queryByTestId('item-title')).not.toBeNull();
 
       expect(queryByTestId('icon').props.name).toBe(item.activeIcon);
     });
@@ -48,6 +51,7 @@ describe('Testing <TabNavigatorItem />', () => {
             inactiveIcon={item.inactiveIcon}
             activeIcon={item.activeIcon}
             onPress={jest.fn()}
+            title="ItemTitle"
             width={12}
             isSelected
           />
@@ -59,6 +63,8 @@ describe('Testing <TabNavigatorItem />', () => {
       expect(queryByTestId('icon').props.name).toEqual(item.activeIcon);
 
       expect(queryByTestId('icon').props.color).toEqual(dark.colors.primary);
+
+      expect(queryByTestId('item-title').props.color).toEqual(dark.colors.primary);
     });
 
     it("should renders correctly when the item isn't selected", () => {
@@ -71,6 +77,7 @@ describe('Testing <TabNavigatorItem />', () => {
             activeIcon={item.activeIcon}
             onPress={jest.fn()}
             isSelected={false}
+            title="ItemTitle"
             width={12}
           />
         </ThemeProvider>,
@@ -81,6 +88,8 @@ describe('Testing <TabNavigatorItem />', () => {
       expect(queryByTestId('icon').props.name).toEqual(item.inactiveIcon);
 
       expect(queryByTestId('icon').props.color).toEqual(dark.colors.inactiveWhite);
+
+      expect(queryByTestId('item-title').props.color).toEqual(dark.colors.inactiveWhite);
     });
   });
 
@@ -95,6 +104,7 @@ describe('Testing <TabNavigatorItem />', () => {
           <TabNavigatorItem
             inactiveIcon={item.inactiveIcon}
             activeIcon={item.activeIcon}
+            title="ItemTitle"
             onPress={onPress}
             width={12}
             isSelected

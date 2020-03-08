@@ -4,7 +4,6 @@ export enum ThemeID {
 }
 
 export type LocalStackRoute = {
-  title: string;
   id: string;
 };
 
