@@ -4,6 +4,7 @@ describe('App', () => {
   });
 
   it('fake e2e test', async () => {
+    await device.reloadReactNative();
     await expect(element(by.id('discover'))).toBeVisible();
   });
 });
