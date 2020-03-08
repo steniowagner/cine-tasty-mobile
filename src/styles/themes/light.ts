@@ -6,7 +6,7 @@ import metrics from '../metrics';
 const light: DefaultTheme = {
   id: ThemeID.LIGHT,
   colors: {
-    primary: '#f00',
+    primary: '#FFD700',
     secondary: '#FFF',
     background: '#F2F2F2',
     text: 'rgba(0, 0, 0, 0.8)',
