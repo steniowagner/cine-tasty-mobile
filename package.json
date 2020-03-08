@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build-android": "cd android && ./gradlew assembleRelease && cd ..",
-    "e2e:ios": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release",
+    "e2e:ios": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release --cleanup",
     "android-release": "npx react-native run-android --variant=release",
     "ios-se": "npx react-native run-ios --simulator=\"iPhone SE\"",
     "start:clean": "npx react-native start --reset-cache",

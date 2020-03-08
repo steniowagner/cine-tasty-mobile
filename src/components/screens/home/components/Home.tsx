@@ -16,7 +16,9 @@ const Text = styled.Text`
 `;
 
 const Discover = () => (
-  <Wrapper>
+  <Wrapper
+    testID="discover"
+  >
     <Text>Discover</Text>
   </Wrapper>
 );

@@ -4,5 +4,6 @@ describe('App', () => {
   });
 
   it('fake e2e test', async () => {
+    await expect(element(by.id('discover'))).toBeVisible();
   });
 });
