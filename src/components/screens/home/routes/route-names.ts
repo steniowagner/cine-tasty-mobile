@@ -1,6 +1,6 @@
 import { LocalStackRoute } from '../../../../types';
 
-type Routes = 'HOME';
+export type Routes = 'HOME';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute> = {
   HOME: {

@@ -15,13 +15,10 @@ const Text = styled.Text`
   font-family: CircularStd-Black;
 `;
 
-const Home = (props: any) => {
-  console.log(props);
-  return (
-    <Wrapper>
-      <Text>Home</Text>
-    </Wrapper>
-  );
-};
+const Home = () => (
+  <Wrapper>
+    <Text>Home</Text>
+  </Wrapper>
+);
 
 export default Home;
