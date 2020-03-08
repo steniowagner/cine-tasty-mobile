@@ -17,10 +17,10 @@ jobs:
           npm install -g react-native-cli
           npm install -g detox-cli
           npm install -g yarn
-      - name: Install Detox
-        run: |
-          brew tap wix/brew
-          brew install applesimutils
+      #- name: Install Detox
+        #run: |
+          #brew tap wix/brew
+          #brew install applesimutils
       - name: Install Yarn Dependencies
         run: yarn install
       - name: Unit Tests
