@@ -2,13 +2,14 @@ import React from 'react';
 import { Platform } from 'react-native';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { SERVER_URL } from 'react-native-dotenv';
 
 import { ThemeContextProvider } from './styles/theme-context-provider/ThemeContextProvider';
 import AndroidNavigationBar from './components/AndroidNavigationBar';
 import Navigation from './routes/Routes';
 
 const client = new ApolloClient({
-  uri: 'https://48p1r2roz4.sse.codesandbox.io',
+  uri: SERVER_URL,
 });
 
 const App = () => (
