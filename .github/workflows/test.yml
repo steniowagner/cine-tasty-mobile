@@ -23,7 +23,7 @@ jobs:
           #brew install applesimutils
       - name: Install Yarn Dependencies
         run: yarn install
-      - name: Unit Tests
+      - name: Unit & Component Tests
         run: yarn test
       #- name: Install Pod Dependencies
         #run: cd ./ios && pod install && cd ..
