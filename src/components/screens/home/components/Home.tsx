@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 const Wrapper = styled.View`
   width: 100%;
@@ -20,14 +19,7 @@ const Discover = () => (
   <Wrapper
     testID="discover"
   >
-    <ShimmerPlaceHolder
-      autoRun
-    />
-    <ShimmerPlaceHolder
-      autoRun
-    >
-      <Text>Wow, awesome here.</Text>
-    </ShimmerPlaceHolder>
+    <Text>Discover</Text>
   </Wrapper>
 );
 

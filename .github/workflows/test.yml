@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node
         run: |
           npm install -g react-native-cli
-          npm install -g detox-cli
+         # npm install -g detox-cli
           npm install -g yarn
       #- name: Install Detox
         #run: |
