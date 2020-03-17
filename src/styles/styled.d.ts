@@ -25,6 +25,7 @@ declare module 'styled-components' {
       subText: string;
       androidToolbar: string;
       inactiveWhite: string;
+      shimmer: string[];
     };
   }
 }
