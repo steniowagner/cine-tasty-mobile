@@ -13,6 +13,7 @@ const dark: DefaultTheme = {
     subText: 'rgba(255, 255, 255, 0.5)',
     androidToolbar: '#222',
     inactiveWhite: '#bbb',
+    shimmer: ['#353535', '#4f4f4f', '#353535'],
   },
   metrics,
 };

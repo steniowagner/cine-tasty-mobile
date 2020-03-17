@@ -7,6 +7,8 @@ const dependenciesToBeTranspiled = [
   'react-native-gesture-handler',
   'react-native-vector-icons',
   'react-native-iphone-x-helper',
+  'react-native-linear-gradient',
+  'react-native-shimmer-placeholder',
 ].join('|');
 
 module.exports = {

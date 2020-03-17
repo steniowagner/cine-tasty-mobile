@@ -18,7 +18,10 @@
     "clear:ios": "cd ios && rm -rf build && cd ..",
     "clear:android": "cd android && ./gradlew clean && cd ..",
     "clear:cache": "watchman watch-del-all",
-    "clear": "kill $(lsof -t -i:8081); yarn clear:ios; yarn clear:android; yarn clear:cache"
+    "clear": "kill $(lsof -t -i:8081); yarn clear:ios; yarn clear:android; yarn clear:cache",
+    "schema:download": "npx apollo client:download-schema --endpoint=http://localhost:3000",
+    "schema:generate": "npx apollo client:codegen src/types/schema.ts --includes=src/**/*.tsx --target=typescript --outputFlat",
+    "generate:types": "yarn schema:download && yarn schema:generate"
   },
   "rnpm": {
     "assets": [
@@ -72,6 +75,8 @@
     "@types/styled-components": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
+    "apollo-client": "^2.6.8",
+    "apollo-link-schema": "^1.2.4",
     "babel-jest": "^24.9.0",
     "detox": "^15.4.1",
     "eslint": "^6.8.0",
@@ -83,6 +88,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "graphql-tools": "^4.0.7",
     "husky": "^4.2.3",
     "jest": "^24.9.0",
     "lint-staged": "^10.0.8",
