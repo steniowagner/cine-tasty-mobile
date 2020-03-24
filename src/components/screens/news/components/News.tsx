@@ -1,11 +1,12 @@
-import React from 'react';
-import { FlatList, View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList, Modal, View } from 'react-native';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import { GetArticles, GetArticlesVariables } from '../../../../types/schema';
 import NewsListItemPlaceholder from './list-item/NewsListItemPlaceholder';
+import LanguageFilter from './language-filter/LanguageFilter';
 import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
 import metrics from '../../../../styles/metrics';
@@ -40,12 +41,15 @@ const GET_ARTICLES = gql`
 `;
 
 const News = () => {
-  const { loading, data } = useQuery<GetArticles, GetArticlesVariables>(GET_ARTICLES, {
+  /*  const { loading, data } = useQuery<GetArticles, GetArticlesVariables>(GET_ARTICLES, {
     variables: { page: 1 },
     fetchPolicy: 'no-cache',
-  });
+  }); */
+  const [isFilterLanguageModalOpen, setIsFilterLanguageModalOpen] = useState<boolean>(
+    true,
+  );
 
-  if (loading) {
+  if (false) {
     return (
       <Wrapper
         testID="news-loading-wrapper"
@@ -74,9 +78,14 @@ const News = () => {
             url={item.url}
           />
         )}
-        data={data.articles.items}
+        data={[]}
         keyExtractor={(item) => item.id}
       />
+      {isFilterLanguageModalOpen && (
+        <LanguageFilter
+          isVisible={isFilterLanguageModalOpen}
+        />
+      )}
     </Wrapper>
   );
 };
