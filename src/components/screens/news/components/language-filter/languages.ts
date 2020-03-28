@@ -12,77 +12,80 @@ import China from './flags/China';
 import Spain from './flags/Spain';
 import UK from './flags/UK';
 
+import { ArticleLanguage } from '../../../../../types/schema';
+import { NewsFilterLanguage } from '../../../../../types';
+
 type Language = {
+  name: NewsFilterLanguage;
   Flag: () => JSX.Element;
-  name: string;
-  id: string;
+  id: ArticleLanguage;
 };
 
 const langauges: Language[] = [
   {
     Flag: UK,
-    name: 'English',
-    id: 'EN',
+    name: 'english',
+    id: ArticleLanguage.EN,
   },
   {
     Flag: SaudiArabia,
-    name: 'Arabia',
-    id: 'AR',
+    name: 'arabic',
+    id: ArticleLanguage.AR,
   },
   {
     Flag: China,
-    name: 'Chinese',
-    id: 'ZH',
+    name: 'chinese',
+    id: ArticleLanguage.ZH,
   },
   {
     Flag: Nederlands,
-    name: 'Dutch',
-    id: 'NL',
-  },
-  {
-    Flag: Finland,
-    name: 'Finland',
-    id: 'SE',
+    name: 'dutch',
+    id: ArticleLanguage.NL,
   },
   {
     Flag: France,
-    name: 'French',
-    id: 'FR',
+    name: 'french',
+    id: ArticleLanguage.FR,
   },
   {
     Flag: Germany,
-    name: 'German',
-    id: 'DE',
+    name: 'german',
+    id: ArticleLanguage.DE,
   },
   {
     Flag: Israel,
-    name: 'Hebrew',
-    id: 'HE',
+    name: 'hebrew',
+    id: ArticleLanguage.HE,
   },
   {
     Flag: Italy,
-    name: 'Italian',
-    id: 'IT',
+    name: 'italian',
+    id: ArticleLanguage.IT,
   },
   {
     Flag: Norway,
-    name: 'Norwegian',
-    id: 'NO',
+    name: 'norwegian',
+    id: ArticleLanguage.NO,
   },
   {
     Flag: Portugal,
-    name: 'Português',
-    id: 'PT',
+    name: 'portuguese',
+    id: ArticleLanguage.PT,
   },
   {
     Flag: Russia,
-    name: 'Russian',
-    id: 'RU',
+    name: 'russian',
+    id: ArticleLanguage.RU,
+  },
+  {
+    Flag: Finland,
+    name: 'sami',
+    id: ArticleLanguage.SE,
   },
   {
     Flag: Spain,
-    name: 'Spanish',
-    id: 'ES',
+    name: 'spanish',
+    id: ArticleLanguage.ES,
   },
 ];
 

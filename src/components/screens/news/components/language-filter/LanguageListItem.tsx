@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import styled from 'styled-components';
 
+import metrics from '../../../../../styles/metrics';
 import Icon from '../../../../common/Icon';
 
+interface SelectedItemStyleProps {
+  readonly isSelected: boolean;
+}
+
+export const ITEM_LIST_HEIGHT = metrics.getWidthFromDP('20%');
+
 const Wrapper = styled(TouchableOpacity)`
+  height: ${ITEM_LIST_HEIGHT}px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
-  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  margin-horizontal: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  margin-horizontal: ${({ theme }) => theme.metrics.largeSize}px;
 `;
 
 const LanguageText = styled(Text)`
@@ -20,15 +26,24 @@ const LanguageText = styled(Text)`
   font-family: CircularStd-Bold;
 `;
 
-const FlagWrapper = styled(View)`
+const OutterFlagWrapper = styled(View)<SelectedItemStyleProps>`
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('12%')}px;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('12%')}px;
+  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
+  background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.primary : 'white')};
+  justify-content: center;
+  align-items: center;
+`;
+
+const InnerFlagWrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
 `;
 
 const CheckIcon = styled(Icon).attrs(({ theme }) => ({
+  size: theme.metrics.getWidthFromDP('10%'),
   name: 'check-circle-outline',
   color: theme.colors.primary,
-  size: theme.metrics.getWidthFromDP('10%'),
 }))``;
 
 const ContentWrapper = styled(View)`
@@ -37,20 +52,34 @@ const ContentWrapper = styled(View)`
 `;
 
 type Props = {
+  Flag: () => JSX.Element;
+  onPress: () => void;
+  isSelected: boolean;
   name: string;
-  Flag: any;
 };
 
-const LanguageListItem = ({ name, Flag }: Props) => (
-  <Wrapper>
+const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isSelected || !nextState.isSelected)
+  && (!previousState.isSelected || nextState.isSelected);
+
+const LanguageListItem = ({
+  isSelected, onPress, name, Flag,
+}: Props) => (
+  <Wrapper
+    onPress={onPress}
+  >
     <ContentWrapper>
-      <FlagWrapper>
-        <Flag />
-      </FlagWrapper>
+      <OutterFlagWrapper
+        testID="outter-flag-wrapper"
+        isSelected={isSelected}
+      >
+        <InnerFlagWrapper>
+          <Flag />
+        </InnerFlagWrapper>
+      </OutterFlagWrapper>
       <LanguageText>{name}</LanguageText>
     </ContentWrapper>
-    <CheckIcon />
+    {isSelected && <CheckIcon />}
   </Wrapper>
 );
 
-export default LanguageListItem;
+export default memo(LanguageListItem, shouldComponentUpdate);

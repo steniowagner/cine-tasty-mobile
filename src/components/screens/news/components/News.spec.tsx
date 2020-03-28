@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { TouchableOpacity, FlatList } from 'react-native';
 import { cleanup, render, act } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 import { MockList } from 'graphql-tools';
@@ -17,6 +17,17 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
+const navigation = {
+  setOptions: () => ({
+    // eslint-disable-next-line react/display-name
+    headerRight: () => (
+      <TouchableOpacity
+        onPress={jest.fn}
+      />
+    ),
+  }),
+};
+
 describe('Testing <News />', () => {
   afterEach(cleanup);
 
@@ -26,7 +37,9 @@ describe('Testing <News />', () => {
         theme={dark}
       >
         <AutoMockProvider>
-          <News />
+          <News
+            navigation={navigation}
+          />
         </AutoMockProvider>
       </ThemeProvider>,
     );
@@ -55,7 +68,9 @@ describe('Testing <News />', () => {
         <AutoMockProvider
           mockResolvers={mockResolvers}
         >
-          <News />
+          <News
+            navigation={navigation}
+          />
         </AutoMockProvider>
       </ThemeProvider>,
     );
@@ -67,10 +82,6 @@ describe('Testing <News />', () => {
     expect(queryByTestId('news-loading-wrapper')).toBeNull();
 
     expect(queryByTestId('news-content-wrapper')).not.toBeNull();
-
-    expect(Array.isArray(queryByTestId('news-content-wrapper').props.children)).toBe(
-      false,
-    );
 
     expect(getAllByType(FlatList).length).toBe(1);
 

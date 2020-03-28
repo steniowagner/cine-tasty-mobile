@@ -31,6 +31,7 @@ export interface GetArticles {
 
 export interface GetArticlesVariables {
   page: number;
+  language: ArticleLanguage;
 }
 
 /* tslint:disable */
@@ -41,6 +42,23 @@ export interface GetArticlesVariables {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export enum ArticleLanguage {
+  AR = 'AR',
+  DE = 'DE',
+  EN = 'EN',
+  ES = 'ES',
+  FR = 'FR',
+  HE = 'HE',
+  IT = 'IT',
+  NL = 'NL',
+  NO = 'NO',
+  PT = 'PT',
+  RU = 'RU',
+  SE = 'SE',
+  UD = 'UD',
+  ZH = 'ZH',
+}
 
 //==============================================================
 // END Enums and Input Objects

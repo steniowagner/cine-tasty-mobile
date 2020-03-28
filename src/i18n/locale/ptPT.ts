@@ -21,6 +21,22 @@ const ptPT: Locale = {
     second: '{{ value }}s ago',
     second_plural: '{{ value }}s ago',
   },
+  language: {
+    english: 'English',
+    arabic: 'Arabic',
+    chinese: 'Chinese',
+    dutch: 'Dutch',
+    french: 'French',
+    german: 'German',
+    hebrew: 'Hebrew',
+    italian: 'Italian',
+    norwegian: 'Norwegian',
+    portuguese: 'Portuguese',
+    russian: 'Russian',
+    sami: 'Sami',
+    spanish: 'Spanish',
+  },
+  newsFilterChooseLanguage: 'Choose a language to filter the News',
 };
 
 export default ptPT;
