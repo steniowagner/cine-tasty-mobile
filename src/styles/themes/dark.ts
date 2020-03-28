@@ -6,7 +6,7 @@ import metrics from '../metrics';
 const dark: DefaultTheme = {
   id: ThemeID.DARK,
   colors: {
-    primary: '#FFD700',
+    primary: '#4674F8',
     secondary: '#111',
     background: '#222222',
     text: '#FFF',
@@ -14,6 +14,7 @@ const dark: DefaultTheme = {
     androidToolbar: '#222',
     inactiveWhite: '#bbb',
     shimmer: ['#353535', '#4f4f4f', '#353535'],
+    darkLayer: 'rgba(0, 0, 0, 0.4)',
   },
   metrics,
 };

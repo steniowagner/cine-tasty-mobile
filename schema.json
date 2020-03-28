@@ -192,9 +192,13 @@
                 "name": "language",
                 "description": null,
                 "type": {
-                  "kind": "ENUM",
-                  "name": "ArticleLanguage",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "ArticleLanguage",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }

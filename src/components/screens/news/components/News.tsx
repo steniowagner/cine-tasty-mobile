@@ -1,14 +1,22 @@
-import React from 'react';
-import { FlatList, View } from 'react-native';
+/* eslint-disable react/display-name */
+
+import React, { useLayoutEffect, useState } from 'react';
+import { TouchableOpacity, FlatList, View } from 'react-native';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import { GetArticles, GetArticlesVariables } from '../../../../types/schema';
+import {
+  GetArticles,
+  GetArticlesVariables,
+  ArticleLanguage,
+} from '../../../../types/schema';
 import NewsListItemPlaceholder from './list-item/NewsListItemPlaceholder';
+import LanguageFilter from './language-filter/LanguageFilter';
 import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
 import metrics from '../../../../styles/metrics';
+import Icon from '../../../common/Icon';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -16,14 +24,32 @@ const Wrapper = styled(View)`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
+const FilterIcon = styled(Icon).attrs(({ theme }) => ({
+  size: theme.metrics.getWidthFromDP('7%'),
+  color: theme.colors.background,
+  name: 'tune',
+}))``;
+
+const FilterButton = styled(TouchableOpacity).attrs(({ theme }) => ({
+  hitSlop: {
+    top: theme.metrics.mediumSize,
+    right: theme.metrics.mediumSize,
+    bottom: theme.metrics.mediumSize,
+    left: theme.metrics.mediumSize,
+  },
+}))`
+  margin-right: ${({ theme }) => theme.metrics.largeSize}px;
+`;
+
 export const LOADING_ITEMS_COUNT = Math.floor(metrics.height / imageWrapper.height) - 1;
+
 const LOADING_ITEMS = Array.from({ length: LOADING_ITEMS_COUNT }, (_, index) => ({
   id: `${index}`,
 }));
 
 const GET_ARTICLES = gql`
-  query GetArticles($page: Int!) {
-    articles(page: $page) {
+  query GetArticles($page: Int!, $language: ArticleLanguage!) {
+    articles(page: $page, language: $language) {
       items {
         publishedAt
         content
@@ -39,11 +65,34 @@ const GET_ARTICLES = gql`
   }
 `;
 
-const News = () => {
+type Props = {
+  navigation: any;
+};
+
+const News = ({ navigation }: Props) => {
+  const [languageFilter, setLanguageFilter] = useState<ArticleLanguage>(
+    ArticleLanguage.EN,
+  );
   const { loading, data } = useQuery<GetArticles, GetArticlesVariables>(GET_ARTICLES, {
-    variables: { page: 1 },
+    variables: { page: 1, language: languageFilter },
     fetchPolicy: 'no-cache',
   });
+
+  const [isFilterLanguageModalOpen, setIsFilterLanguageModalOpen] = useState<boolean>(
+    false,
+  );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <FilterButton
+          onPress={() => setIsFilterLanguageModalOpen(true)}
+        >
+          <FilterIcon />
+        </FilterButton>
+      ),
+    });
+  }, []);
 
   if (loading) {
     return (
@@ -77,6 +126,15 @@ const News = () => {
         data={data.articles.items}
         keyExtractor={(item) => item.id}
       />
+      {isFilterLanguageModalOpen && (
+        <LanguageFilter
+          onSelect={(language: ArticleLanguage) => {
+            setIsFilterLanguageModalOpen(false);
+            setLanguageFilter(language);
+          }}
+          lastFilterSelected={languageFilter}
+        />
+      )}
     </Wrapper>
   );
 };

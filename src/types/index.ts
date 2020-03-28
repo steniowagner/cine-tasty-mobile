@@ -12,3 +12,18 @@ export type TabNavigatorItem = {
   activeIcon: string;
   id: string;
 };
+
+export type NewsFilterLanguage =
+  | 'english'
+  | 'arabic'
+  | 'chinese'
+  | 'dutch'
+  | 'french'
+  | 'german'
+  | 'hebrew'
+  | 'italian'
+  | 'norwegian'
+  | 'portuguese'
+  | 'russian'
+  | 'sami'
+  | 'spanish';

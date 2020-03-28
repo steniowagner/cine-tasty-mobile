@@ -27,7 +27,7 @@ const BottomTextContentWrapper = styled(View)`
 const NewsImage = styled(Image)`
   width: ${imageWrapper.width}px;
   height: ${imageWrapper.height}px;
-  borderradius: ${imageWrapper.borderRadius}px;
+  border-radius: ${imageWrapper.borderRadius}px;
 `;
 
 type Props = {

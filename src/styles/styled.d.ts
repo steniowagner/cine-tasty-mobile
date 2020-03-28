@@ -26,6 +26,7 @@ declare module 'styled-components' {
       androidToolbar: string;
       inactiveWhite: string;
       shimmer: string[];
+      darkLayer: string;
     };
   }
 }

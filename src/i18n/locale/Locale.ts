@@ -1,3 +1,5 @@
+import { NewsFilterLanguage } from '../../types';
+
 type Time =
   | 'year'
   | 'year_plural'
@@ -15,6 +17,8 @@ type Time =
 type Tabs = 'discover' | 'people' | 'quiz' | 'news';
 
 export interface Locale {
+  language: Record<NewsFilterLanguage, string>;
+  newsFilterChooseLanguage: string;
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;
 }
