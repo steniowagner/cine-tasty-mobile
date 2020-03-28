@@ -3,10 +3,7 @@ import {
   Linking, Image, View, Text,
 } from 'react-native';
 import styled from 'styled-components';
-
-import {
-  DefaultText, TextWrapper, Wrapper, imageWrapper,
-} from './common-styles';
+import { TextWrapper, Wrapper, imageWrapper } from './common-styles';
 import DateDiff from './date-diff/DateDiff';
 
 const SourceText = styled(Text).attrs({
@@ -30,7 +27,15 @@ const NewsImage = styled(Image)`
   border-radius: ${imageWrapper.borderRadius}px;
 `;
 
-type Props = {
+const NewsText = styled(Text)<{ withRTL: boolean }>`
+  font-family: CircularStd-Medium;
+  font-size: ${({ theme }) => theme.metrics.largeSize}px;
+  color: ${({ theme }) => theme.colors.text};
+  text-align: ${({ withRTL }) => (withRTL ? 'right' : 'left')};
+`;
+
+export type Props = {
+  withRTL: boolean;
   source: string;
   image: string;
   text: string;
@@ -39,21 +44,23 @@ type Props = {
 };
 
 const NewsListItem = ({
-  source, image, text, date, url,
+  withRTL, source, image, text, date, url,
 }: Props) => (
   <Wrapper
-    testID="news-list-item-wrapper"
     onPress={() => Linking.openURL(url)}
+    testID="news-list-item-wrapper"
   >
     <NewsImage
       source={{ uri: image }}
     />
     <TextWrapper>
-      <DefaultText
+      <NewsText
+        testID="news-text"
+        withRTL={withRTL}
         numberOfLines={3}
       >
         {text}
-      </DefaultText>
+      </NewsText>
       <BottomTextContentWrapper>
         <SourceText>{`${source}  \u2022`}</SourceText>
         <DateDiff

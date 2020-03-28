@@ -1,7 +1,13 @@
 import React from 'react';
+import { Text } from 'react-native';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { DefaultText } from '../common-styles';
+const DefaultText = styled(Text)`
+  font-family: CircularStd-Medium;
+  font-size: ${({ theme }) => theme.metrics.largeSize}px;
+  color: ${({ theme }) => theme.colors.text};
+`;
 
 type Props = {
   date: string;
