@@ -2,8 +2,8 @@ import React from 'react';
 import { fireEvent, render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
+import NewsListItem, { Props } from './NewsListItem';
 import { dark } from '../../../../../styles/themes';
-import NewsListItem from './NewsListItem';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -39,43 +39,42 @@ jest.mock('react-native', () => {
 
 const NEWS_URL = 'http://www.com';
 
+type OptionalProps = {
+  [K in keyof Omit<Props, 'withRTL'>]?: string;
+};
+
+type ExtraOptionalProps = {
+  withRTL?: boolean;
+};
+
+const renderNewsListItem = (optionalProps: OptionalProps & ExtraOptionalProps = {}) => (
+  <ThemeProvider
+    theme={dark}
+  >
+    <NewsListItem
+      withRTL={optionalProps.withRTL || false}
+      source={optionalProps.source || 'source'}
+      image={optionalProps.image || 'image'}
+      text={optionalProps.text || 'text'}
+      date={optionalProps.date || 'date'}
+      url={optionalProps.url || 'url'}
+    />
+  </ThemeProvider>
+);
+
 describe('Testing <NewsListItem />', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('should render the correctly', () => {
-    const { getByTestId } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <NewsListItem
-          source="source"
-          image="image"
-          text="text"
-          date="date"
-          url="url"
-        />
-      </ThemeProvider>,
-    );
+    const { getByTestId } = render(renderNewsListItem());
 
     expect(getByTestId('news-list-item-wrapper')).not.toBeNull();
   });
 
   it('should call Linking when pressed', () => {
-    const { getByTestId } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <NewsListItem
-          source="source"
-          url={NEWS_URL}
-          image="image"
-          text="text"
-          date="date"
-        />
-      </ThemeProvider>,
-    );
+    const { getByTestId } = render(renderNewsListItem({ url: NEWS_URL }));
 
     fireEvent.press(getByTestId('news-list-item-wrapper'));
 

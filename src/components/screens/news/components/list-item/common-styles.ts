@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 
 import Metrics from '../../../../../styles/metrics';
@@ -14,12 +14,6 @@ export const Wrapper = styled(TouchableOpacity)`
 export const TextWrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('49%')}px;
   margin-left: ${({ theme }) => theme.metrics.mediumSize}px;
-`;
-
-export const DefaultText = styled(Text)`
-  font-family: CircularStd-Medium;
-  font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const imageWrapper = {

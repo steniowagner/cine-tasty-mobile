@@ -116,6 +116,7 @@ const News = ({ navigation }: Props) => {
         testID="news-list"
         renderItem={({ item }) => (
           <NewsListItem
+            withRTL={languageFilter === ArticleLanguage.AR}
             date={item.publishedAt}
             source={item.source}
             text={item.content}
