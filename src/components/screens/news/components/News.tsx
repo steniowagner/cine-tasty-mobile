@@ -7,9 +7,9 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import {
-  GetArticles,
   GetArticlesVariables,
   ArticleLanguage,
+  GetArticles,
 } from '../../../../types/schema';
 import NewsListItemPlaceholder from './list-item/NewsListItemPlaceholder';
 import LanguageFilter from './language-filter/LanguageFilter';
