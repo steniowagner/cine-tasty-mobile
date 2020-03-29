@@ -7,6 +7,7 @@ const dark: DefaultTheme = {
   id: ThemeID.DARK,
   colors: {
     primary: '#4674F8',
+    lightPrimary: 'rgba(70, 117, 248, 0.4)',
     secondary: '#111',
     background: '#222222',
     text: '#FFF',

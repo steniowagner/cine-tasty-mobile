@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import isEqualsOrLargestThanIphoneX from '../../../../../utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
-import LanguageListItem, { ITEM_LIST_HEIGHT } from './LanguageListItem';
+import LanguageListItem, { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem';
 import { ArticleLanguage } from '../../../../../types/schema';
 import metrics from '../../../../../styles/metrics';
 import languages from './languages';

@@ -7,6 +7,7 @@ const light: DefaultTheme = {
   id: ThemeID.LIGHT,
   colors: {
     primary: '#FFD700',
+    lightPrimary: 'rgba(70, 117, 248, 0.5)',
     secondary: '#FFF',
     background: '#F2F2F2',
     text: 'rgba(0, 0, 0, 0.8)',

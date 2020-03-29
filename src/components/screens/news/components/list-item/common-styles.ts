@@ -12,12 +12,12 @@ export const Wrapper = styled(TouchableOpacity)`
 `;
 
 export const TextWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('49%')}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('54%')}px;
   margin-left: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
 export const imageWrapper = {
-  width: Metrics.getWidthFromDP('38%'),
-  height: Metrics.getWidthFromDP('32%'),
+  width: Metrics.getWidthFromDP('35%'),
+  height: Metrics.getWidthFromDP('30%'),
   borderRadius: 8,
 };
