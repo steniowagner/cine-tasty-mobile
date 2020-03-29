@@ -1,16 +1,13 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { SERVER_URL } from 'react-native-dotenv';
 
 import { ThemeContextProvider } from './styles/theme-context-provider/ThemeContextProvider';
-import AndroidNavigationBar from './components/AndroidNavigationBar';
+import AndroidNavigationBar from './components/AndroidNavigationBar.android';
 import Navigation from './routes/Routes';
+import makeClient from './config/client';
 
-const client = new ApolloClient({
-  uri: SERVER_URL,
-});
+const client = makeClient();
 
 const App = () => (
   <ThemeContextProvider>
