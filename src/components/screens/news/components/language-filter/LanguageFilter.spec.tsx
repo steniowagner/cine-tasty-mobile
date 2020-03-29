@@ -12,12 +12,6 @@ import languages from './languages';
 
 jest.useFakeTimers();
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
-}));
-
 const renderLanguageFilter = (
   lastFilterSelected: ArticleLanguage,
   onSelected = jest.fn(),

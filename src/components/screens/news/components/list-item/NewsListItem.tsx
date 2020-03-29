@@ -1,10 +1,10 @@
 import React from 'react';
-import {
-  Linking, Image, View, Text,
-} from 'react-native';
+import { Linking, View, Text } from 'react-native';
 import styled from 'styled-components';
-import { TextWrapper, Wrapper, imageWrapper } from './common-styles';
+
+import { TextWrapper, Wrapper } from './common-styles';
 import DateDiff from './date-diff/DateDiff';
+import NewsImage from './news-image/NewsListItemImage';
 
 const SourceText = styled(Text).attrs({
   numberOfLines: 1,
@@ -19,12 +19,6 @@ const BottomTextContentWrapper = styled(View)`
   width: 70%;
   flex-direction: row;
   margin-top: ${({ theme }) => theme.metrics.largeSize}px;
-`;
-
-const NewsImage = styled(Image)`
-  width: ${imageWrapper.width}px;
-  height: ${imageWrapper.height}px;
-  border-radius: ${imageWrapper.borderRadius}px;
 `;
 
 const NewsText = styled(Text)<{ withRTL: boolean }>`
@@ -51,7 +45,7 @@ const NewsListItem = ({
     testID="news-list-item-wrapper"
   >
     <NewsImage
-      source={{ uri: image }}
+      image={image}
     />
     <TextWrapper>
       <NewsText

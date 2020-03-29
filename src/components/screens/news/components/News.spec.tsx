@@ -11,12 +11,6 @@ import { dark } from '../../../../styles/themes';
 
 jest.useFakeTimers();
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
-}));
-
 const navigation = {
   setOptions: () => ({
     // eslint-disable-next-line react/display-name
