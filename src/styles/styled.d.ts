@@ -19,6 +19,7 @@ declare module 'styled-components' {
     };
     colors: {
       primary: string;
+      lightPrimary: string;
       secondary: string;
       background: string;
       text: string;

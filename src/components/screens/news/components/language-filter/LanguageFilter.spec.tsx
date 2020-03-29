@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { ArticleLanguage } from '../../../../../types/schema';
 import { dark } from '../../../../../styles/themes';
-import LanguageListItem from './LanguageListItem';
+import LanguageListItem from './list-item/LanguageListItem';
 import LanguageFilter from './LanguageFilter';
 import languages from './languages';
 
