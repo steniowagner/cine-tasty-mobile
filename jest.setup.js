@@ -5,6 +5,12 @@ jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
 
 jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
 
+jest.mock('react-native-vector-icons/MaterialCommunityIcons', () => 'Icon');
+
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key) => key }),
+}));
+
 jest.mock('react-native-gesture-handler', () => {
   const View = require('react-native/Libraries/Components/View/View');
   return {

@@ -1,20 +1,18 @@
+/* eslint-disable global-require */
+/* eslint-disable import/first */
 import React from 'react';
 import { fireEvent, render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
+jest.useFakeTimers();
+
 import NewsListItem, { Props } from './NewsListItem';
 import { dark } from '../../../../../styles/themes';
-
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
-}));
 
 const mockOnPressItem = jest.fn();
 
 jest.mock('react-native', () => {
-  // eslint-disable-next-line global-require
+  const Animated = require('react-native/Libraries/Animated/src/Animated.js');
   const View = require('react-native/Libraries/Components/View/View');
 
   return {
@@ -33,6 +31,7 @@ jest.mock('react-native', () => {
     TouchableOpacity: View,
     Image: View,
     Text: View,
+    Animated,
     View,
   };
 });
@@ -61,6 +60,8 @@ const renderNewsListItem = (optionalProps: OptionalProps & ExtraOptionalProps = 
     />
   </ThemeProvider>
 );
+
+jest.useFakeTimers();
 
 describe('Testing <NewsListItem />', () => {
   beforeEach(() => {
