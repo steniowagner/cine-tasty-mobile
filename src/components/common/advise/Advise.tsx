@@ -52,7 +52,7 @@ const Suggestion = styled(Text).attrs({
 
 const AdviseIcon = styled(Icon).attrs(({ theme, name }) => ({
   size: theme.metrics.getWidthFromDP('20%'),
-  color: theme.colors.primary,
+  color: '#fff',
   name,
 }))``;
 
@@ -66,7 +66,9 @@ export type Props = {
 const Advise = ({
   description, suggestion, title, icon,
 }: Props) => (
-  <Wrapper>
+  <Wrapper
+    testID="advise-wrapper"
+  >
     <IconWrapper
       testID="icon-wrapper"
     >

@@ -1,15 +1,15 @@
 import React from 'react';
-import { TouchableOpacity, FlatList } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { cleanup, render, act } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
-import { MockList } from 'graphql-tools';
+import { MockList, IMocks } from 'graphql-tools';
+import { GraphQLError } from 'graphql';
 
-import AutoMockProvider from '../../../../utils/AutoMockedProvider';
+import AuthoMockedErrorProvider from '../../../../utils/mock-providers/AuthoMockedErrorProvider';
+import AutoMockProvider from '../../../../utils/mock-providers/AutoMockedProvider';
+import CONSTANTS from '../../../../utils/constants';
 import News, { LOADING_ITEMS_COUNT } from './News';
-import NewsListItem from './list-item/NewsListItem';
 import { dark } from '../../../../styles/themes';
-
-jest.useFakeTimers();
 
 const navigation = {
   setOptions: () => ({
@@ -22,21 +22,27 @@ const navigation = {
   }),
 };
 
+const renderNews = (mockResolvers?: IMocks) => (
+  <ThemeProvider
+    theme={dark}
+  >
+    <AutoMockProvider
+      mockResolvers={mockResolvers}
+    >
+      <News
+        navigation={navigation}
+      />
+    </AutoMockProvider>
+  </ThemeProvider>
+);
+
+jest.useFakeTimers();
+
 describe('Testing <News />', () => {
   afterEach(cleanup);
 
   it('should render the loading state correctly', () => {
-    const { queryByTestId } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <AutoMockProvider>
-          <News
-            navigation={navigation}
-          />
-        </AutoMockProvider>
-      </ThemeProvider>,
-    );
+    const { queryByTestId } = render(renderNews());
 
     expect(queryByTestId('news-loading-wrapper')).not.toBeNull();
 
@@ -55,19 +61,7 @@ describe('Testing <News />', () => {
       }),
     };
 
-    const { getAllByType, queryByTestId } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <AutoMockProvider
-          mockResolvers={mockResolvers}
-        >
-          <News
-            navigation={navigation}
-          />
-        </AutoMockProvider>
-      </ThemeProvider>,
-    );
+    const { getAllByTestId, queryByTestId } = render(renderNews(mockResolvers));
 
     act(() => {
       jest.runAllTimers();
@@ -77,8 +71,36 @@ describe('Testing <News />', () => {
 
     expect(queryByTestId('news-content-wrapper')).not.toBeNull();
 
-    expect(getAllByType(FlatList).length).toBe(1);
+    expect(queryByTestId('news-list')).not.toBeNull();
 
-    expect(getAllByType(NewsListItem).length).toBe(NEWS_COUNT);
+    expect(getAllByTestId('news-list-item-wrapper').length).toBe(NEWS_COUNT);
+  });
+
+  it('should render the advise screen when has a network error', () => {
+    const { queryByTestId } = render(
+      <AuthoMockedErrorProvider
+        errors={[new GraphQLError(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)]}
+      >
+        <ThemeProvider
+          theme={dark}
+        >
+          <News
+            navigation={navigation}
+          />
+        </ThemeProvider>
+      </AuthoMockedErrorProvider>,
+    );
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(queryByTestId('news-loading-wrapper')).toBeNull();
+
+    expect(queryByTestId('news-content-wrapper')).toBeNull();
+
+    expect(queryByTestId('news-list')).toBeNull();
+
+    expect(queryByTestId('advise-wrapper')).not.toBeNull();
   });
 });

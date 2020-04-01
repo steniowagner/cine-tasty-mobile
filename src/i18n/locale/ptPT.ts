@@ -1,6 +1,13 @@
 import { Locale } from './Locale';
 
 const ptPT: Locale = {
+  errors: {
+    network: {
+      description: 'description',
+      suggestion: 'suggestion',
+      title: 'title',
+    },
+  },
   tabs: {
     discover: 'Descobrir',
     news: 'Notícias',
