@@ -2,8 +2,9 @@
 
 import React, { useLayoutEffect, useState } from 'react';
 import { TouchableOpacity, FlatList, View } from 'react-native';
-import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
+import styled from 'styled-components';
 import gql from 'graphql-tag';
 
 import {
@@ -15,6 +16,8 @@ import NewsListItemPlaceholder from './list-item/NewsListItemPlaceholder';
 import LanguageFilter from './language-filter/LanguageFilter';
 import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
+import CONSTANTS from '../../../../utils/constants';
+import Advise from '../../../common/advise/Advise';
 import metrics from '../../../../styles/metrics';
 import Icon from '../../../common/Icon';
 
@@ -47,7 +50,7 @@ const LOADING_ITEMS = Array.from({ length: LOADING_ITEMS_COUNT }, (_, index) => 
   id: `${index}`,
 }));
 
-const GET_ARTICLES = gql`
+export const GET_ARTICLES = gql`
   query GetArticles($page: Int!, $language: ArticleLanguage!) {
     articles(page: $page, language: $language) {
       items {
@@ -73,14 +76,20 @@ const News = ({ navigation }: Props) => {
   const [languageFilter, setLanguageFilter] = useState<ArticleLanguage>(
     ArticleLanguage.EN,
   );
-  const { loading, data } = useQuery<GetArticles, GetArticlesVariables>(GET_ARTICLES, {
-    variables: { page: 1, language: languageFilter },
-    fetchPolicy: 'no-cache',
-  });
+
+  const { loading, error, data } = useQuery<GetArticles, GetArticlesVariables>(
+    GET_ARTICLES,
+    {
+      variables: { page: 1, language: languageFilter },
+      fetchPolicy: 'no-cache',
+    },
+  );
 
   const [isFilterLanguageModalOpen, setIsFilterLanguageModalOpen] = useState<boolean>(
     false,
   );
+
+  const { t } = useTranslation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -105,6 +114,20 @@ const News = ({ navigation }: Props) => {
           />
         ))}
       </Wrapper>
+    );
+  }
+
+  if (
+    error
+    && error.message.includes(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)
+  ) {
+    return (
+      <Advise
+        description={t('translations:errors:network:description')}
+        suggestion={t('translations:errors:network:suggestion')}
+        title={t('translations:errors:network:title')}
+        icon="wifi-off"
+      />
     );
   }
 

@@ -1,6 +1,13 @@
 import { Locale } from './Locale';
 
 const ptBR: Locale = {
+  errors: {
+    network: {
+      description: 'description',
+      suggestion: 'suggestion',
+      title: 'title',
+    },
+  },
   tabs: {
     discover: 'Descobrir',
     news: 'Notícias',

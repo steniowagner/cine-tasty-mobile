@@ -1,6 +1,13 @@
 import { Locale } from './Locale';
 
 const es: Locale = {
+  errors: {
+    network: {
+      description: 'description',
+      suggestion: 'suggestion',
+      title: 'title',
+    },
+  },
   tabs: {
     discover: 'Descubrir',
     news: 'Noticias',
