@@ -66,8 +66,7 @@
     "react-native-shimmer-placeholder": "^1.0.35",
     "react-native-svg": "^12.0.3",
     "react-native-vector-icons": "^6.6.0",
-    "styled-components": "^5.0.1",
-    "yarn": "^1.22.1"
+    "styled-components": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

@@ -1,17 +1,14 @@
 /* eslint-disable react/display-name */
 
-import React, { useLayoutEffect, useState } from 'react';
-import { TouchableOpacity, FlatList, View } from 'react-native';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
+import {
+  TouchableOpacity, RefreshControl, FlatList, View,
+} from 'react-native';
+import { useLazyQuery } from '@apollo/react-hooks';
+import styled, { withTheme, DefaultTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/react-hooks';
-import styled from 'styled-components';
 import gql from 'graphql-tag';
 
-import {
-  GetArticlesVariables,
-  ArticleLanguage,
-  GetArticles,
-} from '../../../../types/schema';
 import NewsListItemPlaceholder from './list-item/NewsListItemPlaceholder';
 import LanguageFilter from './language-filter/LanguageFilter';
 import { imageWrapper } from './list-item/common-styles';
@@ -20,6 +17,11 @@ import CONSTANTS from '../../../../utils/constants';
 import Advise from '../../../common/advise/Advise';
 import metrics from '../../../../styles/metrics';
 import Icon from '../../../common/Icon';
+import {
+  GetArticlesVariables,
+  ArticleLanguage,
+  GetArticles,
+} from '../../../../types/schema';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -69,25 +71,31 @@ export const GET_ARTICLES = gql`
 `;
 
 type Props = {
+  theme: DefaultTheme;
   navigation: any;
 };
 
-const News = ({ navigation }: Props) => {
+const News = ({ navigation, theme }: Props) => {
+  const [isFilterLanguageModalOpen, setIsFilterLanguageModalOpen] = useState<boolean>(
+    false,
+  );
+
   const [languageFilter, setLanguageFilter] = useState<ArticleLanguage>(
     ArticleLanguage.EN,
   );
 
-  const { loading, error, data } = useQuery<GetArticles, GetArticlesVariables>(
-    GET_ARTICLES,
-    {
-      variables: { page: 1, language: languageFilter },
-      fetchPolicy: 'no-cache',
-    },
-  );
+  const [isRefetching, setIsRefetching] = useState<boolean>(false);
 
-  const [isFilterLanguageModalOpen, setIsFilterLanguageModalOpen] = useState<boolean>(
-    false,
-  );
+  const [loadArticles, { loading, data, error }] = useLazyQuery<
+    GetArticles,
+    GetArticlesVariables
+  >(GET_ARTICLES, {
+    variables: { page: 1, language: languageFilter },
+    fetchPolicy: 'no-cache',
+    onCompleted: () => {
+      setIsRefetching(false);
+    },
+  });
 
   const { t } = useTranslation();
 
@@ -101,6 +109,10 @@ const News = ({ navigation }: Props) => {
         </FilterButton>
       ),
     });
+  }, []);
+
+  useEffect(() => {
+    loadArticles();
   }, []);
 
   if (loading) {
@@ -136,7 +148,6 @@ const News = ({ navigation }: Props) => {
       testID="news-content-wrapper"
     >
       <FlatList
-        testID="news-list"
         renderItem={({ item }) => (
           <NewsListItem
             withRTL={languageFilter === ArticleLanguage.AR}
@@ -147,8 +158,21 @@ const News = ({ navigation }: Props) => {
             url={item.url}
           />
         )}
-        data={data.articles.items}
+        refreshControl={(
+          <RefreshControl
+            progressBackgroundColor={theme.colors.text}
+            refreshing={isRefetching && !data}
+            colors={[theme.colors.background]}
+            tintColor={theme.colors.text}
+            onRefresh={() => {
+              setIsRefetching(true);
+              loadArticles();
+            }}
+          />
+        )}
+        data={data ? data.articles.items : []}
         keyExtractor={(item) => item.id}
+        testID="news-list"
       />
       {isFilterLanguageModalOpen && (
         <LanguageFilter
@@ -163,4 +187,4 @@ const News = ({ navigation }: Props) => {
   );
 };
 
-export default News;
+export default withTheme(News);
