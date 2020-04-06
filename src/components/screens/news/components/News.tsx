@@ -1,27 +1,22 @@
 /* eslint-disable react/display-name */
 
-import React, { useLayoutEffect, useEffect, useState } from 'react';
+import React, { useLayoutEffect } from 'react';
 import {
-  TouchableOpacity, RefreshControl, FlatList, View,
+  TouchableOpacity, RefreshControl, FlatList, Platform, View,
 } from 'react-native';
-import { useLazyQuery } from '@apollo/react-hooks';
 import styled, { withTheme, DefaultTheme } from 'styled-components';
-import { useTranslation } from 'react-i18next';
-import gql from 'graphql-tag';
 
+import PaginationFooterLoading from '../../../common/PaginationFooterLoading';
 import NewsListItemPlaceholder from './list-item/NewsListItemPlaceholder';
 import LanguageFilter from './language-filter/LanguageFilter';
+import { ArticleLanguage } from '../../../../types/schema';
 import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
 import CONSTANTS from '../../../../utils/constants';
 import Advise from '../../../common/advise/Advise';
 import metrics from '../../../../styles/metrics';
 import Icon from '../../../common/Icon';
-import {
-  GetArticlesVariables,
-  ArticleLanguage,
-  GetArticles,
-} from '../../../../types/schema';
+import useNews from './useNews';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -46,29 +41,13 @@ const FilterButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   margin-right: ${({ theme }) => theme.metrics.largeSize}px;
 `;
 
-export const LOADING_ITEMS_COUNT = Math.floor(metrics.height / imageWrapper.height) - 1;
+const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
-const LOADING_ITEMS = Array.from({ length: LOADING_ITEMS_COUNT }, (_, index) => ({
+export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
+
+const LOADING_ITEMS = Array.from({ length: INITIAL_ITEMS_TO_RENDER }, (_, index) => ({
   id: `${index}`,
 }));
-
-export const GET_ARTICLES = gql`
-  query GetArticles($page: Int!, $language: ArticleLanguage!) {
-    articles(page: $page, language: $language) {
-      items {
-        publishedAt
-        content
-        source
-        author
-        title
-        image
-        url
-        id
-      }
-      hasMore
-    }
-  }
-`;
 
 type Props = {
   theme: DefaultTheme;
@@ -76,28 +55,20 @@ type Props = {
 };
 
 const News = ({ navigation, theme }: Props) => {
-  const [isFilterLanguageModalOpen, setIsFilterLanguageModalOpen] = useState<boolean>(
-    false,
-  );
-
-  const [languageFilter, setLanguageFilter] = useState<ArticleLanguage>(
-    ArticleLanguage.EN,
-  );
-
-  const [isRefetching, setIsRefetching] = useState<boolean>(false);
-
-  const [loadArticles, { loading, data, error }] = useLazyQuery<
-    GetArticles,
-    GetArticlesVariables
-  >(GET_ARTICLES, {
-    variables: { page: 1, language: languageFilter },
-    fetchPolicy: 'no-cache',
-    onCompleted: () => {
-      setIsRefetching(false);
-    },
-  });
-
-  const { t } = useTranslation();
+  const {
+    setIsFilterLanguageModalOpen,
+    isFilterLanguageModalOpen,
+    onSelectLanguageFilter,
+    onRefreshArticles,
+    languageFilter,
+    onEndReached,
+    isRefreshing,
+    isPaginating,
+    isLoading,
+    articles,
+    error,
+    t,
+  } = useNews();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -111,24 +82,6 @@ const News = ({ navigation, theme }: Props) => {
     });
   }, []);
 
-  useEffect(() => {
-    loadArticles();
-  }, []);
-
-  if (loading) {
-    return (
-      <Wrapper
-        testID="news-loading-wrapper"
-      >
-        {LOADING_ITEMS.map((item) => (
-          <NewsListItemPlaceholder
-            key={item.id}
-          />
-        ))}
-      </Wrapper>
-    );
-  }
-
   if (
     error
     && error.message.includes(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)
@@ -140,6 +93,20 @@ const News = ({ navigation, theme }: Props) => {
         title={t('translations:errors:network:title')}
         icon="wifi-off"
       />
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Wrapper
+        testID="news-loading-wrapper"
+      >
+        {LOADING_ITEMS.map((item) => (
+          <NewsListItemPlaceholder
+            key={item.id}
+          />
+        ))}
+      </Wrapper>
     );
   }
 
@@ -161,26 +128,32 @@ const News = ({ navigation, theme }: Props) => {
         refreshControl={(
           <RefreshControl
             progressBackgroundColor={theme.colors.text}
-            refreshing={isRefetching && !data}
+            refreshing={isRefreshing && !articles}
             colors={[theme.colors.background]}
+            onRefresh={onRefreshArticles}
             tintColor={theme.colors.text}
-            onRefresh={() => {
-              setIsRefetching(true);
-              loadArticles();
-            }}
           />
         )}
-        data={data ? data.articles.items : []}
-        keyExtractor={(item) => item.id}
+        ListFooterComponent={() => isPaginating && <PaginationFooterLoading />}
+        keyExtractor={(item, index) => `${item.id}${index}`}
+        initialNumToRender={INITIAL_ITEMS_TO_RENDER + 1}
+        onEndReachedThreshold={Platform.select({
+          android: 0.5,
+          ios: 0.1,
+        })}
+        getItemLayout={(_data, index) => ({
+          length: ITEM_HEIGHT,
+          offset: ITEM_HEIGHT * index,
+          index,
+        })}
+        onEndReached={onEndReached}
         testID="news-list"
+        data={articles}
       />
       {isFilterLanguageModalOpen && (
         <LanguageFilter
-          onSelect={(language: ArticleLanguage) => {
-            setIsFilterLanguageModalOpen(false);
-            setLanguageFilter(language);
-          }}
           lastFilterSelected={languageFilter}
+          onSelect={onSelectLanguageFilter}
         />
       )}
     </Wrapper>

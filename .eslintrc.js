@@ -14,8 +14,8 @@ module.exports = {
   },
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
-    'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     'react/jsx-max-props-per-line': [1, { maximum: 1, when: 'always' }],
+    'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
     'import/prefer-default-export': 'off',
     'max-len': 'off',

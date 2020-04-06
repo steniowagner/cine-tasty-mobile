@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Linking, View, Text } from 'react-native';
 import styled from 'styled-components';
 
 import { TextWrapper, Wrapper } from './common-styles';
-import DateDiff from './date-diff/DateDiff';
 import NewsImage from './news-image/NewsListItemImage';
+import DateDiff from './date-diff/DateDiff';
 
 const SourceText = styled(Text).attrs({
   numberOfLines: 1,
@@ -66,4 +66,4 @@ const NewsListItem = ({
   </Wrapper>
 );
 
-export default NewsListItem;
+export default memo(NewsListItem);

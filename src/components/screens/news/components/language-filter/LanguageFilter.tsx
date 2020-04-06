@@ -93,9 +93,9 @@ const LanguageFilter = ({ lastFilterSelected, onSelect }: Props) => {
   );
 
   const onAnimateCard = (toValue: number, callback?: () => void): void => {
-    Animated.spring(cardPosition, {
+    Animated.timing(cardPosition, {
       useNativeDriver: true,
-      bounciness: 4,
+      duration: 400,
       toValue,
     }).start(callback);
   };
