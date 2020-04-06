@@ -1,14 +1,12 @@
+/* eslint-disable import/first */
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { cleanup, render, act } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
-import { GraphQLError } from 'graphql';
 
-import AuthoMockedErrorProvider from '../../../../utils/mock-providers/AuthoMockedErrorProvider';
 import AutoMockProvider from '../../../../utils/mock-providers/AutoMockedProvider';
-import CONSTANTS from '../../../../utils/constants';
-import News, { LOADING_ITEMS_COUNT } from './News';
+import News, { INITIAL_ITEMS_TO_RENDER } from './News';
 import { dark } from '../../../../styles/themes';
 
 const navigation = {
@@ -47,7 +45,7 @@ describe('Testing <News />', () => {
     expect(queryByTestId('news-loading-wrapper')).not.toBeNull();
 
     expect(queryByTestId('news-loading-wrapper').props.children.length).toEqual(
-      LOADING_ITEMS_COUNT,
+      INITIAL_ITEMS_TO_RENDER,
     );
   });
 
@@ -73,34 +71,8 @@ describe('Testing <News />', () => {
 
     expect(queryByTestId('news-list')).not.toBeNull();
 
-    expect(getAllByTestId('news-list-item-wrapper').length).toBe(NEWS_COUNT);
-  });
-
-  it('should render the advise screen when has a network error', () => {
-    const { queryByTestId } = render(
-      <AuthoMockedErrorProvider
-        errors={[new GraphQLError(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)]}
-      >
-        <ThemeProvider
-          theme={dark}
-        >
-          <News
-            navigation={navigation}
-          />
-        </ThemeProvider>
-      </AuthoMockedErrorProvider>,
+    expect(getAllByTestId('news-list-item-wrapper').length).toBe(
+      queryByTestId('news-list').props.initialNumToRender,
     );
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(queryByTestId('news-loading-wrapper')).toBeNull();
-
-    expect(queryByTestId('news-content-wrapper')).toBeNull();
-
-    expect(queryByTestId('news-list')).toBeNull();
-
-    expect(queryByTestId('advise-wrapper')).not.toBeNull();
   });
 });
