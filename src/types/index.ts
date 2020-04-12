@@ -1,3 +1,11 @@
+import {
+  FetchMoreQueryOptions,
+  ApolloQueryResult,
+  FetchMoreOptions,
+} from 'apollo-client';
+
+import { GetArticlesVariables, GetArticles } from './schema';
+
 export enum ThemeID {
   DARK = 'DARK',
   LIGHT = 'LIGHT',
@@ -27,3 +35,8 @@ export type NewsFilterLanguage =
   | 'russian'
   | 'sami'
   | 'spanish';
+
+export type FetchMoreArticles = <K extends keyof GetArticlesVariables>(
+  options: FetchMoreQueryOptions<GetArticlesVariables, K> &
+    FetchMoreOptions<GetArticles, GetArticlesVariables>,
+) => Promise<ApolloQueryResult<GetArticles>>;

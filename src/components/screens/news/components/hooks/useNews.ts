@@ -1,15 +1,19 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { ApolloError } from 'apollo-client';
 import gql from 'graphql-tag';
+
+import useFetchFromFirstPage from './useFetchFromFirstPage';
+import usePaginateArticles from './usePaginateArticles';
+import useRefreshArticles from './useRefreshArticles';
 
 import {
   GetArticles_articles_items as Article,
   GetArticlesVariables,
   ArticleLanguage,
   GetArticles,
-} from '../../../../types/schema';
+} from '../../../../../types/schema';
 
 export const GET_ARTICLES = gql`
   query GetArticles($page: Int!, $language: ArticleLanguage!) {
@@ -32,16 +36,22 @@ export const GET_ARTICLES = gql`
 type State = {
   onSelectLanguageFilter: (language: ArticleLanguage) => void;
   setIsFilterLanguageModalOpen: (value: boolean) => void;
+  onPressFooterLoadMoreButton: () => void;
+  shouldRendeListFooterComponent: boolean;
+  isFooterLoadMoreButtonVisible: boolean;
+  onPressReloadErrorButton: () => void;
   isFilterLanguageModalOpen: boolean;
   languageFilter: ArticleLanguage;
   onRefreshArticles: () => void;
+  onHidePopupError: () => void;
   t: (key: string) => string;
+  popupErrorMessage: string;
+  error: ApolloError | null;
   onEndReached: () => void;
   isPaginating: boolean;
   isRefreshing: boolean;
   articles: Article[];
   isLoading: boolean;
-  error: ApolloError;
 };
 
 type LocalQueryState = {
@@ -64,15 +74,31 @@ const useNews = (): State => {
   const [localQueryState, setLocalQueryState] = useState<LocalQueryState>(
     INITIAL_QUERY_STATE,
   );
+  const [isFooterLoadMoreButtonVisible, setIsFooterLoadMoreButtonVisible] = useState<
+    boolean
+  >(false);
+  const [
+    fetchFromFirstPageError,
+    setFetchFromFirstPageError,
+  ] = useState<ApolloError | null>(null);
   const [isFetchedInitialData, setIsFetchedInitialData] = useState<boolean>(false);
-  const [isRefetching, setIsRefetching] = useState<boolean>(false);
+  const [popupErrorMessage, setPopupErrorMessage] = useState<string>('');
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [isPaginating, setIsPaginating] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
 
-  const lastPaginationTimestamp = useRef(0);
-
   const { t } = useTranslation();
+
+  const restartErrorsAndLoadings = () => {
+    if (isRefreshing) setIsRefreshing(false);
+
+    if (isLoading) setIsLoading(false);
+
+    if (isPaginating) setIsPaginating(false);
+
+    if (fetchFromFirstPageError) setFetchFromFirstPageError(null);
+  };
 
   const {
     data, error, fetchMore, refetch,
@@ -82,6 +108,9 @@ const useNews = (): State => {
       variables: { language: languageFilter, page: 1 },
       notifyOnNetworkStatusChange: true,
       fetchPolicy: 'no-cache',
+      onError: () => {
+        restartErrorsAndLoadings();
+      },
       onCompleted: () => {
         if (!isFetchedInitialData && data && !error) {
           setLocalQueryState({
@@ -89,98 +118,52 @@ const useNews = (): State => {
             hasMore: data.articles.hasMore,
           });
 
-          setIsLoading(false);
-
           setIsFetchedInitialData(true);
         }
 
-        if (isRefetching) setIsRefetching(false);
-
-        if (isLoading) setIsLoading(false);
-
-        if (isPaginating) setIsPaginating(false);
+        restartErrorsAndLoadings();
       },
     },
   );
 
-  const onPaginateArticles = (): void => {
-    if (isPaginating && localQueryState.hasMore) {
-      fetchMore({
-        query: GET_ARTICLES,
-        variables: { language: languageFilter, page },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          setLocalQueryState({
-            hasMore: fetchMoreResult.articles.hasMore,
-            articles: [...localQueryState.articles, ...fetchMoreResult.articles.items],
-          });
+  useRefreshArticles({
+    setError: (err: string) => setPopupErrorMessage(t(err)),
+    setIsFooterLoadMoreButtonVisible,
+    isFooterLoadMoreButtonVisible,
+    language: languageFilter,
+    restartErrorsAndLoadings,
+    query: GET_ARTICLES,
+    setLocalQueryState,
+    isRefreshing,
+    fetchMore,
+    setPage,
+  });
 
-          return previousResult;
-        },
-      });
-    }
-  };
+  const { fetchFromFirstPage } = useFetchFromFirstPage({
+    setFetchFromFirstPageError,
+    language: languageFilter,
+    isFetchedInitialData,
+    setLocalQueryState,
+    setIsLoading,
+    refetch,
+    setPage,
+  });
 
-  const onRefetchArticles = async (): Promise<void> => {
-    const refreshedArticlesQuery = await refetch({ language: languageFilter, page: 1 });
-
-    setLocalQueryState({
-      articles: refreshedArticlesQuery.data.articles.items,
-      hasMore: refreshedArticlesQuery.data.articles.hasMore,
-    });
-  };
-
-  const onRefreshArticles = async (): Promise<void> => {
-    setIsRefetching(false);
-
-    setPage(1);
-
-    setIsLoading(true);
-
-    await onRefetchArticles();
-
-    setIsLoading(false);
-  };
-
-  const onChangeLanguageFilter = async (): Promise<void> => {
-    setIsLoading(true);
-
-    setPage(1);
-
-    await onRefetchArticles();
-
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    if (page > 1) {
-      onPaginateArticles();
-    }
-  }, [page]);
-
-  useEffect(() => {
-    if (isFetchedInitialData) {
-      onChangeLanguageFilter();
-    }
-  }, [languageFilter]);
-
-  useEffect(() => {
-    const now = new Date().getTime();
-
-    const isEnableToPaginate = now - lastPaginationTimestamp.current >= 500;
-
-    if (isEnableToPaginate && isPaginating) {
-      lastPaginationTimestamp.current = now;
-      setPage(page + 1);
-    } else {
-      setIsPaginating(false);
-    }
-  }, [isPaginating]);
-
-  useEffect(() => {
-    if (isRefetching) {
-      onRefreshArticles();
-    }
-  }, [isRefetching]);
+  usePaginateArticles({
+    setError: (err: string) => setPopupErrorMessage(t(err)),
+    setIsFooterLoadMoreButtonVisible,
+    isFooterLoadMoreButtonVisible,
+    restartErrorsAndLoadings,
+    language: languageFilter,
+    query: GET_ARTICLES,
+    setLocalQueryState,
+    localQueryState,
+    setIsPaginating,
+    isPaginating,
+    fetchMore,
+    setPage,
+    page,
+  });
 
   const onSelectLanguageFilter = (language: ArticleLanguage): void => {
     setIsFilterLanguageModalOpen(false);
@@ -188,17 +171,24 @@ const useNews = (): State => {
   };
 
   return {
+    shouldRendeListFooterComponent:
+      !!localQueryState.articles.length && localQueryState.hasMore,
+    onEndReached: () => !popupErrorMessage && setIsPaginating(true),
+    onPressFooterLoadMoreButton: () => setIsPaginating(true),
     isPaginating: isPaginating && localQueryState.hasMore,
-    onRefreshArticles: () => setIsRefetching(true),
-    onEndReached: () => setIsPaginating(true),
+    onPressReloadErrorButton: () => fetchFromFirstPage(),
+    onHidePopupError: () => setPopupErrorMessage(''),
+    onRefreshArticles: () => setIsRefreshing(true),
+    error: fetchFromFirstPageError || error,
     articles: localQueryState.articles,
+    isFooterLoadMoreButtonVisible,
     setIsFilterLanguageModalOpen,
-    isRefreshing: isRefetching,
     isFilterLanguageModalOpen,
     onSelectLanguageFilter,
+    popupErrorMessage,
     languageFilter,
+    isRefreshing,
     isLoading,
-    error,
     t,
   };
 };

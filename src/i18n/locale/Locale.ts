@@ -16,7 +16,7 @@ type Time =
 
 type Tabs = 'discover' | 'people' | 'quiz' | 'news';
 
-type ErrorType = 'network';
+type ErrorType = 'network' | 'loadMoreNewsError' | 'reloadNewsError';
 
 type ErrorDescription = {
   description: string;
@@ -25,9 +25,8 @@ type ErrorDescription = {
 };
 
 export interface Locale {
-  errors: Record<ErrorType, Record<keyof ErrorDescription, string>>;
+  errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
   language: Record<NewsFilterLanguage, string>;
-  newsFilterChooseLanguage: string;
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;
 }

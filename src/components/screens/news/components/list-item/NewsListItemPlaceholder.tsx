@@ -4,14 +4,12 @@ import ShimmerPlaceHolder from '../../../../common/ShimmerPlaceholder';
 import Metrics from '../../../../../styles/metrics';
 import {
   TextWrapper as TextPlaceholderWrapper,
-  Wrapper,
   imageWrapper,
+  Wrapper,
 } from './common-styles';
 
 const NewsListItemPlaceholder = () => (
-  <Wrapper
-    disabled
-  >
+  <Wrapper>
     <ShimmerPlaceHolder
       style={imageWrapper}
     />

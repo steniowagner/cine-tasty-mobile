@@ -2,6 +2,8 @@ import { Locale } from './Locale';
 
 const es: Locale = {
   errors: {
+    reloadNewsError: "Couldn't reload the news",
+    loadMoreNewsError: "Couldn't load more news",
     network: {
       description: 'description',
       suggestion: 'suggestion',
