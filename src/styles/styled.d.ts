@@ -20,6 +20,7 @@ declare module 'styled-components' {
     colors: {
       primary: string;
       lightPrimary: string;
+      popup: string;
       secondary: string;
       background: string;
       text: string;

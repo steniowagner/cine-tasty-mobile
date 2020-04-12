@@ -17,6 +17,7 @@ module.exports = {
     'react/jsx-max-props-per-line': [1, { maximum: 1, when: 'always' }],
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'react/prop-types': 'off',
     'import/prefer-default-export': 'off',
     'max-len': 'off',
     'react/jsx-first-prop-new-line': [1, 'always'],

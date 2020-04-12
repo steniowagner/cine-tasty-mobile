@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import { render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
-jest.mock('./useNews', () => () => ({
+jest.mock('./hooks/useNews', () => () => ({
   error: new Error('Network error: Network request failed'),
   t: (value: string): string => value,
 }));

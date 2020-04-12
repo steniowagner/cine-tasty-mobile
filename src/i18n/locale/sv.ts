@@ -1,6 +1,15 @@
 import { Locale } from './Locale';
 
 const sv: Locale = {
+  errors: {
+    reloadNewsError: "Couldn't reload the news",
+    loadMoreNewsError: "Couldn't load more news",
+    network: {
+      description: 'description',
+      suggestion: 'suggestion',
+      title: 'title',
+    },
+  },
   tabs: {
     discover: 'Upptäck',
     news: 'Nyheter',
