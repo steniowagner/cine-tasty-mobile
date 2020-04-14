@@ -144,7 +144,7 @@ const News = ({ navigation, theme }: Props) => {
       </ErrorWrapper>
     );
   }
-
+  console.log('articles: ', articles);
   return (
     <Wrapper
       testID="news-content-wrapper"
@@ -162,8 +162,8 @@ const News = ({ navigation, theme }: Props) => {
             withRTL={languageFilter === ArticleLanguage.AR}
             date={item.publishedAt}
             source={item.source}
-            text={item.content}
             image={item.image}
+            text={item.title}
             url={item.url}
           />
         )}
