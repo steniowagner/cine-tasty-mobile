@@ -47,14 +47,6 @@ const MockDate = require('mockdate');
 
 const frameTime = 10;
 
-/* global.withAnimatedTimeTravelEnabled = (func) => {
-    MockDate.set(0);
-    jest.useFakeTimers();
-    func();
-    MockDate.reset();
-    jest.useRealTimers();
-  }; */
-
 global.requestAnimationFrame = (callback) => {
   setTimeout(callback, frameTime);
 };

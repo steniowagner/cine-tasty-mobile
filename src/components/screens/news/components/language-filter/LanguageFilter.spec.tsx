@@ -7,8 +7,8 @@ import MockDate from 'mockdate';
 
 import LanguageFilter, { ANIMATION_TIMING } from './LanguageFilter';
 import { ArticleLanguage } from '../../../../../types/schema';
-import { dark } from '../../../../../styles/themes';
 import LanguageListItem from './list-item/LanguageListItem';
+import { dark } from '../../../../../styles/themes';
 import languages from './languages';
 
 const renderLanguageFilter = (
