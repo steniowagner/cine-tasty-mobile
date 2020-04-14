@@ -65,6 +65,7 @@ const LanguageListItem = ({
   isSelected, onPress, name, Flag,
 }: Props) => (
   <Wrapper
+    testID="language-filter-list-item"
     onPress={onPress}
   >
     <ContentWrapper>
