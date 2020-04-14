@@ -1,7 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import {
-  TouchableOpacity, Animated, FlatList, Modal, View, Text,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  Animated,
+  FlatList,
+  Modal,
+  View,
+  Text,
 } from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -9,7 +16,11 @@ import isEqualsOrLargestThanIphoneX from '../../../../../utils/is-equals-or-larg
 import LanguageListItem, { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem';
 import { ArticleLanguage } from '../../../../../types/schema';
 import metrics from '../../../../../styles/metrics';
+import useLanguageFilter from './useLanguageFilter';
 import languages from './languages';
+
+const CARD_CONTAINER_HEIGHT = metrics.getHeightFromDP('65%');
+export const ANIMATION_TIMING = 400;
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -19,9 +30,14 @@ const Wrapper = styled(View)`
   background-color: ${({ theme }) => theme.colors.darkLayer};
 `;
 
+const PressAreaClose = styled(View)`
+  width: 100%;
+  height: ${({ theme }) => theme.metrics.getHeightFromDP('35%')}px;
+`;
+
 const CardWrapper = styled(Animated.View)`
   width: 100%;
-  height: ${({ theme }) => theme.metrics.getHeightFromDP('65%')}px;
+  height: ${CARD_CONTAINER_HEIGHT}px;
   border-top-left-radius: ${({ theme }) => theme.metrics.mediumSize}px;
   border-top-right-radius: ${({ theme }) => theme.metrics.mediumSize}px;
   background-color: white;
@@ -75,103 +91,106 @@ const SelectLanguageText = styled(Text)`
 `;
 
 type Props = {
-  onSelect: (language: ArticleLanguage) => void;
-  lastFilterSelected: ArticleLanguage;
+  onSelectLanguage: (language: ArticleLanguage) => void;
+  lastLanguageSelected: ArticleLanguage;
+  onCloseModal: () => void;
 };
 
-const LanguageFilter = ({ lastFilterSelected, onSelect }: Props) => {
-  const [filterSelected, setFilterSelected] = useState<ArticleLanguage>(
-    lastFilterSelected,
-  );
-  const [shouldHideCard, setShouldHideCard] = useState<boolean>(false);
-  const cardPosition = useRef(new Animated.Value(0)).current;
+const LanguageFilter = ({
+  lastLanguageSelected,
+  onSelectLanguage,
+  onCloseModal,
+}: Props) => {
+  const {
+    onCloseWithoutChanges,
+    onHandlerStateChange,
+    initialFlatListIndex,
+    onPressSelectButton,
+    setLanguageSelected,
+    languageSelected,
+    shouldHideCard,
+    animatedEvent,
+    translateY,
+  } = useLanguageFilter({
+    cardContainerHeight: CARD_CONTAINER_HEIGHT,
+    animationTiming: ANIMATION_TIMING,
+    lastLanguageSelected,
+    onSelectLanguage,
+    onCloseModal,
+  });
 
   const { t } = useTranslation();
 
-  const initialFlatListIndex = languages.findIndex(
-    (language) => language.id === lastFilterSelected,
-  );
-
-  const onAnimateCard = (toValue: number, callback?: () => void): void => {
-    Animated.timing(cardPosition, {
-      useNativeDriver: true,
-      duration: 400,
-      toValue,
-    }).start(callback);
-  };
-
-  useEffect(() => {
-    onAnimateCard(1);
-  }, []);
-
-  const onCloseModal = (): void => {
-    onAnimateCard(0, () => {
-      setShouldHideCard(true);
-      onSelect(filterSelected);
-    });
-  };
-
   return (
     <Modal
-      onRequestClose={() => {
-        onAnimateCard(0, () => {
-          setShouldHideCard(false);
-          onSelect(lastFilterSelected);
-        });
-      }}
+      onRequestClose={onCloseWithoutChanges}
       animationType="fade"
       hardwareAccelerated
       transparent
       visible
     >
       <Wrapper>
+        <TouchableWithoutFeedback
+          onPress={onCloseWithoutChanges}
+          testID="hide-filter-button"
+        >
+          <PressAreaClose />
+        </TouchableWithoutFeedback>
         {!shouldHideCard && (
-          <CardWrapper
-            style={{
-              transform: [
-                {
-                  translateY: cardPosition.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [metrics.height, 0],
-                  }),
-                },
-              ],
-            }}
+          <PanGestureHandler
+            onHandlerStateChange={onHandlerStateChange}
+            onGestureEvent={animatedEvent}
           >
-            <GripWrapper>
-              <Grip />
-            </GripWrapper>
-            <ListHeaderWrapper>
-              <HeadLineText>{t('translations:newsFilterChooseLanguage')}</HeadLineText>
-              <LineDivider />
-            </ListHeaderWrapper>
-            <FlatList
-              ItemSeparatorComponent={() => <LineDivider />}
-              initialScrollIndex={initialFlatListIndex}
-              getItemLayout={(_, index) => ({
-                length: ITEM_LIST_HEIGHT,
-                offset: ITEM_LIST_HEIGHT * index,
-                index,
-              })}
-              keyExtractor={(item) => item.id}
-              testID="languages-list"
-              data={languages}
-              renderItem={({ item }) => (
-                <LanguageListItem
-                  name={t(`translations:language:${item.name}`)}
-                  onPress={() => setFilterSelected(item.id)}
-                  isSelected={filterSelected === item.id}
-                  Flag={item.Flag}
-                />
-              )}
-            />
-            <SelectLanguageButton
-              onPress={onCloseModal}
-              testID="select-button"
+            <CardWrapper
+              style={{
+                transform: [
+                  {
+                    translateY: translateY.interpolate({
+                      inputRange: [0, CARD_CONTAINER_HEIGHT],
+                      outputRange: [0, CARD_CONTAINER_HEIGHT],
+                      extrapolate: 'clamp',
+                    }),
+                  },
+                ],
+              }}
             >
-              <SelectLanguageText>SELECT</SelectLanguageText>
-            </SelectLanguageButton>
-          </CardWrapper>
+              <GripWrapper>
+                <Grip />
+              </GripWrapper>
+              <ListHeaderWrapper>
+                <HeadLineText>{t('translations:newsFilterChooseLanguage')}</HeadLineText>
+                <LineDivider />
+              </ListHeaderWrapper>
+              <FlatList
+                renderItem={({ item }) => (
+                  <LanguageListItem
+                    name={t(`translations:language:${item.name}`)}
+                    isSelected={languageSelected === item.id}
+                    onPress={() => {
+                      setLanguageSelected(item.id);
+                    }}
+                    Flag={item.Flag}
+                  />
+                )}
+                ItemSeparatorComponent={() => <LineDivider />}
+                initialScrollIndex={initialFlatListIndex}
+                getItemLayout={(_, index) => ({
+                  offset: ITEM_LIST_HEIGHT * index,
+                  length: ITEM_LIST_HEIGHT,
+                  index,
+                })}
+                keyExtractor={(item) => item.id}
+                testID="languages-list"
+                data={languages}
+              />
+              <SelectLanguageButton
+                onPress={onPressSelectButton}
+                testID="select-button"
+              >
+                <SelectLanguageText>SELECT</SelectLanguageText>
+              </SelectLanguageButton>
+            </CardWrapper>
+          </PanGestureHandler>
         )}
       </Wrapper>
     </Modal>

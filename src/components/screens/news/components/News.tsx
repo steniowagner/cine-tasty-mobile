@@ -136,8 +136,9 @@ const News = ({ navigation, theme }: Props) => {
         />
         {isFilterLanguageModalOpen && (
           <LanguageFilter
-            lastFilterSelected={languageFilter}
-            onSelect={onSelectLanguageFilter}
+            onCloseModal={() => setIsFilterLanguageModalOpen(false)}
+            onSelectLanguage={onSelectLanguageFilter}
+            lastLanguageSelected={languageFilter}
           />
         )}
       </ErrorWrapper>
@@ -192,8 +193,9 @@ const News = ({ navigation, theme }: Props) => {
       />
       {isFilterLanguageModalOpen && (
         <LanguageFilter
-          lastFilterSelected={languageFilter}
-          onSelect={onSelectLanguageFilter}
+          onCloseModal={() => setIsFilterLanguageModalOpen(false)}
+          onSelectLanguage={onSelectLanguageFilter}
+          lastLanguageSelected={languageFilter}
         />
       )}
       {!!popupErrorMessage && (

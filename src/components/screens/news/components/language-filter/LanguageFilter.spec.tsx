@@ -3,30 +3,33 @@ import {
   fireEvent, cleanup, render, act,
 } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
+import MockDate from 'mockdate';
 
+import LanguageFilter, { ANIMATION_TIMING } from './LanguageFilter';
 import { ArticleLanguage } from '../../../../../types/schema';
 import { dark } from '../../../../../styles/themes';
 import LanguageListItem from './list-item/LanguageListItem';
-import LanguageFilter from './LanguageFilter';
 import languages from './languages';
-
-jest.useFakeTimers();
 
 const renderLanguageFilter = (
   lastFilterSelected: ArticleLanguage,
-  onSelected = jest.fn(),
+  onSelect = jest.fn(),
+  onClose = jest.fn(),
 ) => (
   <ThemeProvider
     theme={dark}
   >
     <LanguageFilter
-      lastFilterSelected={lastFilterSelected}
-      onSelect={onSelected}
+      lastLanguageSelected={lastFilterSelected}
+      onSelectLanguage={onSelect}
+      onCloseModal={onClose}
     />
   </ThemeProvider>
 );
 
-describe('Testing LanguageFilter', () => {
+jest.useFakeTimers();
+
+describe('Testing <LanguageFilter />', () => {
   afterEach(cleanup);
 
   beforeEach(() => {
@@ -97,6 +100,8 @@ describe('Testing LanguageFilter', () => {
 
     expect(newItemSelected.props.isSelected).toBe(true);
 
+    expect(getAllByType(LanguageListItem)[0].props.isSelected).toBe(false);
+
     expect(
       getAllByType(LanguageListItem)
         .filter((_, index) => index !== INDEX_NEW_ITEM_SELECTED)
@@ -104,24 +109,67 @@ describe('Testing LanguageFilter', () => {
     ).toBe(true);
   });
 
-  it('should call onSelect when the SELECT button is pressed', () => {
-    const onSelect = jest.fn();
-    const INDEX_SELECTED = 2;
+  it('should call onSelectLanguage when the Select Button is pressed with a different language than the one received', () => {
+    MockDate.set(0);
 
-    const { getByTestId } = render(
-      renderLanguageFilter(languages[INDEX_SELECTED].id, onSelect),
+    const initialIndexSelected = 0;
+    const nextItemSelected = initialIndexSelected + 1;
+    const onSelect = jest.fn();
+
+    const { getAllByTestId, getByTestId } = render(
+      renderLanguageFilter(languages[initialIndexSelected].id, onSelect),
     );
 
-    const selectButton = getByTestId('select-button');
+    fireEvent.press(getAllByTestId('language-filter-list-item')[nextItemSelected]);
 
-    fireEvent.press(selectButton);
+    fireEvent.press(getByTestId('select-button'));
 
     act(() => {
-      jest.runAllTimers();
+      global.timeTravel(ANIMATION_TIMING);
     });
 
     expect(onSelect).toHaveBeenCalledTimes(1);
 
-    expect(onSelect).toHaveBeenCalledWith(languages[INDEX_SELECTED].id);
+    expect(onSelect).toHaveBeenCalledWith(languages[nextItemSelected].id);
+  });
+
+  it('should not call onSelectLanguage when press Select Button when the language selected is the same of the one received as lastLanguageSelected', () => {
+    MockDate.set(0);
+
+    const initialIndexSelected = 0;
+    const onSelect = jest.fn();
+
+    const { getAllByTestId, getByTestId } = render(
+      renderLanguageFilter(languages[initialIndexSelected].id, onSelect),
+    );
+
+    fireEvent.press(getAllByTestId('language-filter-list-item')[initialIndexSelected]);
+
+    fireEvent.press(getByTestId('select-button'));
+
+    act(() => {
+      global.timeTravel(ANIMATION_TIMING);
+    });
+
+    expect(onSelect).toHaveBeenCalledTimes(0);
+  });
+
+  it('should call onCloseModal when user press out of the card', () => {
+    MockDate.set(0);
+
+    const onClose = jest.fn();
+    const INDEX_SELECTED = 1;
+
+    const { getByTestId } = render(
+      renderLanguageFilter(languages[INDEX_SELECTED].id, undefined, onClose),
+    );
+
+    fireEvent.press(getByTestId('hide-filter-button'));
+
+    act(() => {
+      global.timeTravel(ANIMATION_TIMING);
+    });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
