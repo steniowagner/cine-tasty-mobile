@@ -39,7 +39,7 @@ describe('Testing <LanguageFilter />', () => {
   it('should render the list of items correctly', () => {
     const INDEX_SELECTED = 0;
 
-    const { getAllByType, getByTestId } = render(
+    const { getAllByType, getByTestId, getAllByTestId } = render(
       renderLanguageFilter(languages[INDEX_SELECTED].id),
     );
 
@@ -51,7 +51,7 @@ describe('Testing <LanguageFilter />', () => {
 
     const { initialNumToRender } = getByTestId('languages-list').props;
 
-    expect(getAllByType(LanguageListItem).length).toBe(initialNumToRender);
+    expect(getAllByTestId('language-filter-list-item').length).toBe(initialNumToRender);
 
     expect(
       getAllByType(LanguageListItem).every((languageItem, index) => {
@@ -62,7 +62,7 @@ describe('Testing <LanguageFilter />', () => {
     ).toBe(true);
   });
 
-  it('should render the selected item correctly', () => {
+  it.only('should render the selected item correctly', () => {
     const INDEX_SELECTED = 1;
 
     const { getAllByType, getByTestId } = render(

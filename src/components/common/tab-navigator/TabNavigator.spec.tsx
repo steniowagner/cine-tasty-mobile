@@ -17,6 +17,17 @@ const state = {
   index,
 };
 
+const renderTabNavigator = (navigate = jest.fn()) => (
+  <ThemeProvider
+    theme={dark}
+  >
+    <TabNavigator
+      navigation={{ navigate }}
+      state={state}
+    />
+  </ThemeProvider>
+);
+
 describe('Testing <TabNavigator />', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -24,16 +35,7 @@ describe('Testing <TabNavigator />', () => {
 
   describe('Testing the render', () => {
     it('should render correctly', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigator
-            navigation={{ navigate: jest.fn() }}
-            state={state}
-          />
-        </ThemeProvider>,
-      );
+      const { queryByTestId } = render(renderTabNavigator());
 
       expect(queryByTestId('tab-wrapper')).not.toBeNull();
 
@@ -45,16 +47,7 @@ describe('Testing <TabNavigator />', () => {
 
   describe('Testing the children state provided by state prop', () => {
     it('should render children correctly', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigator
-            navigation={{ navigate: jest.fn() }}
-            state={state}
-          />
-        </ThemeProvider>,
-      );
+      const { queryByTestId } = render(renderTabNavigator());
 
       expect(queryByTestId('tab-wrapper').props.children[index].props.isSelected).toBe(
         true,
@@ -72,16 +65,7 @@ describe('Testing <TabNavigator />', () => {
     it('should call the navigation() when is pressed', () => {
       const navigate = jest.fn();
 
-      const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigator
-            navigation={{ navigate }}
-            state={state}
-          />
-        </ThemeProvider>,
-      );
+      const { queryByTestId } = render(renderTabNavigator(navigate));
 
       fireEvent.press(queryByTestId('tab-wrapper').props.children[index]);
 

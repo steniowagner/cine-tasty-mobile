@@ -29,17 +29,17 @@ describe('Testing <NewsListItemImage />', () => {
   afterEach(cleanup);
 
   it('should render the loading layout when is mounted', () => {
-    const { getByTestId, getAllByType } = render(renderNewsListItemImage());
+    const { getByTestId } = render(renderNewsListItemImage());
 
     expect(getByTestId('news-image')).not.toBeNull();
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 
-    expect(getAllByType(Icon)[0].props.name).toBe('image');
+    expect(getByTestId('icon').props.name).toBe('image');
   });
 
   it('should render only the image after the image be loaded', () => {
-    const { getByTestId, getAllByType } = render(renderNewsListItemImage());
+    const { getByTestId } = render(renderNewsListItemImage());
 
     act(() => {
       jest.runAllTimers();
@@ -56,19 +56,19 @@ describe('Testing <NewsListItemImage />', () => {
     }
 
     try {
-      expect(getAllByType(Icon));
+      expect(getByTestId('icon'));
     } catch (err) {
       expect(err.message).toEqual('No instances found');
     }
   });
 
   it("should render the error layout when there's some error when try to load the image", () => {
-    const { getByTestId, getAllByType } = render(renderNewsListItemImage());
+    const { getByTestId } = render(renderNewsListItemImage());
 
     fireEvent(getByTestId('news-image'), 'onError');
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 
-    expect(getAllByType(Icon)[0].props.name).toBe('image-off');
+    expect(getByTestId('icon').props.name).toBe('image-off');
   });
 });

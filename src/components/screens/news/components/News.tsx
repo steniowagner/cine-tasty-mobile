@@ -144,7 +144,7 @@ const News = ({ navigation, theme }: Props) => {
       </ErrorWrapper>
     );
   }
-  console.log('articles: ', articles);
+
   return (
     <Wrapper
       testID="news-content-wrapper"

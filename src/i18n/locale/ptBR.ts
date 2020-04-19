@@ -33,7 +33,7 @@ const ptBR: Locale = {
   language: {
     english: 'English',
     arabic: 'Arabic',
-    chinese: 'Chinese',
+    mandarim: 'Mandarim',
     dutch: 'Dutch',
     french: 'French',
     german: 'German',

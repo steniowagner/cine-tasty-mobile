@@ -41,17 +41,21 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
+const renderDateDiff = (now: Date, date: string) => (
+  <ThemeProvider
+    theme={dark}
+  >
+    <DateDiff
+      date={date}
+      now={now}
+    />
+  </ThemeProvider>
+);
+
 describe('Testing <DateDiff />', () => {
   it('shoud render correctly when the dates diff by years', () => {
     const { getByText } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <DateDiff
-          now={new Date('2019-04-20T20:33:37Z')}
-          date="2017-03-13T19:33:37Z"
-        />
-      </ThemeProvider>,
+      renderDateDiff(new Date('2019-04-20T20:33:37Z'), '2017-03-13T19:33:37Z'),
     );
 
     expect(getByText('2yr ago')).not.toBeNull();
@@ -59,14 +63,7 @@ describe('Testing <DateDiff />', () => {
 
   it('shoud render correctly when the dates diff by months', () => {
     const { getByText } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <DateDiff
-          now={new Date('2019-04-20T20:33:37Z')}
-          date="2019-03-13T19:33:37Z"
-        />
-      </ThemeProvider>,
+      renderDateDiff(new Date('2019-04-20T20:33:37Z'), '2019-03-13T19:33:37Z'),
     );
 
     expect(getByText('1mth ago')).not.toBeNull();
@@ -74,14 +71,7 @@ describe('Testing <DateDiff />', () => {
 
   it('shoud render correctly when the dates diff by days', () => {
     const { getByText } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <DateDiff
-          now={new Date('2019-03-20T20:33:37Z')}
-          date="2019-03-13T19:33:37Z"
-        />
-      </ThemeProvider>,
+      renderDateDiff(new Date('2019-03-20T20:33:37Z'), '2019-03-13T19:33:37Z'),
     );
 
     expect(getByText('7d ago')).not.toBeNull();
@@ -89,14 +79,7 @@ describe('Testing <DateDiff />', () => {
 
   it('shoud render correctly when the dates diff by hours', () => {
     const { getByText } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <DateDiff
-          now={new Date('2019-03-13T20:33:37Z')}
-          date="2019-03-13T19:33:37Z"
-        />
-      </ThemeProvider>,
+      renderDateDiff(new Date('2019-03-13T20:33:37Z'), '2019-03-13T19:33:37Z'),
     );
 
     expect(getByText('1h ago')).not.toBeNull();
@@ -104,14 +87,7 @@ describe('Testing <DateDiff />', () => {
 
   it('shoud render correctly when the dates diff by minutes', () => {
     const { getByText } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <DateDiff
-          now={new Date('2019-03-13T19:55:00Z')}
-          date="2019-03-13T19:33:37Z"
-        />
-      </ThemeProvider>,
+      renderDateDiff(new Date('2019-03-13T19:55:00Z'), '2019-03-13T19:33:37Z'),
     );
 
     expect(getByText('21min ago')).not.toBeNull();
@@ -119,14 +95,7 @@ describe('Testing <DateDiff />', () => {
 
   it('shoud render correctly when the dates diff by seconds', () => {
     const { getByText } = render(
-      <ThemeProvider
-        theme={dark}
-      >
-        <DateDiff
-          now={new Date('2019-03-13T19:55:37Z')}
-          date="2019-03-13T19:55:30Z"
-        />
-      </ThemeProvider>,
+      renderDateDiff(new Date('2019-03-13T19:55:37Z'), '2019-03-13T19:55:30Z'),
     );
 
     expect(getByText('7s ago')).not.toBeNull();
