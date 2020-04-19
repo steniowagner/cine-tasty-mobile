@@ -11,6 +11,21 @@ const item = {
   inactiveIcon: 'home-variant-outline',
 };
 
+const renderTabNavigatorItem = (isSelected: boolean, onPress = jest.fn()) => (
+  <ThemeProvider
+    theme={dark}
+  >
+    <TabNavigatorItem
+      inactiveIcon={item.inactiveIcon}
+      activeIcon={item.activeIcon}
+      isSelected={isSelected}
+      onPress={onPress}
+      title="ItemTitle"
+      width={12}
+    />
+  </ThemeProvider>
+);
+
 describe('Testing <TabNavigatorItem />', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -18,20 +33,7 @@ describe('Testing <TabNavigatorItem />', () => {
 
   describe('Testing the render', () => {
     it('should renders correctly', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigatorItem
-            inactiveIcon={item.inactiveIcon}
-            activeIcon={item.activeIcon}
-            onPress={jest.fn()}
-            title="ItemTitle"
-            width={12}
-            isSelected
-          />
-        </ThemeProvider>,
-      );
+      const { queryByTestId } = render(renderTabNavigatorItem(true));
 
       expect(queryByTestId('button-wrapper')).not.toBeNull();
 
@@ -43,20 +45,7 @@ describe('Testing <TabNavigatorItem />', () => {
 
   describe('Testing the render with the selection-state', () => {
     it('should renders correctly when the item is selected', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigatorItem
-            inactiveIcon={item.inactiveIcon}
-            activeIcon={item.activeIcon}
-            onPress={jest.fn()}
-            title="ItemTitle"
-            width={12}
-            isSelected
-          />
-        </ThemeProvider>,
-      );
+      const { queryByTestId } = render(renderTabNavigatorItem(true));
 
       expect(queryByTestId('button-wrapper')).not.toBeNull();
 
@@ -68,20 +57,7 @@ describe('Testing <TabNavigatorItem />', () => {
     });
 
     it("should renders correctly when the item isn't selected", () => {
-      const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigatorItem
-            inactiveIcon={item.inactiveIcon}
-            activeIcon={item.activeIcon}
-            onPress={jest.fn()}
-            isSelected={false}
-            title="ItemTitle"
-            width={12}
-          />
-        </ThemeProvider>,
-      );
+      const { queryByTestId } = render(renderTabNavigatorItem(false));
 
       expect(queryByTestId('button-wrapper')).not.toBeNull();
 
@@ -97,20 +73,7 @@ describe('Testing <TabNavigatorItem />', () => {
     it('should call the onPress() action when is pressed', () => {
       const onPress = jest.fn();
 
-      const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigatorItem
-            inactiveIcon={item.inactiveIcon}
-            activeIcon={item.activeIcon}
-            title="ItemTitle"
-            onPress={onPress}
-            width={12}
-            isSelected
-          />
-        </ThemeProvider>,
-      );
+      const { queryByTestId } = render(renderTabNavigatorItem(true, onPress));
 
       fireEvent.press(queryByTestId('button-wrapper'));
 

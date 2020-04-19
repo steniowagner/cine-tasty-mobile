@@ -28,20 +28,20 @@ describe('Testing <LangugeListItem />', () => {
   });
 
   it('should render correctly when is selected', () => {
-    const { getAllByType, getByTestId } = render(renderLanguageFilter(true));
+    const { getAllByTestId, getByTestId } = render(renderLanguageFilter(true));
 
-    expect(getAllByType(Icon)).not.toBeNull();
+    expect(getAllByTestId('icon')).not.toBeNull();
 
     expect(getByTestId('outter-flag-wrapper').props.isSelected).toBe(true);
   });
 
   it('should render correctly when is not selected', () => {
-    const { getAllByType, getByTestId } = render(renderLanguageFilter(false));
+    const { getAllByTestId, getByTestId } = render(renderLanguageFilter(false));
 
     try {
-      expect(getAllByType(Icon));
+      expect(getAllByTestId('icon'));
     } catch (err) {
-      expect(err.message).toEqual('No instances found');
+      expect(err.message).toEqual('No instances found with testID: icon');
     }
 
     expect(getByTestId('outter-flag-wrapper').props.isSelected).toBe(false);
@@ -50,9 +50,9 @@ describe('Testing <LangugeListItem />', () => {
   it('should call onPress when is pressed', () => {
     const onPress = jest.fn();
 
-    const { getAllByType } = render(renderLanguageFilter(false, onPress));
+    const { getAllByTestId } = render(renderLanguageFilter(false, onPress));
 
-    fireEvent.press(getAllByType(LanguageListItem)[0]);
+    fireEvent.press(getAllByTestId('language-filter-list-item')[0]);
 
     expect(onPress).toHaveBeenCalledTimes(1);
   });

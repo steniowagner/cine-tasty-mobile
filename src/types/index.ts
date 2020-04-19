@@ -24,7 +24,7 @@ export type TabNavigatorItem = {
 export type NewsFilterLanguage =
   | 'english'
   | 'arabic'
-  | 'chinese'
+  | 'mandarim'
   | 'dutch'
   | 'french'
   | 'german'

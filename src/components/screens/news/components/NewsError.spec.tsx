@@ -48,24 +48,4 @@ describe('Testing the Error state of <News />', () => {
 
     expect(queryByTestId('advise-wrapper')).not.toBeNull();
   });
-
-  /*
-    const { queryByTestId } = render(
-      <AuthoMockedErrorProvider
-        errors={[new GraphQLError(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)]}
-      >
-        <ThemeProvider
-          theme={dark}
-        >
-          <News
-            navigation={navigation}
-          />
-        </ThemeProvider>
-      </AuthoMockedErrorProvider>,
-    );
-
-    act(() => {
-      jest.runAllTimers();
-    });
-  */
 });

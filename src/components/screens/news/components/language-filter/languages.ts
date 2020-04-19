@@ -34,7 +34,7 @@ const langauges: Language[] = [
   },
   {
     Flag: China,
-    name: 'chinese',
+    name: 'mandarim',
     id: ArticleLanguage.ZH,
   },
   {
