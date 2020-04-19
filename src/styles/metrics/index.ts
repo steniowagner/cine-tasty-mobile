@@ -4,6 +4,7 @@ const { width, height } = Dimensions.get('window');
 
 const getWidthFromDP = (widthPercentage: string): number => {
   const percentageDesired = parseFloat(widthPercentage);
+
   const widthPercentageToDP = PixelRatio.roundToNearestPixel(
     (width * percentageDesired) / 100,
   );
@@ -13,6 +14,7 @@ const getWidthFromDP = (widthPercentage: string): number => {
 
 const getHeightFromDP = (heightPercentage: string): number => {
   const percentageDesired = parseFloat(heightPercentage);
+
   const heightPercentageToDP = PixelRatio.roundToNearestPixel(
     (height * percentageDesired) / 100,
   );

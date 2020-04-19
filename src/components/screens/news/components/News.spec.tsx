@@ -75,4 +75,21 @@ describe('Testing <News />', () => {
       queryByTestId('news-list').props.initialNumToRender,
     );
   });
+
+  it('should show empty-list state when the query returns an empty array of articles', () => {
+    const mockResolvers = {
+      ArticleQueryResult: () => ({
+        items: () => new MockList(0),
+        hasMore: false,
+      }),
+    };
+
+    const { queryByTestId } = render(renderNews(mockResolvers));
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(queryByTestId('list-empty-component-wrapper')).not.toBeNull();
+  });
 });

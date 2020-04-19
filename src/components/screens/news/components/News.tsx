@@ -40,6 +40,12 @@ const ErrorWrapper = styled(View)`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
+const ListEmptyComponentWrapper = styled(View)`
+  width: 100%;
+  height: 100%;
+  padding-top: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
+`;
+
 const FilterIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('7%'),
   color: theme.colors.background,
@@ -167,15 +173,29 @@ const News = ({ navigation, theme }: Props) => {
             url={item.url}
           />
         )}
-        refreshControl={(
-          <RefreshControl
-            progressBackgroundColor={theme.colors.text}
-            refreshing={isRefreshing && !articles}
-            colors={[theme.colors.background]}
-            onRefresh={onRefreshArticles}
-            tintColor={theme.colors.text}
-          />
+        ListEmptyComponent={() => (
+          <ListEmptyComponentWrapper
+            testID="list-empty-component-wrapper"
+          >
+            <Advise
+              description={t('translations:news:emptyList:description')}
+              suggestion={t('translations:news:emptyList:suggestion')}
+              title={t('translations:news:emptyList:title')}
+              icon="alert-box"
+            />
+          </ListEmptyComponentWrapper>
         )}
+        refreshControl={
+          articles.length && (
+            <RefreshControl
+              progressBackgroundColor={theme.colors.text}
+              refreshing={isRefreshing && !articles}
+              colors={[theme.colors.background]}
+              onRefresh={onRefreshArticles}
+              tintColor={theme.colors.text}
+            />
+          )
+        }
         keyExtractor={(item, index) => `${item.id}${index}`}
         initialNumToRender={INITIAL_ITEMS_TO_RENDER + 1}
         onEndReachedThreshold={Platform.select({
@@ -187,6 +207,7 @@ const News = ({ navigation, theme }: Props) => {
           length: ITEM_HEIGHT,
           index,
         })}
+        bounces={!!articles.length}
         onEndReached={onEndReached}
         testID="news-list"
         data={articles}

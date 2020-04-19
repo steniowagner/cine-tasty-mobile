@@ -26,7 +26,11 @@ type ErrorDescription = {
 
 export interface Locale {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
-  language: Record<NewsFilterLanguage, string>;
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;
+  news: {
+    emptyList: Record<keyof ErrorDescription, string>;
+    languages: Record<NewsFilterLanguage, string>;
+    filterMessage: string;
+  };
 }

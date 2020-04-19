@@ -158,13 +158,13 @@ const LanguageFilter = ({
                 <Grip />
               </GripWrapper>
               <ListHeaderWrapper>
-                <HeadLineText>{t('translations:newsFilterChooseLanguage')}</HeadLineText>
+                <HeadLineText>{t('translations:news:filterMessage')}</HeadLineText>
                 <LineDivider />
               </ListHeaderWrapper>
               <FlatList
                 renderItem={({ item }) => (
                   <LanguageListItem
-                    name={t(`translations:language:${item.name}`)}
+                    name={t(`translations:news:languages:${item.name}`)}
                     isSelected={languageSelected === item.id}
                     onPress={() => {
                       setLanguageSelected(item.id);
