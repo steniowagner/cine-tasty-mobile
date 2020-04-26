@@ -4,16 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { ApolloError } from 'apollo-client';
 import gql from 'graphql-tag';
 
-import useFetchFromFirstPage from './useFetchFromFirstPage';
-import usePaginateArticles from './usePaginateArticles';
-import useRefreshArticles from './useRefreshArticles';
-
 import {
   GetArticles_articles_items as Article,
   GetArticlesVariables,
   ArticleLanguage,
   GetArticles,
-} from '../../../../../types/schema';
+} from 'types/schema';
+
+import useFetchFromFirstPage from './useFetchFromFirstPage';
+import usePaginateArticles from './usePaginateArticles';
+import useRefreshArticles from './useRefreshArticles';
 
 export const GET_ARTICLES = gql`
   query GetArticles($page: Int!, $language: ArticleLanguage!) {

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Animated, Image, View } from 'react-native';
 import styled from 'styled-components';
 
+import Icon from 'components/common/Icon';
 import { imageWrapper } from '../common-styles';
-import Icon from '../../../../../common/Icon';
 
 const ImageContent = styled(Image)`
   width: ${imageWrapper.width}px;
@@ -32,7 +32,7 @@ type Props = {
 
 const NewsListItemImage = ({ image }: Props) => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState<boolean>(true);
-  const [isImageWithError, setIsImageWithError] = useState<boolean>();
+  const [isImageWithError, setIsImageWithError] = useState<boolean>(false);
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
 
   const fallbackImageWrapperOpacity = useRef(new Animated.Value(1)).current;
@@ -47,12 +47,18 @@ const NewsListItemImage = ({ image }: Props) => {
     }
   }, [isImageLoaded]);
 
+  useEffect(() => {
+    if (!image) {
+      setIsImageWithError(true);
+    }
+  }, []);
+
   return (
     <View>
       <ImageContent
         onError={() => setIsImageWithError(true)}
         onLoad={() => setIsImageLoaded(true)}
-        source={{ uri: image }}
+        source={{ uri: image || undefined }}
         testID="news-image"
       />
       {isFallbackImageVisible && (

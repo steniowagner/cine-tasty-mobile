@@ -1,3 +1,6 @@
+import { ArticleLanguage } from 'types/schema';
+import { NewsFilterLanguage } from 'types';
+
 import SaudiArabia from './flags/SaudiArabia';
 import Nederlands from './flags/Nederlands';
 import Portugal from './flags/Portugal';
@@ -11,9 +14,6 @@ import Italy from './flags/Italy';
 import China from './flags/China';
 import Spain from './flags/Spain';
 import UK from './flags/UK';
-
-import { ArticleLanguage } from '../../../../../types/schema';
-import { NewsFilterLanguage } from '../../../../../types';
 
 type Language = {
   name: NewsFilterLanguage;

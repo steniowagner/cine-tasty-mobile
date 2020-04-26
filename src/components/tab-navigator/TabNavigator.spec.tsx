@@ -2,7 +2,8 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { fireEvent, render } from 'react-native-testing-library';
 
-import { dark } from '../../styles/themes';
+import { dark } from 'styles/themes';
+
 import TabNavigator from './TabNavigator';
 import items from './items';
 

@@ -1,8 +1,8 @@
 import React, { createContext } from 'react';
 import { ThemeProvider } from 'styled-components';
 
+import { ThemeID } from 'types';
 import useThemeContextProvider from './useThemeContextProvider';
-import { ThemeID } from '../../types';
 
 type ThemeContextProps = {
   onToggleTheme: () => void;

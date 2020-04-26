@@ -1,7 +1,8 @@
 import React from 'react';
 
-import ShimmerPlaceHolder from '../../../../common/ShimmerPlaceholder';
-import Metrics from '../../../../../styles/metrics';
+import ShimmerPlaceHolder from 'components/common/ShimmerPlaceholder';
+import Metrics from 'styles/metrics';
+
 import {
   TextWrapper as TextPlaceholderWrapper,
   imageWrapper,

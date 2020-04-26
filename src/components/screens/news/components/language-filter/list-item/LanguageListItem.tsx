@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import styled from 'styled-components';
 
-import metrics from '../../../../../../styles/metrics';
-import Icon from '../../../../../common/Icon';
+import Icon from 'components/common/Icon';
+import metrics from 'styles/metrics';
 
 interface SelectedItemStyleProps {
   readonly isSelected: boolean;

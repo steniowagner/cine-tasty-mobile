@@ -5,10 +5,11 @@ import { DefaultTheme } from 'styled-components';
 import {
   getItemFromStorage,
   persistItemInStorage,
-} from '../../utils/async-storage-adapter/AsyncStorageAdapter';
+} from 'utils/async-storage-adapter/AsyncStorageAdapter';
+import CONSTANTS from 'utils/constants';
+import { ThemeID } from 'types';
+
 import { dark as darkTheme, light as lightTheme } from '../themes';
-import CONSTANTS from '../../utils/constants';
-import { ThemeID } from '../../types';
 
 interface ThemeContextProviderState {
   onToggleTheme: () => void;

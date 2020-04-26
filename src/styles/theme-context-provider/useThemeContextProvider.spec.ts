@@ -1,17 +1,18 @@
 import { renderHook, cleanup, act } from '@testing-library/react-hooks';
 
-import useThemeContextProvider from './useThemeContextProvider';
-import CONSTANTS from '../../utils/constants';
-import { ThemeID } from '../../types';
+import CONSTANTS from 'utils/constants';
+import { ThemeID } from 'types';
 
-jest.mock('../../utils/async-storage-adapter/AsyncStorageAdapter');
+import useThemeContextProvider from './useThemeContextProvider';
+
+jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
 
 jest.useFakeTimers();
 
 const {
   getItemFromStorage,
   persistItemInStorage,
-} = require('../../utils/async-storage-adapter/AsyncStorageAdapter');
+} = require('utils/async-storage-adapter/AsyncStorageAdapter');
 
 describe('Testing useThemeContextProvider hook', () => {
   beforeEach(() => {

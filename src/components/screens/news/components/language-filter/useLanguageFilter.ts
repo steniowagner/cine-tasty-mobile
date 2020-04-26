@@ -8,7 +8,8 @@ import {
   State,
 } from 'react-native-gesture-handler';
 
-import { ArticleLanguage } from '../../../../../types/schema';
+import { ArticleLanguage } from 'types/schema';
+
 import languages from './languages';
 
 type Props = {

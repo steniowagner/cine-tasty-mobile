@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 
-import CONSTANTS from '../utils/constants';
+import CONSTANTS from 'utils/constants';
 
 describe('Testing the handleLanguageDetection()', () => {
   beforeEach(() => {

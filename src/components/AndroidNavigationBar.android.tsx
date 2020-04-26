@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { DefaultTheme, withTheme } from 'styled-components';
 
-import { ThemeID } from '../types';
+import { ThemeID } from 'types';
 
 type Props = {
   theme: DefaultTheme;

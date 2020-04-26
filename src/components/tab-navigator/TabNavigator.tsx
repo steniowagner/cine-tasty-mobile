@@ -4,9 +4,10 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import isEqualsOrLargestThanIphoneX from '../../utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
+import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
+import metrics from 'styles/metrics';
+
 import TabNavigatorItem from './TabNavigatorItem';
-import metrics from '../../styles/metrics';
 import items from './items';
 
 const Wrapper = styled(View)`

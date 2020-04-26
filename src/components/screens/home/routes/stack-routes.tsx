@@ -2,8 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
-import RouteSuspenseWrapper from '../../../common/RouteSuspenseWrapper';
-import { DEFAULT_HEADER_OPTIONS } from '../../../../routes/constants';
+import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
+import { DEFAULT_HEADER_OPTIONS } from 'routes/constants';
+
 import Discover from '../components/Home';
 import LOCAL_ROUTES from './route-names';
 
