@@ -8,7 +8,7 @@ import { SchemaLink } from 'apollo-link-schema';
 import { makeExecutableSchema, addMockFunctionsToSchema, IMocks } from 'graphql-tools';
 import { printSchema, buildClientSchema } from 'graphql/utilities';
 
-import introspectionResult from '../../../schema.json';
+import introspectionResult from '../schema.json';
 
 type Props = {
   mockResolvers?: IMocks;

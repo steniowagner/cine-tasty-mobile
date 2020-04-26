@@ -1,13 +1,13 @@
 /* eslint-disable global-require */
-/* eslint-disable import/first */
 import React from 'react';
 import { fireEvent, render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
-jest.useFakeTimers();
+import { dark } from 'styles/themes';
 
 import NewsListItem, { Props } from './NewsListItem';
-import { dark } from '../../../../../styles/themes';
+
+jest.useFakeTimers();
 
 const mockOnPressItem = jest.fn();
 

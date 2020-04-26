@@ -4,13 +4,14 @@ import { TouchableOpacity } from 'react-native';
 import { render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
+import { dark } from 'styles/themes';
+
 jest.mock('./hooks/useNews', () => () => ({
   error: new Error('Network error: Network request failed'),
   t: (value: string): string => value,
 }));
 
-import AutoMockProvider from '../../../../utils/mock-providers/AutoMockedProvider';
-import { dark } from '../../../../styles/themes';
+import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import News from './News';
 
 const navigation = {

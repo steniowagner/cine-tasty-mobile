@@ -6,14 +6,24 @@
     "moduleResolution": "node",
     "noEmit": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "components": ["./components"],
+      "routes": ["./routes"],
+      "config": ["./config"],
+      "styles": ["./styles"],
+      "utils": ["./utils"],
+      "types": ["./types"],
+      "i18n": ["./i18n"],
+    },
   },
   "include": [
     "src/**/*",
-    "schema.json"
+    "schema.json", "__mocks__/AutoMockedProvider.tsx", "__mocks__/AuthoMockedErrorProvider.tsx"
   ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
-  ]
+  ],
 }

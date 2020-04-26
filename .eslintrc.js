@@ -13,6 +13,7 @@ module.exports = {
     },
   },
   rules: {
+    'import/no-unresolved': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     'react/jsx-max-props-per-line': [1, { maximum: 1, when: 'always' }],
     'import/prefer-default-export': 'off',

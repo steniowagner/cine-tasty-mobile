@@ -5,6 +5,6 @@ describe('App', () => {
 
   it('fake e2e test', async () => {
     await device.reloadReactNative();
-    await expect(element(by.id('news-content-wrapper'))).toBeVisible();
+    await expect(element(by.id('news-content-wrapper'))).toNotExist();
   });
 });

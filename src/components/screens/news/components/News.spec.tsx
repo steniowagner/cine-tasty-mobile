@@ -5,9 +5,10 @@ import { cleanup, render, act } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
-import AutoMockProvider from '../../../../utils/mock-providers/AutoMockedProvider';
+import { dark } from 'styles/themes';
+
+import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import News, { INITIAL_ITEMS_TO_RENDER } from './News';
-import { dark } from '../../../../styles/themes';
 
 const navigation = {
   setOptions: () => ({

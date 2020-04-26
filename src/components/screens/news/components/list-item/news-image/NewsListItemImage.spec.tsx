@@ -5,18 +5,18 @@ import {
 } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
+import { dark } from 'styles/themes';
+
+import NewsListItemImage from './NewsListItemImage';
+
 jest.useFakeTimers();
 
-import { dark } from '../../../../../../styles/themes';
-import NewsListItemImage from './NewsListItemImage';
-import Icon from '../../../../../common/Icon';
-
-const renderNewsListItemImage = () => (
+const renderNewsListItemImage = (imageURL = 'image') => (
   <ThemeProvider
     theme={dark}
   >
     <NewsListItemImage
-      image="image"
+      image={imageURL}
     />
   </ThemeProvider>
 );
@@ -66,6 +66,14 @@ describe('Testing <NewsListItemImage />', () => {
     const { getByTestId } = render(renderNewsListItemImage());
 
     fireEvent(getByTestId('news-image'), 'onError');
+
+    expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
+
+    expect(getByTestId('icon').props.name).toBe('image-off');
+  });
+
+  it('should render the error layout when the image URL is null', () => {
+    const { getByTestId } = render(renderNewsListItemImage(null));
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 

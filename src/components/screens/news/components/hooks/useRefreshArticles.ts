@@ -1,11 +1,8 @@
 import { useEffect } from 'react';
 import { DocumentNode } from 'graphql';
 
-import {
-  GetArticles_articles_items as Article,
-  ArticleLanguage,
-} from '../../../../../types/schema';
-import { FetchMoreArticles } from '../../../../../types';
+import { GetArticles_articles_items as Article, ArticleLanguage } from 'types/schema';
+import { FetchMoreArticles } from 'types';
 
 type LocalQueryState = {
   articles: Article[];

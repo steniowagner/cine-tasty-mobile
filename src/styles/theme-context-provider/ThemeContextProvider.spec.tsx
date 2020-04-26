@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { fireEvent, render, act } from 'react-native-testing-library';
 
+import { ThemeID } from 'types';
 import ThemeContext, { ThemeContextProvider } from './ThemeContextProvider';
-import { ThemeID } from '../../types';
 
-jest.mock('../../utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
 
 jest.useFakeTimers();
 

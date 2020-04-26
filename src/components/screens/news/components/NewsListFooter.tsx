@@ -1,6 +1,7 @@
 import React from 'react';
 
-import PaginationFooterLoading from '../../../common/PaginationFooterLoading';
+import PaginationFooterLoading from 'components/common/PaginationFooterLoading';
+
 import ReloadButton from './ReloadButton';
 
 type Props = {

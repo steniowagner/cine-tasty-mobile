@@ -1,9 +1,9 @@
-import { TabID as HomeTabID } from '../screens/home/routes/stack-routes';
-import { TabID as PeopleTabID } from '../screens/people/routes/stack-routes';
-import { TabID as QuizTabID } from '../screens/quiz/routes/stack-routes';
-import { TabID as NewsTabID } from '../screens/news/routes/stack-routes';
+import { TabID as HomeTabID } from 'components/screens/home/routes/stack-routes';
+import { TabID as PeopleTabID } from 'components/screens/people/routes/stack-routes';
+import { TabID as QuizTabID } from 'components/screens/quiz/routes/stack-routes';
+import { TabID as NewsTabID } from 'components/screens/news/routes/stack-routes';
 
-import { TabNavigatorItem } from '../../types';
+import { TabNavigatorItem } from 'types';
 
 const items: TabNavigatorItem[] = [
   {

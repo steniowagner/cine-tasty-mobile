@@ -1,4 +1,4 @@
-import metrics from '../styles/metrics';
+import metrics from 'styles/metrics';
 
 export const DEFAULT_HEADER_OPTIONS = {
   headerTitleStyle: {

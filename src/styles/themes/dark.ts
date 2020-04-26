@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components';
 
-import { ThemeID } from '../../types';
+import { ThemeID } from 'types';
 import metrics from '../metrics';
 
 const dark: DefaultTheme = {

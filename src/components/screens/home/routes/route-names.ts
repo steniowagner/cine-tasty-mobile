@@ -1,4 +1,4 @@
-import { LocalStackRoute } from '../../../../types';
+import { LocalStackRoute } from 'types';
 
 export type Routes = 'DISCOVER';
 

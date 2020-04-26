@@ -2,9 +2,9 @@ import React from 'react';
 import { fireEvent, cleanup, render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from '../../../../../../styles/themes';
+import { dark } from 'styles/themes';
+
 import LanguageListItem from './LanguageListItem';
-import Icon from '../../../../../common/Icon';
 import languages from '../languages';
 
 const renderLanguageFilter = (isSelected: boolean, onPress = jest.fn()) => (

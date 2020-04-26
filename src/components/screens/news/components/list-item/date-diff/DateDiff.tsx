@@ -9,16 +9,16 @@ const DefaultText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-type Props = {
-  date: string;
-  now: Date;
-};
-
 const ONE_MINUTE_IN_SECONDS = 60;
 const ONE_HOUR_IN_SECONDS = ONE_MINUTE_IN_SECONDS * 60;
 const ONE_DAY_IN_SECONDS = ONE_HOUR_IN_SECONDS * 24;
 const ONE_MONTH_IN_SECONDS = ONE_DAY_IN_SECONDS * 31;
 const ONE_YEAR_IN_SECONDS = ONE_MONTH_IN_SECONDS * 12;
+
+type Props = {
+  date: string;
+  now: Date;
+};
 
 const DateDiff = ({ now, date }: Props) => {
   const { t } = useTranslation();

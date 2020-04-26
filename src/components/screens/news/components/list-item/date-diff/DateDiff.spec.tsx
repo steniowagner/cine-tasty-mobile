@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from '../../../../../../styles/themes';
+import { dark } from 'styles/themes';
+
 import DateDiff from './DateDiff';
 
 type I18NextProps = {

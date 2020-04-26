@@ -1,4 +1,4 @@
-import { NewsFilterLanguage } from '../../types';
+import { NewsFilterLanguage } from 'types';
 
 type Time =
   | 'year'

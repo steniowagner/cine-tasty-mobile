@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { DEFAULT_HEADER_OPTIONS } from '../../../../routes/constants';
+import { DEFAULT_HEADER_OPTIONS } from 'routes/constants';
+
 import Settings from '../components/Settings';
 import LOCAL_ROUTES from './route-names';
 

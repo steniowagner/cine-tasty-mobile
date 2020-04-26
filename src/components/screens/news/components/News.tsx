@@ -6,18 +6,19 @@ import {
 } from 'react-native';
 import styled, { withTheme, DefaultTheme } from 'styled-components';
 
+import PopupAdvice from 'components/common/PopupAdvice';
+import Advise from 'components/common/advise/Advise';
+import { ArticleLanguage } from 'types/schema';
+import Icon from 'components/common/Icon';
+import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
+
 import NewsListItemPlaceholder from './list-item/NewsListItemPlaceholder';
 import LanguageFilter from './language-filter/LanguageFilter';
-import { ArticleLanguage } from '../../../../types/schema';
 import { imageWrapper } from './list-item/common-styles';
-import PopupAdvice from '../../../common/PopupAdvice';
 import NewsListItem from './list-item/NewsListItem';
-import CONSTANTS from '../../../../utils/constants';
-import Advise from '../../../common/advise/Advise';
-import metrics from '../../../../styles/metrics';
 import NewsListFooter from './NewsListFooter';
 import ReloadButton from './ReloadButton';
-import Icon from '../../../common/Icon';
 import useNews from './hooks/useNews';
 
 const Wrapper = styled(View)`
@@ -100,12 +101,13 @@ const News = ({ navigation, theme }: Props) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => !error && (
-      <FilterButton
-        onPress={() => !isLoading && setIsFilterLanguageModalOpen(true)}
-      >
-        <FilterIcon />
-      </FilterButton>
+      headerRight: () => !isLoading
+        && !error && (
+          <FilterButton
+            onPress={() => setIsFilterLanguageModalOpen(true)}
+          >
+            <FilterIcon />
+          </FilterButton>
       ),
     });
   }, [isLoading, error]);

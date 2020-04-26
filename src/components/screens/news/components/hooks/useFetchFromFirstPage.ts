@@ -6,7 +6,7 @@ import {
   GetArticlesVariables,
   ArticleLanguage,
   GetArticles,
-} from '../../../../../types/schema';
+} from 'types/schema';
 
 type State = {
   fetchFromFirstPage: () => Promise<void>;
