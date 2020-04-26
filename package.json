@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build-android": "cd android && ./gradlew assembleRelease && cd ..",
-    "e2e:ios": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release --cleanup",
+    "e2e:ios": "detox build --c ios.sim.release && detox test --c ios.sim.release",
     "android-release": "npx react-native run-android --variant=release",
     "ios-se": "npx react-native run-ios --simulator=\"iPhone SE\"",
     "start:clean": "npx react-native start --reset-cache",
@@ -109,12 +109,10 @@
     "test-runner": "jest",
     "configurations": {
       "ios.sim.release": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/CineTasty.app",
-        "build": "xcodebuild -workspace ios/CineTasty.xcworkspace -scheme CineTasty -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/CineTasty.app",
+        "build": "xcodebuild -workspace ios/CineTasty.xcworkspace -scheme CineTasty -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
-        "device": {
-          "type": "iPhone 11 Pro"
-        }
+        "name": "iPhone 8"
       }
     }
   }
