@@ -25,9 +25,9 @@ jobs:
         run: yarn install
       - name: Unit & Component Tests
         run: yarn test
-      - name: Install Pod Dependencies
-        run: cd ./ios && pod install && cd ..
-      - name: Detox Build
-        run: detox build --configuration ios.sim.release
-      - name: Detox Test
-        run: detox test --configuration ios.sim.release --cleanup
+      # - name: Install Pod Dependencies
+        # run: cd ./ios && pod install && cd ..
+      # - name: Detox Build
+        # run: detox build --configuration ios.sim.release
+      # - name: Detox Test
+        # run: detox test --configuration ios.sim.release --cleanup
