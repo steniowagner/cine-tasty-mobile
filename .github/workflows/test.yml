@@ -1,8 +1,6 @@
 name: CI
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -15,19 +13,8 @@ jobs:
       - name: Set up Node
         run: |
           npm install -g react-native-cli
-          npm install -g detox-cli
           npm install -g yarn
-      - name: Install Detox
-        run: |
-          brew tap wix/brew
-          brew install applesimutils
       - name: Install Yarn Dependencies
         run: yarn install
       - name: Unit & Component Tests
         run: yarn test
-      # - name: Install Pod Dependencies
-        # run: cd ./ios && pod install && cd ..
-      # - name: Detox Build
-        # run: detox build --configuration ios.sim.release
-      # - name: Detox Test
-        # run: detox test --configuration ios.sim.release --cleanup
