@@ -1,9 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import RoundedButton from 'components/common/RoundedButton';
+
+import { QuizStackParams } from '../routes/route-types';
+import LOCAL_ROUTES from '../routes/route-names';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -29,7 +33,13 @@ const SubText = styled(Text)`
   text-align: center;
 `;
 
-const Quiz = () => {
+type QuizScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUIZ'>;
+
+type Props = {
+  navigation: QuizScreenNavigationProp;
+};
+
+const Quiz = ({ navigation }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -38,7 +48,7 @@ const Quiz = () => {
       <SubText>{t('translations:quiz:decription')}</SubText>
       <LargeText>{t('translations:quiz:challenge')}</LargeText>
       <RoundedButton
-        onPress={() => {}}
+        onPress={() => navigation.navigate(LOCAL_ROUTES.SETUP_QUESTIONS.id)}
         text={t('translations:quiz:startButtonText')}
       />
     </Wrapper>

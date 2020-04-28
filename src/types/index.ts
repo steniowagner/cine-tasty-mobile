@@ -11,8 +11,8 @@ export enum ThemeID {
   LIGHT = 'LIGHT',
 }
 
-export type LocalStackRoute = {
-  id: string;
+export type LocalStackRoute<T> = {
+  id: T;
 };
 
 export type TabNavigatorItem = {
