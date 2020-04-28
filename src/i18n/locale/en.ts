@@ -53,6 +53,13 @@ const en: Locale = {
     },
     filterMessage: 'Choose a language to filter the News',
   },
+  quiz: {
+    welcome: 'Welcome to the Cine-Tasty Quiz!',
+    decription:
+      'Want to test your knowledge about the world of cinema?\n\nYou can choose the type (true/false or multi-choice) and how many questions you want to answer.',
+    challenge: 'Can you score 100%?',
+    startButtonText: 'CHOOSE QUESTIONS',
+  },
 };
 
 export default en;
