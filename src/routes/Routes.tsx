@@ -21,14 +21,14 @@ import NewsStack, {
   TabID as NewsTabID,
 } from 'components/screens/news/routes/stack-routes';
 
-import TabNavigator from 'components/common/tab-navigator/TabNavigator';
+import TabNavigator from 'components/utils/tab-navigator/TabNavigator';
 
 const Tab = createBottomTabNavigator();
 
 const Routes = () => (
   <NavigationContainer>
     <Tab.Navigator
-      initialRouteName={NewsTabID}
+      initialRouteName={QuizTabID}
       tabBar={(props: BottomTabBarProps) => (
         <TabNavigator
           // eslint-disable-next-line react/jsx-props-no-spreading

@@ -53,6 +53,12 @@ const ptBR: Locale = {
     },
     filterMessage: 'Choose a language to filter the News',
   },
+  quiz: {
+    welcome: 'welcome',
+    decription: 'decription',
+    challenge: 'challenge',
+    startButtonText: 'startButtonText',
+  },
 };
 
 export default ptBR;

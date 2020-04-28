@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { ThemeContextProvider } from './styles/theme-context-provider/ThemeContextProvider';
-import AndroidNavigationBar from './components/AndroidNavigationBar.android';
+import AndroidNavigationBar from './components/utils/AndroidNavigationBar.android';
 import Navigation from './routes/Routes';
 import makeClient from './config/client';
 

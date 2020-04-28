@@ -33,4 +33,10 @@ export interface Locale {
     languages: Record<NewsFilterLanguage, string>;
     filterMessage: string;
   };
+  quiz: {
+    startButtonText: string;
+    decription: string;
+    challenge: string;
+    welcome: string;
+  };
 }
