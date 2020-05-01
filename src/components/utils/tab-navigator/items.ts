@@ -1,4 +1,4 @@
-import { TabID as HomeTabID } from 'components/screens/home/routes/stack-routes';
+import { TabID as HomeTabID } from 'components/screens/discover/routes/stack-routes';
 import { TabID as PeopleTabID } from 'components/screens/people/routes/stack-routes';
 import { TabID as QuizTabID } from 'components/screens/quiz/routes/stack-routes';
 import { TabID as NewsTabID } from 'components/screens/news/routes/stack-routes';

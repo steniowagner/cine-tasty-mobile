@@ -8,8 +8,9 @@ const light: DefaultTheme = {
   colors: {
     primary: '#FFD700',
     lightPrimary: 'rgba(70, 117, 248, 0.5)',
-    secondary: '#FFF',
-    background: '#F2F2F2',
+    secondary: '#FFFFFF',
+    background: '#EBEBEB',
+    contrast: '#4d4d4d',
     text: 'rgba(0, 0, 0, 0.8)',
     subText: 'rgba(0, 0, 0, 0.4)',
     androidToolbar: '#F2F2F2',

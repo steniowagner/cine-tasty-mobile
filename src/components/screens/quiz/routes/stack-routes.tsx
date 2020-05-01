@@ -1,9 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
+import { DefaultTheme, withTheme } from 'styled-components';
 
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
-import { DEFAULT_HEADER_OPTIONS } from 'routes/constants';
+import { getDefaultHeaderOptions } from 'routes/constants';
 
 import SetupQuestions from '../components/setup-questions/SetupQuestions';
 import LOCAL_ROUTES from './route-names';
@@ -11,7 +12,9 @@ import Quiz from '../components/Quiz';
 
 const Stack = createStackNavigator();
 
-const QuizStack = () => {
+type Props = { theme: DefaultTheme };
+
+const QuizStack = ({ theme }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -25,7 +28,7 @@ const QuizStack = () => {
       />
       <Stack.Screen
         options={{
-          ...DEFAULT_HEADER_OPTIONS,
+          ...getDefaultHeaderOptions(theme),
           headerTitle: t('translations:tabs:quiz'),
         }}
         name={LOCAL_ROUTES.SETUP_QUESTIONS.id}
@@ -46,4 +49,4 @@ const Wrapper = (props: any) => (
 
 export const TabID = LOCAL_ROUTES.QUIZ.id;
 
-export default Wrapper;
+export default withTheme(Wrapper);

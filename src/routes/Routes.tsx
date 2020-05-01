@@ -7,7 +7,7 @@ import {
 
 import DiscoverStack, {
   TabID as DiscoverTabID,
-} from 'components/screens/home/routes/stack-routes';
+} from 'components/screens/discover/routes/stack-routes';
 
 import PeopleStack, {
   TabID as PeopleTabID,

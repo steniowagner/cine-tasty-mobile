@@ -1,8 +1,8 @@
 import { LocalStackRoute } from 'types';
 
-type Routes = 'NEWS';
+export type Routes = 'NEWS';
 
-const LOCAL_ROUTES: Record<Routes, LocalStackRoute> = {
+const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   NEWS: {
     id: 'NEWS',
   },

@@ -40,3 +40,5 @@ export type FetchMoreArticles = <K extends keyof GetArticlesVariables>(
   options: FetchMoreQueryOptions<GetArticlesVariables, K> &
     FetchMoreOptions<GetArticles, GetArticlesVariables>,
 ) => Promise<ApolloQueryResult<GetArticles>>;
+
+export type QuizOption = 'DIFFICULTY' | 'CATEGORY' | 'TYPE';
