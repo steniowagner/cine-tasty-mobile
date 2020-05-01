@@ -16,6 +16,18 @@ const index = 0;
 const state = {
   routeNames,
   index,
+  routes: [
+    {
+      state: {
+        routes: [
+          {
+            name: '',
+          },
+        ],
+        index: 0,
+      },
+    },
+  ],
 };
 
 describe('Testing <TabNavigator />', () => {
@@ -41,6 +53,35 @@ describe('Testing <TabNavigator />', () => {
       expect(Array.isArray(queryByTestId('tab-wrapper').props.children)).toBe(true);
 
       expect(queryByTestId('tab-wrapper').props.children.length).toBe(items.length);
+    });
+
+    it('should return null when the current screen is on the blacklist', () => {
+      const { queryByTestId } = render(
+        <ThemeProvider
+          theme={dark}
+        >
+          <TabNavigator
+            navigation={{ navigate: jest.fn() }}
+            state={{
+              routeNames,
+              index,
+              routes: [
+                {
+                  state: {
+                    routes: [
+                      {
+                        name: '',
+                      },
+                    ],
+                  },
+                },
+              ],
+            }}
+          />
+        </ThemeProvider>,
+      );
+
+      expect(queryByTestId('tab-wrapper')).toBeNull();
     });
   });
 

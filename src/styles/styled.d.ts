@@ -22,6 +22,7 @@ declare module 'styled-components' {
       lightPrimary: string;
       popup: string;
       secondary: string;
+      contrast: string;
       background: string;
       text: string;
       subText: string;

@@ -1,23 +1,26 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { DefaultTheme, withTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
-import { DEFAULT_HEADER_OPTIONS } from 'routes/constants';
+import { getDefaultHeaderOptions } from 'routes/constants';
 
 import LOCAL_ROUTES from './route-names';
 import News from '../components/News';
 
 const Stack = createStackNavigator();
 
-const NewsStack = () => {
+type Props = { theme: DefaultTheme };
+
+const NewsStack = ({ theme }: Props) => {
   const { t } = useTranslation();
 
   return (
     <Stack.Navigator>
       <Stack.Screen
         options={{
-          ...DEFAULT_HEADER_OPTIONS,
+          ...getDefaultHeaderOptions(theme),
           headerTitle: t('translations:tabs:news'),
         }}
         name={LOCAL_ROUTES.NEWS.id}
@@ -38,4 +41,4 @@ const Wrapper = (props: any) => (
 
 export const TabID = LOCAL_ROUTES.NEWS.id;
 
-export default Wrapper;
+export default withTheme(Wrapper);

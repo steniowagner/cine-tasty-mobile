@@ -49,7 +49,7 @@ const ListEmptyComponentWrapper = styled(View)`
 
 const FilterIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('7%'),
-  color: theme.colors.background,
+  color: theme.colors.text,
   name: 'tune',
 }))``;
 
