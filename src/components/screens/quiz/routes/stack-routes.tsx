@@ -7,6 +7,7 @@ import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 import { getDefaultHeaderOptions } from 'routes/constants';
 
 import SetupQuestions from '../components/setup-questions/SetupQuestions';
+import Questions from '../components/questions/Questions';
 import LOCAL_ROUTES from './route-names';
 import Quiz from '../components/Quiz';
 
@@ -25,6 +26,10 @@ const QuizStack = ({ theme }: Props) => {
         }}
         name={LOCAL_ROUTES.QUIZ.id}
         component={Quiz}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.QUESTIONS.id}
+        component={Questions}
       />
       <Stack.Screen
         options={{

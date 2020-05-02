@@ -56,9 +56,18 @@ const en: Locale = {
   quiz: {
     welcome: 'Welcome to the Cine-Tasty Quiz!',
     decription:
-      'Want to test your knowledge about the world of cinema?\n\nYou can choose the type (true/false or multi-choice) and how many questions you want to answer.',
+      'Want to test your knowledge about the world of cinema?\n\nYou can choose the type (true/false or multi-choice), category (Movies or Tv) and how many questions you want to answer.',
     challenge: 'Can you score 100%?',
-    startButtonText: 'CHOOSE QUESTIONS',
+    chooseQuestions: 'CHOOSE QUESTIONS',
+    startButton: 'START QUIZ',
+    difficulty: 'Difficulty',
+    category: 'Category',
+    type: 'Type',
+    numberOfQuestions: 'Number of Questions',
+    setDifficulty: 'Difficulty of the questions',
+    setCategory: 'Category of the questions',
+    setType: 'Type of questions',
+    modalSelectText: 'selectionar',
   },
 };
 

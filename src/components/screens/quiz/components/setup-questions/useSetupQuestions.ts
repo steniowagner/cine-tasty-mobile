@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { QuizOption } from 'types';
 
 import { difficulties, categories, types } from './options';
+
+const INITIAL_NUMBER_QUESTIONS = 10;
 
 type State = {
   setNumberOfQuestions: (numberOfQuestions: number) => void;
@@ -10,23 +13,30 @@ type State = {
   onPressOptionDropdown: (option: QuizOption) => void;
   indexLastOptionSelected: number;
   questionDifficulty: string;
+  t: (key: string) => string;
   onPressSelect: () => void;
   numberOfQuestions: number;
   onCloseModal: () => void;
   questionCategory: string;
+  modalMessage: string;
   questionType: string;
   isModalOpen: boolean;
   options: any[];
 };
 
 const useSetupQuestions = (): State => {
+  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(
+    INITIAL_NUMBER_QUESTIONS,
+  );
   const [questionDifficulty, setQuestionDifficulty] = useState<string>(difficulties[0]);
   const [questionCategory, setQuestionCategory] = useState<string>(categories[0]);
   const [currentOption, setCurrentOption] = useState<QuizOption | null>(null);
   const [indexLastOptionSelected, setIndexLastOptionSelected] = useState(0);
-  const [numberOfQuestions, setNumberOfQuestions] = useState<number>();
   const [questionType, setQuestionType] = useState<string>(types[0]);
+  const [modalMessage, setModalMessage] = useState<string>('');
   const [optionsSelected, setOptionsSelected] = useState([]);
+
+  const { t } = useTranslation();
 
   const getOptionSelectedInfo = (option: QuizOption): any => {
     let currentOptionSelected: any;
@@ -69,14 +79,17 @@ const useSetupQuestions = (): State => {
     setCurrentOption(option);
 
     if (option === 'CATEGORY') {
+      setModalMessage(t('translations:quiz:setCategory'));
       setOptionsSelected(categories);
     }
 
     if (option === 'DIFFICULTY') {
+      setModalMessage(t('translations:quiz:setDifficulty'));
       setOptionsSelected(difficulties);
     }
 
     if (option === 'TYPE') {
+      setModalMessage(t('translations:quiz:setType'));
       setOptionsSelected(types);
     }
   };
@@ -110,6 +123,8 @@ const useSetupQuestions = (): State => {
     questionCategory,
     onPressSelect,
     questionType,
+    modalMessage,
+    t,
   };
 };
 

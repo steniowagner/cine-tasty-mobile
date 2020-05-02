@@ -34,9 +34,18 @@ export interface Locale {
     filterMessage: string;
   };
   quiz: {
-    startButtonText: string;
+    numberOfQuestions: string;
+    chooseQuestions: string;
+    modalSelectText: string;
+    setDifficulty: string;
+    setCategory: string;
+    startButton: string;
+    difficulty: string;
     decription: string;
     challenge: string;
+    category: string;
     welcome: string;
+    setType: string;
+    type: string;
   };
 }

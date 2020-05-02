@@ -57,7 +57,16 @@ const es: Locale = {
     welcome: 'welcome',
     decription: 'decription',
     challenge: 'challenge',
-    startButtonText: 'startButtonText',
+    startButton: 'START QUIZ',
+    chooseQuestions: 'CHOOSE QUESTIONS',
+    difficulty: 'Difficulty',
+    category: 'Category',
+    type: 'Type',
+    numberOfQuestions: 'Number of Questions',
+    setDifficulty: 'Set the difficulty of the questions',
+    setCategory: 'Set the category of the questions',
+    setType: 'Set the type of questions',
+    modalSelectText: 'selectionar',
   },
 };
 

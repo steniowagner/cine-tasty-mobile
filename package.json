@@ -43,6 +43,7 @@
     "@apollo/react-hooks": "^3.1.3",
     "@react-native-community/async-storage": "^1.8.0",
     "@react-native-community/masked-view": "^0.1.6",
+    "@react-native-community/slider": "^2.0.9",
     "@react-navigation/bottom-tabs": "^5.1.0",
     "@react-navigation/native": "^5.0.8",
     "@react-navigation/stack": "^5.1.0",
@@ -67,7 +68,8 @@
     "react-native-shimmer-placeholder": "^1.0.35",
     "react-native-svg": "^12.0.3",
     "react-native-vector-icons": "^6.6.0",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "yarn": "^1.22.4"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

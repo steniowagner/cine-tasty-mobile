@@ -14,6 +14,8 @@ const ButtonText = styled(Text)`
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
   color: ${({ theme }) => theme.colors.text};
   font-family: CircularStd-Black;
+  text-transform: uppercase;
+  text-align: center;
 `;
 
 export type Props = {
