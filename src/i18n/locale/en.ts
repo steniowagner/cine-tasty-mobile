@@ -68,6 +68,16 @@ const en: Locale = {
     setCategory: 'Category of the questions',
     setType: 'Type of questions',
     modalSelectText: 'selectionar',
+    categoryMixed: 'Mixed',
+    categoryMovie: 'Movies',
+    categoryTv: 'Tv',
+    difficultyEasy: 'Easy',
+    difficultyMedium: 'Medium',
+    difficultyHard: 'Hard',
+    difficultyMixed: 'Mixed',
+    typeMultiple: 'Multiple',
+    typeBoolean: 'Boolean',
+    typeMixed: 'Mixed',
   },
 };
 

@@ -1,3 +1,19 @@
-const categories = ['Categoria 01', 'Categoria 02', 'Categoria 03'];
+import { QuestionCategory } from 'types/schema';
+import { QuestionOption } from 'types';
+
+const categories: QuestionOption<QuestionCategory>[] = [
+  {
+    id: 'categoryMixed',
+    value: QuestionCategory.MIXED,
+  },
+  {
+    id: 'categoryMovie',
+    value: QuestionCategory.MOVIE,
+  },
+  {
+    id: 'categoryTv',
+    value: QuestionCategory.TV,
+  },
+];
 
 export default categories;

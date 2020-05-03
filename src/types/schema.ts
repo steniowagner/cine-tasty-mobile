@@ -39,6 +39,33 @@ export interface GetArticlesVariables {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL query operation: GetQuizQuestions
+// ====================================================
+
+export interface GetQuizQuestions_quiz {
+  __typename: 'Question';
+  incorrect_answers: string[];
+  category: string;
+  type: string;
+  difficulty: string;
+  question: string;
+  correct_answer: string;
+}
+
+export interface GetQuizQuestions {
+  quiz: GetQuizQuestions_quiz[];
+}
+
+export interface GetQuizQuestionsVariables {
+  input: QuizInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
@@ -58,6 +85,32 @@ export enum ArticleLanguage {
   SE = 'SE',
   UD = 'UD',
   ZH = 'ZH',
+}
+
+export enum QuestionCategory {
+  MIXED = 'MIXED',
+  MOVIE = 'MOVIE',
+  TV = 'TV',
+}
+
+export enum QuestionDifficulty {
+  EASY = 'EASY',
+  HARD = 'HARD',
+  MEDIUM = 'MEDIUM',
+  MIXED = 'MIXED',
+}
+
+export enum QuestionType {
+  BOOLEAN = 'BOOLEAN',
+  MIXED = 'MIXED',
+  MULTIPLE = 'MULTIPLE',
+}
+
+export interface QuizInput {
+  difficulty: QuestionDifficulty;
+  type: QuestionType;
+  category: QuestionCategory;
+  number_questions: number;
 }
 
 //==============================================================

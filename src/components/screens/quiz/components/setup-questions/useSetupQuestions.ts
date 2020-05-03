@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { QuizOption } from 'types';
+import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
+import { QuestionOption, QuizOption } from 'types';
 
 import { difficulties, categories, types } from './options';
 
@@ -9,38 +10,53 @@ const INITIAL_NUMBER_QUESTIONS = 10;
 
 type State = {
   setNumberOfQuestions: (numberOfQuestions: number) => void;
+  questionDifficulty: QuestionOption<QuestionDifficulty>;
   onSelectOption: (indexOptionSelected: number) => void;
   onPressOptionDropdown: (option: QuizOption) => void;
+  questionCategory: QuestionOption<QuestionCategory>;
+  questionType: QuestionOption<QuestionType>;
   indexLastOptionSelected: number;
-  questionDifficulty: string;
   t: (key: string) => string;
   onPressSelect: () => void;
   numberOfQuestions: number;
   onCloseModal: () => void;
-  questionCategory: string;
   modalMessage: string;
-  questionType: string;
   isModalOpen: boolean;
   options: any[];
 };
 
+type Option = QuestionOption<QuestionDifficulty | QuestionCategory | QuestionType>;
+
+type Options = Option[];
+
+type OptionSelectedInfo = {
+  currentOptionSelected: Option;
+  currentDataset: Options;
+};
+
 const useSetupQuestions = (): State => {
+  const [questionDifficulty, setQuestionDifficulty] = useState<
+    QuestionOption<QuestionDifficulty>
+  >(difficulties[0]);
+  const [questionCategory, setQuestionCategory] = useState<
+    QuestionOption<QuestionCategory>
+  >(categories[0]);
+  const [questionType, setQuestionType] = useState<QuestionOption<QuestionType>>(
+    types[0],
+  );
+  const [indexLastOptionSelected, setIndexLastOptionSelected] = useState<number>(0);
+  const [currentOption, setCurrentOption] = useState<QuizOption | null>(null);
+  const [optionsSelected, setOptionsSelected] = useState<Options>([]);
+  const [modalMessage, setModalMessage] = useState<string>('');
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(
     INITIAL_NUMBER_QUESTIONS,
   );
-  const [questionDifficulty, setQuestionDifficulty] = useState<string>(difficulties[0]);
-  const [questionCategory, setQuestionCategory] = useState<string>(categories[0]);
-  const [currentOption, setCurrentOption] = useState<QuizOption | null>(null);
-  const [indexLastOptionSelected, setIndexLastOptionSelected] = useState(0);
-  const [questionType, setQuestionType] = useState<string>(types[0]);
-  const [modalMessage, setModalMessage] = useState<string>('');
-  const [optionsSelected, setOptionsSelected] = useState([]);
 
   const { t } = useTranslation();
 
-  const getOptionSelectedInfo = (option: QuizOption): any => {
-    let currentOptionSelected: any;
-    let currentDataset = [];
+  const getOptionSelectedInfo = (option: QuizOption): OptionSelectedInfo => {
+    let currentOptionSelected: Option;
+    let currentDataset: Options = [];
 
     if (option === 'CATEGORY') {
       currentDataset = categories;
@@ -67,7 +83,7 @@ const useSetupQuestions = (): State => {
     const { currentOptionSelected, currentDataset } = getOptionSelectedInfo(option);
 
     const index = currentDataset.findIndex(
-      (datasetItem: any) => datasetItem === currentOptionSelected,
+      (datasetItem) => datasetItem.id === currentOptionSelected.id,
     );
 
     setIndexLastOptionSelected(index);

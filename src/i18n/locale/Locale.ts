@@ -47,5 +47,15 @@ export interface Locale {
     welcome: string;
     setType: string;
     type: string;
+    categoryMixed: string;
+    categoryMovie: string;
+    categoryTv: string;
+    difficultyEasy: string;
+    difficultyMedium: string;
+    difficultyHard: string;
+    difficultyMixed: string;
+    typeMultiple: string;
+    typeBoolean: string;
+    typeMixed: string;
   };
 }

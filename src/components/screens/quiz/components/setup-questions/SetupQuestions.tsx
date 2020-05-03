@@ -67,9 +67,9 @@ const SetupQuestions = ({ navigation }: Props) => {
 
   const onPressStartQuiz = () => {
     navigation.navigate('QUESTIONS', {
-      difficulty: questionDifficulty,
-      category: questionCategory,
-      type: questionType,
+      difficulty: questionDifficulty.value,
+      category: questionCategory.value,
+      type: questionType.value,
       numberOfQuestions,
     });
   };
@@ -80,17 +80,17 @@ const SetupQuestions = ({ navigation }: Props) => {
         <Label>{t('translations:quiz:difficulty')}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('DIFFICULTY')}
-          selectedOption={questionDifficulty}
+          selectedOption={t(`translations:quiz:${questionDifficulty.id}`)}
         />
         <Label>{t('translations:quiz:category')}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('CATEGORY')}
-          selectedOption={questionCategory}
+          selectedOption={t(`translations:quiz:${questionCategory.id}`)}
         />
         <Label>{t('translations:quiz:type')}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('TYPE')}
-          selectedOption={questionType}
+          selectedOption={t(`translations:quiz:${questionType.id}`)}
         />
         <Label>{t('translations:quiz:numberOfQuestions')}</Label>
         <NumberOfQuestions
@@ -118,11 +118,11 @@ const SetupQuestions = ({ navigation }: Props) => {
               <OptionListItem
                 isSelected={indexLastOptionSelected === index}
                 onPress={() => onSelectOption(index)}
-                title={item}
+                title={t(`translations:quiz:${item.id}`)}
               />
             )}
             ItemSeparatorComponent={() => <LineDivider />}
-            keyExtractor={(item) => item}
+            keyExtractor={(item) => item.id}
             testID="options-list"
             data={options}
           />

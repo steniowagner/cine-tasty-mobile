@@ -42,3 +42,8 @@ export type FetchMoreArticles = <K extends keyof GetArticlesVariables>(
 ) => Promise<ApolloQueryResult<GetArticles>>;
 
 export type QuizOption = 'DIFFICULTY' | 'CATEGORY' | 'TYPE';
+
+export type QuestionOption<T> = {
+  id: string;
+  value: T;
+};
