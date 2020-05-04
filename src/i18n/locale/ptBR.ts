@@ -67,6 +67,16 @@ const ptBR: Locale = {
     setCategory: 'Set the category of the questions',
     setType: 'Set the type of questions',
     modalSelectText: 'selectionar',
+    categoryMixed: 'categoryMixed',
+    categoryMovie: 'categoryMovie',
+    categoryTv: 'categoryTv',
+    difficultyEasy: 'difficultyEasy',
+    difficultyMedium: 'difficultyMedium',
+    difficultyHard: 'difficultyHard',
+    difficultyMixed: 'difficultyMixed',
+    typeMultiple: 'typeMultiple',
+    typeBoolean: 'typeBoolean',
+    typeMixed: 'typeMixed',
   },
 };
 
