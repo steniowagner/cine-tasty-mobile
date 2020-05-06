@@ -1,7 +1,7 @@
 import { TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 
-import Metrics from 'styles/metrics';
+import metrics from 'styles/metrics';
 
 export const Wrapper = styled(TouchableOpacity)`
   width: 100%;
@@ -17,7 +17,7 @@ export const TextWrapper = styled(View)`
 `;
 
 export const imageWrapper = {
-  width: Metrics.getWidthFromDP('35%'),
-  height: Metrics.getWidthFromDP('30%'),
+  width: metrics.getWidthFromDP('35%'),
+  height: metrics.getWidthFromDP('30%'),
   borderRadius: 8,
 };
