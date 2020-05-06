@@ -28,6 +28,9 @@ const QuizStack = ({ theme }: Props) => {
         component={Quiz}
       />
       <Stack.Screen
+        options={{
+          ...getDefaultHeaderOptions(theme),
+        }}
         name={LOCAL_ROUTES.QUESTIONS.id}
         component={Questions}
       />

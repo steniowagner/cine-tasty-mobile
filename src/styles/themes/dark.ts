@@ -8,7 +8,7 @@ const dark: DefaultTheme = {
   colors: {
     primary: '#4674F8',
     lightPrimary: 'rgba(70, 117, 248, 0.4)',
-    secondary: '#050505',
+    secondary: '#11141a',
     background: '#262626',
     contrast: '#4d4d4d',
     text: '#FFF',

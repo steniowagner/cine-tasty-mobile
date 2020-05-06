@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ShimmerPlaceHolder from 'components/common/ShimmerPlaceholder';
-import Metrics from 'styles/metrics';
+import metrics from 'styles/metrics';
 
 import {
   TextWrapper as TextPlaceholderWrapper,
@@ -18,14 +18,14 @@ const NewsListItemPlaceholder = () => (
       <ShimmerPlaceHolder
         style={{
           width: '100%',
-          height: Metrics.getWidthFromDP('15%'),
-          marginBottom: Metrics.mediumSize,
+          height: metrics.getWidthFromDP('15%'),
+          marginBottom: metrics.mediumSize,
         }}
       />
       <ShimmerPlaceHolder
         style={{
           width: '100%',
-          height: Metrics.getWidthFromDP('7.5%'),
+          height: metrics.getWidthFromDP('7.5%'),
         }}
       />
     </TextPlaceholderWrapper>
