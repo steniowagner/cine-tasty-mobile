@@ -54,7 +54,7 @@ const Questions = ({ navigation, route }: Props) => {
     questions,
     loading,
     error,
-  } = useQuestions(route);
+  } = useQuestions(route, navigation);
 
   useLayoutEffect(() => {
     const hasErrorOrIsLoading = loading || error;

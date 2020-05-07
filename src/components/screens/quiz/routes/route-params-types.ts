@@ -1,4 +1,5 @@
 import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
+import { QuizResult } from 'types';
 
 export type QuizStackParams = {
   QUIZ: undefined;
@@ -8,5 +9,8 @@ export type QuizStackParams = {
     category: QuestionCategory;
     numberOfQuestions: number;
     type: QuestionType;
+  };
+  RESULTS: {
+    results: QuizResult[];
   };
 };

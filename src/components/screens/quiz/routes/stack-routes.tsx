@@ -8,6 +8,7 @@ import { getDefaultHeaderOptions } from 'routes/constants';
 
 import SetupQuestions from '../components/setup-questions/SetupQuestions';
 import Questions from '../components/questions/Questions';
+import Results from '../components/results/Results';
 import LOCAL_ROUTES from './route-names';
 import Quiz from '../components/Quiz';
 
@@ -30,6 +31,7 @@ const QuizStack = ({ theme }: Props) => {
       <Stack.Screen
         options={{
           ...getDefaultHeaderOptions(theme),
+          headerTitleAlign: 'center',
         }}
         name={LOCAL_ROUTES.QUESTIONS.id}
         component={Questions}
@@ -41,6 +43,14 @@ const QuizStack = ({ theme }: Props) => {
         }}
         name={LOCAL_ROUTES.SETUP_QUESTIONS.id}
         component={SetupQuestions}
+      />
+      <Stack.Screen
+        options={{
+          ...getDefaultHeaderOptions(theme),
+          headerLeft: () => null,
+        }}
+        name={LOCAL_ROUTES.RESULTS.id}
+        component={Results}
       />
     </Stack.Navigator>
   );

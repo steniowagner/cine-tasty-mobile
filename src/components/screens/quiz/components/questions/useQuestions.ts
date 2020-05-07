@@ -1,6 +1,7 @@
 import {
   useCallback, useEffect, useState, useRef,
 } from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 import { ApolloError } from 'apollo-client';
@@ -11,6 +12,7 @@ import {
   GetQuizQuestionsVariables,
   GetQuizQuestions,
 } from 'types/schema';
+import { QuizResult } from 'types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 
@@ -27,6 +29,8 @@ const GET_QUIZ_QUESTIONS = gql`
   }
 `;
 
+type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUESTIONS'>;
+
 type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'QUESTIONS'>;
 
 type State = {
@@ -42,7 +46,10 @@ type State = {
   loading: boolean;
 };
 
-const useQuestions = ({ params }: QuestionsScreenRouteProp): State => {
+const useQuestions = (
+  { params }: QuestionsScreenRouteProp,
+  navigation: QuestionsScreenNavigationProp,
+): State => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [currentAnswer, setCurrentAnswer] = useState<string>('');
   const [answers, setAnswers] = useState<string[]>([]);
@@ -76,6 +83,23 @@ const useQuestions = ({ params }: QuestionsScreenRouteProp): State => {
     }
   }, [currentQuestionIndex]);
 
+  const getQuizResults = (): QuizResult[] => {
+    const results = data.quiz.map((dataItem, index) => ({
+      isCorrect: dataItem.correct_answer === answers[index],
+      answer: dataItem.correct_answer,
+      userAnswer: answers[index],
+      question: dataItem.question,
+    }));
+
+    return results;
+  };
+
+  const handleQuizResults = (): void => {
+    const results = getQuizResults();
+
+    navigation.navigate('RESULTS', { results });
+  };
+
   const handleQuestionsListIndexPosition = (): void => {
     const nextIndex = currentQuestionIndex + 1;
 
@@ -85,14 +109,14 @@ const useQuestions = ({ params }: QuestionsScreenRouteProp): State => {
       return;
     }
 
-    console.warn('RETURN');
+    handleQuizResults();
   };
 
-  const onPressNext = (): void => {
-    setAnswers((prevAnswers) => [...prevAnswers, currentAnswer]);
-
-    handleQuestionsListIndexPosition();
-  };
+  useEffect(() => {
+    if (data && data.quiz && data.quiz.length) {
+      handleQuestionsListIndexPosition();
+    }
+  }, [answers]);
 
   const onRestartQuiz = useCallback(() => {
     setCurrentQuestionIndex(0);
@@ -100,13 +124,13 @@ const useQuestions = ({ params }: QuestionsScreenRouteProp): State => {
   }, []);
 
   return {
+    onPressNext: () => setAnswers((prevAnswers) => [...prevAnswers, currentAnswer]),
     questions: data ? data.quiz : [],
     onSelectAnswer: setCurrentAnswer,
     currentQuestionIndex,
     questionsFlatListRef,
     onRestartQuiz,
     currentAnswer,
-    onPressNext,
     loading,
     answers,
     error,

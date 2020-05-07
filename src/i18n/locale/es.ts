@@ -77,6 +77,13 @@ const es: Locale = {
     typeMultiple: 'typeMultiple',
     typeBoolean: 'typeBoolean',
     typeMixed: 'typeMixed',
+    playAgain: 'Play Again',
+    playAgainDescription: 'Do you want to play the Trivia Challenge again?',
+    answer: 'Answer',
+    yourAnswer: 'Your Answer',
+    scores: 'You scored',
+    no: 'No',
+    yes: 'Yes',
   },
 };
 

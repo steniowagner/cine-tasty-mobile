@@ -47,3 +47,10 @@ export type QuestionOption<T> = {
   id: string;
   value: T;
 };
+
+export type QuizResult = {
+  userAnswer: string;
+  isCorrect: boolean;
+  question: string;
+  answer: string;
+};
