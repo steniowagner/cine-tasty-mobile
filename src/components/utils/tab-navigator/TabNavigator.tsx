@@ -32,7 +32,7 @@ type BlacklistScreens =
   | PeopleRoutes
   | SettingsRoutes;
 
-const blacklistScreens: BlacklistScreens[] = ['SETUP_QUESTIONS', 'QUESTIONS'];
+const blacklistScreens: BlacklistScreens[] = ['SETUP_QUESTIONS', 'QUESTIONS', 'RESULTS'];
 
 const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
   const { t } = useTranslation();

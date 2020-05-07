@@ -78,6 +78,13 @@ const en: Locale = {
     typeMultiple: 'Multiple',
     typeBoolean: 'Boolean',
     typeMixed: 'Mixed',
+    playAgain: 'Play Again',
+    playAgainDescription: 'Do you want to play the Quiz again?',
+    answer: 'Answer',
+    yourAnswer: 'Your Answer',
+    scores: 'You scored',
+    no: 'No',
+    yes: 'Yes',
   },
 };
 

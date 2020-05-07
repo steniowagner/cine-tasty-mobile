@@ -57,5 +57,12 @@ export interface Locale {
     typeMultiple: string;
     typeBoolean: string;
     typeMixed: string;
+    playAgain: string;
+    playAgainDescription: string;
+    answer: string;
+    yourAnswer: string;
+    scores: string;
+    no: string;
+    yes: string;
   };
 }
