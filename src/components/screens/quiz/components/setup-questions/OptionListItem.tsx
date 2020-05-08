@@ -41,6 +41,7 @@ const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean 
 const OptionListItem = ({ isSelected, onPress, title }: Props) => (
   <ListItemWrapper
     onPress={onPress}
+    testID="option-list-item"
   >
     <ListItemText
       isSelected={isSelected}

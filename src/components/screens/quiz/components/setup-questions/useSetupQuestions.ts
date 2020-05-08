@@ -6,7 +6,7 @@ import { QuestionOption, QuizOption } from 'types';
 
 import { difficulties, categories, types } from './options';
 
-const INITIAL_NUMBER_QUESTIONS = 10;
+export const INITIAL_NUMBER_QUESTIONS = 10;
 
 type State = {
   setNumberOfQuestions: (numberOfQuestions: number) => void;
