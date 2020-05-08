@@ -20,7 +20,9 @@ const QuizStack = ({ theme }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      initialRouteName={LOCAL_ROUTES.SETUP_QUESTIONS.id}
+    >
       <Stack.Screen
         options={{
           headerShown: false,

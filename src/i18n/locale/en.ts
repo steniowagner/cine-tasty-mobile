@@ -67,7 +67,7 @@ const en: Locale = {
     setDifficulty: 'Difficulty of the questions',
     setCategory: 'Category of the questions',
     setType: 'Type of questions',
-    modalSelectText: 'selectionar',
+    modalSelectText: 'select',
     categoryMixed: 'Mixed',
     categoryMovie: 'Movies',
     categoryTv: 'Tv',

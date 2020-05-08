@@ -41,10 +41,8 @@ const Label = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-type QuizScreenNavigationProp = StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
-
 type Props = {
-  navigation: QuizScreenNavigationProp;
+  navigation: StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
 };
 
 const SetupQuestions = ({ navigation }: Props) => {

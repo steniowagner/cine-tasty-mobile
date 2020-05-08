@@ -124,7 +124,9 @@ const CustomModal = ({
       transparent
       visible
     >
-      <Wrapper>
+      <Wrapper
+        testID="custom-modal"
+      >
         <TouchableWithoutFeedback
           onPress={onCloseModal}
           testID="hide-filter-button"

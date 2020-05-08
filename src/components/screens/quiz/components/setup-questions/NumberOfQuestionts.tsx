@@ -34,6 +34,7 @@ const NumberOfQuestions = ({ onSetNumberQuestions, numberOfQuestions, theme }: P
         style={{
           textAlign: 'center',
         }}
+        testID="default-text"
       >
         {numberOfQuestions}
       </DefaultText>
@@ -48,6 +49,7 @@ const NumberOfQuestions = ({ onSetNumberQuestions, numberOfQuestions, theme }: P
         ref={numberQuestionsSliderRef}
         maximumValue={MAX_VALUE}
         minimumValue={MIN_VALUE}
+        testID="slider"
         step={1}
       />
       <NumberQuestionsWrapper>

@@ -34,8 +34,13 @@ type Props = {
 const DropdownOption = ({ selectedOption, onPress }: Props) => (
   <InnerContentWrapper
     onPress={onPress}
+    testID="dropdown-button"
   >
-    <OptionText>{selectedOption}</OptionText>
+    <OptionText
+      testID="option-value"
+    >
+      {selectedOption}
+    </OptionText>
     <ArrowDownIcon />
   </InnerContentWrapper>
 );

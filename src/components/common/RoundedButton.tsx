@@ -26,6 +26,7 @@ export type Props = {
 
 const RoundedButton = ({ isDisabled, onPress, text }: Props) => (
   <Wrapper
+    testID="rounded-button"
     disabled={isDisabled}
     onPress={onPress}
   >
