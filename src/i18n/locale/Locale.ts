@@ -64,5 +64,8 @@ export interface Locale {
     scores: string;
     no: string;
     yes: string;
+    noQuestionsAdviseTitle: string;
+    noQuestionsAdviseDescription: string;
+    noQuestionsAdviseSuggestion: string;
   };
 }

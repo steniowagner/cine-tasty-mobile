@@ -91,9 +91,7 @@ const ResultListItem = ({ result }: Props) => {
         <AnswerText>{`${t('translations:quiz:answer')}: ${result.answer}`}</AnswerText>
         <LineDivider />
         <AnswerText>
-          {`${t('translations:quiz:yourAnswer')}: ${
-            result.userAnswer
-          }`}
+          {`${t('translations:quiz:yourAnswer')}: ${result.userAnswer}`}
         </AnswerText>
       </TextContentWrapper>
     </Wrapper>

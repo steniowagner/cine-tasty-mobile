@@ -1,14 +1,17 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/jsx-no-undef */
 import React, { useLayoutEffect } from 'react';
-import { TouchableOpacity, FlatList } from 'react-native';
+import { TouchableOpacity, FlatList, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import LoadingIndicator from 'components/common/LoadingIndicator';
+import Advise from 'components/common/advise/Advise';
 import { QuestionType } from 'types/schema';
 import Icon from 'components/common/Icon';
+import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
 import { QuizStackParams } from '../../routes/route-params-types';
@@ -34,6 +37,12 @@ const RestartQuizButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   margin-right: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
+const ErrorWrapper = styled(View)`
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+`;
+
 type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUESTIONS'>;
 
 type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'QUESTIONS'>;
@@ -55,6 +64,8 @@ const Questions = ({ navigation, route }: Props) => {
     loading,
     error,
   } = useQuestions(route, navigation);
+
+  const { t } = useTranslation();
 
   useLayoutEffect(() => {
     const hasErrorOrIsLoading = loading || error;
@@ -87,6 +98,35 @@ const Questions = ({ navigation, route }: Props) => {
 
   if (loading) {
     return <LoadingIndicator />;
+  }
+
+  if (
+    error
+    && error.message.includes(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)
+  ) {
+    return (
+      <ErrorWrapper>
+        <Advise
+          description={t('translations:errors:network:description')}
+          suggestion={t('translations:errors:network:suggestion')}
+          title={t('translations:errors:network:title')}
+          icon="server-network-off"
+        />
+      </ErrorWrapper>
+    );
+  }
+
+  if (!loading && !error && !questions.length) {
+    return (
+      <ErrorWrapper>
+        <Advise
+          description={t('translations:quiz:noQuestionsAdviseDescription')}
+          suggestion={t('translations:quiz:noQuestionsAdviseSuggestion')}
+          title={t('translations:quiz:noQuestionsAdviseTitle')}
+          icon="playlist-remove"
+        />
+      </ErrorWrapper>
+    );
   }
 
   return (
