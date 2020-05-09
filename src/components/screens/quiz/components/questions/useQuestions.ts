@@ -16,7 +16,7 @@ import { QuizResult } from 'types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 
-const GET_QUIZ_QUESTIONS = gql`
+export const GET_QUIZ_QUESTIONS = gql`
   query GetQuizQuestions($input: QuizInput!) {
     quiz(input: $input) {
       incorrect_answers
@@ -37,8 +37,8 @@ type State = {
   onSelectAnswer: (answer: string) => void;
   currentQuestionIndex: number;
   onRestartQuiz: () => void;
-  onPressNext: () => void;
   questionsFlatListRef: any;
+  onPressNext: () => void;
   questions: Questions[];
   currentAnswer: string;
   error: ApolloError;
@@ -85,7 +85,9 @@ const useQuestions = (
 
   const getQuizResults = (): QuizResult[] => {
     const results = data.quiz.map((dataItem, index) => ({
-      isCorrect: dataItem.correct_answer === answers[index],
+      isCorrect:
+        dataItem.correct_answer.toLocaleLowerCase()
+        === answers[index].toLocaleLowerCase(),
       answer: dataItem.correct_answer,
       userAnswer: answers[index],
       question: dataItem.question,

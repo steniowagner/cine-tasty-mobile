@@ -44,6 +44,7 @@ type Props = {
 const MultiChoiceAnswer = ({ onSelectAnswer, isSelected, answer }: Props) => (
   <ListItemWrapper
     onPress={() => onSelectAnswer(answer)}
+    testID="multi-choice-answer"
     isSelected={isSelected}
     key={answer}
   >
