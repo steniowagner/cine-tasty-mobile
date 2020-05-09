@@ -81,19 +81,27 @@ const ListItemWrapper = ({
         shadowRadius: 2.62,
         elevation: 4,
       }}
+      testID="card-wrapper"
     >
       <TextWrapper>
-        <QuestionsIndicatorText>
+        <QuestionsIndicatorText
+          testID="question-indicator-text"
+        >
           {currentQuestionIndex}
           /
           {numberOfQuestions}
         </QuestionsIndicatorText>
-        <QuestionText>{question}</QuestionText>
+        <QuestionText
+          testID="question-text"
+        >
+          {question}
+        </QuestionText>
       </TextWrapper>
       {children}
       <NextButton
         disabled={!hasSelectedAnswer}
         onPress={onPressNext}
+        testID="next-button"
       >
         <NextText>NEXT</NextText>
       </NextButton>

@@ -15,7 +15,9 @@ const Indicator = styled(ActivityIndicator).attrs(({ theme }) => ({
 }))``;
 
 const LoadingIndicator = () => (
-  <Wrapper>
+  <Wrapper
+    testID="loading-content-indicator"
+  >
     <Indicator />
   </Wrapper>
 );

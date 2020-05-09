@@ -105,7 +105,9 @@ const Questions = ({ navigation, route }: Props) => {
     && error.message.includes(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)
   ) {
     return (
-      <ErrorWrapper>
+      <ErrorWrapper
+        testID="network-error-wrapper"
+      >
         <Advise
           description={t('translations:errors:network:description')}
           suggestion={t('translations:errors:network:suggestion')}
@@ -118,7 +120,9 @@ const Questions = ({ navigation, route }: Props) => {
 
   if (!loading && !error && !questions.length) {
     return (
-      <ErrorWrapper>
+      <ErrorWrapper
+        testID="no-questions-error-wrapper"
+      >
         <Advise
           description={t('translations:quiz:noQuestionsAdviseDescription')}
           suggestion={t('translations:quiz:noQuestionsAdviseSuggestion')}
@@ -158,8 +162,8 @@ const Questions = ({ navigation, route }: Props) => {
           </>
         </ListItemWrapper>
       )}
+      keyExtractor={(item, index) => `${item.question}${index}`}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(item) => item.question}
       getItemLayout={(_data, index) => ({
         offset: metrics.width * index,
         length: metrics.width,
@@ -168,6 +172,7 @@ const Questions = ({ navigation, route }: Props) => {
       ref={questionsFlatListRef}
       scrollEnabled={false}
       data={questions}
+      testID="questions-list"
       pagingEnabled
       horizontal
     />

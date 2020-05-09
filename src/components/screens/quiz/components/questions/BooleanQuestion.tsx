@@ -33,16 +33,20 @@ type Props = {
 };
 
 const BooleanQuestion = ({ onSelectAnswer, answerSelected }: Props) => (
-  <Wrapper>
+  <Wrapper
+    testID="boolean-question"
+  >
     <OptionButton
       onPress={() => onSelectAnswer(String(true))}
       isSelected={answerSelected === String(true)}
+      testID="true-option-button"
     >
       <OptionText>True</OptionText>
     </OptionButton>
     <OptionButton
       onPress={() => onSelectAnswer(String(false))}
       isSelected={answerSelected === String(false)}
+      testID="false-option-button"
     >
       <OptionText>False</OptionText>
     </OptionButton>

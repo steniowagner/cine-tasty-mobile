@@ -56,14 +56,14 @@ describe('Testing <LanguageFilter />', () => {
 
     expect(
       getAllByType(LanguageListItem).every((languageItem, index) => {
-        const language = languageItem.props.name.split(':')[2];
+        const language = languageItem.props.name.split(':')[3];
 
         return language === languages[index].name;
       }),
     ).toBe(true);
   });
 
-  it.only('should render the selected item correctly', () => {
+  it('should render the selected item correctly', () => {
     const INDEX_SELECTED = 1;
 
     const { getAllByType, getByTestId } = render(
