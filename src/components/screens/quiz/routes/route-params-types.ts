@@ -1,5 +1,9 @@
-import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
-import { QuizResult } from 'types';
+import {
+  GetQuizQuestions_quiz as QuizQuestions,
+  QuestionDifficulty,
+  QuestionCategory,
+  QuestionType,
+} from 'types/schema';
 
 export type QuizStackParams = {
   QUIZ: undefined;
@@ -11,6 +15,7 @@ export type QuizStackParams = {
     type: QuestionType;
   };
   RESULTS: {
-    results: QuizResult[];
+    questions: QuizQuestions[];
+    answers: string[];
   };
 };

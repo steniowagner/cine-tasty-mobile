@@ -18,6 +18,7 @@ import Questions from './Questions';
 
 const quiz = [
   {
+    __typename: 'Question',
     category: 'Entertainment: Television',
     correct_answer: 'D',
     difficulty: 'difficulty',
@@ -26,6 +27,7 @@ const quiz = [
     type: 'multiple',
   },
   {
+    __typename: 'Question',
     category: 'Entertainment: Film',
     correct_answer: 'True',
     difficulty: 'difficulty',
@@ -168,20 +170,8 @@ describe('Testing <Questions />', () => {
     expect(navigate).toBeCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith(LOCAL_ROUTES.RESULTS.id, {
-      results: [
-        {
-          isCorrect: false,
-          answer: quiz[0].correct_answer,
-          userAnswer: quiz[0].incorrect_answers[0],
-          question: quiz[0].question,
-        },
-        {
-          isCorrect: true,
-          answer: 'True',
-          userAnswer: 'true',
-          question: quiz[1].question,
-        },
-      ],
+      questions: quiz,
+      answers: [quiz[0].incorrect_answers[0], 'true'],
     });
   });
 

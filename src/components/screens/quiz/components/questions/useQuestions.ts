@@ -83,35 +83,20 @@ const useQuestions = (
     }
   }, [currentQuestionIndex]);
 
-  const getQuizResults = (): QuizResult[] => {
-    const results = data.quiz.map((dataItem, index) => ({
-      isCorrect:
-        dataItem.correct_answer.toLocaleLowerCase()
-        === answers[index].toLocaleLowerCase(),
-      answer: dataItem.correct_answer,
-      userAnswer: answers[index],
-      question: dataItem.question,
-    }));
-
-    return results;
-  };
-
-  const handleQuizResults = (): void => {
-    const results = getQuizResults();
-
-    navigation.navigate('RESULTS', { results });
-  };
-
   const handleQuestionsListIndexPosition = (): void => {
     const nextIndex = currentQuestionIndex + 1;
+    const isLastQuestion = nextIndex === data.quiz.length;
 
-    if (nextIndex < data.quiz.length) {
-      setCurrentQuestionIndex(nextIndex);
+    if (isLastQuestion) {
+      navigation.navigate('RESULTS', {
+        questions: data.quiz,
+        answers,
+      });
 
       return;
     }
 
-    handleQuizResults();
+    setCurrentQuestionIndex(nextIndex);
   };
 
   useEffect(() => {
