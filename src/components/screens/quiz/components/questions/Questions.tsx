@@ -14,10 +14,10 @@ import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
+import ListItemWrapper from './list-item-wrapper-question/ListItemWrapperQuestion';
 import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
 import { QuizStackParams } from '../../routes/route-params-types';
 import BooleanQuestion from './boolean-question/BooleanQuestion';
-import ListItemWrapper from './ListItemWrapper';
 import useQuestions from './useQuestions';
 
 const RestartQuizIcon = styled(Icon).attrs(({ theme }) => ({
@@ -170,9 +170,9 @@ const Questions = ({ navigation, route }: Props) => {
         index,
       })}
       ref={questionsFlatListRef}
+      testID="questions-list"
       scrollEnabled={false}
       data={questions}
-      testID="questions-list"
       pagingEnabled
       horizontal
     />
