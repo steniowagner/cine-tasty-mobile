@@ -14,9 +14,9 @@ import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
+import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
 import { QuizStackParams } from '../../routes/route-params-types';
-import MultiChoice from './multi-choice/MultiChoice';
-import BooleanQuestion from './BooleanQuestion';
+import BooleanQuestion from './boolean-question/BooleanQuestion';
 import ListItemWrapper from './ListItemWrapper';
 import useQuestions from './useQuestions';
 
@@ -153,7 +153,7 @@ const Questions = ({ navigation, route }: Props) => {
             )}
             {item.type.toLocaleLowerCase()
               === QuestionType.MULTIPLE.toLocaleLowerCase() && (
-              <MultiChoice
+              <MultiChoiceQuestion
                 answers={[...item.incorrect_answers, item.correct_answer]}
                 onSelectAnswer={onSelectAnswer}
                 answerSelected={currentAnswer}
