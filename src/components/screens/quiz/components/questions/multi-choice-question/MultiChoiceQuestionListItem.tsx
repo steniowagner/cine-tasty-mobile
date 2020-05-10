@@ -41,7 +41,7 @@ type Props = {
   answer: string;
 };
 
-const MultiChoiceAnswer = ({ onSelectAnswer, isSelected, answer }: Props) => (
+const MultiChoiceListItem = ({ onSelectAnswer, isSelected, answer }: Props) => (
   <ListItemWrapper
     onPress={() => onSelectAnswer(answer)}
     testID="multi-choice-answer"
@@ -66,4 +66,4 @@ const MultiChoiceAnswer = ({ onSelectAnswer, isSelected, answer }: Props) => (
 const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isSelected || !nextState.isSelected)
   && (!previousState.isSelected || nextState.isSelected);
 
-export default memo(MultiChoiceAnswer, shouldComponentUpdate);
+export default memo(MultiChoiceListItem, shouldComponentUpdate);

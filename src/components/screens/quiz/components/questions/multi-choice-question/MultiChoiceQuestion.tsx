@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, View } from 'react-native';
 import styled from 'styled-components';
 
-import MultiChoiceListItem from './MultiChoiceListItem';
+import MultiChoiceQuestionListItem from './MultiChoiceQuestionListItem';
 
 const Wrapper = styled(View)`
   max-height: ${({ theme }) => theme.metrics.getHeightFromDP('47%')}px;
@@ -15,12 +15,13 @@ type Props = {
   answers: string[];
 };
 
-const MultiChoiceAnswer = ({ onSelectAnswer, answerSelected, answers }: Props) => (
+const MultiChoiceQuestion = ({ onSelectAnswer, answerSelected, answers }: Props) => (
   <Wrapper>
     <FlatList
       alwaysBounceVertical={false}
+      testID="multi-choice-options"
       renderItem={({ item }) => (
-        <MultiChoiceListItem
+        <MultiChoiceQuestionListItem
           isSelected={answerSelected === item}
           onSelectAnswer={onSelectAnswer}
           answer={item}
@@ -32,4 +33,4 @@ const MultiChoiceAnswer = ({ onSelectAnswer, answerSelected, answers }: Props) =
   </Wrapper>
 );
 
-export default MultiChoiceAnswer;
+export default MultiChoiceQuestion;
