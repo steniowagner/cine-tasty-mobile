@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import { FlatList, Alert, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import RoundedButton from 'components/common/RoundedButton';
 import metrics from 'styles/metrics';
+import { QuizResult } from 'types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import ResultListItem from './ResultListItem';
@@ -32,11 +33,11 @@ type Props = {
 };
 
 const Results = ({ navigation, route }: Props) => {
+  const [results, setResults] = useState<QuizResult[]>([]);
+
   const { t } = useTranslation();
 
   useLayoutEffect(() => {
-    const { results } = route.params;
-
     const scores = results.reduce(
       (total, current) => total + Number(current.isCorrect),
       0,
@@ -45,6 +46,21 @@ const Results = ({ navigation, route }: Props) => {
     navigation.setOptions({
       title: `${t('translations:quiz:scores')} ${scores}/${results.length}!`,
     });
+  }, [results]);
+
+  useEffect(() => {
+    const { questions, answers } = route.params;
+
+    const result = questions.map((dataItem, index) => ({
+      isCorrect:
+        dataItem.correct_answer.toLocaleLowerCase()
+        === answers[index].toLocaleLowerCase(),
+      answer: dataItem.correct_answer,
+      userAnswer: answers[index],
+      question: dataItem.question,
+    }));
+
+    setResults(result);
   }, []);
 
   const onPressPlayAgain = (): void => {
@@ -77,7 +93,7 @@ const Results = ({ navigation, route }: Props) => {
           paddingTop: metrics.largeSize,
         }}
         keyExtractor={(item) => item.question}
-        data={route.params.results}
+        data={results}
       />
       <PlayAgainButtonWrapper>
         <RoundedButton

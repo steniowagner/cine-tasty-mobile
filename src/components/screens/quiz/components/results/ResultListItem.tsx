@@ -22,13 +22,13 @@ const TextContentWrapper = styled(View)`
 `;
 
 const IconWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('15%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('15%')}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('18%')}px;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('18%')}px;
   justify-content: center;
   align-self: center;
   align-items: center;
   margin-top: ${({ theme }) => -theme.metrics.getWidthFromDP('8%')}px;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('7.5%')}px;
+  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('9%')}px;
   background-color: white;
 `;
 
@@ -59,10 +59,11 @@ type Props = {
   result: QuizResult;
 };
 
+export const incorrectAnswerConfig = { color: '#D5233B', icon: 'close-circle' };
+export const correctAnswerConfig = { color: '#32BE70', icon: 'check-circle' };
+
 const ResultListItem = ({ result }: Props) => {
-  const { color, icon } = result.isCorrect
-    ? { color: '#32BE70', icon: 'check-circle' }
-    : { color: '#D5233B', icon: 'close-circle' };
+  const { color, icon } = result.isCorrect ? correctAnswerConfig : incorrectAnswerConfig;
 
   const { t } = useTranslation();
 
@@ -81,7 +82,7 @@ const ResultListItem = ({ result }: Props) => {
     >
       <IconWrapper>
         <Icon
-          size={metrics.getWidthFromDP('12%')}
+          size={metrics.getWidthFromDP('14%')}
           color={color}
           name={icon}
         />
