@@ -16,7 +16,6 @@ const Wrapper = styled(View)`
   justify-content: space-around;
   padding-vertical: ${({ theme }) => theme.metrics.getHeightFromDP('10%')}px;
   padding-horizontal: ${({ theme }) => theme.metrics.getWidthFromDP('7%')}px;
-  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 const LargeText = styled(Text)`

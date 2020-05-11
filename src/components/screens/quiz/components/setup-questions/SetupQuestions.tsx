@@ -20,7 +20,6 @@ const Wrapper = styled(View)`
   justify-content: space-between;
   padding-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
   padding-bottom: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
-  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 const RoundedButtonWrapper = styled(View)`
