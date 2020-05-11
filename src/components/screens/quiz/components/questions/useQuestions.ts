@@ -12,7 +12,6 @@ import {
   GetQuizQuestionsVariables,
   GetQuizQuestions,
 } from 'types/schema';
-import { QuizResult } from 'types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 

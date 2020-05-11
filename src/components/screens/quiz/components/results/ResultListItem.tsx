@@ -22,13 +22,13 @@ const TextContentWrapper = styled(View)`
 `;
 
 const IconWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('18%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('18%')}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('15%')}px;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('15%')}px;
   justify-content: center;
   align-self: center;
   align-items: center;
   margin-top: ${({ theme }) => -theme.metrics.getWidthFromDP('8%')}px;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('9%')}px;
+  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('7.5%')}px;
   background-color: white;
 `;
 
@@ -46,6 +46,7 @@ const AnswerText = styled(Text)`
   font-family: CircularStd-Bold;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
   color: rgba(0, 0, 0, 0.8);
+  text-transform: capitalize;
 `;
 
 const LineDivider = styled(View)`

@@ -71,10 +71,6 @@ const Questions = ({ navigation, route }: Props) => {
     const hasErrorOrIsLoading = loading || error;
 
     if (hasErrorOrIsLoading && !!questions.length) {
-      navigation.setOptions({
-        title: '',
-      });
-
       return;
     }
 
