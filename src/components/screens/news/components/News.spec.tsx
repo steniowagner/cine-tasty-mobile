@@ -5,6 +5,7 @@ import { cleanup, render, act } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
+import CONSTANTS from 'utils/constants';
 import { dark } from 'styles/themes';
 
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
@@ -92,5 +93,27 @@ describe('Testing <News />', () => {
     });
 
     expect(queryByTestId('list-empty-component-wrapper')).not.toBeNull();
+  });
+
+  it('should render the advise screen when has a network error', async () => {
+    const mockResolvers = {
+      Query: () => ({
+        articles: () => new Error(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION),
+      }),
+    };
+
+    const { queryByTestId } = render(renderNews(mockResolvers));
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(queryByTestId('news-loading-wrapper')).toBeNull();
+
+    expect(queryByTestId('news-content-wrapper')).toBeNull();
+
+    expect(queryByTestId('news-list')).toBeNull();
+
+    expect(queryByTestId('advise-wrapper')).not.toBeNull();
   });
 });

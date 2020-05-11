@@ -47,6 +47,7 @@ const QuizStack = ({ theme }: Props) => {
       <Stack.Screen
         options={{
           ...getDefaultHeaderOptions(theme),
+          headerTitleAlign: 'center',
           headerLeft: () => null,
         }}
         name={LOCAL_ROUTES.RESULTS.id}
