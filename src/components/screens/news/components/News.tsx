@@ -21,13 +21,6 @@ import NewsListFooter from './NewsListFooter';
 import ReloadButton from './ReloadButton';
 import useNews from './hooks/useNews';
 
-const Wrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => theme.colors.background};
-  justify-content: center;
-`;
-
 const LoadingWrapper = styled(View)`
   width: 100%;
   height: 100%;
@@ -154,9 +147,7 @@ const News = ({ navigation, theme }: Props) => {
   }
 
   return (
-    <Wrapper
-      testID="news-content-wrapper"
-    >
+    <>
       <FlatList
         ListFooterComponent={() => shouldRendeListFooterComponent && (
         <NewsListFooter
@@ -227,7 +218,7 @@ const News = ({ navigation, theme }: Props) => {
           text={popupErrorMessage}
         />
       )}
-    </Wrapper>
+    </>
   );
 };
 

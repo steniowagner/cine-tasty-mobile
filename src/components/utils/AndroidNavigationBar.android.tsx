@@ -13,7 +13,7 @@ const AndroidNavigationBar = ({ theme }: Props) => {
   useEffect(() => {
     const isLightIcons = theme.id === ThemeID.LIGHT;
 
-    changeNavigationBarColor(theme.colors.background, isLightIcons, true);
+    changeNavigationBarColor(theme.colors.secondary, isLightIcons, true);
   }, [theme]);
 
   return <View />;

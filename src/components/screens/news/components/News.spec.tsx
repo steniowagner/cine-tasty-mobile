@@ -69,8 +69,6 @@ describe('Testing <News />', () => {
 
     expect(queryByTestId('news-loading-wrapper')).toBeNull();
 
-    expect(queryByTestId('news-content-wrapper')).not.toBeNull();
-
     expect(queryByTestId('news-list')).not.toBeNull();
 
     expect(getAllByTestId('news-list-item-wrapper').length).toBe(
@@ -109,8 +107,6 @@ describe('Testing <News />', () => {
     });
 
     expect(queryByTestId('news-loading-wrapper')).toBeNull();
-
-    expect(queryByTestId('news-content-wrapper')).toBeNull();
 
     expect(queryByTestId('news-list')).toBeNull();
 

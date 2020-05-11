@@ -9,9 +9,7 @@ export const getDefaultHeaderOptions = (theme: DefaultTheme) => ({
     fontWeight: undefined,
   },
   headerBackTitleVisible: false,
-  headerTintColor: theme.colors.text,
   headerStyle: {
-    backgroundColor: theme.colors.secondary,
     shadowColor: 'transparent',
     elevation: 0,
   },
