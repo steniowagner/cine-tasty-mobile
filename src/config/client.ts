@@ -7,7 +7,9 @@ import { ApolloLink } from 'apollo-link';
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, path }) => console.log(`[GraphQL error]: Message: ${message}, Path: ${path}`));
+    graphQLErrors.forEach(({ message, path }) => {
+      console.log(`[GraphQL error]: Message: ${message}, Path: ${path}`);
+    });
   }
 
   if (networkError) {

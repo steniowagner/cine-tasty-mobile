@@ -53,9 +53,8 @@ const Results = ({ navigation, route }: Props) => {
 
     const result = questions.map((dataItem, index) => ({
       isCorrect:
-        dataItem.correct_answer.toLocaleLowerCase()
-        === answers[index].toLocaleLowerCase(),
-      answer: dataItem.correct_answer,
+        dataItem.correctAnswer.toLocaleLowerCase() === answers[index].toLocaleLowerCase(),
+      answer: dataItem.correctAnswer,
       userAnswer: answers[index],
       question: dataItem.question,
     }));

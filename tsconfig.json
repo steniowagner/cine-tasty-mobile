@@ -15,15 +15,9 @@
       "styles": ["./styles"],
       "utils": ["./utils"],
       "types": ["./types"],
-      "i18n": ["./i18n"],
-    },
+      "i18n": ["./i18n"]
+    }
   },
-  "include": [
-    "src/**/*",
-    "schema.json", "__mocks__/AutoMockedProvider.tsx", "__mocks__/AuthoMockedErrorProvider.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ],
+  "include": ["src/**/*", "schema.json"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
