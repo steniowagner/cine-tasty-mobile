@@ -18,12 +18,12 @@ import { QuizStackParams } from '../../routes/route-params-types';
 export const GET_QUIZ_QUESTIONS = gql`
   query GetQuizQuestions($input: QuizInput!) {
     quiz(input: $input) {
-      incorrect_answers
+      options
       category
       type
       difficulty
       question
-      correct_answer
+      correctAnswer
     }
   }
 `;
@@ -59,7 +59,7 @@ const useQuestions = (
     {
       variables: {
         input: {
-          number_questions: params.numberOfQuestions,
+          numberOfQuestions: params.numberOfQuestions,
           difficulty: params.difficulty,
           category: params.category,
           type: params.type,

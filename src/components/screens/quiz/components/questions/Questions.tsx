@@ -150,9 +150,9 @@ const Questions = ({ navigation, route }: Props) => {
             {item.type.toLocaleLowerCase()
               === QuestionType.MULTIPLE.toLocaleLowerCase() && (
               <MultiChoiceQuestion
-                answers={[...item.incorrect_answers, item.correct_answer]}
                 onSelectAnswer={onSelectAnswer}
                 answerSelected={currentAnswer}
+                answers={item.options}
               />
             )}
           </>

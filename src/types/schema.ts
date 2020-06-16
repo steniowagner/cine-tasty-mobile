@@ -20,7 +20,7 @@ export interface GetArticles_articles_items {
 }
 
 export interface GetArticles_articles {
-  __typename: 'ArticleQueryResult';
+  __typename: 'Articles';
   items: GetArticles_articles_items[];
   hasMore: boolean;
 }
@@ -45,12 +45,12 @@ export interface GetArticlesVariables {
 
 export interface GetQuizQuestions_quiz {
   __typename: 'Question';
-  incorrect_answers: string[];
+  options: string[];
   category: string;
   type: string;
   difficulty: string;
   question: string;
-  correct_answer: string;
+  correctAnswer: string;
 }
 
 export interface GetQuizQuestions {
@@ -110,7 +110,7 @@ export interface QuizInput {
   difficulty: QuestionDifficulty;
   type: QuestionType;
   category: QuestionCategory;
-  number_questions: number;
+  numberOfQuestions: number;
 }
 
 //==============================================================

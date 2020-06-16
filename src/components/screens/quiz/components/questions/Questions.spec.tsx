@@ -20,18 +20,18 @@ const quiz = [
   {
     __typename: 'Question',
     category: 'Entertainment: Television',
-    correct_answer: 'D',
+    correctAnswer: 'D',
     difficulty: 'difficulty',
-    incorrect_answers: ['A', 'B', 'C'],
+    options: ['A', 'B', 'C', 'D'],
     question: 'Question 01',
     type: 'multiple',
   },
   {
     __typename: 'Question',
     category: 'Entertainment: Film',
-    correct_answer: 'True',
+    correctAnswer: 'True',
     difficulty: 'difficulty',
-    incorrect_answers: ['False'],
+    options: ['False'],
     question: 'Question 02',
     type: 'boolean',
   },
@@ -113,23 +113,21 @@ describe('Testing <Questions />', () => {
     expect(getAllByTestId('question-indicator-text')[0].children.join('')).toBe(
       `1/${quiz.length}`,
     );
+
     expect(getAllByTestId('question-text')[0].children[0]).toBe(quiz[0].question);
 
     const firstCardAnswers = getAllByTestId('card-wrapper')[0].children[1].props.answers;
-    expect(
-      checkHasCorrespondingAnswers(
-        [...quiz[0].incorrect_answers, quiz[0].correct_answer],
-        firstCardAnswers,
-      ),
-    ).toBe(true);
-    expect(getAllByTestId('multi-choice-answer').length).toBe(
-      quiz[0].incorrect_answers.length + 1,
-    );
+
+    expect(checkHasCorrespondingAnswers(quiz[0].options, firstCardAnswers)).toBe(true);
+
+    expect(getAllByTestId('multi-choice-answer').length).toBe(quiz[0].options.length);
 
     expect(getAllByTestId('question-indicator-text')[1].children.join('')).toBe(
       `2/${quiz.length}`,
     );
+
     expect(getAllByTestId('question-text')[1].children[0]).toBe(quiz[1].question);
+
     expect(getAllByTestId('boolean-question').length).toBe(1);
   });
 
@@ -171,7 +169,7 @@ describe('Testing <Questions />', () => {
 
     expect(navigate).toHaveBeenCalledWith(LOCAL_ROUTES.RESULTS.id, {
       questions: quiz,
-      answers: [quiz[0].incorrect_answers[0], 'true'],
+      answers: [quiz[0].options[0], 'true'],
     });
   });
 

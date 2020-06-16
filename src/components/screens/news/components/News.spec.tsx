@@ -55,7 +55,7 @@ describe('Testing <News />', () => {
     const NEWS_COUNT = 10;
 
     const mockResolvers = {
-      ArticleQueryResult: () => ({
+      Articles: () => ({
         items: () => new MockList(NEWS_COUNT),
         hasMore: false,
       }),
@@ -78,7 +78,7 @@ describe('Testing <News />', () => {
 
   it('should show empty-list state when the query returns an empty array of articles', () => {
     const mockResolvers = {
-      ArticleQueryResult: () => ({
+      Articles: () => ({
         items: () => new MockList(0),
         hasMore: false,
       }),
