@@ -35,6 +35,7 @@
   },
   "lint-staged": {
     "*.+(ts|tsx)": [
+      "yarnt test",
       "yarn prettier:fix",
       "yarn lint:fix"
     ]
