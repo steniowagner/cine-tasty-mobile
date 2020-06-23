@@ -5,14 +5,13 @@ on:
     branches: [master]
 
 jobs:
-  build:
-    name: Test
-    runs-on: macos
+  install-and-test:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Set up Node
-        run: npm install -g react-native-cli
-      - name: Installing Dependencies
-        run: npm install
-      - name: Unit & Component Tests
-        run: npm run test
+      - uses: actions/checkout@v2
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: Run tests
+        run: |
+          npm test
