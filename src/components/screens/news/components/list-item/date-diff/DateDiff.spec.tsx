@@ -13,8 +13,7 @@ type I18NextProps = {
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string, { value }: I18NextProps) => {
-      // eslint-disable-next-line no-unused-vars
-      const [_, __, keySelected] = key.split(':');
+      const [, , keySelected] = key.split(':');
 
       switch (keySelected) {
         case 'year':

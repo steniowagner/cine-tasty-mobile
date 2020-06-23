@@ -50,8 +50,13 @@ const SearchBar = ({
   }, []);
 
   return (
-    <Wrapper testID="searchbar-wrapper">
-      <HeaderIconButton iconName="close" onPress={onPressClose} />
+    <Wrapper
+      testID="searchbar-wrapper"
+    >
+      <HeaderIconButton
+        iconName="close"
+        onPress={onPressClose}
+      />
       <Input
         testID="search-input"
         onChangeText={(text: string) => onTypeSearchQuery(text)}

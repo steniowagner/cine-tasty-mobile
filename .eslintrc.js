@@ -4,12 +4,7 @@ module.exports = {
     jest: true,
     'detox/detox': true,
   },
-  extends: [
-    'airbnb',
-    'plugin:react/recommended',
-    'prettier/@typescript-eslint',
-    'plugin:@typescript-eslint/recommended',
-  ],
+  extends: ['airbnb', 'plugin:react/recommended', 'prettier/@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -19,7 +14,7 @@ module.exports = {
   },
   rules: {
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'import/no-unresolved': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     'react/jsx-max-props-per-line': [1, { maximum: 1, when: 'always' }],

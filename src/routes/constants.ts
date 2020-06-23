@@ -1,8 +1,6 @@
-import { DefaultTheme } from 'styled-components';
-
 import metrics from 'styles/metrics';
 
-export const getDefaultHeaderOptions = (theme: DefaultTheme) => ({
+export const getDefaultHeaderOptions = () => ({
   headerTitleStyle: {
     fontSize: metrics.getWidthFromDP('5.5%'),
     fontFamily: 'CircularStd-Bold',

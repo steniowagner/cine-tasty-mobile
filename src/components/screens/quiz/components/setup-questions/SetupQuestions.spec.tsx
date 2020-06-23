@@ -100,7 +100,7 @@ describe('Testing <SetupQuestions />', () => {
 
       const { getByTestId, getAllByTestId } = render(renderSetupQuestions());
 
-      const [_difficultyDropdown, categoryDropdown] = getAllByTestId('dropdown-button');
+      const [, categoryDropdown] = getAllByTestId('dropdown-button');
 
       fireEvent.press(categoryDropdown);
 
@@ -124,7 +124,7 @@ describe('Testing <SetupQuestions />', () => {
         expect(err.message.includes('No instances found')).toEqual(true);
       }
 
-      const [_difficultySelected, optionSelected] = getAllByTestId('option-value');
+      const [, optionSelected] = getAllByTestId('option-value');
 
       expect(
         optionSelected.props.children.includes(categories[INDEX_CATEGORY_SELECTED].id),
@@ -138,9 +138,7 @@ describe('Testing <SetupQuestions />', () => {
 
       const { getByTestId, getAllByTestId } = render(renderSetupQuestions());
 
-      const [_difficultyDropdown, _categoryDropdown, typeDropdown] = getAllByTestId(
-        'dropdown-button',
-      );
+      const [, , typeDropdown] = getAllByTestId('dropdown-button');
 
       fireEvent.press(typeDropdown);
 
@@ -164,9 +162,7 @@ describe('Testing <SetupQuestions />', () => {
         expect(err.message.includes('No instances found')).toEqual(true);
       }
 
-      const [_difficultySelected, _categorySelected, typeSelected] = getAllByTestId(
-        'option-value',
-      );
+      const [, , typeSelected] = getAllByTestId('option-value');
 
       expect(typeSelected.props.children.includes(types[INDEX_TYPE_SELECTED].id)).toEqual(
         true,
@@ -307,7 +303,7 @@ describe('Testing <SetupQuestions />', () => {
 
       const { getAllByTestId, getByTestId } = render(renderSetupQuestions());
 
-      const [_, categoryOption] = getAllByTestId('dropdown-button');
+      const [, categoryOption] = getAllByTestId('dropdown-button');
 
       fireEvent.press(categoryOption);
 
@@ -331,7 +327,7 @@ describe('Testing <SetupQuestions />', () => {
 
       const { getAllByTestId, getByTestId } = render(renderSetupQuestions());
 
-      const [_, __, typeOptions] = getAllByTestId('dropdown-button');
+      const [, , typeOptions] = getAllByTestId('dropdown-button');
 
       fireEvent.press(typeOptions);
 

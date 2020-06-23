@@ -13,7 +13,9 @@ const renderSearchBar = ({
   placeholder,
   value,
 }: Props) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider
+    theme={dark}
+  >
     <SearchBar
       onTypeSearchQuery={onTypeSearchQuery}
       onPressSearch={onPressSearch}
