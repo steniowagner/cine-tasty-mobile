@@ -3,6 +3,7 @@ import { Animated, Image, View } from 'react-native';
 import styled from 'styled-components';
 
 import Icon from 'components/common/Icon';
+
 import { imageWrapper } from '../common-styles';
 
 const ImageContent = styled(Image)`
@@ -68,11 +69,8 @@ const NewsListItemImage = ({ image }: Props) => {
             {
               opacity: fallbackImageWrapperOpacity,
             },
-          ]}
-        >
-          <FallbackImageIcon
-            name={isImageWithError ? 'image-off' : 'image'}
-          />
+          ]}>
+          <FallbackImageIcon name={isImageWithError ? 'image-off' : 'image'} />
         </FallbackImageWrapper>
       )}
     </View>

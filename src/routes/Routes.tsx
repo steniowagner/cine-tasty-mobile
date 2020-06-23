@@ -49,33 +49,19 @@ const Routes = ({ theme }: Props) => (
           border: theme.colors.text,
           text: theme.colors.text,
         },
-      }}
-    >
+      }}>
       <Tab.Navigator
-        initialRouteName={QuizTabID}
+        initialRouteName={PeopleTabID}
         tabBar={(props: BottomTabBarProps) => (
           <TabNavigator
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
           />
-        )}
-      >
-        <Tab.Screen
-          component={DiscoverStack}
-          name={DiscoverTabID}
-        />
-        <Tab.Screen
-          component={PeopleStack}
-          name={PeopleTabID}
-        />
-        <Tab.Screen
-          component={QuizStack}
-          name={QuizTabID}
-        />
-        <Tab.Screen
-          component={NewsStack}
-          name={NewsTabID}
-        />
+        )}>
+        <Tab.Screen component={DiscoverStack} name={DiscoverTabID} />
+        <Tab.Screen component={PeopleStack} name={PeopleTabID} />
+        <Tab.Screen component={QuizStack} name={QuizTabID} />
+        <Tab.Screen component={NewsStack} name={NewsTabID} />
       </Tab.Navigator>
     </NavigationContainer>
   </>

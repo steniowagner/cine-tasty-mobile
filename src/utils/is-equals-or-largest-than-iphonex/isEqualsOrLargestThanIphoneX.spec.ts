@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 
 describe('Testing isEqualsOrLargestThanIphoneX() fucntion', () => {

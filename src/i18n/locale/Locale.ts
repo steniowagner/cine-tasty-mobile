@@ -68,4 +68,7 @@ export interface Locale {
     noQuestionsAdviseDescription: string;
     noQuestionsAdviseSuggestion: string;
   };
+  people: {
+    searchBarPlaceholder: string;
+  };
 }
