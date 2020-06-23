@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    name: Test
+    runs-on: macos
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Node
+        run: npm install -g react-native-cli
+      - name: Installing Dependencies
+        run: npm install
+      - name: Unit & Component Tests
+        run: npm run test
