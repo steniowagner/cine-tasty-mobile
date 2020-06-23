@@ -90,6 +90,9 @@ const en: Locale = {
       "Seems like we don't have enough questions for your taste today.",
     noQuestionsAdviseSuggestion: 'Try to change the search parameters.',
   },
+  people: {
+    searchBarPlaceholder: 'Search for an Actor or Actress...',
+  },
 };
 
 export default en;

@@ -23,6 +23,10 @@ const PeopleStack = ({ theme }: Props) => {
           ...getDefaultHeaderOptions(theme),
           headerTitle: t('translations:tabs:people'),
         }}
+        initialParams={{
+          searchBarPlaceholder: t('translations:people:searchBarPlaceholder'),
+          headerTitle: t('translations:tabs:people'),
+        }}
         name={LOCAL_ROUTES.PEOPLE.id}
         component={People}
       />
