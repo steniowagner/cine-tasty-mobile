@@ -41,10 +41,17 @@ const People = ({ navigation, route }: Props) => {
   const defaultHeaderOptions = useMemo(
     () => ({
       headerRight: () => (
-        <HeaderIconButton iconName="magnify" onPress={() => setIsStatusBarOpen(true)} />
+        <HeaderIconButton
+          iconName="magnify"
+          onPress={() => setIsStatusBarOpen(true)}
+        />
       ),
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      header: (headerOptions: StackHeaderProps) => <Header {...headerOptions} />,
+      header: (headerOptions: StackHeaderProps) => (
+        <Header
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...headerOptions}
+        />
+      ),
       headerTitle: route.params.headerTitle,
     }),
     [],

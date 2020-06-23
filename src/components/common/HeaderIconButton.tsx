@@ -28,8 +28,13 @@ type Props = {
 };
 
 const HeaderIconButton = ({ iconName, onPress }: Props) => (
-  <Wrapper testID="header-icon-button-wrapper" onPress={onPress}>
-    <HeaderIcon name={iconName} />
+  <Wrapper
+    testID="header-icon-button-wrapper"
+    onPress={onPress}
+  >
+    <HeaderIcon
+      name={iconName}
+    />
   </Wrapper>
 );
 

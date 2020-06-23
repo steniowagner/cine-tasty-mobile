@@ -69,8 +69,11 @@ const NewsListItemImage = ({ image }: Props) => {
             {
               opacity: fallbackImageWrapperOpacity,
             },
-          ]}>
-          <FallbackImageIcon name={isImageWithError ? 'image-off' : 'image'} />
+          ]}
+        >
+          <FallbackImageIcon
+            name={isImageWithError ? 'image-off' : 'image'}
+          />
         </FallbackImageWrapper>
       )}
     </View>
