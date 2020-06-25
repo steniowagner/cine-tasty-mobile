@@ -1,6 +1,8 @@
 export type PeopleStackParams = {
   PEOPLE: {
-    searchBarPlaceholder: string;
     headerTitle: string;
+  };
+  SEARCH_PERSON: {
+    searchBarPlaceholder: string;
   };
 };

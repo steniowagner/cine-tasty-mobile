@@ -18,7 +18,7 @@ const Wrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
 `;
 
 const HeaderIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('7%'),
+  size: theme.metrics.getWidthFromDP('6%'),
   color: theme.colors.text,
 }))``;
 

@@ -1,9 +1,11 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { IntrospectionFragmentMatcher, InMemoryCache } from 'apollo-cache-inmemory';
 import { SERVER_URL } from 'react-native-dotenv';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
+
+import introspectionQueryResultData from '../../fragmentTypes.json';
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors) {
@@ -19,8 +21,12 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   }
 });
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData,
+});
+
 const makeClient = () => {
-  const cache = new InMemoryCache();
+  const cache = new InMemoryCache({ fragmentMatcher });
 
   const httpLink = new HttpLink({
     uri: SERVER_URL,

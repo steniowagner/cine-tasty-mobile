@@ -9,6 +9,7 @@
     "ios-se": "npx react-native run-ios --simulator=\"iPhone SE\"",
     "start:clean": "npx react-native start --reset-cache",
     "android": "npx react-native run-android",
+    "android:emulator": "emulator -avd default-emulator",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx .",
     "prettier:fix": "prettier '**/*.+(ts|js|tsx)' --write",
     "start": "npx react-native start",
@@ -75,6 +76,8 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/runtime": "^7.6.2",
+    "@graphql-codegen/cli": "^1.15.4",
+    "@graphql-codegen/fragment-matcher": "^1.15.4",
     "@react-native-community/eslint-config": "^0.0.5",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^24.0.24",

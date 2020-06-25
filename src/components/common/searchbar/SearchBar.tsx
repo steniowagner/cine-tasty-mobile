@@ -32,7 +32,6 @@ export type Props = {
   onPressSearch: () => void;
   onPressClose: () => void;
   placeholder: string;
-  value: string;
 };
 
 const SearchBar = ({
@@ -40,7 +39,6 @@ const SearchBar = ({
   onPressSearch,
   onPressClose,
   placeholder,
-  value,
 }: Props) => {
   const inputRef = useRef<TextInput>();
   useEffect(() => {
@@ -63,7 +61,6 @@ const SearchBar = ({
         onSubmitEditing={onPressSearch}
         placeholder={placeholder}
         ref={inputRef}
-        value={value}
       />
     </Wrapper>
   );
