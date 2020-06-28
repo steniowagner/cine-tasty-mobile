@@ -22,6 +22,7 @@ const Input = styled(TextInput).attrs(({ placeholder, theme }) => ({
   placeholder,
 }))`
   width: 85%;
+  margin-left: ${({ theme }) => theme.metrics.smallSize}px;
   font-family: CircularStd-Book;
   font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
   color: ${({ theme }) => theme.colors.text};
@@ -54,6 +55,7 @@ const SearchBar = ({
       <HeaderIconButton
         iconName="close"
         onPress={onPressClose}
+        withMarginLeft
       />
       <Input
         testID="search-input"

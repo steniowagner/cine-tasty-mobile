@@ -1,4 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import {
+  useCallback, useState, useEffect, useRef,
+} from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
@@ -10,7 +12,7 @@ import {
 } from 'types/schema';
 import debounce from 'utils/debounce';
 
-const SEARCH_DELAY = 1500;
+const SEARCH_DELAY = 1000;
 
 const SEARCH_PERSON = gql`
   query SearchPerson($input: SearchInput!) {
@@ -44,22 +46,28 @@ const useSearchPerson = (): State => {
     variables: { input: { page: 1, query, type: SearchType.PERSON } },
   });
 
-  const debouncedSetQuery = useRef(
-    debounce((queryTyped: string) => {
-      setQuery(queryTyped);
-    }, SEARCH_DELAY),
-  ).current;
-
   useEffect(() => {
     if (query) {
       searchPerson();
     }
   }, [query]);
 
+  const debouncedSetQuery = useRef(
+    debounce((queryTyped: string) => {
+      setQuery(queryTyped);
+    }, SEARCH_DELAY),
+  ).current;
+
+  const onTypeSearchQuery = useCallback((text: string) => {
+    if (text) {
+      debouncedSetQuery(text);
+    }
+  }, []);
+
   return {
     items: data && data.search && query ? (data.search.items as SearchPersonItems[]) : [],
-    onTypeSearchQuery: (text: string) => debouncedSetQuery(text),
     isLoading: loading,
+    onTypeSearchQuery,
   };
 };
 
