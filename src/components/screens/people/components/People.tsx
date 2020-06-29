@@ -25,8 +25,9 @@ const People = ({ navigation }: Props) => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          iconName="magnify"
           onPress={() => navigation.navigate('SEARCH_PERSON')}
+          iconName="magnify"
+          withMarginRight
         />
       ),
     });

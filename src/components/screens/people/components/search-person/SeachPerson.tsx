@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 
 import React, { useLayoutEffect } from 'react';
-import { FlatList, View } from 'react-native';
+import { Platform, FlatList, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
@@ -56,12 +56,14 @@ const SearchPerson = ({ navigation, route }: Props) => {
   return (
     <Wrapper>
       <FlatList
-        data={items}
         numColumns={NUMBER_FLATLIST_COLUMNS}
         columnWrapperStyle={{
           paddingLeft: metrics.smallSize,
         }}
-        keyExtractor={({ id }) => `${id}`}
+        onEndReachedThreshold={Platform.select({
+          android: 0.5,
+          ios: 0.1,
+        })}
         renderItem={({ item, index }) => (
           <SearchPersonListItem
             onPress={() => console.warn('item: ', item)}
@@ -71,6 +73,8 @@ const SearchPerson = ({ navigation, route }: Props) => {
             index={index}
           />
         )}
+        keyExtractor={({ id }) => `${id}`}
+        data={items}
       />
     </Wrapper>
   );

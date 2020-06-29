@@ -1,18 +1,13 @@
-import {
-  useCallback, useState, useEffect, useRef,
-} from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useCallback, useState, useEffect } from 'react';
 import gql from 'graphql-tag';
 
 import {
   SearchPerson_search_items_BasePerson as SearchPersonItems,
-  SearchPersonVariables,
   SearchPerson,
   SearchType,
 } from 'types/schema';
-import debounce from 'utils/debounce';
 
-const SEARCH_DELAY = 1000;
+import { useSearchByQuery } from 'hooks';
 
 const SEARCH_PERSON = gql`
   query SearchPerson($input: SearchInput!) {
@@ -30,6 +25,16 @@ const SEARCH_PERSON = gql`
   }
 `;
 
+const initialQueryResult: QueryResult = {
+  hasMore: true,
+  items: [],
+};
+
+type QueryResult = {
+  items: SearchPersonItems[];
+  hasMore: boolean;
+};
+
 type State = {
   onTypeSearchQuery: (value: string) => void;
   items: SearchPersonItems[];
@@ -37,37 +42,40 @@ type State = {
 };
 
 const useSearchPerson = (): State => {
-  const [query, setQuery] = useState<string>('');
+  const [queryResult, setQueryResult] = useState<QueryResult>(initialQueryResult);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [queryString, setQueryString] = useState<string>('');
 
-  const [searchPerson, { loading, data }] = useLazyQuery<
-    SearchPerson,
-    SearchPersonVariables
-  >(SEARCH_PERSON, {
-    variables: { input: { page: 1, query, type: SearchType.PERSON } },
+  const { onTypeSearchQuery, onSearchByQuery } = useSearchByQuery<SearchPerson>({
+    onSetQueryString: setQueryString,
+    searchType: SearchType.PERSON,
+    query: SEARCH_PERSON,
+    queryString,
   });
 
+  const handleOnSearchByQuery = useCallback(async () => {
+    const { search } = await onSearchByQuery();
+
+    setQueryResult({
+      items: search.items as SearchPersonItems[],
+      hasMore: search.hasMore,
+    });
+
+    setIsLoading(false);
+  }, [queryString]);
+
   useEffect(() => {
-    if (query) {
-      searchPerson();
-    }
-  }, [query]);
+    if (queryString) {
+      setIsLoading(true);
 
-  const debouncedSetQuery = useRef(
-    debounce((queryTyped: string) => {
-      setQuery(queryTyped);
-    }, SEARCH_DELAY),
-  ).current;
-
-  const onTypeSearchQuery = useCallback((text: string) => {
-    if (text) {
-      debouncedSetQuery(text);
+      handleOnSearchByQuery();
     }
-  }, []);
+  }, [queryString]);
 
   return {
-    items: data && data.search && query ? (data.search.items as SearchPersonItems[]) : [],
-    isLoading: loading,
+    items: queryResult.items,
     onTypeSearchQuery,
+    isLoading,
   };
 };
 

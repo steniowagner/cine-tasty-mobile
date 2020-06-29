@@ -1,0 +1,1 @@
+export { useSearchByQuery } from './useSearchPersonByQuery';
