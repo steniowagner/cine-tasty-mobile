@@ -23,7 +23,7 @@ type TVariables = {
   input: SearchInput;
 };
 
-export const useSearchByQuery = <TData>({
+const useSearchByQuery = <TData>({
   onSetQueryString,
   queryString,
   searchType,
@@ -58,3 +58,5 @@ export const useSearchByQuery = <TData>({
     onSearchByQuery,
   };
 };
+
+export default useSearchByQuery;

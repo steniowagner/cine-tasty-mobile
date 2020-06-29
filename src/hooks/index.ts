@@ -1,1 +1,1 @@
-export { useSearchByQuery } from './useSearchPersonByQuery';
+export { useSearch } from './use-search/useSearch';
