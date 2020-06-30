@@ -1,7 +1,6 @@
 import { useCallback, useRef } from 'react';
-import { DocumentNode } from 'graphql';
+import { ApolloQueryResult } from 'apollo-client';
 
-import useImperativeQuery from 'utils/useImperativeQuery';
 import { SearchInput, SearchType } from 'types/schema';
 import debounce from 'utils/debounce';
 
@@ -12,25 +11,23 @@ type State<TData> = {
   onSearchByQuery: () => Promise<TData>;
 };
 
-type Props = {
-  onSetQueryString: (queryString: string) => void;
-  searchType: SearchType;
-  query: DocumentNode;
-  queryString: string;
-};
-
 type TVariables = {
   input: SearchInput;
+};
+
+type Props<TData> = {
+  search: (variables: TVariables) => Promise<ApolloQueryResult<TData>>;
+  onSetQueryString: (queryString: string) => void;
+  searchType: SearchType;
+  queryString: string;
 };
 
 const useSearchByQuery = <TData>({
   onSetQueryString,
   queryString,
   searchType,
-  query,
-}: Props): State<TData> => {
-  const search = useImperativeQuery<TData, TVariables>(query);
-
+  search,
+}: Props<TData>): State<TData> => {
   const debouncedSetQueryString = useRef(
     debounce((queryStringTyped: string) => {
       onSetQueryString(queryStringTyped);

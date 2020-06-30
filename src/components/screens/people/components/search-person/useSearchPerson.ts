@@ -28,16 +28,21 @@ const SEARCH_PERSON = gql`
 type State = {
   onTypeSearchQuery: (queryString: string) => void;
   items: SearchPersonResultItems[];
+  onPaginateSearch: () => void;
+  isPaginating: boolean;
   isLoading: boolean;
 };
 
 const useSearchPerson = (): State => {
   const [queryString, setQueryString] = useState<string>('');
 
-  const { onTypeSearchQuery, isLoading, items } = useSearch<
-    SearchPerson,
-    SearchPersonItems
-  >({
+  const {
+    onTypeSearchQuery,
+    onPaginateSearch,
+    isPaginating,
+    isLoading,
+    items,
+  } = useSearch<SearchPerson, SearchPersonItems>({
     onSetQueryString: setQueryString,
     searchType: SearchType.PERSON,
     query: SEARCH_PERSON,
@@ -46,7 +51,9 @@ const useSearchPerson = (): State => {
 
   return {
     items: items as SearchPersonResultItems[],
+    onPaginateSearch,
     onTypeSearchQuery,
+    isPaginating,
     isLoading,
   };
 };

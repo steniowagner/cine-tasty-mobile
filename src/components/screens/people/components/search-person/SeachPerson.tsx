@@ -6,6 +6,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
+import PaginationFooterLoading from 'components/common/PaginationFooterLoading';
+
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import SearchBar from 'components/common/searchbar/SearchBar';
 import metrics from 'styles/metrics';
@@ -34,7 +36,13 @@ type Props = {
 };
 
 const SearchPerson = ({ navigation, route }: Props) => {
-  const { onTypeSearchQuery, isLoading, items } = useSearchPerson();
+  const {
+    onTypeSearchQuery,
+    onPaginateSearch,
+    isPaginating,
+    isLoading,
+    items,
+  } = useSearchPerson();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -56,7 +64,7 @@ const SearchPerson = ({ navigation, route }: Props) => {
   return (
     <Wrapper>
       <FlatList
-        numColumns={NUMBER_FLATLIST_COLUMNS}
+        ListFooterComponent={() => isPaginating && <PaginationFooterLoading />}
         columnWrapperStyle={{
           paddingLeft: metrics.smallSize,
         }}
@@ -64,6 +72,7 @@ const SearchPerson = ({ navigation, route }: Props) => {
           android: 0.5,
           ios: 0.1,
         })}
+        numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
           <SearchPersonListItem
             onPress={() => console.warn('item: ', item)}
@@ -74,6 +83,7 @@ const SearchPerson = ({ navigation, route }: Props) => {
           />
         )}
         keyExtractor={({ id }) => `${id}`}
+        onEndReached={onPaginateSearch}
         data={items}
       />
     </Wrapper>

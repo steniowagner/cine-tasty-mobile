@@ -1,14 +1,18 @@
 import { useCallback, useState, useEffect } from 'react';
 import { DocumentNode } from 'graphql';
 
+import useImperativeQuery from 'utils/useImperativeQuery';
 import { SearchType } from 'types/schema';
 
+import usePaginatedSearch from './usePaginatedSearch';
 import useSearchByQuery from './useSearchByQuery';
 
 type State<TDataItems> = {
   onTypeSearchQuery: (value: string) => void;
-  isLoading: boolean;
+  onPaginateSearch: () => void;
+  isPaginating: boolean;
   items: TDataItems[];
+  isLoading: boolean;
 };
 
 type Props = {
@@ -25,7 +29,7 @@ type QueryResult<TDataItems> = {
 
 type BaseSearchResult<TDataItems> = { search: QueryResult<TDataItems> };
 
-export const useSearch = <TDataResult extends BaseSearchResult<TDataItems>, TDataItems>({
+export const useSearch = <TData extends BaseSearchResult<TDataItems>, TDataItems>({
   onSetQueryString,
   queryString,
   searchType,
@@ -37,19 +41,40 @@ export const useSearch = <TDataResult extends BaseSearchResult<TDataItems>, TDat
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { onTypeSearchQuery, onSearchByQuery } = useSearchByQuery<TDataResult>({
+  const search = useImperativeQuery<TData>(query);
+
+  const { onTypeSearchQuery, onSearchByQuery } = useSearchByQuery<TData>({
     onSetQueryString,
     queryString,
     searchType,
-    query,
+    search,
+  });
+
+  const concatPaginatedItems = useCallback(
+    (data: TData) => {
+      setQueryResult((previousQueryResult) => ({
+        items: [...previousQueryResult.items, ...data.search.items],
+        hasMore: data.search.hasMore,
+      }));
+    },
+    [queryResult],
+  );
+
+  const { restartPaginatedSearch, onPaginateSearch, isPaginating } = usePaginatedSearch({
+    concatPaginatedItems,
+    queryString,
+    searchType,
+    search,
   });
 
   const handleOnSearchByQuery = useCallback(async () => {
-    const { search } = await onSearchByQuery();
+    const { search: data } = await onSearchByQuery();
+
+    restartPaginatedSearch();
 
     setQueryResult({
-      hasMore: search.hasMore,
-      items: search.items,
+      hasMore: data.hasMore,
+      items: data.items,
     });
 
     setIsLoading(false);
@@ -63,9 +88,17 @@ export const useSearch = <TDataResult extends BaseSearchResult<TDataItems>, TDat
     }
   }, [queryString]);
 
+  const handleOnPaginatedSearch = useCallback(() => {
+    if (queryResult.hasMore) {
+      onPaginateSearch();
+    }
+  }, [queryString, queryResult]);
+
   return {
+    onPaginateSearch: handleOnPaginatedSearch,
     items: queryResult.items,
     onTypeSearchQuery,
+    isPaginating,
     isLoading,
   };
 };
