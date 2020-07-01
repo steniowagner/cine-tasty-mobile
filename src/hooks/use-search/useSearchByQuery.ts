@@ -35,9 +35,7 @@ const useSearchByQuery = <TData>({
   ).current;
 
   const onTypeSearchQuery = useCallback((queryStringTyped: string) => {
-    if (queryStringTyped) {
-      debouncedSetQueryString(queryStringTyped);
-    }
+    debouncedSetQueryString(queryStringTyped);
   }, []);
 
   const onSearchByQuery = useCallback(async (): Promise<TData> => {

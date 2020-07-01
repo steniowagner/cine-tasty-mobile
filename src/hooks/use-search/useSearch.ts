@@ -7,6 +7,11 @@ import { SearchType } from 'types/schema';
 import usePaginatedSearch from './usePaginatedSearch';
 import useSearchByQuery from './useSearchByQuery';
 
+const INITIAL_QUERY_RESULT = {
+  hasMore: true,
+  items: [],
+};
+
 type State<TDataItems> = {
   onTypeSearchQuery: (value: string) => void;
   onPaginateSearch: () => void;
@@ -35,10 +40,9 @@ export const useSearch = <TData extends BaseSearchResult<TDataItems>, TDataItems
   searchType,
   query,
 }: Props): State<TDataItems> => {
-  const [queryResult, setQueryResult] = useState<QueryResult<TDataItems>>({
-    hasMore: true,
-    items: [],
-  });
+  const [queryResult, setQueryResult] = useState<QueryResult<TDataItems>>(
+    INITIAL_QUERY_RESULT,
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const search = useImperativeQuery<TData>(query);
@@ -85,6 +89,8 @@ export const useSearch = <TData extends BaseSearchResult<TDataItems>, TDataItems
       setIsLoading(true);
 
       handleOnSearchByQuery();
+    } else {
+      setQueryResult(INITIAL_QUERY_RESULT);
     }
   }, [queryString]);
 

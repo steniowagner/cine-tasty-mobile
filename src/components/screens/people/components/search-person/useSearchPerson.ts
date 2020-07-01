@@ -30,6 +30,7 @@ type State = {
   items: SearchPersonResultItems[];
   onPaginateSearch: () => void;
   isPaginating: boolean;
+  queryString: string;
   isLoading: boolean;
 };
 
@@ -51,9 +52,10 @@ const useSearchPerson = (): State => {
 
   return {
     items: items as SearchPersonResultItems[],
-    onPaginateSearch,
     onTypeSearchQuery,
+    onPaginateSearch,
     isPaginating,
+    queryString,
     isLoading,
   };
 };

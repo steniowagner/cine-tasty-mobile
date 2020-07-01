@@ -7,7 +7,6 @@ import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
 import PaginationFooterLoading from 'components/common/PaginationFooterLoading';
-
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import SearchBar from 'components/common/searchbar/SearchBar';
 import metrics from 'styles/metrics';
