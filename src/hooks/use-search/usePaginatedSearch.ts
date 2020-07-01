@@ -59,7 +59,7 @@ const usePaginatedSearch = <TData>({
         isPaginating: true,
       };
     });
-  }, [pagination]);
+  }, []);
 
   const onSearchByPagination = useCallback(
     async ({ queryStringTyped, pageSelected }: DebouncedPaginationProps) => {
