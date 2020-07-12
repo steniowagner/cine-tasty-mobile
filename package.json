@@ -9,7 +9,6 @@
     "ios-se": "npx react-native run-ios --simulator=\"iPhone SE\"",
     "start:clean": "npx react-native start --reset-cache",
     "android": "npx react-native run-android",
-    "android:emulator": "emulator -avd default-emulator",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx .",
     "prettier:fix": "prettier '**/*.+(ts|js|tsx)' --write",
     "start": "npx react-native start",

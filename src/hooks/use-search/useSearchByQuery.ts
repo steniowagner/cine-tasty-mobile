@@ -40,7 +40,7 @@ const useSearchByQuery = <TData>({
 
   const onSearchByQuery = useCallback(async (): Promise<TData> => {
     const variables = {
-      input: { page: 1, query: queryString, type: searchType },
+      input: { page: 1, query: queryString.trim(), type: searchType },
     };
 
     const { data } = await search(variables);
