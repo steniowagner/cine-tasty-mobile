@@ -6,7 +6,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import { SearchInput, SearchType } from 'types/schema';
 import debounce from 'utils/debounce';
 
-const SEARCH_DELAY = 450;
+const SEARCH_DELAY = 500;
 
 const initialPagination: Pagination = {
   isPaginating: false,
