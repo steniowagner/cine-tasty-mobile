@@ -10,11 +10,12 @@ import CONSTANTS from 'utils/constants';
 
 interface WrapperStyleProps {
   readonly withMargin: boolean;
+  readonly height: number;
 }
 
 const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('50%')}px;
+  height: ${({ height }) => height}px;
   margin-horizontal: ${({ withMargin, theme }) => {
     const margin = withMargin ? theme.metrics.mediumSize : 0;
 
@@ -56,6 +57,7 @@ type Props = {
   numberOfColumns: number;
   profilePath?: string;
   onPress: () => void;
+  height: number;
   name?: string;
   index: number;
 };
@@ -66,6 +68,7 @@ const SearchPersonListItem = ({
   numberOfColumns,
   profilePath,
   onPress,
+  height,
   index,
   name,
 }: Props) => {
@@ -81,8 +84,9 @@ const SearchPersonListItem = ({
 
   return (
     <Wrapper
-      onPress={onPress}
       withMargin={index % numberOfColumns === 1}
+      onPress={onPress}
+      height={height}
     >
       <>
         <PersonImage

@@ -16,6 +16,7 @@ import { PeopleStackParams } from '../../routes/route-params-types';
 import SearchPersonListItem from './SearchPersonListItem';
 import useSearchPerson from './useSearchPerson';
 
+const LIST_ITEM_HEIGHT = metrics.getWidthFromDP('50%');
 const NUMBER_FLATLIST_COLUMNS = 3;
 
 const Wrapper = styled(View)`
@@ -84,12 +85,18 @@ const SearchPerson = ({ navigation, route }: Props) => {
           android: 0.5,
           ios: 0.1,
         })}
+        getItemLayout={(_, index: number) => ({
+          length: LIST_ITEM_HEIGHT,
+          offset: LIST_ITEM_HEIGHT * Math.floor(index / NUMBER_FLATLIST_COLUMNS),
+          index,
+        })}
         numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
           <SearchPersonListItem
             onPress={() => console.warn('item: ', item)}
             numberOfColumns={NUMBER_FLATLIST_COLUMNS}
             profilePath={item.profilePath}
+            height={LIST_ITEM_HEIGHT}
             name={item.name}
             index={index}
           />
