@@ -2,6 +2,8 @@ import { Locale } from './Locale';
 
 const en: Locale = {
   errors: {
+    paginatePeopleError: "Couldn't load more people",
+    searchPeopleError: "Couldn't search for this person",
     reloadNewsError: "Couldn't reload the news",
     loadMoreNewsError: "Couldn't load more news",
     network: {

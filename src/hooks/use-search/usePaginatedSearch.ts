@@ -6,7 +6,7 @@ import { ApolloQueryResult } from 'apollo-client';
 import { SearchInput, SearchType } from 'types/schema';
 import debounce from 'utils/debounce';
 
-const SEARCH_DELAY = 250;
+const SEARCH_DELAY = 450;
 
 const initialPagination: Pagination = {
   isPaginating: false,
@@ -36,6 +36,7 @@ type TVariables = {
 type Props<TData> = {
   search: (variables: TVariables) => Promise<ApolloQueryResult<TData>>;
   concatPaginatedItems: (data: TData) => void;
+  setHasError: () => void;
   searchType: SearchType;
   queryString: string;
 };
@@ -43,6 +44,7 @@ type Props<TData> = {
 const usePaginatedSearch = <TData>({
   concatPaginatedItems,
   queryString,
+  setHasError,
   searchType,
   search,
 }: Props<TData>): State => {
@@ -63,22 +65,31 @@ const usePaginatedSearch = <TData>({
 
   const onSearchByPagination = useCallback(
     async ({ queryStringTyped, pageSelected }: DebouncedPaginationProps) => {
-      const variables = {
-        input: { page: pageSelected, query: queryStringTyped, type: searchType },
-      };
+      try {
+        const variables = {
+          input: { page: pageSelected, query: queryStringTyped, type: searchType },
+        };
 
-      const { data } = await search(variables);
+        const { data } = await search(variables);
 
-      if (!data) {
-        return;
+        setPagination((previousPagination: Pagination) => ({
+          ...previousPagination,
+          isPaginating: false,
+        }));
+
+        if (!data) {
+          return;
+        }
+
+        concatPaginatedItems(data);
+      } catch (err) {
+        setHasError();
+
+        setPagination((previousPagination: Pagination) => ({
+          page: previousPagination.page - 1,
+          isPaginating: false,
+        }));
       }
-
-      setPagination((previousPagination: Pagination) => ({
-        ...previousPagination,
-        isPaginating: false,
-      }));
-
-      concatPaginatedItems(data);
     },
     [],
   );

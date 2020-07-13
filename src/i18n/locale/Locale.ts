@@ -16,7 +16,12 @@ type Time =
 
 type Tabs = 'discover' | 'people' | 'quiz' | 'news';
 
-type ErrorType = 'network' | 'loadMoreNewsError' | 'reloadNewsError';
+type ErrorType =
+  | 'network'
+  | 'loadMoreNewsError'
+  | 'reloadNewsError'
+  | 'paginatePeopleError'
+  | 'searchPeopleError';
 
 type ErrorDescription = {
   description: string;

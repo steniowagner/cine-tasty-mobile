@@ -14,7 +14,10 @@ const INITIAL_QUERY_RESULT = {
 
 type State<TDataItems> = {
   onTypeSearchQuery: (value: string) => void;
+  onReloadPagination: () => void;
   onPaginateSearch: () => void;
+  hasPaginationError: boolean;
+  hasSearchError: boolean;
   isPaginating: boolean;
   items: TDataItems[];
   isLoading: boolean;
@@ -43,6 +46,8 @@ export const useSearch = <TData extends BaseSearchResult<TDataItems>, TDataItems
   const [queryResult, setQueryResult] = useState<QueryResult<TDataItems>>(
     INITIAL_QUERY_RESULT,
   );
+  const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
+  const [hasSearchError, setHasSearchError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const search = useImperativeQuery<TData>(query);
@@ -65,6 +70,7 @@ export const useSearch = <TData extends BaseSearchResult<TDataItems>, TDataItems
   );
 
   const { restartPaginatedSearch, onPaginateSearch, isPaginating } = usePaginatedSearch({
+    setHasError: () => setHasPaginationError(true),
     concatPaginatedItems,
     queryString,
     searchType,
@@ -72,38 +78,61 @@ export const useSearch = <TData extends BaseSearchResult<TDataItems>, TDataItems
   });
 
   const handleOnSearchByQuery = useCallback(async () => {
-    const { search: data } = await onSearchByQuery();
+    try {
+      const { search: data } = await onSearchByQuery();
 
-    restartPaginatedSearch();
+      restartPaginatedSearch();
 
-    setQueryResult({
-      hasMore: data.hasMore,
-      items: data.items,
-    });
+      setQueryResult({
+        hasMore: data.hasMore,
+        items: data.items,
+      });
 
-    setIsLoading(false);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+
+      setHasSearchError(true);
+    }
   }, [queryString]);
 
   useEffect(() => {
+    if (hasSearchError) {
+      setHasSearchError(false);
+    }
+
+    if (hasPaginationError) {
+      setHasPaginationError(false);
+    }
+
+    setQueryResult(INITIAL_QUERY_RESULT);
+
     if (queryString) {
       setIsLoading(true);
 
       handleOnSearchByQuery();
-    } else {
-      setQueryResult(INITIAL_QUERY_RESULT);
     }
   }, [queryString]);
 
   const handleOnPaginatedSearch = useCallback(() => {
-    if (queryResult.hasMore) {
+    if (queryResult.hasMore && !hasPaginationError) {
       onPaginateSearch();
     }
-  }, [queryString, queryResult]);
+  }, [hasPaginationError, queryResult]);
+
+  useEffect(() => {
+    if (!hasPaginationError && queryResult.hasMore && queryResult.items.length > 0) {
+      onPaginateSearch();
+    }
+  }, [hasPaginationError]);
 
   return {
+    onReloadPagination: () => setHasPaginationError(false),
     onPaginateSearch: handleOnPaginatedSearch,
     items: queryResult.items,
+    hasPaginationError,
     onTypeSearchQuery,
+    hasSearchError,
     isPaginating,
     isLoading,
   };

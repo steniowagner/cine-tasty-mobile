@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const Wrapper = styled(Animated.View)`
   position: absolute;
   align-self: center;
+  margin-top: ${({ theme }) => theme.metrics.getHeightFromDP('35%')}px;
   padding-horizontal: ${({ theme }) => theme.metrics.extraLargeSize}px;
   padding-vertical: ${({ theme }) => theme.metrics.largeSize}px;
   border-radius: ${({ theme }) => theme.metrics.smallSize}px;

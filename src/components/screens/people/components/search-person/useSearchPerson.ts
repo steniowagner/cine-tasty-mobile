@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import gql from 'graphql-tag';
 
 import {
@@ -28,8 +29,11 @@ const SEARCH_PERSON = gql`
 type State = {
   onTypeSearchQuery: (queryString: string) => void;
   items: SearchPersonResultItems[];
+  onReloadPagination: () => void;
   onPaginateSearch: () => void;
+  hasPaginationError: boolean;
   isPaginating: boolean;
+  errorMessage: string;
   queryString: string;
   isLoading: boolean;
 };
@@ -37,9 +41,14 @@ type State = {
 const useSearchPerson = (): State => {
   const [queryString, setQueryString] = useState<string>('');
 
+  const { t } = useTranslation();
+
   const {
+    hasPaginationError,
+    onReloadPagination,
     onTypeSearchQuery,
     onPaginateSearch,
+    hasSearchError,
     isPaginating,
     isLoading,
     items,
@@ -50,8 +59,23 @@ const useSearchPerson = (): State => {
     queryString,
   });
 
+  const getErrorMessage = useCallback(() => {
+    if (hasSearchError) {
+      return t('translations:errors:searchPeopleError');
+    }
+
+    if (hasPaginationError) {
+      return t('translations:errors:paginatePeopleError');
+    }
+
+    return '';
+  }, [hasSearchError, hasPaginationError]);
+
   return {
     items: items as SearchPersonResultItems[],
+    errorMessage: getErrorMessage(),
+    onReloadPagination,
+    hasPaginationError,
     onTypeSearchQuery,
     onPaginateSearch,
     isPaginating,

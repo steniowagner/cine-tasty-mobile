@@ -15,7 +15,6 @@ interface WrapperStyleProps {
 const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('50%')}px;
-  margin-vertical: ${({ theme }) => theme.metrics.getWidthFromDP('1.5%')}px;
   margin-horizontal: ${({ withMargin, theme }) => {
     const margin = withMargin ? theme.metrics.mediumSize : 0;
 

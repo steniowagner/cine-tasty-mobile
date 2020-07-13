@@ -6,21 +6,21 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
-import PaginationFooterLoading from 'components/common/PaginationFooterLoading';
+import ListFooterComponent from 'components/common/PaginationFooter';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import SearchBar from 'components/common/searchbar/SearchBar';
+import PopupAdvice from 'components/common/PopupAdvice';
 import metrics from 'styles/metrics';
 
 import { PeopleStackParams } from '../../routes/route-params-types';
 import SearchPersonListItem from './SearchPersonListItem';
 import useSearchPerson from './useSearchPerson';
 
-const Wrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-`;
-
 const NUMBER_FLATLIST_COLUMNS = 3;
+
+const Wrapper = styled(View)`
+  flex: 1;
+`;
 
 type SearchPersonScreenNavigationProp = StackNavigationProp<
   PeopleStackParams,
@@ -36,9 +36,12 @@ type Props = {
 
 const SearchPerson = ({ navigation, route }: Props) => {
   const {
+    onReloadPagination,
+    hasPaginationError,
     onTypeSearchQuery,
     onPaginateSearch,
     isPaginating,
+    errorMessage,
     isLoading,
     items,
   } = useSearchPerson();
@@ -63,9 +66,19 @@ const SearchPerson = ({ navigation, route }: Props) => {
   return (
     <Wrapper>
       <FlatList
-        ListFooterComponent={() => isPaginating && <PaginationFooterLoading />}
+        ListFooterComponent={() => (
+          <ListFooterComponent
+            onPressReloadButton={onReloadPagination}
+            hasError={hasPaginationError}
+            isPaginating={isPaginating}
+          />
+        )}
         columnWrapperStyle={{
           paddingLeft: metrics.smallSize,
+        }}
+        contentContainerStyle={{
+          paddingTop: metrics.mediumSize,
+          paddingBottom: metrics.mediumSize,
         }}
         onEndReachedThreshold={Platform.select({
           android: 0.5,
@@ -85,6 +98,12 @@ const SearchPerson = ({ navigation, route }: Props) => {
         onEndReached={onPaginateSearch}
         data={items}
       />
+      {!!errorMessage && (
+      <PopupAdvice
+        onFinishToShow={() => {}}
+        text={errorMessage}
+      />
+      )}
     </Wrapper>
   );
 };
