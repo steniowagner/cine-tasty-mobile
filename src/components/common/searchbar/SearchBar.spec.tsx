@@ -11,7 +11,6 @@ const renderSearchBar = ({
   onPressSearch,
   onPressClose,
   placeholder,
-  value,
 }: Props) => (
   <ThemeProvider
     theme={dark}
@@ -21,14 +20,12 @@ const renderSearchBar = ({
       onPressSearch={onPressSearch}
       onPressClose={onPressClose}
       placeholder={placeholder}
-      value={value}
     />
   </ThemeProvider>
 );
 
 describe('Testing <SearchBar />', () => {
   it('should render correctly', () => {
-    const value = 'some value';
     const placeholder = 'some placeholder';
 
     const { getByTestId } = render(
@@ -37,14 +34,12 @@ describe('Testing <SearchBar />', () => {
         onPressSearch: jest.fn(),
         onPressClose: jest.fn(),
         placeholder,
-        value,
       }),
     );
 
     expect(getByTestId('searchbar-wrapper')).not.toBeNull();
     expect(getByTestId('header-icon-button-wrapper')).not.toBeNull();
     expect(getByTestId('icon').props.name).toEqual('close');
-    expect(getByTestId('search-input').props.value).toEqual(value);
     expect(getByTestId('search-input').props.placeholder).toEqual(placeholder);
   });
 
@@ -58,7 +53,6 @@ describe('Testing <SearchBar />', () => {
         onPressClose: jest.fn(),
         onTypeSearchQuery,
         placeholder: '',
-        value: '',
       }),
     );
 
@@ -77,7 +71,6 @@ describe('Testing <SearchBar />', () => {
         onPressClose: jest.fn(),
         placeholder: '',
         onPressSearch,
-        value: '',
       }),
     );
 
@@ -95,7 +88,6 @@ describe('Testing <SearchBar />', () => {
         onPressSearch: jest.fn(),
         placeholder: '',
         onPressClose,
-        value: '',
       }),
     );
 

@@ -35,7 +35,6 @@
   },
   "lint-staged": {
     "*.+(ts|tsx)": [
-      "yarn test",
       "yarn prettier:fix",
       "yarn lint:fix"
     ]
@@ -75,6 +74,8 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/runtime": "^7.6.2",
+    "@graphql-codegen/cli": "^1.15.4",
+    "@graphql-codegen/fragment-matcher": "^1.15.4",
     "@react-native-community/eslint-config": "^0.0.5",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^24.0.24",

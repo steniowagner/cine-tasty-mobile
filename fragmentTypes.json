@@ -1,0 +1,57 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "SearchResultItem",
+        "possibleTypes": [
+          {
+            "name": "BasePerson"
+          },
+          {
+            "name": "BaseMovie"
+          },
+          {
+            "name": "BaseTVShow"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "PersonKnowFor",
+        "possibleTypes": [
+          {
+            "name": "BaseMovie"
+          },
+          {
+            "name": "BaseTVShow"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Cast",
+        "possibleTypes": [
+          {
+            "name": "CastMovie"
+          },
+          {
+            "name": "CastTVShow"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "CastResponse",
+        "possibleTypes": [
+          {
+            "name": "CastMovieResponse"
+          },
+          {
+            "name": "CastTVShowResponse"
+          }
+        ]
+      }
+    ]
+  }
+}

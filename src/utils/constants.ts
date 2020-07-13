@@ -6,6 +6,10 @@ const KEYS = {
 };
 
 const VALUES = {
+  IMAGES: {
+    BASE_URL: 'https://image.tmdb.org/t/p',
+    PROFILE_SIZE_CODE: 'w154',
+  },
   FALLBACK_LANGUAGE: 'en',
 };
 

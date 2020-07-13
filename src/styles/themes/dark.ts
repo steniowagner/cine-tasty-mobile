@@ -17,7 +17,7 @@ const dark: DefaultTheme = {
     inactiveWhite: '#bbb',
     shimmer: ['#353535', '#4f4f4f', '#353535'],
     darkLayer: 'rgba(0, 0, 0, 0.4)',
-    popup: '#4f4f4f',
+    popup: '#rgba(0, 0, 0, 0.9)',
   },
   metrics,
 };

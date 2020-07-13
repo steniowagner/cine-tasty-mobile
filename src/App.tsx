@@ -2,6 +2,8 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { ApolloProvider } from '@apollo/react-hooks';
 
+import RouteSuspenseWrapper from './components/common/RouteSuspenseWrapper';
+
 import { ThemeContextProvider } from './styles/theme-context-provider/ThemeContextProvider';
 import AndroidNavigationBar from './components/utils/AndroidNavigationBar.android';
 import Navigation from './routes/Routes';
@@ -15,7 +17,9 @@ const App = () => (
       <ApolloProvider
         client={client}
       >
-        <Navigation />
+        <RouteSuspenseWrapper>
+          <Navigation />
+        </RouteSuspenseWrapper>
       </ApolloProvider>
       {Platform.OS === 'android' && <AndroidNavigationBar />}
     </>
