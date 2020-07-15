@@ -1,41 +1,41 @@
 /* eslint-disable react/display-name */
 
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useCallback } from 'react';
 import { Platform, FlatList, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
+import DefaultListItem, {
+  DEFAULT_LIST_ITEM_HEIGHT,
+} from 'components/common/DefaultListItem';
 import ListFooterComponent from 'components/common/PaginationFooter';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import SearchBar from 'components/common/searchbar/SearchBar';
 import PopupAdvice from 'components/common/PopupAdvice';
+import { SearchType } from 'types/schema';
 import metrics from 'styles/metrics';
+import { SearchItem } from 'types';
 
-import { PeopleStackParams } from '../../routes/route-params-types';
-import SearchPersonListItem from './SearchPersonListItem';
-import useSearchPerson from './useSearchPerson';
+import { SearchStackParams } from '../../routes/route-params-types';
+import useSearch from './use-search/useSearch';
 
-const LIST_ITEM_HEIGHT = metrics.getWidthFromDP('50%');
 const NUMBER_FLATLIST_COLUMNS = 3;
 
 const Wrapper = styled(View)`
   flex: 1;
 `;
 
-type SearchPersonScreenNavigationProp = StackNavigationProp<
-  PeopleStackParams,
-  'SEARCH_PERSON'
->;
+type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH'>;
 
-type SearchPersonScreenRouteProp = RouteProp<PeopleStackParams, 'SEARCH_PERSON'>;
+type SearchScreenRouteProp = RouteProp<SearchStackParams, 'SEARCH'>;
 
 type Props = {
-  navigation: SearchPersonScreenNavigationProp;
-  route: SearchPersonScreenRouteProp;
+  navigation: SearchScreenNavigationProp;
+  route: SearchScreenRouteProp;
 };
 
-const SearchPerson = ({ navigation, route }: Props) => {
+const Search = ({ navigation, route }: Props) => {
   const {
     onReloadPagination,
     hasPaginationError,
@@ -45,13 +45,19 @@ const SearchPerson = ({ navigation, route }: Props) => {
     errorMessage,
     isLoading,
     items,
-  } = useSearchPerson();
+    t,
+  } = useSearch({
+    i18nQueryByPaginationErrorRef: route.params.i18nQueryByPaginationErrorRef,
+    i18nQueryByTextErrorRef: route.params.i18nQueryByTextErrorRef,
+    searchType: route.params.searchType,
+    query: route.params.query,
+  });
 
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <SearchBar
-          placeholder={route.params.searchBarPlaceholder}
+          placeholder={t(route.params.i18nSearchBarPlaceholderRef)}
           onPressClose={() => navigation.goBack()}
           onTypeSearchQuery={onTypeSearchQuery}
           onPressSearch={() => {}}
@@ -59,6 +65,20 @@ const SearchPerson = ({ navigation, route }: Props) => {
       ),
     });
   }, [onTypeSearchQuery]);
+
+  const onPressListItem = useCallback((item: SearchItem): void => {
+    if (route.params.searchType === SearchType.MOVIE) {
+      console.warn('Go to MOVIE-DETAIL-SCREEN', item.title);
+    }
+
+    if (route.params.searchType === SearchType.PERSON) {
+      console.warn('Go to PERSON-DETAIL-SCREEN', item.title);
+    }
+
+    if (route.params.searchType === SearchType.TV) {
+      console.warn('Go to Tv-DETAIL-SCREEN', item.title);
+    }
+  }, []);
 
   if (isLoading) {
     return <LoadingIndicator />;
@@ -86,18 +106,17 @@ const SearchPerson = ({ navigation, route }: Props) => {
           ios: 0.1,
         })}
         getItemLayout={(_, index: number) => ({
-          length: LIST_ITEM_HEIGHT,
-          offset: LIST_ITEM_HEIGHT * Math.floor(index / NUMBER_FLATLIST_COLUMNS),
+          length: DEFAULT_LIST_ITEM_HEIGHT,
+          offset: DEFAULT_LIST_ITEM_HEIGHT * Math.floor(index / NUMBER_FLATLIST_COLUMNS),
           index,
         })}
         numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
-          <SearchPersonListItem
-            onPress={() => console.warn('item: ', item)}
+          <DefaultListItem
+            onPress={() => onPressListItem(item)}
             numberOfColumns={NUMBER_FLATLIST_COLUMNS}
-            profilePath={item.profilePath}
-            height={LIST_ITEM_HEIGHT}
-            name={item.name}
+            image={item.image}
+            title={item.title}
             index={index}
           />
         )}
@@ -115,4 +134,4 @@ const SearchPerson = ({ navigation, route }: Props) => {
   );
 };
 
-export default SearchPerson;
+export default Search;

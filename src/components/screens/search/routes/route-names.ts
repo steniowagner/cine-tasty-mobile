@@ -1,10 +1,10 @@
 import { LocalStackRoute } from 'types';
 
-export type Routes = 'PEOPLE';
+export type Routes = 'SEARCH';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
-  PEOPLE: {
-    id: 'PEOPLE',
+  SEARCH: {
+    id: 'SEARCH',
   },
 };
 

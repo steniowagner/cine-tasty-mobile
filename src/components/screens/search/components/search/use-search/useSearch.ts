@@ -1,7 +1,9 @@
 import { useCallback, useState, useEffect } from 'react';
 import { DocumentNode } from 'graphql';
 
+import { PaginatedQueryResult, SearchResult, SearchItem } from 'types';
 import useImperativeQuery from 'utils/useImperativeQuery';
+import { useTranslation } from 'react-i18next';
 import { SearchType } from 'types/schema';
 
 import usePaginatedSearch from './usePaginatedSearch';
@@ -12,55 +14,53 @@ const INITIAL_QUERY_RESULT = {
   items: [],
 };
 
-type State<TDataItems> = {
+type State = {
   onTypeSearchQuery: (value: string) => void;
   onReloadPagination: () => void;
   onPaginateSearch: () => void;
+  t: (text: string) => string;
   hasPaginationError: boolean;
   hasSearchError: boolean;
   isPaginating: boolean;
-  items: TDataItems[];
+  errorMessage: string;
+  items: SearchItem[];
   isLoading: boolean;
 };
 
 type Props = {
-  onSetQueryString: (queryString: string) => void;
+  i18nQueryByPaginationErrorRef: string;
+  i18nQueryByTextErrorRef: string;
   searchType: SearchType;
   query: DocumentNode;
-  queryString: string;
 };
 
-type QueryResult<TDataItems> = {
-  items: TDataItems[];
-  hasMore: boolean;
-};
-
-type BaseSearchResult<TDataItems> = { search: QueryResult<TDataItems> };
-
-export const useSearch = <TData extends BaseSearchResult<TDataItems>, TDataItems>({
-  onSetQueryString,
-  queryString,
+const useSearch = ({
+  i18nQueryByPaginationErrorRef,
+  i18nQueryByTextErrorRef,
   searchType,
   query,
-}: Props): State<TDataItems> => {
-  const [queryResult, setQueryResult] = useState<QueryResult<TDataItems>>(
+}: Props): State => {
+  const [queryResult, setQueryResult] = useState<PaginatedQueryResult>(
     INITIAL_QUERY_RESULT,
   );
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [hasSearchError, setHasSearchError] = useState<boolean>(false);
+  const [queryString, setQueryString] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const search = useImperativeQuery<TData>(query);
+  const search = useImperativeQuery<SearchResult>(query);
 
-  const { onTypeSearchQuery, onSearchByQuery } = useSearchByQuery<TData>({
-    onSetQueryString,
+  const { t } = useTranslation();
+
+  const { onTypeSearchQuery, onSearchByQuery } = useSearchByQuery({
+    setQueryString,
     queryString,
     searchType,
     search,
   });
 
   const concatPaginatedItems = useCallback(
-    (data: TData) => {
+    (data: SearchResult) => {
       setQueryResult((previousQueryResult) => ({
         items: [...previousQueryResult.items, ...data.search.items],
         hasMore: data.search.hasMore,
@@ -126,14 +126,30 @@ export const useSearch = <TData extends BaseSearchResult<TDataItems>, TDataItems
     }
   }, [hasPaginationError]);
 
+  const getErrorMessage = useCallback(() => {
+    if (hasSearchError) {
+      return t(i18nQueryByTextErrorRef);
+    }
+
+    if (hasPaginationError) {
+      return t(i18nQueryByPaginationErrorRef);
+    }
+
+    return '';
+  }, [hasSearchError, hasPaginationError]);
+
   return {
     onReloadPagination: () => setHasPaginationError(false),
     onPaginateSearch: handleOnPaginatedSearch,
+    errorMessage: getErrorMessage(),
     items: queryResult.items,
     hasPaginationError,
     onTypeSearchQuery,
     hasSearchError,
     isPaginating,
     isLoading,
+    t,
   };
 };
+
+export default useSearch;

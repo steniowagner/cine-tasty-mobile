@@ -93,6 +93,8 @@ const es: Locale = {
   },
   people: {
     searchBarPlaceholder: 'Search for an Actor or Actress...',
+    i18nQueryByPaginationErrorRef: 'i18nQueryByPaginationErrorRef',
+    i18nQueryByTextErrorRef: 'i18nQueryByTextErrorRef',
   },
 };
 
