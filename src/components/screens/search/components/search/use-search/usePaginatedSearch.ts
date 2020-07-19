@@ -5,6 +5,7 @@ import { ApolloQueryResult } from 'apollo-client';
 
 import { SearchInput, SearchType } from 'types/schema';
 import debounce from 'utils/debounce';
+import { SearchResult } from 'types';
 
 const SEARCH_DELAY = 500;
 
@@ -33,21 +34,21 @@ type TVariables = {
   input: SearchInput;
 };
 
-type Props<TData> = {
-  search: (variables: TVariables) => Promise<ApolloQueryResult<TData>>;
-  concatPaginatedItems: (data: TData) => void;
+type Props = {
+  search: (variables: TVariables) => Promise<ApolloQueryResult<SearchResult>>;
+  concatPaginatedItems: (data: SearchResult) => void;
   setHasError: () => void;
   searchType: SearchType;
   queryString: string;
 };
 
-const usePaginatedSearch = <TData>({
+const usePaginatedSearch = ({
   concatPaginatedItems,
   queryString,
   setHasError,
   searchType,
   search,
-}: Props<TData>): State => {
+}: Props): State => {
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
 
   const onPaginateSearch = useCallback(() => {

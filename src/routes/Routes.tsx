@@ -1,14 +1,17 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { DefaultTheme, withTheme } from 'styled-components';
 import {
   createBottomTabNavigator,
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
-import { ThemeID } from 'types';
 
 import TabNavigator from 'components/utils/tab-navigator/TabNavigator';
+import { ThemeID } from 'types';
+
+import SearchStack, { StackID } from 'components/screens/search/routes/stack-routes';
 
 import DiscoverStack, {
   TabID as DiscoverTabID,
@@ -27,6 +30,37 @@ import NewsStack, {
 } from 'components/screens/news/routes/stack-routes';
 
 const Tab = createBottomTabNavigator();
+
+const Tabs = () => (
+  <Tab.Navigator
+    initialRouteName={PeopleTabID}
+    tabBar={(props: BottomTabBarProps) => (
+      <TabNavigator
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+      />
+    )}
+  >
+    <Tab.Screen
+      component={DiscoverStack}
+      name={DiscoverTabID}
+    />
+    <Tab.Screen
+      component={PeopleStack}
+      name={PeopleTabID}
+    />
+    <Tab.Screen
+      component={QuizStack}
+      name={QuizTabID}
+    />
+    <Tab.Screen
+      component={NewsStack}
+      name={NewsTabID}
+    />
+  </Tab.Navigator>
+);
+
+const RootStack = createStackNavigator();
 
 type Props = {
   theme: DefaultTheme;
@@ -51,32 +85,21 @@ const Routes = ({ theme }: Props) => (
         },
       }}
     >
-      <Tab.Navigator
-        initialRouteName={PeopleTabID}
-        tabBar={(props: BottomTabBarProps) => (
-          <TabNavigator
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...props}
-          />
-        )}
+      <RootStack.Navigator
+        screenOptions={{ animationEnabled: false }}
+        mode="modal"
       >
-        <Tab.Screen
-          component={DiscoverStack}
-          name={DiscoverTabID}
+        <RootStack.Screen
+          options={{ headerShown: false }}
+          component={Tabs}
+          name="Tabs"
         />
-        <Tab.Screen
-          component={PeopleStack}
-          name={PeopleTabID}
+        <RootStack.Screen
+          options={{ headerShown: false, animationEnabled: true }}
+          component={SearchStack}
+          name={StackID}
         />
-        <Tab.Screen
-          component={QuizStack}
-          name={QuizTabID}
-        />
-        <Tab.Screen
-          component={NewsStack}
-          name={NewsTabID}
-        />
-      </Tab.Navigator>
+      </RootStack.Navigator>
     </NavigationContainer>
   </>
 );

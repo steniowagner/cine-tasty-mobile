@@ -3,34 +3,35 @@ import { ApolloQueryResult } from 'apollo-client';
 
 import { SearchInput, SearchType } from 'types/schema';
 import debounce from 'utils/debounce';
+import { SearchResult } from 'types';
 
 const SEARCH_DELAY = 1000;
 
-type State<TData> = {
+type State = {
   onTypeSearchQuery: (queryStringTyped: string) => void;
-  onSearchByQuery: () => Promise<TData>;
+  onSearchByQuery: () => Promise<SearchResult>;
 };
 
 type TVariables = {
   input: SearchInput;
 };
 
-type Props<TData> = {
-  search: (variables: TVariables) => Promise<ApolloQueryResult<TData>>;
-  onSetQueryString: (queryString: string) => void;
+type Props = {
+  search: (variables: TVariables) => Promise<ApolloQueryResult<SearchResult>>;
+  setQueryString: (queryString: string) => void;
   searchType: SearchType;
   queryString: string;
 };
 
-const useSearchByQuery = <TData>({
-  onSetQueryString,
+const useSearchByQuery = ({
+  setQueryString,
   queryString,
   searchType,
   search,
-}: Props<TData>): State<TData> => {
+}: Props): State => {
   const debouncedSetQueryString = useRef(
     debounce((queryStringTyped: string) => {
-      onSetQueryString(queryStringTyped);
+      setQueryString(queryStringTyped);
     }, SEARCH_DELAY),
   ).current;
 
@@ -38,7 +39,7 @@ const useSearchByQuery = <TData>({
     debouncedSetQueryString(queryStringTyped);
   }, []);
 
-  const onSearchByQuery = useCallback(async (): Promise<TData> => {
+  const onSearchByQuery = useCallback(async (): Promise<SearchResult> => {
     const variables = {
       input: { page: 1, query: queryString.trim(), type: searchType },
     };

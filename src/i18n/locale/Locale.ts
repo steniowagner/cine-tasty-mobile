@@ -74,6 +74,8 @@ export interface Locale {
     noQuestionsAdviseSuggestion: string;
   };
   people: {
+    i18nQueryByPaginationErrorRef: string;
+    i18nQueryByTextErrorRef: string;
     searchBarPlaceholder: string;
   };
 }

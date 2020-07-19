@@ -54,3 +54,18 @@ export type QuizResult = {
   question: string;
   answer: string;
 };
+
+export type SearchItem = {
+  image: string;
+  title: string;
+  id: number;
+};
+
+export type PaginatedQueryResult = {
+  items: SearchItem[];
+  hasMore: boolean;
+};
+
+export type SearchResult = {
+  search: PaginatedQueryResult;
+}

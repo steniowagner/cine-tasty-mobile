@@ -7,15 +7,17 @@ import styled from 'styled-components';
 import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 interface WrapperStyleProps {
   readonly withMargin: boolean;
-  readonly height: number;
 }
+
+export const DEFAULT_LIST_ITEM_HEIGHT = metrics.getWidthFromDP('50%');
 
 const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
-  height: ${({ height }) => height}px;
+  height: ${DEFAULT_LIST_ITEM_HEIGHT}px;
   margin-horizontal: ${({ withMargin, theme }) => {
     const margin = withMargin ? theme.metrics.mediumSize : 0;
 
@@ -55,22 +57,16 @@ const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
 
 type Props = {
   numberOfColumns: number;
-  profilePath?: string;
+  image?: string;
   onPress: () => void;
-  height: number;
-  name?: string;
+  title?: string;
   index: number;
 };
 
 const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
-const SearchPersonListItem = ({
-  numberOfColumns,
-  profilePath,
-  onPress,
-  height,
-  index,
-  name,
+const DefaultListItem = ({
+  numberOfColumns, onPress, image, index, title,
 }: Props) => {
   const {
     isFallbackImageVisible,
@@ -79,21 +75,20 @@ const SearchPersonListItem = ({
     opacity,
     onLoad,
   } = useLoadListItemImage({
-    image: profilePath,
+    image,
   });
 
   return (
     <Wrapper
       withMargin={index % numberOfColumns === 1}
       onPress={onPress}
-      height={height}
     >
       <>
         <PersonImage
           onError={onError}
           onLoad={onLoad}
           source={{
-            uri: `${PERSON_IMAGE_URI}${profilePath}`,
+            uri: `${PERSON_IMAGE_URI}${image}`,
           }}
         />
         {isFallbackImageVisible && (
@@ -111,9 +106,9 @@ const SearchPersonListItem = ({
           </FallbackImageWrapper>
         )}
       </>
-      <PersonName>{name}</PersonName>
+      <PersonName>{title}</PersonName>
     </Wrapper>
   );
 };
 
-export default SearchPersonListItem;
+export default DefaultListItem;
