@@ -64,51 +64,53 @@ const useCustomModal = ({
     onAnimateCard(0);
   }, []);
 
-  const setTranslationValues = (
-    translationOffset: number,
-    translationValue: number,
-    offsetValue: number,
-  ): void => {
-    translateY.setOffset(translationOffset);
-    translateY.setValue(translationValue);
-    offset = offsetValue;
-  };
+  const setTranslationValues = useCallback(
+    (translationOffset: number, translationValue: number, offsetValue: number): void => {
+      translateY.setOffset(translationOffset);
+      translateY.setValue(translationValue);
+      offset = offsetValue;
+    },
+    [offset],
+  );
 
-  const onHandlerStateChange = (event: PanGestureHandlerStateChangeEvent): void => {
-    if (event.nativeEvent.oldState === State.ACTIVE) {
-      const { translationY } = event.nativeEvent;
-      let isFilterOpen = false;
+  const onHandlerStateChange = useCallback(
+    (event: PanGestureHandlerStateChangeEvent): void => {
+      if (event.nativeEvent.oldState === State.ACTIVE) {
+        const { translationY } = event.nativeEvent;
+        let isFilterOpen = false;
 
-      offset += translationY;
+        offset += translationY;
 
-      if (translationY >= cardContainerHeight / 2) {
-        isFilterOpen = true;
-      } else {
-        setTranslationValues(0, offset, 0);
-      }
-
-      const nextCardPosition = isFilterOpen ? cardContainerHeight : 0;
-
-      onAnimateCard(nextCardPosition, () => {
-        setTranslationValues(nextCardPosition, 0, nextCardPosition);
-
-        if (isFilterOpen) {
-          setShouldHideCard(true);
-          onClose();
+        if (translationY >= cardContainerHeight / 2) {
+          isFilterOpen = true;
+        } else {
+          setTranslationValues(0, offset, 0);
         }
-      });
-    }
-  };
 
-  const onCloseModal = () => {
+        const nextCardPosition = isFilterOpen ? cardContainerHeight : 0;
+
+        onAnimateCard(nextCardPosition, () => {
+          setTranslationValues(nextCardPosition, 0, nextCardPosition);
+
+          if (isFilterOpen) {
+            setShouldHideCard(true);
+            onClose();
+          }
+        });
+      }
+    },
+    [onClose],
+  );
+
+  const onCloseModal = useCallback(() => {
     onAnimateCard(cardContainerHeight, () => {
       setShouldHideCard(true);
 
       onClose();
     });
-  };
+  }, [onClose]);
 
-  const onPressSelectButton = () => {
+  const onPressSelectButton = useCallback(() => {
     onAnimateCard(cardContainerHeight, () => {
       setShouldHideCard(true);
 
@@ -116,7 +118,7 @@ const useCustomModal = ({
 
       onClose();
     });
-  };
+  }, [onPressSelect]);
 
   return {
     onHandlerStateChange,
