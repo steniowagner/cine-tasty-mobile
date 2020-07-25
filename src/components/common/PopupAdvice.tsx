@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, Text } from 'react-native';
 import styled from 'styled-components';
 
+export const DEFAULT_ANIMATION_DURATION = 400;
+
 const Wrapper = styled(Animated.View)`
   position: absolute;
   align-self: center;
@@ -22,11 +24,13 @@ const PopupAdvice = ({ onFinishToShow, text }) => {
   const wrapperOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const onHidePopup = () => Animated.timing(wrapperOpacity, {
-      useNativeDriver: true,
-      duration: 400,
-      toValue: 0,
-    }).start(onFinishToShow);
+    const onHidePopup = () => {
+      Animated.timing(wrapperOpacity, {
+        useNativeDriver: true,
+        duration: 400,
+        toValue: 0,
+      }).start(onFinishToShow);
+    };
 
     Animated.timing(wrapperOpacity, {
       useNativeDriver: true,
@@ -41,13 +45,18 @@ const PopupAdvice = ({ onFinishToShow, text }) => {
 
   return (
     <Wrapper
+      testID="popup-advice-wrapper"
       style={[
         {
           opacity: wrapperOpacity,
         },
       ]}
     >
-      <Message>{text}</Message>
+      <Message
+        testID="popup-advice-message"
+      >
+        {text}
+      </Message>
     </Wrapper>
   );
 };
