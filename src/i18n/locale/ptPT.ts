@@ -95,6 +95,7 @@ const ptPT: Locale = {
     searchBarPlaceholder: 'Search for an Actor or Actress...',
     i18nQueryByPaginationErrorRef: 'i18nQueryByPaginationErrorRef',
     i18nQueryByTextErrorRef: 'i18nQueryByTextErrorRef',
+    i18EntryQueryErrorRef: 'i18EntryQueryErrorRef',
   },
 };
 

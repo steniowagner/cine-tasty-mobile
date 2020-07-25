@@ -76,6 +76,7 @@ export interface Locale {
   people: {
     i18nQueryByPaginationErrorRef: string;
     i18nQueryByTextErrorRef: string;
+    i18EntryQueryErrorRef: string;
     searchBarPlaceholder: string;
   };
 }

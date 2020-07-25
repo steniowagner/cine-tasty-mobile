@@ -40,77 +40,28 @@ export interface GetArticlesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SearchPerson
+// GraphQL query operation: GetPeople
 // ====================================================
 
-export interface SearchPerson_search_items_BaseMovie {
-  __typename: "BaseMovie" | "BaseTVShow";
-}
-
-export interface SearchPerson_search_items_BasePerson_knownFor_BaseMovie {
-  __typename: "BaseMovie";
-  originalTitle: string | null;
-  video: boolean | null;
-  title: string | null;
-  adult: boolean | null;
-  releaseDate: string | null;
-  backdropPath: string | null;
-  genreIds: string[];
-  overview: string | null;
-  voteAverage: number | null;
-  mediaType: string | null;
-  posterPath: string | null;
-  popularity: number | null;
-  originalLanguage: string | null;
-  voteCount: number | null;
-  id: number | null;
-}
-
-export interface SearchPerson_search_items_BasePerson_knownFor_BaseTVShow {
-  __typename: "BaseTVShow";
-  originCountry: string[];
-  originalName: string | null;
-  name: string | null;
-  firstAirDate: string | null;
-  backdropPath: string | null;
-  genreIds: string[];
-  overview: string | null;
-  voteAverage: number | null;
-  mediaType: string | null;
-  posterPath: string | null;
-  popularity: number | null;
-  originalLanguage: string | null;
-  voteCount: number | null;
-  id: number | null;
-}
-
-export type SearchPerson_search_items_BasePerson_knownFor = SearchPerson_search_items_BasePerson_knownFor_BaseMovie | SearchPerson_search_items_BasePerson_knownFor_BaseTVShow;
-
-export interface SearchPerson_search_items_BasePerson {
+export interface GetPeople_people_items {
   __typename: "BasePerson";
   profilePath: string | null;
-  adult: boolean | null;
-  id: number | null;
-  popularity: number | null;
   name: string | null;
-  knownFor: SearchPerson_search_items_BasePerson_knownFor[];
+  id: number | null;
 }
 
-export type SearchPerson_search_items = SearchPerson_search_items_BaseMovie | SearchPerson_search_items_BasePerson;
-
-export interface SearchPerson_search {
-  __typename: "SearchQueryResult";
-  totalResults: number;
+export interface GetPeople_people {
+  __typename: "PeopleQueryResult";
   hasMore: boolean;
-  items: SearchPerson_search_items[];
+  items: GetPeople_people_items[];
 }
 
-export interface SearchPerson {
-  search: SearchPerson_search;
+export interface GetPeople {
+  people: GetPeople_people;
 }
 
-export interface SearchPersonVariables {
-  input: SearchInput;
+export interface GetPeopleVariables {
+  page: number;
 }
 
 /* tslint:disable */
@@ -138,6 +89,43 @@ export interface GetQuizQuestions {
 
 export interface GetQuizQuestionsVariables {
   input: QuizInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: SearchPerson
+// ====================================================
+
+export interface SearchPerson_search_items_BaseMovie {
+  __typename: "BaseMovie" | "BaseTVShow";
+}
+
+export interface SearchPerson_search_items_BasePerson {
+  __typename: "BasePerson";
+  image: string | null;
+  title: string | null;
+  id: number | null;
+}
+
+export type SearchPerson_search_items = SearchPerson_search_items_BaseMovie | SearchPerson_search_items_BasePerson;
+
+export interface SearchPerson_search {
+  __typename: "SearchQueryResult";
+  totalResults: number;
+  hasMore: boolean;
+  items: SearchPerson_search_items[];
+}
+
+export interface SearchPerson {
+  search: SearchPerson_search;
+}
+
+export interface SearchPersonVariables {
+  input: SearchInput;
 }
 
 /* tslint:disable */
