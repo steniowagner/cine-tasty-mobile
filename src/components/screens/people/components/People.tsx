@@ -6,10 +6,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
+import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import { SEARCH_PERSON } from 'components/screens/search/queries';
 import LoadingIndicator from 'components/common/LoadingIndicator';
-import PopupAdvice from 'components/common/PopupAdvice';
 import DefaultListItem, {
   DEFAULT_LIST_ITEM_HEIGHT,
 } from 'components/common/DefaultListItem';

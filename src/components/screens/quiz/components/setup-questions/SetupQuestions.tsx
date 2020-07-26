@@ -52,6 +52,7 @@ const SetupQuestions = ({ navigation }: Props) => {
     questionDifficulty,
     numberOfQuestions,
     questionCategory,
+    onPressStartQuiz,
     onSelectOption,
     onPressSelect,
     modalMessage,
@@ -60,16 +61,7 @@ const SetupQuestions = ({ navigation }: Props) => {
     isModalOpen,
     options,
     t,
-  } = useSetupQuestions();
-
-  const onPressStartQuiz = () => {
-    navigation.navigate('QUESTIONS', {
-      difficulty: questionDifficulty.value,
-      category: questionCategory.value,
-      type: questionType.value,
-      numberOfQuestions,
-    });
-  };
+  } = useSetupQuestions({ navigation });
 
   return (
     <Wrapper>

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import styled, { withTheme, DefaultTheme } from 'styled-components';
 
-import PopupAdvice from 'components/common/PopupAdvice';
+import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import Advise from 'components/common/advise/Advise';
 import { ArticleLanguage } from 'types/schema';
 import Icon from 'components/common/Icon';

@@ -3,20 +3,20 @@ import { QuestionOption } from 'types';
 
 const difficulties: QuestionOption<QuestionDifficulty>[] = [
   {
-    id: 'difficultyMixed',
     value: QuestionDifficulty.MIXED,
+    id: 'difficultyMixed',
   },
   {
-    id: 'difficultyEasy',
     value: QuestionDifficulty.EASY,
+    id: 'difficultyEasy',
   },
   {
-    id: 'difficultyMedium',
     value: QuestionDifficulty.MEDIUM,
+    id: 'difficultyMedium',
   },
   {
-    id: 'difficultyHard',
     value: QuestionDifficulty.HARD,
+    id: 'difficultyHard',
   },
 ];
 

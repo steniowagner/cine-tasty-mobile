@@ -5,6 +5,7 @@ import {
 } from 'react-native-testing-library';
 import MockDate from 'mockdate';
 
+import { ANIMATION_TIMING } from 'components/common/custom-modal/CustomModal';
 import { dark } from 'styles/themes';
 
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
@@ -23,13 +24,15 @@ const renderSetupQuestions = (mockedNavigation = navigation) => (
   </ThemeProvider>
 );
 
-jest.useFakeTimers();
-
 describe('Testing <SetupQuestions />', () => {
   afterEach(cleanup);
 
   beforeEach(() => {
+    jest.useFakeTimers();
+
     jest.clearAllMocks();
+
+    MockDate.set(0);
   });
 
   describe('Testing the renders', () => {
@@ -54,8 +57,6 @@ describe('Testing <SetupQuestions />', () => {
     });
 
     it('should render the difficulty selected correctly after the selection', () => {
-      MockDate.set(0);
-
       const INDEX_DIFFICULTY_SELECTED = 3;
 
       const { getByTestId, getAllByTestId } = render(renderSetupQuestions());
@@ -65,7 +66,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(difficultDropdown);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -75,7 +76,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       try {
@@ -94,8 +95,6 @@ describe('Testing <SetupQuestions />', () => {
     });
 
     it('should render the category selected correctly after the selection', () => {
-      MockDate.set(0);
-
       const INDEX_CATEGORY_SELECTED = 2;
 
       const { getByTestId, getAllByTestId } = render(renderSetupQuestions());
@@ -105,7 +104,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(categoryDropdown);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -115,7 +114,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       try {
@@ -132,8 +131,6 @@ describe('Testing <SetupQuestions />', () => {
     });
 
     it('should render the type selected correctly after the selection', () => {
-      MockDate.set(0);
-
       const INDEX_TYPE_SELECTED = 1;
 
       const { getByTestId, getAllByTestId } = render(renderSetupQuestions());
@@ -143,7 +140,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(typeDropdown);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -153,7 +150,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       try {
@@ -194,8 +191,6 @@ describe('Testing <SetupQuestions />', () => {
     });
 
     it('should call navigate with custom parameters when press START QUIZ', () => {
-      MockDate.set(0);
-
       const INDEX_DIFFICULTY_SELECTED = 3;
       const INDEX_CATEGORY_SELECTED = 2;
       const INDEX_TYPE_SELECTED = 1;
@@ -219,7 +214,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(difficultyDropdown);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(getAllByTestId('option-list-item')[INDEX_DIFFICULTY_SELECTED]);
@@ -227,13 +222,13 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(categoryDropdown);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(getAllByTestId('option-list-item')[INDEX_CATEGORY_SELECTED]);
@@ -241,13 +236,13 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(typeDropdown);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(getAllByTestId('option-list-item')[INDEX_TYPE_SELECTED]);
@@ -255,7 +250,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent(getByTestId('slider'), 'onValueChange', NUMBER_QUESTIONS);
@@ -275,8 +270,6 @@ describe('Testing <SetupQuestions />', () => {
 
   describe('Testing the items showed inside <CustomModal /> when a certain option is selected', () => {
     it('should show the corresponding options when the difficulty option is selected', () => {
-      MockDate.set(0);
-
       const { getAllByTestId, getByTestId } = render(renderSetupQuestions());
 
       const [difficultyOption] = getAllByTestId('dropdown-button');
@@ -284,7 +277,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(difficultyOption);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -299,8 +292,6 @@ describe('Testing <SetupQuestions />', () => {
     });
 
     it('should show the corresponding options when the category option is selected', () => {
-      MockDate.set(0);
-
       const { getAllByTestId, getByTestId } = render(renderSetupQuestions());
 
       const [, categoryOption] = getAllByTestId('dropdown-button');
@@ -308,7 +299,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(categoryOption);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -323,8 +314,6 @@ describe('Testing <SetupQuestions />', () => {
     });
 
     it('should show the corresponding options when the type option is selected', () => {
-      MockDate.set(0);
-
       const { getAllByTestId, getByTestId } = render(renderSetupQuestions());
 
       const [, , typeOptions] = getAllByTestId('dropdown-button');
@@ -332,7 +321,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(typeOptions);
 
       act(() => {
-        global.timeTravel(400);
+        global.timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
