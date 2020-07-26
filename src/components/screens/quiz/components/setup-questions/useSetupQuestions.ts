@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
 import { QuestionOption, QuizOption } from 'types';
 
+import { QuizStackParams } from '../../routes/route-params-types';
 import { difficulties, categories, types } from './options';
 
 export const INITIAL_NUMBER_QUESTIONS = 10;
@@ -16,6 +18,7 @@ type State = {
   questionCategory: QuestionOption<QuestionCategory>;
   questionType: QuestionOption<QuestionType>;
   indexLastOptionSelected: number;
+  onPressStartQuiz: () => void;
   t: (key: string) => string;
   onPressSelect: () => void;
   numberOfQuestions: number;
@@ -34,7 +37,11 @@ type OptionSelectedInfo = {
   currentDataset: Options;
 };
 
-const useSetupQuestions = (): State => {
+type Props = {
+  navigation: StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
+};
+
+const useSetupQuestions = ({ navigation }: Props): State => {
   const [questionDifficulty, setQuestionDifficulty] = useState<
     QuestionOption<QuestionDifficulty>
   >(difficulties[0]);
@@ -54,63 +61,72 @@ const useSetupQuestions = (): State => {
 
   const { t } = useTranslation();
 
-  const getOptionSelectedInfo = (option: QuizOption): OptionSelectedInfo => {
-    let currentOptionSelected: Option;
-    let currentDataset: Options = [];
+  const getOptionSelectedInfo = useCallback(
+    (option: QuizOption): OptionSelectedInfo => {
+      let currentOptionSelected: Option;
+      let currentDataset: Options = [];
 
-    if (option === 'CATEGORY') {
-      currentDataset = categories;
-      currentOptionSelected = questionCategory;
-    }
+      if (option === 'CATEGORY') {
+        currentOptionSelected = questionCategory;
+        currentDataset = categories;
+      }
 
-    if (option === 'DIFFICULTY') {
-      currentDataset = difficulties;
-      currentOptionSelected = questionDifficulty;
-    }
+      if (option === 'DIFFICULTY') {
+        currentOptionSelected = questionDifficulty;
+        currentDataset = difficulties;
+      }
 
-    if (option === 'TYPE') {
-      currentDataset = types;
-      currentOptionSelected = questionType;
-    }
+      if (option === 'TYPE') {
+        currentOptionSelected = questionType;
+        currentDataset = types;
+      }
 
-    return {
-      currentOptionSelected,
-      currentDataset,
-    };
-  };
+      return {
+        currentOptionSelected,
+        currentDataset,
+      };
+    },
+    [optionsSelected],
+  );
 
-  const handleSetCurrentSelectedOptionIndex = (option: QuizOption): void => {
-    const { currentOptionSelected, currentDataset } = getOptionSelectedInfo(option);
+  const handleSetCurrentSelectedOptionIndex = useCallback(
+    (option: QuizOption): void => {
+      const { currentOptionSelected, currentDataset } = getOptionSelectedInfo(option);
 
-    const index = currentDataset.findIndex(
-      (datasetItem) => datasetItem.id === currentOptionSelected.id,
-    );
+      const index = currentDataset.findIndex(
+        (datasetItem) => datasetItem.id === currentOptionSelected.id,
+      );
 
-    setIndexLastOptionSelected(index);
-  };
+      setIndexLastOptionSelected(index);
+    },
+    [optionsSelected],
+  );
 
-  const setOptions = (option: QuizOption): void => {
-    handleSetCurrentSelectedOptionIndex(option);
+  const setOptions = useCallback(
+    (option: QuizOption): void => {
+      handleSetCurrentSelectedOptionIndex(option);
 
-    setCurrentOption(option);
+      setCurrentOption(option);
 
-    if (option === 'CATEGORY') {
-      setModalMessage(t('translations:quiz:setCategory'));
-      setOptionsSelected(categories);
-    }
+      if (option === 'CATEGORY') {
+        setModalMessage(t('translations:quiz:setCategory'));
+        setOptionsSelected(categories);
+      }
 
-    if (option === 'DIFFICULTY') {
-      setModalMessage(t('translations:quiz:setDifficulty'));
-      setOptionsSelected(difficulties);
-    }
+      if (option === 'DIFFICULTY') {
+        setModalMessage(t('translations:quiz:setDifficulty'));
+        setOptionsSelected(difficulties);
+      }
 
-    if (option === 'TYPE') {
-      setModalMessage(t('translations:quiz:setType'));
-      setOptionsSelected(types);
-    }
-  };
+      if (option === 'TYPE') {
+        setModalMessage(t('translations:quiz:setType'));
+        setOptionsSelected(types);
+      }
+    },
+    [optionsSelected],
+  );
 
-  const onPressSelect = (): void => {
+  const onPressSelect = useCallback((): void => {
     if (currentOption === 'CATEGORY') {
       setQuestionCategory(categories[indexLastOptionSelected]);
     }
@@ -124,7 +140,16 @@ const useSetupQuestions = (): State => {
     }
 
     setOptionsSelected([]);
-  };
+  }, [indexLastOptionSelected, currentOption]);
+
+  const onPressStartQuiz = useCallback(() => {
+    navigation.navigate('QUESTIONS', {
+      difficulty: questionDifficulty.value,
+      category: questionCategory.value,
+      type: questionType.value,
+      numberOfQuestions,
+    });
+  }, [numberOfQuestions, questionDifficulty, questionCategory, questionType]);
 
   return {
     onSelectOption: setIndexLastOptionSelected,
@@ -136,6 +161,7 @@ const useSetupQuestions = (): State => {
     setNumberOfQuestions,
     questionDifficulty,
     numberOfQuestions,
+    onPressStartQuiz,
     questionCategory,
     onPressSelect,
     questionType,

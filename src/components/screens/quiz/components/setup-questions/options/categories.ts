@@ -3,16 +3,16 @@ import { QuestionOption } from 'types';
 
 const categories: QuestionOption<QuestionCategory>[] = [
   {
-    id: 'categoryMixed',
     value: QuestionCategory.MIXED,
+    id: 'categoryMixed',
   },
   {
-    id: 'categoryMovie',
     value: QuestionCategory.MOVIE,
+    id: 'categoryMovie',
   },
   {
-    id: 'categoryTv',
     value: QuestionCategory.TV,
+    id: 'categoryTv',
   },
 ];
 

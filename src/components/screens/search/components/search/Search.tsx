@@ -10,9 +10,9 @@ import DefaultListItem, {
   DEFAULT_LIST_ITEM_HEIGHT,
 } from 'components/common/DefaultListItem';
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
+import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import SearchBar from 'components/common/searchbar/SearchBar';
-import PopupAdvice from 'components/common/PopupAdvice';
 import { SearchType } from 'types/schema';
 import metrics from 'styles/metrics';
 import { SearchItem } from 'types';

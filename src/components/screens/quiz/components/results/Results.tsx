@@ -1,16 +1,15 @@
-import React, { useLayoutEffect, useEffect, useState } from 'react';
-import { FlatList, Alert, View } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { FlatList, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import RoundedButton from 'components/common/RoundedButton';
 import metrics from 'styles/metrics';
-import { QuizResult } from 'types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import ResultListItem from './ResultListItem';
+import useResults from './useResults';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -33,9 +32,7 @@ type Props = {
 };
 
 const Results = ({ navigation, route }: Props) => {
-  const [results, setResults] = useState<QuizResult[]>([]);
-
-  const { t } = useTranslation();
+  const { onPressPlayAgain, results, t } = useResults({ navigation, route });
 
   useLayoutEffect(() => {
     const scores = results.reduce(
@@ -47,36 +44,6 @@ const Results = ({ navigation, route }: Props) => {
       title: `${t('translations:quiz:scores')} ${scores}/${results.length}!`,
     });
   }, [results]);
-
-  useEffect(() => {
-    const { questions, answers } = route.params;
-
-    const result = questions.map((dataItem, index) => ({
-      isCorrect:
-        dataItem.correctAnswer.toLocaleLowerCase() === answers[index].toLocaleLowerCase(),
-      answer: dataItem.correctAnswer,
-      userAnswer: answers[index],
-      question: dataItem.question,
-    }));
-
-    setResults(result);
-  }, []);
-
-  const onPressPlayAgain = (): void => {
-    Alert.alert(
-      t('translations:quiz:playAgain'),
-      t('translations:quiz:playAgainDescription'),
-      [
-        {
-          text: t('translations:quiz:no'),
-          style: 'cancel',
-          onPress: () => navigation.pop(3),
-        },
-        { text: t('translations:quiz:yes'), onPress: () => navigation.pop(2) },
-      ],
-      { cancelable: false },
-    );
-  };
 
   return (
     <Wrapper>

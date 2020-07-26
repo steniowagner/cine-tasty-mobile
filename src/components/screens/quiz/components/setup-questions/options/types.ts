@@ -3,16 +3,16 @@ import { QuestionOption } from 'types';
 
 const types: QuestionOption<QuestionType>[] = [
   {
-    id: 'typeMixed',
     value: QuestionType.MIXED,
+    id: 'typeMixed',
   },
   {
-    id: 'typeMultiple',
     value: QuestionType.MULTIPLE,
+    id: 'typeMultiple',
   },
   {
-    id: 'typeBoolean',
     value: QuestionType.BOOLEAN,
+    id: 'typeBoolean',
   },
 ];
 
