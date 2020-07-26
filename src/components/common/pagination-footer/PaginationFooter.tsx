@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from './Icon';
+import Icon from '../Icon';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -39,9 +39,12 @@ type Props = {
 };
 
 const PaginationFooter = ({ onPressReloadButton, isPaginating, hasError }: Props) => (
-  <Wrapper>
+  <Wrapper
+    testID="pagination-footer-wrapper"
+  >
     {isPaginating && (
       <CustomActivityIndicator
+        testID="loading-footer-wrapper"
         size={Platform.select({
           android: 'large',
           ios: 'small',
@@ -50,6 +53,7 @@ const PaginationFooter = ({ onPressReloadButton, isPaginating, hasError }: Props
     )}
     {hasError && (
       <LoadButton
+        testID="pagination-footer-reload-button"
         onPress={onPressReloadButton}
       >
         <LoadMoreIcon />

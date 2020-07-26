@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import DefaultListItem, {
   DEFAULT_LIST_ITEM_HEIGHT,
 } from 'components/common/DefaultListItem';
-import ListFooterComponent from 'components/common/PaginationFooter';
+import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import SearchBar from 'components/common/searchbar/SearchBar';
 import PopupAdvice from 'components/common/PopupAdvice';
