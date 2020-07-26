@@ -5,7 +5,7 @@ import { RefreshControl, Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
-import ListFooterComponent from 'components/common/PaginationFooter';
+import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import { SEARCH_PERSON } from 'components/screens/search/queries';
 import LoadingIndicator from 'components/common/LoadingIndicator';
