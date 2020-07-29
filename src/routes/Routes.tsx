@@ -33,7 +33,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
   <Tab.Navigator
-    initialRouteName={QuizTabID}
+    initialRouteName={NewsTabID}
     tabBar={(props: BottomTabBarProps) => (
       <TabNavigator
         // eslint-disable-next-line react/jsx-props-no-spreading

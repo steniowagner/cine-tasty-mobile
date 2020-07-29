@@ -34,8 +34,9 @@ export interface Locale {
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;
   news: {
-    emptyList: Record<keyof ErrorDescription, string>;
     languages: Record<NewsFilterLanguage, string>;
+    i18nQueryByPaginationErrorRef: string;
+    i18EntryQueryErrorRef: string;
     filterMessage: string;
   };
   quiz: {

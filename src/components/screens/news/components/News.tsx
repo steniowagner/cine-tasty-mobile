@@ -1,46 +1,22 @@
 /* eslint-disable react/display-name */
 
-import React, { useLayoutEffect } from 'react';
-import {
-  TouchableOpacity, RefreshControl, FlatList, Platform, View,
-} from 'react-native';
-import styled, { withTheme, DefaultTheme } from 'styled-components';
+import React from 'react';
+import { FlatList, Platform } from 'react-native';
+// import styled from 'styled-components';
 
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
-import Advise from 'components/common/advise/Advise';
-import { ArticleLanguage } from 'types/schema';
-import Icon from 'components/common/Icon';
-import CONSTANTS from 'utils/constants';
+import CustomRefreshControl from 'components/common/CustomRefreshControl';
+import LoadingIndicator from 'components/common/LoadingIndicator';
+// import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
-import NewsListItemPlaceholder from './list-item/NewsListItemPlaceholder';
-import LanguageFilter from './language-filter/LanguageFilter';
+import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
+// import LanguageFilter from './language-filter/LanguageFilter';
 import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
-import NewsListFooter from './NewsListFooter';
-import ReloadButton from './ReloadButton';
-import useNews from './hooks/useNews';
+import useNews from './useNews';
 
-const LoadingWrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => theme.colors.background};
-`;
-
-const ErrorWrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.background};
-`;
-
-const ListEmptyComponentWrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  padding-top: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
-`;
-
-const FilterIcon = styled(Icon).attrs(({ theme }) => ({
+/*  FilterIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('7%'),
   color: theme.colors.text,
   name: 'tune',
@@ -57,108 +33,60 @@ const FilterButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   margin-right: ${({ theme }) => theme.metrics.largeSize}px;
 `;
 
+const LOADING_ITEMS = Array.from({ length: INITIAL_ITEMS_TO_RENDER }, (_, index) => ({
+  id: `${index}`,
+}));
+*/
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
 
-const LOADING_ITEMS = Array.from({ length: INITIAL_ITEMS_TO_RENDER }, (_, index) => ({
-  id: `${index}`,
-}));
-
 type Props = {
-  theme: DefaultTheme;
   navigation: any;
 };
 
-const News = ({ navigation, theme }: Props) => {
+const News = () => {
   const {
-    shouldRendeListFooterComponent,
-    isFooterLoadMoreButtonVisible,
-    setIsFilterLanguageModalOpen,
-    onPressFooterLoadMoreButton,
-    isFilterLanguageModalOpen,
-    onPressReloadErrorButton,
-    onSelectLanguageFilter,
-    onRefreshArticles,
-    popupErrorMessage,
-    onHidePopupError,
-    languageFilter,
+    onPullRefreshControl,
+    onPressReloadButton,
+    hasPaginationError,
     onEndReached,
     isRefreshing,
     isPaginating,
     isLoading,
     articles,
     error,
-    t,
   } = useNews();
 
-  useLayoutEffect(() => {
+  /* useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => !isLoading
-        && !error && (
-          <FilterButton
-            onPress={() => setIsFilterLanguageModalOpen(true)}
-          >
+      headerRight: () =>
+        !isLoading &&
+        !error && (
+          <FilterButton onPress={() => console.log('setIsFilterLanguageModalOpen(true)')}>
             <FilterIcon />
           </FilterButton>
-      ),
+        ),
     });
-  }, [isLoading, error]);
+  }, [isLoading, error]); */
 
   if (isLoading) {
-    return (
-      <LoadingWrapper
-        testID="news-loading-wrapper"
-      >
-        {LOADING_ITEMS.map((item) => (
-          <NewsListItemPlaceholder
-            key={item.id}
-          />
-        ))}
-      </LoadingWrapper>
-    );
-  }
-
-  if (
-    error
-    && error.message.includes(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)
-  ) {
-    return (
-      <ErrorWrapper>
-        <Advise
-          description={t('translations:errors:network:description')}
-          suggestion={t('translations:errors:network:suggestion')}
-          title={t('translations:errors:network:title')}
-          icon="server-network-off"
-        />
-        <ReloadButton
-          onPress={onPressReloadErrorButton}
-          withMarginVetical
-        />
-        {isFilterLanguageModalOpen && (
-          <LanguageFilter
-            onCloseModal={() => setIsFilterLanguageModalOpen(false)}
-            onSelectLanguage={onSelectLanguageFilter}
-            lastLanguageSelected={languageFilter}
-          />
-        )}
-      </ErrorWrapper>
-    );
+    return <LoadingIndicator />;
   }
 
   return (
     <>
       <FlatList
-        ListFooterComponent={() => shouldRendeListFooterComponent && (
-        <NewsListFooter
-          isFooterLoadMoreButtonVisible={isFooterLoadMoreButtonVisible}
-          onPressLoadMore={onPressFooterLoadMoreButton}
-          isPaginating={isPaginating}
-        />
+        ListFooterComponent={() => (
+          <ListFooterComponent
+            onPressReloadButton={onPressReloadButton}
+            hasError={hasPaginationError}
+            isPaginating={isPaginating}
+          />
         )}
         renderItem={({ item }) => (
           <NewsListItem
-            withRTL={languageFilter === ArticleLanguage.AR}
+            withRTL={false} // languageFilter === ArticleLanguage.AR
             date={item.publishedAt}
             source={item.source}
             image={item.image}
@@ -167,28 +95,18 @@ const News = ({ navigation, theme }: Props) => {
           />
         )}
         ListEmptyComponent={() => (
-          <ListEmptyComponentWrapper
-            testID="list-empty-component-wrapper"
-          >
-            <Advise
-              description={t('translations:news:emptyList:description')}
-              suggestion={t('translations:news:emptyList:suggestion')}
-              title={t('translations:news:emptyList:title')}
-              icon="alert-box"
-            />
-          </ListEmptyComponentWrapper>
+          <ListFooterComponent
+            onPressReloadButton={onPressReloadButton}
+            hasError={hasPaginationError}
+            isPaginating={isPaginating}
+          />
         )}
-        refreshControl={
-          articles.length && (
-            <RefreshControl
-              progressBackgroundColor={theme.colors.text}
-              refreshing={isRefreshing && !articles}
-              colors={[theme.colors.background]}
-              onRefresh={onRefreshArticles}
-              tintColor={theme.colors.text}
-            />
-          )
-        }
+        refreshControl={(
+          <CustomRefreshControl
+            onRefresh={onPullRefreshControl}
+            refreshing={isRefreshing}
+          />
+        )}
         keyExtractor={(item, index) => `${item.id}${index}`}
         initialNumToRender={INITIAL_ITEMS_TO_RENDER + 1}
         onEndReachedThreshold={Platform.select({
@@ -205,21 +123,21 @@ const News = ({ navigation, theme }: Props) => {
         testID="news-list"
         data={articles}
       />
-      {isFilterLanguageModalOpen && (
+      {/* isFilterLanguageModalOpen && (
         <LanguageFilter
           onCloseModal={() => setIsFilterLanguageModalOpen(false)}
           onSelectLanguage={onSelectLanguageFilter}
           lastLanguageSelected={languageFilter}
         />
-      )}
-      {!!popupErrorMessage && (
-        <PopupAdvice
-          onFinishToShow={onHidePopupError}
-          text={popupErrorMessage}
-        />
+      ) */}
+      {!!error && (
+      <PopupAdvice
+        onFinishToShow={() => {}}
+        text={error}
+      />
       )}
     </>
   );
 };
 
-export default withTheme(News);
+export default News;

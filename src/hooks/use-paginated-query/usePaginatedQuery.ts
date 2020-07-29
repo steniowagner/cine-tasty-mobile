@@ -15,11 +15,11 @@ type State = {
 };
 
 type Props<TData, TVariables> = {
+  variables?: Omit<TVariables, 'page'>;
   onGetData: (data: TData) => boolean;
   onPaginationQueryError: () => void;
   onEntryQueryError: () => void;
   fetchPolicy?: FetchPolicy;
-  variables?: TVariables;
   query: DocumentNode;
 };
 
@@ -49,7 +49,10 @@ export const usePaginatedQuery = <TData, TVariables>({
     [onGetData, variables, execQuery],
   );
 
-  const { exec: execEntryQuery, isLoading } = useEntryQuery<TData, TVariables>({
+  const { exec: execEntryQuery, isLoading } = useEntryQuery<
+    TData,
+    Omit<TVariables, 'page'>
+  >({
     ...baseParams,
     onError: () => onEntryQueryError(),
   });
@@ -58,7 +61,7 @@ export const usePaginatedQuery = <TData, TVariables>({
     exec: execPaginateQuery,
     restartPagination,
     isPaginating,
-  } = useQueryWithPagination<TData, TVariables>({
+  } = useQueryWithPagination<TData, Omit<TVariables, 'page'>>({
     ...baseParams,
     onError: () => onPaginationQueryError(),
   });

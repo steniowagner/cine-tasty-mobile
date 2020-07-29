@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
-import { DefaultTheme, withTheme } from 'styled-components';
 
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 import { getDefaultHeaderOptions } from 'routes/constants';
@@ -14,9 +13,7 @@ import Quiz from '../components/Quiz';
 
 const Stack = createStackNavigator();
 
-type Props = { theme: DefaultTheme };
-
-const QuizStack = ({ theme }: Props) => {
+const QuizStack = () => {
   const { t } = useTranslation();
 
   return (
@@ -30,7 +27,7 @@ const QuizStack = ({ theme }: Props) => {
       />
       <Stack.Screen
         options={{
-          ...getDefaultHeaderOptions(theme),
+          ...getDefaultHeaderOptions(),
           headerTitleAlign: 'center',
         }}
         name={LOCAL_ROUTES.QUESTIONS.id}
@@ -38,7 +35,7 @@ const QuizStack = ({ theme }: Props) => {
       />
       <Stack.Screen
         options={{
-          ...getDefaultHeaderOptions(theme),
+          ...getDefaultHeaderOptions(),
           headerTitle: t('translations:tabs:quiz'),
         }}
         name={LOCAL_ROUTES.SETUP_QUESTIONS.id}
@@ -46,7 +43,7 @@ const QuizStack = ({ theme }: Props) => {
       />
       <Stack.Screen
         options={{
-          ...getDefaultHeaderOptions(theme),
+          ...getDefaultHeaderOptions(),
           headerTitleAlign: 'center',
           headerLeft: () => null,
         }}
@@ -57,15 +54,12 @@ const QuizStack = ({ theme }: Props) => {
   );
 };
 
-const Wrapper = (props: any) => (
+const Wrapper = () => (
   <RouteSuspenseWrapper>
-    <QuizStack
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    />
+    <QuizStack />
   </RouteSuspenseWrapper>
 );
 
 export const TabID = LOCAL_ROUTES.QUIZ.id;
 
-export default withTheme(Wrapper);
+export default Wrapper;

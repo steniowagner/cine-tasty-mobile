@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
-import { withTheme } from 'styled-components';
 
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 import { getDefaultHeaderOptions } from 'routes/constants';
@@ -28,15 +27,12 @@ const NewsStack = () => {
   );
 };
 
-const Wrapper = (props: any) => (
+const Wrapper = () => (
   <RouteSuspenseWrapper>
-    <NewsStack
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    />
+    <NewsStack />
   </RouteSuspenseWrapper>
 );
 
 export const TabID = LOCAL_ROUTES.NEWS.id;
 
-export default withTheme(Wrapper);
+export default Wrapper;
