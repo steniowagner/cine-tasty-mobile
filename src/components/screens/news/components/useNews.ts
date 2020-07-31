@@ -29,6 +29,11 @@ export const GET_ARTICLES = gql`
 `;
 
 type State = {
+  onSelectArticleLanguage: (language: ArticleLanguage) => void;
+  onPressHeaderArticleLanguageButton: (value: boolean) => void;
+  onCloseArticleLanguageModal: () => void;
+  isFilterLanguageModalOpen: boolean;
+  articleLanguage: ArticleLanguage;
   onPullRefreshControl: () => void;
   onPressReloadButton: () => void;
   hasPaginationError: boolean;
@@ -41,8 +46,13 @@ type State = {
 };
 
 const useNews = (): State => {
+  const [isFilterLanguageModalOpen, setIsFilterLanguageModalOpen] = useState<boolean>(
+    false,
+  );
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [language] = useState<ArticleLanguage>(ArticleLanguage.EN);
+  const [articleLanguage, setArticleLanguage] = useState<ArticleLanguage>(
+    ArticleLanguage.EN,
+  );
   const [isRefreshing, setIsRefrehing] = useState<boolean>(false);
   const [articles, setArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string>('');
@@ -58,16 +68,15 @@ const useNews = (): State => {
     return data.articles.hasMore;
   }, []);
 
-  const {
-    onPaginateQuery, onReloadData, isPaginating, isLoading,
-  } = usePaginatedQuery<
+  const { onPaginateQuery, onReloadData, isPaginating, isLoading } = usePaginatedQuery<
     GetArticles,
     GetArticlesVariables
   >({
-    onPaginationQueryError: () => setError(t('translations:news:i18nQueryByPaginationErrorRef')),
+    onPaginationQueryError: () =>
+      setError(t('translations:news:i18nQueryByPaginationErrorRef')),
     onEntryQueryError: () => setError(t('translations:news:i18EntryQueryErrorRef')),
     variables: {
-      language,
+      language: articleLanguage,
     },
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
@@ -102,11 +111,37 @@ const useNews = (): State => {
     }
   }, [isRefreshing]);
 
+  const onSelectArticleLanguage = useCallback((language: ArticleLanguage): void => {
+    setIsFilterLanguageModalOpen(false);
+    setArticleLanguage(language);
+  }, []);
+
   return {
+    onPressHeaderArticleLanguageButton: () => setIsFilterLanguageModalOpen(true),
+    onCloseArticleLanguageModal: () => setIsFilterLanguageModalOpen(false),
+    onSelectArticleLanguage,
+
+    isFilterLanguageModalOpen: boolean;
+    articleLanguage: ArticleLanguage;
+    onPullRefreshControl: () => void;
+    onPressReloadButton: () => void;
+    hasPaginationError: boolean;
+    onEndReached: () => void;
+    isPaginating: boolean;
+    isRefreshing: boolean;
+    articles: Article[];
+    isLoading: boolean;
+    error: string;
+
+    onPressArticleLanguageButton: () => setIsFilterLanguageModalOpen(true),
     onPullRefreshControl: () => setIsRefrehing(true),
     onEndReached: onPaginateQuery,
+    setIsFilterLanguageModalOpen,
+    isFilterLanguageModalOpen,
+    onSelectArticleLanguage,
     onPressReloadButton,
     hasPaginationError,
+    articleLanguage,
     isRefreshing,
     isPaginating,
     isLoading,

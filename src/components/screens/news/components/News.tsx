@@ -1,22 +1,25 @@
 /* eslint-disable react/display-name */
 
-import React from 'react';
-import { FlatList, Platform } from 'react-native';
-// import styled from 'styled-components';
-
-import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
-import CustomRefreshControl from 'components/common/CustomRefreshControl';
-import LoadingIndicator from 'components/common/LoadingIndicator';
-// import Icon from 'components/common/Icon';
-import metrics from 'styles/metrics';
+import React, { useLayoutEffect } from 'react';
+import { TouchableOpacity, FlatList, Platform } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import styled from 'styled-components';
 
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
-// import LanguageFilter from './language-filter/LanguageFilter';
+import CustomRefreshControl from 'components/common/CustomRefreshControl';
+import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
+import LoadingIndicator from 'components/common/LoadingIndicator';
+import { ArticleLanguage } from 'types/schema';
+import Icon from 'components/common/Icon';
+import metrics from 'styles/metrics';
+
+import { NewsStackParams } from '../routes/route-params-types';
+import LanguageFilter from './language-filter/LanguageFilter';
 import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
 import useNews from './useNews';
 
-/*  FilterIcon = styled(Icon).attrs(({ theme }) => ({
+const FilterIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('7%'),
   color: theme.colors.text,
   name: 'tune',
@@ -33,23 +36,26 @@ const FilterButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   margin-right: ${({ theme }) => theme.metrics.largeSize}px;
 `;
 
-const LOADING_ITEMS = Array.from({ length: INITIAL_ITEMS_TO_RENDER }, (_, index) => ({
-  id: `${index}`,
-}));
-*/
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
-export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
+export const INITIAL_ITEMS_TO_RENDER =
+  Math.floor(metrics.height / imageWrapper.height) - 1;
+
+type PeopleScreenNavigationProp = StackNavigationProp<NewsStackParams, 'NEWS'>;
 
 type Props = {
-  navigation: any;
+  navigation: PeopleScreenNavigationProp;
 };
 
-const News = () => {
+const News = ({ navigation }: Props) => {
   const {
+    setIsFilterLanguageModalOpen,
+    isFilterLanguageModalOpen,
     onPullRefreshControl,
     onPressReloadButton,
+    setArticleLanguage,
     hasPaginationError,
+    articleLanguage,
     onEndReached,
     isRefreshing,
     isPaginating,
@@ -58,17 +64,17 @@ const News = () => {
     error,
   } = useNews();
 
-  /* useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () =>
         !isLoading &&
         !error && (
-          <FilterButton onPress={() => console.log('setIsFilterLanguageModalOpen(true)')}>
+          <FilterButton onPress={() => setIsFilterLanguageModalOpen(true)}>
             <FilterIcon />
           </FilterButton>
         ),
     });
-  }, [isLoading, error]); */
+  }, [isLoading, error]);
 
   if (isLoading) {
     return <LoadingIndicator />;
@@ -86,7 +92,7 @@ const News = () => {
         )}
         renderItem={({ item }) => (
           <NewsListItem
-            withRTL={false} // languageFilter === ArticleLanguage.AR
+            withRTL={articleLanguage === ArticleLanguage.AR}
             date={item.publishedAt}
             source={item.source}
             image={item.image}
@@ -101,12 +107,12 @@ const News = () => {
             isPaginating={isPaginating}
           />
         )}
-        refreshControl={(
+        refreshControl={
           <CustomRefreshControl
             onRefresh={onPullRefreshControl}
             refreshing={isRefreshing}
           />
-        )}
+        }
         keyExtractor={(item, index) => `${item.id}${index}`}
         initialNumToRender={INITIAL_ITEMS_TO_RENDER + 1}
         onEndReachedThreshold={Platform.select({
@@ -123,19 +129,14 @@ const News = () => {
         testID="news-list"
         data={articles}
       />
-      {/* isFilterLanguageModalOpen && (
+      {isFilterLanguageModalOpen && (
         <LanguageFilter
           onCloseModal={() => setIsFilterLanguageModalOpen(false)}
-          onSelectLanguage={onSelectLanguageFilter}
-          lastLanguageSelected={languageFilter}
+          lastLanguageSelected={articleLanguage}
+          onSelectLanguage={setArticleLanguage}
         />
-      ) */}
-      {!!error && (
-      <PopupAdvice
-        onFinishToShow={() => {}}
-        text={error}
-      />
       )}
+      {!!error && <PopupAdvice onFinishToShow={() => {}} text={error} />}
     </>
   );
 };
