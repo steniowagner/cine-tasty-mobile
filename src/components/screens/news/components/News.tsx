@@ -9,6 +9,7 @@ import ListFooterComponent from 'components/common/pagination-footer/PaginationF
 import CustomRefreshControl from 'components/common/CustomRefreshControl';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import LoadingIndicator from 'components/common/LoadingIndicator';
+import HeaderIconButton from 'components/common/HeaderIconButton';
 import { ArticleLanguage } from 'types/schema';
 import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
@@ -19,27 +20,28 @@ import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
 import useNews from './useNews';
 
-const FilterIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('7%'),
-  color: theme.colors.text,
-  name: 'tune',
-}))``;
-
-const FilterButton = styled(TouchableOpacity).attrs(({ theme }) => ({
-  hitSlop: {
-    top: theme.metrics.mediumSize,
-    right: theme.metrics.mediumSize,
-    bottom: theme.metrics.mediumSize,
-    left: theme.metrics.mediumSize,
-  },
-}))`
-  margin-right: ${({ theme }) => theme.metrics.largeSize}px;
-`;
-
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
 export const INITIAL_ITEMS_TO_RENDER =
   Math.floor(metrics.height / imageWrapper.height) - 1;
+
+const TopReloadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
+  hitSlop: {
+    top: theme.metrics.largeSize,
+    bottom: theme.metrics.largeSize,
+    left: theme.metrics.largeSize,
+    right: theme.metrics.largeSize,
+  },
+}))`
+  align-self: center;
+  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
+`;
+
+const ReloadIcon = styled(Icon).attrs(({ theme }) => ({
+  size: theme.metrics.getWidthFromDP('10%'),
+  color: theme.colors.text,
+  name: 'reload',
+}))``;
 
 type PeopleScreenNavigationProp = StackNavigationProp<NewsStackParams, 'NEWS'>;
 
@@ -51,45 +53,62 @@ const News = ({ navigation }: Props) => {
   const {
     setIsFilterLanguageModalOpen,
     isFilterLanguageModalOpen,
+    onPressFooterReloadButton,
+    onSelectArticleLanguage,
+    onPressTopReloadButton,
     onPullRefreshControl,
-    onPressReloadButton,
-    setArticleLanguage,
     hasPaginationError,
     articleLanguage,
     onEndReached,
-    isRefreshing,
     isPaginating,
-    isLoading,
+    isRefreshing,
     articles,
+    isLoading,
     error,
   } = useNews();
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () =>
-        !isLoading &&
-        !error && (
-          <FilterButton onPress={() => setIsFilterLanguageModalOpen(true)}>
-            <FilterIcon />
-          </FilterButton>
-        ),
+      headerRight: () => (
+        <HeaderIconButton
+          onPress={() => setIsFilterLanguageModalOpen(true)}
+          disabled={isLoading}
+          withMarginRight
+          iconName="tune"
+        />
+      ),
     });
-  }, [isLoading, error]);
+  }, [isLoading]);
 
   if (isLoading) {
     return <LoadingIndicator />;
   }
 
+  const shouldShowListTopReloadButton = !articles.length && !!error && !isLoading;
+  const shouldShowListBottomReloadButton =
+    !!articles.length && (hasPaginationError || isPaginating);
+
   return (
     <>
       <FlatList
-        ListFooterComponent={() => (
-          <ListFooterComponent
-            onPressReloadButton={onPressReloadButton}
-            hasError={hasPaginationError}
-            isPaginating={isPaginating}
-          />
-        )}
+        ListHeaderComponent={() =>
+          shouldShowListTopReloadButton && (
+            <TopReloadButton
+              onPress={() => onPressTopReloadButton()}
+              testID="top-reload-button">
+              <ReloadIcon />
+            </TopReloadButton>
+          )
+        }
+        ListFooterComponent={() =>
+          shouldShowListBottomReloadButton && (
+            <ListFooterComponent
+              onPressReloadButton={onPressFooterReloadButton}
+              hasError={hasPaginationError}
+              isPaginating={isPaginating}
+            />
+          )
+        }
         renderItem={({ item }) => (
           <NewsListItem
             withRTL={articleLanguage === ArticleLanguage.AR}
@@ -98,13 +117,6 @@ const News = ({ navigation }: Props) => {
             image={item.image}
             text={item.title}
             url={item.url}
-          />
-        )}
-        ListEmptyComponent={() => (
-          <ListFooterComponent
-            onPressReloadButton={onPressReloadButton}
-            hasError={hasPaginationError}
-            isPaginating={isPaginating}
           />
         )}
         refreshControl={
@@ -132,8 +144,8 @@ const News = ({ navigation }: Props) => {
       {isFilterLanguageModalOpen && (
         <LanguageFilter
           onCloseModal={() => setIsFilterLanguageModalOpen(false)}
+          onSelectLanguage={onSelectArticleLanguage}
           lastLanguageSelected={articleLanguage}
-          onSelectLanguage={setArticleLanguage}
         />
       )}
       {!!error && <PopupAdvice onFinishToShow={() => {}} text={error} />}

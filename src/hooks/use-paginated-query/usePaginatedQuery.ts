@@ -16,6 +16,7 @@ type State = {
 
 type Props<TData, TVariables> = {
   variables?: Omit<TVariables, 'page'>;
+  fireEntryQueryWhenMounted?: boolean;
   onGetData: (data: TData) => boolean;
   onPaginationQueryError: () => void;
   onEntryQueryError: () => void;
@@ -28,6 +29,7 @@ type BaseVariables = {
 };
 
 export const usePaginatedQuery = <TData, TVariables>({
+  fireEntryQueryWhenMounted = true,
   onPaginationQueryError,
   onEntryQueryError,
   fetchPolicy,
@@ -49,15 +51,8 @@ export const usePaginatedQuery = <TData, TVariables>({
     [onGetData, variables, execQuery],
   );
 
-  const { exec: execEntryQuery, isLoading } = useEntryQuery<
-    TData,
-    Omit<TVariables, 'page'>
-  >({
-    ...baseParams,
-    onError: () => onEntryQueryError(),
-  });
-
   const {
+    setHasMoreFromEntryQuery,
     exec: execPaginateQuery,
     restartPagination,
     isPaginating,
@@ -66,15 +61,26 @@ export const usePaginatedQuery = <TData, TVariables>({
     onError: () => onPaginationQueryError(),
   });
 
+  const { exec: execEntryQuery, isLoading } = useEntryQuery<
+    TData,
+    Omit<TVariables, 'page'>
+  >({
+    ...baseParams,
+    setPaginationHasMore: setHasMoreFromEntryQuery,
+    onError: () => onEntryQueryError(),
+  });
+
   useEffect(() => {
-    execEntryQuery();
+    if (fireEntryQueryWhenMounted) {
+      execEntryQuery();
+    }
   }, []);
 
   const onReloadData = useCallback(async () => {
     restartPagination();
 
-    await execEntryQuery();
-  }, []);
+    await execEntryQuery(variables);
+  }, [variables]);
 
   return {
     onPaginateQuery: execPaginateQuery,

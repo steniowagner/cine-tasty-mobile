@@ -30,12 +30,12 @@ export const GET_ARTICLES = gql`
 
 type State = {
   onSelectArticleLanguage: (language: ArticleLanguage) => void;
-  onPressHeaderArticleLanguageButton: (value: boolean) => void;
-  onCloseArticleLanguageModal: () => void;
+  setIsFilterLanguageModalOpen: (value: boolean) => void;
+  onPressTopReloadButton: () => Promise<void>;
+  onPressFooterReloadButton: () => void;
   isFilterLanguageModalOpen: boolean;
   articleLanguage: ArticleLanguage;
   onPullRefreshControl: () => void;
-  onPressReloadButton: () => void;
   hasPaginationError: boolean;
   onEndReached: () => void;
   isPaginating: boolean;
@@ -72,9 +72,18 @@ const useNews = (): State => {
     GetArticles,
     GetArticlesVariables
   >({
-    onPaginationQueryError: () =>
-      setError(t('translations:news:i18nQueryByPaginationErrorRef')),
-    onEntryQueryError: () => setError(t('translations:news:i18EntryQueryErrorRef')),
+    onPaginationQueryError: () => {
+      setError(t('translations:news:i18nQueryByPaginationErrorRef'));
+      setHasPaginationError(true);
+    },
+    onEntryQueryError: () => {
+      setError(t('translations:news:i18EntryQueryErrorRef'));
+
+      if (hasPaginationError) {
+        setHasPaginationError(false);
+      }
+    },
+    fireEntryQueryWhenMounted: false,
     variables: {
       language: articleLanguage,
     },
@@ -83,12 +92,10 @@ const useNews = (): State => {
     query: GET_ARTICLES,
   });
 
-  const onPressReloadButton = useCallback(() => {
+  const onPressFooterReloadButton = useCallback(() => {
     setHasPaginationError(false);
 
-    if (error) {
-      setError('');
-    }
+    setError('');
 
     onPaginateQuery();
   }, []);
@@ -103,7 +110,7 @@ const useNews = (): State => {
     await onReloadData();
 
     setIsRefrehing(false);
-  }, [onReloadData, error]);
+  }, [error]);
 
   useEffect(() => {
     if (isRefreshing) {
@@ -111,41 +118,48 @@ const useNews = (): State => {
     }
   }, [isRefreshing]);
 
+  useEffect(() => {
+    if (error) {
+      setError('');
+    }
+
+    onReloadData();
+  }, [articleLanguage]);
+
   const onSelectArticleLanguage = useCallback((language: ArticleLanguage): void => {
     setIsFilterLanguageModalOpen(false);
+
+    if (error) {
+      setError('');
+    }
+
+    setArticles([]);
+
     setArticleLanguage(language);
   }, []);
 
+  const onPressTopReloadButton = useCallback(async (): Promise<void> => {
+    setHasPaginationError(false);
+
+    setError('');
+
+    await onReloadData();
+  }, []);
+
   return {
-    onPressHeaderArticleLanguageButton: () => setIsFilterLanguageModalOpen(true),
-    onCloseArticleLanguageModal: () => setIsFilterLanguageModalOpen(false),
-    onSelectArticleLanguage,
-
-    isFilterLanguageModalOpen: boolean;
-    articleLanguage: ArticleLanguage;
-    onPullRefreshControl: () => void;
-    onPressReloadButton: () => void;
-    hasPaginationError: boolean;
-    onEndReached: () => void;
-    isPaginating: boolean;
-    isRefreshing: boolean;
-    articles: Article[];
-    isLoading: boolean;
-    error: string;
-
-    onPressArticleLanguageButton: () => setIsFilterLanguageModalOpen(true),
     onPullRefreshControl: () => setIsRefrehing(true),
     onEndReached: onPaginateQuery,
     setIsFilterLanguageModalOpen,
+    onPressFooterReloadButton,
     isFilterLanguageModalOpen,
+    onPressTopReloadButton,
     onSelectArticleLanguage,
-    onPressReloadButton,
     hasPaginationError,
     articleLanguage,
-    isRefreshing,
     isPaginating,
-    isLoading,
+    isRefreshing,
     articles,
+    isLoading,
     error,
   };
 };

@@ -1,13 +1,14 @@
 import { useCallback, useState } from 'react';
 import { ApolloQueryResult } from 'apollo-client';
 
-type State = {
-  exec: () => Promise<void>;
+type State<TVariables> = {
+  exec: (variables?: TVariables) => Promise<void>;
   isLoading: boolean;
 };
 
 type Props<TData, TVariables> = {
   execQuery: (variables: TVariables) => Promise<ApolloQueryResult<TData>>;
+  setPaginationHasMore: (hasMore: boolean) => void;
   onGetData: (data: TData) => boolean;
   variables?: TVariables;
   onError: () => void;
@@ -15,26 +16,36 @@ type Props<TData, TVariables> = {
 
 const useEntryQuery = <TData, TVariables>({
   variables = {} as TVariables,
+  setPaginationHasMore,
   onGetData,
   execQuery,
   onError,
-}: Props<TData, TVariables>): State => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+}: Props<TData, TVariables>): State<TVariables> => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const exec = useCallback(async () => {
-    try {
-      const { data } = await execQuery({ ...variables, page: 1 });
+  const exec = useCallback(
+    async (updatedVariables: TVariables = variables) => {
+      try {
+        console.log('exec-variables: ', variables);
+        setIsLoading(true);
 
-      onGetData(data);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log('usePaginatedQuery/useEntryQuery: ', err);
+        const { data } = await execQuery({ ...updatedVariables, page: 1 });
 
-      onError();
-    } finally {
-      setIsLoading(false);
-    }
-  }, [onGetData, onError]);
+        setIsLoading(false);
+
+        const hasMore = onGetData(data);
+
+        setPaginationHasMore(hasMore);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log('usePaginatedQuery/useEntryQuery: ', err);
+        setIsLoading(false);
+
+        onError();
+      }
+    },
+    [onGetData, onError],
+  );
 
   return {
     isLoading,
