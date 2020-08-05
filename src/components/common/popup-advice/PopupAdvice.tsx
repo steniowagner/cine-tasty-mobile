@@ -56,8 +56,13 @@ const PopupAdvice = ({ onFinishToShow = () => {}, text }: Props) => {
         {
           opacity: wrapperOpacity,
         },
-      ]}>
-      <Message testID="popup-advice-message">{text}</Message>
+      ]}
+    >
+      <Message
+        testID="popup-advice-message"
+      >
+        {text}
+      </Message>
     </Wrapper>
   );
 };

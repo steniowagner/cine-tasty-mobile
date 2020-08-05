@@ -1,12 +1,13 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from 'react-native-testing-library';
+import {
+  fireEvent, cleanup, render, act,
+} from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
-import MockDate from 'mockdate';
 
 import { ArticleLanguage } from 'types/schema';
 import { dark } from 'styles/themes';
 
-import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
+import timeTravel from '../../../../../../__mocks__/timeTravel';
 import LanguageFilter, { ANIMATION_TIMING } from './LanguageFilter';
 import LanguageListItem from './list-item/LanguageListItem';
 import languages from './languages';
@@ -16,7 +17,9 @@ const renderLanguageFilter = (
   onSelect = jest.fn(),
   onClose = jest.fn(),
 ) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider
+    theme={dark}
+  >
     <LanguageFilter
       lastLanguageSelected={lastFilterSelected}
       onSelectLanguage={onSelect}
@@ -101,7 +104,7 @@ describe('Testing <LanguageFilter />', () => {
     expect(
       getAllByType(LanguageListItem)
         .filter((_, index) => index !== INDEX_NEW_ITEM_SELECTED)
-        .every(languageItem => languageItem.props.isSelected === false),
+        .every((languageItem) => languageItem.props.isSelected === false),
     ).toBe(true);
   });
 

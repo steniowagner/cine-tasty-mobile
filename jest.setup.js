@@ -8,7 +8,7 @@ jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
 jest.mock('react-native-vector-icons/MaterialCommunityIcons', () => 'Icon');
 
 jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: key => key }),
+  useTranslation: () => ({ t: (key) => key }),
 }));
 
 jest.mock('react-native-gesture-handler', () => {
@@ -45,6 +45,6 @@ jest.mock('react-native-gesture-handler', () => {
 
 const FRAME_TIME = 10;
 
-global.requestAnimationFrame = callback => {
+global.requestAnimationFrame = (callback) => {
   setTimeout(callback, FRAME_TIME);
 };

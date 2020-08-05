@@ -1,4 +1,6 @@
-import { useCallback, useState, useEffect, useRef } from 'react';
+import {
+  useCallback, useState, useEffect, useRef,
+} from 'react';
 import { ApolloQueryResult } from 'apollo-client';
 
 import debounce from 'utils/debounce';

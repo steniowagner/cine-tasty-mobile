@@ -124,7 +124,11 @@ const Search = ({ navigation, route }: Props) => {
         onEndReached={onPaginateSearch}
         data={items}
       />
-      {!!errorMessage && <PopupAdvice text={errorMessage} />}
+      {!!errorMessage && (
+      <PopupAdvice
+        text={errorMessage}
+      />
+      )}
     </Wrapper>
   );
 };

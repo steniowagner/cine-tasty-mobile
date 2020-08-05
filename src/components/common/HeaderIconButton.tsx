@@ -18,10 +18,8 @@ const Wrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
     left: theme.metrics.mediumSize,
   },
 }))<WrapperStyleProps>`
-  margin-right: ${({ theme, withMarginRight }) =>
-    withMarginRight ? theme.metrics.mediumSize : 0}px;
-  margin-left: ${({ theme, withMarginLeft }) =>
-    withMarginLeft ? theme.metrics.mediumSize : 0}px;
+  margin-right: ${({ theme, withMarginRight }) => withMarginRight ? theme.metrics.mediumSize : 0}px;
+  margin-left: ${({ theme, withMarginLeft }) => withMarginLeft ? theme.metrics.mediumSize : 0}px;
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   justify-content: center;
   align-items: center;
@@ -52,8 +50,11 @@ const HeaderIconButton = ({
     withMarginRight={withMarginRight}
     withMarginLeft={withMarginLeft}
     disabled={disabled}
-    onPress={onPress}>
-    <HeaderIcon name={iconName} />
+    onPress={onPress}
+  >
+    <HeaderIcon
+      name={iconName}
+    />
   </Wrapper>
 );
 

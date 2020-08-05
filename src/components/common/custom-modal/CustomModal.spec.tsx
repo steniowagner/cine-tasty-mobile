@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { fireEvent, cleanup, render, act } from 'react-native-testing-library';
+import {
+  fireEvent, cleanup, render, act,
+} from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -12,15 +14,22 @@ const CHILDREN_TEST_ID = 'custom-modal-children';
 const HEADER_TEXT = 'HEADER_TEXT';
 const FOOTER_TEXT = 'FOOTER_TEXT';
 
-const Children = () => <View testID={CHILDREN_TEST_ID} />;
+const Children = () => (
+  <View
+    testID={CHILDREN_TEST_ID}
+  />
+);
 
 const renderCustomModal = (onPressSelect = jest.fn, onClose = jest.fn) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider
+    theme={dark}
+  >
     <CustomModal
       onPressSelect={onPressSelect}
       headerText={HEADER_TEXT}
       footerText={FOOTER_TEXT}
-      onClose={onClose}>
+      onClose={onClose}
+    >
       <Children />
     </CustomModal>
   </ThemeProvider>

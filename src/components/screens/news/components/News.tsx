@@ -1,7 +1,9 @@
 /* eslint-disable react/display-name */
 
 import React, { useLayoutEffect } from 'react';
-import { TouchableOpacity, FlatList, Platform, View } from 'react-native';
+import {
+  TouchableOpacity, FlatList, Platform, View,
+} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
@@ -23,8 +25,7 @@ import useNews from './useNews';
 
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
-export const INITIAL_ITEMS_TO_RENDER =
-  Math.floor(metrics.height / imageWrapper.height) - 1;
+export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
 
 const TopReloadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   hitSlop: {
@@ -90,7 +91,9 @@ const News = ({ navigation }: Props) => {
 
   if (shouldShowEmptyListAdvice) {
     return (
-      <View testID="list-empty-component-wrapper">
+      <View
+        testID="list-empty-component-wrapper"
+      >
         <Advise
           description={t('translations:news:emptyList:description')}
           suggestion={t('translations:news:emptyList:suggestion')}
@@ -109,30 +112,26 @@ const News = ({ navigation }: Props) => {
   }
 
   const shouldShowListTopReloadButton = !articles.length && !!error && !isLoading;
-  const shouldShowListBottomReloadButton =
-    !!articles.length && (hasPaginationError || isPaginating);
+  const shouldShowListBottomReloadButton = !!articles.length && (hasPaginationError || isPaginating);
 
   return (
     <>
       <FlatList
-        ListHeaderComponent={() =>
-          shouldShowListTopReloadButton && (
-            <TopReloadButton
-              onPress={() => onPressTopReloadButton()}
-              testID="top-reload-button">
-              <ReloadIcon />
-            </TopReloadButton>
-          )
-        }
-        ListFooterComponent={() =>
-          shouldShowListBottomReloadButton && (
-            <ListFooterComponent
-              onPressReloadButton={onPressFooterReloadButton}
-              hasError={hasPaginationError}
-              isPaginating={isPaginating}
-            />
-          )
-        }
+        ListHeaderComponent={() => shouldShowListTopReloadButton && (
+        <TopReloadButton
+          onPress={() => onPressTopReloadButton()}
+          testID="top-reload-button"
+        >
+          <ReloadIcon />
+        </TopReloadButton>
+        )}
+        ListFooterComponent={() => shouldShowListBottomReloadButton && (
+        <ListFooterComponent
+          onPressReloadButton={onPressFooterReloadButton}
+          hasError={hasPaginationError}
+          isPaginating={isPaginating}
+        />
+        )}
         renderItem={({ item }) => (
           <NewsListItem
             withRTL={articleLanguage === ArticleLanguage.AR}
@@ -143,12 +142,12 @@ const News = ({ navigation }: Props) => {
             url={item.url}
           />
         )}
-        refreshControl={
+        refreshControl={(
           <CustomRefreshControl
             onRefresh={onPullRefreshControl}
             refreshing={isRefreshing}
           />
-        }
+        )}
         keyExtractor={(item, index) => `${item.id}${index}`}
         initialNumToRender={INITIAL_ITEMS_TO_RENDER + 1}
         onEndReachedThreshold={Platform.select({
@@ -172,7 +171,11 @@ const News = ({ navigation }: Props) => {
           lastLanguageSelected={articleLanguage}
         />
       )}
-      {!!error && <PopupAdvice text={error} />}
+      {!!error && (
+      <PopupAdvice
+        text={error}
+      />
+      )}
     </>
   );
 };

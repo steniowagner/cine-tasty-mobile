@@ -72,7 +72,9 @@ const useNews = (): State => {
     return data.articles.hasMore;
   }, []);
 
-  const { onPaginateQuery, onReloadData, isPaginating, isLoading } = usePaginatedQuery<
+  const {
+    onPaginateQuery, onReloadData, isPaginating, isLoading,
+  } = usePaginatedQuery<
     GetArticles,
     GetArticlesVariables
   >({
