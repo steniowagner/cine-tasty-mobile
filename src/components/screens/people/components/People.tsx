@@ -44,14 +44,16 @@ const People = ({ navigation }: Props) => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          onPress={() => navigation.navigate('SEARCH', {
-            i18nQueryByPaginationErrorRef:
+          onPress={() =>
+            navigation.navigate('SEARCH', {
+              i18nQueryByPaginationErrorRef:
                 'translations:people:i18nQueryByPaginationErrorRef',
-            i18nSearchBarPlaceholderRef: 'translations:people:searchBarPlaceholder',
-            i18nQueryByTextErrorRef: 'translations:people:i18nQueryByTextErrorRef',
-            searchType: SearchType.PERSON,
-            query: SEARCH_PERSON,
-          })}
+              i18nSearchBarPlaceholderRef: 'translations:people:searchBarPlaceholder',
+              i18nQueryByTextErrorRef: 'translations:people:i18nQueryByTextErrorRef',
+              searchType: SearchType.PERSON,
+              query: SEARCH_PERSON,
+            })
+          }
           iconName="magnify"
           withMarginRight
         />
@@ -67,12 +69,12 @@ const People = ({ navigation }: Props) => {
     <>
       <FlatList
         testID="people-list"
-        refreshControl={(
+        refreshControl={
           <CustomRefreshControl
             onRefresh={onPullRefreshControl}
             refreshing={isRefreshing}
           />
-        )}
+        }
         ListFooterComponent={() => (
           <ListFooterComponent
             onPressReloadButton={onPressReloadButton}
@@ -110,12 +112,7 @@ const People = ({ navigation }: Props) => {
         onEndReached={onEndReached}
         data={people}
       />
-      {!!error && (
-      <PopupAdvice
-        onFinishToShow={() => {}}
-        text={error}
-      />
-      )}
+      {!!error && <PopupAdvice text={error} />}
     </>
   );
 };

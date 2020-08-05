@@ -10,6 +10,9 @@ import {
   GetArticles,
 } from 'types/schema';
 
+export const I18N_ENTRY_QUERY_ERROR_REF = 'translations:news:i18EntryQueryErrorRef';
+export const I18N_QUERY_BY_PAGINATION_ERROR_REF = 'i18nQueryByPaginationErrorRef';
+
 export const GET_ARTICLES = gql`
   query GetArticles($page: Int!, $language: ArticleLanguage!) {
     articles(page: $page, language: $language) {
@@ -37,6 +40,7 @@ type State = {
   articleLanguage: ArticleLanguage;
   onPullRefreshControl: () => void;
   hasPaginationError: boolean;
+  t: (key: string) => string;
   onEndReached: () => void;
   isPaginating: boolean;
   isRefreshing: boolean;
@@ -73,11 +77,11 @@ const useNews = (): State => {
     GetArticlesVariables
   >({
     onPaginationQueryError: () => {
-      setError(t('translations:news:i18nQueryByPaginationErrorRef'));
+      setError(t(I18N_QUERY_BY_PAGINATION_ERROR_REF));
       setHasPaginationError(true);
     },
     onEntryQueryError: () => {
-      setError(t('translations:news:i18EntryQueryErrorRef'));
+      setError(t(I18N_ENTRY_QUERY_ERROR_REF));
 
       if (hasPaginationError) {
         setHasPaginationError(false);
@@ -161,6 +165,7 @@ const useNews = (): State => {
     articles,
     isLoading,
     error,
+    t,
   };
 };
 

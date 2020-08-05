@@ -26,7 +26,6 @@ const useEntryQuery = <TData, TVariables>({
   const exec = useCallback(
     async (updatedVariables: TVariables = variables) => {
       try {
-        console.log('exec-variables: ', variables);
         setIsLoading(true);
 
         const { data } = await execQuery({ ...updatedVariables, page: 1 });

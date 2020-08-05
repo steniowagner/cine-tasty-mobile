@@ -80,7 +80,6 @@ const useQueryWithPagination = <TData, TVariables>({
 
   useEffect(() => {
     if (pagination.isPaginating) {
-      console.log('82; ', variables);
       debouncedPaginateSearch(pagination.page, variables);
     }
   }, [pagination]);

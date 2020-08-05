@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  ActivityIndicator, TouchableOpacity, Platform, View,
-} from 'react-native';
+import { ActivityIndicator, TouchableOpacity, Platform, View } from 'react-native';
 import styled from 'styled-components';
 
 import Icon from '../Icon';
@@ -39,9 +37,7 @@ type Props = {
 };
 
 const PaginationFooter = ({ onPressReloadButton, isPaginating, hasError }: Props) => (
-  <Wrapper
-    testID="pagination-footer-wrapper"
-  >
+  <Wrapper testID="pagination-footer-wrapper">
     {isPaginating && (
       <CustomActivityIndicator
         testID="loading-footer-wrapper"
@@ -52,10 +48,7 @@ const PaginationFooter = ({ onPressReloadButton, isPaginating, hasError }: Props
       />
     )}
     {hasError && (
-      <LoadButton
-        testID="pagination-footer-reload-button"
-        onPress={onPressReloadButton}
-      >
+      <LoadButton testID="pagination-footer-reload-button" onPress={onPressReloadButton}>
         <LoadMoreIcon />
       </LoadButton>
     )}

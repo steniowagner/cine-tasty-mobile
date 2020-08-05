@@ -9,7 +9,9 @@ export const setupTimeTravel = () => {
 
 const advanceOneFrame = () => {
   const now = Date.now();
+
   MockDate.set(new Date(now + FRAME_TIME));
+
   jest.advanceTimersByTime(FRAME_TIME);
 };
 

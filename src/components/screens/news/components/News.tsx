@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 
 import React, { useLayoutEffect } from 'react';
-import { TouchableOpacity, FlatList, Platform } from 'react-native';
+import { TouchableOpacity, FlatList, Platform, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ import CustomRefreshControl from 'components/common/CustomRefreshControl';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import HeaderIconButton from 'components/common/HeaderIconButton';
+import Advise from 'components/common/advise/Advise';
 import { ArticleLanguage } from 'types/schema';
 import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
@@ -65,6 +66,7 @@ const News = ({ navigation }: Props) => {
     articles,
     isLoading,
     error,
+    t,
   } = useNews();
 
   useLayoutEffect(() => {
@@ -82,6 +84,28 @@ const News = ({ navigation }: Props) => {
 
   if (isLoading) {
     return <LoadingIndicator />;
+  }
+
+  const shouldShowEmptyListAdvice = !isLoading && !error && !articles.length;
+
+  if (shouldShowEmptyListAdvice) {
+    return (
+      <View testID="list-empty-component-wrapper">
+        <Advise
+          description={t('translations:news:emptyList:description')}
+          suggestion={t('translations:news:emptyList:suggestion')}
+          title={t('translations:news:emptyList:title')}
+          icon="alert-box"
+        />
+        {isFilterLanguageModalOpen && (
+          <LanguageFilter
+            onCloseModal={() => setIsFilterLanguageModalOpen(false)}
+            onSelectLanguage={onSelectArticleLanguage}
+            lastLanguageSelected={articleLanguage}
+          />
+        )}
+      </View>
+    );
   }
 
   const shouldShowListTopReloadButton = !articles.length && !!error && !isLoading;
@@ -148,7 +172,7 @@ const News = ({ navigation }: Props) => {
           lastLanguageSelected={articleLanguage}
         />
       )}
-      {!!error && <PopupAdvice onFinishToShow={() => {}} text={error} />}
+      {!!error && <PopupAdvice text={error} />}
     </>
   );
 };
