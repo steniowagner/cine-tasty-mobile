@@ -126,7 +126,6 @@ const Search = ({ navigation, route }: Props) => {
       />
       {!!errorMessage && (
       <PopupAdvice
-        onFinishToShow={() => {}}
         text={errorMessage}
       />
       )}

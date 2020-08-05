@@ -33,11 +33,8 @@ const sv: Locale = {
     second_plural: '{{ value }}sek ago',
   },
   news: {
-    emptyList: {
-      description: 'description',
-      suggestion: 'suggestion',
-      title: 'title',
-    },
+    i18nQueryByPaginationErrorRef: 'i18nQueryByPaginationErrorRef',
+    i18EntryQueryErrorRef: 'i18EntryQueryErrorRef',
     languages: {
       english: 'English',
       arabic: 'Arabic',

@@ -3,11 +3,11 @@ import {
   fireEvent, cleanup, render, act,
 } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
-import MockDate from 'mockdate';
 
 import { ArticleLanguage } from 'types/schema';
 import { dark } from 'styles/themes';
 
+import timeTravel from '../../../../../../__mocks__/timeTravel';
 import LanguageFilter, { ANIMATION_TIMING } from './LanguageFilter';
 import LanguageListItem from './list-item/LanguageListItem';
 import languages from './languages';
@@ -28,13 +28,11 @@ const renderLanguageFilter = (
   </ThemeProvider>
 );
 
-jest.useFakeTimers();
-
 describe('Testing <LanguageFilter />', () => {
   afterEach(cleanup);
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.useFakeTimers();
   });
 
   it('should render the list of items correctly', () => {
@@ -111,8 +109,6 @@ describe('Testing <LanguageFilter />', () => {
   });
 
   it('should call onSelectLanguage when the Select Button is pressed with a different language than the one received', () => {
-    MockDate.set(0);
-
     const initialIndexSelected = 0;
     const nextItemSelected = initialIndexSelected + 1;
     const onSelect = jest.fn();
@@ -126,7 +122,7 @@ describe('Testing <LanguageFilter />', () => {
     fireEvent.press(getByTestId('select-button'));
 
     act(() => {
-      global.timeTravel(ANIMATION_TIMING);
+      timeTravel(ANIMATION_TIMING);
     });
 
     expect(onSelect).toHaveBeenCalledTimes(1);
@@ -135,8 +131,6 @@ describe('Testing <LanguageFilter />', () => {
   });
 
   it('should not call onSelectLanguage when press Select Button when the language selected is the same of the one received as lastLanguageSelected', () => {
-    MockDate.set(0);
-
     const initialIndexSelected = 0;
     const onSelect = jest.fn();
 
@@ -149,15 +143,13 @@ describe('Testing <LanguageFilter />', () => {
     fireEvent.press(getByTestId('select-button'));
 
     act(() => {
-      global.timeTravel(ANIMATION_TIMING);
+      timeTravel(ANIMATION_TIMING);
     });
 
     expect(onSelect).toHaveBeenCalledTimes(0);
   });
 
   it('should call onCloseModal when user press out of the card', () => {
-    MockDate.set(0);
-
     const onClose = jest.fn();
     const INDEX_SELECTED = 1;
 
@@ -168,7 +160,7 @@ describe('Testing <LanguageFilter />', () => {
     fireEvent.press(getByTestId('hide-filter-button'));
 
     act(() => {
-      global.timeTravel(ANIMATION_TIMING);
+      timeTravel(ANIMATION_TIMING);
     });
 
     expect(onClose).toHaveBeenCalledTimes(1);

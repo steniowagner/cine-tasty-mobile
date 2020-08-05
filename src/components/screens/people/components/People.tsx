@@ -1,11 +1,11 @@
 /* eslint-disable react/display-name */
 
 import React, { useLayoutEffect } from 'react';
-import { RefreshControl, Platform, FlatList } from 'react-native';
+import { Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
 
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
+import CustomRefreshControl from 'components/common/CustomRefreshControl';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import { SEARCH_PERSON } from 'components/screens/search/queries';
@@ -20,12 +20,6 @@ import { PeopleStackParams } from '../routes/route-params-types';
 import usePeople from './usePeople';
 
 const NUMBER_FLATLIST_COLUMNS = 3;
-
-const CustomRefreshControl = styled(RefreshControl).attrs(({ theme }) => ({
-  progressBackgroundColor: theme.colors.primary,
-  tintColor: theme.colors.primary,
-  colors: [theme.colors.text],
-}))``;
 
 type PeopleScreenNavigationProp = StackNavigationProp<PeopleStackParams, 'PEOPLE'>;
 
@@ -118,7 +112,6 @@ const People = ({ navigation }: Props) => {
       />
       {!!error && (
       <PopupAdvice
-        onFinishToShow={() => {}}
         text={error}
       />
       )}

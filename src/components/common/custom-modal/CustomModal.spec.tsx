@@ -1,28 +1,26 @@
 import React from 'react';
 import { View } from 'react-native';
-import { fireEvent, render, act } from 'react-native-testing-library';
+import {
+  fireEvent, cleanup, render, act,
+} from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
 
+import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import CustomModal, { ANIMATION_TIMING } from './CustomModal';
 
+const CHILDREN_TEST_ID = 'custom-modal-children';
 const HEADER_TEXT = 'HEADER_TEXT';
 const FOOTER_TEXT = 'FOOTER_TEXT';
 
-const CHILDREN_TEST_ID = 'custom-modal-children';
 const Children = () => (
   <View
     testID={CHILDREN_TEST_ID}
   />
 );
 
-type CallableFunction = () => void;
-
-const renderCustomModal = (
-  onPressSelect: CallableFunction = jest.fn,
-  onClose: CallableFunction = jest.fn,
-) => (
+const renderCustomModal = (onPressSelect = jest.fn, onClose = jest.fn) => (
   <ThemeProvider
     theme={dark}
   >
@@ -37,9 +35,11 @@ const renderCustomModal = (
   </ThemeProvider>
 );
 
-jest.useFakeTimers();
-
 describe('Testing <CustomModal />', () => {
+  beforeEach(setupTimeTravel);
+
+  afterEach(cleanup);
+
   it('should render correctly', () => {
     const { getByText, getByTestId } = render(renderCustomModal());
 
@@ -68,7 +68,7 @@ describe('Testing <CustomModal />', () => {
     fireEvent.press(getByTestId('closeable-area'));
 
     act(() => {
-      global.timeTravel(ANIMATION_TIMING);
+      timeTravel(ANIMATION_TIMING);
     });
 
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -82,7 +82,7 @@ describe('Testing <CustomModal />', () => {
     fireEvent.press(getByTestId('select-button'));
 
     act(() => {
-      global.timeTravel(ANIMATION_TIMING);
+      timeTravel(ANIMATION_TIMING);
     });
 
     expect(onPressSelect).toHaveBeenCalledTimes(1);

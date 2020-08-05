@@ -20,6 +20,7 @@ const Wrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
 }))<WrapperStyleProps>`
   margin-right: ${({ theme, withMarginRight }) => withMarginRight ? theme.metrics.mediumSize : 0}px;
   margin-left: ${({ theme, withMarginLeft }) => withMarginLeft ? theme.metrics.mediumSize : 0}px;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   justify-content: center;
   align-items: center;
 `;
@@ -33,19 +34,22 @@ type Props = {
   withMarginRight?: boolean;
   withMarginLeft?: boolean;
   onPress: () => void;
+  disabled?: boolean;
   iconName: string;
 };
 
 const HeaderIconButton = ({
   withMarginRight,
   withMarginLeft,
+  disabled,
   iconName,
   onPress,
 }: Props) => (
   <Wrapper
+    testID="header-icon-button-wrapper"
     withMarginRight={withMarginRight}
     withMarginLeft={withMarginLeft}
-    testID="header-icon-button-wrapper"
+    disabled={disabled}
     onPress={onPress}
   >
     <HeaderIcon

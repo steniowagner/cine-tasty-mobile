@@ -43,23 +43,8 @@ jest.mock('react-native-gesture-handler', () => {
   };
 });
 
-const MockDate = require('mockdate');
-
-const frameTime = 10;
+const FRAME_TIME = 10;
 
 global.requestAnimationFrame = (callback) => {
-  setTimeout(callback, frameTime);
-};
-
-global.timeTravel = (time = frameTime) => {
-  const tickTravel = () => {
-    const now = Date.now();
-    MockDate.set(new Date(now + frameTime));
-    jest.advanceTimersByTime(frameTime);
-  };
-  const frames = time / frameTime;
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < frames; i++) {
-    tickTravel();
-  }
+  setTimeout(callback, FRAME_TIME);
 };

@@ -14,6 +14,7 @@ const initialPagination: Pagination = {
 };
 
 type State = {
+  setHasMoreFromEntryQuery: (hasMore: boolean) => void;
   restartPagination: () => void;
   isPaginating: boolean;
   exec: () => void;
@@ -40,45 +41,48 @@ const useQueryWithPagination = <TData, TVariables>({
 }: Props<TData, TVariables>): State => {
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
 
-  const onPaginateQuery = useCallback(async (pageSelected: number) => {
-    try {
-      const queryVariables = {
-        ...variables,
-        page: pageSelected,
-      };
+  const onPaginateQuery = useCallback(
+    async (pageSelected: number, variablesUpdated: TVariables) => {
+      try {
+        const queryVariables = {
+          ...variablesUpdated,
+          page: pageSelected,
+        };
 
-      const { data } = await execQuery(queryVariables);
+        const { data } = await execQuery(queryVariables);
 
-      const hasMore = onGetData(data);
+        const hasMore = onGetData(data);
 
-      setPagination((previousPagination: Pagination) => ({
-        ...previousPagination,
-        isPaginating: false,
-        hasMore,
-      }));
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log('useQueryWithPagination/onPaginateQuery: ', err);
+        setPagination((previousPagination: Pagination) => ({
+          ...previousPagination,
+          isPaginating: false,
+          hasMore,
+        }));
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log('useQueryWithPagination/onPaginateQuery: ', err);
 
-      onError();
+        onError();
 
-      setPagination((previousPagination: Pagination) => ({
-        page: previousPagination.page - 1,
-        isPaginating: false,
-        hasMore: true,
-      }));
-    }
-  }, []);
+        setPagination((previousPagination: Pagination) => ({
+          page: previousPagination.page - 1,
+          isPaginating: false,
+          hasMore: true,
+        }));
+      }
+    },
+    [],
+  );
 
   const debouncedPaginateSearch = useRef(
-    debounce((pageSelected: number) => {
-      onPaginateQuery(pageSelected);
+    debounce((pageSelected: number, variablesUpdated: TVariables) => {
+      onPaginateQuery(pageSelected, variablesUpdated);
     }, PAGINATION_DELAY),
   ).current;
 
   useEffect(() => {
     if (pagination.isPaginating) {
-      debouncedPaginateSearch(pagination.page);
+      debouncedPaginateSearch(pagination.page, variables);
     }
   }, [pagination]);
 
@@ -104,8 +108,16 @@ const useQueryWithPagination = <TData, TVariables>({
     setPagination(initialPagination);
   }, []);
 
+  const setHasMoreFromEntryQuery = useCallback((hasMore: boolean) => {
+    setPagination({
+      ...initialPagination,
+      hasMore,
+    });
+  }, []);
+
   return {
     isPaginating: pagination.isPaginating,
+    setHasMoreFromEntryQuery,
     restartPagination,
     exec,
   };

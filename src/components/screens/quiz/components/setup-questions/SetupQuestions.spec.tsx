@@ -3,11 +3,11 @@ import { ThemeProvider } from 'styled-components';
 import {
   cleanup, fireEvent, render, act,
 } from 'react-native-testing-library';
-import MockDate from 'mockdate';
 
 import { ANIMATION_TIMING } from 'components/common/custom-modal/CustomModal';
 import { dark } from 'styles/themes';
 
+import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
 import { difficulties, categories, types } from './options';
@@ -28,11 +28,8 @@ describe('Testing <SetupQuestions />', () => {
   afterEach(cleanup);
 
   beforeEach(() => {
-    jest.useFakeTimers();
-
+    setupTimeTravel();
     jest.clearAllMocks();
-
-    MockDate.set(0);
   });
 
   describe('Testing the renders', () => {
@@ -66,7 +63,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(difficultDropdown);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -76,7 +73,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       try {
@@ -104,7 +101,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(categoryDropdown);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -114,7 +111,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       try {
@@ -140,7 +137,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(typeDropdown);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -150,7 +147,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       try {
@@ -214,7 +211,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(difficultyDropdown);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(getAllByTestId('option-list-item')[INDEX_DIFFICULTY_SELECTED]);
@@ -222,13 +219,13 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(categoryDropdown);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(getAllByTestId('option-list-item')[INDEX_CATEGORY_SELECTED]);
@@ -236,13 +233,13 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(typeDropdown);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent.press(getAllByTestId('option-list-item')[INDEX_TYPE_SELECTED]);
@@ -250,7 +247,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(getByTestId('select-button'));
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       fireEvent(getByTestId('slider'), 'onValueChange', NUMBER_QUESTIONS);
@@ -277,7 +274,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(difficultyOption);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -299,7 +296,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(categoryOption);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);
@@ -321,7 +318,7 @@ describe('Testing <SetupQuestions />', () => {
       fireEvent.press(typeOptions);
 
       act(() => {
-        global.timeTravel(ANIMATION_TIMING);
+        timeTravel(ANIMATION_TIMING);
       });
 
       expect(getByTestId('custom-modal')).not.toBe(null);

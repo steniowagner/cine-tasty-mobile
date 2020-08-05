@@ -1,9 +1,10 @@
 import React from 'react';
-import { render } from 'react-native-testing-library';
+import { cleanup, render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
 
+import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import PopupAdvice, { HIDE_POPUP_DELAY } from './PopupAdvice';
 
 const DEFAULT_TEXT = 'DEFAULT_TEXT';
@@ -19,9 +20,11 @@ const renderPopupAdvice = (onFinishToShow = jest.fn, text = DEFAULT_TEXT) => (
   </ThemeProvider>
 );
 
-jest.useFakeTimers();
-
 describe('Testing <PopupAdvice />', () => {
+  beforeEach(setupTimeTravel);
+
+  afterEach(cleanup);
+
   it('should render correctly', () => {
     const { getByTestId, getByText } = render(renderPopupAdvice());
 
@@ -37,7 +40,7 @@ describe('Testing <PopupAdvice />', () => {
 
     render(renderPopupAdvice(onFinishToShow));
 
-    global.timeTravel(HIDE_POPUP_DELAY * 2);
+    timeTravel(HIDE_POPUP_DELAY * 2);
 
     expect(onFinishToShow).toHaveBeenCalledTimes(1);
   });
