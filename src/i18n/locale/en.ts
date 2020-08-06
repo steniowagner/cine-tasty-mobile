@@ -2,8 +2,8 @@ import { Locale } from './Locale';
 
 const en: Locale = {
   errors: {
-    paginatePeopleError: "Couldn't load more people",
-    searchPeopleError: "Couldn't search for this person",
+    paginateFamousError: "Couldn't load more Famous",
+    searchFamousError: "Couldn't search for this person",
     reloadNewsError: "Couldn't reload the news",
     loadMoreNewsError: "Couldn't load more news",
     network: {
@@ -15,7 +15,7 @@ const en: Locale = {
   tabs: {
     discover: 'Discover',
     news: 'News',
-    people: 'People',
+    famous: 'Famous',
     quiz: 'Quiz',
   },
   time: {
@@ -89,7 +89,7 @@ const en: Locale = {
       "Seems like we don't have enough questions for your taste today.",
     noQuestionsAdviseSuggestion: 'Try to change the search parameters.',
   },
-  people: {
+  famous: {
     searchBarPlaceholder: 'Search for an Actor or Actress...',
     i18nQueryByPaginationErrorRef: 'i18nQueryByPaginationErrorRef',
     i18nQueryByTextErrorRef: 'i18nQueryByTextErrorRef',

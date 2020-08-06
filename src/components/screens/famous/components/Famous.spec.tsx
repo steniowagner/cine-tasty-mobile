@@ -7,11 +7,10 @@ import { MockList, IMocks } from 'graphql-tools';
 
 import { dark } from 'styles/themes';
 
-import { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
-import People from './People';
+import { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
+import Famous from './Famous';
 
 const navigation = {
   setOptions: () => ({
@@ -24,15 +23,15 @@ const navigation = {
   }),
 };
 
-const renderPeopleScreen = (mockResolvers?: IMocks) => {
-  const PeopleScreen = () => (
+const renderFamousScreen = (mockResolvers?: IMocks) => {
+  const FamousScreen = () => (
     <ThemeProvider
       theme={dark}
     >
       <AutoMockProvider
         mockResolvers={mockResolvers}
       >
-        <People
+        <Famous
           navigation={navigation}
         />
       </AutoMockProvider>
@@ -41,18 +40,18 @@ const renderPeopleScreen = (mockResolvers?: IMocks) => {
 
   return (
     <MockedNavigation
-      component={PeopleScreen}
+      component={FamousScreen}
     />
   );
 };
 
-describe('Testing <People />', () => {
+describe('Testing <Famous />', () => {
   afterEach(cleanup);
 
   beforeEach(setupTimeTravel);
 
   it('should render the loading state when the screen is mounted', () => {
-    const { queryByTestId } = render(renderPeopleScreen());
+    const { queryByTestId } = render(renderFamousScreen());
 
     expect(queryByTestId('loading-content-indicator')).not.toBeNull();
 
@@ -61,7 +60,7 @@ describe('Testing <People />', () => {
     });
   });
 
-  it('should render the list of people when the loading is over', () => {
+  it('should render the list of famous when the loading is over', () => {
     const ITEMS_COUNT = 10;
 
     const mockResolvers = {
@@ -70,7 +69,7 @@ describe('Testing <People />', () => {
       }),
     };
 
-    const { queryByTestId } = render(renderPeopleScreen(mockResolvers));
+    const { queryByTestId } = render(renderFamousScreen(mockResolvers));
 
     expect(queryByTestId('loading-content-indicator')).not.toBeNull();
 
@@ -80,8 +79,8 @@ describe('Testing <People />', () => {
 
     expect(queryByTestId('loading-content-indicator')).toBeNull();
 
-    expect(queryByTestId('people-list')).not.toBeNull();
+    expect(queryByTestId('famous-list')).not.toBeNull();
 
-    expect(queryByTestId('people-list').props.data.length).toEqual(ITEMS_COUNT);
+    expect(queryByTestId('famous-list').props.data.length).toEqual(ITEMS_COUNT);
   });
 });

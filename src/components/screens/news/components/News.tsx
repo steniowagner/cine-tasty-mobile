@@ -45,10 +45,10 @@ const ReloadIcon = styled(Icon).attrs(({ theme }) => ({
   name: 'reload',
 }))``;
 
-type PeopleScreenNavigationProp = StackNavigationProp<NewsStackParams, 'NEWS'>;
+type NewsScreenNavigationProp = StackNavigationProp<NewsStackParams, 'NEWS'>;
 
 type Props = {
-  navigation: PeopleScreenNavigationProp;
+  navigation: NewsScreenNavigationProp;
 };
 
 const News = ({ navigation }: Props) => {

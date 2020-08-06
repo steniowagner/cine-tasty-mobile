@@ -21,7 +21,7 @@ type State = {
   error: string;
 };
 
-export const GET_PEOPLE = gql`
+export const GET_FAMOUS = gql`
   query GetPeople($page: Int!) {
     people(page: $page) {
       hasMore
@@ -34,7 +34,7 @@ export const GET_PEOPLE = gql`
   }
 `;
 
-const usePeople = (): State => {
+const useFamous = (): State => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [people, setPeople] = useState<GetPeoplePeopleItems[]>([]);
   const [isRefreshing, setIsRefrehing] = useState<boolean>(false);
@@ -57,11 +57,11 @@ const usePeople = (): State => {
     GetPeople,
     GetPeopleVariables
   >({
-    onPaginationQueryError: () => setError(t('translations:people:i18nQueryByPaginationErrorRef')),
-    onEntryQueryError: () => setError(t('translations:people:i18EntryQueryErrorRef')),
+    onPaginationQueryError: () => setError(t('translations:famous:i18nQueryByPaginationErrorRef')),
+    onEntryQueryError: () => setError(t('translations:famous:i18EntryQueryErrorRef')),
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
-    query: GET_PEOPLE,
+    query: GET_FAMOUS,
   });
 
   const onPressReloadButton = useCallback(() => {
@@ -105,4 +105,4 @@ const usePeople = (): State => {
   };
 };
 
-export default usePeople;
+export default useFamous;

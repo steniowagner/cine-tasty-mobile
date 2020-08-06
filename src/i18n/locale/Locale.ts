@@ -14,14 +14,14 @@ type Time =
   | 'second'
   | 'second_plural';
 
-type Tabs = 'discover' | 'people' | 'quiz' | 'news';
+type Tabs = 'discover' | 'famous' | 'quiz' | 'news';
 
 type ErrorType =
   | 'network'
   | 'loadMoreNewsError'
   | 'reloadNewsError'
-  | 'paginatePeopleError'
-  | 'searchPeopleError';
+  | 'paginateFamousError'
+  | 'searchFamousError';
 
 type ErrorDescription = {
   description: string;
@@ -74,7 +74,7 @@ export interface Locale {
     noQuestionsAdviseDescription: string;
     noQuestionsAdviseSuggestion: string;
   };
-  people: {
+  famous: {
     i18nQueryByPaginationErrorRef: string;
     i18nQueryByTextErrorRef: string;
     i18EntryQueryErrorRef: string;
