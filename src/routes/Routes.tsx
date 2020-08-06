@@ -8,18 +8,17 @@ import {
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
 
+import SearchStack, { StackID } from 'components/screens/search/routes/stack-routes';
 import TabNavigator from 'components/utils/tab-navigator/TabNavigator';
 import { ThemeID } from 'types';
-
-import SearchStack, { StackID } from 'components/screens/search/routes/stack-routes';
 
 import DiscoverStack, {
   TabID as DiscoverTabID,
 } from 'components/screens/discover/routes/stack-routes';
 
-import PeopleStack, {
-  TabID as PeopleTabID,
-} from 'components/screens/people/routes/stack-routes';
+import FamousStack, {
+  TabID as FamousTabID,
+} from 'components/screens/famous/routes/stack-routes';
 
 import QuizStack, {
   TabID as QuizTabID,
@@ -46,8 +45,8 @@ const Tabs = () => (
       name={DiscoverTabID}
     />
     <Tab.Screen
-      component={PeopleStack}
-      name={PeopleTabID}
+      component={FamousStack}
+      name={FamousTabID}
     />
     <Tab.Screen
       component={QuizStack}

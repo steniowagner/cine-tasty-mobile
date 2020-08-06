@@ -16,18 +16,18 @@ import DefaultListItem, {
 import { SearchType } from 'types/schema';
 import metrics from 'styles/metrics';
 
-import { PeopleStackParams } from '../routes/route-params-types';
-import usePeople from './usePeople';
+import { FamousStackParams } from '../routes/route-params-types';
+import useFamous from './useFamous';
 
 const NUMBER_FLATLIST_COLUMNS = 3;
 
-type PeopleScreenNavigationProp = StackNavigationProp<PeopleStackParams, 'PEOPLE'>;
+type FamousScreenNavigationProp = StackNavigationProp<FamousStackParams, 'FAMOUS'>;
 
 type Props = {
-  navigation: PeopleScreenNavigationProp;
+  navigation: FamousScreenNavigationProp;
 };
 
-const People = ({ navigation }: Props) => {
+const Famous = ({ navigation }: Props) => {
   const {
     onPullRefreshControl,
     onPressReloadButton,
@@ -38,7 +38,7 @@ const People = ({ navigation }: Props) => {
     isLoading,
     people,
     error,
-  } = usePeople();
+  } = useFamous();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,9 +46,9 @@ const People = ({ navigation }: Props) => {
         <HeaderIconButton
           onPress={() => navigation.navigate('SEARCH', {
             i18nQueryByPaginationErrorRef:
-                'translations:people:i18nQueryByPaginationErrorRef',
-            i18nSearchBarPlaceholderRef: 'translations:people:searchBarPlaceholder',
-            i18nQueryByTextErrorRef: 'translations:people:i18nQueryByTextErrorRef',
+                'translations:famous:i18nQueryByPaginationErrorRef',
+            i18nSearchBarPlaceholderRef: 'translations:famous:searchBarPlaceholder',
+            i18nQueryByTextErrorRef: 'translations:famous:i18nQueryByTextErrorRef',
             searchType: SearchType.PERSON,
             query: SEARCH_PERSON,
           })}
@@ -66,7 +66,7 @@ const People = ({ navigation }: Props) => {
   return (
     <>
       <FlatList
-        testID="people-list"
+        testID="famous-list"
         refreshControl={(
           <CustomRefreshControl
             onRefresh={onPullRefreshControl}
@@ -119,4 +119,4 @@ const People = ({ navigation }: Props) => {
   );
 };
 
-export default People;
+export default Famous;

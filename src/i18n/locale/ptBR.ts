@@ -1,9 +1,9 @@
 import { Locale } from './Locale';
 
-const ptBR: Locale = {
+const en: Locale = {
   errors: {
-    paginatePeopleError: "Couldn't load more people",
-    searchPeopleError: "Couldn't search for this person",
+    paginateFamousError: "Couldn't load more Famous",
+    searchFamousError: "Couldn't search for this person",
     reloadNewsError: "Couldn't reload the news",
     loadMoreNewsError: "Couldn't load more news",
     network: {
@@ -13,16 +13,16 @@ const ptBR: Locale = {
     },
   },
   tabs: {
-    discover: 'Descobrir',
-    news: 'Notícias',
-    people: 'Pessoas',
+    discover: 'Discover',
+    news: 'News',
+    famous: 'Famous',
     quiz: 'Quiz',
   },
   time: {
-    year: '{{ value }}y ago',
-    year_plural: '{{ value }}y ago',
-    month: '{{ value }}m ago',
-    month_plural: '{{ value }}m ago',
+    year: '{{ value }}yr ago',
+    year_plural: '{{ value }}yr ago',
+    month: '{{ value }}mth ago',
+    month_plural: '{{ value }}mth ago',
     day: '{{ value }}d ago',
     day_plural: '{{ value }}d ago',
     hour: '{{ value }}h ago',
@@ -53,31 +53,32 @@ const ptBR: Locale = {
     filterMessage: 'Choose a language to filter the News',
   },
   quiz: {
-    welcome: 'welcome',
-    decription: 'decription',
-    challenge: 'challenge',
-    startButton: 'startButtonText',
+    welcome: 'Welcome to the Cine-Tasty Quiz!',
+    decription:
+      'Want to test your knowledge about the world of cinema?\n\nYou can choose the type (true/false or multi-choice), category (Movies or Tv) and how many questions you want to answer.',
+    challenge: 'Can you score 100%?',
     chooseQuestions: 'CHOOSE QUESTIONS',
+    startButton: 'START QUIZ',
     difficulty: 'Difficulty',
     category: 'Category',
     type: 'Type',
     numberOfQuestions: 'Number of Questions',
-    setDifficulty: 'Set the difficulty of the questions',
-    setCategory: 'Set the category of the questions',
-    setType: 'Set the type of questions',
-    modalSelectText: 'selectionar',
-    categoryMixed: 'categoryMixed',
-    categoryMovie: 'categoryMovie',
-    categoryTv: 'categoryTv',
-    difficultyEasy: 'difficultyEasy',
-    difficultyMedium: 'difficultyMedium',
-    difficultyHard: 'difficultyHard',
-    difficultyMixed: 'difficultyMixed',
-    typeMultiple: 'typeMultiple',
-    typeBoolean: 'typeBoolean',
-    typeMixed: 'typeMixed',
+    setDifficulty: 'Difficulty of the questions',
+    setCategory: 'Category of the questions',
+    setType: 'Type of questions',
+    modalSelectText: 'select',
+    categoryMixed: 'Mixed',
+    categoryMovie: 'Movies',
+    categoryTv: 'Tv',
+    difficultyEasy: 'Easy',
+    difficultyMedium: 'Medium',
+    difficultyHard: 'Hard',
+    difficultyMixed: 'Mixed',
+    typeMultiple: 'Multiple',
+    typeBoolean: 'Boolean',
+    typeMixed: 'Mixed',
     playAgain: 'Play Again',
-    playAgainDescription: 'Do you want to play the Trivia Challenge again?',
+    playAgainDescription: 'Do you want to play the Quiz again?',
     answer: 'Answer',
     yourAnswer: 'Your Answer',
     scores: 'You scored',
@@ -88,7 +89,7 @@ const ptBR: Locale = {
       "Seems like we don't have enough questions for your taste today.",
     noQuestionsAdviseSuggestion: 'Try to change the search parameters.',
   },
-  people: {
+  famous: {
     searchBarPlaceholder: 'Search for an Actor or Actress...',
     i18nQueryByPaginationErrorRef: 'i18nQueryByPaginationErrorRef',
     i18nQueryByTextErrorRef: 'i18nQueryByTextErrorRef',
@@ -96,4 +97,4 @@ const ptBR: Locale = {
   },
 };
 
-export default ptBR;
+export default en;

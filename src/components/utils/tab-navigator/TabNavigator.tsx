@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import { Routes as DiscoverRoutes } from 'components/screens/discover/routes/route-names';
 import { Routes as SettingsRoutes } from 'components/screens/settings/routes/route-names';
-import { Routes as PeopleRoutes } from 'components/screens/people/routes/route-names';
+import { Routes as FamousRoutes } from 'components/screens/famous/routes/route-names';
 import { Routes as QuizRoutes } from 'components/screens/quiz/routes/route-names';
 import { Routes as NewsRoutes } from 'components/screens/news/routes/route-names';
 import metrics from 'styles/metrics';
@@ -29,7 +29,7 @@ type BlacklistScreens =
   | DiscoverRoutes
   | QuizRoutes
   | NewsRoutes
-  | PeopleRoutes
+  | FamousRoutes
   | SettingsRoutes;
 
 const blacklistScreens: BlacklistScreens[] = ['SETUP_QUESTIONS', 'QUESTIONS', 'RESULTS'];
