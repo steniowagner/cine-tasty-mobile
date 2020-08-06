@@ -60,11 +60,11 @@ describe('Testing <Famous />', () => {
     });
   });
 
-  it('should render the list of Famous when the loading is over', () => {
+  it('should render the list of famous when the loading is over', () => {
     const ITEMS_COUNT = 10;
 
     const mockResolvers = {
-      FamousQueryResult: () => ({
+      PeopleQueryResult: () => ({
         items: () => new MockList(ITEMS_COUNT),
       }),
     };
