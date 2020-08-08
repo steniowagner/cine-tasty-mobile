@@ -1,20 +1,17 @@
 /* eslint-disable react/display-name */
 
 import React, { useLayoutEffect } from 'react';
-import {
-  TouchableOpacity, FlatList, Platform, View,
-} from 'react-native';
+import { FlatList, Platform, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
 
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
 import CustomRefreshControl from 'components/common/CustomRefreshControl';
+import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import Advise from 'components/common/advise/Advise';
 import { ArticleLanguage } from 'types/schema';
-import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
 import { NewsStackParams } from '../routes/route-params-types';
@@ -26,24 +23,6 @@ import useNews from './useNews';
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
-
-const TopReloadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
-  hitSlop: {
-    top: theme.metrics.largeSize,
-    bottom: theme.metrics.largeSize,
-    left: theme.metrics.largeSize,
-    right: theme.metrics.largeSize,
-  },
-}))`
-  align-self: center;
-  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
-`;
-
-const ReloadIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('10%'),
-  color: theme.colors.text,
-  name: 'reload',
-}))``;
 
 type NewsScreenNavigationProp = StackNavigationProp<NewsStackParams, 'NEWS'>;
 
@@ -118,12 +97,9 @@ const News = ({ navigation }: Props) => {
     <>
       <FlatList
         ListHeaderComponent={() => shouldShowListTopReloadButton && (
-        <TopReloadButton
-          onPress={() => onPressTopReloadButton()}
-          testID="top-reload-button"
-        >
-          <ReloadIcon />
-        </TopReloadButton>
+        <PaginatedListHeader
+          onPress={onPressTopReloadButton}
+        />
         )}
         ListFooterComponent={() => shouldShowListBottomReloadButton && (
         <ListFooterComponent
