@@ -188,8 +188,7 @@
 <a name='L130'></a><a href='#L130'>130</a>
 <a name='L131'></a><a href='#L131'>131</a>
 <a name='L132'></a><a href='#L132'>132</a>
-<a name='L133'></a><a href='#L133'>133</a>
-<a name='L134'></a><a href='#L134'>134</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L133'></a><a href='#L133'>133</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -237,9 +236,7 @@
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -259,11 +256,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -279,7 +274,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -313,6 +307,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">268x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -370,16 +368,14 @@ const Famous = ({ navigation }: Props) =&gt; {
     navigation.setOptions({
       headerRight: <span class="fstat-no" title="function not covered" >()</span> =&gt; (
 <span class="cstat-no" title="statement not covered" >        &lt;HeaderIconButton</span>
-          onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt;
-<span class="cstat-no" title="statement not covered" >            navigation.navigate('SEARCH', {</span>
-              i18nQueryByPaginationErrorRef:
+          onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >navigation.navigate('SEARCH', {</span>
+            i18nQueryByPaginationErrorRef:
                 'translations:famous:i18nQueryByPaginationErrorRef',
-              i18nSearchBarPlaceholderRef: 'translations:famous:searchBarPlaceholder',
-              i18nQueryByTextErrorRef: 'translations:famous:i18nQueryByTextErrorRef',
-              searchType: SearchType.PERSON,
-              query: SEARCH_PERSON,
-            })
-          }
+            i18nSearchBarPlaceholderRef: 'translations:famous:searchBarPlaceholder',
+            i18nQueryByTextErrorRef: 'translations:famous:i18nQueryByTextErrorRef',
+            searchType: SearchType.PERSON,
+            query: SEARCH_PERSON,
+          })}
           iconName="magnify"
           withMarginRight
         /&gt;
@@ -392,33 +388,30 @@ const Famous = ({ navigation }: Props) =&gt; {
   }
 &nbsp;
   const shouldShowListTopReloadButton = !famous.length &amp;&amp; !!error &amp;&amp; !isLoading;
-  const shouldShowListBottomReloadButton =
-    !!famous.length &amp;&amp; (hasPaginationError || isPaginating);
+  const shouldShowListBottomReloadButton = !!famous.length &amp;&amp; (hasPaginationError || isPaginating);
 &nbsp;
   return (
     &lt;&gt;
       &lt;FlatList
         testID="famous-list"
-        ListHeaderComponent={() =&gt;
-          shouldShowListTopReloadButton &amp;&amp; (
-            &lt;PaginatedListHeader onPress={onPressTopReloadButton} /&gt;
-          )
-        }
-        refreshControl={
+        ListHeaderComponent={() =&gt; shouldShowListTopReloadButton &amp;&amp; (
+        &lt;PaginatedListHeader
+          onPress={onPressTopReloadButton}
+        /&gt;
+        )}
+        refreshControl={(
           &lt;CustomRefreshControl
             onRefresh={onPullRefreshControl}
             refreshing={isRefreshing}
           /&gt;
-        }
-        ListFooterComponent={() =&gt;
-          shouldShowListBottomReloadButton &amp;&amp; (
-            &lt;ListFooterComponent
-              onPressReloadButton={onPressBottomReloadButton}
-              hasError={hasPaginationError}
-              isPaginating={isPaginating}
-            /&gt;
-          )
-        }
+        )}
+        ListFooterComponent={() =&gt; shouldShowListBottomReloadButton &amp;&amp; (
+        &lt;ListFooterComponent
+          onPressReloadButton={onPressBottomReloadButton}
+          hasError={hasPaginationError}
+          isPaginating={isPaginating}
+        /&gt;
+        )}
         columnWrapperStyle={{
           paddingLeft: metrics.smallSize,
         }}
@@ -449,7 +442,11 @@ const Famous = ({ navigation }: Props) =&gt; {
         onEndReached={onEndReached}
         data={famous}
       /&gt;
-      {!!error &amp;&amp; &lt;PopupAdvice text={error} /&gt;}
+      {!!error &amp;&amp; (
+      &lt;PopupAdvice
+        text={error}
+      /&gt;
+      )}
     &lt;/&gt;
   );
 };
@@ -462,7 +459,7 @@ export default Famous;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Aug 08 2020 15:31:11 GMT-0300 (Brasilia Standard Time)
+                at Sat Aug 08 2020 17:22:23 GMT-0300 (Brasilia Standard Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>

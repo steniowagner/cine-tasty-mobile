@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1596911471877" clover="3.2.0">
-  <project timestamp="1596911471877" name="All files">
-    <metrics statements="1035" coveredstatements="942" conditionals="300" coveredconditionals="249" methods="441" coveredmethods="387" elements="1776" coveredelements="1578" complexity="0" loc="1035" ncloc="1035" packages="40" files="92" classes="92"/>
+<coverage generated="1596918143459" clover="3.2.0">
+  <project timestamp="1596918143459" name="All files">
+    <metrics statements="1039" coveredstatements="955" conditionals="300" coveredconditionals="249" methods="441" coveredmethods="395" elements="1780" coveredelements="1599" complexity="0" loc="1039" ncloc="1039" packages="40" files="92" classes="92"/>
     <package name="components.common">
       <metrics statements="54" coveredstatements="52" conditionals="16" coveredconditionals="10" methods="34" coveredmethods="31"/>
       <file name="CustomRefreshControl.tsx" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/common/CustomRefreshControl.tsx">
@@ -62,17 +62,17 @@
       </file>
       <file name="RoundedButton.tsx" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/common/RoundedButton.tsx">
         <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="1" methods="8" coveredmethods="8"/>
-        <line num="5" count="3" type="stmt"/>
-        <line num="6" count="33" type="stmt"/>
-        <line num="7" count="33" type="stmt"/>
-        <line num="8" count="33" type="stmt"/>
-        <line num="9" count="33" type="stmt"/>
-        <line num="10" count="33" type="cond" truecount="1" falsecount="1"/>
-        <line num="13" count="3" type="stmt"/>
-        <line num="14" count="33" type="stmt"/>
-        <line num="15" count="33" type="stmt"/>
-        <line num="27" count="3" type="stmt"/>
-        <line num="28" count="33" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="35" type="stmt"/>
+        <line num="7" count="35" type="stmt"/>
+        <line num="8" count="35" type="stmt"/>
+        <line num="9" count="35" type="stmt"/>
+        <line num="10" count="35" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="35" type="stmt"/>
+        <line num="15" count="35" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="28" count="35" type="stmt"/>
       </file>
       <file name="RouteSuspenseWrapper.tsx" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/common/RouteSuspenseWrapper.tsx">
         <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
@@ -285,58 +285,58 @@
         <line num="45" count="53" type="stmt"/>
         <line num="46" count="10" type="stmt"/>
         <line num="48" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
-        <line num="66" count="53" type="cond" truecount="2" falsecount="0"/>
-        <line num="67" count="14" type="stmt"/>
-        <line num="70" count="39" type="cond" truecount="3" falsecount="0"/>
-        <line num="72" count="39" type="cond" truecount="3" falsecount="0"/>
-        <line num="74" count="39" type="stmt"/>
-        <line num="79" count="39" type="cond" truecount="2" falsecount="0"/>
-        <line num="90" count="39" type="cond" truecount="2" falsecount="0"/>
-        <line num="109" count="6" type="stmt"/>
-        <line num="116" count="252" type="stmt"/>
-        <line num="117" count="0" type="stmt"/>
-        <line num="124" count="268" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="64" count="53" type="cond" truecount="2" falsecount="0"/>
+        <line num="65" count="14" type="stmt"/>
+        <line num="68" count="39" type="cond" truecount="3" falsecount="0"/>
+        <line num="69" count="39" type="cond" truecount="3" falsecount="0"/>
+        <line num="71" count="39" type="stmt"/>
+        <line num="75" count="39" type="cond" truecount="2" falsecount="0"/>
+        <line num="86" count="39" type="cond" truecount="2" falsecount="0"/>
+        <line num="104" count="6" type="stmt"/>
+        <line num="111" count="252" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="119" count="268" type="stmt"/>
       </file>
       <file name="useFamous.ts" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/screens/famous/components/useFamous.ts">
         <metrics statements="37" coveredstatements="35" conditionals="6" coveredconditionals="4" methods="10" coveredmethods="10"/>
         <line num="25" count="6" type="stmt"/>
         <line num="38" count="6" type="stmt"/>
-        <line num="40" count="6" type="stmt"/>
-        <line num="42" count="6" type="stmt"/>
+        <line num="39" count="6" type="stmt"/>
+        <line num="41" count="6" type="stmt"/>
+        <line num="42" count="53" type="stmt"/>
         <line num="43" count="53" type="stmt"/>
         <line num="44" count="53" type="stmt"/>
         <line num="45" count="53" type="stmt"/>
-        <line num="46" count="53" type="stmt"/>
-        <line num="48" count="53" type="stmt"/>
-        <line num="50" count="53" type="stmt"/>
-        <line num="51" count="12" type="stmt"/>
-        <line num="56" count="12" type="stmt"/>
-        <line num="59" count="53" type="stmt"/>
-        <line num="64" count="2" type="stmt"/>
+        <line num="47" count="53" type="stmt"/>
+        <line num="49" count="53" type="stmt"/>
+        <line num="50" count="12" type="stmt"/>
+        <line num="55" count="12" type="stmt"/>
+        <line num="60" count="53" type="stmt"/>
         <line num="65" count="2" type="stmt"/>
-        <line num="68" count="4" type="stmt"/>
-        <line num="70" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="79" count="53" type="stmt"/>
-        <line num="80" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="84" count="2" type="stmt"/>
-        <line num="86" count="2" type="stmt"/>
-        <line num="88" count="2" type="stmt"/>
-        <line num="91" count="53" type="stmt"/>
-        <line num="92" count="2" type="stmt"/>
-        <line num="94" count="2" type="stmt"/>
-        <line num="96" count="2" type="stmt"/>
-        <line num="99" count="53" type="stmt"/>
-        <line num="100" count="1" type="stmt"/>
-        <line num="102" count="1" type="stmt"/>
-        <line num="104" count="1" type="stmt"/>
-        <line num="107" count="53" type="stmt"/>
-        <line num="108" count="14" type="cond" truecount="2" falsecount="0"/>
-        <line num="109" count="2" type="stmt"/>
-        <line num="113" count="53" type="stmt"/>
-        <line num="114" count="2" type="stmt"/>
+        <line num="66" count="2" type="stmt"/>
+        <line num="69" count="4" type="stmt"/>
+        <line num="71" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="80" count="53" type="stmt"/>
+        <line num="81" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="85" count="2" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="92" count="53" type="stmt"/>
+        <line num="93" count="2" type="stmt"/>
+        <line num="95" count="2" type="stmt"/>
+        <line num="97" count="2" type="stmt"/>
+        <line num="100" count="53" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="105" count="1" type="stmt"/>
+        <line num="108" count="53" type="stmt"/>
+        <line num="109" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="110" count="2" type="stmt"/>
+        <line num="114" count="53" type="stmt"/>
+        <line num="115" count="2" type="stmt"/>
       </file>
     </package>
     <package name="components.screens.famous.routes">
@@ -359,28 +359,28 @@
       <file name="News.tsx" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/screens/news/components/News.tsx">
         <metrics statements="23" coveredstatements="19" conditionals="23" coveredconditionals="21" methods="11" coveredmethods="7"/>
         <line num="23" count="4" type="stmt"/>
-        <line num="26" count="4" type="stmt"/>
-        <line num="34" count="4" type="stmt"/>
-        <line num="51" count="50" type="stmt"/>
-        <line num="53" count="50" type="stmt"/>
-        <line num="54" count="35" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="50" count="50" type="stmt"/>
+        <line num="52" count="50" type="stmt"/>
+        <line num="53" count="35" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="66" count="50" type="cond" truecount="2" falsecount="0"/>
-        <line num="67" count="13" type="stmt"/>
-        <line num="70" count="37" type="cond" truecount="3" falsecount="0"/>
-        <line num="72" count="37" type="cond" truecount="2" falsecount="0"/>
-        <line num="73" count="10" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
-        <line num="92" count="27" type="cond" truecount="3" falsecount="0"/>
+        <line num="65" count="50" type="cond" truecount="2" falsecount="0"/>
+        <line num="66" count="13" type="stmt"/>
+        <line num="69" count="37" type="cond" truecount="3" falsecount="0"/>
+        <line num="71" count="37" type="cond" truecount="2" falsecount="0"/>
+        <line num="72" count="10" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="93" count="27" type="cond" truecount="3" falsecount="0"/>
         <line num="94" count="27" type="cond" truecount="3" falsecount="0"/>
         <line num="96" count="27" type="stmt"/>
-        <line num="100" count="27" type="cond" truecount="2" falsecount="0"/>
-        <line num="105" count="27" type="cond" truecount="2" falsecount="0"/>
-        <line num="114" count="110" type="stmt"/>
-        <line num="129" count="168" type="stmt"/>
-        <line num="135" count="58" type="stmt"/>
-        <line num="147" count="0" type="stmt"/>
+        <line num="99" count="27" type="cond" truecount="2" falsecount="0"/>
+        <line num="104" count="27" type="cond" truecount="2" falsecount="0"/>
+        <line num="112" count="110" type="stmt"/>
+        <line num="127" count="168" type="stmt"/>
+        <line num="133" count="58" type="stmt"/>
+        <line num="145" count="0" type="stmt"/>
       </file>
       <file name="useNews.ts" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/screens/news/components/useNews.ts">
         <metrics statements="49" coveredstatements="41" conditionals="10" coveredconditionals="5" methods="12" coveredmethods="11"/>
@@ -398,41 +398,41 @@
         <line num="66" count="50" type="stmt"/>
         <line num="67" count="11" type="stmt"/>
         <line num="72" count="11" type="stmt"/>
-        <line num="75" count="50" type="stmt"/>
-        <line num="80" count="2" type="stmt"/>
-        <line num="81" count="2" type="stmt"/>
-        <line num="84" count="4" type="stmt"/>
-        <line num="86" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="87" count="0" type="stmt"/>
-        <line num="99" count="50" type="stmt"/>
-        <line num="100" count="1" type="stmt"/>
+        <line num="77" count="50" type="stmt"/>
+        <line num="82" count="2" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="86" count="4" type="stmt"/>
+        <line num="88" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="101" count="50" type="stmt"/>
         <line num="102" count="1" type="stmt"/>
         <line num="104" count="1" type="stmt"/>
-        <line num="107" count="50" type="stmt"/>
-        <line num="108" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="109" count="0" type="stmt"/>
-        <line num="112" count="2" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="109" count="50" type="stmt"/>
+        <line num="110" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="111" count="0" type="stmt"/>
         <line num="114" count="2" type="stmt"/>
         <line num="116" count="2" type="stmt"/>
-        <line num="119" count="50" type="stmt"/>
-        <line num="120" count="13" type="cond" truecount="2" falsecount="0"/>
-        <line num="121" count="2" type="stmt"/>
-        <line num="125" count="50" type="stmt"/>
-        <line num="126" count="9" type="cond" truecount="1" falsecount="1"/>
-        <line num="127" count="0" type="stmt"/>
-        <line num="130" count="9" type="stmt"/>
-        <line num="133" count="50" type="stmt"/>
-        <line num="134" count="0" type="stmt"/>
-        <line num="136" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="137" count="0" type="stmt"/>
-        <line num="140" count="0" type="stmt"/>
+        <line num="118" count="2" type="stmt"/>
+        <line num="121" count="50" type="stmt"/>
+        <line num="122" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="123" count="2" type="stmt"/>
+        <line num="127" count="50" type="stmt"/>
+        <line num="128" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="129" count="0" type="stmt"/>
+        <line num="132" count="9" type="stmt"/>
+        <line num="135" count="50" type="stmt"/>
+        <line num="136" count="0" type="stmt"/>
+        <line num="138" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="139" count="0" type="stmt"/>
         <line num="142" count="0" type="stmt"/>
-        <line num="145" count="50" type="stmt"/>
-        <line num="146" count="2" type="stmt"/>
+        <line num="144" count="0" type="stmt"/>
+        <line num="147" count="50" type="stmt"/>
         <line num="148" count="2" type="stmt"/>
         <line num="150" count="2" type="stmt"/>
-        <line num="153" count="50" type="stmt"/>
-        <line num="154" count="2" type="stmt"/>
+        <line num="152" count="2" type="stmt"/>
+        <line num="155" count="50" type="stmt"/>
+        <line num="156" count="2" type="stmt"/>
       </file>
     </package>
     <package name="components.screens.news.components.language-filter">
@@ -749,22 +749,26 @@
       </file>
     </package>
     <package name="components.screens.quiz.components">
-      <metrics statements="13" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
+      <metrics statements="17" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="8"/>
       <file name="Quiz.tsx" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/screens/quiz/components/Quiz.tsx">
-        <metrics statements="13" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
+        <metrics statements="17" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="8"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="47" count="2" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
       </file>
     </package>
     <package name="components.screens.quiz.components.questions">
@@ -1114,7 +1118,7 @@
       <metrics statements="9" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="route-names.ts" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/screens/quiz/routes/route-names.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="5" count="3" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
       </file>
       <file name="stack-routes.tsx" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/components/screens/quiz/routes/stack-routes.tsx">
         <metrics statements="8" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
@@ -1250,36 +1254,36 @@
       </file>
       <file name="useQueryWithPagination.ts" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/hooks/use-paginated-query/useQueryWithPagination.ts">
         <metrics statements="30" coveredstatements="29" conditionals="7" coveredconditionals="6" methods="10" coveredmethods="10"/>
-        <line num="6" count="9" type="stmt"/>
         <line num="8" count="9" type="stmt"/>
-        <line num="34" count="9" type="stmt"/>
-        <line num="40" count="103" type="stmt"/>
+        <line num="10" count="9" type="stmt"/>
+        <line num="36" count="9" type="stmt"/>
         <line num="42" count="103" type="stmt"/>
-        <line num="44" count="8" type="stmt"/>
-        <line num="45" count="8" type="stmt"/>
-        <line num="50" count="8" type="stmt"/>
-        <line num="52" count="4" type="stmt"/>
+        <line num="44" count="103" type="stmt"/>
+        <line num="46" count="8" type="stmt"/>
+        <line num="47" count="8" type="stmt"/>
+        <line num="52" count="8" type="stmt"/>
         <line num="54" count="4" type="stmt"/>
-        <line num="61" count="4" type="stmt"/>
+        <line num="56" count="4" type="stmt"/>
         <line num="63" count="4" type="stmt"/>
         <line num="65" count="4" type="stmt"/>
-        <line num="75" count="103" type="stmt"/>
-        <line num="77" count="8" type="stmt"/>
-        <line num="81" count="103" type="stmt"/>
-        <line num="82" count="58" type="cond" truecount="2" falsecount="0"/>
-        <line num="83" count="8" type="stmt"/>
-        <line num="87" count="103" type="stmt"/>
-        <line num="88" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="89" count="2" type="stmt"/>
-        <line num="92" count="8" type="stmt"/>
-        <line num="93" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="94" count="0" type="stmt"/>
-        <line num="97" count="8" type="stmt"/>
-        <line num="105" count="103" type="stmt"/>
-        <line num="106" count="17" type="stmt"/>
-        <line num="109" count="103" type="stmt"/>
-        <line num="110" count="19" type="stmt"/>
-        <line num="116" count="103" type="stmt"/>
+        <line num="67" count="4" type="stmt"/>
+        <line num="77" count="103" type="stmt"/>
+        <line num="79" count="8" type="stmt"/>
+        <line num="83" count="103" type="stmt"/>
+        <line num="84" count="58" type="cond" truecount="2" falsecount="0"/>
+        <line num="85" count="8" type="stmt"/>
+        <line num="89" count="103" type="stmt"/>
+        <line num="90" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="91" count="2" type="stmt"/>
+        <line num="94" count="8" type="stmt"/>
+        <line num="95" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="99" count="8" type="stmt"/>
+        <line num="107" count="103" type="stmt"/>
+        <line num="108" count="17" type="stmt"/>
+        <line num="111" count="103" type="stmt"/>
+        <line num="112" count="19" type="stmt"/>
+        <line num="118" count="103" type="stmt"/>
       </file>
     </package>
     <package name="i18n">
@@ -1314,15 +1318,15 @@
       <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
       <file name="index.ts" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/styles/metrics/index.ts">
         <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
-        <line num="3" count="28" type="stmt"/>
-        <line num="5" count="28" type="stmt"/>
-        <line num="6" count="1761" type="stmt"/>
-        <line num="8" count="1761" type="stmt"/>
-        <line num="12" count="1761" type="stmt"/>
-        <line num="15" count="28" type="stmt"/>
-        <line num="16" count="63" type="stmt"/>
-        <line num="18" count="63" type="stmt"/>
-        <line num="22" count="63" type="stmt"/>
+        <line num="3" count="29" type="stmt"/>
+        <line num="5" count="29" type="stmt"/>
+        <line num="6" count="1774" type="stmt"/>
+        <line num="8" count="1774" type="stmt"/>
+        <line num="12" count="1774" type="stmt"/>
+        <line num="15" count="29" type="stmt"/>
+        <line num="16" count="65" type="stmt"/>
+        <line num="18" count="65" type="stmt"/>
+        <line num="22" count="65" type="stmt"/>
       </file>
     </package>
     <package name="styles.theme-context-provider">
@@ -1361,14 +1365,14 @@
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="dark.ts" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/styles/themes/dark.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="6" count="28" type="stmt"/>
+        <line num="6" count="29" type="stmt"/>
       </file>
       <file name="index.ts" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/styles/themes/index.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
       <file name="light.ts" path="/Users/steniowagner/Documents/dev/cine-tasty-mobile/src/styles/themes/light.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="6" count="28" type="stmt"/>
+        <line num="6" count="29" type="stmt"/>
       </file>
     </package>
     <package name="types">
