@@ -10,9 +10,10 @@ import {
 import { usePaginatedQuery } from 'hooks';
 
 type State = {
+  onPressTopReloadButton: () => Promise<void>;
+  onPressBottomReloadButton: () => void;
   onPullRefreshControl: () => void;
-  onPressReloadButton: () => void;
-  people: GetPeoplePeopleItems[];
+  famous: GetPeoplePeopleItems[];
   hasPaginationError: boolean;
   onEndReached: () => void;
   isPaginating: boolean;
@@ -22,7 +23,7 @@ type State = {
 };
 
 export const GET_FAMOUS = gql`
-  query GetPeople($page: Int!) {
+  query GetFamous($page: Int!) {
     people(page: $page) {
       hasMore
       items {
@@ -34,17 +35,20 @@ export const GET_FAMOUS = gql`
   }
 `;
 
+export const I18N_ENTRY_QUERY_ERROR_REF = 'translations:famous:i18EntryQueryErrorRef';
+export const I18N_QUERY_BY_PAGINATION_ERROR_REF = 'translations:famous:i18nQueryByPaginationErrorRef';
+
 const useFamous = (): State => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [people, setPeople] = useState<GetPeoplePeopleItems[]>([]);
+  const [famous, setFamous] = useState<GetPeoplePeopleItems[]>([]);
   const [isRefreshing, setIsRefrehing] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
   const { t } = useTranslation();
 
   const handleOnGetData = useCallback((data: GetPeople): boolean => {
-    setPeople((previousPeople: GetPeoplePeopleItems[]) => [
-      ...previousPeople,
+    setFamous((previousFamous: GetPeoplePeopleItems[]) => [
+      ...previousFamous,
       ...data.people.items,
     ]);
 
@@ -57,34 +61,49 @@ const useFamous = (): State => {
     GetPeople,
     GetPeopleVariables
   >({
-    onPaginationQueryError: () => setError(t('translations:famous:i18nQueryByPaginationErrorRef')),
-    onEntryQueryError: () => setError(t('translations:famous:i18EntryQueryErrorRef')),
+    onPaginationQueryError: () => {
+      setError(t(I18N_QUERY_BY_PAGINATION_ERROR_REF));
+      setHasPaginationError(true);
+    },
+    onEntryQueryError: () => {
+      setError(t(I18N_ENTRY_QUERY_ERROR_REF));
+
+      if (hasPaginationError) {
+        setHasPaginationError(false);
+      }
+    },
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
     query: GET_FAMOUS,
   });
-
-  const onPressReloadButton = useCallback(() => {
-    setHasPaginationError(false);
-
-    if (error) {
-      setError('');
-    }
-
-    onPaginateQuery();
-  }, []);
 
   const handleRefreshQuery = useCallback(async () => {
     if (error) {
       setError('');
     }
 
-    setPeople([]);
+    setFamous([]);
 
     await onReloadData();
 
     setIsRefrehing(false);
   }, [onReloadData, error]);
+
+  const onPressTopReloadButton = useCallback(async (): Promise<void> => {
+    setHasPaginationError(false);
+
+    setError('');
+
+    await onReloadData();
+  }, []);
+
+  const onPressBottomReloadButton = useCallback(() => {
+    setHasPaginationError(false);
+
+    setError('');
+
+    onPaginateQuery();
+  }, []);
 
   useEffect(() => {
     if (isRefreshing) {
@@ -95,12 +114,13 @@ const useFamous = (): State => {
   return {
     onPullRefreshControl: () => setIsRefrehing(true),
     onEndReached: onPaginateQuery,
-    onPressReloadButton,
+    onPressBottomReloadButton,
+    onPressTopReloadButton,
     hasPaginationError,
     isRefreshing,
     isPaginating,
     isLoading,
-    people,
+    famous,
     error,
   };
 };

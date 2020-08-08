@@ -39,7 +39,7 @@ const renderNews = (mockResolvers?: IMocks) => (
   </ThemeProvider>
 );
 
-describe('Testing <News /> [pagination]', () => {
+describe('Testing <News /> [Pagination-Error]', () => {
   beforeEach(setupTimeTravel);
 
   afterEach(cleanup);

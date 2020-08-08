@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
 import CustomRefreshControl from 'components/common/CustomRefreshControl';
+import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import { SEARCH_PERSON } from 'components/screens/search/queries';
@@ -29,14 +30,15 @@ type Props = {
 
 const Famous = ({ navigation }: Props) => {
   const {
+    onPressBottomReloadButton,
+    onPressTopReloadButton,
     onPullRefreshControl,
-    onPressReloadButton,
     hasPaginationError,
     isPaginating,
     onEndReached,
     isRefreshing,
     isLoading,
-    people,
+    famous,
     error,
   } = useFamous();
 
@@ -63,22 +65,30 @@ const Famous = ({ navigation }: Props) => {
     return <LoadingIndicator />;
   }
 
+  const shouldShowListTopReloadButton = !famous.length && !!error && !isLoading;
+  const shouldShowListBottomReloadButton = !!famous.length && (hasPaginationError || isPaginating);
+
   return (
     <>
       <FlatList
         testID="famous-list"
+        ListHeaderComponent={() => shouldShowListTopReloadButton && (
+        <PaginatedListHeader
+          onPress={onPressTopReloadButton}
+        />
+        )}
         refreshControl={(
           <CustomRefreshControl
             onRefresh={onPullRefreshControl}
             refreshing={isRefreshing}
           />
         )}
-        ListFooterComponent={() => (
-          <ListFooterComponent
-            onPressReloadButton={onPressReloadButton}
-            hasError={hasPaginationError}
-            isPaginating={isPaginating}
-          />
+        ListFooterComponent={() => shouldShowListBottomReloadButton && (
+        <ListFooterComponent
+          onPressReloadButton={onPressBottomReloadButton}
+          hasError={hasPaginationError}
+          isPaginating={isPaginating}
+        />
         )}
         columnWrapperStyle={{
           paddingLeft: metrics.smallSize,
@@ -108,7 +118,7 @@ const Famous = ({ navigation }: Props) => {
         )}
         keyExtractor={({ id }, index) => `${id}-${index}`}
         onEndReached={onEndReached}
-        data={people}
+        data={famous}
       />
       {!!error && (
       <PopupAdvice

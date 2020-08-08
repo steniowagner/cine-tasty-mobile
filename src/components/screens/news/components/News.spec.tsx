@@ -46,38 +46,6 @@ describe('Testing <News />', () => {
 
   afterEach(cleanup);
 
-  it('should render the loading state correctly when is mounted from the first time', () => {
-    const { queryByTestId } = render(renderNews());
-
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
-
-    act(() => {
-      jest.runAllTimers();
-    });
-  });
-
-  it('should render the items returned from the query correctly', () => {
-    const NEWS_COUNT = 10;
-
-    const mockResolvers = {
-      Articles: () => ({
-        items: () => new MockList(NEWS_COUNT),
-      }),
-    };
-
-    const { queryByTestId } = render(renderNews(mockResolvers));
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(queryByTestId('loading-content-indicator')).toBeNull();
-
-    expect(queryByTestId('news-list')).not.toBeNull();
-
-    expect(queryByTestId('news-list').props.data.length).toEqual(NEWS_COUNT);
-  });
-
   it('should show the empty-list-state when the query returns an empty array of articles', () => {
     const mockResolvers = {
       Articles: () => ({
@@ -149,7 +117,7 @@ describe('Testing <News />', () => {
     expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
   });
 
-  it('should not paginate to the next page when the user reach the bottom of the news-list and the previous query return "hasMore" as "false"', () => {
+  it('should not paginate to the next page when the user reach the bottom of the news-list and the previous query returned "hasMore" as "false"', () => {
     const NEWS_COUNT = 10;
 
     const mockResolvers = {
