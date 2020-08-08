@@ -9,6 +9,11 @@ import RoundedButton from 'components/common/RoundedButton';
 import { QuizStackParams } from '../routes/route-params-types';
 import LOCAL_ROUTES from '../routes/route-names';
 
+export const I18N_CHOOSE_QUESTIONS_REF = 'translations:quiz:chooseQuestions';
+export const I18N_DESCRIPTION_REF = 'translations:quiz:decription';
+export const I18N_CHALLENGE_REF = 'translations:quiz:challenge';
+export const I18N_WELCOME_REF = 'translations:quiz:welcome';
+
 const Wrapper = styled(View)`
   width: 100%;
   height: 100%;
@@ -43,12 +48,12 @@ const Quiz = ({ navigation }: Props) => {
 
   return (
     <Wrapper>
-      <LargeText>{t('translations:quiz:welcome')}</LargeText>
-      <SubText>{t('translations:quiz:decription')}</SubText>
-      <LargeText>{t('translations:quiz:challenge')}</LargeText>
+      <LargeText>{t(I18N_WELCOME_REF)}</LargeText>
+      <SubText>{t(I18N_DESCRIPTION_REF)}</SubText>
+      <LargeText>{t(I18N_CHALLENGE_REF)}</LargeText>
       <RoundedButton
         onPress={() => navigation.navigate(LOCAL_ROUTES.SETUP_QUESTIONS.id)}
-        text={t('translations:quiz:chooseQuestions')}
+        text={t(I18N_CHOOSE_QUESTIONS_REF)}
       />
     </Wrapper>
   );

@@ -213,7 +213,9 @@
 <a name='L155'></a><a href='#L155'>155</a>
 <a name='L156'></a><a href='#L156'>156</a>
 <a name='L157'></a><a href='#L157'>157</a>
-<a name='L158'></a><a href='#L158'>158</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,7 +238,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -295,6 +296,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -305,11 +308,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
@@ -318,7 +319,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -370,6 +370,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable react/display-name */
 &nbsp;
 import React, { useLayoutEffect } from 'react';
@@ -394,8 +398,7 @@ import useNews from './useNews';
 &nbsp;
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 &nbsp;
-export const INITIAL_ITEMS_TO_RENDER =
-  Math.floor(metrics.height / imageWrapper.height) - 1;
+export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
 &nbsp;
 type NewsScreenNavigationProp = StackNavigationProp&lt;NewsStackParams, 'NEWS'&gt;;
 &nbsp;
@@ -443,7 +446,9 @@ const News = ({ navigation }: Props) =&gt; {
 &nbsp;
   if (shouldShowEmptyListAdvice) {
     return (
-      &lt;View testID="list-empty-component-wrapper"&gt;
+      &lt;View
+        testID="list-empty-component-wrapper"
+      &gt;
         &lt;Advise
           description={t('translations:news:emptyList:description')}
           suggestion={t('translations:news:emptyList:suggestion')}
@@ -462,26 +467,23 @@ const News = ({ navigation }: Props) =&gt; {
   }
 &nbsp;
   const shouldShowListTopReloadButton = !articles.length &amp;&amp; !!error &amp;&amp; !isLoading;
-  const shouldShowListBottomReloadButton =
-    !!articles.length &amp;&amp; (hasPaginationError || isPaginating);
+  const shouldShowListBottomReloadButton = !!articles.length &amp;&amp; (hasPaginationError || isPaginating);
 &nbsp;
   return (
     &lt;&gt;
       &lt;FlatList
-        ListHeaderComponent={() =&gt;
-          shouldShowListTopReloadButton &amp;&amp; (
-            &lt;PaginatedListHeader onPress={onPressTopReloadButton} /&gt;
-          )
-        }
-        ListFooterComponent={() =&gt;
-          shouldShowListBottomReloadButton &amp;&amp; (
-            &lt;ListFooterComponent
-              onPressReloadButton={onPressFooterReloadButton}
-              hasError={hasPaginationError}
-              isPaginating={isPaginating}
-            /&gt;
-          )
-        }
+        ListHeaderComponent={() =&gt; shouldShowListTopReloadButton &amp;&amp; (
+        &lt;PaginatedListHeader
+          onPress={onPressTopReloadButton}
+        /&gt;
+        )}
+        ListFooterComponent={() =&gt; shouldShowListBottomReloadButton &amp;&amp; (
+        &lt;ListFooterComponent
+          onPressReloadButton={onPressFooterReloadButton}
+          hasError={hasPaginationError}
+          isPaginating={isPaginating}
+        /&gt;
+        )}
         renderItem={({ item }) =&gt; (
           &lt;NewsListItem
             withRTL={articleLanguage === ArticleLanguage.AR}
@@ -492,12 +494,12 @@ const News = ({ navigation }: Props) =&gt; {
             url={item.url}
           /&gt;
         )}
-        refreshControl={
+        refreshControl={(
           &lt;CustomRefreshControl
             onRefresh={onPullRefreshControl}
             refreshing={isRefreshing}
           /&gt;
-        }
+        )}
         keyExtractor={(item, index) =&gt; `${item.id}${index}`}
         initialNumToRender={INITIAL_ITEMS_TO_RENDER + 1}
         onEndReachedThreshold={Platform.select({
@@ -521,7 +523,11 @@ const News = ({ navigation }: Props) =&gt; {
           lastLanguageSelected={articleLanguage}
         /&gt;
       )}
-      {!!error &amp;&amp; &lt;PopupAdvice text={error} /&gt;}
+      {!!error &amp;&amp; (
+      &lt;PopupAdvice
+        text={error}
+      /&gt;
+      )}
     &lt;/&gt;
   );
 };
@@ -534,7 +540,7 @@ export default News;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Aug 08 2020 15:31:11 GMT-0300 (Brasilia Standard Time)
+                at Sat Aug 08 2020 17:22:23 GMT-0300 (Brasilia Standard Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>
