@@ -60,7 +60,6 @@ const Search = ({ navigation, route }: Props) => {
           placeholder={t(route.params.i18nSearchBarPlaceholderRef)}
           onPressClose={() => navigation.goBack()}
           onTypeSearchQuery={onTypeSearchQuery}
-          onPressSearch={() => {}}
         />
       ),
     });
