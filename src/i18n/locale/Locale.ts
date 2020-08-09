@@ -37,6 +37,7 @@ export interface Locale {
     languages: Record<NewsFilterLanguage, string>;
     i18nQueryByPaginationErrorRef: string;
     i18EntryQueryErrorRef: string;
+    selectFilterMessage: string;
     filterMessage: string;
   };
   quiz: {

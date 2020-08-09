@@ -10,16 +10,17 @@ import {
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 
+import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import metrics from 'styles/metrics';
 
-import useLanguageFilter from './useCustomModal';
+import useCustomModal from './useCustomModal';
 
-const CARD_CONTAINER_HEIGHT = metrics.getWidthFromDP('120%');
-
+const CARD_CONTAINER_HEIGHT = metrics.getHeightFromDP('70%');
 export const ANIMATION_TIMING = 400;
 
 const Wrapper = styled(View)`
-  flex: 1;
+  width: 100%;
+  height: 100%;
   justify-content: flex-end;
   padding-top: ${({ theme }) => theme.metrics.height}px;
   background-color: ${({ theme }) => theme.colors.darkLayer};
@@ -71,7 +72,9 @@ const ListHeaderWrapper = styled(View)`
 
 const SelectButton = styled(TouchableOpacity)`
   width: 100%;
-  height: 14%;
+  height: ${({ theme }) => (isEqualsOrLargestThanIphoneX()
+    ? theme.metrics.getWidthFromDP('20%')
+    : theme.metrics.getWidthFromDP('16%'))}px;
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.primary};
@@ -82,16 +85,6 @@ const SelectButtonText = styled(Text)`
   font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
   color: white;
   text-transform: uppercase;
-`;
-
-const ChildrenWrapper = styled(View)`
-  height: 67%;
-  width: 100%;
-`;
-
-const CardHeaderWrapper = styled(View)`
-  width: 100%;
-  height: 15%;
 `;
 
 type Props = {
@@ -116,7 +109,7 @@ const CustomModal = ({
     animatedEvent,
     onCloseModal,
     translateY,
-  } = useLanguageFilter({
+  } = useCustomModal({
     cardContainerHeight: CARD_CONTAINER_HEIGHT,
     animationTiming: ANIMATION_TIMING,
     onPressSelect,
@@ -159,18 +152,14 @@ const CustomModal = ({
                 ],
               }}
             >
-              <CardHeaderWrapper
-                testID="card-header-wrapper"
-              >
-                <GripWrapper>
-                  <Grip />
-                </GripWrapper>
-                <ListHeaderWrapper>
-                  <HeadLineText>{headerText}</HeadLineText>
-                </ListHeaderWrapper>
-              </CardHeaderWrapper>
-              <LineDivider />
-              <ChildrenWrapper>{children}</ChildrenWrapper>
+              <GripWrapper>
+                <Grip />
+              </GripWrapper>
+              <ListHeaderWrapper>
+                <HeadLineText>{headerText}</HeadLineText>
+                <LineDivider />
+              </ListHeaderWrapper>
+              {children}
               <SelectButton
                 onPress={onPressSelectButton}
                 testID="select-button"
