@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
 
-import SearchBar, { Props } from './SearchBar';
+import SearchBar, { Props } from './SearchBar.android';
 
 const renderSearchBar = ({
   onTypeSearchQuery,
