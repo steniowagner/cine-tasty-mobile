@@ -51,6 +51,7 @@ const en: Locale = {
       spanish: 'Spanish',
     },
     filterMessage: 'Choose a language to filter the News',
+    selectFilterMessage: 'SELECT',
   },
   quiz: {
     welcome: 'Welcome to the Cine-Tasty Quiz!',

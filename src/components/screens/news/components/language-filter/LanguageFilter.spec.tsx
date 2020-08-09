@@ -157,7 +157,7 @@ describe('Testing <LanguageFilter />', () => {
       renderLanguageFilter(languages[INDEX_SELECTED].id, undefined, onClose),
     );
 
-    fireEvent.press(getByTestId('hide-filter-button'));
+    fireEvent.press(getByTestId('closeable-area'));
 
     act(() => {
       timeTravel(ANIMATION_TIMING);

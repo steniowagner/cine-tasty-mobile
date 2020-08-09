@@ -47,8 +47,6 @@ describe('Testing <CustomModal />', () => {
 
     expect(getByTestId('card-wrapper')).not.toBeNull();
 
-    expect(getByTestId('card-header-wrapper')).not.toBeNull();
-
     expect(getByTestId('select-button')).not.toBeNull();
 
     expect(getByTestId('closeable-area')).not.toBeNull();
