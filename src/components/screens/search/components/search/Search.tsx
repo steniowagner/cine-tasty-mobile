@@ -1,15 +1,15 @@
 /* eslint-disable react/display-name */
 
 import React, { useLayoutEffect, useCallback } from 'react';
-import { Platform, FlatList, View } from 'react-native';
+import { Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import styled from 'styled-components';
 
 import DefaultListItem, {
   DEFAULT_LIST_ITEM_HEIGHT,
 } from 'components/common/DefaultListItem';
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
+import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import SearchBar from 'components/common/searchbar/SearchBar';
@@ -22,10 +22,6 @@ import useSearch from './use-search/useSearch';
 
 const NUMBER_FLATLIST_COLUMNS = 3;
 
-const Wrapper = styled(View)`
-  flex: 1;
-`;
-
 type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH'>;
 
 type SearchScreenRouteProp = RouteProp<SearchStackParams, 'SEARCH'>;
@@ -37,7 +33,8 @@ type Props = {
 
 const Search = ({ navigation, route }: Props) => {
   const {
-    onReloadPagination,
+    onPressFooterReloadButton,
+    onPressHeaderReloadButton,
     hasPaginationError,
     onTypeSearchQuery,
     onPaginateSearch,
@@ -83,12 +80,19 @@ const Search = ({ navigation, route }: Props) => {
     return <LoadingIndicator />;
   }
 
+  const shouldShowListTopReloadButton = !items.length && !!errorMessage && !isLoading;
+
   return (
-    <Wrapper>
+    <>
       <FlatList
+        ListHeaderComponent={() => shouldShowListTopReloadButton && (
+        <PaginatedListHeader
+          onPress={onPressHeaderReloadButton}
+        />
+        )}
         ListFooterComponent={() => (
           <ListFooterComponent
-            onPressReloadButton={onReloadPagination}
+            onPressReloadButton={onPressFooterReloadButton}
             hasError={hasPaginationError}
             isPaginating={isPaginating}
           />
@@ -121,6 +125,7 @@ const Search = ({ navigation, route }: Props) => {
         )}
         keyExtractor={({ id }) => `${id}`}
         onEndReached={onPaginateSearch}
+        testID="search-list"
         data={items}
       />
       {!!errorMessage && (
@@ -128,7 +133,7 @@ const Search = ({ navigation, route }: Props) => {
         text={errorMessage}
       />
       )}
-    </Wrapper>
+    </>
   );
 };
 

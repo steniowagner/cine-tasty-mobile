@@ -16,7 +16,8 @@ const INITIAL_QUERY_RESULT = {
 
 type State = {
   onTypeSearchQuery: (value: string) => void;
-  onReloadPagination: () => void;
+  onPressFooterReloadButton: () => void;
+  onPressHeaderReloadButton: () => void;
   onPaginateSearch: () => void;
   t: (text: string) => string;
   hasPaginationError: boolean;
@@ -138,10 +139,19 @@ const useSearch = ({
     return '';
   }, [hasSearchError, hasPaginationError]);
 
+  const onPressHeaderReloadButton = useCallback(async (): Promise<void> => {
+    if (hasSearchError) {
+      setHasSearchError(false);
+    }
+
+    await handleOnSearchByQuery();
+  }, []);
+
   return {
-    onReloadPagination: () => setHasPaginationError(false),
+    onPressFooterReloadButton: () => setHasPaginationError(false),
     onPaginateSearch: handleOnPaginatedSearch,
     errorMessage: getErrorMessage(),
+    onPressHeaderReloadButton,
     items: queryResult.items,
     hasPaginationError,
     onTypeSearchQuery,

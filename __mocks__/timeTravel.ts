@@ -3,8 +3,8 @@ import MockDate from 'mockdate';
 const FRAME_TIME = 10;
 
 export const setupTimeTravel = () => {
-  MockDate.set(0);
   jest.useFakeTimers();
+  MockDate.set(0);
 };
 
 const advanceOneFrame = () => {

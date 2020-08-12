@@ -5,7 +5,7 @@ import { SearchInput, SearchType } from 'types/schema';
 import debounce from 'utils/debounce';
 import { SearchResult } from 'types';
 
-const SEARCH_DELAY = 1000;
+export const SEARCH_BY_QUERY_DELAY = 1000;
 
 type State = {
   onTypeSearchQuery: (queryStringTyped: string) => void;
@@ -32,7 +32,7 @@ const useSearchByQuery = ({
   const debouncedSetQueryString = useRef(
     debounce((queryStringTyped: string) => {
       setQueryString(queryStringTyped);
-    }, SEARCH_DELAY),
+    }, SEARCH_BY_QUERY_DELAY),
   ).current;
 
   const onTypeSearchQuery = useCallback((queryStringTyped: string) => {
