@@ -55,7 +55,11 @@ const SearchBar = ({
   const headerHeightRef = useRef<number>();
   const inputRef = useRef<TextInput>();
 
-  headerHeightRef.current = useHeaderHeight();
+  try {
+    headerHeightRef.current = useHeaderHeight();
+  } catch (err) {
+    headerHeightRef.current = 1;
+  }
 
   useEffect(() => {
     setHeaderHeight(headerHeightRef.current);

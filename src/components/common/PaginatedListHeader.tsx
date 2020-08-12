@@ -28,8 +28,8 @@ type Props = {
 
 const PaginatedListHeader = ({ onPress }: Props) => (
   <ReloadButton
-    onPress={onPress}
     testID="top-reload-button"
+    onPress={onPress}
   >
     <ReloadIcon />
   </ReloadButton>

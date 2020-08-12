@@ -7,7 +7,7 @@ import { SearchInput, SearchType } from 'types/schema';
 import debounce from 'utils/debounce';
 import { SearchResult } from 'types';
 
-const SEARCH_DELAY = 500;
+export const PAGINATION_SEARCH_DELAY = 500;
 
 const initialPagination: Pagination = {
   isPaginating: false,
@@ -98,7 +98,7 @@ const usePaginatedSearch = ({
   const debouncedPaginateSearch = useRef(
     debounce(({ queryStringTyped, pageSelected }: DebouncedPaginationProps) => {
       onSearchByPagination({ queryStringTyped, pageSelected });
-    }, SEARCH_DELAY),
+    }, PAGINATION_SEARCH_DELAY),
   ).current;
 
   useEffect(() => {
