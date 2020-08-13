@@ -37,7 +37,7 @@ const Search = ({ navigation, route }: Props) => {
     onPressHeaderReloadButton,
     hasPaginationError,
     onTypeSearchQuery,
-    onPaginateSearch,
+    onEndReached,
     isPaginating,
     errorMessage,
     isLoading,
@@ -124,7 +124,7 @@ const Search = ({ navigation, route }: Props) => {
           />
         )}
         keyExtractor={({ id }) => `${id}`}
-        onEndReached={onPaginateSearch}
+        onEndReached={onEndReached}
         testID="search-list"
         data={items}
       />

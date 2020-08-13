@@ -37,32 +37,19 @@ type TVariables = {
 type Props = {
   search: (variables: TVariables) => Promise<ApolloQueryResult<SearchResult>>;
   concatPaginatedItems: (data: SearchResult) => void;
-  setHasError: () => void;
   searchType: SearchType;
+  onError: () => void;
   queryString: string;
 };
 
 const usePaginatedSearch = ({
   concatPaginatedItems,
   queryString,
-  setHasError,
   searchType,
+  onError,
   search,
 }: Props): State => {
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
-
-  const onPaginateSearch = useCallback(() => {
-    setPagination((previousPagination: Pagination) => {
-      if (previousPagination.isPaginating) {
-        return previousPagination;
-      }
-
-      return {
-        page: previousPagination.page + 1,
-        isPaginating: true,
-      };
-    });
-  }, []);
 
   const onSearchByPagination = useCallback(
     async ({ queryStringTyped, pageSelected }: DebouncedPaginationProps) => {
@@ -70,7 +57,6 @@ const usePaginatedSearch = ({
         const variables = {
           input: { page: pageSelected, query: queryStringTyped, type: searchType },
         };
-
         const { data } = await search(variables);
 
         setPagination((previousPagination: Pagination) => ({
@@ -84,12 +70,12 @@ const usePaginatedSearch = ({
 
         concatPaginatedItems(data);
       } catch (err) {
-        setHasError();
-
         setPagination((previousPagination: Pagination) => ({
           page: previousPagination.page - 1,
           isPaginating: false,
         }));
+
+        onError();
       }
     },
     [],
@@ -109,6 +95,19 @@ const usePaginatedSearch = ({
       });
     }
   }, [pagination]);
+
+  const onPaginateSearch = useCallback(() => {
+    setPagination((previousPagination: Pagination) => {
+      if (previousPagination.isPaginating) {
+        return previousPagination;
+      }
+
+      return {
+        page: previousPagination.page + 1,
+        isPaginating: true,
+      };
+    });
+  }, []);
 
   const restartPaginatedSearch = useCallback(() => {
     setPagination(initialPagination);

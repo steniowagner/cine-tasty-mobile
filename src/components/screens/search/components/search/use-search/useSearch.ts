@@ -18,10 +18,9 @@ type State = {
   onTypeSearchQuery: (value: string) => void;
   onPressFooterReloadButton: () => void;
   onPressHeaderReloadButton: () => void;
-  onPaginateSearch: () => void;
   t: (text: string) => string;
   hasPaginationError: boolean;
-  hasSearchError: boolean;
+  onEndReached: () => void;
   isPaginating: boolean;
   errorMessage: string;
   items: SearchItem[];
@@ -45,17 +44,15 @@ const useSearch = ({
     INITIAL_QUERY_RESULT,
   );
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [hasSearchError, setHasSearchError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [queryString, setQueryString] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const search = useImperativeQuery<SearchResult>(query);
 
   const { t } = useTranslation();
 
-  const { onTypeSearchQuery, onSearchByQuery } = useSearchByQuery({
+  const { onTypeSearchQuery, onSearchByQuery, isLoading } = useSearchByQuery({
     setQueryString,
-    queryString,
     searchType,
     search,
   });
@@ -70,8 +67,13 @@ const useSearch = ({
     [queryResult],
   );
 
+  const onPaginationError = useCallback(() => {
+    setErrorMessage(i18nQueryByPaginationErrorRef);
+    setHasPaginationError(true);
+  }, []);
+
   const { restartPaginatedSearch, onPaginateSearch, isPaginating } = usePaginatedSearch({
-    setHasError: () => setHasPaginationError(true),
+    onError: onPaginationError,
     concatPaginatedItems,
     queryString,
     searchType,
@@ -80,7 +82,7 @@ const useSearch = ({
 
   const handleOnSearchByQuery = useCallback(async () => {
     try {
-      const { search: data } = await onSearchByQuery();
+      const { search: data } = await onSearchByQuery(queryString);
 
       restartPaginatedSearch();
 
@@ -88,74 +90,51 @@ const useSearch = ({
         hasMore: data.hasMore,
         items: data.items,
       });
-
-      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
-
-      setHasSearchError(true);
+      setErrorMessage(i18nQueryByTextErrorRef);
     }
   }, [queryString]);
 
-  useEffect(() => {
-    if (hasSearchError) {
-      setHasSearchError(false);
-    }
+  const onPressHeaderReloadButton = useCallback(async (): Promise<void> => {
+    setErrorMessage('');
 
-    if (hasPaginationError) {
-      setHasPaginationError(false);
-    }
-
-    setQueryResult(INITIAL_QUERY_RESULT);
-
-    if (queryString) {
-      setIsLoading(true);
-
-      handleOnSearchByQuery();
-    }
+    await handleOnSearchByQuery();
   }, [queryString]);
 
-  const handleOnPaginatedSearch = useCallback(() => {
-    if (queryResult.hasMore && !hasPaginationError) {
+  const onPressFooterReloadButton = useCallback(() => {
+    setHasPaginationError(false);
+
+    setErrorMessage('');
+
+    if (queryResult.hasMore && queryResult.items.length > 0) {
       onPaginateSearch();
     }
   }, [hasPaginationError, queryResult]);
 
+  const handleOnPaginatedSearch = useCallback(() => {
+    if (queryResult.hasMore && !hasPaginationError) {
+      onPressFooterReloadButton();
+    }
+  }, [hasPaginationError, queryResult]);
+
   useEffect(() => {
-    if (!hasPaginationError && queryResult.hasMore && queryResult.items.length > 0) {
-      onPaginateSearch();
+    setHasPaginationError(false);
+
+    setQueryResult(INITIAL_QUERY_RESULT);
+
+    if (queryString) {
+      handleOnSearchByQuery();
     }
-  }, [hasPaginationError]);
-
-  const getErrorMessage = useCallback(() => {
-    if (hasSearchError) {
-      return t(i18nQueryByTextErrorRef);
-    }
-
-    if (hasPaginationError) {
-      return t(i18nQueryByPaginationErrorRef);
-    }
-
-    return '';
-  }, [hasSearchError, hasPaginationError]);
-
-  const onPressHeaderReloadButton = useCallback(async (): Promise<void> => {
-    if (hasSearchError) {
-      setHasSearchError(false);
-    }
-
-    await handleOnSearchByQuery();
-  }, []);
+  }, [queryString]);
 
   return {
-    onPressFooterReloadButton: () => setHasPaginationError(false),
-    onPaginateSearch: handleOnPaginatedSearch,
-    errorMessage: getErrorMessage(),
+    onEndReached: handleOnPaginatedSearch,
+    onPressFooterReloadButton,
     onPressHeaderReloadButton,
     items: queryResult.items,
     hasPaginationError,
     onTypeSearchQuery,
-    hasSearchError,
+    errorMessage,
     isPaginating,
     isLoading,
     t,
