@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import { ApolloQueryResult } from 'apollo-client';
 
 import { SearchInput, SearchType } from 'types/schema';
@@ -9,7 +9,8 @@ export const SEARCH_BY_QUERY_DELAY = 1000;
 
 type State = {
   onTypeSearchQuery: (queryStringTyped: string) => void;
-  onSearchByQuery: () => Promise<SearchResult>;
+  onSearchByQuery: (query: string) => Promise<SearchResult>;
+  isLoading: boolean;
 };
 
 type TVariables = {
@@ -20,15 +21,11 @@ type Props = {
   search: (variables: TVariables) => Promise<ApolloQueryResult<SearchResult>>;
   setQueryString: (queryString: string) => void;
   searchType: SearchType;
-  queryString: string;
 };
 
-const useSearchByQuery = ({
-  setQueryString,
-  queryString,
-  searchType,
-  search,
-}: Props): State => {
+const useSearchByQuery = ({ setQueryString, searchType, search }: Props): State => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const debouncedSetQueryString = useRef(
     debounce((queryStringTyped: string) => {
       setQueryString(queryStringTyped);
@@ -39,19 +36,30 @@ const useSearchByQuery = ({
     debouncedSetQueryString(queryStringTyped);
   }, []);
 
-  const onSearchByQuery = useCallback(async (): Promise<SearchResult> => {
-    const variables = {
-      input: { page: 1, query: queryString.trim(), type: searchType },
-    };
+  const onSearchByQuery = useCallback(async (query: string): Promise<SearchResult> => {
+    try {
+      setIsLoading(true);
 
-    const { data } = await search(variables);
+      const variables = {
+        input: { page: 1, query: query.trim(), type: searchType },
+      };
 
-    return data;
-  }, [queryString]);
+      const { data } = await search(variables);
+
+      setIsLoading(false);
+
+      return data;
+    } catch (err) {
+      setIsLoading(false);
+
+      throw err;
+    }
+  }, []);
 
   return {
     onTypeSearchQuery,
     onSearchByQuery,
+    isLoading,
   };
 };
 
