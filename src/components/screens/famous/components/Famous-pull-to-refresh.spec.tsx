@@ -70,11 +70,11 @@ describe('Testing <News /> [Pull-to-Refresh]', () => {
 
     expect(queryByTestId('famous-list').props.data.length).toEqual(FAMOUS_COUNT);
 
-    expect(queryByTestId('loading-content-indicator')).toBeNull();
+    expect(queryByTestId('famous-loading-list')).toBeNull();
 
     fireEvent(queryByTestId('famous-list').props.refreshControl, 'refresh');
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('famous-loading-list')).not.toBeNull();
 
     expect(queryByTestId('famous-list')).toBeNull();
 
@@ -142,7 +142,7 @@ describe('Testing <News /> [Pull-to-Refresh]', () => {
 
     fireEvent.press(queryByTestId('top-reload-button'));
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('famous-loading-list')).not.toBeNull();
 
     act(() => {
       try {
@@ -174,7 +174,7 @@ describe('Testing <News /> [Pull-to-Refresh]', () => {
 
     fireEvent.press(queryByTestId('top-reload-button'));
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('famous-loading-list')).not.toBeNull();
 
     act(() => {
       timeTravel(DEFAULT_ANIMATION_DURATION);

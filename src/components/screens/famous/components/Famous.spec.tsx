@@ -53,7 +53,7 @@ describe('Testing <Famous />', () => {
   it('should render the loading state when the screen is mounted', () => {
     const { queryByTestId } = render(renderFamousScreen());
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('famous-loading-list')).not.toBeNull();
 
     act(() => {
       jest.runAllTimers();
@@ -71,13 +71,13 @@ describe('Testing <Famous />', () => {
 
     const { queryByTestId } = render(renderFamousScreen(mockResolvers));
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('famous-loading-list')).not.toBeNull();
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('loading-content-indicator')).toBeNull();
+    expect(queryByTestId('famous-loading-list')).toBeNull();
 
     expect(queryByTestId('famous-list')).not.toBeNull();
 

@@ -9,7 +9,7 @@ type Props = {
   style: object;
 };
 
-const LoadingPlaceholder = ({ indexToDelayAnimation, style, colors }: Props) => {
+const LoadingPlaceholder = ({ indexToDelayAnimation = 0, style, colors }: Props) => {
   const { color } = useLoadingPlaceholder({
     indexToDelayAnimation,
     colors,
@@ -19,6 +19,7 @@ const LoadingPlaceholder = ({ indexToDelayAnimation, style, colors }: Props) => 
   return (
     <Animated.View
       style={{ ...style, backgroundColor: color }}
+      testID="loading-placeholder"
     />
   );
 };
