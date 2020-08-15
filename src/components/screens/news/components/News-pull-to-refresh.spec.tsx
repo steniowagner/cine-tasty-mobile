@@ -66,11 +66,11 @@ describe('Testing <News /> [pull-to-refresh]', () => {
 
     expect(queryByTestId('news-list').props.data.length).toEqual(NEWS_COUNT);
 
-    expect(queryByTestId('loading-content-indicator')).toBeNull();
+    expect(queryByTestId('news-loading-list')).toBeNull();
 
     fireEvent(queryByTestId('news-list').props.refreshControl, 'refresh');
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('news-loading-list')).not.toBeNull();
 
     expect(queryByTestId('news-list')).toBeNull();
 
@@ -160,7 +160,7 @@ describe('Testing <News /> [pull-to-refresh]', () => {
 
     fireEvent.press(queryByTestId('top-reload-button'));
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('news-loading-list')).not.toBeNull();
 
     act(() => {
       try {
@@ -196,7 +196,7 @@ describe('Testing <News /> [pull-to-refresh]', () => {
 
     fireEvent.press(queryByTestId('top-reload-button'));
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('news-loading-list')).not.toBeNull();
 
     act(() => {
       timeTravel(DEFAULT_ANIMATION_DURATION);

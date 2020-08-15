@@ -15,7 +15,7 @@ const light: DefaultTheme = {
     subText: 'rgba(0, 0, 0, 0.4)',
     androidToolbar: '#F2F2F2',
     inactiveWhite: '#bbb',
-    shimmer: ['#FFD700', '#F2F2F2', '#FFD700'],
+    loadingColors: ['#FFD700', '#F2F2F2'],
     darkLayer: 'rgba(0, 0, 0, 0.4)',
     popup: '#rgba(0, 0, 0, 0.9)',
   },

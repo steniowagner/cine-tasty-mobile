@@ -8,7 +8,6 @@ import ListFooterComponent from 'components/common/pagination-footer/PaginationF
 import CustomRefreshControl from 'components/common/CustomRefreshControl';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
-import LoadingIndicator from 'components/common/LoadingIndicator';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import Advise from 'components/common/advise/Advise';
 import { ArticleLanguage } from 'types/schema';
@@ -18,6 +17,7 @@ import { NewsStackParams } from '../routes/route-params-types';
 import LanguageFilter from './language-filter/LanguageFilter';
 import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
+import NewsLoading from './loading-list/NewsLoading';
 import useNews from './useNews';
 
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
@@ -63,7 +63,7 @@ const News = ({ navigation }: Props) => {
   }, [isLoading]);
 
   if (isLoading) {
-    return <LoadingIndicator />;
+    return <NewsLoading />;
   }
 
   const shouldShowEmptyListAdvice = !isLoading && !error && !articles.length;
