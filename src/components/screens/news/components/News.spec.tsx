@@ -55,6 +55,8 @@ describe('Testing <News />', () => {
 
     const { queryByTestId } = render(renderNews(mockResolvers));
 
+    expect(queryByTestId('news-loading-list')).not.toBeNull();
+
     act(() => {
       jest.runAllTimers();
     });
@@ -75,6 +77,8 @@ describe('Testing <News />', () => {
     };
 
     const { queryByTestId } = render(renderNews(mockResolvers));
+
+    expect(queryByTestId('news-loading-list')).not.toBeNull();
 
     act(() => {
       try {
@@ -129,6 +133,8 @@ describe('Testing <News />', () => {
 
     const { queryByTestId } = render(renderNews(mockResolvers));
 
+    expect(queryByTestId('news-loading-list')).not.toBeNull();
+
     act(() => {
       try {
         jest.runAllTimers();
@@ -181,6 +187,8 @@ describe('Testing <News />', () => {
     };
 
     const { queryByTestId, queryByText, rerender } = render(renderNews(mockResolvers));
+
+    expect(queryByTestId('news-loading-list')).not.toBeNull();
 
     act(() => {
       jest.runAllTimers();

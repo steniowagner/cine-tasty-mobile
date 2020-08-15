@@ -11,6 +11,14 @@ export const Wrapper = styled(TouchableOpacity)`
   padding-horizontal: ${({ theme }) => theme.metrics.largeSize}px;
 `;
 
+export const LoadingWrapper = styled(View)`
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  margin-vertical: ${({ theme }) => theme.metrics.smallSize}px;
+  padding-horizontal: ${({ theme }) => theme.metrics.largeSize}px;
+`;
+
 export const TextWrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('54%')}px;
   margin-left: ${({ theme }) => theme.metrics.mediumSize}px;

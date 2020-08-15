@@ -18,8 +18,9 @@ declare module 'styled-components' {
       height: number;
     };
     colors: {
-      primary: string;
+      loadingColors: string[];
       lightPrimary: string;
+      primary: string;
       popup: string;
       secondary: string;
       contrast: string;
@@ -28,7 +29,6 @@ declare module 'styled-components' {
       subText: string;
       androidToolbar: string;
       inactiveWhite: string;
-      shimmer: string[];
       darkLayer: string;
     };
   }
