@@ -5,10 +5,9 @@ import { Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import DefaultListItem, {
-  DEFAULT_LIST_ITEM_HEIGHT,
-} from 'components/common/DefaultListItem';
+import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/getWrapperMeasures';
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
+import DefaultListItem from 'components/common/famous-list-item/FamousListItem';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import LoadingIndicator from 'components/common/LoadingIndicator';

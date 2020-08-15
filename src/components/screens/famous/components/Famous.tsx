@@ -4,23 +4,22 @@ import React, { useLayoutEffect } from 'react';
 import { Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/getWrapperMeasures';
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
+import DefaultListItem from 'components/common/famous-list-item/FamousListItem';
 import CustomRefreshControl from 'components/common/CustomRefreshControl';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import { SEARCH_PERSON } from 'components/screens/search/queries';
-import LoadingIndicator from 'components/common/LoadingIndicator';
-import DefaultListItem, {
-  DEFAULT_LIST_ITEM_HEIGHT,
-} from 'components/common/DefaultListItem';
 import { SearchType } from 'types/schema';
 import metrics from 'styles/metrics';
 
+import LoadingFamousList from './loading-famous-list/LoadingFamousList';
 import { FamousStackParams } from '../routes/route-params-types';
 import useFamous from './useFamous';
 
-const NUMBER_FLATLIST_COLUMNS = 3;
+export const NUMBER_FLATLIST_COLUMNS = 3;
 
 type FamousScreenNavigationProp = StackNavigationProp<FamousStackParams, 'FAMOUS'>;
 
@@ -62,7 +61,11 @@ const Famous = ({ navigation }: Props) => {
   }, []);
 
   if (isLoading) {
-    return <LoadingIndicator />;
+    return (
+      <LoadingFamousList
+        numberOfColumns={NUMBER_FLATLIST_COLUMNS}
+      />
+    );
   }
 
   const shouldShowListTopReloadButton = !famous.length && !!error && !isLoading;

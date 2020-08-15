@@ -12,20 +12,25 @@ type State = {
   color: Animated.AnimatedInterpolation;
 };
 
-const ANIMATION_DURATION = 650;
+const ANIMATION_DURATION = 500;
 
 const useLoadingPlaceholder = ({ indexToDelayAnimation, colors }: Props): State => {
   const animatedColor = useRef(new Animated.Value(0)).current;
+
+  const animationDuration = useMemo(
+    () => ANIMATION_DURATION + indexToDelayAnimation * 150,
+    [indexToDelayAnimation],
+  );
 
   const animateColor = useCallback(() => {
     Animated.loop(
       Animated.sequence([
         Animated.timing(animatedColor, {
-          duration: ANIMATION_DURATION + Number(indexToDelayAnimation) * 150,
+          duration: animationDuration,
           toValue: 1,
         }),
         Animated.timing(animatedColor, {
-          duration: ANIMATION_DURATION + Number(indexToDelayAnimation) * 150,
+          duration: animationDuration,
           toValue: 0,
         }),
       ]),
