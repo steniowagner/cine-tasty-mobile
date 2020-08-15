@@ -1,9 +1,10 @@
 import React from 'react';
-import { render } from 'react-native-testing-library';
+import { cleanup, render } from 'react-native-testing-library';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
 
+import { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import NewsLoading, { INITIAL_ITEMS_TO_RENDER } from './NewsLoading';
 
 const renderNewsLoading = () => (
@@ -15,6 +16,10 @@ const renderNewsLoading = () => (
 );
 
 describe('Testing <NewsLoading />', () => {
+  beforeEach(setupTimeTravel);
+
+  afterEach(cleanup);
+
   it('should render the correct number of items', () => {
     const { queryAllByTestId, queryByTestId } = render(renderNewsLoading());
 
