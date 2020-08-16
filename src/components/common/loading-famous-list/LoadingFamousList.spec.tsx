@@ -5,8 +5,8 @@ import { ThemeProvider } from 'styled-components';
 import { dark } from 'styles/themes';
 
 import LoadingFamousList, { INITIAL_ITEMS_TO_RENDER } from './LoadingFamousList';
-import { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
-import { NUMBER_FLATLIST_COLUMNS } from '../Famous';
+import { setupTimeTravel } from '../../../../__mocks__/timeTravel';
+import { NUMBER_FLATLIST_COLUMNS } from '../../screens/famous/components/Famous';
 
 const renderLoadingFamousList = () => (
   <ThemeProvider

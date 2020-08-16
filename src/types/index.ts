@@ -68,4 +68,15 @@ export type PaginatedQueryResult = {
 
 export type SearchResult = {
   search: PaginatedQueryResult;
-}
+};
+
+export type SearchProps = {
+  onPressHeaderReloadButton: () => void;
+  onPressFooterReloadButton: () => void;
+  hasPaginationError: boolean;
+  onEndReached: () => void;
+  isPaginating: boolean;
+  errorMessage: string;
+  items: SearchItem[];
+  isLoading: boolean;
+};

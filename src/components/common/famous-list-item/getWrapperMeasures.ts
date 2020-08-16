@@ -6,6 +6,7 @@ const getWrapperMeasures = (withMargin: boolean) => ({
   width: metrics.getWidthFromDP('30%'),
   height: DEFAULT_LIST_ITEM_HEIGHT,
   marginHorizontal: withMargin ? metrics.mediumSize : 0,
+  marginBottom: metrics.mediumSize,
 });
 
 export default getWrapperMeasures;

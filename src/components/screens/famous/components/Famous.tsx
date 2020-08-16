@@ -15,7 +15,7 @@ import { SEARCH_PERSON } from 'components/screens/search/queries';
 import { SearchType } from 'types/schema';
 import metrics from 'styles/metrics';
 
-import LoadingFamousList from './loading-famous-list/LoadingFamousList';
+import LoadingFamousList from '../../../common/loading-famous-list/LoadingFamousList';
 import { FamousStackParams } from '../routes/route-params-types';
 import useFamous from './useFamous';
 

@@ -35,9 +35,9 @@ const LoadingFamousList = ({ numberOfColumns }: Props) => {
         />
       )}
       data={famousLoadingListItems}
+      keyExtractor={(item) => item}
       numColumns={numberOfColumns}
       testID="famous-loading-list"
-      keyExtractor={(item) => item}
       scrollEnabled={false}
     />
   );
