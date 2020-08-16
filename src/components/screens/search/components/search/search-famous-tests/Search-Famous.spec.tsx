@@ -59,7 +59,7 @@ describe('Testing <Search /> - [Famous]', () => {
   it('should render correctly on the first render', () => {
     const { queryByTestId } = render(renderSearchFamous(getMockResolvers()));
 
-    expect(queryByTestId('loading-content-indicator')).toBeNull();
+    expect(queryByTestId('famous-loading-list')).toBeNull();
 
     expect(queryByTestId('top-reload-button')).toBeNull();
 
@@ -79,7 +79,7 @@ describe('Testing <Search /> - [Famous]', () => {
       timeTravel(SEARCH_BY_QUERY_DELAY);
     });
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('famous-loading-list')).not.toBeNull();
 
     act(() => {
       jest.runAllTimers();

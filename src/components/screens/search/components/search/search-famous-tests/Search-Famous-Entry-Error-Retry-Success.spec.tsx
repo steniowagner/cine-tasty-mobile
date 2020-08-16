@@ -97,7 +97,7 @@ describe('Testing <Search /> - [Famous # Entry-Error-Retry-Success]', () => {
 
     fireEvent.press(queryByTestId('top-reload-button'));
 
-    expect(queryByTestId('loading-content-indicator')).not.toBeNull();
+    expect(queryByTestId('famous-loading-list')).not.toBeNull();
 
     act(() => {
       timeTravel(SEARCH_BY_QUERY_DELAY);
