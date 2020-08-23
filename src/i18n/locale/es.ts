@@ -96,6 +96,9 @@ const en: Locale = {
     i18nQueryByTextErrorRef: 'i18nQueryByTextErrorRef',
     i18EntryQueryErrorRef: 'i18EntryQueryErrorRef',
   },
+  search: {
+    recent: 'Recent',
+  },
 };
 
 export default en;

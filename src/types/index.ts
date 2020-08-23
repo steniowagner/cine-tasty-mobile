@@ -71,6 +71,7 @@ export type SearchResult = {
 };
 
 export type SearchProps = {
+  onPressListItem: (item: SearchItem) => void;
   onPressHeaderReloadButton: () => void;
   onPressFooterReloadButton: () => void;
   hasPaginationError: boolean;

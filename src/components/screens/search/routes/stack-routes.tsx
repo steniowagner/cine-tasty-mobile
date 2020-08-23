@@ -17,7 +17,7 @@ type Props = {
   route: SearchScreenRouteProp;
 };
 
-const SearcheStack = (props: Props) => {
+const SearchStack = (props: Props) => {
   const { route } = props;
 
   return (
@@ -38,4 +38,4 @@ const SearcheStack = (props: Props) => {
 
 export const StackID = LOCAL_ROUTES.SEARCH.id;
 
-export default SearcheStack;
+export default SearchStack;

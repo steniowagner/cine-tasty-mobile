@@ -18,6 +18,8 @@ declare module 'styled-components' {
       height: number;
     };
     colors: {
+      fallbackImageBackground: string;
+      fallbackImageIcon: string;
       loadingColors: string[];
       lightPrimary: string;
       primary: string;

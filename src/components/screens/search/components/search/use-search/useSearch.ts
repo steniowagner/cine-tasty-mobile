@@ -18,8 +18,9 @@ type State = {
   onTypeSearchQuery: (value: string) => void;
   onPressFooterReloadButton: () => void;
   onPressHeaderReloadButton: () => void;
-  t: (text: string) => string;
+  shouldShowRecentSearches: boolean;
   hasPaginationError: boolean;
+  t: (text: string) => string;
   onEndReached: () => void;
   isPaginating: boolean;
   errorMessage: string;
@@ -128,6 +129,8 @@ const useSearch = ({
   }, [queryString]);
 
   return {
+    shouldShowRecentSearches:
+      !queryString && !isLoading && !errorMessage && !queryResult.items.length,
     onEndReached: handleOnPaginatedSearch,
     onPressFooterReloadButton,
     onPressHeaderReloadButton,
