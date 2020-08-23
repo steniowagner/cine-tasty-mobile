@@ -16,6 +16,7 @@ const Wrapper = styled(View)`
   width: 100%;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
 `;
 
@@ -54,7 +55,7 @@ const CloseIcon = styled(Icon).attrs(({ theme }) => ({
 const ItemText = styled(Text).attrs({
   numberOfLines: 2,
 })`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('52.5%')}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('55%')}px;
   margin-left: ${({ theme }) => theme.metrics.mediumSize}px;
   margin-right: ${({ theme }) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Medium;
