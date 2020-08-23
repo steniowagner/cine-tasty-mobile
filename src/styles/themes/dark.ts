@@ -18,6 +18,8 @@ const dark: DefaultTheme = {
     loadingColors: ['#353535', '#4f4f4f'],
     darkLayer: 'rgba(0, 0, 0, 0.4)',
     popup: '#rgba(0, 0, 0, 0.9)',
+    fallbackImageBackground: '#cfcfcf',
+    fallbackImageIcon: '#4d4d4d',
   },
   metrics,
 };

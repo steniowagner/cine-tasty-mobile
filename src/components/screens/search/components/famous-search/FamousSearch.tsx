@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Platform, FlatList } from 'react-native';
 
 import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/getWrapperMeasures';
@@ -6,8 +6,8 @@ import ListFooterComponent from 'components/common/pagination-footer/PaginationF
 import LoadingFamousList from 'components/common/loading-famous-list/LoadingFamousList';
 import DefaultListItem from 'components/common/famous-list-item/FamousListItem';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
-import { SearchProps, SearchItem } from 'types';
 import metrics from 'styles/metrics';
+import { SearchProps } from 'types';
 
 const NUMBER_FLATLIST_COLUMNS = 3;
 
@@ -15,16 +15,13 @@ const FamousSearch = ({
   onPressHeaderReloadButton,
   onPressFooterReloadButton,
   hasPaginationError,
+  onPressListItem,
   onEndReached,
   errorMessage,
   isPaginating,
   isLoading,
   items,
 }: SearchProps) => {
-  const onPressListItem = useCallback((item: SearchItem) => {
-    console.log('onPressListItem', item);
-  }, []);
-
   if (isLoading) {
     return (
       <LoadingFamousList
@@ -42,12 +39,12 @@ const FamousSearch = ({
         onPress={onPressHeaderReloadButton}
       />
       )}
-      ListFooterComponent={() => (
-        <ListFooterComponent
-          onPressReloadButton={onPressFooterReloadButton}
-          hasError={hasPaginationError}
-          isPaginating={isPaginating}
-        />
+      ListFooterComponent={() => items.length > 0 && (
+      <ListFooterComponent
+        onPressReloadButton={onPressFooterReloadButton}
+        hasError={hasPaginationError}
+        isPaginating={isPaginating}
+      />
       )}
       columnWrapperStyle={{
         paddingLeft: metrics.smallSize,

@@ -32,12 +32,12 @@ const FallbackImageWrapper = styled(Animated.View)`
   align-items: center;
   position: absolute;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  background-color: #cfcfcf;
+  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
 const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('14%'),
-  color: '#4d4d4d',
+  color: theme.colors.fallbackImageIcon,
 }))``;
 
 type Props = {

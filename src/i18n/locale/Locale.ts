@@ -81,4 +81,7 @@ export interface Locale {
     i18EntryQueryErrorRef: string;
     searchBarPlaceholder: string;
   };
+  search: {
+    recent: string;
+  };
 }
