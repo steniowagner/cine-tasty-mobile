@@ -18,6 +18,7 @@ type State = {
   onTypeSearchQuery: (value: string) => void;
   onPressFooterReloadButton: () => void;
   onPressHeaderReloadButton: () => void;
+  shouldShowEmptyListAdvise: boolean;
   shouldShowRecentSearches: boolean;
   hasPaginationError: boolean;
   t: (text: string) => string;
@@ -44,6 +45,7 @@ const useSearch = ({
   const [queryResult, setQueryResult] = useState<PaginatedQueryResult>(
     INITIAL_QUERY_RESULT,
   );
+  const [isSearchResultEmpty, setIsSearchResultEmpty] = useState<boolean>(false);
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [queryString, setQueryString] = useState<string>('');
@@ -83,9 +85,15 @@ const useSearch = ({
 
   const handleOnSearchByQuery = useCallback(async () => {
     try {
+      setIsSearchResultEmpty(false);
+
       const { search: data } = await onSearchByQuery(queryString);
 
       restartPaginatedSearch();
+
+      if (!data.items.length) {
+        setIsSearchResultEmpty(true);
+      }
 
       setQueryResult({
         hasMore: data.hasMore,
@@ -129,6 +137,8 @@ const useSearch = ({
   }, [queryString]);
 
   return {
+    shouldShowEmptyListAdvise:
+      isSearchResultEmpty && !isLoading && !errorMessage && !!queryString,
     shouldShowRecentSearches:
       !queryString && !isLoading && !errorMessage && !queryResult.items.length,
     onEndReached: handleOnPaginatedSearch,

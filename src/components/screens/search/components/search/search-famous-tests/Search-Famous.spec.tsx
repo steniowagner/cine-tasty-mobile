@@ -22,9 +22,12 @@ const I18N_FAMOUS_QUERY_BY_TEXT_ERROR_REF = 'i18nFamousQueryByTextErrorRef';
 const SOME_FAMOUS_NAME = 'SOME_FAMOUS_NAME';
 const FAMOUS_COUNT = 10;
 
-const getMockResolvers = (hasMore: boolean = false) => ({
+const getMockResolvers = (
+  hasMore: boolean = false,
+  items = new MockList(FAMOUS_COUNT),
+) => ({
   SearchQueryResult: () => ({
-    items: () => new MockList(FAMOUS_COUNT),
+    items: () => items,
     hasMore,
   }),
 });
@@ -80,6 +83,28 @@ describe('Testing <Search /> - [Famous]', () => {
     });
 
     expect(queryByTestId('famous-loading-list')).not.toBeNull();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+  });
+
+  it("should should show an advise when there's no search results", () => {
+    const { queryByTestId } = render(
+      renderSearchFamous(getMockResolvers(false, new MockList(0))),
+    );
+
+    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_FAMOUS_NAME);
+
+    act(() => {
+      timeTravel(SEARCH_BY_QUERY_DELAY);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(queryByTestId('advise-wrapper')).not.toBeNull();
 
     act(() => {
       jest.runAllTimers();

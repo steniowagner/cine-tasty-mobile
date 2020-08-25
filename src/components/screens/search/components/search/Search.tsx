@@ -6,6 +6,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import SearchBar from 'components/common/searchbar/SearchBar';
+import Advise from 'components/common/advise/Advise';
 import { SearchType } from 'types/schema';
 import { SearchItem } from 'types';
 
@@ -27,6 +28,7 @@ type Props = {
 const Search = ({ navigation, route }: Props) => {
   const {
     onPressFooterReloadButton,
+    shouldShowEmptyListAdvise,
     onPressHeaderReloadButton,
     shouldShowRecentSearches,
     hasPaginationError,
@@ -79,6 +81,14 @@ const Search = ({ navigation, route }: Props) => {
 
   return (
     <>
+      {shouldShowEmptyListAdvise && (
+        <Advise
+          description={t('translations:news:emptyList:description')}
+          suggestion={t('translations:news:emptyList:suggestion')}
+          title={t('translations:news:emptyList:title')}
+          icon="alert-box"
+        />
+      )}
       {isSearchingFamous && (
         <FamousSearch
           onPressHeaderReloadButton={onPressHeaderReloadButton}
