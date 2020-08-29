@@ -15,7 +15,7 @@ import metrics from 'styles/metrics';
 
 import useCustomModal from './useCustomModal';
 
-const CARD_CONTAINER_HEIGHT = metrics.getHeightFromDP('70%');
+const CARD_CONTAINER_HEIGHT = metrics.getHeightFromDP('75%');
 export const ANIMATION_TIMING = 400;
 
 const Wrapper = styled(View)`
@@ -57,6 +57,7 @@ const HeadLineText = styled(Text)`
   margin-bottom: ${({ theme }) => theme.metrics.largeSize}px;
   font-family: CircularStd-Bold;
   font-size: ${({ theme }) => theme.metrics.extraLargeSize * 1.1}px;
+  text-align: center;
   color: rgba(0, 0, 0, 0.8);
 `;
 
@@ -67,7 +68,7 @@ const LineDivider = styled(View)`
 `;
 
 const ListHeaderWrapper = styled(View)`
-  margin-top: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  margin-top: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
 const SelectButton = styled(TouchableOpacity)`
