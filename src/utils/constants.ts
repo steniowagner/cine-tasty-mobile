@@ -8,6 +8,7 @@ const KEYS = {
 const VALUES = {
   IMAGES: {
     BASE_URL: 'https://image.tmdb.org/t/p',
+    MEDIA_POSTER_SIZE_CODE: 'w185',
     RECENT_SEARCH_SIZE_CODE: 'w92',
     PROFILE_SIZE_CODE: 'w154',
   },
