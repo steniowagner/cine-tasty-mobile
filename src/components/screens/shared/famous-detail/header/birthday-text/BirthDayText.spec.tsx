@@ -32,13 +32,14 @@ describe('Testing <BirthDatText />', () => {
 
   afterEach(cleanup);
 
-  it('it should return render correctly with a valid date', () => {
-    const { getByText } = render(renderBirthDayText('1994-02-21'));
+  it.only('it should return render correctly with a valid date', () => {
+    const { getByText, debug } = render(renderBirthDayText('1994-02-21'));
+    console.log(debug());
 
     act(() => {
       jest.runAllTimers();
     });
-
+    console.log(debug());
     expect(getByText('February 21, 1994')).not.toBeNull();
   });
 

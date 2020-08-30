@@ -20,6 +20,8 @@ const BirthDayText = ({ rawBirthDate }: BirthdayTextProps) => {
     rawDateString: rawBirthDate,
     options: parseDateOptions,
   });
+  console.log('rawBirthDate: ', rawBirthDate);
+  console.log('dateText: ', dateText);
 
   return <InfoText>{dateText}</InfoText>;
 };
