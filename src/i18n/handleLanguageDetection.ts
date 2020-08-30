@@ -46,13 +46,13 @@ const detectDeviceLanguage = (): string => {
 };
 
 const handleLanguageDetection = async (): Promise<string> => {
-  const hasLanguageSet = await getItemFromStorage<string, string>(
+  const languagePreviouslySet = await getItemFromStorage<string, string>(
     CONSTANTS.KEYS.LANGUAGE,
     '',
   );
 
-  if (hasLanguageSet) {
-    return hasLanguageSet;
+  if (languagePreviouslySet) {
+    return languagePreviouslySet;
   }
 
   const deviceLanguage = detectDeviceLanguage();

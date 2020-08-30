@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ParseDateOptions } from 'types';
-
 type Props = {
-  options: ParseDateOptions;
+  useDefaultDateParser: boolean;
   rawDateString: string;
 };
 
@@ -12,10 +10,75 @@ type State = {
   dateText: string;
 };
 
-export const useParseDateToLocaleDate = ({ rawDateString, options }: Props): State => {
+export const useParseDateToLocaleDate = ({
+  useDefaultDateParser,
+  rawDateString,
+}: Props): State => {
   const [dateText, setDateText] = useState<string>('-');
 
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
+
+  const parseDateToLocaleTextDate = useCallback(
+    (rawDate: string, currentLanguage: string): string => {
+      const [year, month, day] = rawDate.split('-');
+
+      let parsedDate: string;
+
+      const monthText = t(`translations:months.${Number(month) - 1}`);
+
+      switch (currentLanguage) {
+        case 'ptBR':
+        case 'ptPT':
+        case 'es':
+          parsedDate = `${day} de ${monthText.toLowerCase()} de ${year}`;
+          break;
+
+        case 'sv':
+          parsedDate = `${day} ${monthText.toLowerCase()} ${year}`;
+          break;
+
+        case 'en':
+          parsedDate = `${monthText} ${day}, ${year}`;
+          break;
+
+        default:
+          parsedDate = '-';
+      }
+
+      return parsedDate;
+    },
+    [rawDateString, i18n],
+  );
+
+  const parseDateToLocaleDefaultDate = useCallback(
+    (rawDate: string, currentLanguage: string): string => {
+      const [year, month, day] = rawDate.split('-');
+
+      let parsedDate: string;
+
+      switch (currentLanguage) {
+        case 'ptBR':
+        case 'ptPT':
+        case 'es':
+          parsedDate = `${day}/${month}/${year}`;
+          break;
+
+        case 'sv':
+          parsedDate = `${year}-${month}-${day}`;
+          break;
+
+        case 'en':
+          parsedDate = `${month}/${day}/${year}`;
+          break;
+
+        default:
+          parsedDate = '-';
+      }
+
+      return parsedDate;
+    },
+    [rawDateString],
+  );
 
   const parseRawDateToLocaleDateText = useCallback(() => {
     const rawDate = new Date(rawDateString);
@@ -23,17 +86,18 @@ export const useParseDateToLocaleDate = ({ rawDateString, options }: Props): Sta
     if (Number.isNaN(rawDate.getTime())) {
       return;
     }
-    console.log(
-      'rawDate.getTime() + 1000 * 60 * 60 * 24: ',
-      rawDate.getTime() + 1000 * 60 * 60 * 24,
-    );
-    const date = new Date(rawDate.getTime() + 1000 * 60 * 60 * 24);
-    console.log('date: ', date);
 
-    const dateToText = date.toLocaleDateString(i18n.language || 'en', options);
-    console.log('dateToText: ', dateToText);
+    if (useDefaultDateParser) {
+      const dateParsed = parseDateToLocaleDefaultDate(rawDateString, i18n.language);
 
-    setDateText(dateToText);
+      setDateText(dateParsed);
+    }
+
+    if (!useDefaultDateParser) {
+      const dateParsed = parseDateToLocaleTextDate(rawDateString, i18n.language);
+
+      setDateText(dateParsed);
+    }
   }, []);
 
   useEffect(() => {

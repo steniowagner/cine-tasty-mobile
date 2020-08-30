@@ -2,7 +2,7 @@ import React from 'react';
 
 import HeaderInfo from './header/HeaderInfo';
 // import HeaderLoadingPlaceholder from './header/HeaderLoadingPlaceholder';
-import DeathDay from './header/DeathDay';
+import DeathDay from './header/death-day/DeathDay';
 
 export const SCREEN_ID = 'FAMOUS_DETAIL';
 
@@ -26,7 +26,7 @@ const FamousDetail = () => (
       name="Dwayne Johnson"
     />
     <DeathDay
-      deathDate="2020-08-28"
+      deathDate="2020-02-28"
     />
   </>
 );

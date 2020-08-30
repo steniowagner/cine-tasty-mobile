@@ -99,6 +99,20 @@ const en: Locale = {
   search: {
     recent: 'Recent',
   },
+  months: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ],
 };
 
 export default en;

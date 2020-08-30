@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { useParseDateToLocaleDate } from 'hooks';
 import Icon from 'components/common/Icon';
-import { ParseDateOptions } from 'types';
 
 const Wrapper = styled(View)`
   flex-direction: row;
@@ -41,16 +40,10 @@ type Props = {
   deathDate: string;
 };
 
-const parseDateOptions: ParseDateOptions = {
-  month: '2-digit',
-  year: 'numeric',
-  day: '2-digit',
-};
-
 const DeathInfo = ({ deathDate }: Props) => {
   const { dateText } = useParseDateToLocaleDate({
+    useDefaultDateParser: true,
     rawDateString: deathDate,
-    options: parseDateOptions,
   });
 
   return (
