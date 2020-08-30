@@ -1,6 +1,6 @@
 import { Locale } from './Locale';
 
-const en: Locale = {
+const ptPT: Locale = {
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -99,6 +99,20 @@ const en: Locale = {
   search: {
     recent: 'Recent',
   },
+  months: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ],
 };
 
-export default en;
+export default ptPT;

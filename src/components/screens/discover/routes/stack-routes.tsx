@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 import { getDefaultHeaderOptions } from 'routes/constants';
 
+import FamousDetail, {
+  SCREEN_ID as FAMOUS_DETAIL_ID,
+} from '../../shared/famous-detail/FamousDetail';
 import Discover from '../components/Discover';
 import LOCAL_ROUTES from './route-names';
 
@@ -18,6 +21,13 @@ const DiscoverStack = ({ theme }: Props) => {
 
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        options={{
+          header: () => null,
+        }}
+        name={FAMOUS_DETAIL_ID}
+        component={FamousDetail}
+      />
       <Stack.Screen
         options={{
           ...getDefaultHeaderOptions(theme),
