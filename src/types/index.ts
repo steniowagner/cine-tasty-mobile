@@ -81,3 +81,9 @@ export type SearchProps = {
   items: SearchItem[];
   isLoading: boolean;
 };
+
+export type ParseDateOptions = {
+  month: '2-digit' | 'numeric' | 'narrow' | 'short' | 'long';
+  year: '2-digit' | 'numeric';
+  day: '2-digit' | 'numeric';
+};
