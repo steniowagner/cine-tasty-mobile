@@ -16,13 +16,25 @@ export const MEDIA_IMAGE_DEFAULT_HEIGHT = '70%';
 export const WRAPPER_DEFAULT_WIDTH = '40%';
 export const WRAPPER_DEFAULT_HEIGHT = '75%';
 
-interface DefaultTextrStyleProps {
+interface DefaultTextStyleProps {
   readonly withMarginRight?: boolean;
 }
 
-const Wrapper = styled(TouchableOpacity)`
+interface WrapperStyleProps {
+  readonly isFirst?: boolean;
+}
+
+const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_WIDTH)}px;
   height: ${({ theme }) => theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_HEIGHT)}px;
+  margin-left: ${({ isFirst, theme }) => {
+    if (isFirst) {
+      return theme.metrics.largeSize;
+    }
+
+    return 0;
+  }}px;
+  margin-right: ${({ theme }) => theme.metrics.largeSize}px;
 `;
 
 const MediaImage = styled(Image)`
@@ -34,10 +46,10 @@ const MediaImage = styled(Image)`
 
 const DefaultText = styled(Text).attrs({
   numberOfLines: 2,
-})<DefaultTextrStyleProps>`
+})<DefaultTextStyleProps>`
   margin-left: ${({ withMarginRight, theme }) => (withMarginRight ? theme.metrics.smallSize : 0)}px;
   font-family: CircularStd-Medium;
-  font-size: ${({ theme }) => theme.metrics.extraLargeSize};
+  font-size: ${({ theme }) => theme.metrics.largeSize}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
@@ -73,14 +85,16 @@ type Props = {
   onPress: () => void;
   voteAverage: number;
   voteCount: number;
+  isFirst: boolean;
   image: string;
   title: string;
 };
 
 const SimplifiedMediaListItem = ({
-  onPress,
   voteAverage,
   voteCount,
+  isFirst,
+  onPress,
   image,
   title,
 }: Props) => {
@@ -97,6 +111,7 @@ const SimplifiedMediaListItem = ({
   return (
     <Wrapper
       onPress={onPress}
+      isFirst={isFirst}
     >
       <>
         <MediaImage

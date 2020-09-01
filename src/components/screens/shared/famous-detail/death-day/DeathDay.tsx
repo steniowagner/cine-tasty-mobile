@@ -9,6 +9,7 @@ const Wrapper = styled(View)`
   flex-direction: row;
   width: ${({ theme }) => theme.metrics.getWidthFromDP('35%')}px;
   align-items: center;
+  margin-top: ${({ theme }) => theme.metrics.extraLargeSize}px;
   padding-horizontal: ${({ theme }) => theme.metrics.extraSmallSize}px;
   padding-vertical: ${({ theme }) => theme.metrics.extraSmallSize}px;
   border-radius: ${({ theme }) => theme.metrics.height}px;

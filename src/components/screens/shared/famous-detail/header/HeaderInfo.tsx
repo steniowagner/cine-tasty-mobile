@@ -7,7 +7,10 @@ import ProfileImage from './profile-image/ProfileImage';
 import InfoText from './InfoText';
 
 const Wrapper = styled(View)`
-  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: ${({ theme }) => theme.metrics.getWidthFromDP('25%')}px;
+  margin-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
 const InfoWrapper = styled(View)`

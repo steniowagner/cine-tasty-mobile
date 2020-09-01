@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DefaultTheme, withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
@@ -14,23 +14,21 @@ import LOCAL_ROUTES from './route-names';
 
 const Stack = createStackNavigator();
 
-type Props = { theme: DefaultTheme };
-
-const DiscoverStack = ({ theme }: Props) => {
+const DiscoverStack = () => {
   const { t } = useTranslation();
 
   return (
     <Stack.Navigator>
       <Stack.Screen
         options={{
-          header: () => null,
+          headerShown: false,
         }}
         name={FAMOUS_DETAIL_ID}
         component={FamousDetail}
       />
       <Stack.Screen
         options={{
-          ...getDefaultHeaderOptions(theme),
+          ...getDefaultHeaderOptions(),
           headerTitle: t('translations:tabs:discover'),
         }}
         name={LOCAL_ROUTES.DISCOVER.id}
