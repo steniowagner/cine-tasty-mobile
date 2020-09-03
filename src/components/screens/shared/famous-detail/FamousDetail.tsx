@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
 
 import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
+import ImagesList from 'components/common/images-list/ImagesList';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
@@ -99,6 +100,22 @@ const FamousDetail = () => {
             />
           </SectionWrapper>
         )}
+        <SectionWrapper>
+          <SectionTitleText>Images</SectionTitleText>
+        </SectionWrapper>
+        <ImagesList
+          images={[
+            '/if0BTPOSkbnvIjry5OcfV7GfRrO.jpg',
+            '/bKyFGGxc8JjpGFdBRZLkUALc0bX.jpg',
+            '/ye3S7ljIsyLY4exDvD9GCfWMzHe.jpg',
+            '/8mYR9V5wq2KKGuDexqrdNfWUOdc.jpg',
+            '/4Gq8wD9fBpHGlXMS3VQhzS9EHjg.jpg',
+            '/1lz1wLOuPFSRIratMz0SxD3tkJ.jpg',
+            '/znyHJBN6r0cONV17R26U31R6VqR.jpg',
+            '/oGueBRTafMdxrMG6sbZSrrOAd1r.jpg',
+            '/mXxiOTrTMJBRSVRfgaSDhOfvfxU.jpg',
+          ]}
+        />
         <SectionWrapper>
           <SectionTitleText>Cast</SectionTitleText>
         </SectionWrapper>
