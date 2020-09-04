@@ -15,6 +15,7 @@ const VALUES = {
     RECENT_SEARCH_SIZE_CODE: 'w92',
     PROFILE_SIZE_CODE: 'w154',
     THUMBNAIL_SIZE_CODE: 'w45',
+    LARGE_IMAGE_SIZE_CODE: 'w342',
   },
   FALLBACK_LANGUAGE: 'en',
   DEFAULT_SPACING: metrics.mediumSize,

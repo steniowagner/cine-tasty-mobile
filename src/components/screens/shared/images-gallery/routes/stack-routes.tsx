@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import { ImagesGalleryParams } from 'components/screens/shared/images-gallery/routes/route-params-types';
 import { getDefaultHeaderOptions } from 'routes/constants';
 
-import ImagesGallery from '../components/ImagesGallery';
+import ImagesGallery from '../components/images-gallery/ImagesGallery';
 import LOCAL_ROUTES from './route-names';
 
 const Stack = createStackNavigator();
