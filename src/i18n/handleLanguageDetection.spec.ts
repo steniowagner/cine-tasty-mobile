@@ -11,6 +11,23 @@ describe('Testing the handleLanguageDetection()', () => {
   describe("Testing the flow when there's no language saved on storage (first run)", () => {
     describe('The App has translation for the OS language', () => {
       it('[Android] should return the correct language', async () => {
+        jest.mock('react-native', () => ({
+          Platform: {
+            OS: 'android',
+          },
+          Dimensions: {
+            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+          },
+          PixelRatio: {
+            roundToNearestPixel: () => 1,
+          },
+          NativeModules: {
+            I18nManager: {
+              localeIdentifier: 'pt_BR',
+            },
+          },
+        }));
+
         jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
 
         const {
@@ -19,17 +36,6 @@ describe('Testing the handleLanguageDetection()', () => {
         } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
 
         getItemFromStorage.mockImplementationOnce(() => '');
-
-        jest.mock('react-native', () => ({
-          Platform: {
-            OS: 'android',
-          },
-          NativeModules: {
-            I18nManager: {
-              localeIdentifier: 'pt_BR',
-            },
-          },
-        }));
 
         const handleLanguageDetection = require('./handleLanguageDetection');
 
@@ -43,18 +49,15 @@ describe('Testing the handleLanguageDetection()', () => {
       });
 
       it('[iOS >= 13] should return the correct language', async () => {
-        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
-
-        const {
-          getItemFromStorage,
-          persistItemInStorage,
-        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
-
-        getItemFromStorage.mockImplementationOnce(() => '');
-
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'ios',
+          },
+          Dimensions: {
+            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+          },
+          PixelRatio: {
+            roundToNearestPixel: () => 1,
           },
           NativeModules: {
             SettingsManager: {
@@ -64,6 +67,15 @@ describe('Testing the handleLanguageDetection()', () => {
             },
           },
         }));
+
+        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+
+        const {
+          getItemFromStorage,
+          persistItemInStorage,
+        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+
+        getItemFromStorage.mockImplementationOnce(() => '');
 
         const handleLanguageDetection = require('./handleLanguageDetection');
 
@@ -77,18 +89,15 @@ describe('Testing the handleLanguageDetection()', () => {
       });
 
       it('[ios < 13] should return the correct language', async () => {
-        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
-
-        const {
-          getItemFromStorage,
-          persistItemInStorage,
-        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
-
-        getItemFromStorage.mockImplementationOnce(() => '');
-
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'ios',
+          },
+          Dimensions: {
+            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+          },
+          PixelRatio: {
+            roundToNearestPixel: () => 1,
           },
           NativeModules: {
             SettingsManager: {
@@ -98,6 +107,15 @@ describe('Testing the handleLanguageDetection()', () => {
             },
           },
         }));
+
+        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+
+        const {
+          getItemFromStorage,
+          persistItemInStorage,
+        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+
+        getItemFromStorage.mockImplementationOnce(() => '');
 
         const handleLanguageDetection = require('./handleLanguageDetection');
 
@@ -113,6 +131,23 @@ describe('Testing the handleLanguageDetection()', () => {
 
     describe('The App has no translation for the OS language', () => {
       it('[Android] should return the "en" when there\'s no translation for that language', async () => {
+        jest.mock('react-native', () => ({
+          Platform: {
+            OS: 'android',
+          },
+          Dimensions: {
+            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+          },
+          PixelRatio: {
+            roundToNearestPixel: () => 1,
+          },
+          NativeModules: {
+            I18nManager: {
+              localeIdentifier: 'x_Y',
+            },
+          },
+        }));
+
         jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
 
         const {
@@ -121,17 +156,6 @@ describe('Testing the handleLanguageDetection()', () => {
         } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
 
         getItemFromStorage.mockImplementationOnce(() => '');
-
-        jest.mock('react-native', () => ({
-          Platform: {
-            OS: 'android',
-          },
-          NativeModules: {
-            I18nManager: {
-              localeIdentifier: 'x_Y',
-            },
-          },
-        }));
 
         const handleLanguageDetection = require('./handleLanguageDetection');
 
@@ -160,6 +184,12 @@ describe('Testing the handleLanguageDetection()', () => {
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'ios',
+          },
+          Dimensions: {
+            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+          },
+          PixelRatio: {
+            roundToNearestPixel: () => 1,
           },
           NativeModules: {
             SettingsManager: {
@@ -197,6 +227,12 @@ describe('Testing the handleLanguageDetection()', () => {
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'ios',
+          },
+          Dimensions: {
+            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+          },
+          PixelRatio: {
+            roundToNearestPixel: () => 1,
           },
           NativeModules: {
             SettingsManager: {
