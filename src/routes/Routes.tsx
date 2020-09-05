@@ -8,7 +8,14 @@ import {
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
 
-import SearchStack, { StackID } from 'components/screens/search/routes/stack-routes';
+import SearchStack, {
+  StackID as SearchStackID,
+} from 'components/screens/search/routes/stack-routes';
+
+import ImagesGalleryModal, {
+  MODAL_ID as IMAGES_GALLERY_MODAL_ID,
+} from 'components/screens/shared/images-gallery/routes/stack-routes';
+
 import TabNavigator from 'components/utils/tab-navigator/TabNavigator';
 import { ThemeID } from 'types';
 
@@ -96,7 +103,12 @@ const Routes = ({ theme }: Props) => (
         <RootStack.Screen
           options={{ headerShown: false, animationEnabled: true }}
           component={SearchStack}
-          name={StackID}
+          name={SearchStackID}
+        />
+        <RootStack.Screen
+          options={{ headerShown: false, animationEnabled: true }}
+          component={ImagesGalleryModal}
+          name={IMAGES_GALLERY_MODAL_ID}
         />
       </RootStack.Navigator>
     </NavigationContainer>

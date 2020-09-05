@@ -1,3 +1,5 @@
+import metrics from 'styles/metrics';
+
 const KEYS = {
   FIRST_TIME_RUNNING_APP: 'FIRST_TIME_RUNNING_APP',
   APP_STORAGE_KEY: '@CINE_TASTY',
@@ -13,8 +15,10 @@ const VALUES = {
     RECENT_SEARCH_SIZE_CODE: 'w92',
     PROFILE_SIZE_CODE: 'w154',
     THUMBNAIL_SIZE_CODE: 'w45',
+    LARGE_IMAGE_SIZE_CODE: 'w342',
   },
   FALLBACK_LANGUAGE: 'en',
+  DEFAULT_SPACING: metrics.mediumSize,
 };
 
 const ERROR_MESSAGES = {
