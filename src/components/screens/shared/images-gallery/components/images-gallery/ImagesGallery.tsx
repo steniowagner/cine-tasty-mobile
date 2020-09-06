@@ -76,7 +76,6 @@ const ImagesGallery = ({ navigation, route }: Props) => {
         if (isIndexesAllowedToRenderImage[index]) {
           return (
             <ImagesGalleryListItem
-              isAllowedToRender
               imageURL={item}
             />
           );

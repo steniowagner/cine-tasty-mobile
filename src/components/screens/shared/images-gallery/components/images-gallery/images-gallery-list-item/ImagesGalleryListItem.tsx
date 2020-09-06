@@ -12,7 +12,7 @@ interface GalleryImageStyleProps {
   readonly isPortrait?: boolean;
 }
 
-const IMAGES_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_IMAGE_SIZE_CODE}`;
+export const IMAGES_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_IMAGE_SIZE_CODE}`;
 
 const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.width}px;
@@ -53,7 +53,6 @@ const ImageOffIcon = styled(Icon).attrs(({ theme }) => ({
 }))``;
 
 type Props = {
-  isAllowedToRender: boolean;
   imageURL: string;
 };
 
@@ -76,7 +75,9 @@ const ImagesGalleryListItem = ({ imageURL }: Props) => {
 
   if (hasError) {
     return (
-      <ImageOffWrapper>
+      <ImageOffWrapper
+        testID="image-error-wrapper"
+      >
         <ImageOffIcon
           name="image-off"
         />
