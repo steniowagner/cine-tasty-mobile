@@ -83,7 +83,9 @@ const ImagesGallery = ({ navigation, route }: Props) => {
         }
 
         return (
-          <PlaceholderListItem>
+          <PlaceholderListItem
+            testID="placeholder-list-item"
+          >
             <CustomActivityIndicator />
           </PlaceholderListItem>
         );
@@ -97,6 +99,7 @@ const ImagesGallery = ({ navigation, route }: Props) => {
       })}
       keyExtractor={(item) => item}
       data={route.params.images}
+      testID="images-list"
       bounces={false}
       pagingEnabled
       horizontal

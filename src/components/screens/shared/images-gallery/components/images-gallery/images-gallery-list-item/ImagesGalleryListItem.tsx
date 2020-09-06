@@ -66,7 +66,9 @@ const ImagesGalleryListItem = ({ imageURL }: Props) => {
 
   if (isLoading) {
     return (
-      <Wrapper>
+      <Wrapper
+        testID="images-gallery-list-item-loading"
+      >
         <CustomActivityIndicator />
       </Wrapper>
     );
@@ -84,7 +86,9 @@ const ImagesGalleryListItem = ({ imageURL }: Props) => {
 
   if (isLandscape || isPortrait) {
     return (
-      <Wrapper>
+      <Wrapper
+        testID="images-gallery-list-item"
+      >
         <GalleryImage
           source={{
             uri: `${IMAGES_URI}${imageURL}`,
