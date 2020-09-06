@@ -1,8 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
-import {
-  fireEvent, cleanup, render, act,
-} from 'react-native-testing-library';
+import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -12,12 +10,8 @@ import NewsListItemImage from './NewsListItemImage';
 jest.useFakeTimers();
 
 const renderNewsListItemImage = (imageURL = 'image') => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <NewsListItemImage
-      image={imageURL}
-    />
+  <ThemeProvider theme={dark}>
+    <NewsListItemImage image={imageURL} />
   </ThemeProvider>
 );
 

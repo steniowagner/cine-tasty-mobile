@@ -1,8 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import {
-  cleanup, fireEvent, render, act,
-} from 'react-native-testing-library';
+import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import { ANIMATION_TIMING } from 'components/common/custom-modal/CustomModal';
 import { dark } from 'styles/themes';
@@ -15,12 +13,8 @@ import LOCAL_ROUTES from '../../routes/route-names';
 import SetupQuestions from './SetupQuestions';
 
 const renderSetupQuestions = (mockedNavigation = navigation) => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <SetupQuestions
-      navigation={mockedNavigation}
-    />
+  <ThemeProvider theme={dark}>
+    <SetupQuestions navigation={mockedNavigation} />
   </ThemeProvider>
 );
 

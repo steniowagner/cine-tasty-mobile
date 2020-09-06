@@ -1,9 +1,7 @@
 /* eslint-disable global-require */
 /* eslint-disable import/first */
 import React from 'react';
-import {
-  cleanup, fireEvent, render, act,
-} from 'react-native-testing-library';
+import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 jest.mock('../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
@@ -16,13 +14,8 @@ import { STORAGE_SEARCH_SECTION } from './useRecentSearches';
 import RecentSearches from './RecentSearches';
 
 const renderRecentSearchFamous = (onPressItem: typeof jest.fn) => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <RecentSearches
-      searchType={SearchType.PERSON}
-      onPressItem={onPressItem}
-    />
+  <ThemeProvider theme={dark}>
+    <RecentSearches searchType={SearchType.PERSON} onPressItem={onPressItem} />
   </ThemeProvider>
 );
 
@@ -113,7 +106,7 @@ describe('Testing <RecentSearches /> - [Famous]', () => {
 
     expect(persistItemInStorage).toHaveBeenCalledWith(
       STORAGE_KEY,
-      items.filter((item) => item.id !== items[INDEX_ITEM_REMOVED].id),
+      items.filter(item => item.id !== items[INDEX_ITEM_REMOVED].id),
     );
   });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, cleanup, render } from 'react-native-testing-library';
+import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -20,12 +20,8 @@ const navigation = {
 };
 
 const renderQuiz = () => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <Quiz
-      navigation={navigation}
-    />
+  <ThemeProvider theme={dark}>
+    <Quiz navigation={navigation} />
   </ThemeProvider>
 );
 

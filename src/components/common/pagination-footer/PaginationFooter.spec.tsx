@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from 'react-native-testing-library';
+import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -25,9 +25,7 @@ const renderPaginationFooter = ({
   isPaginating,
   hasError,
 }: Props = defaultProps) => (
-  <ThemeProvider
-    theme={dark}
-  >
+  <ThemeProvider theme={dark}>
     <PaginationFooter
       onPressReloadButton={onPressReloadButton}
       isPaginating={isPaginating}

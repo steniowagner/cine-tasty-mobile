@@ -1,9 +1,7 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import {
-  fireEvent, cleanup, render, act,
-} from 'react-native-testing-library';
+import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
@@ -32,24 +30,14 @@ const mockResolversWithError = {
 const navigation = {
   setOptions: () => ({
     // eslint-disable-next-line react/display-name
-    headerRight: () => (
-      <TouchableOpacity
-        onPress={jest.fn}
-      />
-    ),
+    headerRight: () => <TouchableOpacity onPress={jest.fn} />,
   }),
 };
 
 const renderFamousScreen = (resolvers?: IMocks) => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <AutoMockProvider
-      mockResolvers={resolvers}
-    >
-      <Famous
-        navigation={navigation}
-      />
+  <ThemeProvider theme={dark}>
+    <AutoMockProvider mockResolvers={resolvers}>
+      <Famous navigation={navigation} />
     </AutoMockProvider>
   </ThemeProvider>
 );

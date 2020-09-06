@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { cleanup, render } from 'react-native-testing-library';
+import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -16,13 +16,10 @@ type Props = {
 };
 
 const renderQuestions = (props: Props) => (
-  <ThemeProvider
-    theme={dark}
-  >
+  <ThemeProvider theme={dark}>
     <ListItemWrapperQuestion
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    >
+      {...props}>
       <View />
     </ListItemWrapperQuestion>
   </ThemeProvider>
@@ -40,7 +37,7 @@ describe('Testing <ListItemWrapperQuestion />', () => {
   afterEach(cleanup);
 
   it('it should render correctly when has no answer selected', () => {
-    const { getByTestId } = render(renderQuestions(defaultProps));
+    const { queryByTestId, getByTestId } = render(renderQuestions(defaultProps));
 
     expect(getByTestId('question-indicator-text').props.children.join('')).toBe(
       `${defaultProps.currentQuestionIndex}/${defaultProps.numberOfQuestions}`,
@@ -48,7 +45,9 @@ describe('Testing <ListItemWrapperQuestion />', () => {
 
     expect(getByTestId('question-text').props.children).toBe(defaultProps.question);
 
-    expect(getByTestId('next-button').props.disabled).toBe(true);
+    expect(getByTestId('next-button-disabled')).not.toBeNull();
+
+    expect(queryByTestId('next-button')).toBeNull();
   });
 
   it('it should render correctly when has an answer selected', () => {
@@ -57,7 +56,7 @@ describe('Testing <ListItemWrapperQuestion />', () => {
       hasSelectedAnswer: true,
     };
 
-    const { getByTestId } = render(renderQuestions(props));
+    const { queryByTestId, getByTestId } = render(renderQuestions(props));
 
     expect(getByTestId('question-indicator-text').props.children.join('')).toBe(
       `${props.currentQuestionIndex}/${props.numberOfQuestions}`,
@@ -65,6 +64,8 @@ describe('Testing <ListItemWrapperQuestion />', () => {
 
     expect(getByTestId('question-text').props.children).toBe(props.question);
 
-    expect(getByTestId('next-button').props.disabled).toBe(false);
+    expect(getByTestId('next-button')).not.toBeNull();
+
+    expect(queryByTestId('next-button-disabled')).toBeNull();
   });
 });

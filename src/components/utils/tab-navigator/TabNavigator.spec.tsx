@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { fireEvent, render } from 'react-native-testing-library';
+import { fireEvent, render } from '@testing-library/react-native';
 
 import { dark } from 'styles/themes';
 
@@ -9,7 +9,7 @@ import items from './items';
 
 jest.mock('Dimensions');
 
-const routeNames = items.map((item) => item.id);
+const routeNames = items.map(item => item.id);
 
 const index = 0;
 
@@ -38,13 +38,8 @@ describe('Testing <TabNavigator />', () => {
   describe('Testing the render', () => {
     it('should render correctly', () => {
       const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigator
-            navigation={{ navigate: jest.fn() }}
-            state={state}
-          />
+        <ThemeProvider theme={dark}>
+          <TabNavigator navigation={{ navigate: jest.fn() }} state={state} />
         </ThemeProvider>,
       );
 
@@ -57,9 +52,7 @@ describe('Testing <TabNavigator />', () => {
 
     it('should return null when the current screen is on the blacklist', () => {
       const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
+        <ThemeProvider theme={dark}>
           <TabNavigator
             navigation={{ navigate: jest.fn() }}
             state={{
@@ -88,13 +81,8 @@ describe('Testing <TabNavigator />', () => {
   describe('Testing the children state provided by state prop', () => {
     it('should render children correctly', () => {
       const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigator
-            navigation={{ navigate: jest.fn() }}
-            state={state}
-          />
+        <ThemeProvider theme={dark}>
+          <TabNavigator navigation={{ navigate: jest.fn() }} state={state} />
         </ThemeProvider>,
       );
 
@@ -105,7 +93,7 @@ describe('Testing <TabNavigator />', () => {
       expect(
         queryByTestId('tab-wrapper')
           .props.children.slice(1, items.length)
-          .every((item) => item.props.isSelected === false),
+          .every(item => item.props.isSelected === false),
       ).toBe(true);
     });
   });
@@ -115,13 +103,8 @@ describe('Testing <TabNavigator />', () => {
       const navigate = jest.fn();
 
       const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
-          <TabNavigator
-            navigation={{ navigate }}
-            state={state}
-          />
+        <ThemeProvider theme={dark}>
+          <TabNavigator navigation={{ navigate }} state={state} />
         </ThemeProvider>,
       );
 

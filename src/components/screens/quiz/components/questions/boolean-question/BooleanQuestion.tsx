@@ -39,14 +39,22 @@ const BooleanQuestion = ({ onSelectAnswer, answerSelected }: Props) => (
     <OptionButton
       onPress={() => onSelectAnswer(String(true))}
       isSelected={answerSelected === String(true)}
-      testID="true-option-button"
+      testID={
+        answerSelected === String(true)
+          ? 'true-option-button-selected'
+          : 'true-option-button'
+      }
     >
       <OptionText>True</OptionText>
     </OptionButton>
     <OptionButton
       onPress={() => onSelectAnswer(String(false))}
       isSelected={answerSelected === String(false)}
-      testID="false-option-button"
+      testID={
+        answerSelected === String(false)
+          ? 'false-option-button-selected'
+          : 'false-option-button'
+      }
     >
       <OptionText>False</OptionText>
     </OptionButton>

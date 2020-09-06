@@ -1,8 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import {
-  cleanup, fireEvent, render, act,
-} from 'react-native-testing-library';
+import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import { dark } from 'styles/themes';
 
@@ -15,9 +13,7 @@ const renderMultiChoice = (
   answerSelected?: string,
   answers = mockedAnswers,
 ) => (
-  <ThemeProvider
-    theme={dark}
-  >
+  <ThemeProvider theme={dark}>
     <MultiChoiceQuestion
       onSelectAnswer={onSelectAnswer}
       answerSelected={answerSelected}

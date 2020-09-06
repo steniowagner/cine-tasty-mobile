@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from 'react-native-testing-library';
+import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -20,9 +20,7 @@ describe('Testing <TabNavigatorItem />', () => {
   describe('Testing the render', () => {
     it('should renders correctly', () => {
       const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
+        <ThemeProvider theme={dark}>
           <TabNavigatorItem
             inactiveIcon={item.inactiveIcon}
             activeIcon={item.activeIcon}
@@ -45,9 +43,7 @@ describe('Testing <TabNavigatorItem />', () => {
   describe('Testing the render with the selection-state', () => {
     it('should renders correctly when the item is selected', () => {
       const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
+        <ThemeProvider theme={dark}>
           <TabNavigatorItem
             inactiveIcon={item.inactiveIcon}
             activeIcon={item.activeIcon}
@@ -70,9 +66,7 @@ describe('Testing <TabNavigatorItem />', () => {
 
     it("should renders correctly when the item isn't selected", () => {
       const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
+        <ThemeProvider theme={dark}>
           <TabNavigatorItem
             inactiveIcon={item.inactiveIcon}
             activeIcon={item.activeIcon}
@@ -99,9 +93,7 @@ describe('Testing <TabNavigatorItem />', () => {
       const onPress = jest.fn();
 
       const { queryByTestId } = render(
-        <ThemeProvider
-          theme={dark}
-        >
+        <ThemeProvider theme={dark}>
           <TabNavigatorItem
             inactiveIcon={item.inactiveIcon}
             activeIcon={item.activeIcon}

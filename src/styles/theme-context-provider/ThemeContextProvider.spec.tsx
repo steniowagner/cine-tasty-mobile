@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { fireEvent, render, act } from 'react-native-testing-library';
+import { fireEvent, render, act } from '@testing-library/react-native';
 
 import { ThemeID } from 'types';
 import ThemeContext, { ThemeContextProvider } from './ThemeContextProvider';
@@ -19,13 +19,7 @@ describe('<ThemeContextProvider />', () => {
       const TestComponent = () => {
         const { themeID } = useContext(ThemeContext);
 
-        return (
-          <Text
-            testID="testText"
-          >
-            {themeID}
-          </Text>
-        );
+        return <Text testID="testText">{themeID}</Text>;
       };
 
       const { getByText } = render(
@@ -53,15 +47,8 @@ describe('<ThemeContextProvider />', () => {
         const { onToggleTheme, themeID } = useContext(ThemeContext);
 
         return (
-          <TouchableOpacity
-            onPress={onToggleTheme}
-            testID={buttonID}
-          >
-            <Text
-              testID={textID}
-            >
-              {themeID}
-            </Text>
+          <TouchableOpacity onPress={onToggleTheme} testID={buttonID}>
+            <Text testID={textID}>{themeID}</Text>
           </TouchableOpacity>
         );
       };
@@ -93,15 +80,8 @@ describe('<ThemeContextProvider />', () => {
         const { onToggleTheme, themeID } = useContext(ThemeContext);
 
         return (
-          <TouchableOpacity
-            onPress={onToggleTheme}
-            testID={buttonID}
-          >
-            <Text
-              testID={textID}
-            >
-              {themeID}
-            </Text>
+          <TouchableOpacity onPress={onToggleTheme} testID={buttonID}>
+            <Text testID={textID}>{themeID}</Text>
           </TouchableOpacity>
         );
       };

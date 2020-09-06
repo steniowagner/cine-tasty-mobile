@@ -101,7 +101,7 @@ const ListItemWrapper = ({
       <NextButton
         disabled={!hasSelectedAnswer}
         onPress={onPressNext}
-        testID="next-button"
+        testID={!hasSelectedAnswer ? 'next-button-disabled' : 'next-button'}
       >
         <NextText>NEXT</NextText>
       </NextButton>

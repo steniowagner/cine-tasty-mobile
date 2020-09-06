@@ -3,3 +3,5 @@ android
 ios
 e2e
 coverage
+*.spec.ts
+*.spec.tsx

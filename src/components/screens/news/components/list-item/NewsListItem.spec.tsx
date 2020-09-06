@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { fireEvent, render } from 'react-native-testing-library';
+import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -47,9 +47,7 @@ type ExtraOptionalProps = {
 };
 
 const renderNewsListItem = (optionalProps: OptionalProps & ExtraOptionalProps = {}) => (
-  <ThemeProvider
-    theme={dark}
-  >
+  <ThemeProvider theme={dark}>
     <NewsListItem
       withRTL={optionalProps.withRTL || false}
       source={optionalProps.source || 'source'}
