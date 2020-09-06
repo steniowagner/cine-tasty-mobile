@@ -1,8 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
-import {
-  fireEvent, cleanup, render, act,
-} from 'react-native-testing-library';
+import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -10,12 +8,8 @@ import { dark } from 'styles/themes';
 import ProfileImage from './ProfileImage';
 
 const renderProfileImage = (profileImage = 'profileImage') => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <ProfileImage
-      profileImage={profileImage}
-    />
+  <ThemeProvider theme={dark}>
+    <ProfileImage profileImage={profileImage} />
   </ThemeProvider>
 );
 

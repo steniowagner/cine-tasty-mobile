@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, cleanup, render } from 'react-native-testing-library';
+import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -8,9 +8,7 @@ import LanguageListItem from './LanguageListItem';
 import languages from '../languages';
 
 const renderLanguageFilter = (isSelected: boolean, onPress = jest.fn()) => (
-  <ThemeProvider
-    theme={dark}
-  >
+  <ThemeProvider theme={dark}>
     <LanguageListItem
       name={languages[0].name}
       Flag={languages[0].Flag}

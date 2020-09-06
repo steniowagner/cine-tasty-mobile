@@ -2,9 +2,7 @@ import React from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
-import {
-  cleanup, fireEvent, render, act,
-} from 'react-native-testing-library';
+import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
 import CONSTANTS from 'utils/constants';
@@ -55,16 +53,9 @@ const renderQuestions = (
   mockedRoute = route,
   mockResolvers?: IMocks,
 ) => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <AutoMockProvider
-      mockResolvers={mockResolvers}
-    >
-      <Questions
-        navigation={mockedNavigation}
-        route={mockedRoute}
-      />
+  <ThemeProvider theme={dark}>
+    <AutoMockProvider mockResolvers={mockResolvers}>
+      <Questions navigation={mockedNavigation} route={mockedRoute} />
     </AutoMockProvider>
   </ThemeProvider>
 );

@@ -1,8 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
-import {
-  cleanup, fireEvent, render, act,
-} from 'react-native-testing-library';
+import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
@@ -42,16 +40,9 @@ const params = {
 };
 
 const renderSearchFamous = (mockResolvers: IMocks = {}) => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <AutoMockProvider
-      mockResolvers={mockResolvers}
-    >
-      <MockedNavigation
-        component={Search}
-        params={params}
-      />
+  <ThemeProvider theme={dark}>
+    <AutoMockProvider mockResolvers={mockResolvers}>
+      <MockedNavigation component={Search} params={params} />
     </AutoMockProvider>
   </ThemeProvider>
 );

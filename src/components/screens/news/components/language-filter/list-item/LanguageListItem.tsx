@@ -77,7 +77,11 @@ const LanguageListItem = ({
           <Flag />
         </InnerFlagWrapper>
       </OutterFlagWrapper>
-      <LanguageText>{name}</LanguageText>
+      <LanguageText
+        testID="language-text"
+      >
+        {name}
+      </LanguageText>
     </ContentWrapper>
     {isSelected && <CheckIcon />}
   </Wrapper>

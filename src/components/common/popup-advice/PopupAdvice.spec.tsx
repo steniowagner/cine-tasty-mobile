@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render } from 'react-native-testing-library';
+import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -10,13 +10,8 @@ import PopupAdvice, { HIDE_POPUP_DELAY } from './PopupAdvice';
 const DEFAULT_TEXT = 'DEFAULT_TEXT';
 
 const renderPopupAdvice = (onFinishToShow = jest.fn, text = DEFAULT_TEXT) => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <PopupAdvice
-      onFinishToShow={onFinishToShow}
-      text={text}
-    />
+  <ThemeProvider theme={dark}>
+    <PopupAdvice onFinishToShow={onFinishToShow} text={text} />
   </ThemeProvider>
 );
 

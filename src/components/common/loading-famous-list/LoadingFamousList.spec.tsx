@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render } from 'react-native-testing-library';
+import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { dark } from 'styles/themes';
@@ -9,12 +9,8 @@ import { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import { NUMBER_FLATLIST_COLUMNS } from '../../screens/famous/components/Famous';
 
 const renderLoadingFamousList = () => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <LoadingFamousList
-      numberOfColumns={NUMBER_FLATLIST_COLUMNS}
-    />
+  <ThemeProvider theme={dark}>
+    <LoadingFamousList numberOfColumns={NUMBER_FLATLIST_COLUMNS} />
   </ThemeProvider>
 );
 

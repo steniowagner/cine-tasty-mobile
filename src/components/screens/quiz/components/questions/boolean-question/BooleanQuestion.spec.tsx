@@ -1,19 +1,14 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { cleanup, fireEvent, render } from 'react-native-testing-library';
+import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
 import { dark } from 'styles/themes';
 
 import BooleanQuestion from './BooleanQuestion';
 
-const renderMultiChoice = (onSelectAnswer = jest.fn(), answerSelected?: string) => (
-  <ThemeProvider
-    theme={dark}
-  >
-    <BooleanQuestion
-      onSelectAnswer={onSelectAnswer}
-      answerSelected={answerSelected}
-    />
+const renderBooleanQuestion = (onSelectAnswer = jest.fn(), answerSelected?: string) => (
+  <ThemeProvider theme={dark}>
+    <BooleanQuestion onSelectAnswer={onSelectAnswer} answerSelected={answerSelected} />
   </ThemeProvider>
 );
 
@@ -21,41 +16,55 @@ describe('Testing <BooleanQuestion />', () => {
   afterEach(cleanup);
 
   it('it should render correctly', () => {
-    const { getByTestId } = render(renderMultiChoice());
+    const { getByTestId, queryByTestId, getByText } = render(renderBooleanQuestion());
 
     expect(getByTestId('boolean-question').props.children.length).toBe(2);
 
-    expect(getByTestId('true-option-button').props.children.props.children).toBe('True');
+    expect(getByText('True')).not.toBeNull();
 
-    expect(getByTestId('false-option-button').props.children.props.children).toBe(
-      'False',
-    );
+    expect(getByText('False')).not.toBeNull();
 
-    expect(getByTestId('true-option-button').props.isSelected).toBe(false);
+    expect(getByTestId('true-option-button')).not.toBeNull();
 
-    expect(getByTestId('false-option-button').props.isSelected).toBe(false);
+    expect(getByTestId('false-option-button')).not.toBeNull();
+
+    expect(queryByTestId('true-option-button-selected')).toBeNull();
+
+    expect(queryByTestId('false-option-button-selected')).toBeNull();
   });
 
   it('it should render correctly when the True option is selected', () => {
-    const { getByTestId } = render(renderMultiChoice(undefined, 'true'));
+    const { getByTestId, queryByTestId } = render(
+      renderBooleanQuestion(undefined, 'true'),
+    );
 
-    expect(getByTestId('true-option-button').props.isSelected).toBe(true);
+    expect(getByTestId('true-option-button-selected')).not.toBeNull();
 
-    expect(getByTestId('false-option-button').props.isSelected).toBe(false);
+    expect(getByTestId('false-option-button')).not.toBeNull();
+
+    expect(queryByTestId('false-option-button-selected')).toBeNull();
+
+    expect(queryByTestId('true-option-button')).toBeNull();
   });
 
   it('it should render correctly when the False option is selected', () => {
-    const { getByTestId } = render(renderMultiChoice(undefined, 'false'));
+    const { queryByTestId, getByTestId } = render(
+      renderBooleanQuestion(undefined, 'false'),
+    );
 
-    expect(getByTestId('true-option-button').props.isSelected).toBe(false);
+    expect(getByTestId('false-option-button-selected')).not.toBeNull();
 
-    expect(getByTestId('false-option-button').props.isSelected).toBe(true);
+    expect(getByTestId('true-option-button')).not.toBeNull();
+
+    expect(queryByTestId('true-option-button-selected')).toBeNull();
+
+    expect(queryByTestId('false-option-button')).toBeNull();
   });
 
   it('it should call onSelectAnswer with "true" when the True button is pressed', () => {
     const onSelectAnswer = jest.fn();
 
-    const { getByTestId } = render(renderMultiChoice(onSelectAnswer));
+    const { getByTestId } = render(renderBooleanQuestion(onSelectAnswer));
 
     fireEvent.press(getByTestId('true-option-button'));
 
@@ -67,7 +76,7 @@ describe('Testing <BooleanQuestion />', () => {
   it('it should call onSelectAnswer with "false" when the False button is pressed', () => {
     const onSelectAnswer = jest.fn();
 
-    const { getByTestId } = render(renderMultiChoice(onSelectAnswer));
+    const { getByTestId } = render(renderBooleanQuestion(onSelectAnswer));
 
     fireEvent.press(getByTestId('false-option-button'));
 
