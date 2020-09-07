@@ -84,5 +84,9 @@ export interface Locale {
   search: {
     recent: string;
   };
+  famousDetail: {
+    readLess: string;
+    readMore: string;
+  };
   months: string[];
 }

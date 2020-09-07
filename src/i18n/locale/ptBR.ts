@@ -113,6 +113,10 @@ const ptBR: Locale = {
     'November',
     'December',
   ],
+  famousDetail: {
+    readLess: 'Read less',
+    readMore: 'Read more',
+  },
 };
 
 export default ptBR;

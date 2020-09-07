@@ -113,6 +113,10 @@ const sv: Locale = {
     'November',
     'December',
   ],
+  famousDetail: {
+    readLess: 'Read less',
+    readMore: 'Read more',
+  },
 };
 
 export default sv;
