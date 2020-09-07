@@ -113,6 +113,10 @@ const ptPT: Locale = {
     'November',
     'December',
   ],
+  famousDetail: {
+    readLess: 'Read less',
+    readMore: 'Read more',
+  },
 };
 
 export default ptPT;

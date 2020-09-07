@@ -16,7 +16,7 @@ const renderImagesGalleryListItem = () => (
   </ThemeProvider>
 );
 
-describe('Testing <ImagesGallery />', () => {
+describe('Testing <ImagesGalleryListItem />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     jest.clearAllMocks();
