@@ -1,14 +1,8 @@
 import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components';
 
-import CONSTANTS from 'utils/constants';
-
 import useMediaItemDescription from './useMediaItemDescription';
-
-const Wrapper = styled(View)`
-  padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-`;
 
 const DescriptionText = styled(Text)`
   font-size: ${({ theme }) => theme.metrics.largeSize * 1.1}px;
@@ -41,7 +35,7 @@ const MediaItemDescription = ({ description }: Props) => {
   } = useMediaItemDescription();
 
   return (
-    <Wrapper>
+    <>
       <DescriptionText
         // @ts-ignore onTextLayout does exist on Text component
         onTextLayout={({ nativeEvent: { lines } }) => onGetTextLayout(lines.length)}
@@ -62,7 +56,7 @@ const MediaItemDescription = ({ description }: Props) => {
           </ExpandableReadText>
         </ExpandableReadButton>
       )}
-    </Wrapper>
+    </>
   );
 };
 

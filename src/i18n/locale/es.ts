@@ -116,6 +116,9 @@ const es: Locale = {
   famousDetail: {
     readLess: 'Read less',
     readMore: 'Read more',
+    biography: 'Biography',
+    images: 'Images',
+    cast: 'Cast',
   },
 };
 

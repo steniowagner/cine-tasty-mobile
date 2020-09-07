@@ -17,7 +17,7 @@ export const WRAPPER_DEFAULT_WIDTH = '40%';
 export const WRAPPER_DEFAULT_HEIGHT = '75%';
 
 interface DefaultTextStyleProps {
-  readonly withMarginRight?: boolean;
+  readonly withMarginLeft?: boolean;
 }
 
 interface WrapperStyleProps {
@@ -47,7 +47,7 @@ const MediaImage = styled(Image)`
 const DefaultText = styled(Text).attrs({
   numberOfLines: 2,
 })<DefaultTextStyleProps>`
-  margin-left: ${({ withMarginRight, theme }) => (withMarginRight ? theme.metrics.smallSize : 0)}px;
+  margin-left: ${({ withMarginLeft, theme }) => (withMarginLeft ? theme.metrics.extraSmallSize : 0)}px;
   font-family: CircularStd-Medium;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
   color: ${({ theme }) => theme.colors.text};
@@ -142,7 +142,7 @@ const SimplifiedMediaListItem = ({
           name="star"
         />
         <DefaultText
-          withMarginRight
+          withMarginLeft
         >
           {`${voteAverage} (${voteCount})`}
         </DefaultText>

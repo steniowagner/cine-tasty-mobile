@@ -87,6 +87,9 @@ export interface Locale {
   famousDetail: {
     readLess: string;
     readMore: string;
+    biography: string;
+    images: string;
+    cast: string;
   };
   months: string[];
 }
