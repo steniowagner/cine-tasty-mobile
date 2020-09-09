@@ -9,7 +9,7 @@ import InfoText from './InfoText';
 const Wrapper = styled(View)`
   width: 100%;
   justify-content: flex-end;
-  margin-top: ${({ theme }) => theme.metrics.getWidthFromDP('25%')}px;
+  margin-top: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
   margin-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 

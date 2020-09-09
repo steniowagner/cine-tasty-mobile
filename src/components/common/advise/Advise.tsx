@@ -51,7 +51,7 @@ const Suggestion = styled(Text).attrs({
 
 const AdviseIcon = styled(Icon).attrs(({ theme, name }) => ({
   size: theme.metrics.getWidthFromDP('20%'),
-  color: '#fff',
+  color: theme.colors.text,
   name,
 }))``;
 

@@ -81,11 +81,3 @@ export type SearchProps = {
   items: SearchItem[];
   isLoading: boolean;
 };
-
-export type MovieSimplified = {
-  voteAverage: number;
-  voteCount: number;
-  image: string;
-  title: string;
-  id: number;
-};

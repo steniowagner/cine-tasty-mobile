@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import MovieListLoading from 'components/common/movie-list/MovieListLoading';
+import MovieListLoading from 'components/common/MediaListLoading';
 import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
 import ImageListLoading from 'components/common/images-list/ImageListLoading';
 import CONSTANTS from 'utils/constants';
@@ -28,7 +28,9 @@ type Props = {
 };
 
 const FamousDetailLoading = ({ theme }: Props) => (
-  <>
+  <View
+    testID="famous-detail-loading"
+  >
     <LoadingPlaceholder
       colors={theme.colors.loadingColors}
       indexToDelayAnimation={4}
@@ -36,8 +38,8 @@ const FamousDetailLoading = ({ theme }: Props) => (
         width: '100%',
         position: 'absolute',
         height:
-            theme.metrics.getWidthFromDP('44%')
-            + theme.metrics.getWidthFromDP(DEFAULT_IMAGE_SIZE_PERCENTAGE),
+          theme.metrics.getWidthFromDP('44%')
+          + theme.metrics.getWidthFromDP(DEFAULT_IMAGE_SIZE_PERCENTAGE),
       }}
     />
     <HeaderLoadingWrapper>
@@ -49,7 +51,7 @@ const FamousDetailLoading = ({ theme }: Props) => (
     <DefaultLoadingWrapper>
       <MovieListLoading />
     </DefaultLoadingWrapper>
-  </>
+  </View>
 );
 
 export default withTheme(FamousDetailLoading);

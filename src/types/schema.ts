@@ -4,6 +4,36 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetFamous
+// ====================================================
+
+export interface GetFamous_people_items {
+  __typename: "BasePerson";
+  profilePath: string | null;
+  name: string | null;
+  id: number | null;
+}
+
+export interface GetFamous_people {
+  __typename: "PeopleQueryResult";
+  hasMore: boolean;
+  items: GetFamous_people_items[];
+}
+
+export interface GetFamous {
+  people: GetFamous_people;
+}
+
+export interface GetFamousVariables {
+  page: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetArticles
 // ====================================================
 
@@ -32,36 +62,6 @@ export interface GetArticles {
 export interface GetArticlesVariables {
   page: number;
   language: ArticleLanguage;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: GetPeople
-// ====================================================
-
-export interface GetPeople_people_items {
-  __typename: "BasePerson";
-  profilePath: string | null;
-  name: string | null;
-  id: number | null;
-}
-
-export interface GetPeople_people {
-  __typename: "PeopleQueryResult";
-  hasMore: boolean;
-  items: GetPeople_people_items[];
-}
-
-export interface GetPeople {
-  people: GetPeople_people;
-}
-
-export interface GetPeopleVariables {
-  page: number;
 }
 
 /* tslint:disable */
@@ -126,6 +126,59 @@ export interface SearchPerson {
 
 export interface SearchPersonVariables {
   input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetFamousDetail
+// ====================================================
+
+export interface GetFamousDetail_person_moviesCast {
+  __typename: "CastMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  mediaType: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number | null;
+}
+
+export interface GetFamousDetail_person_tvCast {
+  __typename: "CastTVShow";
+  voteAverage: number | null;
+  posterPath: string | null;
+  mediaType: string | null;
+  voteCount: number | null;
+  name: string | null;
+  id: number | null;
+}
+
+export interface GetFamousDetail_person {
+  __typename: "Person";
+  knownForDepartment: string | null;
+  placeOfBirth: string | null;
+  profilePath: string | null;
+  biography: string | null;
+  birthday: string | null;
+  deathday: string | null;
+  images: string[];
+  name: string | null;
+  id: number | null;
+  moviesCast: GetFamousDetail_person_moviesCast[];
+  tvCast: GetFamousDetail_person_tvCast[];
+}
+
+export interface GetFamousDetail {
+  person: GetFamousDetail_person | null;
+}
+
+export interface GetFamousDetailVariables {
+  id: number;
+  language?: ISO6391Language | null;
 }
 
 /* tslint:disable */
