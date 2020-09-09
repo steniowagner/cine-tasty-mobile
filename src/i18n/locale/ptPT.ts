@@ -118,7 +118,11 @@ const ptPT: Locale = {
     readMore: 'Read more',
     biography: 'Biography',
     images: 'Images',
-    cast: 'Cast',
+    castMovies: 'Cast (Movies)',
+    castTV: 'Cast (TV Shows)',
+    errorDescription: 'errorDescription',
+    errorSuggestion: 'errorSuggestion',
+    errorTitle: 'errorTitle',
   },
 };
 

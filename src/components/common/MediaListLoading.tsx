@@ -20,7 +20,7 @@ const items = Array(3)
   .fill(0)
   .map((item, index) => `${item + index}`);
 
-const MovieListLoading = ({ theme }: Props) => (
+const MediaListLoading = ({ theme }: Props) => (
   <>
     <LoadingPlaceholder
       colors={theme.colors.loadingColors}
@@ -50,4 +50,4 @@ const MovieListLoading = ({ theme }: Props) => (
   </>
 );
 
-export default withTheme(MovieListLoading);
+export default withTheme(MediaListLoading);

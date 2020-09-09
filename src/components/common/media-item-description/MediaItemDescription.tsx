@@ -42,7 +42,7 @@ const MediaItemDescription = ({ description }: Props) => {
         testID="description-text"
         numberOfLines={numberOfLines}
       >
-        {description}
+        {description || '-'}
       </DescriptionText>
       {isReadExpandableButtonVisible && (
         <ExpandableReadButton

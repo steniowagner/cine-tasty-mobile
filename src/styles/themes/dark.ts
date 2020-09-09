@@ -6,7 +6,7 @@ import metrics from '../metrics';
 const dark: DefaultTheme = {
   id: ThemeID.DARK,
   colors: {
-    primary: '#4674F8',
+    primary: '#FFD700',
     lightPrimary: 'rgba(70, 117, 248, 0.4)',
     secondary: '#11141a',
     background: '#262626',

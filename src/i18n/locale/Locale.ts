@@ -85,11 +85,15 @@ export interface Locale {
     recent: string;
   };
   famousDetail: {
+    errorDescription: string;
+    errorSuggestion: string;
+    errorTitle: string;
+    castMovies: string;
+    biography: string;
     readLess: string;
     readMore: string;
-    biography: string;
+    castTV: string;
     images: string;
-    cast: string;
   };
   months: string[];
 }

@@ -13,7 +13,7 @@ const InfoText = styled(Text)<InfoTextStyle>`
   margin-vertical: ${({ withVerticalMargin, theme }) => (withVerticalMargin
     ? theme.metrics.getWidthFromDP(DEFAULT_MARGIN_VERTICAL_PERCENTAGE)
     : 0)}px;
-  font-family: CircularStd-Book;
+  font-family: CircularStd-Medium;
   color: ${({ withCustomColor, theme }) => (withCustomColor ? theme.colors.primary : theme.colors.text)};
 `;
 

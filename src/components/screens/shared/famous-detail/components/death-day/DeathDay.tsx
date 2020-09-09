@@ -48,7 +48,9 @@ const DeathInfo = ({ deathDate }: Props) => {
   });
 
   return (
-    <Wrapper>
+    <Wrapper
+      testID="death-day-info"
+    >
       <IconWrapper>
         <CrossIcon
           name="christianity"
