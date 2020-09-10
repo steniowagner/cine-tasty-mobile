@@ -7,10 +7,12 @@ import { MockList, IMocks } from 'graphql-tools';
 import { SearchType } from 'types/schema';
 import { dark } from 'styles/themes';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../../../common/popup-advice/PopupAdvice';
-import timeTravel, { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
+import { DEFAULT_ANIMATION_DURATION } from '../../../../../../common/popup-advice/PopupAdvice';
+import timeTravel, {
+  setupTimeTravel,
+} from '../../../../../../../../__mocks__/timeTravel';
+import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
+import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
 import { SEARCH_PERSON } from '../../../queries';
 

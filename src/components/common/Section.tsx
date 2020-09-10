@@ -22,7 +22,7 @@ const Wrapper = styled(View)<WrapperPaddingStyleProps>`
 `;
 
 const Title = styled(Text)<TitleMarginStyleProps>`
-margin-left: ${({ withMarginLeft }) => (withMarginLeft ? CONSTANTS.VALUES.DEFAULT_SPACING : 0)}px
+  margin-left: ${({ withMarginLeft }) => (withMarginLeft ? CONSTANTS.VALUES.DEFAULT_SPACING : 0)}px
   margin-bottom: ${({ theme }) => theme.metrics.largeSize}px;
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
   color: ${({ theme }) => theme.colors.text};

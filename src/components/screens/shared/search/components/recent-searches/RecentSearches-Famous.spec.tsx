@@ -9,7 +9,7 @@ jest.mock('../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 import { SearchType } from 'types/schema';
 import { dark } from 'styles/themes';
 
-import { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
+import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import { STORAGE_SEARCH_SECTION } from './useRecentSearches';
 import RecentSearches from './RecentSearches';
 

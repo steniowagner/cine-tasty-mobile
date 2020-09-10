@@ -10,7 +10,7 @@ import {
 
 import SearchStack, {
   StackID as SearchStackID,
-} from 'components/screens/search/routes/stack-routes';
+} from 'components/screens/shared/search/routes/stack-routes';
 
 import ImagesGalleryModal, {
   MODAL_ID as IMAGES_GALLERY_MODAL_ID,
@@ -39,7 +39,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
   <Tab.Navigator
-    initialRouteName={DiscoverTabID}
+    initialRouteName={FamousTabID}
     tabBar={(props: BottomTabBarProps) => (
       <TabNavigator
         // eslint-disable-next-line react/jsx-props-no-spreading

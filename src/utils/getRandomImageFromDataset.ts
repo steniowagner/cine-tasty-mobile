@@ -5,10 +5,6 @@ const getRandomIndexBetweenLimits = (min: number, max: number): number => {
 };
 
 const getRandomImageFromDataset = (dataset: string[], imageToExclude: string): string => {
-  if (dataset.length === 1) {
-    return dataset[0];
-  }
-
   const datasetWithoutImageToExclude = dataset.filter((image) => image !== imageToExclude);
   const max = Math.floor(datasetWithoutImageToExclude.length);
   const min = 0;

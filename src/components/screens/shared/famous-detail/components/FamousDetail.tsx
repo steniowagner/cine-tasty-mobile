@@ -64,17 +64,33 @@ const FamousDetail = ({ route }: Props) => {
   const scrollViewOffset = useRef(new Animated.Value(0)).current;
 
   if (isLoading) {
-    return <FamousDetailLoading />;
+    return (
+      <>
+        <StatusBar
+          translucent
+          animated
+          backgroundColor="transparent"
+        />
+        <FamousDetailLoading />
+      </>
+    );
   }
 
   if (hasError) {
     return (
-      <Advise
-        description={t('translations:famousDetail:errorDescription')}
-        suggestion={t('translations:famousDetail:errorSuggestion')}
-        title={t('translations:famousDetail:errorTitle')}
-        icon="alert-box"
-      />
+      <>
+        <StatusBar
+          translucent
+          animated
+          backgroundColor="transparent"
+        />
+        <Advise
+          description={t('translations:famousDetail:errorDescription')}
+          suggestion={t('translations:famousDetail:errorSuggestion')}
+          title={t('translations:famousDetail:errorTitle')}
+          icon="alert-box"
+        />
+      </>
     );
   }
 
@@ -83,6 +99,7 @@ const FamousDetail = ({ route }: Props) => {
       <>
         <StatusBar
           translucent
+          animated
           backgroundColor="transparent"
         />
         <BackgroundImageWrapper

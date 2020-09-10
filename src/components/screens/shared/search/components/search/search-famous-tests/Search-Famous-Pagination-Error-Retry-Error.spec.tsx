@@ -7,10 +7,12 @@ import { MockList, IMocks } from 'graphql-tools';
 import { SearchType } from 'types/schema';
 import { dark } from 'styles/themes';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../../../common/popup-advice/PopupAdvice';
-import timeTravel, { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
+import { DEFAULT_ANIMATION_DURATION } from '../../../../../../common/popup-advice/PopupAdvice';
+import timeTravel, {
+  setupTimeTravel,
+} from '../../../../../../../../__mocks__/timeTravel';
+import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
+import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
 import { SEARCH_PERSON } from '../../../queries';
 
@@ -47,13 +49,13 @@ const renderSearchFamous = (mockResolvers: IMocks = {}) => (
   </ThemeProvider>
 );
 
-describe('Testing <Search /> - [Famous-Pagination-Error]', () => {
+describe('Testing <Search /> - [Famous-Pagination-Error-Retry-Error]', () => {
   beforeEach(setupTimeTravel);
 
   afterEach(cleanup);
 
-  it('should show an error-message when the user tries to paginate and some error occurs', () => {
-    const { queryByTestId, queryByText, rerender } = render(
+  it('should paginate correctly when some error occurs and then the user press the reload-button and the error doesnt exist anymore', () => {
+    const { queryByTestId, rerender } = render(
       renderSearchFamous(getMockResolvers(true)),
     );
 
@@ -64,28 +66,16 @@ describe('Testing <Search /> - [Famous-Pagination-Error]', () => {
     });
 
     act(() => {
-      jest.runAllTimers();
+      try {
+        jest.runAllTimers();
+      } catch (err) {
+        console.log(err.message);
+      }
     });
-
-    expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT);
-
-    expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
-
-    expect(queryByTestId('loading-footer-wrapper')).toBeNull();
-
-    expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
     rerender(renderSearchFamous(mockResolversWithError));
 
     fireEvent(queryByTestId('search-list'), 'onEndReached');
-
-    expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
-
-    expect(queryByTestId('loading-footer-wrapper')).not.toBeNull();
-
-    expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
-
-    expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT);
 
     act(() => {
       timeTravel(DEFAULT_ANIMATION_DURATION);
@@ -101,9 +91,33 @@ describe('Testing <Search /> - [Famous-Pagination-Error]', () => {
 
         expect(queryByTestId('loading-footer-wrapper')).toBeNull();
 
-        expect(queryByTestId('popup-advice-wrapper')).not.toBeNull();
+        fireEvent.press(queryByTestId('pagination-footer-reload-button'));
+      }
+    });
 
-        expect(queryByText(I18N_FAMOUS_QUERY_BY_PAGINATION_ERROR_REF)).not.toBeNull();
+    rerender(renderSearchFamous(getMockResolvers(true)));
+
+    expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
+
+    expect(queryByTestId('loading-footer-wrapper')).not.toBeNull();
+
+    expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
+
+    act(() => {
+      timeTravel(DEFAULT_ANIMATION_DURATION);
+    });
+
+    act(() => {
+      try {
+        jest.runAllTimers();
+      } catch (err) {
+        expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
+
+        expect(queryByTestId('loading-footer-wrapper')).toBeNull();
+
+        expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
+
+        expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT * 2);
       }
     });
   });

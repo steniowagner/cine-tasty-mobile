@@ -5,6 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
+// @ts-ignore
 import SearchBar from 'components/common/searchbar/SearchBar';
 import Advise from 'components/common/advise/Advise';
 import { SearchType } from 'types/schema';
@@ -68,7 +69,9 @@ const Search = ({ navigation, route }: Props) => {
   ]);
 
   const onNavigateToFamousDetailScreen = useCallback((item: SearchItem) => {
-    console.log('NAVIGATE TO FAMOUS-DETAIL CARRYING: ', item.id, item.title, item.image);
+    navigation.navigate('FAMOUS_DETAIL', {
+      id: item.id,
+    });
   }, []);
 
   const onPressListItem = useCallback(async (item: SearchItem) => {
