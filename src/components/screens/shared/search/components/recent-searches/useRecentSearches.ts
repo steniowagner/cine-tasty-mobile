@@ -68,14 +68,28 @@ const useRecentSearches = ({
   }, []);
 
   const persistItemToRecentSearches = useCallback(async (item: SearchItem) => {
-    const recentSearchesFromStorage = await getItemFromStorage<[], SearchItem[]>(
-      STORAGE_KEY,
-      [],
+    const recentSearchesFromStorage = await getItemFromStorage<
+      SearchItem[],
+      SearchItem[]
+    >(STORAGE_KEY, []);
+
+    let recentSearchesUpdated = [];
+
+    const isItemAlreadyPersisted = recentSearchesFromStorage.some(
+      (recentSearcheFromStorage) => recentSearcheFromStorage.id === item.id,
     );
 
-    const recentSearchesUpdated = [item, ...recentSearchesFromStorage.slice(0, 4)];
+    if (isItemAlreadyPersisted) {
+      recentSearchesUpdated = recentSearchesFromStorage.filter(
+        (recentSearchFromStorage) => recentSearchFromStorage.id !== item.id,
+      );
+    }
 
-    await persistItemInStorage(STORAGE_KEY, recentSearchesUpdated);
+    if (!isItemAlreadyPersisted) {
+      recentSearchesUpdated = recentSearchesFromStorage.slice(0, 4);
+    }
+
+    await persistItemInStorage(STORAGE_KEY, [item, ...recentSearchesUpdated]);
   }, []);
 
   return {
