@@ -1,29 +1,39 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
+import { DefaultTheme, withTheme } from 'styled-components';
 
-import { getDefaultHeaderOptions } from 'routes/constants';
+import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
+import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 
 import Famous from '../components/Famous';
 import LOCAL_ROUTES from './route-names';
 
 const Stack = createStackNavigator();
 
-const FamousStack = () => {
+type Props = {
+  theme: DefaultTheme;
+};
+
+const FamousStack = ({ theme }: Props) => {
   const { t } = useTranslation();
 
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name={LOCAL_ROUTES.FAMOUS.id}
         options={{
           ...getDefaultHeaderOptions(),
           headerTitle: t('translations:tabs:famous'),
         }}
-        initialParams={{
-          headerTitle: t('translations:tabs:famous'),
-        }}
-        name={LOCAL_ROUTES.FAMOUS.id}
         component={Famous}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
+        options={{
+          ...getTransparentHeaderOptions(theme),
+        }}
+        component={FamousDetail}
       />
     </Stack.Navigator>
   );
@@ -31,4 +41,4 @@ const FamousStack = () => {
 
 export const TabID = LOCAL_ROUTES.FAMOUS.id;
 
-export default FamousStack;
+export default withTheme(FamousStack);

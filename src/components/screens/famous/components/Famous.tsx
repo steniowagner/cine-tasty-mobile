@@ -8,10 +8,10 @@ import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/get
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
 import DefaultListItem from 'components/common/famous-list-item/FamousListItem';
 import CustomRefreshControl from 'components/common/CustomRefreshControl';
+import { SEARCH_PERSON } from 'components/screens/shared/search/queries';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import HeaderIconButton from 'components/common/HeaderIconButton';
-import { SEARCH_PERSON } from 'components/screens/search/queries';
 import { SearchType } from 'types/schema';
 import metrics from 'styles/metrics';
 
@@ -112,7 +112,9 @@ const Famous = ({ navigation }: Props) => {
         numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
           <DefaultListItem
-            onPress={() => console.log(item)}
+            onPress={() => navigation.navigate('FAMOUS_DETAIL', {
+              id: item.id,
+            })}
             numberOfColumns={NUMBER_FLATLIST_COLUMNS}
             image={item.profilePath}
             title={item.name}

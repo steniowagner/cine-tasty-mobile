@@ -4,12 +4,12 @@ import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-jest.mock('../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
 import { SearchType } from 'types/schema';
 import { dark } from 'styles/themes';
 
-import { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
+import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import { STORAGE_SEARCH_SECTION } from './useRecentSearches';
 import RecentSearches from './RecentSearches';
 
@@ -24,7 +24,7 @@ const ITEMS_COUNT = 5;
 const {
   persistItemInStorage,
   getItemFromStorage,
-} = require('../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+} = require('../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
 const items = Array(ITEMS_COUNT)
   .fill({})
