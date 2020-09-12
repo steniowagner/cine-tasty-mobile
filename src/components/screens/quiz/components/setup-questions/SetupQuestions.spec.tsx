@@ -1,327 +1,130 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
+import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
-import { ANIMATION_TIMING } from 'components/common/custom-modal/CustomModal';
+import { CustomizedModalChildrenType } from 'types';
 import { dark } from 'styles/themes';
 
-import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
 import { difficulties, categories, types } from './options';
 import LOCAL_ROUTES from '../../routes/route-names';
 import SetupQuestions from './SetupQuestions';
+import {
+  I18N_DIFFICULTY_HEADER_TEXT_KEY,
+  I18N_CATEGORY_HEADER_TEXT_KEY,
+  I18N_TYPE_HEADER_TEXT_KEY,
+} from './useSetupQuestions';
 
-const renderSetupQuestions = (mockedNavigation = navigation) => (
+const getNavigationParam = (navigate = jest.fn) => ({
+  ...navigation,
+  navigate,
+});
+
+const renderSetupQuestions = (navigate = jest.fn) => (
   <ThemeProvider theme={dark}>
-    <SetupQuestions navigation={mockedNavigation} />
+    <SetupQuestions navigation={getNavigationParam(navigate)} />
   </ThemeProvider>
 );
 
 describe('Testing <SetupQuestions />', () => {
   afterEach(cleanup);
 
-  beforeEach(() => {
-    setupTimeTravel();
-    jest.clearAllMocks();
+  it('should render correctly with the default params', () => {
+    const { getAllByTestId } = render(renderSetupQuestions());
+
+    const [difficultySelected, categorySelected, typeSelected] = getAllByTestId(
+      'option-value',
+    );
+
+    expect(difficultySelected.props.children.includes(difficulties[0].id)).toEqual(true);
+
+    expect(categorySelected.props.children.includes(categories[0].id)).toEqual(true);
+
+    expect(typeSelected.props.children.includes(types[0].id)).toEqual(true);
+
+    expect(getAllByTestId('default-text')[0].children[0]).toEqual(
+      String(INITIAL_NUMBER_QUESTIONS),
+    );
   });
 
-  describe('Testing the renders', () => {
-    it('should render correctly with the default params', () => {
-      const { getAllByTestId } = render(renderSetupQuestions());
+  it('should navigate to CustomModal correctly when the user press the difficulty-dropdown', () => {
+    const navigate = jest.fn();
 
-      const [difficultySelected, categorySelected, typeSelected] = getAllByTestId(
-        'option-value',
-      );
+    const { getAllByTestId } = render(renderSetupQuestions(navigate));
 
-      expect(difficultySelected.props.children.includes(difficulties[0].id)).toEqual(
-        true,
-      );
+    const [difficultDropdown] = getAllByTestId('dropdown-button');
 
-      expect(categorySelected.props.children.includes(categories[0].id)).toEqual(true);
+    fireEvent.press(difficultDropdown);
 
-      expect(typeSelected.props.children.includes(types[0].id)).toEqual(true);
+    expect(navigate).toHaveBeenCalledTimes(1);
 
-      expect(getAllByTestId('default-text')[0].children[0]).toEqual(
-        String(INITIAL_NUMBER_QUESTIONS),
-      );
-    });
-
-    it('should render the difficulty selected correctly after the selection', () => {
-      const INDEX_DIFFICULTY_SELECTED = 3;
-
-      const { getByTestId, getAllByTestId } = render(renderSetupQuestions());
-
-      const [difficultDropdown] = getAllByTestId('dropdown-button');
-
-      fireEvent.press(difficultDropdown);
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      expect(getByTestId('custom-modal')).not.toBe(null);
-
-      fireEvent.press(getAllByTestId('option-list-item')[INDEX_DIFFICULTY_SELECTED]);
-
-      fireEvent.press(getByTestId('select-button'));
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      try {
-        expect(getByTestId('custom-modal')).toBe(null);
-      } catch (err) {
-        expect(err.message.includes('No instances found')).toEqual(true);
-      }
-
-      const [difficultySelected] = getAllByTestId('option-value');
-
-      expect(
-        difficultySelected.props.children.includes(
-          difficulties[INDEX_DIFFICULTY_SELECTED].id,
-        ),
-      ).toEqual(true);
-    });
-
-    it('should render the category selected correctly after the selection', () => {
-      const INDEX_CATEGORY_SELECTED = 2;
-
-      const { getByTestId, getAllByTestId } = render(renderSetupQuestions());
-
-      const [, categoryDropdown] = getAllByTestId('dropdown-button');
-
-      fireEvent.press(categoryDropdown);
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      expect(getByTestId('custom-modal')).not.toBe(null);
-
-      fireEvent.press(getAllByTestId('option-list-item')[INDEX_CATEGORY_SELECTED]);
-
-      fireEvent.press(getByTestId('select-button'));
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      try {
-        expect(getByTestId('custom-modal')).toBe(null);
-      } catch (err) {
-        expect(err.message.includes('No instances found')).toEqual(true);
-      }
-
-      const [, optionSelected] = getAllByTestId('option-value');
-
-      expect(
-        optionSelected.props.children.includes(categories[INDEX_CATEGORY_SELECTED].id),
-      ).toEqual(true);
-    });
-
-    it('should render the type selected correctly after the selection', () => {
-      const INDEX_TYPE_SELECTED = 1;
-
-      const { getByTestId, getAllByTestId } = render(renderSetupQuestions());
-
-      const [, , typeDropdown] = getAllByTestId('dropdown-button');
-
-      fireEvent.press(typeDropdown);
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      expect(getByTestId('custom-modal')).not.toBe(null);
-
-      fireEvent.press(getAllByTestId('option-list-item')[INDEX_TYPE_SELECTED]);
-
-      fireEvent.press(getByTestId('select-button'));
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      try {
-        expect(getByTestId('custom-modal')).toBe(null);
-      } catch (err) {
-        expect(err.message.includes('No instances found')).toEqual(true);
-      }
-
-      const [, , typeSelected] = getAllByTestId('option-value');
-
-      expect(typeSelected.props.children.includes(types[INDEX_TYPE_SELECTED].id)).toEqual(
-        true,
-      );
-    });
+    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
+    expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(difficulties);
+    expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
+    expect(navigate.mock.calls[0][1].type).toEqual(
+      CustomizedModalChildrenType.MEDIA_FILTER,
+    );
+    expect(navigate.mock.calls[0][1].headerText).toEqual(I18N_DIFFICULTY_HEADER_TEXT_KEY);
+    expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
   });
 
-  describe('Testing the interactions', () => {
-    it('should call navigate with the default parameters when press START QUIZ', () => {
-      const navigate = jest.fn();
+  it('should navigate to CustomModal correctly when the user press the category-dropdown', () => {
+    const navigate = jest.fn();
 
-      const mockedNavigation = {
-        ...navigation,
-        navigate,
-      };
+    const { getAllByTestId } = render(renderSetupQuestions(navigate));
 
-      const { getByTestId } = render(renderSetupQuestions(mockedNavigation));
+    const [, categoryDropdown] = getAllByTestId('dropdown-button');
 
-      fireEvent.press(getByTestId('rounded-button'));
+    fireEvent.press(categoryDropdown);
 
-      expect(navigate).toHaveBeenCalledTimes(1);
+    expect(navigate).toHaveBeenCalledTimes(1);
 
-      expect(navigate).toBeCalledWith(LOCAL_ROUTES.QUESTIONS.id, {
-        numberOfQuestions: INITIAL_NUMBER_QUESTIONS,
-        difficulty: difficulties[0].value,
-        category: categories[0].value,
-        type: types[0].value,
-      });
-    });
-
-    it('should call navigate with custom parameters when press START QUIZ', () => {
-      const INDEX_DIFFICULTY_SELECTED = 3;
-      const INDEX_CATEGORY_SELECTED = 2;
-      const INDEX_TYPE_SELECTED = 1;
-      const NUMBER_QUESTIONS = 5;
-
-      const navigate = jest.fn();
-
-      const mockedNavigation = {
-        ...navigation,
-        navigate,
-      };
-
-      const { getAllByTestId, getByTestId } = render(
-        renderSetupQuestions(mockedNavigation),
-      );
-
-      const [difficultyDropdown, categoryDropdown, typeDropdown] = getAllByTestId(
-        'dropdown-button',
-      );
-
-      fireEvent.press(difficultyDropdown);
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      fireEvent.press(getAllByTestId('option-list-item')[INDEX_DIFFICULTY_SELECTED]);
-
-      fireEvent.press(getByTestId('select-button'));
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      fireEvent.press(categoryDropdown);
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      fireEvent.press(getAllByTestId('option-list-item')[INDEX_CATEGORY_SELECTED]);
-
-      fireEvent.press(getByTestId('select-button'));
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      fireEvent.press(typeDropdown);
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      fireEvent.press(getAllByTestId('option-list-item')[INDEX_TYPE_SELECTED]);
-
-      fireEvent.press(getByTestId('select-button'));
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      fireEvent(getByTestId('slider'), 'onValueChange', NUMBER_QUESTIONS);
-
-      fireEvent.press(getByTestId('rounded-button'));
-
-      expect(navigate).toHaveBeenCalledTimes(1);
-
-      expect(navigate).toBeCalledWith(LOCAL_ROUTES.QUESTIONS.id, {
-        numberOfQuestions: NUMBER_QUESTIONS,
-        difficulty: difficulties[INDEX_DIFFICULTY_SELECTED].value,
-        category: categories[INDEX_CATEGORY_SELECTED].value,
-        type: types[INDEX_TYPE_SELECTED].value,
-      });
-    });
+    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
+    expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(categories);
+    expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
+    expect(navigate.mock.calls[0][1].type).toEqual(
+      CustomizedModalChildrenType.MEDIA_FILTER,
+    );
+    expect(navigate.mock.calls[0][1].headerText).toEqual(I18N_CATEGORY_HEADER_TEXT_KEY);
+    expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
   });
 
-  describe('Testing the items showed inside <CustomModal /> when a certain option is selected', () => {
-    it('should show the corresponding options when the difficulty option is selected', () => {
-      const { getAllByTestId, getByTestId } = render(renderSetupQuestions());
+  it('should navigate to CustomModal correctly when the user press the type-dropdown', () => {
+    const navigate = jest.fn();
 
-      const [difficultyOption] = getAllByTestId('dropdown-button');
+    const { getAllByTestId } = render(renderSetupQuestions(navigate));
 
-      fireEvent.press(difficultyOption);
+    const [, , typeDropdown] = getAllByTestId('dropdown-button');
 
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
+    fireEvent.press(typeDropdown);
 
-      expect(getByTestId('custom-modal')).not.toBe(null);
+    expect(navigate).toHaveBeenCalledTimes(1);
 
-      const optionsList = getByTestId('options-list');
+    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
+    expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(types);
+    expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
+    expect(navigate.mock.calls[0][1].type).toEqual(
+      CustomizedModalChildrenType.MEDIA_FILTER,
+    );
+    expect(navigate.mock.calls[0][1].headerText).toEqual(I18N_TYPE_HEADER_TEXT_KEY);
+    expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
+  });
 
-      expect(optionsList).not.toBe(null);
+  it('should navigate to Questions with the selected params when the user press the "START QUIZ" button', () => {
+    const navigate = jest.fn();
 
-      expect(JSON.stringify(optionsList.props.data)).toStrictEqual(
-        JSON.stringify(difficulties),
-      );
-    });
+    const { getByTestId } = render(renderSetupQuestions(navigate));
 
-    it('should show the corresponding options when the category option is selected', () => {
-      const { getAllByTestId, getByTestId } = render(renderSetupQuestions());
+    fireEvent.press(getByTestId('rounded-button'));
 
-      const [, categoryOption] = getAllByTestId('dropdown-button');
+    expect(navigate).toHaveBeenCalledTimes(1);
 
-      fireEvent.press(categoryOption);
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      expect(getByTestId('custom-modal')).not.toBe(null);
-
-      const optionsList = getByTestId('options-list');
-
-      expect(optionsList).not.toBe(null);
-
-      expect(JSON.stringify(optionsList.props.data)).toStrictEqual(
-        JSON.stringify(categories),
-      );
-    });
-
-    it('should show the corresponding options when the type option is selected', () => {
-      const { getAllByTestId, getByTestId } = render(renderSetupQuestions());
-
-      const [, , typeOptions] = getAllByTestId('dropdown-button');
-
-      fireEvent.press(typeOptions);
-
-      act(() => {
-        timeTravel(ANIMATION_TIMING);
-      });
-
-      expect(getByTestId('custom-modal')).not.toBe(null);
-
-      const optionsList = getByTestId('options-list');
-
-      expect(optionsList).not.toBe(null);
-
-      expect(JSON.stringify(optionsList.props.data)).toStrictEqual(JSON.stringify(types));
+    expect(navigate).toBeCalledWith(LOCAL_ROUTES.QUESTIONS.id, {
+      numberOfQuestions: INITIAL_NUMBER_QUESTIONS,
+      difficulty: difficulties[0].value,
+      category: categories[0].value,
+      type: types[0].value,
     });
   });
 });

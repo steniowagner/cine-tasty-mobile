@@ -20,6 +20,14 @@ const QuizStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         options={{
+          ...getDefaultHeaderOptions(),
+          headerTitle: t('translations:tabs:quiz'),
+        }}
+        name={LOCAL_ROUTES.SETUP_QUESTIONS.id}
+        component={SetupQuestions}
+      />
+      <Stack.Screen
+        options={{
           headerShown: false,
         }}
         name={LOCAL_ROUTES.QUIZ.id}
@@ -33,14 +41,7 @@ const QuizStack = () => {
         name={LOCAL_ROUTES.QUESTIONS.id}
         component={Questions}
       />
-      <Stack.Screen
-        options={{
-          ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:tabs:quiz'),
-        }}
-        name={LOCAL_ROUTES.SETUP_QUESTIONS.id}
-        component={SetupQuestions}
-      />
+
       <Stack.Screen
         options={{
           ...getDefaultHeaderOptions(),

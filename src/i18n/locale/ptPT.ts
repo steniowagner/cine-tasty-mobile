@@ -49,6 +49,11 @@ const ptPT: Locale = {
       russian: 'Russian',
       sami: 'Sami',
       spanish: 'Spanish',
+      emptyList: {
+        description: 'description',
+        suggestion: 'suggestion',
+        title: 'title',
+      },
     },
     filterMessage: 'Choose a language to filter the News',
     selectFilterMessage: 'SELECT',

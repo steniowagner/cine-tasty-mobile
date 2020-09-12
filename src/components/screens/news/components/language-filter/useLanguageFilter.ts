@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { ArticleLanguage } from 'types/schema';
 
@@ -7,24 +8,27 @@ import languages from './languages';
 type Props = {
   onSelectLanguage: (language: string) => void;
   lastLanguageSelected: ArticleLanguage;
-  onCloseModal: () => void;
+  closeModal: () => void;
 };
 
 type State = {
   setLanguageSelected: (language: ArticleLanguage) => void;
   onPressSelectButton: () => void;
   initialFlatListIndex: number;
+  t: (key: string) => string;
   languageSelected: string;
 };
 
 const useLanguageFilter = ({
   lastLanguageSelected,
   onSelectLanguage,
-  onCloseModal,
+  closeModal,
 }: Props): State => {
   const [languageSelected, setLanguageSelected] = useState<ArticleLanguage>(
     lastLanguageSelected,
   );
+
+  const { t } = useTranslation();
 
   const initialFlatListIndex = useMemo(
     () => languages.findIndex((language) => language.id === lastLanguageSelected),
@@ -36,7 +40,7 @@ const useLanguageFilter = ({
       onSelectLanguage(languageSelected);
     }
 
-    onCloseModal();
+    closeModal();
   }, [lastLanguageSelected, languageSelected]);
 
   return {
@@ -44,6 +48,7 @@ const useLanguageFilter = ({
     onPressSelectButton,
     setLanguageSelected,
     languageSelected,
+    t,
   };
 };
 

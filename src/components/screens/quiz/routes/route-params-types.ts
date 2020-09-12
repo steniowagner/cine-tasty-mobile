@@ -1,3 +1,6 @@
+import { MODAL_ID as CUSTOM_MODAL_ID } from 'components/screens/shared/customized-modal/routes/stack-routes';
+import { CustomModalParams } from 'components/screens/shared/customized-modal/routes/route-params-types';
+
 import {
   GetQuizQuestions_quiz as QuizQuestions,
   QuestionDifficulty,
@@ -18,4 +21,5 @@ export type QuizStackParams = {
     questions: QuizQuestions[];
     answers: string[];
   };
+  [CUSTOM_MODAL_ID]: CustomModalParams;
 };

@@ -13,6 +13,8 @@ jest.mock('react-i18next', () => ({
 
 jest.mock('react-native-gesture-handler', () => {
   const View = require('react-native/Libraries/Components/View/View');
+  const FlatList = require('react-native/Libraries/Lists/FlatList');
+
   return {
     Swipeable: View,
     DrawerLayout: View,
@@ -37,9 +39,9 @@ jest.mock('react-native-gesture-handler', () => {
     BaseButton: View,
     RectButton: View,
     BorderlessButton: View,
-    FlatList: View,
     gestureHandlerRootHOC: jest.fn(),
     Directions: {},
+    FlatList,
   };
 });
 

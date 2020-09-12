@@ -52,6 +52,11 @@ const sv: Locale = {
     },
     filterMessage: 'Choose a language to filter the News',
     selectFilterMessage: 'SELECT',
+    emptyList: {
+      description: 'description',
+      suggestion: 'suggestion',
+      title: 'title',
+    },
   },
   quiz: {
     welcome: 'Welcome to the Cine-Tasty Quiz!',

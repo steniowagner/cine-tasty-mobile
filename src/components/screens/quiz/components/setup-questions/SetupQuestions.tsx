@@ -1,18 +1,14 @@
 import React from 'react';
-import {
-  SafeAreaView, FlatList, Text, View,
-} from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
-import CustomModal from 'components/common/custom-modal/CustomModal';
 import RoundedButton from 'components/common/RoundedButton';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import NumberOfQuestions from './NumberOfQuestionts';
 import useSetupQuestions from './useSetupQuestions';
 import DropdownOption from './DropdownOption';
-import OptionListItem from './OptionListItem';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -24,12 +20,6 @@ const Wrapper = styled(View)`
 
 const RoundedButtonWrapper = styled(View)`
   align-items: center;
-`;
-
-const LineDivider = styled(View)`
-  width: 100%;
-  height: 1.8px;
-  background-color: #f2f2f2;
 `;
 
 const Label = styled(Text)`
@@ -46,20 +36,13 @@ type Props = {
 
 const SetupQuestions = ({ navigation }: Props) => {
   const {
-    indexLastOptionSelected,
     onPressOptionDropdown,
     setNumberOfQuestions,
     questionDifficulty,
     numberOfQuestions,
     questionCategory,
     onPressStartQuiz,
-    onSelectOption,
-    onPressSelect,
-    modalMessage,
-    onCloseModal,
     questionType,
-    isModalOpen,
-    options,
     t,
   } = useSetupQuestions({ navigation });
 
@@ -95,28 +78,6 @@ const SetupQuestions = ({ navigation }: Props) => {
           />
         </RoundedButtonWrapper>
       </SafeAreaView>
-      {isModalOpen && (
-        <CustomModal
-          footerText={t('translations:quiz:modalSelectText')}
-          onPressSelect={onPressSelect}
-          headerText={modalMessage}
-          onClose={onCloseModal}
-        >
-          <FlatList
-            renderItem={({ item, index }) => (
-              <OptionListItem
-                isSelected={indexLastOptionSelected === index}
-                onPress={() => onSelectOption(index)}
-                title={t(`translations:quiz:${item.id}`)}
-              />
-            )}
-            ItemSeparatorComponent={() => <LineDivider />}
-            keyExtractor={(item) => item.id}
-            testID="options-list"
-            data={options}
-          />
-        </CustomModal>
-      )}
     </Wrapper>
   );
 };

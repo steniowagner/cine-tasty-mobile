@@ -39,6 +39,11 @@ export interface Locale {
     i18EntryQueryErrorRef: string;
     selectFilterMessage: string;
     filterMessage: string;
+    emptyList: {
+      description: string;
+      suggestion: string;
+      title: string;
+    };
   };
   quiz: {
     numberOfQuestions: string;
