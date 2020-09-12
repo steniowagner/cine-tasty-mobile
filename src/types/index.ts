@@ -4,7 +4,9 @@ import {
   FetchMoreOptions,
 } from 'apollo-client';
 
-import { GetArticlesVariables, GetArticles } from './schema';
+import {
+  GetArticlesVariables, QuestionDifficulty, QuestionCategory, QuestionType, GetArticles,
+} from './schema';
 
 export enum ThemeID {
   DARK = 'DARK',
@@ -81,3 +83,10 @@ export type SearchProps = {
   items: SearchItem[];
   isLoading: boolean;
 };
+
+export type QuizFilterOption = QuestionOption<QuestionDifficulty | QuestionCategory | QuestionType>;
+
+export enum CustomizedModalChildrenType {
+  MEDIA_FILTER = 'MEDIA_FILTER',
+  LANGUAGE = 'LANGUAGE',
+}

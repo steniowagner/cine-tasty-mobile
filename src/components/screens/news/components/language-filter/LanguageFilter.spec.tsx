@@ -7,7 +7,6 @@ import { dark } from 'styles/themes';
 
 import timeTravel from '../../../../../../__mocks__/timeTravel';
 import LanguageFilter, { ANIMATION_TIMING } from './LanguageFilter';
-import LanguageListItem from './list-item/LanguageListItem';
 import languages from './languages';
 
 const renderLanguageFilter = (
@@ -19,7 +18,7 @@ const renderLanguageFilter = (
     <LanguageFilter
       lastLanguageSelected={lastFilterSelected}
       onSelectLanguage={onSelect}
-      onCloseModal={onClose}
+      closeModal={onClose}
     />
   </ThemeProvider>
 );
@@ -108,22 +107,5 @@ describe('Testing <LanguageFilter />', () => {
     });
 
     expect(onSelect).toHaveBeenCalledTimes(0);
-  });
-
-  it('should call onCloseModal when user press out of the card', () => {
-    const onClose = jest.fn();
-    const INDEX_SELECTED = 1;
-
-    const { getByTestId } = render(
-      renderLanguageFilter(languages[INDEX_SELECTED].id, undefined, onClose),
-    );
-
-    fireEvent.press(getByTestId('closeable-area'));
-
-    act(() => {
-      timeTravel(ANIMATION_TIMING);
-    });
-
-    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

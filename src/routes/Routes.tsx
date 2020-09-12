@@ -16,6 +16,10 @@ import ImagesGalleryModal, {
   MODAL_ID as IMAGES_GALLERY_MODAL_ID,
 } from 'components/screens/shared/images-gallery/routes/stack-routes';
 
+import CustomModal, {
+  MODAL_ID as CUSTOM_MODAL_ID,
+} from 'components/screens/shared/customized-modal/routes/stack-routes';
+
 import TabNavigator from 'components/utils/tab-navigator/TabNavigator';
 import { ThemeID } from 'types';
 
@@ -39,7 +43,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
   <Tab.Navigator
-    initialRouteName={FamousTabID}
+    initialRouteName={QuizTabID}
     tabBar={(props: BottomTabBarProps) => (
       <TabNavigator
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -109,6 +113,11 @@ const Routes = ({ theme }: Props) => (
           options={{ headerShown: false, animationEnabled: true }}
           component={ImagesGalleryModal}
           name={IMAGES_GALLERY_MODAL_ID}
+        />
+        <RootStack.Screen
+          options={{ headerShown: false, animationEnabled: true }}
+          component={CustomModal}
+          name={CUSTOM_MODAL_ID}
         />
       </RootStack.Navigator>
     </NavigationContainer>

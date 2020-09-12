@@ -10,11 +10,11 @@ import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import Advise from 'components/common/advise/Advise';
+import { CustomizedModalChildrenType } from 'types';
 import { ArticleLanguage } from 'types/schema';
 import metrics from 'styles/metrics';
 
 import { NewsStackParams } from '../routes/route-params-types';
-import LanguageFilter from './language-filter/LanguageFilter';
 import { imageWrapper } from './list-item/common-styles';
 import NewsListItem from './list-item/NewsListItem';
 import NewsLoading from './loading-list/NewsLoading';
@@ -32,8 +32,6 @@ type Props = {
 
 const News = ({ navigation }: Props) => {
   const {
-    setIsFilterLanguageModalOpen,
-    isFilterLanguageModalOpen,
     onPressFooterReloadButton,
     onSelectArticleLanguage,
     onPressTopReloadButton,
@@ -53,7 +51,14 @@ const News = ({ navigation }: Props) => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          onPress={() => setIsFilterLanguageModalOpen(true)}
+          onPress={() => navigation.navigate('CUSTOM_MODAL', {
+            headerText: t('translations:news:filterMessage'),
+            type: CustomizedModalChildrenType.LANGUAGE,
+            extraData: {
+              onPressSelect: onSelectArticleLanguage,
+              lastItemSelected: articleLanguage,
+            },
+          })}
           disabled={isLoading}
           withMarginRight
           iconName="tune"
@@ -79,13 +84,6 @@ const News = ({ navigation }: Props) => {
           title={t('translations:news:emptyList:title')}
           icon="alert-box"
         />
-        {isFilterLanguageModalOpen && (
-          <LanguageFilter
-            onCloseModal={() => setIsFilterLanguageModalOpen(false)}
-            onSelectLanguage={onSelectArticleLanguage}
-            lastLanguageSelected={articleLanguage}
-          />
-        )}
       </View>
     );
   }
@@ -140,13 +138,6 @@ const News = ({ navigation }: Props) => {
         testID="news-list"
         data={articles}
       />
-      {isFilterLanguageModalOpen && (
-        <LanguageFilter
-          onCloseModal={() => setIsFilterLanguageModalOpen(false)}
-          onSelectLanguage={onSelectArticleLanguage}
-          lastLanguageSelected={articleLanguage}
-        />
-      )}
       {!!error && (
       <PopupAdvice
         text={error}

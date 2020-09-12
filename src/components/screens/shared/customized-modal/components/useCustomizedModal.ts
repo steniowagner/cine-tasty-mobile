@@ -8,28 +8,22 @@ import {
   State,
 } from 'react-native-gesture-handler';
 
+export const ANIMATION_TIMING = 400;
+
 type Props = {
   cardContainerHeight: number;
-  onPressSelect: () => void;
-  animationTiming: number;
   onClose: () => void;
 };
 
 type HookState = {
   onHandlerStateChange: (event: PanGestureHandlerStateChangeEvent) => void;
   animatedEvent: (event: PanGestureHandlerGestureEvent) => void;
-  onPressSelectButton: () => void;
   translateY: Animated.Value;
   onCloseModal: () => void;
   shouldHideCard: boolean;
 };
 
-const useCustomModal = ({
-  cardContainerHeight,
-  animationTiming,
-  onPressSelect,
-  onClose,
-}: Props): HookState => {
+const useCustomizedModal = ({ cardContainerHeight, onClose }: Props): HookState => {
   let offset = 0;
 
   const translateY = useRef(new Animated.Value(cardContainerHeight)).current;
@@ -54,7 +48,7 @@ const useCustomModal = ({
 
   const onAnimateCard = useCallback((toValue: number, callback?: () => void): void => {
     Animated.timing(translateY, {
-      duration: toValue === 0 ? animationTiming : animationTiming / 2,
+      duration: toValue === 0 ? ANIMATION_TIMING : ANIMATION_TIMING / 2,
       useNativeDriver: true,
       toValue,
     }).start(callback);
@@ -110,19 +104,8 @@ const useCustomModal = ({
     });
   }, [onClose]);
 
-  const onPressSelectButton = useCallback(() => {
-    onAnimateCard(cardContainerHeight, () => {
-      setShouldHideCard(true);
-
-      onPressSelect();
-
-      onClose();
-    });
-  }, [onPressSelect]);
-
   return {
     onHandlerStateChange,
-    onPressSelectButton,
     shouldHideCard,
     animatedEvent,
     onCloseModal,
@@ -130,4 +113,4 @@ const useCustomModal = ({
   };
 };
 
-export default useCustomModal;
+export default useCustomizedModal;

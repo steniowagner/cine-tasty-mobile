@@ -3,38 +3,44 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
-import { QuestionOption, QuizOption } from 'types';
+import {
+  CustomizedModalChildrenType,
+  QuizFilterOption,
+  QuestionOption,
+  QuizOption,
+} from 'types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import { difficulties, categories, types } from './options';
+
+export const I18N_DIFFICULTY_HEADER_TEXT_KEY = 'translations:quiz:setDifficulty';
+export const I18N_CATEGORY_HEADER_TEXT_KEY = 'translations:quiz:setCategory';
+export const I18N_TYPE_HEADER_TEXT_KEY = 'translations:quiz:setType';
 
 export const INITIAL_NUMBER_QUESTIONS = 10;
 
 type State = {
   setNumberOfQuestions: (numberOfQuestions: number) => void;
   questionDifficulty: QuestionOption<QuestionDifficulty>;
-  onSelectOption: (indexOptionSelected: number) => void;
   onPressOptionDropdown: (option: QuizOption) => void;
   questionCategory: QuestionOption<QuestionCategory>;
   questionType: QuestionOption<QuestionType>;
-  indexLastOptionSelected: number;
   onPressStartQuiz: () => void;
   t: (key: string) => string;
-  onPressSelect: () => void;
   numberOfQuestions: number;
-  onCloseModal: () => void;
-  modalMessage: string;
-  isModalOpen: boolean;
-  options: any[];
 };
 
-type Option = QuestionOption<QuestionDifficulty | QuestionCategory | QuestionType>;
-
-type Options = Option[];
-
 type OptionSelectedInfo = {
-  currentOptionSelected: Option;
-  currentDataset: Options;
+  currentOptionSelected: QuizFilterOption;
+  currentDataset: QuizFilterOption[];
+  headerText: string;
+};
+
+type NavigateToCustomModalProps = {
+  currentOptionSelected: QuizFilterOption;
+  currentDataset: QuizFilterOption[];
+  headerText: string;
+  option: QuizOption;
 };
 
 type Props = {
@@ -51,10 +57,6 @@ const useSetupQuestions = ({ navigation }: Props): State => {
   const [questionType, setQuestionType] = useState<QuestionOption<QuestionType>>(
     types[0],
   );
-  const [indexLastOptionSelected, setIndexLastOptionSelected] = useState<number>(0);
-  const [currentOption, setCurrentOption] = useState<QuizOption | null>(null);
-  const [optionsSelected, setOptionsSelected] = useState<Options>([]);
-  const [modalMessage, setModalMessage] = useState<string>('');
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(
     INITIAL_NUMBER_QUESTIONS,
   );
@@ -63,20 +65,24 @@ const useSetupQuestions = ({ navigation }: Props): State => {
 
   const getOptionSelectedInfo = useCallback(
     (option: QuizOption): OptionSelectedInfo => {
-      let currentOptionSelected: Option;
-      let currentDataset: Options = [];
+      let currentOptionSelected: QuizFilterOption;
+      let currentDataset: QuizFilterOption[] = [];
+      let headerText: string = '';
 
       if (option === 'CATEGORY') {
+        headerText = t(I18N_CATEGORY_HEADER_TEXT_KEY);
         currentOptionSelected = questionCategory;
         currentDataset = categories;
       }
 
       if (option === 'DIFFICULTY') {
+        headerText = t(I18N_DIFFICULTY_HEADER_TEXT_KEY);
         currentOptionSelected = questionDifficulty;
         currentDataset = difficulties;
       }
 
       if (option === 'TYPE') {
+        headerText = t(I18N_TYPE_HEADER_TEXT_KEY);
         currentOptionSelected = questionType;
         currentDataset = types;
       }
@@ -84,65 +90,82 @@ const useSetupQuestions = ({ navigation }: Props): State => {
       return {
         currentOptionSelected,
         currentDataset,
+        headerText,
       };
     },
-    [optionsSelected],
+    [questionDifficulty, questionCategory, questionType],
   );
 
-  const handleSetCurrentSelectedOptionIndex = useCallback(
-    (option: QuizOption): void => {
-      const { currentOptionSelected, currentDataset } = getOptionSelectedInfo(option);
+  const onSelectOption = useCallback(
+    (indexOptionSelected: number, optionSelected: QuizOption): void => {
+      if (optionSelected === 'CATEGORY') {
+        setQuestionCategory(categories[indexOptionSelected]);
+      }
 
+      if (optionSelected === 'DIFFICULTY') {
+        setQuestionDifficulty(difficulties[indexOptionSelected]);
+      }
+
+      if (optionSelected === 'TYPE') {
+        setQuestionType(types[indexOptionSelected]);
+      }
+    },
+    [],
+  );
+
+  const getLastIndexOptionSelected = useCallback(
+    (currentDataset: QuizFilterOption[], currentOptionSelected: QuizFilterOption) => {
       const index = currentDataset.findIndex(
         (datasetItem) => datasetItem.id === currentOptionSelected.id,
       );
 
-      setIndexLastOptionSelected(index);
+      return index;
     },
-    [optionsSelected],
+    [],
   );
 
-  const setOptions = useCallback(
+  const navigateToCustomModal = useCallback(
+    ({
+      currentOptionSelected,
+      currentDataset,
+      headerText,
+      option,
+    }: NavigateToCustomModalProps): void => {
+      navigation.navigate('CUSTOM_MODAL', {
+        extraData: {
+          onPressSelect: (indexOptionSelected: number) => {
+            onSelectOption(indexOptionSelected, option);
+          },
+          lastItemSelected: getLastIndexOptionSelected(
+            currentDataset,
+            currentOptionSelected,
+          ),
+          dataset: currentDataset,
+        },
+        type: CustomizedModalChildrenType.MEDIA_FILTER,
+        headerText,
+      });
+    },
+    [],
+  );
+
+  const onPressOptionDropdown = useCallback(
     (option: QuizOption): void => {
-      handleSetCurrentSelectedOptionIndex(option);
+      const { currentOptionSelected, currentDataset, headerText } = getOptionSelectedInfo(
+        option,
+      );
 
-      setCurrentOption(option);
-
-      if (option === 'CATEGORY') {
-        setModalMessage(t('translations:quiz:setCategory'));
-        setOptionsSelected(categories);
-      }
-
-      if (option === 'DIFFICULTY') {
-        setModalMessage(t('translations:quiz:setDifficulty'));
-        setOptionsSelected(difficulties);
-      }
-
-      if (option === 'TYPE') {
-        setModalMessage(t('translations:quiz:setType'));
-        setOptionsSelected(types);
-      }
+      navigateToCustomModal({
+        currentOptionSelected,
+        currentDataset,
+        headerText,
+        option,
+      });
     },
-    [optionsSelected],
+    [questionDifficulty, questionCategory, questionType],
   );
 
-  const onPressSelect = useCallback((): void => {
-    if (currentOption === 'CATEGORY') {
-      setQuestionCategory(categories[indexLastOptionSelected]);
-    }
-
-    if (currentOption === 'DIFFICULTY') {
-      setQuestionDifficulty(difficulties[indexLastOptionSelected]);
-    }
-
-    if (currentOption === 'TYPE') {
-      setQuestionType(types[indexLastOptionSelected]);
-    }
-
-    setOptionsSelected([]);
-  }, [indexLastOptionSelected, currentOption]);
-
-  const onPressStartQuiz = useCallback(() => {
+  const navigateToQuestions = useCallback(() => {
     navigation.navigate('QUESTIONS', {
       difficulty: questionDifficulty.value,
       category: questionCategory.value,
@@ -152,20 +175,13 @@ const useSetupQuestions = ({ navigation }: Props): State => {
   }, [numberOfQuestions, questionDifficulty, questionCategory, questionType]);
 
   return {
-    onSelectOption: setIndexLastOptionSelected,
-    onCloseModal: () => setOptionsSelected([]),
-    isModalOpen: !!optionsSelected.length,
-    onPressOptionDropdown: setOptions,
-    options: optionsSelected,
-    indexLastOptionSelected,
+    onPressStartQuiz: navigateToQuestions,
+    onPressOptionDropdown,
     setNumberOfQuestions,
     questionDifficulty,
     numberOfQuestions,
-    onPressStartQuiz,
     questionCategory,
-    onPressSelect,
     questionType,
-    modalMessage,
     t,
   };
 };

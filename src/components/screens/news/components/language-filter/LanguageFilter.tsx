@@ -1,9 +1,9 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 
-import CustomModal from 'components/common/custom-modal/CustomModal';
+import ModalSelectButton from 'components/common/ModalSelectButton';
 import { ArticleLanguage } from 'types/schema';
 
 import LanguageListItem, { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem';
@@ -21,34 +21,28 @@ const LineDivider = styled(View)`
 type Props = {
   onSelectLanguage: (language: ArticleLanguage) => void;
   lastLanguageSelected: ArticleLanguage;
-  onCloseModal: () => void;
+  closeModal: () => void;
 };
 
 const LanguageFilter = ({
   lastLanguageSelected,
   onSelectLanguage,
-  onCloseModal,
+  closeModal,
 }: Props) => {
   const {
     initialFlatListIndex,
     onPressSelectButton,
     setLanguageSelected,
     languageSelected,
+    t,
   } = useLanguageFilter({
     lastLanguageSelected,
     onSelectLanguage,
-    onCloseModal,
+    closeModal,
   });
 
-  const { t } = useTranslation();
-
   return (
-    <CustomModal
-      footerText={t('translations:news:selectFilterMessage')}
-      headerText={t('translations:news:filterMessage')}
-      onPressSelect={onPressSelectButton}
-      onClose={onCloseModal}
-    >
+    <>
       <FlatList
         renderItem={({ item }) => (
           <LanguageListItem
@@ -71,7 +65,11 @@ const LanguageFilter = ({
         testID="languages-list"
         data={languages}
       />
-    </CustomModal>
+      <ModalSelectButton
+        title={t('translations:news:selectFilterMessage')}
+        onPress={onPressSelectButton}
+      />
+    </>
   );
 };
 

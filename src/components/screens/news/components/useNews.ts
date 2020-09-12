@@ -33,10 +33,8 @@ export const GET_ARTICLES = gql`
 
 type State = {
   onSelectArticleLanguage: (language: ArticleLanguage) => void;
-  setIsFilterLanguageModalOpen: (value: boolean) => void;
   onPressTopReloadButton: () => Promise<void>;
   onPressFooterReloadButton: () => void;
-  isFilterLanguageModalOpen: boolean;
   articleLanguage: ArticleLanguage;
   onPullRefreshControl: () => void;
   hasPaginationError: boolean;
@@ -50,9 +48,6 @@ type State = {
 };
 
 const useNews = (): State => {
-  const [isFilterLanguageModalOpen, setIsFilterLanguageModalOpen] = useState<boolean>(
-    false,
-  );
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [articleLanguage, setArticleLanguage] = useState<ArticleLanguage>(
     ArticleLanguage.EN,
@@ -133,8 +128,6 @@ const useNews = (): State => {
   }, [articleLanguage]);
 
   const onSelectArticleLanguage = useCallback((language: ArticleLanguage): void => {
-    setIsFilterLanguageModalOpen(false);
-
     if (error) {
       setError('');
     }
@@ -155,9 +148,7 @@ const useNews = (): State => {
   return {
     onPullRefreshControl: () => setIsRefrehing(true),
     onEndReached: onPaginateQuery,
-    setIsFilterLanguageModalOpen,
     onPressFooterReloadButton,
-    isFilterLanguageModalOpen,
     onPressTopReloadButton,
     onSelectArticleLanguage,
     hasPaginationError,

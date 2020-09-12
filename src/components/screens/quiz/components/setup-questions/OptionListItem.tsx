@@ -44,6 +44,7 @@ const OptionListItem = ({ isSelected, onPress, title }: Props) => (
     testID="option-list-item"
   >
     <ListItemText
+      testID="list-item-text"
       isSelected={isSelected}
     >
       {title}
