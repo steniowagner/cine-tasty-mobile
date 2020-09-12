@@ -96,7 +96,27 @@ const Routes = ({ theme }: Props) => (
       }}
     >
       <RootStack.Navigator
-        screenOptions={{ animationEnabled: false }}
+        screenOptions={{
+          cardStyleInterpolator: ({ current: { progress } }) => ({
+            cardStyle: {
+              opacity: progress.interpolate({
+                inputRange: [0, 0.5, 0.9, 1],
+                outputRange: [0, 0.25, 0.7, 1],
+              }),
+            },
+            overlayStyle: {
+              opacity: progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 0.5],
+                extrapolate: 'clamp',
+              }),
+            },
+          }),
+          cardStyle: { backgroundColor: 'transparent' },
+          cardOverlayEnabled: true,
+          animationEnabled: false,
+          headerShown: false,
+        }}
         mode="modal"
       >
         <RootStack.Screen

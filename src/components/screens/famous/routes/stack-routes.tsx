@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 import { DefaultTheme, withTheme } from 'styled-components';
 
@@ -32,6 +32,7 @@ const FamousStack = ({ theme }: Props) => {
         name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
         options={{
           ...getTransparentHeaderOptions(theme),
+          ...TransitionPresets.SlideFromRightIOS,
         }}
         component={FamousDetail}
       />
