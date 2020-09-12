@@ -1,6 +1,6 @@
 import React from 'react';
 import { YellowBox } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { withTheme, DefaultTheme } from 'styled-components';
 import { RouteProp } from '@react-navigation/native';
 
@@ -40,6 +40,7 @@ const SearchStack = ({ route, theme }: Props) => (
       name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
       options={{
         ...getTransparentHeaderOptions(theme),
+        ...TransitionPresets.SlideFromRightIOS,
       }}
       component={FamousDetail}
     />
