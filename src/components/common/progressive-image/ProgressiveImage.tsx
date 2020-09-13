@@ -4,10 +4,15 @@ import styled from 'styled-components';
 
 import useProgressiveImage from './useProgressiveImage';
 
-const ForegroundLayer = styled(View)`
+interface ForegroundLayerStyleProps {
+  readonly borderRadius?: number;
+}
+
+const ForegroundLayer = styled(View)<ForegroundLayerStyleProps>`
   height: 100%;
   width: 100%;
   background-color: 'rgba(242, 242, 242, 0.5)';
+  border-radius: ${({ borderRadius }) => Number(borderRadius)}px;
 `;
 
 const styles = StyleSheet.create({
@@ -26,11 +31,12 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
+  borderRadius?: number;
   thumbnailURL: string;
   imageURL: string;
 };
 
-const ProgressiveImage = ({ thumbnailURL, imageURL }: Props) => {
+const ProgressiveImage = ({ borderRadius = 0, thumbnailURL, imageURL }: Props) => {
   const {
     thumbnailOpacity,
     onLoadThumbnail,
@@ -40,13 +46,16 @@ const ProgressiveImage = ({ thumbnailURL, imageURL }: Props) => {
   } = useProgressiveImage();
 
   return (
-    <ForegroundLayer>
+    <ForegroundLayer
+      borderRadius={borderRadius}
+    >
       {!isImageLoaded && (
         <Animated.Image
           style={[
             styles.container,
             {
               opacity: thumbnailOpacity,
+              borderRadius: Number(borderRadius),
             },
           ]}
           source={{ uri: thumbnailURL }}
@@ -60,6 +69,7 @@ const ProgressiveImage = ({ thumbnailURL, imageURL }: Props) => {
           styles.imageOverlay,
           {
             opacity: imageOpacity,
+            borderRadius: Number(borderRadius),
           },
           styles.container,
         ]}

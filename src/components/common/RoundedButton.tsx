@@ -12,7 +12,7 @@ const Wrapper = styled(TouchableOpacity)`
 
 const ButtonText = styled(Text)`
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => theme.colors.text};
+  color: #262626;
   font-family: CircularStd-Black;
   text-transform: uppercase;
   text-align: center;

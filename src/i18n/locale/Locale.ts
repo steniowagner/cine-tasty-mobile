@@ -33,6 +33,9 @@ export interface Locale {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;
+  home: {
+    learMoreButtonText: string;
+  };
   news: {
     languages: Record<NewsFilterLanguage, string>;
     i18nQueryByPaginationErrorRef: string;

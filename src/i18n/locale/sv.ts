@@ -129,6 +129,9 @@ const sv: Locale = {
     errorSuggestion: 'errorSuggestion',
     errorTitle: 'errorTitle',
   },
+  home: {
+    learMoreButtonText: 'learMoreButtonText',
+  },
 };
 
 export default sv;
