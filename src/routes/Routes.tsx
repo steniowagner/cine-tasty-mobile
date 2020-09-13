@@ -23,9 +23,9 @@ import CustomModal, {
 import TabNavigator from 'components/utils/tab-navigator/TabNavigator';
 import { ThemeID } from 'types';
 
-import DiscoverStack, {
-  TabID as DiscoverTabID,
-} from 'components/screens/discover/routes/stack-routes';
+import HomeStack, {
+  TabID as HomeTabID,
+} from 'components/screens/home/routes/stack-routes';
 
 import FamousStack, {
   TabID as FamousTabID,
@@ -43,7 +43,7 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
   <Tab.Navigator
-    initialRouteName={DiscoverTabID}
+    initialRouteName={HomeTabID}
     tabBar={(props: BottomTabBarProps) => (
       <TabNavigator
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -52,8 +52,8 @@ const Tabs = () => (
     )}
   >
     <Tab.Screen
-      component={DiscoverStack}
-      name={DiscoverTabID}
+      component={HomeStack}
+      name={HomeTabID}
     />
     <Tab.Screen
       component={FamousStack}

@@ -13,7 +13,7 @@ const sv: Locale = {
     },
   },
   tabs: {
-    discover: 'Discover',
+    home: 'Home',
     news: 'News',
     famous: 'Famous',
     quiz: 'Quiz',

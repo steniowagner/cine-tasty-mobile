@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './header/Header';
 
-const Discover = () => <Header />;
+const Home = () => <Header />;
 
-export default Discover;
+export default Home;

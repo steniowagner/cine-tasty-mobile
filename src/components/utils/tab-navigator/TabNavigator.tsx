@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
-import { Routes as DiscoverRoutes } from 'components/screens/discover/routes/route-names';
+import { Routes as HomeRoutes } from 'components/screens/home/routes/route-names';
 import { Routes as SettingsRoutes } from 'components/screens/settings/routes/route-names';
 import { Routes as FamousRoutes } from 'components/screens/famous/routes/route-names';
 import { Routes as QuizRoutes } from 'components/screens/quiz/routes/route-names';
@@ -26,7 +26,7 @@ const Wrapper = styled(View)`
 const ITEM_WIDTH = metrics.width / items.length;
 
 type BlacklistScreens =
-  | DiscoverRoutes
+  | HomeRoutes
   | QuizRoutes
   | NewsRoutes
   | FamousRoutes
