@@ -129,6 +129,9 @@ const en: Locale = {
     errorSuggestion: 'errorSuggestion',
     errorTitle: 'errorTitle',
   },
+  home: {
+    learMoreButtonText: 'LEARN MORE',
+  },
 };
 
 export default en;

@@ -123,13 +123,18 @@ const FamousDetail = ({ route }: Props) => {
         </BackgroundImageWrapper>
         <Animated.ScrollView
           scrollEventThrottle={16}
-          onScroll={Animated.event([
-            {
-              nativeEvent: {
-                contentOffset: { y: scrollViewOffset },
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: { y: scrollViewOffset },
+                },
               },
+            ],
+            {
+              useNativeDriver: true,
             },
-          ])}
+          )}
           testID="scroll-content"
         >
           <HeaderInfo

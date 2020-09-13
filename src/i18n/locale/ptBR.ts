@@ -129,6 +129,9 @@ const ptBR: Locale = {
     errorSuggestion: 'errorSuggestion',
     errorTitle: 'errorTitle',
   },
+  home: {
+    learMoreButtonText: 'learMoreButtonText',
+  },
 };
 
 export default ptBR;
