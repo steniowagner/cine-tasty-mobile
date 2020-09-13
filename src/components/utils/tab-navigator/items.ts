@@ -1,4 +1,4 @@
-import { TabID as HomeTabID } from 'components/screens/discover/routes/stack-routes';
+import { TabID as HomeTabID } from 'components/screens/home/routes/stack-routes';
 import { TabID as FamousTabID } from 'components/screens/famous/routes/stack-routes';
 import { TabID as QuizTabID } from 'components/screens/quiz/routes/stack-routes';
 import { TabID as NewsTabID } from 'components/screens/news/routes/stack-routes';
@@ -8,8 +8,8 @@ import { TabNavigatorItem } from 'types';
 const items: TabNavigatorItem[] = [
   {
     id: HomeTabID,
-    activeIcon: 'compass',
-    inactiveIcon: 'compass-outline',
+    activeIcon: 'home-variant',
+    inactiveIcon: 'home-variant-outline',
   },
   {
     id: FamousTabID,

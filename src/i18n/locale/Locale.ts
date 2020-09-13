@@ -14,7 +14,7 @@ type Time =
   | 'second'
   | 'second_plural';
 
-type Tabs = 'discover' | 'famous' | 'quiz' | 'news';
+type Tabs = 'home' | 'famous' | 'quiz' | 'news';
 
 type ErrorType =
   | 'network'
