@@ -1,6 +1,6 @@
 import { Locale } from './Locale';
 
-const sv: Locale = {
+const en: Locale = {
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -130,8 +130,10 @@ const sv: Locale = {
     errorTitle: 'errorTitle',
   },
   home: {
-    learMoreButtonText: 'learMoreButtonText',
+    learMoreButtonText: 'LEARN MORE',
+    tvShows: 'tvShows',
+    movies: 'movies',
   },
 };
 
-export default sv;
+export default en;

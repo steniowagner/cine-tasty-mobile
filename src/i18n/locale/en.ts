@@ -131,6 +131,8 @@ const en: Locale = {
   },
   home: {
     learMoreButtonText: 'LEARN MORE',
+    tvShows: 'TV Shows',
+    movies: 'Movies',
   },
 };
 

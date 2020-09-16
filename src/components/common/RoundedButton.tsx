@@ -16,6 +16,7 @@ const ButtonText = styled(Text)`
   font-family: CircularStd-Black;
   text-transform: uppercase;
   text-align: center;
+  letter-spacing: 1px;
 `;
 
 export type Props = {
