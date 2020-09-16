@@ -1,6 +1,6 @@
 import { Locale } from './Locale';
 
-const ptBR: Locale = {
+const en: Locale = {
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -130,8 +130,10 @@ const ptBR: Locale = {
     errorTitle: 'errorTitle',
   },
   home: {
-    learMoreButtonText: 'learMoreButtonText',
+    learMoreButtonText: 'LEARN MORE',
+    tvShows: 'tvShows',
+    movies: 'movies',
   },
 };
 
-export default ptBR;
+export default en;

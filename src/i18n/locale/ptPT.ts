@@ -1,6 +1,6 @@
 import { Locale } from './Locale';
 
-const ptPT: Locale = {
+const en: Locale = {
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -49,14 +49,14 @@ const ptPT: Locale = {
       russian: 'Russian',
       sami: 'Sami',
       spanish: 'Spanish',
-      emptyList: {
-        description: 'description',
-        suggestion: 'suggestion',
-        title: 'title',
-      },
     },
     filterMessage: 'Choose a language to filter the News',
     selectFilterMessage: 'SELECT',
+    emptyList: {
+      description: 'description',
+      suggestion: 'suggestion',
+      title: 'title',
+    },
   },
   quiz: {
     welcome: 'Welcome to the Cine-Tasty Quiz!',
@@ -130,8 +130,10 @@ const ptPT: Locale = {
     errorTitle: 'errorTitle',
   },
   home: {
-    learMoreButtonText: 'learMoreButtonText',
+    learMoreButtonText: 'LEARN MORE',
+    tvShows: 'tvShows',
+    movies: 'movies',
   },
 };
 
-export default ptPT;
+export default en;
