@@ -14,6 +14,11 @@ const GapFlatlist = styled(View)`
   height: 1px;
 `;
 
+const Wrapper = styled(View)`
+  width: 100%;
+  height: ${({ theme }) => theme.metrics.getHeightFromDP('58%') + 50}px;
+`;
+
 const data = [
   {
     image: '/72I82eKXCadZWEYygV9GkJOQNEq.jpg',
@@ -42,7 +47,7 @@ const Header = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
-    <>
+    <Wrapper>
       <Animated.FlatList
         decelerationRate={Platform.OS === 'ios' ? 0 : 0.98}
         ListHeaderComponent={() => <GapFlatlist />}
@@ -100,7 +105,7 @@ const Header = () => {
         data={data}
         horizontal
       />
-    </>
+    </Wrapper>
   );
 };
 

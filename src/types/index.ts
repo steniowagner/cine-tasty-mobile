@@ -90,3 +90,11 @@ export enum CustomizedModalChildrenType {
   MEDIA_FILTER = 'MEDIA_FILTER',
   LANGUAGE = 'LANGUAGE',
 }
+
+export type SimplifiedMedia = {
+  voteAverage: number;
+  voteCount: number;
+  image: string;
+  title: string;
+  id: number;
+};
