@@ -11,7 +11,7 @@ const WRAPPER_BORDER_RADIUS = metrics.getWidthFromDP('7.5%');
 const WRAPPER_HEIGHT = metrics.getWidthFromDP('15%');
 const WRAPPER_WIDTH = metrics.getWidthFromDP('15%');
 const BOTTOM_VALUE = 30;
-const RIGHT_VALUE = 30;
+const RIGHT_VALUE = 20;
 
 interface IconStyleProps {
   readonly name: string;
