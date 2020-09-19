@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import metrics from 'styles/metrics';
 
-import HeaderListItem from './HeaderListItem';
+import Top3ListItem from './Top3ListItem';
 
 const ITEM_WIDTH = metrics.getWidthFromDP('75%');
 const SPACER_ITEM_SIZE = (metrics.width - (ITEM_WIDTH + 2 * metrics.largeSize)) / 2;
@@ -43,7 +43,7 @@ const data = [
   },
 ];
 
-const Header = () => {
+const Top3 = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
@@ -64,7 +64,7 @@ const Header = () => {
           });
 
           return (
-            <HeaderListItem
+            <Top3ListItem
               onPress={() => {}}
               isTheMiddle={index === 1}
               translateY={translateY}
@@ -108,4 +108,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Top3;
