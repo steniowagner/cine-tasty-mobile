@@ -47,6 +47,11 @@ const movies = [
 
 const Home = () => (
   <>
+    <MediaSwitcher
+      isDisabled={false}
+      onSwitchToTVShows={() => console.warn('onSwitchToTVShows')}
+      onSwitchToMovies={() => console.warn('onSwitchToMovies')}
+    />
     <ScrollView
       contentContainerStyle={{
         paddingTop: metrics.getWidthFromDP('24%'),
@@ -78,7 +83,6 @@ const Home = () => (
         items={[movies[0], movies[3], movies[2], movies[4], movies[1]].sort()}
       />
     </ScrollView>
-    <MediaSwitcher />
   </>
 );
 

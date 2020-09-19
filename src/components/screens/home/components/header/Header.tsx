@@ -100,7 +100,6 @@ const Header = () => {
         snapToInterval={ITEM_WIDTH}
         scrollEventThrottle={16}
         snapToAlignment="start"
-        initialScrollIndex={1}
         bounces={false}
         data={data}
         horizontal
