@@ -1,156 +1,98 @@
-import React, { useRef } from 'react';
-import { TouchableWithoutFeedback, Animated, View } from 'react-native';
+import React from 'react';
+import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
-
-import Icon from 'components/common/Icon';
-import metrics from 'styles/metrics';
 
 import useMediaSwitcher from './useMediaSwitcher';
 
-const WRAPPER_BORDER_RADIUS = metrics.getWidthFromDP('7.5%');
-const WRAPPER_HEIGHT = metrics.getWidthFromDP('15%');
-const WRAPPER_WIDTH = metrics.getWidthFromDP('15%');
-const BOTTOM_VALUE = 30;
-const RIGHT_VALUE = 20;
+export const I18N_TV_SHOWS_KEY = 'translations:home:tvShows';
+export const I18N_MOVIES_KEY = 'translations:home:movies';
 
-interface IconStyleProps {
-  readonly name: string;
+interface OptionButtonStyleProps {
+  readonly isSelected: boolean;
+  readonly isRight?: boolean;
+  readonly isLeft?: boolean;
 }
 
-const MainButtonWrapper = styled(View)`
-  width: ${WRAPPER_WIDTH}px;
-  height: ${WRAPPER_HEIGHT}px;
-  border-radius: ${WRAPPER_BORDER_RADIUS}px;
-  justify-content: center;
+interface OptionTextStyleProps {
+  readonly isSelected: boolean;
+}
+
+interface WrapperStyleProps {
+  readonly isDisabled: boolean;
+}
+
+const Wrapper = styled(View)<WrapperStyleProps>`
+  flex-direction: row;
   align-items: center;
-  position: absolute;
-  bottom: ${BOTTOM_VALUE}px;
-  right: ${RIGHT_VALUE}px;
-  background-color: ${({ theme }) => theme.colors.primary};
+  opacity: ${({ isDisabled }) => (isDisabled ? 0.6 : 1)};
 `;
 
-const BackgroundView = styled(Animated.View)`
-  width: ${WRAPPER_WIDTH}px;
-  height: ${WRAPPER_HEIGHT}px;
-  border-radius: ${WRAPPER_BORDER_RADIUS}px;
-  background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
-  bottom: ${BOTTOM_VALUE}px;
-  right: ${RIGHT_VALUE}px;
+const OptionButton = styled(TouchableOpacity)<OptionButtonStyleProps>`
+  border-radius: 4px;
+  padding-horizontal: ${({ theme }) => theme.metrics.largeSize}px;
+  padding-vertical: ${({ theme }) => theme.metrics.smallSize}px;
+  background-color: ${({ isSelected, theme }) => (isSelected ? theme.colors.primary : theme.colors.contrast)};
+  border-top-left-radius: ${({ isLeft, theme }) => (isLeft ? theme.metrics.extraSmallSize : 0)}px;
+  border-bottom-left-radius: ${({ isLeft, theme }) => (isLeft ? theme.metrics.extraSmallSize : 0)}px;
+  border-top-right-radius: ${({ isRight, theme }) => (isRight ? theme.metrics.extraSmallSize : 0)}px;
+  border-bottom-right-radius: ${({ isRight, theme }) => (isRight ? theme.metrics.extraSmallSize : 0)}px;
 `;
 
-const SwitcherOptionText = styled(Animated.Text)`
-  text-align: right;
-  position: absolute;
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('50%')}px;
-  font-family: CircularStd-Bold;
-  font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  color: white;
+const OptionText = styled(Text)<OptionTextStyleProps>`
+  text-align: center;
+  font-family: CircularStd-Black;
+  font-size: ${({ theme }) => theme.metrics.mediumSize * 1.2}px;
+  color: ${({ isSelected, theme }) => (isSelected ? '#262626' : theme.colors.text)};
 `;
 
-const SwitcherOptionWrapper = styled(Animated.View)`
-  height: ${WRAPPER_HEIGHT}px;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  border-radius: ${WRAPPER_BORDER_RADIUS}px;
-  bottom: ${BOTTOM_VALUE}px;
-  right: ${RIGHT_VALUE}px;
-`;
+type Props = {
+  onSwitchToTVShows: () => void;
+  onSwitchToMovies: () => void;
+  isDisabled: boolean;
+};
 
-const IconWrapper = styled(View)`
-  width: ${WRAPPER_WIDTH}px;
-  height: ${WRAPPER_HEIGHT}px;
-  border-radius: ${WRAPPER_BORDER_RADIUS}px;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-`;
-
-const DefaultIcon = styled(Icon).attrs(({ theme, name }) => ({
-  size: theme.metrics.getWidthFromDP('7%'),
-  color: '#262626',
-  name,
-}))<IconStyleProps>``;
-
-const MediaSwitcher = () => {
-  const switcherButtonAnimation = useRef(new Animated.Value(0)).current;
-
+const MediaSwitcher = ({ onSwitchToTVShows, onSwitchToMovies, isDisabled }: Props) => {
   const {
-    moviesOptionAnimatedStyle,
-    optionTextAnimatedStyle,
-    backgroundAnimatedStyle,
-    tvOptionAnimatedStyle,
-    onPressSwitchButton,
-    onPressMovies,
-    onPressTV,
-    isOpen,
-    t,
-  } = useMediaSwitcher({ switcherButtonAnimation });
+    isMovieSelected, onPressTVShows, onPressMovies, t,
+  } = useMediaSwitcher({
+    onSwitchToTVShows,
+    onSwitchToMovies,
+  });
 
   return (
-    <>
-      <BackgroundView
-        style={backgroundAnimatedStyle}
-      />
-      <TouchableWithoutFeedback
-        onPress={onPressTV}
-      >
-        <SwitcherOptionWrapper
-          style={[tvOptionAnimatedStyle]}
-        >
-          <SwitcherOptionText
-            style={optionTextAnimatedStyle}
-          >
-            {t('translations:home:tvShows')}
-          </SwitcherOptionText>
-          <IconWrapper>
-            <DefaultIcon
-              name="television"
-            />
-          </IconWrapper>
-        </SwitcherOptionWrapper>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
+    <Wrapper
+      testID="media-switcher-wrapper"
+      isDisabled={isDisabled}
+    >
+      <OptionButton
+        testID="media-switcher-movies-button"
+        isSelected={isMovieSelected}
         onPress={onPressMovies}
+        disabled={isDisabled}
+        isLeft
       >
-        <SwitcherOptionWrapper
-          style={[moviesOptionAnimatedStyle]}
+        <OptionText
+          testID="media-switcher-movies-text"
+          isSelected={isMovieSelected}
         >
-          <SwitcherOptionText
-            style={optionTextAnimatedStyle}
-          >
-            {t('translations:home:movies')}
-          </SwitcherOptionText>
-          <IconWrapper>
-            <DefaultIcon
-              name="movie"
-            />
-          </IconWrapper>
-        </SwitcherOptionWrapper>
-      </TouchableWithoutFeedback>
-
-      <TouchableWithoutFeedback
-        onPress={onPressSwitchButton}
+          {t(I18N_MOVIES_KEY)}
+        </OptionText>
+      </OptionButton>
+      <OptionButton
+        testID="media-switcher-tv-shows-button"
+        isSelected={!isMovieSelected}
+        onPress={onPressTVShows}
+        disabled={isDisabled}
+        isRight
       >
-        <MainButtonWrapper
-          style={{
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.22,
-            shadowRadius: 2.22,
-            elevation: 3,
-          }}
+        <OptionText
+          testID="media-switcher-tv-shows-text"
+          isSelected={!isMovieSelected}
         >
-          <DefaultIcon
-            name={isOpen ? 'close' : 'tune'}
-          />
-        </MainButtonWrapper>
-      </TouchableWithoutFeedback>
-    </>
+          {t(I18N_TV_SHOWS_KEY)}
+        </OptionText>
+      </OptionButton>
+    </Wrapper>
   );
 };
 
