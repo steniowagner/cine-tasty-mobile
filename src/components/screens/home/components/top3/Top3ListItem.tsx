@@ -76,7 +76,7 @@ type Props = {
   votes: number;
 };
 
-const HeaderListItem = ({
+const Top3ListItem = ({
   isTheMiddle,
   translateY,
   onPress,
@@ -120,4 +120,4 @@ const HeaderListItem = ({
   );
 };
 
-export default HeaderListItem;
+export default Top3ListItem;

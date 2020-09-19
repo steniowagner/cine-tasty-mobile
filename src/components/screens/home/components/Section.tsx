@@ -11,7 +11,6 @@ import { SimplifiedMedia } from 'types';
 
 const Wrapper = styled(View)`
   width: 100%;
-  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
   margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
