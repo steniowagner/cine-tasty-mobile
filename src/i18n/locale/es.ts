@@ -131,8 +131,21 @@ const en: Locale = {
   },
   home: {
     learMoreButtonText: 'LEARN MORE',
-    tvShows: 'tvShows',
-    movies: 'movies',
+    tvShows: 'TV Shows',
+    movies: 'Movies',
+    trendingMovies: {
+      error: 'trendingMoviesError',
+      nowPlaying: 'Now Playing',
+      popular: 'Popular',
+      topRated: 'Top Rated',
+      upcoming: 'Upcoming',
+    },
+    trendingTvShows: {
+      error: 'trendingTVShowsError',
+      onTheAir: 'On the Air',
+      popular: 'Popular',
+      topRated: 'Top Rated',
+    },
   },
 };
 

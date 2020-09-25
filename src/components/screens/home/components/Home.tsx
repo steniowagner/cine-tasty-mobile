@@ -1,106 +1,95 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect } from 'react';
-import { Platform, ScrollView } from 'react-native';
+import { Platform, ScrollView, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import styled from 'styled-components';
 
+import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import metrics from 'styles/metrics';
 
+import { HomeStackParams } from '../routes/route-params-types';
+import LoadingHome from './top3/LoadingTop3';
+import useHome from './use-home/useHome';
+import Header from './header/Header';
 import Section from './Section';
 import Top3 from './top3/Top3';
-import Header from './Header';
 
-const movies = [
-  {
-    voteAverage: 7,
-    voteCount: 11,
-    image: '/kiX7UYfOpYrMFSAGbI6j1pFkLzQ.jpg',
-    title: 'After We Collided',
-    id: 337401,
-  },
-  {
-    voteAverage: 7.6,
-    voteCount: 11,
-    image: '/72I82eKXCadZWEYygV9GkJOQNEq.jpg',
-    title: 'Mulan',
-    id: 337401,
-  },
-  {
-    voteAverage: 7.2,
-    voteCount: 11,
-    image: '/uobkkvvKCZbTKpJCMnvuTRQt5bV.jpg',
-    title: 'Ava',
-    id: 337401,
-  },
-  {
-    voteAverage: 6.2,
-    voteCount: 11,
-    image: '/eDnHgozW8vfOaLHzfpHluf1GZCW.jpg',
-    title: 'Archive',
-    id: 337401,
-  },
-  {
-    voteAverage: 8.6,
-    voteCount: 122,
-    image: '/aVbqhqYtlxwEGihTEhewZAgDOCX.jpg',
-    title: 'Mortal',
-    id: 33741,
-  },
-];
+const PopupAdviceWrapper = styled(View)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding-top: ${Platform.select({
+    android: metrics.getWidthFromDP('18%'),
+    ios: metrics.getWidthFromDP('26%'),
+  })}px;
+`;
+
+type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
 type Props = {
-  navigation: any;
+  navigation: HomeScreenNavigationProp;
 };
 
 const Home = ({ navigation }: Props) => {
+  const {
+    shouldDisableHeaderActions,
+    onPressTop3LearnMore,
+    onPressTrendingItem,
+    onSelectTVShows,
+    onSelectMovies,
+    onPressViewAll,
+    errorMessage,
+    isLoading,
+    trendings,
+    top3,
+  } = useHome(navigation);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <Header
-          isMediaSwitcherDisabled={false}
-          onPresSwitchTVShows={() => {}}
-          onPressSwitchMovies={() => {}}
+          shouldDisableActions={shouldDisableHeaderActions}
+          onPresSwitchTVShows={onSelectTVShows}
+          onPressSwitchMovies={onSelectMovies}
           onPressSettings={() => {}}
           onPressSearch={() => {}}
         />
       ),
     });
-  }, []);
+  }, [shouldDisableHeaderActions, isLoading]);
+
+  if (isLoading) {
+    return <LoadingHome />;
+  }
 
   return (
     <>
-      <ScrollView
-        contentContainerStyle={{
-          paddingTop: Platform.select({
-            android: metrics.getWidthFromDP('18%'),
-            ios: metrics.getWidthFromDP('26%'),
-          }),
-        }}
-      >
-        <Top3 />
-        <Section
-          onPressViewAll={() => console.warn('onPressViewAll')}
-          onPressItem={(id: number) => console.warn(id)}
-          sectionTitle="Trending now"
-          items={movies}
-        />
-        <Section
-          onPressViewAll={() => console.warn('onPressViewAll')}
-          onPressItem={(id: number) => console.warn(id)}
-          sectionTitle="Popular"
-          items={[movies[2], movies[1], movies[0], movies[4], movies[3]]}
-        />
-        <Section
-          onPressViewAll={() => console.warn('onPressViewAll')}
-          onPressItem={(id: number) => console.warn(id)}
-          sectionTitle="Top Rated"
-          items={[movies[2], movies[1], movies[0], movies[4], movies[3]].reverse()}
-        />
-        <Section
-          onPressViewAll={() => console.warn('onPressViewAll')}
-          onPressItem={(id: number) => console.warn(id)}
-          sectionTitle="Upcoming"
-          items={[movies[0], movies[3], movies[2], movies[4], movies[1]].sort()}
-        />
-      </ScrollView>
+      {!errorMessage && (
+        <ScrollView
+          testID="scrollview-content"
+        >
+          <Top3
+            onPressLearnMore={onPressTop3LearnMore}
+            top3Items={top3}
+          />
+          {trendings.map((trending) => (
+            <Section
+              onPressItem={(id: number) => onPressTrendingItem(id)}
+              sectionTitle={trending.sectionTitle}
+              onPressViewAll={onPressViewAll}
+              key={trending.sectionTitle}
+              items={trending.data}
+            />
+          ))}
+        </ScrollView>
+      )}
+      {!!errorMessage && (
+        <PopupAdviceWrapper>
+          <PopupAdvice
+            text={errorMessage}
+          />
+        </PopupAdviceWrapper>
+      )}
     </>
   );
 };

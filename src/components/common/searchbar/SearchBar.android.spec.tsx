@@ -36,7 +36,7 @@ describe('Testing <SearchBar />', () => {
     );
 
     expect(getByTestId('searchbar-wrapper')).not.toBeNull();
-    expect(getByTestId('header-icon-button-wrapper')).not.toBeNull();
+    expect(getByTestId('header-icon-button-wrapper-close')).not.toBeNull();
     expect(getByTestId('icon').props.name).toEqual('close');
     expect(getByTestId('search-input').props.placeholder).toEqual(placeholder);
   });
@@ -89,7 +89,7 @@ describe('Testing <SearchBar />', () => {
       }),
     );
 
-    fireEvent.press(getByTestId('header-icon-button-wrapper'));
+    fireEvent.press(getByTestId('header-icon-button-wrapper-close'));
 
     expect(onPressClose).toHaveBeenCalledTimes(1);
   });

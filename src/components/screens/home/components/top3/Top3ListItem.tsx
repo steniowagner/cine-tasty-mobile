@@ -1,6 +1,5 @@
 import React from 'react';
 import { Animated, View, Text } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
@@ -8,7 +7,14 @@ import ProgressiveImage from 'components/common/progressive-image/ProgressiveIma
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import RoundedButton from 'components/common/RoundedButton';
 import CONSTANTS from 'utils/constants';
-import metrics from 'styles/metrics';
+
+import {
+  ITEM_MARGING_HORIZONTAL,
+  ITEM_BORDER_RADIUS,
+  SmokeShadow,
+  ITEM_WIDTH,
+  ITEM_HEIGHT,
+} from './commonStyles';
 
 const PROFILE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
 const PROFILE_IMAGE_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_SIZE_CODE}`;
@@ -19,17 +25,9 @@ interface ItemWrapperStyleProps {
 }
 
 const Wrapper = styled(Animated.View)<ItemWrapperStyleProps>`
-  width: ${({ width }) => width}px;
-  margin-horizontal: ${({ isTheMiddle, theme }) => (isTheMiddle ? theme.metrics.largeSize : 0)}px;
-  height: ${({ theme }) => theme.metrics.getHeightFromDP('58%')}px;
-`;
-
-const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
-  colors: ['rgba(38, 38, 38, 0)', 'rgba(38, 38, 38, 0.8)', theme.colors.background],
-}))`
-  width: 100%;
-  height: 100%;
-  position: absolute;
+  width: ${ITEM_WIDTH}px;
+  margin-horizontal: ${({ isTheMiddle }) => (isTheMiddle ? ITEM_MARGING_HORIZONTAL : 0)}px;
+  height: ${ITEM_HEIGHT}px;
 `;
 
 const TextContentWrapper = styled(View)`
@@ -42,7 +40,7 @@ const TextContentWrapper = styled(View)`
 `;
 
 const TitleText = styled(Text).attrs({
-  numberOfLines: 2,
+  numberOfLines: 3,
 })`
   margin-bottom: ${({ theme }) => theme.metrics.smallSize}px;
   margin-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
@@ -69,21 +67,21 @@ type Props = {
   translateY: Animated.AnimatedInterpolation;
   isTheMiddle: boolean;
   onPress: () => void;
+  voteAverage: number;
   genres: string[];
   width: number;
   image: string;
   title: string;
-  votes: number;
 };
 
 const Top3ListItem = ({
   isTheMiddle,
+  voteAverage,
   translateY,
   onPress,
   genres,
   width,
   image,
-  votes,
   title,
 }: Props) => {
   const { t } = useTranslation();
@@ -99,14 +97,14 @@ const Top3ListItem = ({
       <ProgressiveImage
         thumbnailURL={`${PROFILE_THUMBNAIL_URL}${image}`}
         imageURL={`${PROFILE_IMAGE_URL}${image}`}
-        borderRadius={metrics.mediumSize}
+        borderRadius={ITEM_BORDER_RADIUS}
       />
       <SmokeShadow />
       <TextContentWrapper>
         <TitleText>{title}</TitleText>
         <StarsVotes
           withText
-          votes={votes}
+          votes={voteAverage}
         />
         <GenreText>{genres.join('  \u2022  ')}</GenreText>
         <LearnMoreButtonWrapper>

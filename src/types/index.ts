@@ -98,3 +98,16 @@ export type SimplifiedMedia = {
   title: string;
   id: number;
 };
+
+export type HomeTop3Item = {
+  voteAverage: number;
+  genres: string[];
+  image: string;
+  title: string;
+  id: number;
+};
+
+export type HomeSection = {
+  data: SimplifiedMedia[];
+  sectionTitle: string
+};
