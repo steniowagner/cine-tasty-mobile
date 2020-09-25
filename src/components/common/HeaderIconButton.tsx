@@ -46,7 +46,7 @@ const HeaderIconButton = ({
   onPress,
 }: Props) => (
   <Wrapper
-    testID="header-icon-button-wrapper"
+    testID={`header-icon-button-wrapper-${iconName}`}
     withMarginRight={withMarginRight}
     withMarginLeft={withMarginLeft}
     disabled={disabled}

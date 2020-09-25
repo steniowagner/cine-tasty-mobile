@@ -14,21 +14,37 @@ import {
   WRAPPER_DEFAULT_HEIGHT,
 } from './SimplifiedMediaListItem';
 
-const Wrapper = styled(View)`
+interface WrapperStyleProps {
+  readonly isFirst?: boolean;
+}
+
+const Wrapper = styled(View)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_WIDTH)}px;
   height: ${({ theme }) => theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_HEIGHT)}px;
+  margin-right: ${({ theme }) => theme.metrics.largeSize}px;
+  margin-left: ${({ isFirst, theme }) => {
+    if (isFirst) {
+      return theme.metrics.largeSize;
+    }
+
+    return 0;
+  }}px;
 `;
 
 type Props = {
   indexToDelayAnimation: number;
   theme: DefaultTheme;
+  isFirst: boolean;
 };
 
 const SimplifiedMediaListItemLoadingPlaceholder = ({
   indexToDelayAnimation,
+  isFirst,
   theme,
 }: Props) => (
-  <Wrapper>
+  <Wrapper
+    isFirst={isFirst}
+  >
     <LoadingPlaceholder
       style={{
         width: MEDIA_IMAGE_DEFAULT_WIDTH,

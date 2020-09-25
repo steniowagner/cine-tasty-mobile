@@ -25,6 +25,7 @@ declare module 'styled-components' {
       primary: string;
       popup: string;
       secondary: string;
+      buttonText: string;
       contrast: string;
       background: string;
       text: string;

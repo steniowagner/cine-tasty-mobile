@@ -37,6 +37,19 @@ export interface Locale {
     learMoreButtonText: string;
     tvShows: string;
     movies: string;
+    trendingMovies: {
+      error: string;
+      nowPlaying: string;
+      popular: string;
+      topRated: string;
+      upcoming: string;
+    };
+    trendingTvShows: {
+      error: string;
+      onTheAir: string;
+      popular: string;
+      topRated: string;
+    };
   };
   news: {
     languages: Record<NewsFilterLanguage, string>;

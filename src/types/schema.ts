@@ -34,6 +34,181 @@ export interface GetFamousVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TrendingMovies
+// ====================================================
+
+export interface TrendingMovies_trendingMovies_nowPlaying_items {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number | null;
+  genreIds: string[];
+}
+
+export interface TrendingMovies_trendingMovies_nowPlaying {
+  __typename: "TrendingMoviesQueryResult";
+  totalResults: number;
+  totalPages: number;
+  hasMore: boolean;
+  items: TrendingMovies_trendingMovies_nowPlaying_items[];
+}
+
+export interface TrendingMovies_trendingMovies_popular_items {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number | null;
+}
+
+export interface TrendingMovies_trendingMovies_popular {
+  __typename: "TrendingMoviesQueryResult";
+  totalResults: number;
+  totalPages: number;
+  hasMore: boolean;
+  items: TrendingMovies_trendingMovies_popular_items[];
+}
+
+export interface TrendingMovies_trendingMovies_topRated_items {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number | null;
+}
+
+export interface TrendingMovies_trendingMovies_topRated {
+  __typename: "TrendingMoviesQueryResult";
+  totalResults: number;
+  totalPages: number;
+  hasMore: boolean;
+  items: TrendingMovies_trendingMovies_topRated_items[];
+}
+
+export interface TrendingMovies_trendingMovies_upcoming_items {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number | null;
+}
+
+export interface TrendingMovies_trendingMovies_upcoming {
+  __typename: "TrendingMoviesQueryResult";
+  totalResults: number;
+  totalPages: number;
+  hasMore: boolean;
+  items: TrendingMovies_trendingMovies_upcoming_items[];
+}
+
+export interface TrendingMovies_trendingMovies {
+  __typename: "TrendingMovies";
+  nowPlaying: TrendingMovies_trendingMovies_nowPlaying;
+  popular: TrendingMovies_trendingMovies_popular;
+  topRated: TrendingMovies_trendingMovies_topRated;
+  upcoming: TrendingMovies_trendingMovies_upcoming;
+}
+
+export interface TrendingMovies {
+  trendingMovies: TrendingMovies_trendingMovies;
+}
+
+export interface TrendingMoviesVariables {
+  page: number;
+  language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: TrendingTVShows
+// ====================================================
+
+export interface TrendingTVShows_trendingTvShows_onTheAir_items {
+  __typename: "BaseTVShow";
+  voteAverage: number | null;
+  posterPath: string | null;
+  popularity: number | null;
+  voteCount: number | null;
+  name: string | null;
+  id: number | null;
+  genreIds: string[];
+}
+
+export interface TrendingTVShows_trendingTvShows_onTheAir {
+  __typename: "TrendingTVShowsQueryResult";
+  totalResults: number;
+  totalPages: number;
+  hasMore: boolean;
+  items: TrendingTVShows_trendingTvShows_onTheAir_items[];
+}
+
+export interface TrendingTVShows_trendingTvShows_popular_items {
+  __typename: "BaseTVShow";
+  voteAverage: number | null;
+  posterPath: string | null;
+  popularity: number | null;
+  voteCount: number | null;
+  name: string | null;
+  id: number | null;
+}
+
+export interface TrendingTVShows_trendingTvShows_popular {
+  __typename: "TrendingTVShowsQueryResult";
+  totalResults: number;
+  totalPages: number;
+  hasMore: boolean;
+  items: TrendingTVShows_trendingTvShows_popular_items[];
+}
+
+export interface TrendingTVShows_trendingTvShows_topRated_items {
+  __typename: "BaseTVShow";
+  voteAverage: number | null;
+  posterPath: string | null;
+  popularity: number | null;
+  voteCount: number | null;
+  name: string | null;
+  id: number | null;
+}
+
+export interface TrendingTVShows_trendingTvShows_topRated {
+  __typename: "TrendingTVShowsQueryResult";
+  totalResults: number;
+  totalPages: number;
+  hasMore: boolean;
+  items: TrendingTVShows_trendingTvShows_topRated_items[];
+}
+
+export interface TrendingTVShows_trendingTvShows {
+  __typename: "TrendingTVShows";
+  onTheAir: TrendingTVShows_trendingTvShows_onTheAir;
+  popular: TrendingTVShows_trendingTvShows_popular;
+  topRated: TrendingTVShows_trendingTvShows_topRated;
+}
+
+export interface TrendingTVShows {
+  trendingTvShows: TrendingTVShows_trendingTvShows;
+}
+
+export interface TrendingTVShowsVariables {
+  page: number;
+  language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetArticles
 // ====================================================
 
@@ -97,43 +272,6 @@ export interface GetQuizQuestionsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SearchPerson
-// ====================================================
-
-export interface SearchPerson_search_items_BaseMovie {
-  __typename: "BaseMovie" | "BaseTVShow";
-}
-
-export interface SearchPerson_search_items_BasePerson {
-  __typename: "BasePerson";
-  image: string | null;
-  title: string | null;
-  id: number | null;
-}
-
-export type SearchPerson_search_items = SearchPerson_search_items_BaseMovie | SearchPerson_search_items_BasePerson;
-
-export interface SearchPerson_search {
-  __typename: "SearchQueryResult";
-  totalResults: number;
-  hasMore: boolean;
-  items: SearchPerson_search_items[];
-}
-
-export interface SearchPerson {
-  search: SearchPerson_search;
-}
-
-export interface SearchPersonVariables {
-  input: SearchInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: GetFamousDetail
 // ====================================================
 
@@ -179,6 +317,80 @@ export interface GetFamousDetail {
 export interface GetFamousDetailVariables {
   id: number;
   language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: SearchPerson
+// ====================================================
+
+export interface SearchPerson_search_items_BaseMovie {
+  __typename: "BaseMovie" | "BaseTVShow";
+}
+
+export interface SearchPerson_search_items_BasePerson {
+  __typename: "BasePerson";
+  image: string | null;
+  title: string | null;
+  id: number | null;
+}
+
+export type SearchPerson_search_items = SearchPerson_search_items_BaseMovie | SearchPerson_search_items_BasePerson;
+
+export interface SearchPerson_search {
+  __typename: "SearchQueryResult";
+  totalResults: number;
+  hasMore: boolean;
+  items: SearchPerson_search_items[];
+}
+
+export interface SearchPerson {
+  search: SearchPerson_search;
+}
+
+export interface SearchPersonVariables {
+  input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TrendingMovie
+// ====================================================
+
+export interface TrendingMovie {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TrendingTVShow
+// ====================================================
+
+export interface TrendingTVShow {
+  __typename: "BaseTVShow";
+  voteAverage: number | null;
+  posterPath: string | null;
+  popularity: number | null;
+  voteCount: number | null;
+  name: string | null;
+  id: number | null;
 }
 
 /* tslint:disable */

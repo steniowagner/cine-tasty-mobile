@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 
-import MediaSwitcher from './media-switcher/MediaSwitcher';
+import MediaSwitcher from '../media-switcher/MediaSwitcher';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -26,7 +26,7 @@ const Wrapper = styled(View)`
 `;
 
 type Props = {
-  isMediaSwitcherDisabled: boolean;
+  shouldDisableActions: boolean;
   onPresSwitchTVShows: () => void;
   onPressSwitchMovies: () => void;
   onPressSettings: () => void;
@@ -34,7 +34,7 @@ type Props = {
 };
 
 const Header = ({
-  isMediaSwitcherDisabled,
+  shouldDisableActions,
   onPresSwitchTVShows,
   onPressSwitchMovies,
   onPressSettings,
@@ -42,6 +42,7 @@ const Header = ({
 }: Props) => (
   <Wrapper>
     <HeaderIconButton
+      disabled={shouldDisableActions}
       onPress={onPressSettings}
       iconName="settings"
       withMarginLeft
@@ -49,9 +50,10 @@ const Header = ({
     <MediaSwitcher
       onSwitchToTVShows={onPresSwitchTVShows}
       onSwitchToMovies={onPressSwitchMovies}
-      isDisabled={isMediaSwitcherDisabled}
+      isDisabled={shouldDisableActions}
     />
     <HeaderIconButton
+      disabled={shouldDisableActions}
       onPress={onPressSearch}
       iconName="magnify"
       withMarginRight

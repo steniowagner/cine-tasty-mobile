@@ -20,6 +20,7 @@ const dark: DefaultTheme = {
     popup: '#rgba(0, 0, 0, 0.9)',
     fallbackImageBackground: '#cfcfcf',
     fallbackImageIcon: '#4d4d4d',
+    buttonText: '#262626',
   },
   metrics,
 };

@@ -6,15 +6,15 @@ import styled from 'styled-components';
 
 import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import Icon from 'components/common/Icon';
-import CONSTANTS from 'utils/constants';
 import { SimplifiedMedia } from 'types';
+import CONSTANTS from 'utils/constants';
 
-const Wrapper = styled(View)`
+export const Wrapper = styled(View)`
   width: 100%;
   margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
-const SectionTextContentWrapper = styled(View)`
+export const SectionTextContentWrapper = styled(View)`
   width: 100%;
   margin-bottom: ${({ theme }) => theme.metrics.largeSize}px;
   flex-direction: row;
@@ -46,7 +46,7 @@ const ViewAllText = styled(Text)`
   color: #262626;
 `;
 
-const ReloadIcon = styled(Icon).attrs(({ theme }) => ({
+const ChevronRightIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('7%'),
   color: '#262626',
   name: 'chevron-right',
@@ -62,14 +62,16 @@ type Props = {
 const Section = ({
   onPressViewAll, sectionTitle, onPressItem, items,
 }: Props) => (
-  <Wrapper>
+  <Wrapper
+    testID="section-wrapper"
+  >
     <SectionTextContentWrapper>
       <SectionTitle>{sectionTitle}</SectionTitle>
       <ViewAllWrapper
         onPress={onPressViewAll}
       >
         <ViewAllText>View all</ViewAllText>
-        <ReloadIcon />
+        <ChevronRightIcon />
       </ViewAllWrapper>
     </SectionTextContentWrapper>
     <FlatList
