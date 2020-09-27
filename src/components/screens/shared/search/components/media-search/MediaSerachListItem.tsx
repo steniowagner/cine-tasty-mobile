@@ -49,7 +49,11 @@ type Props = {
 };
 
 const MediaSearchListItem = ({
-  onPressDetails, genres, image, title, votes,
+  onPressDetails,
+  genres = [],
+  image,
+  title,
+  votes,
 }: Props) => (
   <Wrapper
     onPress={onPressDetails}
