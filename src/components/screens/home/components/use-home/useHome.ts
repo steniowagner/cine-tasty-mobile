@@ -4,8 +4,8 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
+import { SEARCH_MOVIES, SEARCH_TV_SHOWS } from 'components/screens/shared/search/queries';
 import { TrendingTVShows, TrendingMovies, SearchType } from 'types/schema';
-import { SEARCH_MOVIES } from 'components/screens/shared/search/queries';
 import { HomeTop3Item, HomeSection } from 'types';
 
 import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '../queries';
@@ -21,6 +21,10 @@ export const TRENDING_MOVIES_ERROR_REF_I18N = 'translations:home:trendingMovies:
 export const SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF = 'translations:home:search:movie:queryByTextError';
 export const SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF = 'translations:home:search:movie:paginationError';
 export const SEARCH_MOVIE_PLACEHOLDER_I18N_REF = 'translations:home:search:movie:placeholder';
+
+export const SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF = 'translations:home:search:tvShows:queryByTextError';
+export const SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF = 'translations:home:search:tvShows:paginationError';
+export const SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF = 'translations:home:search:tvShows:placeholder';
 
 export const TRANSITIONING_DURATION = 1200;
 
@@ -39,12 +43,6 @@ type State = {
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
-
-type PressMapping = {
-  onPressTop3LearnMore: (id: number) => void;
-  onPressTrendingItem: (id: number) => void;
-  onPressViewAll: () => void;
-};
 
 const useHome = (navigation: HomeScreenNavigationProp): State => {
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
@@ -124,32 +122,6 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
     }
   }, [isTransitioningData]);
 
-  const onPressMapping = useMemo((): PressMapping => {
-    if (isMoviesSelected) {
-      return {
-        onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [MOVIES] - ', id),
-        onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [MOVIES]: ', id),
-        onPressViewAll: () => console.warn('onPressViewAll [MOVIES]'),
-      };
-    }
-
-    return {
-      onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [TV-SHOW] - ', id),
-      onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [TV-SHOW]: ', id),
-      onPressViewAll: () => console.warn('onPressViewAll [TV-SHOWS]'),
-    };
-  }, [isMoviesSelected]);
-
-  const top3Data = useMemo(
-    (): HomeTop3Item[] => (isMoviesSelected ? top3Movies : top3TVShows),
-    [isMoviesSelected, top3TVShows, top3Movies],
-  );
-
-  const trendings = useMemo(
-    (): HomeSection[] => (isMoviesSelected ? homeTrendingMovies : homeTrendingTVShows),
-    [isMoviesSelected, homeTrendingMovies, homeTrendingTVShows],
-  );
-
   const errorMessage = useMemo((): string => {
     if (isMoviesSelected && hasTrendingMoviesError) {
       return t(TRENDING_MOVIES_ERROR_REF_I18N);
@@ -181,34 +153,60 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
     setIsMovieSelected(false);
   }, [trendingTVShows]);
 
-  const onPressSearch = useCallback(() => {
-    let searchParams;
+  const {
+    onPressTop3LearnMore,
+    onPressTrendingItem,
+    onPressViewAll,
+    onPressSearch,
+  } = useMemo(() => {
+    const pressMapping = {
+      [SearchType.MOVIE]: {
+        onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [MOVIES] - ', id),
+        onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [MOVIES]: ', id),
+        onPressViewAll: () => console.warn('onPressViewAll [MOVIES]'),
+        onPressSearch: () => {
+          navigation.navigate('SEARCH', {
+            i18nQueryByPaginationErrorRef: SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
+            i18nQueryByTextErrorRef: SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
+            i18nSearchBarPlaceholderRef: SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
+            searchType: SearchType.MOVIE,
+            query: SEARCH_MOVIES,
+          });
+        },
+      },
+      [SearchType.TV]: {
+        onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [TV-SHOW] - ', id),
+        onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [TV-SHOW]: ', id),
+        onPressViewAll: () => console.warn('onPressViewAll [TV-SHOWS]'),
+        onPressSearch: () => {
+          navigation.navigate('SEARCH', {
+            i18nQueryByPaginationErrorRef: SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF,
+            i18nQueryByTextErrorRef: SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF,
+            i18nSearchBarPlaceholderRef: SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF,
+            searchType: SearchType.TV,
+            query: SEARCH_TV_SHOWS,
+          });
+        },
+      },
+    };
 
-    if (isMoviesSelected) {
-      searchParams = {
-        i18nQueryByPaginationErrorRef: SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
-        i18nQueryByTextErrorRef: SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
-        i18nSearchBarPlaceholderRef: SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
-        searchType: SearchType.MOVIE,
-        query: SEARCH_MOVIES,
-      };
-    }
+    const mediaSelected = isMoviesSelected ? SearchType.MOVIE : SearchType.TV;
 
-    navigation.navigate('SEARCH', searchParams);
+    return pressMapping[mediaSelected];
   }, [isMoviesSelected]);
 
   return {
     isLoading: isLoadingMovies || isLoadingTVShows || isTransitioningData,
-    onPressTop3LearnMore: onPressMapping.onPressTop3LearnMore,
-    onPressTrendingItem: onPressMapping.onPressTrendingItem,
-    onPressViewAll: onPressMapping.onPressViewAll,
+    onPressTop3LearnMore,
+    onPressTrendingItem,
+    onPressViewAll,
     shouldDisableHeaderActions,
     onSelectTVShows,
     onSelectMovies,
-    top3: top3Data,
+    top3: isMoviesSelected ? top3Movies : top3TVShows,
     onPressSearch,
     errorMessage,
-    trendings,
+    trendings: isMoviesSelected ? homeTrendingMovies : homeTrendingTVShows,
   };
 };
 

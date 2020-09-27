@@ -152,6 +152,11 @@ const en: Locale = {
         paginationError: 'movie-paginationError',
         placeholder: 'placeholder',
       },
+      tvShows: {
+        queryByTextError: 'tv-shows-queryByTextError',
+        paginationError: 'tv-shows-paginationError',
+        placeholder: 'tv-shows-placeholder',
+      },
     },
   },
 };
