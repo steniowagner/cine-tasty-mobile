@@ -43,6 +43,11 @@ export interface Locale {
         paginationError: string;
         placeholder: string;
       };
+      tvShows: {
+        queryByTextError: string;
+        paginationError: string;
+        placeholder: string;
+      };
     };
     trendingMovies: {
       error: string;

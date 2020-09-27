@@ -25,8 +25,6 @@ const MediaSearch = ({
   isLoading,
   items,
 }: Props) => {
-  console.log(items);
-  console.log(isLoading);
   if (isLoading) {
     return <LoadingMediaSearch />;
   }

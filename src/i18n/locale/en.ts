@@ -150,7 +150,12 @@ const en: Locale = {
       movie: {
         queryByTextError: 'movie-queryByTextError',
         paginationError: 'movie-paginationError',
-        placeholder: 'placeholder',
+        placeholder: 'movies-placeholder',
+      },
+      tvShows: {
+        queryByTextError: 'tv-shows-queryByTextError',
+        paginationError: 'tv-shows-paginationError',
+        placeholder: 'tv-shows-placeholder',
       },
     },
   },
