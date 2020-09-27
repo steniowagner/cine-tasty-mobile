@@ -14,18 +14,18 @@ import timeTravel, {
 import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
-import { SEARCH_MOVIES } from '../../../queries';
+import { SEARCH_TV_SHOWS } from '../../../queries';
 
 import Search from '../Search';
 
-const I18N_MOVIE_QUERY_BY_PAGINATION_ERROR_REF = 'i18nMoviesQueryByPaginationErrorRef';
-const I18N_MOVIE_QUERY_BY_TEXT_ERROR_REF = 'i18nMoviesQueryByTextErrorRef';
-const SOME_MOVIE_NAME = 'SOME_MOVIE_NAME';
-const MOVIE_COUNT = 10;
+const I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF = 'i18nTVShowQueryByPaginationErrorRef';
+const I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF = 'i18nTVShowQueryByTextErrorRef';
+const SOME_TV_SHOW_NAME = 'SOME_TV_SHOW_NAME';
+const TV_SHOWS_COUNT = 10;
 
 const getMockResolvers = (hasMore: boolean = false) => ({
   SearchQueryResult: () => ({
-    items: () => new MockList(MOVIE_COUNT),
+    items: () => new MockList(TV_SHOWS_COUNT),
     hasMore,
   }),
 });
@@ -35,13 +35,13 @@ const mockResolversWithError = {
 };
 
 const params = {
-  i18nQueryByPaginationErrorRef: I18N_MOVIE_QUERY_BY_PAGINATION_ERROR_REF,
-  i18nQueryByTextErrorRef: I18N_MOVIE_QUERY_BY_TEXT_ERROR_REF,
-  searchType: SearchType.MOVIE,
-  query: SEARCH_MOVIES,
+  i18nQueryByPaginationErrorRef: I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF,
+  i18nQueryByTextErrorRef: I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF,
+  searchType: SearchType.TV,
+  query: SEARCH_TV_SHOWS,
 };
 
-const renderSearchMovie = (mockResolvers: IMocks = {}) => (
+const renderSearchTVShows = (mockResolvers: IMocks = {}) => (
   <ThemeProvider theme={dark}>
     <AutoMockProvider mockResolvers={mockResolvers}>
       <MockedNavigation component={Search} params={params} />
@@ -49,15 +49,17 @@ const renderSearchMovie = (mockResolvers: IMocks = {}) => (
   </ThemeProvider>
 );
 
-describe('Testing <Search /> - [Movie-Pagination-Retry-Success]', () => {
+describe('Testing <Search /> - [TVShows-Pagination-Retry-Success]', () => {
   beforeEach(setupTimeTravel);
 
   afterEach(cleanup);
 
   it('should paginate correctly when some error occurs and then the user press the reload-button and the error doesnt exist anymore', () => {
-    const { queryByTestId, rerender } = render(renderSearchMovie(getMockResolvers(true)));
+    const { queryByTestId, rerender } = render(
+      renderSearchTVShows(getMockResolvers(true)),
+    );
 
-    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
+    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_TV_SHOW_NAME);
 
     act(() => {
       timeTravel(SEARCH_BY_QUERY_DELAY);
@@ -71,7 +73,7 @@ describe('Testing <Search /> - [Movie-Pagination-Retry-Success]', () => {
       }
     });
 
-    rerender(renderSearchMovie(mockResolversWithError));
+    rerender(renderSearchTVShows(mockResolversWithError));
 
     fireEvent(queryByTestId('search-media-list'), 'onEndReached');
 
@@ -93,7 +95,7 @@ describe('Testing <Search /> - [Movie-Pagination-Retry-Success]', () => {
       }
     });
 
-    rerender(renderSearchMovie(getMockResolvers(true)));
+    rerender(renderSearchTVShows(getMockResolvers(true)));
 
     expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
 
@@ -116,7 +118,7 @@ describe('Testing <Search /> - [Movie-Pagination-Retry-Success]', () => {
         expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
         expect(queryByTestId('search-media-list').props.data.length).toEqual(
-          MOVIE_COUNT * 2,
+          TV_SHOWS_COUNT * 2,
         );
       }
     });

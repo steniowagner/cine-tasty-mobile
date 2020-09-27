@@ -5,6 +5,7 @@ import {
 } from 'apollo-client';
 
 import {
+  SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
   SearchPerson_search_items_BasePerson as SearchPersonResult,
   SearchMovie_search_items_BaseMovie as SearchMovieResult,
   GetArticlesVariables,
@@ -69,7 +70,7 @@ export type RecentSearchItem = {
   id: number;
 }
 
-export type SearchItem = SearchMovieResult | SearchPersonResult;
+export type SearchItem = SearchMovieResult | SearchPersonResult | SearchTVShowResult;
 
 export type PaginatedQueryResult = {
   items: SearchItem[];

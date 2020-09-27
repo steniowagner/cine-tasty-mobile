@@ -7,6 +7,7 @@ import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import SearchBar from 'components/common/searchbar/SearchBar';
 import Advise from 'components/common/advise/Advise';
 import {
+  SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
   SearchPerson_search_items_BasePerson as SearchPersonResult,
   SearchMovie_search_items_BaseMovie as SearchMovieResult,
   SearchType,
@@ -96,6 +97,19 @@ const Search = ({ navigation, route }: Props) => {
           onPressFooterReloadButton={onPressFooterReloadButton}
           hasPaginationError={hasPaginationError}
           items={items as SearchMovieResult[]}
+          onPressListItem={onPressListItem}
+          onEndReached={onEndReached}
+          errorMessage={errorMessage}
+          isPaginating={isPaginating}
+          isLoading={isLoading}
+        />
+      )}
+      {route.params.searchType === SearchType.TV && (
+        <MediaSearch
+          onPressHeaderReloadButton={onPressHeaderReloadButton}
+          onPressFooterReloadButton={onPressFooterReloadButton}
+          hasPaginationError={hasPaginationError}
+          items={items as SearchTVShowResult[]}
           onPressListItem={onPressListItem}
           onEndReached={onEndReached}
           errorMessage={errorMessage}

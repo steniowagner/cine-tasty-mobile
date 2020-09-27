@@ -13,13 +13,14 @@ import timeTravel, {
 import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
-import { SEARCH_MOVIES } from '../../../queries';
+import { SEARCH_TV_SHOWS } from '../../../queries';
 
 import Search from '../Search';
 
-const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF = 'i18nMoviesQueryByPaginationErrorRef';
-const I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF = 'i18nMoviesQueryByTextErrorRef';
-const SOME_MOVIE_NAME = 'SOME_MOVIE_NAME';
+const I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF =
+  'i18nTVShowsQueryByPaginationErrorRef';
+const I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF = 'i18nTVShowsQueryByTextErrorRef';
+const SOME_TV_SHOWS_NAME = 'SOME_TV_SHOWS_NAME';
 
 const defaultItems = [
   {
@@ -28,7 +29,7 @@ const defaultItems = [
     genreIds: ['Hello World', 'Hello World'],
     title: 'Hello World',
     id: 78,
-    __typename: 'BaseMovie',
+    __typename: 'BaseTVShow',
   },
   {
     voteAverage: 31.0653079308008,
@@ -36,7 +37,7 @@ const defaultItems = [
     genreIds: ['Hello World', 'Hello World'],
     title: 'Hello World',
     id: -6,
-    __typename: 'BaseMovie',
+    __typename: 'BaseTVShow',
   },
 ];
 
@@ -48,13 +49,13 @@ const getMockResolvers = (hasMore: boolean = false, items: any = defaultItems) =
 });
 
 const params = {
-  i18nQueryByPaginationErrorRef: I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF,
-  i18nQueryByTextErrorRef: I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF,
-  searchType: SearchType.MOVIE,
-  query: SEARCH_MOVIES,
+  i18nQueryByPaginationErrorRef: I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF,
+  i18nQueryByTextErrorRef: I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF,
+  searchType: SearchType.TV,
+  query: SEARCH_TV_SHOWS,
 };
 
-const renderSearchMovies = (mockResolvers: IMocks = {}) => (
+const renderSearchTVShows = (mockResolvers: IMocks = {}) => (
   <ThemeProvider theme={dark}>
     <AutoMockProvider mockResolvers={mockResolvers}>
       <MockedNavigation component={Search} params={params} />
@@ -62,13 +63,13 @@ const renderSearchMovies = (mockResolvers: IMocks = {}) => (
   </ThemeProvider>
 );
 
-describe('Testing <Search /> - [Movies]', () => {
+describe('Testing <Search /> - [TVShows]', () => {
   beforeEach(setupTimeTravel);
 
   afterEach(cleanup);
 
   it('should render correctly on the first render', () => {
-    const { queryByTestId } = render(renderSearchMovies(getMockResolvers()));
+    const { queryByTestId } = render(renderSearchTVShows(getMockResolvers()));
 
     expect(queryByTestId('loading-media-search')).toBeNull();
 
@@ -86,9 +87,9 @@ describe('Testing <Search /> - [Movies]', () => {
   });
 
   it('should show the loading-state after user type some text on the search-bar', () => {
-    const { queryByTestId } = render(renderSearchMovies(getMockResolvers()));
+    const { queryByTestId } = render(renderSearchTVShows(getMockResolvers()));
 
-    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
+    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_TV_SHOWS_NAME);
 
     act(() => {
       timeTravel(SEARCH_BY_QUERY_DELAY);
@@ -103,10 +104,10 @@ describe('Testing <Search /> - [Movies]', () => {
 
   it("should should show an advise when there's no search results", () => {
     const { queryByTestId } = render(
-      renderSearchMovies(getMockResolvers(false, new MockList(0))),
+      renderSearchTVShows(getMockResolvers(false, new MockList(0))),
     );
 
-    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
+    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_TV_SHOWS_NAME);
 
     act(() => {
       timeTravel(SEARCH_BY_QUERY_DELAY);
@@ -124,9 +125,9 @@ describe('Testing <Search /> - [Movies]', () => {
   });
 
   it('should show the list with the items returned by the query', () => {
-    const { queryByTestId } = render(renderSearchMovies(getMockResolvers()));
+    const { queryByTestId } = render(renderSearchTVShows(getMockResolvers()));
 
-    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
+    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_TV_SHOWS_NAME);
 
     act(() => {
       timeTravel(SEARCH_BY_QUERY_DELAY);

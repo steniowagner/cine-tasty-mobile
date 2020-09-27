@@ -7,10 +7,10 @@ export const SEARCH_TV_SHOWS = gql`
       hasMore
       items {
         ... on BaseTVShow {
+          title: name
           voteAverage
           posterPath
           genreIds
-          name
           id
         }
       }

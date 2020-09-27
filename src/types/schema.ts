@@ -398,6 +398,45 @@ export interface SearchPersonVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: SearchTVShow
+// ====================================================
+
+export interface SearchTVShow_search_items_BasePerson {
+  __typename: "BasePerson" | "BaseMovie";
+}
+
+export interface SearchTVShow_search_items_BaseTVShow {
+  __typename: "BaseTVShow";
+  title: string | null;
+  voteAverage: number | null;
+  posterPath: string | null;
+  genreIds: string[];
+  id: number | null;
+}
+
+export type SearchTVShow_search_items = SearchTVShow_search_items_BasePerson | SearchTVShow_search_items_BaseTVShow;
+
+export interface SearchTVShow_search {
+  __typename: "SearchQueryResult";
+  totalResults: number;
+  hasMore: boolean;
+  items: SearchTVShow_search_items[];
+}
+
+export interface SearchTVShow {
+  search: SearchTVShow_search;
+}
+
+export interface SearchTVShowVariables {
+  input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: TrendingMovie
 // ====================================================
 

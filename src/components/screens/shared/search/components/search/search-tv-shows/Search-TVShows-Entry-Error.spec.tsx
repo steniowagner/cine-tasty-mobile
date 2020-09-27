@@ -14,27 +14,27 @@ import timeTravel, {
 import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
-import { SEARCH_MOVIES } from '../../../queries';
+import { SEARCH_TV_SHOWS } from '../../../queries';
 
 import Search from '../Search';
 
-const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF =
-  'I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF';
-const I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF = 'I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF';
-const SOME_MOVIE_NAME = 'SOME_MOVIE_NAME';
+const I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF = 'I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF';
+const I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF =
+  'I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF';
+const SOME_TV_SHOW_NAME = 'SOME_TV_SHOW_NAME';
 
 const mockResolversWithError = {
   SearchQueryResult: () => new Error(),
 };
 
 const params = {
-  i18nQueryByPaginationErrorRef: I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF,
-  i18nQueryByTextErrorRef: I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF,
-  searchType: SearchType.MOVIE,
-  query: SEARCH_MOVIES,
+  i18nQueryByPaginationErrorRef: I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF,
+  i18nQueryByTextErrorRef: I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF,
+  searchType: SearchType.TV,
+  query: SEARCH_TV_SHOWS,
 };
 
-const renderSearchMovies = (mockResolvers: IMocks = {}) => (
+const renderSearchTVShows = (mockResolvers: IMocks = {}) => (
   <ThemeProvider theme={dark}>
     <AutoMockProvider mockResolvers={mockResolvers}>
       <MockedNavigation component={Search} params={params} />
@@ -42,17 +42,17 @@ const renderSearchMovies = (mockResolvers: IMocks = {}) => (
   </ThemeProvider>
 );
 
-describe('Testing <Search /> - [Movies-Entry-Error]', () => {
+describe('Testing <Search /> - [TVShows-Entry-Error]', () => {
   beforeEach(setupTimeTravel);
 
   afterEach(cleanup);
 
   it('should show an error-message when some error occurs on the first query', () => {
     const { queryByTestId, queryByText } = render(
-      renderSearchMovies(mockResolversWithError),
+      renderSearchTVShows(mockResolversWithError),
     );
 
-    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
+    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_TV_SHOW_NAME);
 
     act(() => {
       timeTravel(SEARCH_BY_QUERY_DELAY);
@@ -76,7 +76,7 @@ describe('Testing <Search /> - [Movies-Entry-Error]', () => {
       timeTravel(DEFAULT_ANIMATION_DURATION);
     });
 
-    expect(queryByText(I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF)).not.toBeNull();
+    expect(queryByText(I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF)).not.toBeNull();
 
     act(() => {
       try {

@@ -2,16 +2,21 @@ import React, { useMemo } from 'react';
 import { Platform, FlatList } from 'react-native';
 
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
-import { SearchMovie_search_items_BaseMovie as SearchMovieResult } from 'types/schema';
+import {
+  SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
+  SearchMovie_search_items_BaseMovie as SearchMovieResult,
+} from 'types/schema';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import { BaseSearchProps } from 'types';
 
 import MediaSearchListItem from './MediaSerachListItem';
 import LoadingMediaSearch from './LoadingMediaSearch';
 
+type MediaSearchItem = SearchTVShowResult | SearchMovieResult;
+
 type Props = BaseSearchProps & {
-  onPressListItem: (item: SearchMovieResult) => void;
-  items: SearchMovieResult[];
+  onPressListItem: (item: MediaSearchItem) => void;
+  items: MediaSearchItem[];
 };
 
 const MediaSearch = ({
@@ -63,7 +68,7 @@ const MediaSearch = ({
       )}
       keyExtractor={({ id }) => `${id}`}
       onEndReached={onEndReached}
-      testID="search-movies-list"
+      testID="search-media-list"
       data={items}
     />
   );

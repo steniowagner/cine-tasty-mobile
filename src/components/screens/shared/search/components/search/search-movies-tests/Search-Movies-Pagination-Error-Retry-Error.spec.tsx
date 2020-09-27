@@ -75,7 +75,7 @@ describe('Testing <Search /> - [Movies-Pagination-Error-Retry-Error]', () => {
 
     rerender(renderSearchMovies(mockResolversWithError));
 
-    fireEvent(queryByTestId('search-movies-list'), 'onEndReached');
+    fireEvent(queryByTestId('search-media-list'), 'onEndReached');
 
     act(() => {
       timeTravel(DEFAULT_ANIMATION_DURATION);
@@ -117,7 +117,7 @@ describe('Testing <Search /> - [Movies-Pagination-Error-Retry-Error]', () => {
 
         expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
-        expect(queryByTestId('search-movies-list').props.data.length).toEqual(
+        expect(queryByTestId('search-media-list').props.data.length).toEqual(
           MOVIES_COUNT * 2,
         );
       }
