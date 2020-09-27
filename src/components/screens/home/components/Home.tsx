@@ -38,6 +38,7 @@ const Home = ({ navigation }: Props) => {
     onSelectTVShows,
     onSelectMovies,
     onPressViewAll,
+    onPressSearch,
     errorMessage,
     isLoading,
     trendings,
@@ -51,12 +52,12 @@ const Home = ({ navigation }: Props) => {
           shouldDisableActions={shouldDisableHeaderActions}
           onPresSwitchTVShows={onSelectTVShows}
           onPressSwitchMovies={onSelectMovies}
+          onPressSearch={onPressSearch}
           onPressSettings={() => {}}
-          onPressSearch={() => {}}
         />
       ),
     });
-  }, [shouldDisableHeaderActions, isLoading]);
+  }, [shouldDisableHeaderActions, onPressSearch, isLoading]);
 
   if (isLoading) {
     return <LoadingHome />;

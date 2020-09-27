@@ -146,6 +146,13 @@ const en: Locale = {
       popular: 'Popular',
       topRated: 'Top Rated',
     },
+    search: {
+      movie: {
+        queryByTextError: 'movie-queryByTextError',
+        paginationError: 'movie-paginationError',
+        placeholder: 'placeholder',
+      },
+    },
   },
 };
 

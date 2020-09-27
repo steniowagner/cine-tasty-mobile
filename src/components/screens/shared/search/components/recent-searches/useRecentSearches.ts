@@ -8,16 +8,21 @@ import {
   getItemFromStorage,
 } from 'utils/async-storage-adapter/AsyncStorageAdapter';
 import { SearchType } from 'types/schema';
-import { SearchItem } from 'types';
-
-type State = {
-  persistItemToRecentSearches: (item: SearchItem) => void;
-  onRemoveItem: (item: SearchItem) => void;
-  t: (key: string) => string;
-  recentSearches: SearchItem[];
-};
 
 export const STORAGE_SEARCH_SECTION = 'RECENT-SEARCHES';
+
+type ResentSearchItem = {
+  image: string;
+  title: string;
+  id: number;
+};
+
+type State = {
+  persistItemToRecentSearches: (item: ResentSearchItem) => void;
+  onRemoveItem: (item: ResentSearchItem) => void;
+  recentSearches: ResentSearchItem[];
+  t: (key: string) => string;
+};
 
 type Props = {
   shouldSkipGetInitialRecentSearches: boolean;
@@ -28,7 +33,7 @@ const useRecentSearches = ({
   shouldSkipGetInitialRecentSearches,
   searchType,
 }: Props): State => {
-  const [recentSearches, setRecentSearches] = useState<SearchItem[]>([]);
+  const [recentSearches, setRecentSearches] = useState<ResentSearchItem[]>([]);
 
   const STORAGE_KEY = useMemo(
     () => `${STORAGE_SEARCH_SECTION}:${searchType.toString()}`,
@@ -38,7 +43,7 @@ const useRecentSearches = ({
   const { t } = useTranslation();
 
   const getRecentSearches = useCallback(async () => {
-    const recentSearchesFromStorage = await getItemFromStorage<[], SearchItem[]>(
+    const recentSearchesFromStorage = await getItemFromStorage<[], ResentSearchItem[]>(
       STORAGE_KEY,
       [],
     );
@@ -52,14 +57,14 @@ const useRecentSearches = ({
     }
   }, [searchType]);
 
-  const onRemoveItem = useCallback(async (recentSearch: SearchItem) => {
-    const recentSearchesFromStorage = await getItemFromStorage<[], SearchItem[]>(
+  const onRemoveItem = useCallback(async (recentSearch: ResentSearchItem) => {
+    const recentSearchesFromStorage = await getItemFromStorage<[], ResentSearchItem[]>(
       STORAGE_KEY,
       [],
     );
 
     const recentSearchesUpdated = recentSearchesFromStorage.filter(
-      (recentSearchFromStorage: SearchItem) => recentSearchFromStorage.id !== recentSearch.id,
+      (recentSearchFromStorage: ResentSearchItem) => recentSearchFromStorage.id !== recentSearch.id,
     );
 
     setRecentSearches(recentSearchesUpdated);
@@ -67,10 +72,10 @@ const useRecentSearches = ({
     await persistItemInStorage(STORAGE_KEY, recentSearchesUpdated);
   }, []);
 
-  const persistItemToRecentSearches = useCallback(async (item: SearchItem) => {
+  const persistItemToRecentSearches = useCallback(async (item: ResentSearchItem) => {
     const recentSearchesFromStorage = await getItemFromStorage<
-      SearchItem[],
-      SearchItem[]
+      ResentSearchItem[],
+      ResentSearchItem[]
     >(STORAGE_KEY, []);
 
     let recentSearchesUpdated = [];

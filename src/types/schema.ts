@@ -136,7 +136,6 @@ export interface TrendingTVShows_trendingTvShows_onTheAir_items {
   __typename: "BaseTVShow";
   voteAverage: number | null;
   posterPath: string | null;
-  popularity: number | null;
   voteCount: number | null;
   name: string | null;
   id: number | null;
@@ -155,7 +154,6 @@ export interface TrendingTVShows_trendingTvShows_popular_items {
   __typename: "BaseTVShow";
   voteAverage: number | null;
   posterPath: string | null;
-  popularity: number | null;
   voteCount: number | null;
   name: string | null;
   id: number | null;
@@ -173,7 +171,6 @@ export interface TrendingTVShows_trendingTvShows_topRated_items {
   __typename: "BaseTVShow";
   voteAverage: number | null;
   posterPath: string | null;
-  popularity: number | null;
   voteCount: number | null;
   name: string | null;
   id: number | null;
@@ -325,6 +322,45 @@ export interface GetFamousDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: SearchMovie
+// ====================================================
+
+export interface SearchMovie_search_items_BasePerson {
+  __typename: "BasePerson" | "BaseTVShow";
+}
+
+export interface SearchMovie_search_items_BaseMovie {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  genreIds: string[];
+  title: string | null;
+  id: number | null;
+}
+
+export type SearchMovie_search_items = SearchMovie_search_items_BasePerson | SearchMovie_search_items_BaseMovie;
+
+export interface SearchMovie_search {
+  __typename: "SearchQueryResult";
+  totalResults: number;
+  hasMore: boolean;
+  items: SearchMovie_search_items[];
+}
+
+export interface SearchMovie {
+  search: SearchMovie_search;
+}
+
+export interface SearchMovieVariables {
+  input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: SearchPerson
 // ====================================================
 
@@ -387,7 +423,6 @@ export interface TrendingTVShow {
   __typename: "BaseTVShow";
   voteAverage: number | null;
   posterPath: string | null;
-  popularity: number | null;
   voteCount: number | null;
   name: string | null;
   id: number | null;

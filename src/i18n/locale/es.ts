@@ -1,6 +1,6 @@
 import { Locale } from './Locale';
 
-const en: Locale = {
+const es: Locale = {
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -146,7 +146,14 @@ const en: Locale = {
       popular: 'Popular',
       topRated: 'Top Rated',
     },
+    search: {
+      movie: {
+        queryByTextError: 'movie-queryByTextError',
+        paginationError: 'movie-paginationError',
+        placeholder: 'placeholder',
+      },
+    },
   },
 };
 
-export default en;
+export default es;

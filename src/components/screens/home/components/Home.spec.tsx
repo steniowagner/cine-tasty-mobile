@@ -1,32 +1,27 @@
-/* eslint-disable import/first */
 import React from 'react';
-import { View } from 'react-native';
-import { cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { MockList, IMocks } from 'graphql-tools';
 
-import { dark } from 'styles/themes';
+import { SEARCH_MOVIES } from 'components/screens/shared/search/queries';
+import { SearchType } from 'types/schema';
 
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
-import { TRENDING_MOVIES_ERROR_REF_I18N } from './use-home/useHome';
+import {
+  SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
+  SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
+  SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
+} from './use-home/useHome';
 import Home from './Home';
 
-const navigation = {
-  setOptions: () => ({
-    // eslint-disable-next-line react/display-name
-    header: () => <View />,
-  }),
-};
-
-const renderHome = (mockResolvers?: IMocks) => {
-  const HomeScreen = () => (
-    <ThemeProvider theme={dark}>
+const renderHome = (mockResolvers?: IMocks, navigate = jest.fn) => {
+  const HomeScreen = ({ navigation }) => {
+    return (
       <AutoMockProvider mockResolvers={mockResolvers}>
-        <Home navigation={navigation} />
+        <Home navigation={{ ...navigation, navigate }} />
       </AutoMockProvider>
-    </ThemeProvider>
-  );
+    );
+  };
 
   return <MockedNavigation component={HomeScreen} />;
 };
@@ -98,5 +93,27 @@ describe('Testing <Famous />', () => {
     expect(queryByTestId('top3-list')).toBeNull();
 
     expect(queryAllByTestId('scrollview-content')).toEqual([]);
+  });
+
+  it('should call navigate to "SearchMovieScreen" when the user seleted "movies" and press the "search" button', () => {
+    const navigate = jest.fn();
+
+    const { getByTestId } = render(renderHome(undefined, navigate));
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    fireEvent.press(getByTestId('header-icon-button-wrapper-magnify'));
+
+    expect(navigate).toHaveBeenCalledTimes(1);
+
+    expect(navigate).toHaveBeenCalledWith('SEARCH', {
+      i18nQueryByPaginationErrorRef: SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
+      i18nQueryByTextErrorRef: SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
+      i18nSearchBarPlaceholderRef: SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
+      searchType: SearchType.MOVIE,
+      query: SEARCH_MOVIES,
+    });
   });
 });

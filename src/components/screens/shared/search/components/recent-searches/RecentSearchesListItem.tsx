@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
+import { RecentSearchItem } from 'types';
 import CONSTANTS from 'utils/constants';
-import { SearchItem } from 'types';
 
 const IMAGE_WIDTH_PERCENTAGE = '21%';
 const IMAGE_HEIGHT_PERCENTAGE = '21%';
@@ -75,7 +75,7 @@ const CloseButtonWrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
 type Props = {
   onPressRemove: () => void;
   onPressItem: () => void;
-  item: SearchItem;
+  item: RecentSearchItem;
 };
 
 const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.RECENT_SEARCH_SIZE_CODE}`;

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { SearchType } from 'types/schema';
 import metrics from 'styles/metrics';
-import { SearchItem } from 'types';
 
 import RecentSearchListItem from './RecentSearchesListItem';
 import useRecentSearches from './useRecentSearches';
@@ -17,7 +16,7 @@ const RecentText = styled(Text)`
 `;
 
 type Props = {
-  onPressItem: (item: SearchItem) => void;
+  onPressItem: (id: number) => void;
   searchType: SearchType;
 };
 
@@ -43,7 +42,7 @@ const RecentSearches = ({ onPressItem, searchType }: Props) => {
       renderItem={({ item }) => (
         <RecentSearchListItem
           onPressRemove={() => onRemoveItem(item)}
-          onPressItem={() => onPressItem(item)}
+          onPressItem={() => onPressItem(item.id)}
           item={item}
         />
       )}

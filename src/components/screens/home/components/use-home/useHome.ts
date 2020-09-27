@@ -4,7 +4,8 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
-import { TrendingTVShows, TrendingMovies } from 'types/schema';
+import { TrendingTVShows, TrendingMovies, SearchType } from 'types/schema';
+import { SEARCH_MOVIES } from 'components/screens/shared/search/queries';
 import { HomeTop3Item, HomeSection } from 'types';
 
 import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '../queries';
@@ -16,6 +17,11 @@ import useTop3 from './top3/useTop3';
 
 export const TRENDING_TV_SHOWS_ERROR_REF_I18N = 'translations:home:trendingTvShows:error';
 export const TRENDING_MOVIES_ERROR_REF_I18N = 'translations:home:trendingMovies:error';
+
+export const SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF = 'translations:home:search:movie:queryByTextError';
+export const SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF = 'translations:home:search:movie:paginationError';
+export const SEARCH_MOVIE_PLACEHOLDER_I18N_REF = 'translations:home:search:movie:placeholder';
+
 export const TRANSITIONING_DURATION = 1200;
 
 type State = {
@@ -25,6 +31,7 @@ type State = {
   onSelectTVShows: () => void;
   onPressViewAll: () => void;
   onSelectMovies: () => void;
+  onPressSearch: () => void;
   trendings: HomeSection[];
   errorMessage: string;
   top3: HomeTop3Item[];
@@ -40,8 +47,6 @@ type PressMapping = {
 };
 
 const useHome = (navigation: HomeScreenNavigationProp): State => {
-  console.log(navigation);
-
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
     true,
   );
@@ -176,6 +181,22 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
     setIsMovieSelected(false);
   }, [trendingTVShows]);
 
+  const onPressSearch = useCallback(() => {
+    let searchParams;
+
+    if (isMoviesSelected) {
+      searchParams = {
+        i18nQueryByPaginationErrorRef: SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
+        i18nQueryByTextErrorRef: SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
+        i18nSearchBarPlaceholderRef: SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
+        searchType: SearchType.MOVIE,
+        query: SEARCH_MOVIES,
+      };
+    }
+
+    navigation.navigate('SEARCH', searchParams);
+  }, [isMoviesSelected]);
+
   return {
     isLoading: isLoadingMovies || isLoadingTVShows || isTransitioningData,
     onPressTop3LearnMore: onPressMapping.onPressTop3LearnMore,
@@ -185,6 +206,7 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
     onSelectTVShows,
     onSelectMovies,
     top3: top3Data,
+    onPressSearch,
     errorMessage,
     trendings,
   };

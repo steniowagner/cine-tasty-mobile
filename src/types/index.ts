@@ -5,7 +5,13 @@ import {
 } from 'apollo-client';
 
 import {
-  GetArticlesVariables, QuestionDifficulty, QuestionCategory, QuestionType, GetArticles,
+  SearchPerson_search_items_BasePerson as SearchPersonResult,
+  SearchMovie_search_items_BaseMovie as SearchMovieResult,
+  GetArticlesVariables,
+  QuestionDifficulty,
+  QuestionCategory,
+  QuestionType,
+  GetArticles,
 } from './schema';
 
 export enum ThemeID {
@@ -57,11 +63,13 @@ export type QuizResult = {
   answer: string;
 };
 
-export type SearchItem = {
-  image: string;
+export type RecentSearchItem = {
   title: string;
+  image: string;
   id: number;
-};
+}
+
+export type SearchItem = SearchMovieResult | SearchPersonResult;
 
 export type PaginatedQueryResult = {
   items: SearchItem[];
@@ -72,17 +80,15 @@ export type SearchResult = {
   search: PaginatedQueryResult;
 };
 
-export type SearchProps = {
-  onPressListItem: (item: SearchItem) => void;
+export type BaseSearchProps = {
   onPressHeaderReloadButton: () => void;
   onPressFooterReloadButton: () => void;
   hasPaginationError: boolean;
   onEndReached: () => void;
   isPaginating: boolean;
   errorMessage: string;
-  items: SearchItem[];
   isLoading: boolean;
-};
+}
 
 export type QuizFilterOption = QuestionOption<QuestionDifficulty | QuestionCategory | QuestionType>;
 
