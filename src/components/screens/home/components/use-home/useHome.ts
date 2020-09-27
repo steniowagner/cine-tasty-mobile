@@ -196,17 +196,17 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
   }, [isMoviesSelected]);
 
   return {
+    trendings: isMoviesSelected ? homeTrendingMovies : homeTrendingTVShows,
     isLoading: isLoadingMovies || isLoadingTVShows || isTransitioningData,
+    top3: isMoviesSelected ? top3Movies : top3TVShows,
+    shouldDisableHeaderActions,
     onPressTop3LearnMore,
     onPressTrendingItem,
     onPressViewAll,
-    shouldDisableHeaderActions,
     onSelectTVShows,
     onSelectMovies,
-    top3: isMoviesSelected ? top3Movies : top3TVShows,
     onPressSearch,
     errorMessage,
-    trendings: isMoviesSelected ? homeTrendingMovies : homeTrendingTVShows,
   };
 };
 

@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { DefaultTheme } from 'styled-components';
 
 export const ANIMATION_DURATION = 100;
-export const CALLBACK_DELAY = 1000;
 
 type State = {
   tvShowsButtonBackgroudColor: Animated.AnimatedInterpolation;
@@ -37,9 +36,7 @@ const useMediaSwitcher = ({
       duration: ANIMATION_DURATION,
       toValue,
     }).start(() => {
-      setTimeout(() => {
-        callback();
-      }, CALLBACK_DELAY);
+      callback();
     });
   }, []);
 
