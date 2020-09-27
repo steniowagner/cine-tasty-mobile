@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import {
+  SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
   SearchPerson_search_items_BasePerson as SearchPersonResult,
   SearchMovie_search_items_BaseMovie as SearchMovieResult,
   SearchType,
@@ -13,7 +14,9 @@ import { SearchStackParams } from '../../routes/route-params-types';
 type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH'>;
 
 type State = {
-  onPressListItem: (item: SearchPersonResult | SearchMovieResult) => void;
+  onPressListItem: (
+    item: SearchPersonResult | SearchMovieResult | SearchTVShowResult,
+  ) => void;
   onPressRecentSearchItem: (id: number) => void;
 };
 
@@ -60,6 +63,20 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
         },
         onPressRecentSearchItem: (id: number) => {
           console.log('SearchMovieResult - onPressRecentSearchItem: ', id);
+        },
+      },
+      [SearchType.TV]: {
+        onPressListItem: (item: SearchTVShowResult) => {
+          persistItemToRecentSearches({
+            image: item.posterPath,
+            title: item.title,
+            id: item.id,
+          });
+
+          console.log('SearchTVShowsResult - onPressListItem: ', item.id, item.title);
+        },
+        onPressRecentSearchItem: (id: number) => {
+          console.log('SearchTVShowsResult - onPressRecentSearchItem: ', id);
         },
       },
     };

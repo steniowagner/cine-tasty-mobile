@@ -137,10 +137,10 @@ const useSearch = ({
   }, [queryString]);
 
   return {
-    shouldShowEmptyListAdvise:
-      isSearchResultEmpty && !isLoading && !errorMessage && !!queryString,
     shouldShowRecentSearches:
       !queryString && !isLoading && !errorMessage && !queryResult.items.length,
+    shouldShowEmptyListAdvise:
+      isSearchResultEmpty && !isLoading && !errorMessage && !!queryString,
     onEndReached: handleOnPaginatedSearch,
     onPressFooterReloadButton,
     onPressHeaderReloadButton,
