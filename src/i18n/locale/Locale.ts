@@ -37,6 +37,13 @@ export interface Locale {
     learMoreButtonText: string;
     tvShows: string;
     movies: string;
+    search: {
+      movie: {
+        queryByTextError: string;
+        paginationError: string;
+        placeholder: string;
+      };
+    };
     trendingMovies: {
       error: string;
       nowPlaying: string;

@@ -1,18 +1,20 @@
 import React from 'react';
 import { Animated } from 'react-native';
+import { withTheme, DefaultTheme } from 'styled-components';
 
 import useLoadingPlaceholder from './useLoadingPlaceholder';
 
 type Props = {
   indexToDelayAnimation?: number;
-  colors: string[];
+  theme: DefaultTheme;
+  colors?: string[];
   style: object;
 };
 
-const LoadingPlaceholder = ({ indexToDelayAnimation = 0, style, colors }: Props) => {
+const LoadingPlaceholder = ({ indexToDelayAnimation = 0, style, theme }: Props) => {
   const { color } = useLoadingPlaceholder({
+    colors: theme.colors.loadingColors,
     indexToDelayAnimation,
-    colors,
   });
 
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -24,4 +26,4 @@ const LoadingPlaceholder = ({ indexToDelayAnimation = 0, style, colors }: Props)
   );
 };
 
-export default LoadingPlaceholder;
+export default withTheme(LoadingPlaceholder);
