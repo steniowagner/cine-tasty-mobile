@@ -6,7 +6,7 @@ import { dark } from 'styles/themes';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import MediaSwitcher, { I18N_TV_SHOWS_KEY, I18N_MOVIES_KEY } from './MediaSwitcher';
-import { ANIMATION_DURATION, CALLBACK_DELAY } from './useMediaSwitcher';
+import { ANIMATION_DURATION } from './useMediaSwitcher';
 
 const PRIMARY_COLOR_RGBA = 'rgba(255, 215, 0, 1)';
 const CONTRAST_COLOR_RGBA = 'rgba(77, 77, 77, 1)';
@@ -274,7 +274,7 @@ describe('Testing <MediaSwitcher />', () => {
       BUTTON_TEXT_RGBA,
     );
 
-    expect(onSwitchToTVShows).toHaveBeenCalledTimes(0);
+    expect(onSwitchToTVShows).toHaveBeenCalledTimes(1);
   });
 
   it('should call the "onSwitchToTVShows" when the user press the "tv-shows" button', () => {
@@ -285,7 +285,7 @@ describe('Testing <MediaSwitcher />', () => {
     fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
 
     act(() => {
-      timeTravel(CALLBACK_DELAY + ANIMATION_DURATION + 1);
+      timeTravel(ANIMATION_DURATION + 1);
     });
 
     expect(onSwitchToTVShows).toHaveBeenCalledTimes(1);
@@ -301,13 +301,13 @@ describe('Testing <MediaSwitcher />', () => {
     fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
 
     act(() => {
-      timeTravel(CALLBACK_DELAY + ANIMATION_DURATION + 1);
+      timeTravel(ANIMATION_DURATION + 1);
     });
 
     fireEvent.press(getByTestId('media-switcher-movies-button'));
 
     act(() => {
-      timeTravel(CALLBACK_DELAY + ANIMATION_DURATION + 1);
+      timeTravel(ANIMATION_DURATION + 1);
     });
 
     expect(onSwitchToMovies).toHaveBeenCalledTimes(1);
@@ -325,7 +325,7 @@ describe('Testing <MediaSwitcher />', () => {
     fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
 
     act(() => {
-      timeTravel(CALLBACK_DELAY + ANIMATION_DURATION + 1);
+      timeTravel(ANIMATION_DURATION + 1);
     });
 
     expect(onSwitchToTVShows).toHaveBeenCalledTimes(0);
@@ -341,7 +341,7 @@ describe('Testing <MediaSwitcher />', () => {
     fireEvent.press(getByTestId('media-switcher-movies-button'));
 
     act(() => {
-      timeTravel(CALLBACK_DELAY + ANIMATION_DURATION + 1);
+      timeTravel(ANIMATION_DURATION + 1);
     });
 
     expect(onSwitchToMovies).toHaveBeenCalledTimes(0);
