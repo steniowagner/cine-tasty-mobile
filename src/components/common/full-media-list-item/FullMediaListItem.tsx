@@ -48,7 +48,7 @@ type Props = {
   votes: number;
 };
 
-const MediaSearchListItem = ({
+const FullMediaListItem = ({
   onPressDetails,
   genres = [],
   image,
@@ -74,4 +74,4 @@ const MediaSearchListItem = ({
   </Wrapper>
 );
 
-export default MediaSearchListItem;
+export default FullMediaListItem;

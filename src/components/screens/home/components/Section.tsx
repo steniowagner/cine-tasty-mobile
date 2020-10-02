@@ -80,8 +80,8 @@ const Section = ({
           onPress={() => onPressItem(item.id)}
           voteAverage={item.voteAverage}
           voteCount={item.voteCount}
+          image={item.posterPath}
           isFirst={index === 0}
-          image={item.image}
           title={item.title}
         />
       )}

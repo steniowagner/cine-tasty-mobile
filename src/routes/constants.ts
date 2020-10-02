@@ -4,7 +4,7 @@ import metrics from 'styles/metrics';
 
 export const getDefaultHeaderOptions = () => ({
   headerTitleStyle: {
-    fontSize: metrics.getWidthFromDP('5.5%'),
+    fontSize: metrics.extraLargeSize,
     fontFamily: 'CircularStd-Bold',
     fontWeight: undefined,
   },

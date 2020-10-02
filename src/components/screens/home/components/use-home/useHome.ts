@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { SEARCH_MOVIES, SEARCH_TV_SHOWS } from 'components/screens/shared/search/queries';
 import { TrendingTVShows, TrendingMovies, SearchType } from 'types/schema';
-import { HomeTop3Item, HomeSection } from 'types';
+import { HomeTop3Item, HomeSection, SimplifiedMedia } from 'types';
 
 import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '../queries';
 import { HomeStackParams } from '../../routes/route-params-types';
@@ -29,11 +29,11 @@ export const SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF = 'translations:home:search:tv
 export const TRANSITIONING_DURATION = 1200;
 
 type State = {
+  onPressViewAll: (sectionItems: SimplifiedMedia[], sectionTitle: string) => void;
   onPressTop3LearnMore: (id: number) => void;
   onPressTrendingItem: (id: number) => void;
   shouldDisableHeaderActions: boolean;
   onSelectTVShows: () => void;
-  onPressViewAll: () => void;
   onSelectMovies: () => void;
   onPressSearch: () => void;
   trendings: HomeSection[];
@@ -163,7 +163,12 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
       [SearchType.MOVIE]: {
         onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [MOVIES] - ', id),
         onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [MOVIES]: ', id),
-        onPressViewAll: () => console.warn('onPressViewAll [MOVIES]'),
+        onPressViewAll: (sectionItems: SimplifiedMedia[], sectionTitle: string) => {
+          navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
+            initialDataset: sectionItems,
+            headerTitle: `${sectionTitle} - ${t('translations:home:movies')}`,
+          });
+        },
         onPressSearch: () => {
           navigation.navigate('SEARCH', {
             i18nQueryByPaginationErrorRef: SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
@@ -177,7 +182,10 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
       [SearchType.TV]: {
         onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [TV-SHOW] - ', id),
         onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [TV-SHOW]: ', id),
-        onPressViewAll: () => console.warn('onPressViewAll [TV-SHOWS]'),
+        onPressViewAll: (sectionItems: SimplifiedMedia[], sectionTitle: string) => navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
+          initialDataset: sectionItems,
+          headerTitle: `${sectionTitle} - ${t('translations:home:tvShows')}`,
+        }),
         onPressSearch: () => {
           navigation.navigate('SEARCH', {
             i18nQueryByPaginationErrorRef: SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF,

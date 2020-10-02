@@ -10,10 +10,7 @@ const parseTrendingToSimplifiedMedia = (
   trendingItems: TrendingItems[],
 ): SimplifiedMedia[] => trendingItems.map((trendingItem: TrendingItems) => ({
   title: trendingItem.title || trendingItem.name,
-  voteAverage: trendingItem.voteAverage,
-  voteCount: trendingItem.voteCount,
-  image: trendingItem.posterPath,
-  id: trendingItem.id,
+  ...trendingItem,
 }));
 
 export default parseTrendingToSimplifiedMedia;

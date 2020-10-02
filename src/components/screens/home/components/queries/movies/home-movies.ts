@@ -1,13 +1,9 @@
 import gql from 'graphql-tag';
 
+import TrendingMovie from './trendingMovieFragment';
+
 export const GET_TRENDING_MOVIES = gql`
-  fragment TrendingMovie on BaseMovie {
-    voteAverage
-    posterPath
-    voteCount
-    title
-    id
-  }
+  ${TrendingMovie}
 
   query TrendingMovies($page: Int!, $language: ISO6391Language) {
     trendingMovies {
@@ -17,7 +13,6 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
-          genreIds
         }
       }
       popular(args: { page: $page, language: $language }) {
