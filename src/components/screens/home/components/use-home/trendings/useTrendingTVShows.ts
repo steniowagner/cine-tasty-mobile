@@ -29,14 +29,17 @@ const useTrendingMovies = ({ rawTrendingTVShows }: Props): State => {
     (trendingItemKey: TrendingItemKey, dataset: TrendingTVShow[]): HomeSection => {
       const sectionMapping: Record<TrendingItemKey, Omit<HomeSection, 'data'>> = {
         onTheAir: {
+          viewAllTitle: t('translations:home:trendingTvShows:onTheAirViewAllTitle'),
           sectionTitle: t('translations:home:trendingTvShows:onTheAir'),
           id: 'onTheAir',
         },
         popular: {
+          viewAllTitle: t('translations:home:trendingTvShows:onTheAirViewAllTitle'),
           sectionTitle: t('translations:home:trendingTvShows:popular'),
           id: 'popular',
         },
         topRated: {
+          viewAllTitle: t('translations:home:trendingTvShows:onTheAirViewAllTitle'),
           sectionTitle: t('translations:home:trendingTvShows:topRated'),
           id: 'topRated',
         },
@@ -44,6 +47,7 @@ const useTrendingMovies = ({ rawTrendingTVShows }: Props): State => {
 
       if (!sectionMapping[trendingItemKey]) {
         return {
+          viewAllTitle: '',
           sectionTitle: '',
           id: 'onTheAir',
           data: [],

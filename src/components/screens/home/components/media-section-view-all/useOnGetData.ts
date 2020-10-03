@@ -1,6 +1,14 @@
 import { useCallback } from 'react';
 
-import { OnTheAirTVShows, NowPlayingMovies } from 'types/schema';
+import {
+  TrendingOnTheAirTVShows,
+  TrendingPopularTVShows,
+  TrendingTopRatedTVShows,
+  TrendingNowPlayingMovies,
+  TrendingPopularMovies,
+  TrendingTopRatedMovies,
+  TrendingUpcomingMovies,
+} from 'types/schema';
 import {
   TrendingTVShowsKeys,
   TrendingMoviesKeys,
@@ -8,19 +16,22 @@ import {
   SimplifiedMedia,
 } from 'types';
 
-type MovieData = NowPlayingMovies;
-
-type TVShowData = OnTheAirTVShows;
-
 export type Data = MovieData | TVShowData;
 
-type TrendingMovieItem = Partial<
-  Record<TrendingMoviesKeys, (data: MovieData) => DataResult>
->;
+type MovieData =
+  | TrendingNowPlayingMovies
+  | TrendingPopularMovies
+  | TrendingTopRatedMovies
+  | TrendingUpcomingMovies;
 
-type TrendingTVShowItem = Partial<
-  Record<TrendingTVShowsKeys, (data: TVShowData) => DataResult>
->;
+type TVShowData =
+  | TrendingOnTheAirTVShows
+  | TrendingPopularTVShows
+  | TrendingTopRatedTVShows;
+
+type TrendingMovieItem = Record<TrendingMoviesKeys, (data: MovieData) => DataResult>;
+
+type TrendingTVShowItem = Record<TrendingTVShowsKeys, (data: TVShowData) => DataResult>;
 
 type DataResult = {
   items: SimplifiedMedia[];
@@ -39,11 +50,35 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
     (trendingMovieKey: TrendingMediaItemKey) => {
       const movieOnGetDataMapping: TrendingMovieItem = {
         nowPlaying: (data: MovieData): DataResult => {
-          const nowPlayingMoviesData = data as NowPlayingMovies;
+          const nowPlayingMoviesData = data as TrendingNowPlayingMovies;
 
           return {
             hasMore: nowPlayingMoviesData.trendingMovies.nowPlaying.hasMore,
             items: nowPlayingMoviesData.trendingMovies.nowPlaying.items,
+          };
+        },
+        popular: (data: MovieData): DataResult => {
+          const popularMoviesData = data as TrendingPopularMovies;
+
+          return {
+            hasMore: popularMoviesData.trendingMovies.popular.hasMore,
+            items: popularMoviesData.trendingMovies.popular.items,
+          };
+        },
+        topRated: (data: MovieData): DataResult => {
+          const topRatedData = data as TrendingTopRatedMovies;
+
+          return {
+            hasMore: topRatedData.trendingMovies.topRated.hasMore,
+            items: topRatedData.trendingMovies.topRated.items,
+          };
+        },
+        upcoming: (data: MovieData): DataResult => {
+          const upcomingData = data as TrendingUpcomingMovies;
+
+          return {
+            hasMore: upcomingData.trendingMovies.upcoming.hasMore,
+            items: upcomingData.trendingMovies.upcoming.items,
           };
         },
       };
@@ -57,11 +92,27 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
     (trendingMovieKey: TrendingMediaItemKey): DataResult => {
       const tvShowOnGetDataMapping: TrendingTVShowItem = {
         onTheAir: (data: TVShowData): DataResult => {
-          const onTheAirTVShowsData = data as TVShowData;
+          const onTheAirTVShowsData = data as TrendingOnTheAirTVShows;
 
           return {
             hasMore: onTheAirTVShowsData.trendingTvShows.onTheAir.hasMore,
             items: onTheAirTVShowsData.trendingTvShows.onTheAir.items,
+          };
+        },
+        popular: (data: TVShowData): DataResult => {
+          const popularTVShowsData = data as TrendingPopularTVShows;
+
+          return {
+            hasMore: popularTVShowsData.trendingTvShows.popular.hasMore,
+            items: popularTVShowsData.trendingTvShows.popular.items,
+          };
+        },
+        topRated: (data: TVShowData): DataResult => {
+          const topRatedTVShowsData = data as TrendingTopRatedTVShows;
+          console.log('data: ', data);
+          return {
+            hasMore: topRatedTVShowsData.trendingTvShows.topRated.hasMore,
+            items: topRatedTVShowsData.trendingTvShows.topRated.items,
           };
         },
       };

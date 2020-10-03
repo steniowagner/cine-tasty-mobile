@@ -11,7 +11,7 @@ import {
   SimplifiedMedia,
 } from 'types';
 
-import { NOW_PLAYING_MOVIES, ON_THE_AIR_TV_SHOWS } from './queries';
+import * as TrendingQueries from './queries';
 import useOnGetData, { Data } from './useOnGetData';
 
 export const I18N_PAGINATE_TV_SHOWS_ERROR_REF = 'translations:home:tvShowsPaginationError';
@@ -51,24 +51,32 @@ const useMediaSectionViewAll = ({
   const onGetData = useOnGetData({ trendingMediaItemKey, isMovie });
 
   const getMovieProperQuery = useCallback((trendingMovieKey: TrendingMediaItemKey) => {
-    const movieTrendingsMapping: Partial<Record<TrendingMoviesKeys, DocumentNode>> = {
-      nowPlaying: NOW_PLAYING_MOVIES,
+    const movieTrendingsMapping: Record<TrendingMoviesKeys, DocumentNode> = {
+      nowPlaying: TrendingQueries.NOW_PLAYING_MOVIES,
+      popular: TrendingQueries.POPULAR_MOVIES,
+      topRated: TrendingQueries.TOP_RATED_MOVIES,
+      upcoming: TrendingQueries.UPCOMING_MOVIES,
     };
 
     return movieTrendingsMapping[trendingMovieKey];
   }, []);
 
   const getTVShowProperQuery = useCallback((trendingMovieKey: TrendingMediaItemKey) => {
-    const tvShowTrendingsMapping: Partial<Record<TrendingTVShowsKeys, DocumentNode>> = {
-      onTheAir: ON_THE_AIR_TV_SHOWS,
+    const tvShowTrendingsMapping: Record<TrendingTVShowsKeys, DocumentNode> = {
+      onTheAir: TrendingQueries.ON_THE_AIR_TV_SHOWS,
+      popular: TrendingQueries.POPULAR_TV_SHOWS,
+      topRated: TrendingQueries.TOP_RATED_TV_SHOWS,
     };
 
     return tvShowTrendingsMapping[trendingMovieKey];
   }, []);
 
-  const getProperQuery = useCallback((): DocumentNode => (isMovie
-    ? getMovieProperQuery(trendingMediaItemKey)
-    : getTVShowProperQuery(trendingMediaItemKey)), [trendingMediaItemKey, isMovie]);
+  const getProperQuery = useCallback(
+    (): DocumentNode => (isMovie
+      ? getMovieProperQuery(trendingMediaItemKey)
+      : getTVShowProperQuery(trendingMediaItemKey)),
+    [trendingMediaItemKey, isMovie],
+  );
 
   const handleOnGetData = useCallback((data: Data): boolean => {
     const { hasMore, items } = onGetData(data);

@@ -33,11 +33,11 @@ export const TRANSITIONING_DURATION = 1200;
 type ViewAllProps = {
   sectionItems: SimplifiedMedia[];
   sectionID: TrendingMediaItemKey;
-  sectionTitle: string;
+  viewAllTitle: string;
 };
 
 type State = {
-  onPressViewAll: ({ sectionItems, sectionTitle, sectionID }: ViewAllProps) => void;
+  onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => void;
   onPressTop3LearnMore: (id: number) => void;
   onPressTrendingItem: (id: number) => void;
   shouldDisableHeaderActions: boolean;
@@ -171,11 +171,11 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
       [SearchType.MOVIE]: {
         onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [MOVIES] - ', id),
         onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [MOVIES]: ', id),
-        onPressViewAll: ({ sectionItems, sectionTitle, sectionID }: ViewAllProps) => {
+        onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
           navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-            headerTitle: `${sectionTitle} - ${t('translations:home:movies')}`,
             onPressItem: (id: number) => console.log('Movie - ', id),
             initialDataset: sectionItems,
+            headerTitle: viewAllTitle,
             sectionKey: sectionID,
             isMovie: true,
           });
@@ -193,10 +193,10 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
       [SearchType.TV]: {
         onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [TV-SHOW] - ', id),
         onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [TV-SHOW]: ', id),
-        onPressViewAll: ({ sectionItems, sectionTitle, sectionID }: ViewAllProps) => navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-          headerTitle: `${sectionTitle} - ${t('translations:home:tvShows')}`,
+        onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
           onPressItem: (id: number) => console.log('TVShow - ', id),
           initialDataset: sectionItems,
+          headerTitle: viewAllTitle,
           sectionKey: sectionID,
           isMovie: false,
         }),

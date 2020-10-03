@@ -54,15 +54,22 @@ export interface Locale {
     trendingMovies: {
       error: string;
       nowPlaying: string;
+      nowPlayingViewAllTitle: string;
       popular: string;
+      popularViewAllTitle: string;
       topRated: string;
+      topRatedViewAllTitle: string;
       upcoming: string;
+      upcomingViewAllTitle: string;
     };
     trendingTvShows: {
       error: string;
       onTheAir: string;
+      onTheAirViewAllTitle: string;
       popular: string;
+      popularViewAllTitle: string;
       topRated: string;
+      topRatedViewAllTitle: string;
     };
   };
   news: {

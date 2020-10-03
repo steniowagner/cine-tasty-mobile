@@ -130,5 +130,6 @@ export type TrendingMediaItemKey = TrendingTVShowsKeys | TrendingMoviesKeys;
 export type HomeSection = {
   id: TrendingMediaItemKey;
   data: SimplifiedMedia[];
-  sectionTitle: string
+  viewAllTitle: string;
+  sectionTitle: string;
 };
