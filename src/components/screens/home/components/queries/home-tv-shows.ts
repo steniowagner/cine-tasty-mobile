@@ -1,10 +1,14 @@
 import gql from 'graphql-tag';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import TrendingTVShow from './trendingTVShowFragment';
-
 export const GET_TRENDING_TV_SHOWS = gql`
-  ${TrendingTVShow}
+  fragment TrendingTVShow on BaseTVShow {
+    voteAverage
+    title: name
+    posterPath
+    voteCount
+    genreIds
+    id
+  }
 
   query TrendingTVShows($page: Int!, $language: ISO6391Language) {
     trendingTvShows {

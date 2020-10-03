@@ -18,6 +18,9 @@ import {
   TrendingMovies_trendingMovies_topRated_items as TopRatedMovies,
   TrendingMovies_trendingMovies_upcoming_items as UpcomingMovies,
 
+  TrendingTVShows_trendingTvShows as TrendingTVShows,
+  TrendingMovies_trendingMovies as TrendingMovies,
+
   GetArticlesVariables,
   QuestionDifficulty,
   QuestionCategory,
@@ -118,7 +121,14 @@ export type HomeTop3Item = {
   id: number;
 };
 
+export type TrendingTVShowsKeys = keyof Omit<TrendingTVShows, '__typename'>;
+
+export type TrendingMoviesKeys = keyof Omit<TrendingMovies, '__typename'>;
+
+export type TrendingMediaItemKey = TrendingTVShowsKeys | TrendingMoviesKeys;
+
 export type HomeSection = {
+  id: TrendingMediaItemKey;
   data: SimplifiedMedia[];
   sectionTitle: string
 };

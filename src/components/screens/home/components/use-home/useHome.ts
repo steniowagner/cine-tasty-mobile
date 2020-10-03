@@ -5,8 +5,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import { SEARCH_MOVIES, SEARCH_TV_SHOWS } from 'components/screens/shared/search/queries';
+import {
+  TrendingMediaItemKey, HomeTop3Item, HomeSection, SimplifiedMedia,
+} from 'types';
 import { TrendingTVShows, TrendingMovies, SearchType } from 'types/schema';
-import { HomeTop3Item, HomeSection, SimplifiedMedia } from 'types';
 
 import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '../queries';
 import { HomeStackParams } from '../../routes/route-params-types';
@@ -28,8 +30,14 @@ export const SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF = 'translations:home:search:tv
 
 export const TRANSITIONING_DURATION = 1200;
 
+type ViewAllProps = {
+  sectionItems: SimplifiedMedia[];
+  sectionID: TrendingMediaItemKey;
+  sectionTitle: string;
+};
+
 type State = {
-  onPressViewAll: (sectionItems: SimplifiedMedia[], sectionTitle: string) => void;
+  onPressViewAll: ({ sectionItems, sectionTitle, sectionID }: ViewAllProps) => void;
   onPressTop3LearnMore: (id: number) => void;
   onPressTrendingItem: (id: number) => void;
   shouldDisableHeaderActions: boolean;
@@ -163,10 +171,13 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
       [SearchType.MOVIE]: {
         onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [MOVIES] - ', id),
         onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [MOVIES]: ', id),
-        onPressViewAll: (sectionItems: SimplifiedMedia[], sectionTitle: string) => {
+        onPressViewAll: ({ sectionItems, sectionTitle, sectionID }: ViewAllProps) => {
           navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-            initialDataset: sectionItems,
             headerTitle: `${sectionTitle} - ${t('translations:home:movies')}`,
+            onPressItem: (id: number) => console.log('Movie - ', id),
+            initialDataset: sectionItems,
+            sectionKey: sectionID,
+            isMovie: true,
           });
         },
         onPressSearch: () => {
@@ -182,9 +193,12 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
       [SearchType.TV]: {
         onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [TV-SHOW] - ', id),
         onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [TV-SHOW]: ', id),
-        onPressViewAll: (sectionItems: SimplifiedMedia[], sectionTitle: string) => navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-          initialDataset: sectionItems,
+        onPressViewAll: ({ sectionItems, sectionTitle, sectionID }: ViewAllProps) => navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
           headerTitle: `${sectionTitle} - ${t('translations:home:tvShows')}`,
+          onPressItem: (id: number) => console.log('TVShow - ', id),
+          initialDataset: sectionItems,
+          sectionKey: sectionID,
+          isMovie: false,
         }),
         onPressSearch: () => {
           navigation.navigate('SEARCH', {

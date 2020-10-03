@@ -1,17 +1,16 @@
 import gql from 'graphql-tag';
 
+import TrendingTVShowFragment from './trendingTVShowFragment';
+
 export const ON_THE_AIR_TV_SHOWS = gql`
+  ${TrendingTVShowFragment}
+
   query OnTheAirTVShows($page: Int!, $language: ISO6391Language) {
     trendingTvShows {
       onTheAir(args: { page: $page, language: $language }) {
         hasMore
         items {
-          title: name
-          voteAverage
-          posterPath
-          voteCount
-          genreIds
-          id
+          ...TrendingTVShowFragment
         }
       }
     }

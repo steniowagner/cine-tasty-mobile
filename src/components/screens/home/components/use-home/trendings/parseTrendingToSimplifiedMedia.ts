@@ -9,8 +9,8 @@ type TrendingItems = (TrendingMovie | TrendingTVShow) & {
 const parseTrendingToSimplifiedMedia = (
   trendingItems: TrendingItems[],
 ): SimplifiedMedia[] => trendingItems.map((trendingItem: TrendingItems) => ({
-  title: trendingItem.title || trendingItem.name,
   ...trendingItem,
+  title: trendingItem.title || trendingItem.name,
 }));
 
 export default parseTrendingToSimplifiedMedia;

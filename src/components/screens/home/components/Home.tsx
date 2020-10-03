@@ -75,7 +75,11 @@ const Home = ({ navigation }: Props) => {
           />
           {trendings.map((trending) => (
             <Section
-              onPressViewAll={() => onPressViewAll(trending.data, trending.sectionTitle)}
+              onPressViewAll={() => onPressViewAll({
+                sectionTitle: trending.sectionTitle,
+                sectionItems: trending.data,
+                sectionID: trending.id,
+              })}
               onPressItem={(id: number) => onPressTrendingItem(id)}
               sectionTitle={trending.sectionTitle}
               key={trending.sectionTitle}
