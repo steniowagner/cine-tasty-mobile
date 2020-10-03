@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  fragment TrendingMovie on BaseMovie {
+  fragment TrendingMovieFragment on BaseMovie {
     voteAverage
     posterPath
     voteCount

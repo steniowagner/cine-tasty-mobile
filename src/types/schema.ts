@@ -34,6 +34,84 @@ export interface GetFamousVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: NowPlayingMovies
+// ====================================================
+
+export interface NowPlayingMovies_trendingMovies_nowPlaying_items {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  genreIds: string[];
+  title: string | null;
+  id: number | null;
+}
+
+export interface NowPlayingMovies_trendingMovies_nowPlaying {
+  __typename: "TrendingMoviesQueryResult";
+  hasMore: boolean;
+  items: NowPlayingMovies_trendingMovies_nowPlaying_items[];
+}
+
+export interface NowPlayingMovies_trendingMovies {
+  __typename: "TrendingMovies";
+  nowPlaying: NowPlayingMovies_trendingMovies_nowPlaying;
+}
+
+export interface NowPlayingMovies {
+  trendingMovies: NowPlayingMovies_trendingMovies;
+}
+
+export interface NowPlayingMoviesVariables {
+  page: number;
+  language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: OnTheAirTVShows
+// ====================================================
+
+export interface OnTheAirTVShows_trendingTvShows_onTheAir_items {
+  __typename: "BaseTVShow";
+  voteAverage: number | null;
+  title: string | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  genreIds: string[];
+  id: number | null;
+}
+
+export interface OnTheAirTVShows_trendingTvShows_onTheAir {
+  __typename: "TrendingTVShowsQueryResult";
+  hasMore: boolean;
+  items: OnTheAirTVShows_trendingTvShows_onTheAir_items[];
+}
+
+export interface OnTheAirTVShows_trendingTvShows {
+  __typename: "TrendingTVShows";
+  onTheAir: OnTheAirTVShows_trendingTvShows_onTheAir;
+}
+
+export interface OnTheAirTVShows {
+  trendingTvShows: OnTheAirTVShows_trendingTvShows;
+}
+
+export interface OnTheAirTVShowsVariables {
+  page: number;
+  language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: TrendingMovies
 // ====================================================
 
@@ -132,45 +210,6 @@ export interface TrendingMoviesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: NowPlayingMovies
-// ====================================================
-
-export interface NowPlayingMovies_trendingMovies_nowPlaying_items {
-  __typename: "BaseMovie";
-  voteAverage: number | null;
-  posterPath: string | null;
-  voteCount: number | null;
-  genreIds: string[];
-  title: string | null;
-  id: number | null;
-}
-
-export interface NowPlayingMovies_trendingMovies_nowPlaying {
-  __typename: "TrendingMoviesQueryResult";
-  hasMore: boolean;
-  items: NowPlayingMovies_trendingMovies_nowPlaying_items[];
-}
-
-export interface NowPlayingMovies_trendingMovies {
-  __typename: "TrendingMovies";
-  nowPlaying: NowPlayingMovies_trendingMovies_nowPlaying;
-}
-
-export interface NowPlayingMovies {
-  trendingMovies: NowPlayingMovies_trendingMovies;
-}
-
-export interface NowPlayingMoviesVariables {
-  page: number;
-  language?: ISO6391Language | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: TrendingTVShows
 // ====================================================
 
@@ -240,45 +279,6 @@ export interface TrendingTVShows {
 }
 
 export interface TrendingTVShowsVariables {
-  page: number;
-  language?: ISO6391Language | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: OnTheAirTVShows
-// ====================================================
-
-export interface OnTheAirTVShows_trendingTvShows_onTheAir_items {
-  __typename: "BaseTVShow";
-  title: string | null;
-  voteAverage: number | null;
-  posterPath: string | null;
-  voteCount: number | null;
-  genreIds: string[];
-  id: number | null;
-}
-
-export interface OnTheAirTVShows_trendingTvShows_onTheAir {
-  __typename: "TrendingTVShowsQueryResult";
-  hasMore: boolean;
-  items: OnTheAirTVShows_trendingTvShows_onTheAir_items[];
-}
-
-export interface OnTheAirTVShows_trendingTvShows {
-  __typename: "TrendingTVShows";
-  onTheAir: OnTheAirTVShows_trendingTvShows_onTheAir;
-}
-
-export interface OnTheAirTVShows {
-  trendingTvShows: OnTheAirTVShows_trendingTvShows;
-}
-
-export interface OnTheAirTVShowsVariables {
   page: number;
   language?: ISO6391Language | null;
 }
@@ -512,6 +512,44 @@ export interface SearchTVShow {
 
 export interface SearchTVShowVariables {
   input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TrendingMovieFragment
+// ====================================================
+
+export interface TrendingMovieFragment {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  genreIds: string[];
+  title: string | null;
+  id: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: TrendingTVShowFragment
+// ====================================================
+
+export interface TrendingTVShowFragment {
+  __typename: "BaseTVShow";
+  voteAverage: number | null;
+  title: string | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  genreIds: string[];
+  id: number | null;
 }
 
 /* tslint:disable */

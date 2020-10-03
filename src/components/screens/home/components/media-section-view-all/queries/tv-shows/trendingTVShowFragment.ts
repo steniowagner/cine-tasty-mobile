@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  fragment TrendingTVShow on BaseTVShow {
+  fragment TrendingTVShowFragment on BaseTVShow {
     voteAverage
     title: name
     posterPath

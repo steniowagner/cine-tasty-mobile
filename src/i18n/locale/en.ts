@@ -146,6 +146,8 @@ const en: Locale = {
       popular: 'Popular',
       topRated: 'Top Rated',
     },
+    tvShowsPaginationError: 'tvShowsPaginationError',
+    moviesPaginationError: 'moviesPaginationError',
     search: {
       movie: {
         queryByTextError: 'movie-queryByTextError',

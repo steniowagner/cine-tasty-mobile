@@ -49,6 +49,8 @@ export interface Locale {
         placeholder: string;
       };
     };
+    tvShowsPaginationError: string;
+    moviesPaginationError: string;
     trendingMovies: {
       error: string;
       nowPlaying: string;
