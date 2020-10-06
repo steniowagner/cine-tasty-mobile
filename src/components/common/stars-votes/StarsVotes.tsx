@@ -52,9 +52,12 @@ type Props = {
 const StarsVotes = ({ voteCount, withText, votes }: Props) => {
   const { numberEmptyStars, numberFullStars, numberHalfStars } = useStarsVotes(votes);
 
+  const shouldShowVoteCount = withText && !!voteCount;
+  const shouldShowVotes = withText && !!votes;
+
   return (
     <Wrapper>
-      {withText && <VotesText>{votes.toFixed(1)}</VotesText>}
+      {shouldShowVotes && <VotesText>{votes.toFixed(1)}</VotesText>}
       <Wrapper
         testID="stars-wrapper"
       >
@@ -98,7 +101,7 @@ const StarsVotes = ({ voteCount, withText, votes }: Props) => {
           </Wrapper>
         )}
       </Wrapper>
-      {withText && <VotesText>{` (${voteCount})`}</VotesText>}
+      {shouldShowVoteCount && <VotesText>{` (${voteCount})`}</VotesText>}
     </Wrapper>
   );
 };
