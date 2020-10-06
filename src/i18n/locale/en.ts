@@ -136,16 +136,25 @@ const en: Locale = {
     trendingMovies: {
       error: 'trendingMoviesError',
       nowPlaying: 'Now Playing',
+      nowPlayingViewAllTitle: 'nowPlayingViewAllTitle',
       popular: 'Popular',
+      popularViewAllTitle: 'popularViewAllTitle',
       topRated: 'Top Rated',
+      topRatedViewAllTitle: 'topRatedViewAllTitle',
       upcoming: 'Upcoming',
+      upcomingViewAllTitle: 'upcomingViewAllTitle',
     },
     trendingTvShows: {
       error: 'trendingTVShowsError',
+      onTheAirViewAllTitle: 'onTheAirViewAllTitle',
       onTheAir: 'On the Air',
+      popularViewAllTitle: 'popularViewAllTitle',
       popular: 'Popular',
+      topRatedViewAllTitle: 'topRatedViewAllTitle',
       topRated: 'Top Rated',
     },
+    tvShowsPaginationError: 'tvShowsPaginationError',
+    moviesPaginationError: 'moviesPaginationError',
     search: {
       movie: {
         queryByTextError: 'movie-queryByTextError',

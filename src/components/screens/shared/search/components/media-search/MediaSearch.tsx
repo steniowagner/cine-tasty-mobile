@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import { Platform, FlatList } from 'react-native';
 
+import LoadingMediaSearch from 'components/common/full-media-list-item/LoadingFullMediaList';
+import MediaSearchListItem from 'components/common/full-media-list-item/FullMediaListItem';
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
 import {
   SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
@@ -8,9 +10,6 @@ import {
 } from 'types/schema';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import { BaseSearchProps } from 'types';
-
-import MediaSearchListItem from './MediaSerachListItem';
-import LoadingMediaSearch from './LoadingMediaSearch';
 
 type MediaSearchItem = SearchTVShowResult | SearchMovieResult;
 

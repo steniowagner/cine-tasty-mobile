@@ -3,9 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { DefaultTheme, withTheme } from 'styled-components';
 
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
+import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
-import { getTransparentHeaderOptions } from 'routes/constants';
 
+import MediaSectionViewAll, {
+  Props as MediaSectionViewAllScreenProps,
+} from '../components/media-section-view-all/MediaSectionViewAll';
 import LOCAL_ROUTES from './route-names';
 import Home from '../components/Home';
 
@@ -30,6 +33,14 @@ const HomeStack = ({ theme }: Props) => (
       }}
       name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
       component={FamousDetail}
+    />
+    <Stack.Screen
+      name={LOCAL_ROUTES.MEDIA_DETAILS_VIEW_ALL.id}
+      options={({ route }: MediaSectionViewAllScreenProps) => ({
+        ...getDefaultHeaderOptions(),
+        headerTitle: route.params.headerTitle,
+      })}
+      component={MediaSectionViewAll}
     />
   </Stack.Navigator>
 );

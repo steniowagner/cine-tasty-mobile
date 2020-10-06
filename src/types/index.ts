@@ -8,6 +8,19 @@ import {
   SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
   SearchPerson_search_items_BasePerson as SearchPersonResult,
   SearchMovie_search_items_BaseMovie as SearchMovieResult,
+
+  TrendingTVShows_trendingTvShows_onTheAir_items as OnTheAirTVShows,
+  TrendingTVShows_trendingTvShows_topRated_items as TopRatedTVShows,
+  TrendingTVShows_trendingTvShows_popular_items as PopuarTVShows,
+
+  TrendingMovies_trendingMovies_nowPlaying_items as NowPlayingMovies,
+  TrendingMovies_trendingMovies_popular_items as PopularMovies,
+  TrendingMovies_trendingMovies_topRated_items as TopRatedMovies,
+  TrendingMovies_trendingMovies_upcoming_items as UpcomingMovies,
+
+  TrendingTVShows_trendingTvShows as TrendingTVShows,
+  TrendingMovies_trendingMovies as TrendingMovies,
+
   GetArticlesVariables,
   QuestionDifficulty,
   QuestionCategory,
@@ -98,13 +111,7 @@ export enum CustomizedModalChildrenType {
   LANGUAGE = 'LANGUAGE',
 }
 
-export type SimplifiedMedia = {
-  voteAverage: number;
-  voteCount: number;
-  image: string;
-  title: string;
-  id: number;
-};
+export type SimplifiedMedia = OnTheAirTVShows | TopRatedTVShows | PopuarTVShows | NowPlayingMovies | PopularMovies | TopRatedMovies | UpcomingMovies;
 
 export type HomeTop3Item = {
   voteAverage: number;
@@ -114,7 +121,15 @@ export type HomeTop3Item = {
   id: number;
 };
 
+export type TrendingTVShowsKeys = keyof Omit<TrendingTVShows, '__typename'>;
+
+export type TrendingMoviesKeys = keyof Omit<TrendingMovies, '__typename'>;
+
+export type TrendingMediaItemKey = TrendingTVShowsKeys | TrendingMoviesKeys;
+
 export type HomeSection = {
+  id: TrendingMediaItemKey;
   data: SimplifiedMedia[];
-  sectionTitle: string
+  viewAllTitle: string;
+  sectionTitle: string;
 };

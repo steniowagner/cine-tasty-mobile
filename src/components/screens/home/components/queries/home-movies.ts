@@ -5,6 +5,7 @@ export const GET_TRENDING_MOVIES = gql`
     voteAverage
     posterPath
     voteCount
+    genreIds
     title
     id
   }
@@ -17,7 +18,6 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
-          genreIds
         }
       }
       popular(args: { page: $page, language: $language }) {

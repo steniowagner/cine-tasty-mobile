@@ -5,7 +5,7 @@ import { ApolloQueryResult } from 'apollo-client';
 
 import debounce from 'utils/debounce';
 
-const PAGINATION_DELAY = 500;
+export const PAGINATION_DELAY = 500;
 
 const initialPagination: Pagination = {
   isPaginating: false,

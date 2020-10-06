@@ -49,18 +49,27 @@ export interface Locale {
         placeholder: string;
       };
     };
+    tvShowsPaginationError: string;
+    moviesPaginationError: string;
     trendingMovies: {
       error: string;
       nowPlaying: string;
+      nowPlayingViewAllTitle: string;
       popular: string;
+      popularViewAllTitle: string;
       topRated: string;
+      topRatedViewAllTitle: string;
       upcoming: string;
+      upcomingViewAllTitle: string;
     };
     trendingTvShows: {
       error: string;
       onTheAir: string;
+      onTheAirViewAllTitle: string;
       popular: string;
+      popularViewAllTitle: string;
       topRated: string;
+      topRatedViewAllTitle: string;
     };
   };
   news: {

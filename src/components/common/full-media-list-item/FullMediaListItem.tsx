@@ -48,7 +48,7 @@ type Props = {
   votes: number;
 };
 
-const MediaSearchListItem = ({
+const FullMediaListItem = ({
   onPressDetails,
   genres = [],
   image,
@@ -57,6 +57,7 @@ const MediaSearchListItem = ({
 }: Props) => (
   <Wrapper
     onPress={onPressDetails}
+    testID="full-media-list-item"
   >
     <MediaImage
       image={image}
@@ -74,4 +75,4 @@ const MediaSearchListItem = ({
   </Wrapper>
 );
 
-export default MediaSearchListItem;
+export default FullMediaListItem;

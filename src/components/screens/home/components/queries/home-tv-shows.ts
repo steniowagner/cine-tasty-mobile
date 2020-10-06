@@ -3,9 +3,10 @@ import gql from 'graphql-tag';
 export const GET_TRENDING_TV_SHOWS = gql`
   fragment TrendingTVShow on BaseTVShow {
     voteAverage
+    title: name
     posterPath
     voteCount
-    name
+    genreIds
     id
   }
 
@@ -17,7 +18,6 @@ export const GET_TRENDING_TV_SHOWS = gql`
         hasMore
         items {
           ...TrendingTVShow
-          genreIds
         }
       }
       popular(args: { page: $page, language: $language }) {

@@ -1,6 +1,6 @@
 import { Locale } from './Locale';
 
-const es: Locale = {
+const en: Locale = {
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -136,21 +136,30 @@ const es: Locale = {
     trendingMovies: {
       error: 'trendingMoviesError',
       nowPlaying: 'Now Playing',
+      nowPlayingViewAllTitle: 'nowPlayingViewAllTitle',
       popular: 'Popular',
+      popularViewAllTitle: 'popularViewAllTitle',
       topRated: 'Top Rated',
+      topRatedViewAllTitle: 'topRatedViewAllTitle',
       upcoming: 'Upcoming',
+      upcomingViewAllTitle: 'upcomingViewAllTitle',
     },
     trendingTvShows: {
       error: 'trendingTVShowsError',
+      onTheAirViewAllTitle: 'onTheAirViewAllTitle',
       onTheAir: 'On the Air',
+      popularViewAllTitle: 'popularViewAllTitle',
       popular: 'Popular',
+      topRatedViewAllTitle: 'topRatedViewAllTitle',
       topRated: 'Top Rated',
     },
+    tvShowsPaginationError: 'tvShowsPaginationError',
+    moviesPaginationError: 'moviesPaginationError',
     search: {
       movie: {
         queryByTextError: 'movie-queryByTextError',
         paginationError: 'movie-paginationError',
-        placeholder: 'placeholder',
+        placeholder: 'movies-placeholder',
       },
       tvShows: {
         queryByTextError: 'tv-shows-queryByTextError',
@@ -161,4 +170,4 @@ const es: Locale = {
   },
 };
 
-export default es;
+export default en;

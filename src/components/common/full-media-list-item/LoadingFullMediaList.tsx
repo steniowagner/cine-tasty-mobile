@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native';
 import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
 import metrics from 'styles/metrics';
 
-import { Wrapper } from './MediaSerachListItem';
+import { Wrapper } from './FullMediaListItem';
 import { IMAGE_HEIGHT } from './MediaImage';
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / IMAGE_HEIGHT);

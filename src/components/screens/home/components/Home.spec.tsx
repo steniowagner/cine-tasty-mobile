@@ -11,7 +11,7 @@ import {
   SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
   SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
   SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
-} from './use-home/useHome';
+} from './hooks/usePressMapping';
 import Home from './Home';
 
 const renderHome = (mockResolvers?: IMocks, navigate = jest.fn) => {

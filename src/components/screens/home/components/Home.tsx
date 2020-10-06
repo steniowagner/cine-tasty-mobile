@@ -9,7 +9,7 @@ import metrics from 'styles/metrics';
 
 import { HomeStackParams } from '../routes/route-params-types';
 import LoadingHome from './top3/LoadingTop3';
-import useHome from './use-home/useHome';
+import useHome from './hooks/useHome';
 import Header from './header/Header';
 import Section from './Section';
 import Top3 from './top3/Top3';
@@ -75,9 +75,13 @@ const Home = ({ navigation }: Props) => {
           />
           {trendings.map((trending) => (
             <Section
+              onPressViewAll={() => onPressViewAll({
+                viewAllTitle: trending.viewAllTitle,
+                sectionItems: trending.data,
+                sectionID: trending.id,
+              })}
               onPressItem={(id: number) => onPressTrendingItem(id)}
               sectionTitle={trending.sectionTitle}
-              onPressViewAll={onPressViewAll}
               key={trending.sectionTitle}
               items={trending.data}
             />
