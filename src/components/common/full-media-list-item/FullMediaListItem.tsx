@@ -57,6 +57,7 @@ const FullMediaListItem = ({
 }: Props) => (
   <Wrapper
     onPress={onPressDetails}
+    testID="full-media-list-item"
   >
     <MediaImage
       image={image}
