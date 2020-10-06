@@ -59,6 +59,7 @@ const MediaSectionViewAll = ({ route }: Props) => {
         renderItem={({ item }) => (
           <MediaSectionViewAllListItem
             onPressDetails={() => route.params.onPressItem(item.id)}
+            voteCount={item.voteCount}
             votes={item.voteAverage}
             image={item.posterPath}
             genres={item.genreIds}

@@ -73,12 +73,12 @@ describe('Testing the query selection for pagination on <MediaSectionViewAll /> 
   });
 
   it('shound select the TopRated-query', () => {
-    render(renderMediaSectionViewAll({ sectionKey: 'popular' }));
+    render(renderMediaSectionViewAll({ sectionKey: 'topRated' }));
 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
     expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(
-      TVShowsQueries.POPULAR_TV_SHOWS,
+      TVShowsQueries.TOP_RATED_TV_SHOWS,
     );
   });
 });

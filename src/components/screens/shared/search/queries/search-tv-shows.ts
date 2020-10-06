@@ -10,6 +10,7 @@ export const SEARCH_TV_SHOWS = gql`
           title: name
           voteAverage
           posterPath
+          voteCount
           genreIds
           id
         }

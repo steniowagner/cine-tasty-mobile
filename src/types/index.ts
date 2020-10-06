@@ -115,6 +115,7 @@ export type SimplifiedMedia = OnTheAirTVShows | TopRatedTVShows | PopuarTVShows 
 
 export type HomeTop3Item = {
   voteAverage: number;
+  voteCount: number;
   genres: string[];
   image: string;
   title: string;

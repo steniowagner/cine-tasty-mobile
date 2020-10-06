@@ -35,6 +35,7 @@ const Top3 = ({ onPressLearnMore, top3Items }: Props) => {
             <Top3ListItem
               onPress={() => onPressLearnMore(item.id)}
               voteAverage={item.voteAverage}
+              voteCount={item.voteCount}
               isTheMiddle={index === 1}
               translateY={translateY}
               genres={item.genres}
