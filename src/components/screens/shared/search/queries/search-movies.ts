@@ -9,6 +9,7 @@ export const SEARCH_MOVIES = gql`
         ... on BaseMovie {
           voteAverage
           posterPath
+          voteCount
           genreIds
           title
           id

@@ -6,17 +6,19 @@ import { dark } from 'styles/themes';
 
 import StarsVotes from './StarsVotes';
 
-const renderStarsVotes = (withText: boolean, votes: number) => (
+const renderStarsVotes = (withText: boolean, votes: number, voteCount?: number) => (
   <ThemeProvider theme={dark}>
-    <StarsVotes withText={withText} votes={votes} />
+    <StarsVotes withText={withText} votes={votes} voteCount={voteCount} />
   </ThemeProvider>
 );
 
 describe('Testing <StarsVotes />', () => {
   it('should render correctly when the "withText" prop is "true"', () => {
-    const { getByTestId, getByText } = render(renderStarsVotes(true, 5));
+    const { getByTestId, getByText } = render(renderStarsVotes(true, 5, 10));
 
-    expect(getByText('5')).not.toBeNull();
+    expect(getByText('5.0')).not.toBeNull();
+
+    expect(getByText(' (10)')).not.toBeNull();
 
     expect(getByTestId('stars-wrapper')).not.toBeNull();
 
@@ -24,9 +26,11 @@ describe('Testing <StarsVotes />', () => {
   });
 
   it('should render correctly when the "withText" prop is "false"', () => {
-    const { getByTestId, queryByText } = render(renderStarsVotes(false, 5));
+    const { getByTestId, queryByText } = render(renderStarsVotes(false, 5, 10));
 
-    expect(queryByText('5')).toBeNull();
+    expect(queryByText('5.0')).toBeNull();
+
+    expect(queryByText(' (10)')).toBeNull();
 
     expect(getByTestId('stars-wrapper')).not.toBeNull();
 

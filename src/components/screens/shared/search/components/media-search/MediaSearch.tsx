@@ -59,6 +59,7 @@ const MediaSearch = ({
       renderItem={({ item }) => (
         <MediaSearchListItem
           onPressDetails={() => onPressListItem(item)}
+          voteCount={item.voteCount}
           votes={item.voteAverage}
           image={item.posterPath}
           genres={item.genreIds}

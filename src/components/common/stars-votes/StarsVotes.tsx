@@ -36,24 +36,28 @@ const EmptyStarIcon = styled(Icon).attrs(({ theme }) => ({
   margin-right: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
-const VotesAverageText = styled(Text)`
+const VotesText = styled(Text)`
   margin-right: ${({ theme }) => theme.metrics.smallSize}px;
-  font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
   color: ${({ theme }) => theme.colors.text};
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium;
 `;
 
 type Props = {
   withText?: boolean;
+  voteCount?: number;
   votes: number;
 };
 
-const StarsVotes = ({ withText, votes }: Props) => {
+const StarsVotes = ({ voteCount, withText, votes }: Props) => {
   const { numberEmptyStars, numberFullStars, numberHalfStars } = useStarsVotes(votes);
+
+  const shouldShowVoteCount = withText && !!voteCount;
+  const shouldShowVotes = withText && !!votes;
 
   return (
     <Wrapper>
-      {withText && <VotesAverageText>{votes}</VotesAverageText>}
+      {shouldShowVotes && <VotesText>{votes.toFixed(1)}</VotesText>}
       <Wrapper
         testID="stars-wrapper"
       >
@@ -97,6 +101,7 @@ const StarsVotes = ({ withText, votes }: Props) => {
           </Wrapper>
         )}
       </Wrapper>
+      {shouldShowVoteCount && <VotesText>{` (${voteCount})`}</VotesText>}
     </Wrapper>
   );
 };

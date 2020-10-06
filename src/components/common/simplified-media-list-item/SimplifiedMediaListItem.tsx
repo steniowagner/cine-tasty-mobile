@@ -144,7 +144,7 @@ const SimplifiedMediaListItem = ({
         <DefaultText
           withMarginLeft
         >
-          {`${voteAverage} (${voteCount})`}
+          {`${voteAverage.toFixed(1)} (${voteCount})`}
         </DefaultText>
       </StarsContentWrapper>
     </Wrapper>

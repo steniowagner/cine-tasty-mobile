@@ -611,6 +611,7 @@ export interface SearchMovie_search_items_BaseMovie {
   __typename: "BaseMovie";
   voteAverage: number | null;
   posterPath: string | null;
+  voteCount: number | null;
   genreIds: string[];
   title: string | null;
   id: number | null;
@@ -688,6 +689,7 @@ export interface SearchTVShow_search_items_BaseTVShow {
   title: string | null;
   voteAverage: number | null;
   posterPath: string | null;
+  voteCount: number | null;
   genreIds: string[];
   id: number | null;
 }

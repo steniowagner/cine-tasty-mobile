@@ -68,6 +68,7 @@ type Props = {
   isTheMiddle: boolean;
   onPress: () => void;
   voteAverage: number;
+  voteCount: number;
   genres: string[];
   width: number;
   image: string;
@@ -78,6 +79,7 @@ const Top3ListItem = ({
   isTheMiddle,
   voteAverage,
   translateY,
+  voteCount,
   onPress,
   genres,
   width,
@@ -103,8 +105,9 @@ const Top3ListItem = ({
       <TextContentWrapper>
         <TitleText>{title}</TitleText>
         <StarsVotes
-          withText
+          voteCount={voteCount}
           votes={voteAverage}
+          withText
         />
         <GenreText>{genres.join('  \u2022  ')}</GenreText>
         <LearnMoreButtonWrapper>

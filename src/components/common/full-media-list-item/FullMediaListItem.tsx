@@ -17,9 +17,10 @@ const TextContentWrapper = styled(View)`
 `;
 
 const TitleText = styled(Text).attrs({
-  numberOfLines: 3,
+  numberOfLines: 2,
 })`
-  font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  margin-bottom: ${({ theme }) => theme.metrics.smallSize}px;
+  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('5.5%')}px;
   color: ${({ theme }) => theme.colors.text};
   font-family: CircularStd-Bold;
 `;
@@ -27,21 +28,15 @@ const TitleText = styled(Text).attrs({
 const GenresText = styled(Text).attrs({
   numberOfLines: 2,
 })`
-  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
-  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
   color: ${({ theme }) => theme.colors.text};
   font-family: CircularStd-Medium;
 `;
 
-const Row = styled(View)`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 type Props = {
   onPressDetails: () => void;
+  voteCount?: number;
   genres: string[];
   image: string;
   title: string;
@@ -51,6 +46,7 @@ type Props = {
 const FullMediaListItem = ({
   onPressDetails,
   genres = [],
+  voteCount,
   image,
   title,
   votes,
@@ -64,13 +60,12 @@ const FullMediaListItem = ({
     />
     <TextContentWrapper>
       <TitleText>{title}</TitleText>
+      <StarsVotes
+        votes={votes}
+        withText
+        voteCount={voteCount}
+      />
       <GenresText>{genres.join('  \u2022  ')}</GenresText>
-      <Row>
-        <StarsVotes
-          votes={votes}
-          withText
-        />
-      </Row>
     </TextContentWrapper>
   </Wrapper>
 );

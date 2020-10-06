@@ -16,6 +16,7 @@ const parseTop3Data = (trendingItems: TrendingItems[]): HomeTop3Item[] => {
   return top3Dataset.slice(0, 3).map((trendingItem: TrendingItems) => ({
     title: trendingItem.title || trendingItem.name,
     voteAverage: trendingItem.voteAverage,
+    voteCount: trendingItem.voteCount,
     image: trendingItem.posterPath,
     genres: trendingItem.genreIds,
     id: trendingItem.id,
