@@ -11,7 +11,7 @@ import { HomeStackParams } from '../routes/route-params-types';
 import LoadingHome from './top3/LoadingTop3';
 import useHome from './hooks/useHome';
 import Header from './header/Header';
-import Section from './Section';
+import Section from './HomeSection';
 import Top3 from './top3/Top3';
 
 const PopupAdviceWrapper = styled(View)`
@@ -28,9 +28,10 @@ type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
+  isMovieSelectedInitially?: boolean;
 };
 
-const Home = ({ navigation }: Props) => {
+const Home = ({ isMovieSelectedInitially, navigation }: Props) => {
   const {
     shouldDisableHeaderActions,
     onPressTop3LearnMore,
@@ -43,7 +44,7 @@ const Home = ({ navigation }: Props) => {
     isLoading,
     trendings,
     top3,
-  } = useHome(navigation);
+  } = useHome(navigation, isMovieSelectedInitially);
 
   useLayoutEffect(() => {
     navigation.setOptions({

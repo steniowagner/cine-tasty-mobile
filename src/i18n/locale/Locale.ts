@@ -35,6 +35,7 @@ export interface Locale {
   time: Record<Time, string>;
   home: {
     learMoreButtonText: string;
+    viewAll: string;
     tvShows: string;
     movies: string;
     search: {

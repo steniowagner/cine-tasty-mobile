@@ -2,6 +2,7 @@ import React from 'react';
 import {
   TouchableOpacity, FlatList, Text, View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
@@ -59,39 +60,48 @@ type Props = {
   sectionTitle: string;
 };
 
-const Section = ({
+const HomeSection = ({
   onPressViewAll, sectionTitle, onPressItem, items,
-}: Props) => (
-  <Wrapper
-    testID="section-wrapper"
-  >
-    <SectionTextContentWrapper>
-      <SectionTitle>{sectionTitle}</SectionTitle>
-      <ViewAllWrapper
-        onPress={onPressViewAll}
-      >
-        <ViewAllText>View all</ViewAllText>
-        <ChevronRightIcon />
-      </ViewAllWrapper>
-    </SectionTextContentWrapper>
-    <FlatList
-      renderItem={({ item, index }) => (
-        <SimplifiedMediaListItem
-          onPress={() => onPressItem(item.id)}
-          voteAverage={item.voteAverage}
-          voteCount={item.voteCount}
-          image={item.posterPath}
-          isFirst={index === 0}
-          title={item.title}
-        />
-      )}
-      keyExtractor={(item, index) => `${item.id}-${index}`}
-      showsHorizontalScrollIndicator={false}
-      data={items}
-      testID="movies-cast"
-      horizontal
-    />
-  </Wrapper>
-);
+}: Props) => {
+  const { t } = useTranslation();
 
-export default Section;
+  return (
+    <Wrapper
+      testID="section-wrapper"
+    >
+      <SectionTextContentWrapper>
+        <SectionTitle
+          testID="section-title"
+        >
+          {sectionTitle}
+        </SectionTitle>
+        <ViewAllWrapper
+          testID="view-all-button"
+          onPress={onPressViewAll}
+        >
+          <ViewAllText>{t('translations:home:viewAll')}</ViewAllText>
+          <ChevronRightIcon />
+        </ViewAllWrapper>
+      </SectionTextContentWrapper>
+      <FlatList
+        renderItem={({ item, index }) => (
+          <SimplifiedMediaListItem
+            onPress={() => onPressItem(item.id)}
+            voteAverage={item.voteAverage}
+            voteCount={item.voteCount}
+            image={item.posterPath}
+            isFirst={index === 0}
+            title={item.title}
+          />
+        )}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
+        showsHorizontalScrollIndicator={false}
+        data={items}
+        testID="movies-cast"
+        horizontal
+      />
+    </Wrapper>
+  );
+};
+
+export default HomeSection;

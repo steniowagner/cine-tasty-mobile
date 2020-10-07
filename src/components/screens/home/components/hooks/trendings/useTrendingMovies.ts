@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +10,18 @@ import {
 import { HomeSection } from 'types';
 
 import parseTrendingToSimplifiedMedia from './parseTrendingToSimplifiedMedia';
+
+export const NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingMovies:nowPlayingViewAllTitle';
+export const NOW_PLAYING_SECTION_TITLE_i18N_REF = 'translations:home:trendingMovies:nowPlaying';
+
+export const POPULAR_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingMovies:popularViewAllTitle';
+export const POPULAR_SECTION_TITLE_i18N_REF = 'translations:home:trendingMovies:popular';
+
+export const TOP_RATED_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingMovies:topRatedViewAllTitle';
+export const TOP_RATED_SECTION_TITLE_i18N_REF = 'translations:home:trendingMovies:topRated';
+
+export const UPCOMING_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingMovies:upcomingViewAllTitle';
+export const UPCOMING_SECTION_TITLE_i18N_REF = 'translations:home:trendingMovies:upcoming';
 
 type Props = {
   rawTrendingMovies: TrendingMovies;
@@ -29,23 +42,23 @@ const useTrendingMovies = ({ rawTrendingMovies }: Props): State => {
     (trendingItemKey: TrendingItemKey, dataset: TrendingMovie[]): HomeSection => {
       const sectionMapping: Record<TrendingItemKey, Omit<HomeSection, 'data'>> = {
         nowPlaying: {
-          viewAllTitle: t('translations:home:trendingMovies:nowPlayingViewAllTitle'),
-          sectionTitle: t('translations:home:trendingMovies:nowPlaying'),
+          viewAllTitle: t(NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF),
+          sectionTitle: t(NOW_PLAYING_SECTION_TITLE_i18N_REF),
           id: 'nowPlaying',
         },
         popular: {
-          viewAllTitle: t('translations:home:trendingMovies:popularViewAllTitle'),
-          sectionTitle: t('translations:home:trendingMovies:popular'),
+          viewAllTitle: t(POPULAR_VIEW_ALL_TITLE_i18N_REF),
+          sectionTitle: t(POPULAR_SECTION_TITLE_i18N_REF),
           id: 'popular',
         },
         topRated: {
-          viewAllTitle: t('translations:home:trendingMovies:topRatedViewAllTitle'),
-          sectionTitle: t('translations:home:trendingMovies:topRated'),
+          viewAllTitle: t(TOP_RATED_VIEW_ALL_TITLE_i18N_REF),
+          sectionTitle: t(TOP_RATED_SECTION_TITLE_i18N_REF),
           id: 'topRated',
         },
         upcoming: {
-          viewAllTitle: t('translations:home:trendingMovies:upcomingViewAllTitle'),
-          sectionTitle: t('translations:home:trendingMovies:upcoming'),
+          viewAllTitle: t(UPCOMING_VIEW_ALL_TITLE_i18N_REF),
+          sectionTitle: t(UPCOMING_SECTION_TITLE_i18N_REF),
           id: 'upcoming',
         },
       };

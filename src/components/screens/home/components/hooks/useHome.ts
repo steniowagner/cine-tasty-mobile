@@ -43,14 +43,19 @@ type State = {
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
-const useHome = (navigation: HomeScreenNavigationProp): State => {
+const useHome = (
+  navigation: HomeScreenNavigationProp,
+  isMovieSelectedInitially = true,
+): State => {
+  const [isMoviesSelected, setIsMovieSelected] = useState<boolean>(
+    isMovieSelectedInitially,
+  );
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
     true,
   );
   const [trendingTVShows, setTrendingTVShows] = useState<TrendingTVShows>(undefined);
   const [trendingMovies, setTrendingMovies] = useState<TrendingMovies>(undefined);
   const [isTransitioningData, setIsTransitioningData] = useState<boolean>(false);
-  const [isMoviesSelected, setIsMovieSelected] = useState<boolean>(true);
 
   const { t } = useTranslation();
 
@@ -144,6 +149,8 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
   }, [isMoviesSelected, hasTrendingMoviesError, hasTrendingTVShowsError]);
 
   const onSelectMovies = useCallback(() => {
+    console.log('onSelectTVShows');
+
     if (trendingMovies) {
       setShouldDisableHeaderActions(true);
       setIsTransitioningData(true);
@@ -153,6 +160,7 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
   }, [trendingMovies]);
 
   const onSelectTVShows = useCallback(() => {
+    console.log('onSelectTVShows');
     setShouldDisableHeaderActions(true);
 
     if (trendingTVShows) {
