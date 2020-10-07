@@ -132,6 +132,7 @@ const en: Locale = {
   home: {
     learMoreButtonText: 'LEARN MORE',
     tvShows: 'TV Shows',
+    viewAll: 'View All',
     movies: 'Movies',
     trendingMovies: {
       error: 'trendingMoviesError',

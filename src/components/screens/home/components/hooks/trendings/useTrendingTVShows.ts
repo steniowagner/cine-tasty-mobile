@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +10,15 @@ import {
 import { HomeSection } from 'types';
 
 import parseTrendingToSimplifiedMedia from './parseTrendingToSimplifiedMedia';
+
+export const ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:onTheAirViewAllTitle';
+export const ON_THE_AIR_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:onTheAir';
+
+export const POPULAR_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:popularViewAllTitle';
+export const POPULAR_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:popular';
+
+export const TOP_RATED_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:topRatedViewAllTitle';
+export const TOP_RATED_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:topRated';
 
 type Props = {
   rawTrendingTVShows: TrendingTVShows;
@@ -34,12 +44,12 @@ const useTrendingMovies = ({ rawTrendingTVShows }: Props): State => {
           id: 'onTheAir',
         },
         popular: {
-          viewAllTitle: t('translations:home:trendingTvShows:onTheAirViewAllTitle'),
+          viewAllTitle: t('translations:home:trendingTvShows:popularViewAllTitle'),
           sectionTitle: t('translations:home:trendingTvShows:popular'),
           id: 'popular',
         },
         topRated: {
-          viewAllTitle: t('translations:home:trendingTvShows:onTheAirViewAllTitle'),
+          viewAllTitle: t('translations:home:trendingTvShows:topRatedViewAllTitle'),
           sectionTitle: t('translations:home:trendingTvShows:topRated'),
           id: 'topRated',
         },
