@@ -59,10 +59,16 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
             id: item.id,
           });
 
-          console.log('SearchMovieResult - onPressListItemL: ', item.id, item.title);
+          navigation.navigate('MEDIA_DETAIL', {
+            isMovie: true,
+            id: item.id,
+          });
         },
         onPressRecentSearchItem: (id: number) => {
-          console.log('SearchMovieResult - onPressRecentSearchItem: ', id);
+          navigation.navigate('MEDIA_DETAIL', {
+            isMovie: true,
+            id,
+          });
         },
       },
       [SearchType.TV]: {
@@ -73,10 +79,16 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
             id: item.id,
           });
 
-          console.log('SearchTVShowsResult - onPressListItem: ', item.id, item.title);
+          navigation.navigate('MEDIA_DETAIL', {
+            isMovie: false,
+            id: item.id,
+          });
         },
         onPressRecentSearchItem: (id: number) => {
-          console.log('SearchTVShowsResult - onPressRecentSearchItem: ', id);
+          navigation.navigate('MEDIA_DETAIL', {
+            isMovie: false,
+            id,
+          });
         },
       },
     };

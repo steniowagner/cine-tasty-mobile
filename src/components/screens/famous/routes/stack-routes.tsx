@@ -3,6 +3,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { useTranslation } from 'react-i18next';
 import { DefaultTheme, withTheme } from 'styled-components';
 
+import MediaDetailScreen from 'components/screens/shared/media-detail-screen/components/MediaDetailScreen';
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 
@@ -35,6 +36,13 @@ const FamousStack = ({ theme }: Props) => {
           ...TransitionPresets.SlideFromRightIOS,
         }}
         component={FamousDetail}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.MEDIA_DETAIL.id}
+        options={{
+          ...getTransparentHeaderOptions(theme),
+        }}
+        component={MediaDetailScreen}
       />
     </Stack.Navigator>
   );
