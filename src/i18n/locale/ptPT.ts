@@ -173,6 +173,7 @@ const en: Locale = {
     votes: 'Votes',
     sections: {
       details: 'Details',
+      videos: 'Videos',
     },
   },
 };

@@ -144,6 +144,7 @@ export interface Locale {
     votes: string;
     sections: {
       details: string;
+      videos: string;
     };
   };
   months: string[];
