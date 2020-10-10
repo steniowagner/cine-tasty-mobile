@@ -10,6 +10,7 @@ const dark: DefaultTheme = {
     lightPrimary: 'rgba(70, 117, 248, 0.4)',
     secondary: '#11141a',
     background: '#262626',
+    backgroundAlpha: 'rgba(38, 38, 38, 0.8)',
     contrast: '#4d4d4d',
     text: '#FFF',
     subText: 'rgba(255, 255, 255, 0.5)',

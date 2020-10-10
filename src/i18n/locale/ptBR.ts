@@ -169,6 +169,9 @@ const en: Locale = {
       },
     },
   },
+  mediaDetail: {
+    votes: 'Votes',
+  },
 };
 
 export default en;
