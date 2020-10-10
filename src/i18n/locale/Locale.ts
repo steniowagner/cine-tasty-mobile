@@ -142,6 +142,9 @@ export interface Locale {
   };
   mediaDetail: {
     votes: string;
+    sections: {
+      details: string;
+    };
   };
   months: string[];
 }

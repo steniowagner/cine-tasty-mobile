@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import HeaderInfo from './header-info/HeaderInfo';
-
+// import HeaderInfo from './header-info/HeaderInfo';
 import useMediaDetailScreen from './useMediaDetailScreen';
+import GeneralInfo from './sections/GeneralInfo';
 
 const MediaDetailScreen = (x) => {
   console.log(x.route.params);
@@ -16,7 +16,26 @@ const MediaDetailScreen = (x) => {
         height: '100%',
       }}
     >
-      <HeaderInfo
+      <GeneralInfo
+        infoItems={[
+          {
+            title: 'Original Language',
+            value: 'Celebrate',
+          },
+          {
+            title: 'Budget',
+            value: '-',
+          },
+        ]}
+      />
+    </View>
+  );
+};
+
+export default MediaDetailScreen;
+
+/**
+ * <HeaderInfo
         thumbnailURL="https://image.tmdb.org/t/p/w92/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
         voteCount={123}
         posterURL="/bvYjhsbxOBwpm8xLE5BhdA3a8CZ.jpg"
@@ -24,8 +43,4 @@ const MediaDetailScreen = (x) => {
         votesAverage={8.3}
         title="Vingadores: Guerra Infinita"
       />
-    </View>
-  );
-};
-
-export default MediaDetailScreen;
+ */

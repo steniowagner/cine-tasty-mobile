@@ -171,6 +171,9 @@ const en: Locale = {
   },
   mediaDetail: {
     votes: 'Votes',
+    sections: {
+      details: 'Details',
+    },
   },
 };
 
