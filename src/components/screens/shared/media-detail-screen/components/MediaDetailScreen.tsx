@@ -4,7 +4,8 @@ import { View } from 'react-native';
 // import HeaderInfo from './header-info/HeaderInfo';
 import useMediaDetailScreen from './useMediaDetailScreen';
 // import GeneralInfo from './sections/GeneralInfo';
-import Videos from './sections/Videos';
+import PersonListItem from './PersonListItem';
+// import Videos from './sections/Videos';
 
 const MediaDetailScreen = (x) => {
   console.log(x.route.params);
@@ -17,7 +18,12 @@ const MediaDetailScreen = (x) => {
         height: '100%',
       }}
     >
-      <Videos />
+      <PersonListItem
+        onPress={() => {}}
+        subText="The Emperor"
+        image="https://image.tmdb.org/t/p/w780/5a6u17dAf11kLvdRUG6QdoRRURj.jpg"
+        name="Jet Li"
+      />
     </View>
   );
 };
