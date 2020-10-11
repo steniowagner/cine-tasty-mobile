@@ -600,6 +600,325 @@ export interface GetFamousDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: Movie
+// ====================================================
+
+export interface Movie_movie_productionCompanies {
+  __typename: "ProductionCompany";
+  id: string | null;
+  logoPath: string | null;
+  name: string | null;
+  originCountry: string | null;
+}
+
+export interface Movie_movie_cast {
+  __typename: "CastItem";
+  name: string | null;
+  profilePath: string | null;
+  id: string | null;
+  character: string | null;
+}
+
+export interface Movie_movie_crew {
+  __typename: "CrewItem";
+  department: string | null;
+  id: string | null;
+  job: string | null;
+  name: string | null;
+  profilePath: string | null;
+}
+
+export interface Movie_movie_videos_thumbnail {
+  __typename: "Thumbnail";
+  /**
+   * 120x90
+   */
+  extraSmall: string | null;
+  /**
+   * 320x180
+   */
+  small: string | null;
+  /**
+   * 480x360
+   */
+  medium: string | null;
+  /**
+   * 640x480
+   */
+  large: string | null;
+  /**
+   * 1280x720
+   */
+  extraLarge: string | null;
+}
+
+export interface Movie_movie_videos {
+  __typename: "MediaVideo";
+  thumbnail: Movie_movie_videos_thumbnail | null;
+  key: string | null;
+  name: string | null;
+  site: string | null;
+  id: string | null;
+  type: string | null;
+}
+
+export interface Movie_movie_reviews {
+  __typename: "Review";
+  author: string | null;
+  content: string | null;
+  id: string | null;
+  url: string | null;
+}
+
+export interface Movie_movie_similar {
+  __typename: "BaseMovie";
+  originalTitle: string | null;
+  video: boolean | null;
+  title: string | null;
+  adult: boolean | null;
+  releaseDate: string | null;
+  backdropPath: string | null;
+  genreIds: string[];
+  overview: string | null;
+  voteAverage: number | null;
+  posterPath: string | null;
+  popularity: number | null;
+  originalLanguage: string | null;
+  voteCount: number | null;
+  id: number | null;
+}
+
+export interface Movie_movie {
+  __typename: "Movie";
+  adult: boolean | null;
+  backdropPath: string | null;
+  genres: string[];
+  id: string | null;
+  originalLanguage: string | null;
+  originalTitle: string | null;
+  overview: string | null;
+  posterPath: string | null;
+  popularity: number | null;
+  video: boolean | null;
+  title: string | null;
+  voteAverage: number | null;
+  releaseDate: string | null;
+  productionCompanies: Movie_movie_productionCompanies[];
+  voteCount: number | null;
+  runtime: number | null;
+  status: string | null;
+  tagline: string | null;
+  budget: number | null;
+  homepage: string | null;
+  revenue: number | null;
+  spokenLanguages: string[];
+  productionCountries: string[];
+  cast: Movie_movie_cast[];
+  crew: Movie_movie_crew[];
+  videos: Movie_movie_videos[];
+  reviews: Movie_movie_reviews[];
+  similar: Movie_movie_similar[];
+}
+
+export interface Movie {
+  movie: Movie_movie | null;
+}
+
+export interface MovieVariables {
+  id: string;
+  language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: TVShowDetail
+// ====================================================
+
+export interface TVShowDetail_tvShow_seasons {
+  __typename: "Season";
+  airDate: string | null;
+  episodeCount: number | null;
+  id: string | null;
+  name: string | null;
+  overview: string | null;
+  posterPath: string | null;
+  seasonNumber: number | null;
+}
+
+export interface TVShowDetail_tvShow_lastEpisodeToAir {
+  __typename: "LastEpisodeToAir";
+  airDate: string | null;
+  episodeNumber: number | null;
+  id: string | null;
+  name: string | null;
+  overview: string | null;
+  productionCode: string | null;
+  seasonNumber: number | null;
+  showId: string | null;
+  stillPath: string | null;
+  voteAverage: number | null;
+  voteCount: number | null;
+}
+
+export interface TVShowDetail_tvShow_createdBy {
+  __typename: "Creator";
+  id: string | null;
+  creditId: string | null;
+  name: string | null;
+  gender: number | null;
+  profilePath: string | null;
+}
+
+export interface TVShowDetail_tvShow_networks {
+  __typename: "Network";
+  name: string | null;
+  id: string | null;
+  logoPath: string | null;
+  originCountry: string | null;
+}
+
+export interface TVShowDetail_tvShow_productionCompanies {
+  __typename: "ProductionCompany";
+  id: string | null;
+  logoPath: string | null;
+  name: string | null;
+  originCountry: string | null;
+}
+
+export interface TVShowDetail_tvShow_videos_thumbnail {
+  __typename: "Thumbnail";
+  /**
+   * 120x90
+   */
+  extraSmall: string | null;
+  /**
+   * 320x180
+   */
+  small: string | null;
+  /**
+   * 480x360
+   */
+  medium: string | null;
+  /**
+   * 640x480
+   */
+  large: string | null;
+  /**
+   * 1280x720
+   */
+  extraLarge: string | null;
+}
+
+export interface TVShowDetail_tvShow_videos {
+  __typename: "MediaVideo";
+  thumbnail: TVShowDetail_tvShow_videos_thumbnail | null;
+  key: string | null;
+  name: string | null;
+  site: string | null;
+  id: string | null;
+  type: string | null;
+}
+
+export interface TVShowDetail_tvShow_cast {
+  __typename: "CastItem";
+  name: string | null;
+  profilePath: string | null;
+  id: string | null;
+  character: string | null;
+  gender: number | null;
+  order: number | null;
+}
+
+export interface TVShowDetail_tvShow_crew {
+  __typename: "CrewItem";
+  department: string | null;
+  id: string | null;
+  job: string | null;
+  name: string | null;
+  gender: number | null;
+  profilePath: string | null;
+}
+
+export interface TVShowDetail_tvShow_similar {
+  __typename: "BaseTVShow";
+  originCountry: string[];
+  originalName: string | null;
+  name: string | null;
+  firstAirDate: string | null;
+  backdropPath: string | null;
+  genreIds: string[];
+  overview: string | null;
+  voteAverage: number | null;
+  posterPath: string | null;
+  popularity: number | null;
+  originalLanguage: string | null;
+  voteCount: number | null;
+  id: number | null;
+}
+
+export interface TVShowDetail_tvShow_reviews {
+  __typename: "Review";
+  author: string | null;
+  content: string | null;
+  id: string | null;
+  url: string | null;
+}
+
+export interface TVShowDetail_tvShow {
+  __typename: "TVShow";
+  seasons: TVShowDetail_tvShow_seasons[];
+  lastEpisodeToAir: TVShowDetail_tvShow_lastEpisodeToAir | null;
+  backdropPath: string | null;
+  createdBy: TVShowDetail_tvShow_createdBy[];
+  networks: TVShowDetail_tvShow_networks[];
+  episodeRunTime: number[];
+  firstAirDate: string | null;
+  homepage: string | null;
+  id: string | null;
+  inProduction: boolean | null;
+  languages: string[];
+  lastAirDate: string | null;
+  genres: string[];
+  name: string | null;
+  status: string | null;
+  type: string | null;
+  voteAverage: number | null;
+  voteCount: number | null;
+  productionCompanies: TVShowDetail_tvShow_productionCompanies[];
+  originalLanguage: string | null;
+  originalName: string | null;
+  overview: string | null;
+  videos: TVShowDetail_tvShow_videos[];
+  cast: TVShowDetail_tvShow_cast[];
+  crew: TVShowDetail_tvShow_crew[];
+  similar: TVShowDetail_tvShow_similar[];
+  popularity: number | null;
+  posterPath: string | null;
+  numberOfEpisodes: number | null;
+  numberOfSeasons: number | null;
+  originCountry: string[];
+  reviews: TVShowDetail_tvShow_reviews[];
+}
+
+export interface TVShowDetail {
+  tvShow: TVShowDetail_tvShow | null;
+}
+
+export interface TVShowDetailVariables {
+  id: string;
+  language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: SearchMovie
 // ====================================================
 

@@ -6,11 +6,18 @@ import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
 
 import { useLoadListItemImage } from 'hooks';
+import CONSTANTS from 'utils/constants';
 import Icon from 'components/common/Icon';
 
-const Wrapper = styled(TouchableOpacity)`
+interface WrapperStyleProps {
+  readonly isFirst: boolean;
+}
+
+const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('40%')}px;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('55%')}px;
+  margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
+  margin-left: ${({ isFirst }) => (isFirst ? CONSTANTS.VALUES.DEFAULT_SPACING : 0)}px;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
@@ -55,7 +62,7 @@ const PersonNameText = styled(Text).attrs({
 `;
 
 const PersonSubText = styled(Text).attrs({
-  numberOfLines: 1,
+  numberOfLines: 2,
 })`
   margin-top: ${({ theme }) => theme.metrics.extraSmallSize}px;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
@@ -80,13 +87,14 @@ const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
 
 type Props = {
   onPress: () => void;
-  image: string;
+  isFirst: boolean;
   subText: string;
+  image: string;
   name: string;
 };
 
-const PersonListItem = ({
-  onPress, subText, image, name,
+const PeopleListItem = ({
+  onPress, isFirst, subText, image, name,
 }: Props) => {
   const {
     isFallbackImageVisible,
@@ -100,9 +108,12 @@ const PersonListItem = ({
 
   return (
     <Wrapper
+      testID="button-wrapper"
+      isFirst={isFirst}
       onPress={onPress}
     >
       <PersonImage
+        testID="person-image"
         onError={onError}
         onLoad={onLoad}
         source={{
@@ -126,12 +137,20 @@ const PersonListItem = ({
       <ContentWrapper>
         <SmokeShadow />
         <TextContentWrapper>
-          <PersonNameText>{name}</PersonNameText>
-          <PersonSubText>{subText}</PersonSubText>
+          <PersonNameText
+            testID="person-name"
+          >
+            {name}
+          </PersonNameText>
+          <PersonSubText
+            testID="person-subtext"
+          >
+            {subText}
+          </PersonSubText>
         </TextContentWrapper>
       </ContentWrapper>
     </Wrapper>
   );
 };
 
-export default PersonListItem;
+export default PeopleListItem;

@@ -21,6 +21,12 @@ import {
   TrendingTVShows_trendingTvShows as TrendingTVShows,
   TrendingMovies_trendingMovies as TrendingMovies,
 
+  TVShowDetail_tvShow_cast as TVShowCast,
+  TVShowDetail_tvShow_crew as TVShowCrew,
+
+  Movie_movie_cast as MovieCast,
+  Movie_movie_crew as MovieCrew,
+
   GetArticlesVariables,
   QuestionDifficulty,
   QuestionCategory,
@@ -134,3 +140,7 @@ export type HomeSection = {
   viewAllTitle: string;
   sectionTitle: string;
 };
+
+export type CrewDataset = (TVShowCrew | MovieCrew)[];
+
+export type CastDataset = (TVShowCast | MovieCast)[];
