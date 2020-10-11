@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const GET_MOVIE_DETAIL = gql`
-  query Movie($id: ID!, $language: ISO6391Language) {
+  query MovieDetail($id: ID!, $language: ISO6391Language) {
     movie(id: $id, language: $language) {
       adult
       backdropPath

@@ -600,10 +600,10 @@ export interface GetFamousDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: Movie
+// GraphQL query operation: MovieDetail
 // ====================================================
 
-export interface Movie_movie_productionCompanies {
+export interface MovieDetail_movie_productionCompanies {
   __typename: "ProductionCompany";
   id: string | null;
   logoPath: string | null;
@@ -611,7 +611,7 @@ export interface Movie_movie_productionCompanies {
   originCountry: string | null;
 }
 
-export interface Movie_movie_cast {
+export interface MovieDetail_movie_cast {
   __typename: "CastItem";
   name: string | null;
   profilePath: string | null;
@@ -619,7 +619,7 @@ export interface Movie_movie_cast {
   character: string | null;
 }
 
-export interface Movie_movie_crew {
+export interface MovieDetail_movie_crew {
   __typename: "CrewItem";
   department: string | null;
   id: string | null;
@@ -628,7 +628,7 @@ export interface Movie_movie_crew {
   profilePath: string | null;
 }
 
-export interface Movie_movie_videos_thumbnail {
+export interface MovieDetail_movie_videos_thumbnail {
   __typename: "Thumbnail";
   /**
    * 120x90
@@ -652,9 +652,9 @@ export interface Movie_movie_videos_thumbnail {
   extraLarge: string | null;
 }
 
-export interface Movie_movie_videos {
+export interface MovieDetail_movie_videos {
   __typename: "MediaVideo";
-  thumbnail: Movie_movie_videos_thumbnail | null;
+  thumbnail: MovieDetail_movie_videos_thumbnail | null;
   key: string | null;
   name: string | null;
   site: string | null;
@@ -662,7 +662,7 @@ export interface Movie_movie_videos {
   type: string | null;
 }
 
-export interface Movie_movie_reviews {
+export interface MovieDetail_movie_reviews {
   __typename: "Review";
   author: string | null;
   content: string | null;
@@ -670,7 +670,7 @@ export interface Movie_movie_reviews {
   url: string | null;
 }
 
-export interface Movie_movie_similar {
+export interface MovieDetail_movie_similar {
   __typename: "BaseMovie";
   originalTitle: string | null;
   video: boolean | null;
@@ -688,7 +688,7 @@ export interface Movie_movie_similar {
   id: number | null;
 }
 
-export interface Movie_movie {
+export interface MovieDetail_movie {
   __typename: "Movie";
   adult: boolean | null;
   backdropPath: string | null;
@@ -703,7 +703,7 @@ export interface Movie_movie {
   title: string | null;
   voteAverage: number | null;
   releaseDate: string | null;
-  productionCompanies: Movie_movie_productionCompanies[];
+  productionCompanies: MovieDetail_movie_productionCompanies[];
   voteCount: number | null;
   runtime: number | null;
   status: string | null;
@@ -713,18 +713,18 @@ export interface Movie_movie {
   revenue: number | null;
   spokenLanguages: string[];
   productionCountries: string[];
-  cast: Movie_movie_cast[];
-  crew: Movie_movie_crew[];
-  videos: Movie_movie_videos[];
-  reviews: Movie_movie_reviews[];
-  similar: Movie_movie_similar[];
+  cast: MovieDetail_movie_cast[];
+  crew: MovieDetail_movie_crew[];
+  videos: MovieDetail_movie_videos[];
+  reviews: MovieDetail_movie_reviews[];
+  similar: MovieDetail_movie_similar[];
 }
 
-export interface Movie {
-  movie: Movie_movie | null;
+export interface MovieDetail {
+  movie: MovieDetail_movie | null;
 }
 
-export interface MovieVariables {
+export interface MovieDetailVariables {
   id: string;
   language?: ISO6391Language | null;
 }

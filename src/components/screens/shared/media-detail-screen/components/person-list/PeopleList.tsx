@@ -3,6 +3,7 @@ import { FlatList } from 'react-native';
 
 import { CrewDataset, CastDataset } from 'types';
 import Section from 'components/common/Section';
+import CONSTANTS from 'utils/constants';
 
 import PeopleListItem from './PeopleListItem';
 import usePeopleList from './usePeopleList';
@@ -13,6 +14,8 @@ type Props = {
   type: 'cast' | 'crew';
   sectionTitle: string;
 };
+
+const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
 const PeopleList = ({
   sectionTitle, onPressItem, dataset, type,
@@ -27,7 +30,7 @@ const PeopleList = ({
         showsHorizontalScrollIndicator={false}
         renderItem={({ index, item }) => (
           <PeopleListItem
-            image={`https://image.tmdb.org/t/p/w780${item.image}`}
+            image={`${PERSON_IMAGE_URI}${item.image}`}
             onPress={() => onPressItem(item.id)}
             subText={item.subText}
             isFirst={index === 0}

@@ -6,10 +6,14 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import Section from 'components/common/Section';
+import {
+  TVShowDetail_tvShow_videos as TVShowVideos,
+  MovieDetail_movie_videos as MovieVideos,
+} from 'types/schema';
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 
-// const YOUTUBE_BASE_URL = 'https://www.youtube.com/';
+const YOUTUBE_BASE_URL = 'https://www.youtube.com/watch?v=';
 
 interface VideoListItemWrapperStyleProps {
   readonly isFirst: boolean;
@@ -44,7 +48,11 @@ const PlayIcon = styled(Icon).attrs(({ theme }) => ({
   color: 'white',
 }))``;
 
-const Videos = () => {
+type Props = {
+  videos: (TVShowVideos | MovieVideos)[];
+};
+
+const Videos = ({ videos }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -54,15 +62,15 @@ const Videos = () => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        // keyExtractor={item}
-        renderItem={({ index }) => (
+        keyExtractor={({ id }) => id}
+        renderItem={({ index, item }) => (
           <VideoListItemWrapper
-            onPress={() => Linking.openURL('https://img.youtube.com/vi/FG1EByNnHUU/hqdefault.jpg')}
+            onPress={() => Linking.openURL(`${YOUTUBE_BASE_URL}${item.key}`)}
             isFirst={index === 0}
           >
             <VideoThumbnailImage
               source={{
-                uri: 'https://img.youtube.com/vi/FG1EByNnHUU/hqdefault.jpg',
+                uri: item.thumbnail.extraSmall,
               }}
             />
             <IconWrapper>
@@ -72,7 +80,7 @@ const Videos = () => {
             </IconWrapper>
           </VideoListItemWrapper>
         )}
-        data={Array(5).fill({})}
+        data={videos}
       />
     </Section>
   );
