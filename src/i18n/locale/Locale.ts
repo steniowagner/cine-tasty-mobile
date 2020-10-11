@@ -143,6 +143,7 @@ export interface Locale {
   mediaDetail: {
     votes: string;
     sections: {
+      productionCompanies: string;
       details: string;
       videos: string;
     };

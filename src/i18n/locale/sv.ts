@@ -172,6 +172,7 @@ const en: Locale = {
   mediaDetail: {
     votes: 'Votes',
     sections: {
+      productionCompanies: 'Production Companies',
       details: 'Details',
       videos: 'Videos',
     },
