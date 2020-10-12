@@ -1,9 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import HeaderInfo from './header-info/HeaderInfo';
 import useMediaDetailScreen from './useMediaDetailScreen';
+import Overview from './sections/Overview';
 import Tags from './sections/Tags';
+
 // import ProductionCompanies from './sections/ProductionCompanies';
 // import GeneralInfo from './sections/GeneralInfo';
 // import PersonList from './person-list/PersonList';
@@ -20,18 +22,21 @@ const MediaDetailScreen = (x) => {
         height: '100%',
       }}
     >
-      <HeaderInfo
-        thumbnailURL="https://image.tmdb.org/t/p/w92/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
-        voteCount={123}
-        posterURL="/bvYjhsbxOBwpm8xLE5BhdA3a8CZ.jpg"
-        imageURL="https://image.tmdb.org/t/p/w780/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
-        votesAverage={8.3}
-        title="Vingadores: Guerra Infinita"
-      />
-      <Tags
-        tags={['Action & Adventure', 'Drama', 'Sci-Fi & Fantasy']}
-        releaseYear="2014"
-      />
+      <ScrollView>
+        <HeaderInfo
+          thumbnailURL="https://image.tmdb.org/t/p/w92/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
+          voteCount={123}
+          posterURL="/bvYjhsbxOBwpm8xLE5BhdA3a8CZ.jpg"
+          imageURL="https://image.tmdb.org/t/p/w780/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
+          votesAverage={8.3}
+          title="Vingadores: Guerra Infinita"
+        />
+        <Tags
+          tags={['Action & Adventure', 'Drama', 'Sci-Fi & Fantasy']}
+          releaseYear="2014"
+        />
+        <Overview />
+      </ScrollView>
     </View>
   );
 };
