@@ -1,9 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
-// import HeaderInfo from './header-info/HeaderInfo';
+import HeaderInfo from './header-info/HeaderInfo';
 import useMediaDetailScreen from './useMediaDetailScreen';
-import ProductionCompanies from './sections/ProductionCompanies';
+import Tags from './sections/Tags';
+// import ProductionCompanies from './sections/ProductionCompanies';
 // import GeneralInfo from './sections/GeneralInfo';
 // import PersonList from './person-list/PersonList';
 // import Videos from './sections/Videos';
@@ -19,7 +20,26 @@ const MediaDetailScreen = (x) => {
         height: '100%',
       }}
     >
-      <ProductionCompanies
+      <HeaderInfo
+        thumbnailURL="https://image.tmdb.org/t/p/w92/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
+        voteCount={123}
+        posterURL="/bvYjhsbxOBwpm8xLE5BhdA3a8CZ.jpg"
+        imageURL="https://image.tmdb.org/t/p/w780/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
+        votesAverage={8.3}
+        title="Vingadores: Guerra Infinita"
+      />
+      <Tags
+        tags={['Action & Adventure', 'Drama', 'Sci-Fi & Fantasy']}
+        releaseYear="2014"
+      />
+    </View>
+  );
+};
+
+export default MediaDetailScreen;
+
+/**
+ * <ProductionCompanies
         productionCompanies={[
           {
             id: '2',
@@ -47,21 +67,7 @@ const MediaDetailScreen = (x) => {
           },
         ]}
       />
-    </View>
-  );
-};
-
-export default MediaDetailScreen;
-
-/**
- * <HeaderInfo
-        thumbnailURL="https://image.tmdb.org/t/p/w92/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
-        voteCount={123}
-        posterURL="/bvYjhsbxOBwpm8xLE5BhdA3a8CZ.jpg"
-        imageURL="https://image.tmdb.org/t/p/w780/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
-        votesAverage={8.3}
-        title="Vingadores: Guerra Infinita"
-      />
+ *
 
        <GeneralInfo
         infoItems={[

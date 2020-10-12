@@ -29,7 +29,7 @@ const ProductionCompany = styled(View)`
 const CompanyLogoImage = styled(Image)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('24%')}px;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
-  tintcolor: ${({ theme }) => theme.colors.text};
+  tint-color: ${({ theme }) => theme.colors.text};
 `;
 
 const CompanyNameText = styled(Text)`

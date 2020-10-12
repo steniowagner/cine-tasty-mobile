@@ -12,7 +12,7 @@ export const BackgroundImageWrapper = styled(View)`
 
 export const Wrapper = styled(View)`
   width: 100%;
-  height: ${({ theme }) => theme.metrics.width}px;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('95%')}px;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
