@@ -46,11 +46,11 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
   } = useMemo(() => {
     const pressMapping = {
       [SearchType.MOVIE]: {
-        onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [MOVIES] - ', id),
-        onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [MOVIES]: ', id),
+        onPressTop3LearnMore: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: true }),
+        onPressTrendingItem: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: true }),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
           navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-            onPressItem: (id: number) => console.log('Movie - ', id),
+            onPressItem: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: true }),
             initialDataset: sectionItems,
             headerTitle: viewAllTitle,
             sectionKey: sectionID,
@@ -68,10 +68,10 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
         },
       },
       [SearchType.TV]: {
-        onPressTop3LearnMore: (id: number) => console.warn('onPressTop3LearnMore [TV-SHOW] - ', id),
-        onPressTrendingItem: (id: number) => console.warn('onPressTrendingItem [TV-SHOW]: ', id),
+        onPressTop3LearnMore: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: false }),
+        onPressTrendingItem: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: false }),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-          onPressItem: (id: number) => console.log('TVShow - ', id),
+          onPressItem: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: false }),
           initialDataset: sectionItems,
           headerTitle: viewAllTitle,
           sectionKey: sectionID,

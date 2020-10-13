@@ -169,6 +169,16 @@ const en: Locale = {
       },
     },
   },
+  mediaDetail: {
+    votes: 'Votes',
+    sections: {
+      productionCompanies: 'Production Companies',
+      overview: 'Overview',
+      reviews: 'Reviews',
+      details: 'Details',
+      videos: 'Videos',
+    },
+  },
 };
 
 export default en;

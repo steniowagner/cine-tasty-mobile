@@ -54,7 +54,7 @@ type Props = {
   route: QuestionsScreenRouteProp;
 };
 
-const FamousDetail = ({ route }: Props) => {
+const FamousDetail = ({ navigation, route }: Props) => {
   const {
     backgroundImage, isLoading, famous, hasError, t,
   } = useFamousDetail({
@@ -171,7 +171,10 @@ const FamousDetail = ({ route }: Props) => {
                     voteAverage={item.voteAverage}
                     voteCount={item.voteCount}
                     isFirst={index === 0}
-                    onPress={() => {}}
+                    onPress={() => navigation.navigate('MEDIA_DETAIL', {
+                      id: item.id,
+                      isMovie: true,
+                    })}
                     image={item.posterPath}
                     title={item.title}
                   />
@@ -195,7 +198,10 @@ const FamousDetail = ({ route }: Props) => {
                     voteAverage={item.voteAverage}
                     voteCount={item.voteCount}
                     isFirst={index === 0}
-                    onPress={() => {}}
+                    onPress={() => navigation.navigate('MEDIA_DETAIL', {
+                      id: item.id,
+                      isMovie: false,
+                    })}
                     image={item.posterPath}
                     title={item.name}
                   />

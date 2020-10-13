@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { DefaultTheme, withTheme } from 'styled-components';
 
+import MediaDetailScreen from 'components/screens/shared/media-detail-screen/components/MediaDetailScreen';
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
@@ -41,6 +42,13 @@ const HomeStack = ({ theme }: Props) => (
         headerTitle: route.params.headerTitle,
       })}
       component={MediaSectionViewAll}
+    />
+    <Stack.Screen
+      name={LOCAL_ROUTES.MEDIA_DETAIL.id}
+      options={() => ({
+        ...getTransparentHeaderOptions(theme),
+      })}
+      component={MediaDetailScreen}
     />
   </Stack.Navigator>
 );

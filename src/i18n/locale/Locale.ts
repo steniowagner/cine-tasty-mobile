@@ -140,5 +140,15 @@ export interface Locale {
     castTV: string;
     images: string;
   };
+  mediaDetail: {
+    votes: string;
+    sections: {
+      productionCompanies: string;
+      reviews: string;
+      overview: string;
+      details: string;
+      videos: string;
+    };
+  };
   months: string[];
 }
