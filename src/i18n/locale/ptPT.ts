@@ -174,6 +174,7 @@ const en: Locale = {
     sections: {
       productionCompanies: 'Production Companies',
       overview: 'Overview',
+      reviews: 'Reviews',
       details: 'Details',
       videos: 'Videos',
     },

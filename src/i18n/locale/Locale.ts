@@ -144,6 +144,7 @@ export interface Locale {
     votes: string;
     sections: {
       productionCompanies: string;
+      reviews: string;
       overview: string;
       details: string;
       videos: string;
