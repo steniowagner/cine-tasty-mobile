@@ -1,7 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import Reviews from './sections/reviews/reviews-section/ReviewsSection';
+// import Reviews from './sections/reviews/reviews-section/ReviewsSection';
+import ReviewsList from './sections/reviews/ReviewsList';
 import useMediaDetailScreen from './useMediaDetailScreen';
 // import HeaderInfo from './header-info/HeaderInfo';
 // import Overview from './sections/Overview';
@@ -22,7 +23,7 @@ const MediaDetailScreen = (x) => {
         height: '100%',
       }}
     >
-      <Reviews
+      <ReviewsList
         reviews={[
           {
             author: 'tmdb38541732',
