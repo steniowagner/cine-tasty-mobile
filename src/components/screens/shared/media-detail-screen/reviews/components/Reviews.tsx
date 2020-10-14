@@ -40,7 +40,7 @@ type Props = {
   reviews: Review[];
 };
 
-const ReviewsList = ({ reviews }: Props) => {
+const Reviews = ({ reviews = [] }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -65,4 +65,4 @@ const ReviewsList = ({ reviews }: Props) => {
   );
 };
 
-export default ReviewsList;
+export default Reviews;

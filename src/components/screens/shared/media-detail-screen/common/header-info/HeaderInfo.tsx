@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
+import CONSTANTS from 'utils/constants';
 
 import {
   BackgroundImageWrapper, SmokeShadow, MediaInfoWrapper, Wrapper,
@@ -67,11 +68,15 @@ const Row = styled(View)`
 type Props = {
   thumbnailURL: string;
   votesAverage: number;
+  isLoading: boolean;
   voteCount: number;
   posterURL: string;
   imageURL: string;
   title: string;
 };
+
+const BACKGROUND_IMAGE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
+const BACKGROUND_IMAGE_IMAGE_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_SIZE_CODE}`;
 
 const HeaderInfo = ({
   thumbnailURL,
@@ -87,8 +92,8 @@ const HeaderInfo = ({
     <Wrapper>
       <BackgroundImageWrapper>
         <ProgressiveImage
-          thumbnailURL={thumbnailURL}
-          imageURL={imageURL}
+          thumbnailURL={`${BACKGROUND_IMAGE_THUMBNAIL_URL}${thumbnailURL}`}
+          imageURL={`${BACKGROUND_IMAGE_IMAGE_URL}${imageURL}`}
           borderRadius={0}
         />
         <SmokeShadow />
@@ -110,7 +115,7 @@ const HeaderInfo = ({
                 <VotesText>{t('translations:mediaDetail:votes')}</VotesText>
               </Row>
             </View>
-            <VotesValueText>{votesAverage}</VotesValueText>
+            <VotesValueText>{votesAverage.toFixed(1)}</VotesValueText>
           </VotesWrapper>
         </TextContentWrapper>
       </MediaInfoWrapper>

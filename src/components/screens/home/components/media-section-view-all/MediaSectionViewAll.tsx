@@ -14,7 +14,7 @@ import useMediaSectionViewAll from './useMediaSectionViewAll';
 export const SCREEN_ID = 'MEDIA_DETAILS_VIEW_ALL';
 
 export type ExternalProps = {
-  onPressItem: (id: number) => void;
+  onPressItem: (item: SimplifiedMedia) => void;
   initialDataset: SimplifiedMedia[];
   sectionKey: TrendingMediaItemKey;
   headerTitle: string;
@@ -58,7 +58,7 @@ const MediaSectionViewAll = ({ route }: Props) => {
         })}
         renderItem={({ item }) => (
           <MediaSectionViewAllListItem
-            onPressDetails={() => route.params.onPressItem(item.id)}
+            onPressDetails={() => route.params.onPressItem(item)}
             voteCount={item.voteCount}
             votes={item.voteAverage}
             image={item.posterPath}

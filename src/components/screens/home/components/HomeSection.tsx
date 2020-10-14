@@ -22,7 +22,7 @@ export const SectionTextContentWrapper = styled(View)`
 `;
 
 type Props = {
-  onPressItem: (id: number) => void;
+  onPressItem: (mediaItem: SimplifiedMedia) => void;
   onPressViewAll: () => void;
   items: SimplifiedMedia[];
   sectionTitle: string;
@@ -41,7 +41,7 @@ const HomeSection = ({
     <FlatList
       renderItem={({ item, index }) => (
         <SimplifiedMediaListItem
-          onPress={() => onPressItem(item.id)}
+          onPress={() => onPressItem(item)}
           voteAverage={item.voteAverage}
           voteCount={item.voteCount}
           image={item.posterPath}

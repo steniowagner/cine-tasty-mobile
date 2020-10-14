@@ -32,27 +32,31 @@ const TagText = styled(Text)<ReleaseYearStyleProp>`
 `;
 
 type Props = {
-  releaseYear: string;
+  releaseDate: string;
   tags: string[];
 };
 
-const Tags = ({ tags, releaseYear }: Props) => (
-  <Wrapper>
-    {[releaseYear, ...tags].map(
-      (tag, index) => !!tag && (
-      <TagWrapper
-        isFirst={index === 0}
-        key={tag}
-      >
-        <TagText
+const Tags = ({ tags, releaseDate }: Props) => {
+  const releaseYear = releaseDate.split('-')[0];
+
+  return (
+    <Wrapper>
+      {[releaseYear, ...tags].map(
+        (tag, index) => !!tag && (
+        <TagWrapper
           isFirst={index === 0}
+          key={tag}
         >
-          {tag}
-        </TagText>
-      </TagWrapper>
-      ),
-    )}
-  </Wrapper>
-);
+          <TagText
+            isFirst={index === 0}
+          >
+            {tag}
+          </TagText>
+        </TagWrapper>
+        ),
+      )}
+    </Wrapper>
+  );
+};
 
 export default Tags;

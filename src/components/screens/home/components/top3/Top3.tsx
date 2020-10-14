@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
 import { Platform, Animated } from 'react-native';
 
-import { HomeTop3Item } from 'types';
+import { SimplifiedMedia, HomeTop3Item } from 'types';
 
 import { GapFlatlist, ListWrapper, ITEM_WIDTH } from './commonStyles';
 import Top3ListItem from './Top3ListItem';
 
 type Props = {
-  onPressLearnMore: (id: number) => void;
+  onPressLearnMore: (mediaItem: Omit<SimplifiedMedia, '__typename'>) => void;
   top3Items: HomeTop3Item[];
 };
 
@@ -33,7 +33,14 @@ const Top3 = ({ onPressLearnMore, top3Items }: Props) => {
 
           return (
             <Top3ListItem
-              onPress={() => onPressLearnMore(item.id)}
+              onPress={() => onPressLearnMore({
+                voteAverage: item.voteAverage,
+                voteCount: item.voteCount,
+                posterPath: item.image,
+                genreIds: item.genres,
+                title: item.title,
+                id: item.id,
+              })}
               voteAverage={item.voteAverage}
               voteCount={item.voteCount}
               isTheMiddle={index === 1}

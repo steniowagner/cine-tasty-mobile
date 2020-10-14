@@ -12,10 +12,10 @@ const MediaItemDescriptionWrapper = styled(View)`
 `;
 
 type Props = {
-  description: string;
+  overview: string;
 };
 
-const Overview = ({ description }: Props) => {
+const Overview = ({ overview }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -24,7 +24,7 @@ const Overview = ({ description }: Props) => {
     >
       <MediaItemDescriptionWrapper>
         <MediaItemDescription
-          description={description}
+          description={overview}
         />
       </MediaItemDescriptionWrapper>
     </Section>

@@ -1,33 +1,34 @@
 import gql from 'graphql-tag';
 
-export const GET_MOVIE_DETAIL = gql`
-  query MovieDetail($id: ID!, $language: ISO6391Language) {
+export default gql`
+  query MovieDetail(
+    $id: ID!
+    $language: ISO6391Language
+    $withVoteAverage: Boolean!
+    $withGenresIds: Boolean!
+    $withVoteCount: Boolean!
+  ) {
     movie(id: $id, language: $language) {
+      genres(language: $language) @include(if: $withGenresIds)
+      voteAverage @include(if: $withVoteAverage)
+      voteCount @include(if: $withVoteCount)
       adult
       backdropPath
-      genres(language: $language)
       id
       originalLanguage
       originalTitle
       overview
-      posterPath
-      popularity
-      video
       title
-      voteAverage
       releaseDate
       productionCompanies {
         id
         logoPath
         name
-        originCountry
       }
-      voteCount
       runtime
       status
       tagline
       budget
-      homepage
       revenue
       spokenLanguages
       productionCountries

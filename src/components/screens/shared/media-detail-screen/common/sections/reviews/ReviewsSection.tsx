@@ -47,6 +47,7 @@ const ReviewsSection = ({ reviews }: Props) => {
     <ContentWrapper>
       <SectionViewAll
         sectionTitle={`${sectionTitle} (${reviews.length})`}
+        withViewAll={!!reviews.length}
       />
       <FlatList
         onMomentumScrollEnd={onMomentumScrollEnd}
@@ -65,7 +66,7 @@ const ReviewsSection = ({ reviews }: Props) => {
       />
       {reviews.length > 1 && (
         <PaginationWrapper>
-          {Array(3)
+          {Array(Math.min(reviews.length, 3))
             .fill({})
             .map((_, index) => (
               <Dot
