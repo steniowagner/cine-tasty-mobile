@@ -12,6 +12,7 @@ export default gql`
       genres(language: $language) @include(if: $withGenresIds)
       voteAverage @include(if: $withVoteAverage)
       voteCount @include(if: $withVoteCount)
+      images(id: $id)
       adult
       backdropPath
       id
@@ -66,19 +67,11 @@ export default gql`
         url
       }
       similar {
-        originalTitle
-        video
-        title
-        adult
-        releaseDate
-        backdropPath
-        genreIds
-        overview
         voteAverage
         posterPath
-        popularity
-        originalLanguage
         voteCount
+        genreIds
+        title
         id
       }
     }

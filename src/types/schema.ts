@@ -792,7 +792,6 @@ export interface MovieDetail_movie_productionCompanies {
   id: string | null;
   logoPath: string | null;
   name: string | null;
-  originCountry: string | null;
 }
 
 export interface MovieDetail_movie_cast {
@@ -856,33 +855,26 @@ export interface MovieDetail_movie_reviews {
 
 export interface MovieDetail_movie_similar {
   __typename: "BaseMovie";
-  originalTitle: string | null;
-  video: boolean | null;
-  title: string | null;
-  adult: boolean | null;
-  releaseDate: string | null;
-  backdropPath: string | null;
-  genreIds: string[];
-  overview: string | null;
   voteAverage: number | null;
   posterPath: string | null;
-  popularity: number | null;
-  originalLanguage: string | null;
   voteCount: number | null;
+  genreIds: string[];
+  title: string | null;
   id: number | null;
 }
 
 export interface MovieDetail_movie {
   __typename: "Movie";
+  genres: string[];
+  voteAverage: number | null;
+  voteCount: number | null;
+  images: string[];
   adult: boolean | null;
   backdropPath: string | null;
-  genres: string[];
   id: string | null;
   originalLanguage: string | null;
   originalTitle: string | null;
   overview: string | null;
-  popularity: number | null;
-  video: boolean | null;
   title: string | null;
   releaseDate: string | null;
   productionCompanies: MovieDetail_movie_productionCompanies[];
@@ -890,7 +882,6 @@ export interface MovieDetail_movie {
   status: string | null;
   tagline: string | null;
   budget: number | null;
-  homepage: string | null;
   revenue: number | null;
   spokenLanguages: string[];
   productionCountries: string[];
@@ -908,6 +899,9 @@ export interface MovieDetail {
 export interface MovieDetailVariables {
   id: string;
   language?: ISO6391Language | null;
+  withVoteAverage: boolean;
+  withGenresIds: boolean;
+  withVoteCount: boolean;
 }
 
 /* tslint:disable */

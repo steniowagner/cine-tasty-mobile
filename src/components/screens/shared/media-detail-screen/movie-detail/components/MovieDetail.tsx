@@ -1,13 +1,16 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
+import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import ImagesList from 'components/common/images-list/ImagesList';
+import Section from 'components/common/Section';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import ProductionCompanies from '../../common/sections/ProductionCompanies';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
+import PeopleList from '../../common/people-list/PeopleList';
 import GeneralInfo from '../../common/sections/GeneralInfo';
 import Header from '../../common/header-info/HeaderInfo';
 import Overview from '../../common/sections/Overview';
@@ -88,34 +91,25 @@ const MovieDetail = ({ route }: Props) => {
           },
         ]}
       />
-      <ImagesList
-        images={[
-          '/zzWGRw277MNoCs3zhyG3YmYQsXv.jpg',
-          '/xl5oCFLVMo4d4Pgxvrf8Jmc2IlA.jpg',
-          '/qAKvUu2FSaDlnqznY4VOp5PmjIF.jpg',
-          '/zMrk2G3XsnfYKiIp1NEfdtvDyBH.jpg',
-          '/yw3ZvsL6uh78u9jqZeUOAa4R1jz.jpg',
-          '/xFAGjsaVlg7n33hjyfM1EnBkYlK.jpg',
-          '/bP8V1IVNRml68Xfmbtp4kqjUxkh.jpg',
-          '/m7TH3tOD1krBRNcEfXMIsqVsifW.jpg',
-          '/lRDfTlAtotNHSxJceQXZhBA2Hyv.jpg',
-          '/aoHiMjRt0Qs1dtkV61LyxTnQtJl.jpg',
-          '/6BKUUvR2UcUSCXHSyUdyPEJcBsV.jpg',
-          '/vjMrfX3aNDXfgW8igmoWmF4UjQ0.jpg',
-          '/v5FoP9d4M6rfrV2WA0MmpJKHmZ5.jpg',
-          '/b0G2U0rWKmKF6wudvmh4CuHI2E3.jpg',
-          '/duMoVxeEg4VX1MIOIGAiOYMiZ19.jpg',
-          '/xuBDXlbjGNTMdQwobDjnx8pdIm0.jpg',
-          '/wbAHIMM2oIB6gJLneWf6D6LwJz9.jpg',
-          '/txwO4KbxsDRbv7p2WJD24YI8t9i.jpg',
-          '/5Hjp9BxalM0eDviMcD8gdHplGbT.jpg',
-          '/dPIwHRKSAMn40Ukew9L8WEW3Nm4.jpg',
-          '/tfHhZU7y6guc2CqjRUK2G1Bwe9S.jpg',
-          '/8AoUSkWjXCxe2Ez8Jx6enkq47Fz.jpg',
-          '/pbAszLhGyW6yaYFoMW4aAF8BhsZ.jpg',
-          '/a4Tp0t3ep4dhLcDoWSTkwLHJep2.jpg',
-        ]}
+      <PeopleList
+        sectionTitle="Cast"
+        onPressItem={() => {}}
+        dataset={movie.cast}
+        type="cast"
       />
+      <PeopleList
+        sectionTitle="Crew"
+        onPressItem={() => {}}
+        dataset={movie.crew}
+        type="crew"
+      />
+      <Section
+        title="Images"
+      >
+        <ImagesList
+          images={movie.images}
+        />
+      </Section>
       <Videos
         videos={movie.videos}
       />
@@ -125,6 +119,26 @@ const MovieDetail = ({ route }: Props) => {
       <ProductionCompanies
         productionCompanies={movie.productionCompanies}
       />
+      <Section
+        title="Similar"
+      >
+        <FlatList
+          renderItem={({ item, index }) => (
+            <SimplifiedMediaListItem
+              onPress={() => console.log(item)}
+              voteAverage={item.voteAverage}
+              voteCount={item.voteCount}
+              image={item.posterPath}
+              isFirst={index === 0}
+              title={item.title}
+            />
+          )}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
+          showsHorizontalScrollIndicator={false}
+          data={movie.similar}
+          horizontal
+        />
+      </Section>
     </ScrollView>
   );
 };
