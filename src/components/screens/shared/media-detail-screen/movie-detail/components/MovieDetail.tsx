@@ -33,8 +33,13 @@ type Props = {
   route: MovieDetailScreenRouteProp;
 };
 
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 const MovieDetail = ({ route }: Props) => {
-  const { isLoading, movie } = useMovieDetail({
+  const { isLoading, movie, t } = useMovieDetail({
     hasVoteAverage: !!route.params.voteAverage,
     hasVoteCount: !!route.params.voteCount,
     hasGenresIds: !!route.params.genreIds,
@@ -46,100 +51,102 @@ const MovieDetail = ({ route }: Props) => {
   }
 
   return (
-    <ScrollView>
-      <Header
-        isLoading={isLoading}
-        thumbnailURL={movie.backdropPath}
-        votesAverage={route.params.voteAverage}
-        voteCount={route.params.voteCount}
-        posterURL={route.params.posterPath}
-        title={route.params.title}
-        imageURL={movie.backdropPath}
-      />
-      <Tags
-        tags={route.params.genreIds || movie.genres}
-        releaseDate={movie.releaseDate}
-      />
-      <Overview
-        overview={movie.overview}
-      />
-      <GeneralInfo
-        infoItems={[
-          {
-            title: 'Original title',
-            value: movie.originalTitle,
-          },
-          {
-            title: 'Release date',
-            value: movie.releaseDate,
-          },
-          {
-            title: 'Budget',
-            value: movie.budget,
-          },
-          {
-            title: 'Revenue',
-            value: movie.revenue,
-          },
-          {
-            title: 'Spoken languages',
-            value: movie.spokenLanguages,
-          },
-          {
-            title: 'Production countries',
-            value: movie.productionCountries.join(', '),
-          },
-        ]}
-      />
-      <PeopleList
-        sectionTitle="Cast"
-        onPressItem={() => {}}
-        dataset={movie.cast}
-        type="cast"
-      />
-      <PeopleList
-        sectionTitle="Crew"
-        onPressItem={() => {}}
-        dataset={movie.crew}
-        type="crew"
-      />
-      <Section
-        title="Images"
-      >
-        <ImagesList
-          images={movie.images}
+    <>
+      <ScrollView>
+        <Header
+          isLoading={isLoading}
+          thumbnailURL={movie.backdropPath}
+          votesAverage={route.params.voteAverage}
+          voteCount={route.params.voteCount}
+          posterURL={route.params.posterPath}
+          title={route.params.title}
+          imageURL={movie.backdropPath}
         />
-      </Section>
-      <Videos
-        videos={movie.videos}
-      />
-      <Reviews
-        reviews={movie.reviews}
-      />
-      <ProductionCompanies
-        productionCompanies={movie.productionCompanies}
-      />
-      <Section
-        title="Similar"
-      >
-        <FlatList
-          renderItem={({ item, index }) => (
-            <SimplifiedMediaListItem
-              onPress={() => console.log(item)}
-              voteAverage={item.voteAverage}
-              voteCount={item.voteCount}
-              image={item.posterPath}
-              isFirst={index === 0}
-              title={item.title}
-            />
-          )}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          showsHorizontalScrollIndicator={false}
-          data={movie.similar}
-          horizontal
+        <Tags
+          tags={route.params.genreIds || movie.genres}
+          releaseDate={movie.releaseDate}
         />
-      </Section>
-    </ScrollView>
+        <Overview
+          overview={movie.overview}
+        />
+        <GeneralInfo
+          infoItems={[
+            {
+              title: t('translations:mediaDetail:sections:originalTitle'),
+              value: movie.originalTitle,
+            },
+            {
+              title: t('translations:mediaDetail:sections:releaseDate'),
+              value: movie.releaseDate,
+            },
+            {
+              title: t('translations:mediaDetail:sections:budget'),
+              value: formatter.format(movie.budget),
+            },
+            {
+              title: t('translations:mediaDetail:sections:revenue'),
+              value: formatter.format(movie.revenue),
+            },
+            {
+              title: t('translations:mediaDetail:sections:productionCountries'),
+              value: movie.productionCountries.join(', '),
+            },
+            {
+              title: t('translations:mediaDetail:sections:spokenLanguages'),
+              value: movie.spokenLanguages.join(', '),
+            },
+          ]}
+        />
+        <PeopleList
+          sectionTitle={t('translations:mediaDetail:sections:cast')}
+          onPressItem={() => {}}
+          dataset={movie.cast}
+          type="cast"
+        />
+        <PeopleList
+          sectionTitle={t('translations:mediaDetail:sections:crew')}
+          onPressItem={() => {}}
+          dataset={movie.crew}
+          type="crew"
+        />
+        <Section
+          title={t('translations:mediaDetail:sections:images')}
+        >
+          <ImagesList
+            images={movie.images}
+          />
+        </Section>
+        <Videos
+          videos={movie.videos}
+        />
+        <Reviews
+          reviews={movie.reviews}
+        />
+        <ProductionCompanies
+          productionCompanies={movie.productionCompanies}
+        />
+        <Section
+          title={t('translations:mediaDetail:sections:similar')}
+        >
+          <FlatList
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            renderItem={({ item, index }) => (
+              <SimplifiedMediaListItem
+                onPress={() => console.log(item)}
+                voteAverage={item.voteAverage}
+                voteCount={item.voteCount}
+                image={item.posterPath}
+                isFirst={index === 0}
+                title={item.title}
+              />
+            )}
+            showsHorizontalScrollIndicator={false}
+            data={movie.similar}
+            horizontal
+          />
+        </Section>
+      </ScrollView>
+    </>
   );
 };
 

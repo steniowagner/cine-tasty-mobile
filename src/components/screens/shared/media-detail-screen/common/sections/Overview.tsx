@@ -21,6 +21,7 @@ const Overview = ({ overview }: Props) => {
   return (
     <Section
       title={t('translations:mediaDetail:sections:overview')}
+      noMarginBottom
     >
       <MediaItemDescriptionWrapper>
         <MediaItemDescription

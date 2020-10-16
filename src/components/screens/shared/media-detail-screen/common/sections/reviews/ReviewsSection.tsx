@@ -17,7 +17,9 @@ interface DotStyleProps {
 
 const ContentWrapper = styled(View)`
   width: 100%;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('62%')}px;
+  margin-vertical: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  padding-vertical: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  []background-color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const Dot = styled(Text)<DotStyleProps>`

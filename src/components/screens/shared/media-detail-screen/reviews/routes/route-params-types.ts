@@ -1,7 +1,12 @@
-export type MovieDetailParams = {
-  voteAverage: number;
-  posterPath: string;
-  voteCount: number;
-  title: string;
-  id: number;
+type Review = {
+  content: string;
+  author: string;
+};
+
+export type ReviewsExternalParams = {
+  reviews: Review[];
+};
+
+export type MovieDetailInternalternalParams = {
+  REVIEWS: Review[];
 };

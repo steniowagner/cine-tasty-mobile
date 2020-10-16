@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
+import { useTranslation } from 'react-i18next';
 
 import {
   MovieDetail_movie as Movie,
@@ -16,6 +17,7 @@ type Props = {
 };
 
 type State = {
+  t: (key: string) => string;
   isLoading: boolean;
   hasError: boolean;
   movie?: Movie;
@@ -35,6 +37,8 @@ const useMovieDetail = ({
   hasVoteCount,
   id,
 }: Props): State => {
+  const { t } = useTranslation();
+
   const { data, error, loading } = useQuery<MovieDetail, Variables>(GET_MOVIE_DETAIL, {
     variables: {
       withVoteAverage: !hasVoteAverage,
@@ -49,6 +53,7 @@ const useMovieDetail = ({
     movie: data?.movie,
     isLoading: loading,
     hasError: !!error,
+    t,
   };
 };
 

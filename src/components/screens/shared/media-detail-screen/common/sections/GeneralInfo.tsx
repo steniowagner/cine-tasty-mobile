@@ -10,6 +10,7 @@ const Wrapper = styled(View)`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  padding-vertical: ${({ theme }) => theme.metrics.smallSize}px;
   background-color: ${({ theme }) => theme.colors.secondary};
 `;
 
@@ -47,6 +48,7 @@ const GeneralInfo = ({ infoItems }: Props) => {
     !!infoItems.length && (
       <Section
         title={t('translations:mediaDetail:sections:details')}
+        noMarginTop
       >
         <Wrapper>
           {infoItems.map((infoItem) => (

@@ -1,10 +1,13 @@
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import MediaItemDescription from 'components/common/media-item-description/MediaItemDescription';
 import metrics from 'styles/metrics';
+
+import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 
 const ContentWrapper = styled(View)`
   width: 100%;
@@ -31,16 +34,13 @@ const Separator = styled(View)`
   background-color: ${({ theme }) => theme.colors.contrast};
 `;
 
-type Review = {
-  author: string;
-  content: string;
-};
+type ReviewsScreenRouteProp = RouteProp<MovieDetailInternalternalParams, 'REVIEWS'>;
 
 type Props = {
-  reviews: Review[];
+  route: ReviewsScreenRouteProp;
 };
 
-const Reviews = ({ reviews = [] }: Props) => {
+const Reviews = ({ route }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -60,7 +60,7 @@ const Reviews = ({ reviews = [] }: Props) => {
         <ReviewsText>{t('translations:mediaDetail:sections:reviews')}</ReviewsText>
       )}
       ItemSeparatorComponent={() => <Separator />}
-      data={reviews}
+      data={route.params.reviews}
     />
   );
 };

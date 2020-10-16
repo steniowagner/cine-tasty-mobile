@@ -18,7 +18,7 @@ const ReviewText = styled(Text).attrs({
   numberOfLines: 4,
 })`
   font-family: CircularStd-Medium;
-  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('5.5%')}px;
+  font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 

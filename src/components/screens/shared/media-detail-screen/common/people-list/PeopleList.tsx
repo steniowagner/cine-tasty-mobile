@@ -27,6 +27,7 @@ const PeopleList = ({
       title={sectionTitle}
     >
       <FlatList
+        keyExtractor={({ id }, index) => `${id}-${index}`}
         showsHorizontalScrollIndicator={false}
         renderItem={({ index, item }) => (
           <PeopleListItem
@@ -37,7 +38,6 @@ const PeopleList = ({
             name={item.name}
           />
         )}
-        keyExtractor={({ id }) => id}
         testID="people-list"
         data={items}
         horizontal

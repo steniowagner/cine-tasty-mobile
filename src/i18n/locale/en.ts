@@ -172,11 +172,21 @@ const en: Locale = {
   mediaDetail: {
     votes: 'Votes',
     sections: {
-      productionCompanies: 'Production Companies',
+      productionCompanies: 'Production companies',
+      productionCountries: 'Production countries',
+      spokenLanguages: 'Spoken languages',
+      originalTitle: 'Original title',
+      releaseDate: 'Release date',
+      budget: 'Budget',
+      revenue: 'Revenue',
       overview: 'Overview',
       reviews: 'Reviews',
       details: 'Details',
       videos: 'Videos',
+      cast: 'Cast',
+      crew: 'Crew',
+      images: 'Images',
+      similar: 'Similar',
     },
   },
 };
