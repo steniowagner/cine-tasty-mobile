@@ -7,28 +7,37 @@ import MediaItemDescription from 'components/common/media-item-description/Media
 import Section from 'components/common/Section';
 import CONSTANTS from 'utils/constants';
 
+import LoadingOverview from './LoadingOverview';
+
+export const SECTION_TITLE_I18N_REF = 'translations:mediaDetail:sections:overview';
+
 const MediaItemDescriptionWrapper = styled(View)`
   padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
   margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize * 2}px;
 `;
 
 type Props = {
+  isLoading: boolean;
   overview: string;
 };
 
-const Overview = ({ overview }: Props) => {
+const Overview = ({ isLoading, overview }: Props) => {
   const { t } = useTranslation();
 
   return (
     <Section
-      title={t('translations:mediaDetail:sections:overview')}
+      title={t(SECTION_TITLE_I18N_REF)}
       noMarginBottom
     >
-      <MediaItemDescriptionWrapper>
-        <MediaItemDescription
-          description={overview}
-        />
-      </MediaItemDescriptionWrapper>
+      {isLoading ? (
+        <LoadingOverview />
+      ) : (
+        <MediaItemDescriptionWrapper>
+          <MediaItemDescription
+            description={overview}
+          />
+        </MediaItemDescriptionWrapper>
+      )}
     </Section>
   );
 };

@@ -3,14 +3,25 @@ import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import CONSTANTS from 'utils/constants';
 
-import {
-  BackgroundImageWrapper, SmokeShadow, MediaInfoWrapper, Wrapper,
-} from './common';
+import BackgroundImage from './BackgroundImage';
 import PosterImage from './PosterImage';
+
+const MediaInfoWrapper = styled(View)`
+  width: 100%;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('40%')}px;
+  flex-direction: row;
+  align-items: center;
+  margin: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
+`;
+
+const Wrapper = styled(View)`
+  width: 100%;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('95%')}px;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
 
 const TextContentWrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('64%')}px;
@@ -75,12 +86,10 @@ type Props = {
   title: string;
 };
 
-const BACKGROUND_IMAGE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
-const BACKGROUND_IMAGE_IMAGE_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_SIZE_CODE}`;
-
 const HeaderInfo = ({
   thumbnailURL,
   votesAverage,
+  isLoading,
   voteCount,
   posterURL,
   imageURL,
@@ -90,14 +99,11 @@ const HeaderInfo = ({
 
   return (
     <Wrapper>
-      <BackgroundImageWrapper>
-        <ProgressiveImage
-          thumbnailURL={`${BACKGROUND_IMAGE_THUMBNAIL_URL}${thumbnailURL}`}
-          imageURL={`${BACKGROUND_IMAGE_IMAGE_URL}${imageURL}`}
-          borderRadius={0}
-        />
-        <SmokeShadow />
-      </BackgroundImageWrapper>
+      <BackgroundImage
+        thumbnailURL={thumbnailURL}
+        isLoading={isLoading}
+        imageURL={imageURL}
+      />
       <MediaInfoWrapper>
         <PosterImage
           image={posterURL}
