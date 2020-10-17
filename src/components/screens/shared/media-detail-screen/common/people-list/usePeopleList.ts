@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { CrewDataset, CastDataset } from 'types';
 
-type PersonListItem = {
+type PeopleListItem = {
   subText: string;
   image: string;
   name: string;
@@ -15,24 +15,48 @@ type Props = {
 };
 
 type State = {
-  items: PersonListItem[];
+  items: PeopleListItem[];
 };
 
 const usePeopleList = ({ dataset, type }: Props): State => {
-  const parseCrewToPersonListItem = useCallback(
-    (crew: CrewDataset): PersonListItem[] => crew.map(({
+  const mergeCrewMemebersBySimilarJobs = useCallback(
+    (crew: PeopleListItem[]): PeopleListItem[] => {
+      const repeatedItemsMap = {};
+
+      const repeatedCrewItems = crew.filter(({ subText, id }) => {
+        if (!repeatedItemsMap[id]) {
+          repeatedItemsMap[id] = [subText];
+          return true;
+        }
+
+        repeatedItemsMap[id] = [...repeatedItemsMap[id], subText];
+
+        return false;
+      });
+
+      return repeatedCrewItems.map((repeatedCrewItem) => ({
+        ...repeatedCrewItem,
+        subText: repeatedItemsMap[repeatedCrewItem.id].join('/'),
+      }));
+    },
+    [],
+  );
+
+  const parseCrewToPeopleListItem = useCallback((crew: CrewDataset): PeopleListItem[] => {
+    const crewParsedToPeople = crew.map(({
       job, profilePath, name, id,
     }) => ({
       image: profilePath,
       subText: job,
       name,
       id,
-    })),
-    [],
-  );
+    }));
 
-  const parseCastToPersonListItem = useCallback(
-    (cast: CastDataset): PersonListItem[] => cast.map(({
+    return mergeCrewMemebersBySimilarJobs(crewParsedToPeople);
+  }, []);
+
+  const parseCastToPeopleListItem = useCallback(
+    (cast: CastDataset): PeopleListItem[] => cast.map(({
       character, profilePath, name, id,
     }) => ({
       image: profilePath,
@@ -43,20 +67,20 @@ const usePeopleList = ({ dataset, type }: Props): State => {
     [],
   );
 
-  const parseDatasetToPersonListItemDataset = useCallback(() => {
+  const parseDatasetToPeopleListItemDataset = useCallback(() => {
     if (type === 'cast') {
       const cast = dataset as CastDataset;
 
-      return parseCastToPersonListItem(cast);
+      return parseCastToPeopleListItem(cast);
     }
 
     const crew = dataset as CrewDataset;
 
-    return parseCrewToPersonListItem(crew);
+    return parseCrewToPeopleListItem(crew);
   }, [dataset, type]);
 
   return {
-    items: parseDatasetToPersonListItemDataset(),
+    items: parseDatasetToPeopleListItemDataset(),
   };
 };
 

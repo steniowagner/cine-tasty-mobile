@@ -14,8 +14,8 @@ import Overview from '../../common/sections/overview/Overview';
 import PeopleList from '../../common/people-list/PeopleList';
 import GeneralInfo from '../../common/sections/GeneralInfo';
 import Header from '../../common/header-info/HeaderInfo';
-import Videos from '../../common/sections/Videos';
 import Tags from '../../common/sections/tags/Tags';
+import Videos from '../../common/sections/Videos';
 import useMovieDetail from './useMovieDetail';
 
 type MovieDetailScreenNavigationProp = StackNavigationProp<
@@ -52,11 +52,11 @@ const MovieDetail = ({ route }: Props) => {
         bounces={false}
       >
         <Header
+          votesAverage={route.params.voteAverage || movie?.voteAverage}
+          voteCount={route.params.voteCount || movie?.voteCount}
           thumbnailURL={movie?.backdropPath || ''}
-          votesAverage={route.params.voteAverage}
           imageURL={movie?.backdropPath || ''}
           posterURL={route.params.posterPath}
-          voteCount={route.params.voteCount}
           title={route.params.title}
           isLoading={isLoading}
         />

@@ -110,19 +110,21 @@ const HeaderInfo = ({
         />
         <TextContentWrapper>
           <MediaTitleText>{title}</MediaTitleText>
-          <VotesWrapper>
-            <View>
-              <StarsVotes
-                voteCount={voteCount}
-                votes={votesAverage}
-              />
-              <Row>
-                <NumberOfVotesText>{voteCount}</NumberOfVotesText>
-                <VotesText>{t('translations:mediaDetail:votes')}</VotesText>
-              </Row>
-            </View>
-            <VotesValueText>{votesAverage.toFixed(1)}</VotesValueText>
-          </VotesWrapper>
+          {!!votesAverage && !!voteCount && (
+            <VotesWrapper>
+              <View>
+                <StarsVotes
+                  voteCount={voteCount}
+                  votes={votesAverage}
+                />
+                <Row>
+                  <NumberOfVotesText>{voteCount}</NumberOfVotesText>
+                  <VotesText>{t('translations:mediaDetail:votes')}</VotesText>
+                </Row>
+              </View>
+              <VotesValueText>{votesAverage.toFixed(1)}</VotesValueText>
+            </VotesWrapper>
+          )}
         </TextContentWrapper>
       </MediaInfoWrapper>
     </Wrapper>

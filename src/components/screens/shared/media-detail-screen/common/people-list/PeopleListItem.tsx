@@ -28,10 +28,15 @@ const PersonImage = styled(Image)`
 `;
 
 const SmokeShadow = styled(LinearGradient).attrs(() => ({
-  colors: ['transparent', 'rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 0, 1)'],
+  colors: [
+    ...Array(4).fill('transparent'),
+    'rgba(0, 0, 0, 0.6)',
+    'rgba(0, 0, 0, 0.8)',
+    'rgba(0, 0, 0, 1)',
+  ],
 }))`
   width: 100%;
-  height: 50%;
+  height: 100%;
   bottom: 0;
   position: absolute;
   border-bottom-left-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
@@ -62,7 +67,7 @@ const PersonNameText = styled(Text).attrs({
 `;
 
 const PersonSubText = styled(Text).attrs({
-  numberOfLines: 2,
+  numberOfLines: 4,
 })`
   margin-top: ${({ theme }) => theme.metrics.extraSmallSize}px;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;

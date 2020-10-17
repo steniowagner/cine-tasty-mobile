@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import styled, { DefaultTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
 import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
@@ -32,7 +32,6 @@ const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
 
 type Props = {
   thumbnailURL: string;
-  theme: DefaultTheme;
   isLoading: boolean;
   imageURL: string;
 };

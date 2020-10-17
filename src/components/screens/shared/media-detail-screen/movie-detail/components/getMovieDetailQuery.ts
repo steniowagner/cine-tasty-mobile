@@ -40,9 +40,8 @@ export default gql`
         character
       }
       crew {
-        department
-        id
         job
+        id
         name
         profilePath
       }
