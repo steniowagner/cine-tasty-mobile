@@ -9,6 +9,7 @@ import CONSTANTS from 'utils/constants';
 
 const MediaItemDescriptionWrapper = styled(View)`
   padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
+  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize * 2}px;
 `;
 
 type Props = {

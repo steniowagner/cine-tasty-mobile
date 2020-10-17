@@ -17,7 +17,7 @@ const ExpandableReadText = styled(Text)`
 `;
 
 const ExpandableReadButton = styled(TouchableOpacity)`
-  margin-vertical: ${({ theme }) => theme.metrics.largeSize}px;
+  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
   align-self: flex-end;
 `;
 

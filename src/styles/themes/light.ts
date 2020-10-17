@@ -8,7 +8,10 @@ const light: DefaultTheme = {
   colors: {
     primary: '#FFD700',
     lightPrimary: 'rgba(70, 117, 248, 0.5)',
-    backgroundAlpha: 'rgba(38, 38, 38, 0.8)',
+    backgroundAlphax1: 'rgba(38, 38, 38, 0.8)',
+    backgroundAlphax2: 'rgba(38, 38, 38, 0.6)',
+    backgroundAlphax3: 'rgba(38, 38, 38, 0.4)',
+    backgroundAlphax4: 'rgba(38, 38, 38, 0.2)',
     secondary: '#FFFFFF',
     background: '#EBEBEB',
     contrast: '#4d4d4d',

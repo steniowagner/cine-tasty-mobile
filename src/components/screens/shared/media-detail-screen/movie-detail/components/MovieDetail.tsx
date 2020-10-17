@@ -52,7 +52,9 @@ const MovieDetail = ({ route }: Props) => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView
+        bounces={false}
+      >
         <Header
           isLoading={isLoading}
           thumbnailURL={movie.backdropPath}

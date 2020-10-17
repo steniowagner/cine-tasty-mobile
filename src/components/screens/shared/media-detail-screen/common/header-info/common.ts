@@ -25,10 +25,17 @@ export const MediaInfoWrapper = styled(View)`
 `;
 
 export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
-  colors: ['transparent', theme.colors.backgroundAlpha, theme.colors.background],
+  colors: [
+    ...Array(5).fill('transparent'),
+    theme.colors.backgroundAlphax4,
+    theme.colors.backgroundAlphax3,
+    theme.colors.backgroundAlphax2,
+    theme.colors.backgroundAlphax1,
+    theme.colors.background,
+  ],
 }))`
   width: 100%;
-  height: 50%;
+  height: 100%;
   position: absolute;
   bottom: 0;
   left: 0;
