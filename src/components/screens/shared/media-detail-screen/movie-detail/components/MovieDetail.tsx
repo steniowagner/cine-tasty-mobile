@@ -103,54 +103,66 @@ const MovieDetail = ({ route }: Props) => {
                 },
               ]}
             />
-            <PeopleList
-              sectionTitle={t('translations:mediaDetail:sections:cast')}
-              onPressItem={() => {}}
-              dataset={movie.cast}
-              type="cast"
-            />
-            <PeopleList
-              sectionTitle={t('translations:mediaDetail:sections:crew')}
-              onPressItem={() => {}}
-              dataset={movie.crew}
-              type="crew"
-            />
-            <Section
-              title={t('translations:mediaDetail:sections:images')}
-            >
-              <ImagesList
-                images={movie.images}
+            {!!movie.cast.length && (
+              <PeopleList
+                sectionTitle={t('translations:mediaDetail:sections:cast')}
+                onPressItem={() => {}}
+                dataset={movie.cast}
+                type="cast"
               />
-            </Section>
+            )}
+            {!!movie.crew.length && (
+              <PeopleList
+                sectionTitle={t('translations:mediaDetail:sections:crew')}
+                onPressItem={() => {}}
+                dataset={movie.crew}
+                type="crew"
+              />
+            )}
+            {!!movie.images.length && (
+              <Section
+                title={t('translations:mediaDetail:sections:images')}
+              >
+                <ImagesList
+                  images={movie.images}
+                />
+              </Section>
+            )}
+            {!!movie.videos.length && (
             <Videos
               videos={movie.videos}
             />
+            )}
             <Reviews
               reviews={movie.reviews}
             />
-            <ProductionCompanies
-              productionCompanies={movie.productionCompanies}
-            />
-            <Section
-              title={t('translations:mediaDetail:sections:similar')}
-            >
-              <FlatList
-                keyExtractor={(item, index) => `${item.id}-${index}`}
-                renderItem={({ item, index }) => (
-                  <SimplifiedMediaListItem
-                    onPress={() => console.log(item)}
-                    voteAverage={item.voteAverage}
-                    voteCount={item.voteCount}
-                    image={item.posterPath}
-                    isFirst={index === 0}
-                    title={item.title}
-                  />
-                )}
-                showsHorizontalScrollIndicator={false}
-                data={movie.similar}
-                horizontal
+            {!!movie.productionCompanies.length && (
+              <ProductionCompanies
+                productionCompanies={movie.productionCompanies}
               />
-            </Section>
+            )}
+            {!!movie.similar.length && (
+              <Section
+                title={t('translations:mediaDetail:sections:similar')}
+              >
+                <FlatList
+                  keyExtractor={(item, index) => `${item.id}-${index}`}
+                  renderItem={({ item, index }) => (
+                    <SimplifiedMediaListItem
+                      onPress={() => console.log(item)}
+                      voteAverage={item.voteAverage}
+                      voteCount={item.voteCount}
+                      image={item.posterPath}
+                      isFirst={index === 0}
+                      title={item.title}
+                    />
+                  )}
+                  showsHorizontalScrollIndicator={false}
+                  data={movie.similar}
+                  horizontal
+                />
+              </Section>
+            )}
           </>
         )}
       </ScrollView>
