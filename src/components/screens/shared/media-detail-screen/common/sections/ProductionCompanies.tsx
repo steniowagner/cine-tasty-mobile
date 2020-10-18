@@ -14,6 +14,8 @@ import Section from 'components/common/Section';
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 
+export const SECTION_TITLE_I18N_REF = 'translations:mediaDetail:sections:productionCompanies';
+
 const COMPANY_LOGO_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
 const ProductionCompany = styled(View)`
@@ -64,7 +66,7 @@ const ProductionCompanies = ({ productionCompanies }: Props) => {
 
   return (
     <Section
-      title={t('translations:mediaDetail:sections:productionCompanies')}
+      title={t(SECTION_TITLE_I18N_REF)}
     >
       <FlatList
         showsHorizontalScrollIndicator={false}

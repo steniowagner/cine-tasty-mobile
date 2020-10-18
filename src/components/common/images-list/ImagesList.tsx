@@ -34,8 +34,9 @@ const ImagesList = ({ images }: Props) => {
       )}
       keyExtractor={(image) => image}
       showsHorizontalScrollIndicator={false}
-      horizontal
+      testID="images-list"
       data={images}
+      horizontal
     />
   );
 };

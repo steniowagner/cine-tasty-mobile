@@ -37,10 +37,13 @@ type Props = {
 };
 
 const BackgroundImage = ({ thumbnailURL, isLoading, imageURL }: Props) => (
-  <Wrapper>
+  <Wrapper
+    testID="background-image-wrapper"
+  >
     {isLoading ? (
       <LoadingPlaceholder
         indexToDelayAnimation={2}
+        testID="background-image-loading"
         style={{
           width: '100%',
           height: '100%',

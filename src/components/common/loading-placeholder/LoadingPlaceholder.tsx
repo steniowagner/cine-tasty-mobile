@@ -8,10 +8,16 @@ type Props = {
   indexToDelayAnimation?: number;
   theme: DefaultTheme;
   colors?: string[];
+  testID?: string;
   style: object;
 };
 
-const LoadingPlaceholder = ({ indexToDelayAnimation = 0, style, theme }: Props) => {
+const LoadingPlaceholder = ({
+  indexToDelayAnimation = 0,
+  testID,
+  style,
+  theme,
+}: Props) => {
   const { color } = useLoadingPlaceholder({
     colors: theme.colors.loadingColors,
     indexToDelayAnimation,
@@ -21,7 +27,7 @@ const LoadingPlaceholder = ({ indexToDelayAnimation = 0, style, theme }: Props) 
   return (
     <Animated.View
       style={{ ...style, backgroundColor: color }}
-      testID="loading-placeholder"
+      testID={testID || 'loading-placeholder'}
     />
   );
 };

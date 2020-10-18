@@ -32,7 +32,9 @@ const Overview = ({ isLoading, overview }: Props) => {
       {isLoading ? (
         <LoadingOverview />
       ) : (
-        <MediaItemDescriptionWrapper>
+        <MediaItemDescriptionWrapper
+          testID="media-item-description-wrapper"
+        >
           <MediaItemDescription
             description={overview}
           />

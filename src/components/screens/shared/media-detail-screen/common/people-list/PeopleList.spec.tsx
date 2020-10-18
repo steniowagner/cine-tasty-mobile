@@ -57,9 +57,9 @@ describe('Testing <PeopleList />', () => {
 
     expect(getByText(sectionTitle)).not.toBeNull();
 
-    expect(getByTestId('people-list')).not.toBeNull();
+    expect(getByTestId('people-list-cast')).not.toBeNull();
 
-    expect(getAllByTestId('button-wrapper').length).toEqual(cast.length);
+    expect(getAllByTestId('button-wrapper-cast').length).toEqual(cast.length);
 
     expect(getAllByTestId('person-image').length).toEqual(cast.length);
 
@@ -103,7 +103,7 @@ describe('Testing <PeopleList />', () => {
       }),
     );
 
-    fireEvent.press(getAllByTestId('button-wrapper')[INDEX_SELECTED]);
+    fireEvent.press(getAllByTestId('button-wrapper-cast')[INDEX_SELECTED]);
 
     expect(onPressItem).toHaveBeenCalledTimes(1);
 
@@ -124,9 +124,9 @@ describe('Testing <PeopleList />', () => {
 
     expect(getByText(sectionTitle)).not.toBeNull();
 
-    expect(getByTestId('people-list')).not.toBeNull();
+    expect(getByTestId('people-list-crew')).not.toBeNull();
 
-    expect(getAllByTestId('button-wrapper').length).toEqual(crew.length);
+    expect(getAllByTestId('button-wrapper-crew').length).toEqual(crew.length);
 
     expect(getAllByTestId('person-image').length).toEqual(crew.length);
 
@@ -170,7 +170,7 @@ describe('Testing <PeopleList />', () => {
       }),
     );
 
-    fireEvent.press(getAllByTestId('button-wrapper')[INDEX_SELECTED]);
+    fireEvent.press(getAllByTestId('button-wrapper-crew')[INDEX_SELECTED]);
 
     expect(onPressItem).toHaveBeenCalledTimes(1);
 

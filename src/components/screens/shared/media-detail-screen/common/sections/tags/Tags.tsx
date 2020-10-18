@@ -44,7 +44,9 @@ type Props = {
 const Tags = ({ isLoading, releaseDate, tags }: Props) => {
   if (isLoading) {
     return (
-      <Wrapper>
+      <Wrapper
+        testID="tags-loading"
+      >
         {Array(NUMBER_ITEMS)
           .fill({})
           .map((_, index) => (
@@ -67,7 +69,9 @@ const Tags = ({ isLoading, releaseDate, tags }: Props) => {
   const releaseYear = releaseDate.split('-')[0];
 
   return (
-    <Wrapper>
+    <Wrapper
+      testID="tags"
+    >
       {[releaseYear, ...tags].map(
         (tag, index) => !!tag && (
         <TagWrapper

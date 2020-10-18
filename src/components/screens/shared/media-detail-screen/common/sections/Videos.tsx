@@ -13,6 +13,8 @@ import {
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 
+export const SECTION_TITLE_I18N_REF = 'translations:mediaDetail:sections:videos';
+
 const YOUTUBE_BASE_URL = 'https://www.youtube.com/watch?v=';
 
 interface VideoListItemWrapperStyleProps {
@@ -57,10 +59,9 @@ const Videos = ({ videos }: Props) => {
 
   return (
     <Section
-      title={t('translations:mediaDetail:sections:videos')}
+      title={t(SECTION_TITLE_I18N_REF)}
     >
       <FlatList
-        horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={({ id }) => id}
         renderItem={({ index, item }) => (
@@ -80,7 +81,9 @@ const Videos = ({ videos }: Props) => {
             </IconWrapper>
           </VideoListItemWrapper>
         )}
+        testID="videos-list"
         data={videos}
+        horizontal
       />
     </Section>
   );

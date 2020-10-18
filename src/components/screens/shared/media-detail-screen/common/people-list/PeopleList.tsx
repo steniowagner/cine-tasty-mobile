@@ -36,9 +36,10 @@ const PeopleList = ({
             subText={item.subText}
             isFirst={index === 0}
             name={item.name}
+            type={type}
           />
         )}
-        testID="people-list"
+        testID={`people-list-${type}`}
         data={items}
         horizontal
       />

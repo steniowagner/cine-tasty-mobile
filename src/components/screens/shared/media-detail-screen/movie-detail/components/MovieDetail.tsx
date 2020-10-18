@@ -22,6 +22,20 @@ import Tags from '../../common/sections/tags/Tags';
 import Videos from '../../common/sections/Videos';
 import useMovieDetail from './useMovieDetail';
 
+export const MOVIE_PRODUCTION_COUNTRIES_I18N_REF = 'translations:mediaDetail:sections:productionCountries';
+export const MOVIE_SPOKEN_LANGUAGES_I18N_REF = 'translations:mediaDetail:sections:spokenLanguages';
+export const ERROR_DESCRIPTION_I18N_REF = 'translations:mediaDetail:errorDescription';
+export const ERROR_SUGGESTION_I18N_REF = 'translations:mediaDetail:errorSuggestion';
+export const MOVIE_ORIGINAL_TITLE_I18N_REF = 'translations:mediaDetail:sections:originalTitle';
+export const MOVIE_RELEASE_DATE_I18N_REF = 'translations:mediaDetail:sections:releaseDate';
+export const MOVIE_SIMILAR_I18N_REF = 'translations:mediaDetail:sections:similar';
+export const MOVIE_IMAGES_I18N_REF = 'translations:mediaDetail:sections:images';
+export const MOVIE_CREW_I18N_REF = 'translations:mediaDetail:sections:crew';
+export const MOVIE_CAST_I18N_REF = 'translations:mediaDetail:sections:cast';
+export const ERROR_TITLE_I18N_REF = 'translations:mediaDetail:errorTitle';
+export const MOVIE_REVENUE_I18N_REF = 'translations:mediaDetail:sections:revenue';
+export const MOVIE_BUDGET_I18N_REF = 'translations:mediaDetail:sections:budget';
+
 type MovieDetailScreenNavigationProp = StackNavigationProp<
   MovieDetailInternalternalParams,
   'MOVIE_DETAIL'
@@ -60,9 +74,9 @@ const MovieDetail = ({ navigation, route }: Props) => {
   if (hasError) {
     return (
       <Advise
-        description={t('translations:mediaDetail:errorDescription')}
-        suggestion={t('translations:mediaDetail:errorSuggestion')}
-        title={t('translations:mediaDetail:errorTitle')}
+        description={t(ERROR_DESCRIPTION_I18N_REF)}
+        suggestion={t(ERROR_SUGGESTION_I18N_REF)}
+        title={t(ERROR_TITLE_I18N_REF)}
         icon="alert-box"
       />
     );
@@ -96,29 +110,29 @@ const MovieDetail = ({ navigation, route }: Props) => {
             <GeneralInfo
               infoItems={[
                 {
-                  title: t('translations:mediaDetail:sections:originalTitle'),
+                  title: t(MOVIE_ORIGINAL_TITLE_I18N_REF),
                   value: movie.originalTitle || '-',
                 },
                 {
-                  title: t('translations:mediaDetail:sections:releaseDate'),
+                  title: t(MOVIE_RELEASE_DATE_I18N_REF),
                   value: formatDate(movie.releaseDate),
                 },
                 {
-                  title: t('translations:mediaDetail:sections:budget'),
+                  title: t(MOVIE_BUDGET_I18N_REF),
                   value: formatCurrency(movie.budget),
                 },
                 {
-                  title: t('translations:mediaDetail:sections:revenue'),
+                  title: t(MOVIE_REVENUE_I18N_REF),
                   value: formatCurrency(movie.revenue),
                 },
                 {
-                  title: t('translations:mediaDetail:sections:productionCountries'),
+                  title: t(MOVIE_PRODUCTION_COUNTRIES_I18N_REF),
                   value: movie.productionCountries.length
                     ? movie.productionCountries.join(', ')
                     : '-',
                 },
                 {
-                  title: t('translations:mediaDetail:sections:spokenLanguages'),
+                  title: t(MOVIE_SPOKEN_LANGUAGES_I18N_REF),
                   value: movie.spokenLanguages.length
                     ? movie.spokenLanguages.join(', ')
                     : '-',
@@ -128,7 +142,7 @@ const MovieDetail = ({ navigation, route }: Props) => {
             {!!movie.cast.length && (
               <PeopleList
                 onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
-                sectionTitle={t('translations:mediaDetail:sections:cast')}
+                sectionTitle={t(MOVIE_CAST_I18N_REF)}
                 dataset={movie.cast}
                 type="cast"
               />
@@ -136,14 +150,14 @@ const MovieDetail = ({ navigation, route }: Props) => {
             {!!movie.crew.length && (
               <PeopleList
                 onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
-                sectionTitle={t('translations:mediaDetail:sections:crew')}
+                sectionTitle={t(MOVIE_CREW_I18N_REF)}
                 dataset={movie.crew}
                 type="crew"
               />
             )}
             {!!movie.images.length && (
               <Section
-                title={t('translations:mediaDetail:sections:images')}
+                title={t(MOVIE_IMAGES_I18N_REF)}
               >
                 <ImagesList
                   images={movie.images}
@@ -163,34 +177,36 @@ const MovieDetail = ({ navigation, route }: Props) => {
                 productionCompanies={movie.productionCompanies}
               />
             )}
-            {!!movie.similar.length && (
-              <Section
-                title={t('translations:mediaDetail:sections:similar')}
-              >
-                <FlatList
-                  keyExtractor={(item, index) => `${item.id}-${index}`}
-                  renderItem={({ item, index }) => (
-                    <SimplifiedMediaListItem
-                      onPress={() => navigation.push('MOVIE_DETAIL', {
-                        voteAverage: item.voteAverage,
-                        posterPath: item.posterPath,
-                        voteCount: item.voteCount,
-                        title: item.title,
-                        id: item.id,
-                      })}
-                      voteAverage={item.voteAverage}
-                      voteCount={item.voteCount}
-                      image={item.posterPath}
-                      isFirst={index === 0}
-                      title={item.title}
-                    />
-                  )}
-                  showsHorizontalScrollIndicator={false}
-                  data={movie.similar}
-                  horizontal
-                />
-              </Section>
-            )}
+            <Section
+              title={
+                movie.similar.length
+                  ? t(MOVIE_SIMILAR_I18N_REF)
+                  : `${t(MOVIE_SIMILAR_I18N_REF)} (0)`
+              }
+            >
+              <FlatList
+                keyExtractor={(item, index) => `${item.id}-${index}`}
+                renderItem={({ item, index }) => (
+                  <SimplifiedMediaListItem
+                    onPress={() => navigation.push('MOVIE_DETAIL', {
+                      voteAverage: item.voteAverage,
+                      posterPath: item.posterPath,
+                      voteCount: item.voteCount,
+                      title: item.title,
+                      id: item.id,
+                    })}
+                    voteAverage={item.voteAverage}
+                    voteCount={item.voteCount}
+                    image={item.posterPath}
+                    isFirst={index === 0}
+                    title={item.title}
+                  />
+                )}
+                showsHorizontalScrollIndicator={false}
+                data={movie.similar}
+                horizontal
+              />
+            </Section>
           </>
         )}
       </ScrollView>

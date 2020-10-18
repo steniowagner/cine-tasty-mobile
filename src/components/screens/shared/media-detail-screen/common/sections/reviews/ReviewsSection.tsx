@@ -46,7 +46,9 @@ const ReviewsSection = ({ reviews }: Props) => {
   } = useReviewsSection();
 
   return (
-    <ContentWrapper>
+    <ContentWrapper
+      testID="reviews-content-wrapper"
+    >
       <SectionViewAll
         sectionTitle={`${sectionTitle} (${reviews.length})`}
         withViewAll={!!reviews.length}

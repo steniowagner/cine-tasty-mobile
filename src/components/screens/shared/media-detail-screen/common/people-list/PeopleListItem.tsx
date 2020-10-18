@@ -96,10 +96,11 @@ type Props = {
   subText: string;
   image: string;
   name: string;
+  type: string;
 };
 
 const PeopleListItem = ({
-  onPress, isFirst, subText, image, name,
+  onPress, isFirst, subText, image, name, type,
 }: Props) => {
   const {
     isFallbackImageVisible,
@@ -113,7 +114,7 @@ const PeopleListItem = ({
 
   return (
     <Wrapper
-      testID="button-wrapper"
+      testID={`button-wrapper-${type}`}
       isFirst={isFirst}
       onPress={onPress}
     >

@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 import Section from 'components/common/Section';
 
+export const SECTION_TITLE_I18N_REF = 'translations:mediaDetail:sections:details';
+
 const Wrapper = styled(View)`
   width: 100%;
   flex-direction: row;
@@ -47,10 +49,12 @@ const GeneralInfo = ({ infoItems }: Props) => {
   return (
     !!infoItems.length && (
       <Section
-        title={t('translations:mediaDetail:sections:details')}
+        title={t(SECTION_TITLE_I18N_REF)}
         noMarginTop
       >
-        <Wrapper>
+        <Wrapper
+          testID="general-info-wrapper"
+        >
           {infoItems.map((infoItem) => (
             <InfoCellWrapper
               key={infoItem.title}

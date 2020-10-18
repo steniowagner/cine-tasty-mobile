@@ -104,7 +104,9 @@ const HeaderInfo = ({
         isLoading={isLoading}
         imageURL={imageURL}
       />
-      <MediaInfoWrapper>
+      <MediaInfoWrapper
+        testID="media-info-wrapper"
+      >
         <PosterImage
           image={posterURL}
         />
