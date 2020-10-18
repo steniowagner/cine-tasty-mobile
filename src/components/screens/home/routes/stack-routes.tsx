@@ -2,8 +2,12 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { DefaultTheme, withTheme } from 'styled-components';
 
+import Reviews, {
+  Props as ReviewsExternalParams,
+} from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import MoviedDetail from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
+
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 
@@ -49,6 +53,14 @@ const HomeStack = ({ theme }: Props) => (
         ...getTransparentHeaderOptions(theme),
       })}
       component={MoviedDetail}
+    />
+    <Stack.Screen
+      name={LOCAL_ROUTES.REVIEWS.id}
+      options={({ route }: ReviewsExternalParams) => ({
+        ...getDefaultHeaderOptions(),
+        headerTitle: route.params.mediaTitle,
+      })}
+      component={Reviews}
     />
   </Stack.Navigator>
 );

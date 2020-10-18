@@ -35,9 +35,10 @@ const PaginationWrapper = styled(View)`
 
 type Props = {
   reviews: (TVSahowReview | MovieReview)[];
+  onPressViewAll: () => void;
 };
 
-const ReviewsSection = ({ reviews }: Props) => {
+const ReviewsSection = ({ onPressViewAll, reviews }: Props) => {
   const {
     indexReviewSelected,
     onMomentumScrollEnd,
@@ -51,6 +52,7 @@ const ReviewsSection = ({ reviews }: Props) => {
     >
       <SectionViewAll
         sectionTitle={`${sectionTitle} (${reviews.length})`}
+        onPressViewAll={onPressViewAll}
         withViewAll={!!reviews.length}
       />
       <FlatList

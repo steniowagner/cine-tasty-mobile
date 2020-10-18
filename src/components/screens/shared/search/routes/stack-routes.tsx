@@ -4,9 +4,12 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { withTheme, DefaultTheme } from 'styled-components';
 import { RouteProp } from '@react-navigation/native';
 
+import Reviews, {
+  Props as ReviewsExternalParams,
+} from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import MediaDetailScreen from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
-import { getTransparentHeaderOptions } from 'routes/constants';
+import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 
 import { SearchStackParams } from './route-params-types';
 import Search from '../components/search/Search';
@@ -51,6 +54,14 @@ const SearchStack = ({ route, theme }: Props) => (
         ...getTransparentHeaderOptions(theme),
       })}
       component={MediaDetailScreen}
+    />
+    <Stack.Screen
+      name={LOCAL_ROUTES.REVIEWS.id}
+      options={({ route: reviewsRoute }: ReviewsExternalParams) => ({
+        ...getDefaultHeaderOptions(),
+        headerTitle: reviewsRoute.params.mediaTitle,
+      })}
+      component={Reviews}
     />
   </Stack.Navigator>
 );

@@ -170,6 +170,10 @@ const MovieDetail = ({ navigation, route }: Props) => {
             />
             )}
             <Reviews
+              onPressViewAll={() => navigation.navigate('REVIEWS', {
+                mediaTitle: movie.title,
+                reviews: movie.reviews,
+              })}
               reviews={movie.reviews}
             />
             {!!movie.productionCompanies.length && (

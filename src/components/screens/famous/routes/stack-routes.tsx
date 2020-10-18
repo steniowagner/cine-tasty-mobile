@@ -1,9 +1,13 @@
 import React from 'react';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { useTranslation } from 'react-i18next';
 import { DefaultTheme, withTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
+import Reviews, {
+  Props as ReviewsExternalParams,
+} from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import MovieDetail from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
+
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 
@@ -43,6 +47,14 @@ const FamousStack = ({ theme }: Props) => {
           ...getTransparentHeaderOptions(theme),
         }}
         component={MovieDetail}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.REVIEWS.id}
+        options={({ route }: ReviewsExternalParams) => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: route.params.mediaTitle,
+        })}
+        component={Reviews}
       />
     </Stack.Navigator>
   );
