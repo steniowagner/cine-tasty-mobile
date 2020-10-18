@@ -6,8 +6,9 @@ import { RouteProp } from '@react-navigation/native';
 
 import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import ImagesList from 'components/common/images-list/ImagesList';
-import Section from 'components/common/Section';
 import { formatCurrency, formatDate } from 'utils/formatters';
+import Advise from 'components/common/advise/Advise';
+import Section from 'components/common/Section';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import ProductionCompanies from '../../common/sections/ProductionCompanies';
@@ -47,12 +48,25 @@ const MovieDetail = ({ navigation, route }: Props) => {
     });
   }, []);
 
-  const { isLoading, movie, t } = useMovieDetail({
+  const {
+    isLoading, hasError, movie, t,
+  } = useMovieDetail({
     hasVoteAverage: !!route.params.voteAverage,
     hasVoteCount: !!route.params.voteCount,
     hasGenresIds: !!route.params.genreIds,
     id: route.params.id,
   });
+
+  if (hasError) {
+    return (
+      <Advise
+        description={t('translations:mediaDetail:errorDescription')}
+        suggestion={t('translations:mediaDetail:errorSuggestion')}
+        title={t('translations:mediaDetail:errorTitle')}
+        icon="alert-box"
+      />
+    );
+  }
 
   return (
     <>
@@ -113,16 +127,16 @@ const MovieDetail = ({ navigation, route }: Props) => {
             />
             {!!movie.cast.length && (
               <PeopleList
+                onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
                 sectionTitle={t('translations:mediaDetail:sections:cast')}
-                onPressItem={() => {}}
                 dataset={movie.cast}
                 type="cast"
               />
             )}
             {!!movie.crew.length && (
               <PeopleList
+                onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
                 sectionTitle={t('translations:mediaDetail:sections:crew')}
-                onPressItem={() => {}}
                 dataset={movie.crew}
                 type="crew"
               />
@@ -157,7 +171,13 @@ const MovieDetail = ({ navigation, route }: Props) => {
                   keyExtractor={(item, index) => `${item.id}-${index}`}
                   renderItem={({ item, index }) => (
                     <SimplifiedMediaListItem
-                      onPress={() => console.log(item)}
+                      onPress={() => navigation.push('MOVIE_DETAIL', {
+                        voteAverage: item.voteAverage,
+                        posterPath: item.posterPath,
+                        voteCount: item.voteCount,
+                        title: item.title,
+                        id: item.id,
+                      })}
                       voteAverage={item.voteAverage}
                       voteCount={item.voteCount}
                       image={item.posterPath}

@@ -69,7 +69,6 @@ export default gql`
         voteAverage
         posterPath
         voteCount
-        genreIds
         title
         id
       }

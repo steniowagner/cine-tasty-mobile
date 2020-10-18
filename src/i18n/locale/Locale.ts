@@ -141,6 +141,9 @@ export interface Locale {
     images: string;
   };
   mediaDetail: {
+    errorDescription: string;
+    errorSuggestion: string;
+    errorTitle: string;
     votes: string;
     sections: {
       productionCompanies: string;

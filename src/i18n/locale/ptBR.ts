@@ -170,6 +170,9 @@ const en: Locale = {
     },
   },
   mediaDetail: {
+    errorDescription: 'errorDescription',
+    errorSuggestion: 'errorSuggestion',
+    errorTitle: 'errorTitle',
     votes: 'Votes',
     sections: {
       productionCompanies: 'Production Companies',
