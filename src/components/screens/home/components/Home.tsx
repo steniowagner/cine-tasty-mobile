@@ -5,6 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
+import { SimplifiedMedia } from 'types';
 import metrics from 'styles/metrics';
 
 import { HomeStackParams } from '../routes/route-params-types';
@@ -76,12 +77,12 @@ const Home = ({ isMovieSelectedInitially, navigation }: Props) => {
           />
           {trendings.map((trending) => (
             <Section
+              onPressItem={(mediaItem: SimplifiedMedia) => onPressTrendingItem(mediaItem)}
               onPressViewAll={() => onPressViewAll({
                 viewAllTitle: trending.viewAllTitle,
                 sectionItems: trending.data,
                 sectionID: trending.id,
               })}
-              onPressItem={(id: number) => onPressTrendingItem(id)}
               sectionTitle={trending.sectionTitle}
               key={trending.sectionTitle}
               items={trending.data}

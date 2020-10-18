@@ -3,6 +3,7 @@ import { FlatList, Text } from 'react-native';
 import styled from 'styled-components';
 
 import { SearchType } from 'types/schema';
+import { RecentSearchItem } from 'types';
 import metrics from 'styles/metrics';
 
 import RecentSearchListItem from './RecentSearchesListItem';
@@ -16,7 +17,7 @@ const RecentText = styled(Text)`
 `;
 
 type Props = {
-  onPressItem: (id: number) => void;
+  onPressItem: (recentSearchItem: RecentSearchItem) => void;
   searchType: SearchType;
 };
 
@@ -42,7 +43,7 @@ const RecentSearches = ({ onPressItem, searchType }: Props) => {
       renderItem={({ item }) => (
         <RecentSearchListItem
           onPressRemove={() => onRemoveItem(item)}
-          onPressItem={() => onPressItem(item.id)}
+          onPressItem={() => onPressItem(item)}
           item={item}
         />
       )}

@@ -9,6 +9,7 @@ jest.mock('react-native-vector-icons/MaterialCommunityIcons', () => 'Icon');
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key) => key }),
+  getI18n: () => ({ language: 'en' }),
 }));
 
 jest.mock('react-native-gesture-handler', () => {

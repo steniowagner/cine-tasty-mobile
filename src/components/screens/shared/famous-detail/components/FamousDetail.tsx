@@ -171,9 +171,12 @@ const FamousDetail = ({ navigation, route }: Props) => {
                     voteAverage={item.voteAverage}
                     voteCount={item.voteCount}
                     isFirst={index === 0}
-                    onPress={() => navigation.navigate('MEDIA_DETAIL', {
+                    onPress={() => navigation.navigate('MOVIE_DETAIL', {
+                      voteAverage: item.voteAverage,
+                      posterPath: item.posterPath,
+                      voteCount: item.voteCount,
+                      title: item.title,
                       id: item.id,
-                      isMovie: true,
                     })}
                     image={item.posterPath}
                     title={item.title}

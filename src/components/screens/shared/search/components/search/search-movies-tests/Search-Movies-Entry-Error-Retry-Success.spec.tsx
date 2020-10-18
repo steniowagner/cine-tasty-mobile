@@ -57,7 +57,7 @@ describe('Testing <Search /> - [Movies # Entry-Error-Retry-Success]', () => {
   afterEach(cleanup);
 
   it('should query again correctly when some error occurs and then the user press the reload-button on the top for the second time and the error doesnt exist anymore', () => {
-    const { queryByTestId, queryByText, rerender, debug } = render(
+    const { queryByTestId, queryByText, rerender } = render(
       renderSearchMovies(mockResolversWithError),
     );
 
@@ -74,7 +74,7 @@ describe('Testing <Search /> - [Movies # Entry-Error-Retry-Success]', () => {
         console.log(err.message);
       }
     });
-    console.log(debug());
+
     expect(queryByTestId('search-media-list').props.data.length).toEqual(0);
 
     expect(queryByTestId('top-reload-button')).not.toBeNull();

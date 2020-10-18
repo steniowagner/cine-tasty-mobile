@@ -4,7 +4,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { withTheme, DefaultTheme } from 'styled-components';
 import { RouteProp } from '@react-navigation/native';
 
-import MediaDetailScreen from 'components/screens/shared/media-detail-screen/components/MediaDetailScreen';
+import MediaDetailScreen from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions } from 'routes/constants';
 
@@ -46,7 +46,7 @@ const SearchStack = ({ route, theme }: Props) => (
       component={FamousDetail}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.MEDIA_DETAIL.id}
+      name={LOCAL_ROUTES.MOVIE_DETAIL.id}
       options={() => ({
         ...getTransparentHeaderOptions(theme),
       })}

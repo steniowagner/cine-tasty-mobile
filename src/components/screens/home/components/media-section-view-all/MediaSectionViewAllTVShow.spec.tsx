@@ -119,7 +119,7 @@ describe('Testing <MediaSectionViewAll /> - [TV-Shows]', () => {
 
     expect(onPressItem).toHaveBeenCalledTimes(1);
 
-    expect(onPressItem).toHaveBeenCalledWith(mockedInitialDataset[INDEX_ITEM_PRESSED].id);
+    expect(onPressItem).toHaveBeenCalledWith(mockedInitialDataset[INDEX_ITEM_PRESSED]);
   });
 
   it('shound show an error message when the user scroll to the end of the list and some error occurs during the pagination', () => {

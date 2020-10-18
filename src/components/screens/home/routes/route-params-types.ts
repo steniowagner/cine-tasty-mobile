@@ -1,17 +1,17 @@
 import { SearchNavigationParams } from 'components/screens/shared/search/routes/route-params-types';
 import { StackID as SEARCH_MODAL_ID } from 'components/screens/shared/search/routes/stack-routes';
 
-import { SCREEN_ID as MediaDetailScreenID } from 'components/screens/shared/media-detail-screen/routes/route-names';
-import { MediaDetailParams } from 'components/screens/shared/media-detail-screen/routes/route-params-types';
+import { SCREEN_ID as MOVIE_DETAIL_SCREEN_ID } from 'components/screens/shared/media-detail-screen/movie-detail/routes/route-names';
+import { MovieDetailExternalParams } from 'components/screens/shared/media-detail-screen/movie-detail/routes/route-params-types';
 
 import {
+  SCREEN_ID as MEDIA_SECTION_VIEW_ALL_SCREEN_ID,
   ExternalProps as MediaSectionViewAllProps,
-  SCREEN_ID as MediaSectionViewAllScreenID,
 } from '../components/media-section-view-all/MediaSectionViewAll';
 
 export type HomeStackParams = {
-  [MediaSectionViewAllScreenID]: MediaSectionViewAllProps;
+  [MEDIA_SECTION_VIEW_ALL_SCREEN_ID]: MediaSectionViewAllProps;
+  [MOVIE_DETAIL_SCREEN_ID]: MovieDetailExternalParams;
   [SEARCH_MODAL_ID]: SearchNavigationParams;
-  [MediaDetailScreenID]: MediaDetailParams;
   HOME: undefined;
 };

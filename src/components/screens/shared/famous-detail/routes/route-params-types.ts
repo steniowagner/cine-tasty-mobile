@@ -1,7 +1,11 @@
-import { SCREEN_ID as MediaDetailScreenID } from 'components/screens/shared/media-detail-screen/routes/route-names';
-import { MediaDetailParams } from 'components/screens/shared/media-detail-screen/routes/route-params-types';
+import { SCREEN_ID as MOVIE_DETAIL } from 'components/screens/shared/media-detail-screen/movie-detail/routes/route-names';
+import { MovieDetailExternalParams } from 'components/screens/shared/media-detail-screen/movie-detail/routes/route-params-types';
+
+export type ExternalFamousDetailParams = {
+  id: number;
+};
 
 export type FamousDetailParams = {
-  [MediaDetailScreenID]: MediaDetailParams;
-  id: number;
+  [MOVIE_DETAIL]: MovieDetailExternalParams;
+  FAMOUS_DETAIL: ExternalFamousDetailParams;
 };

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { SEARCH_MOVIES, SEARCH_TV_SHOWS } from 'components/screens/shared/search/queries';
@@ -38,6 +38,20 @@ type Props = {
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
 const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
+  const onNavigateToMovieDetailAfterPress = useCallback(
+    (movie: SimplifiedMedia): void => {
+      navigation.navigate('MOVIE_DETAIL', {
+        genreIds: movie.genreIds || [],
+        voteAverage: movie.voteAverage,
+        posterPath: movie.posterPath,
+        voteCount: movie.voteCount,
+        title: movie.title,
+        id: movie.id,
+      });
+    },
+    [],
+  );
+
   const {
     onPressTop3LearnMore,
     onPressTrendingItem,
@@ -46,11 +60,11 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
   } = useMemo(() => {
     const pressMapping = {
       [SearchType.MOVIE]: {
-        onPressTop3LearnMore: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: true }),
-        onPressTrendingItem: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: true }),
+        onPressTop3LearnMore: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
+        onPressTrendingItem: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
           navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-            onPressItem: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: true }),
+            onPressItem: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
             initialDataset: sectionItems,
             headerTitle: viewAllTitle,
             sectionKey: sectionID,

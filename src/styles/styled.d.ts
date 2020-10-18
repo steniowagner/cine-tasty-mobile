@@ -19,7 +19,10 @@ declare module 'styled-components' {
     };
     colors: {
       fallbackImageBackground: string;
-      backgroundAlpha: string;
+      backgroundAlphax1: string;
+      backgroundAlphax2: string;
+      backgroundAlphax3: string;
+      backgroundAlphax4: string;
       fallbackImageIcon: string;
       loadingColors: string[];
       lightPrimary: string;

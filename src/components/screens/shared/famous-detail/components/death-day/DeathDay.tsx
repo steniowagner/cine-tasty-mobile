@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
-import { useParseDateToLocaleDate } from 'hooks';
+import { formatDate } from 'utils/formatters';
 import Icon from 'components/common/Icon';
 
 const Wrapper = styled(View)`
@@ -29,7 +29,7 @@ const DateText = styled(Text)`
   margin-left: ${({ theme }) => theme.metrics.extraSmallSize * 1.5}px;
   font-family: CircularStd-Bold;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: white;
+  color: ${({ theme }) => theme.colors.buttonText};
 `;
 
 const CrossIcon = styled(Icon).attrs(({ theme }) => ({
@@ -42,10 +42,7 @@ type Props = {
 };
 
 const DeathInfo = ({ deathDate }: Props) => {
-  const { dateText } = useParseDateToLocaleDate({
-    useDefaultDateParser: true,
-    rawDateString: deathDate,
-  });
+  const dateText = formatDate(deathDate);
 
   return (
     <Wrapper

@@ -9,10 +9,7 @@ type BirthdayTextProps = {
 };
 
 const BirthDayText = ({ rawBirthDate }: BirthdayTextProps) => {
-  const { dateText } = useParseDateToLocaleDate({
-    useDefaultDateParser: false,
-    rawDateString: rawBirthDate,
-  });
+  const { dateText } = useParseDateToLocaleDate(rawBirthDate);
 
   return <InfoText>{dateText}</InfoText>;
 };

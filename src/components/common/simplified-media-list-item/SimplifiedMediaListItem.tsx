@@ -110,6 +110,7 @@ const SimplifiedMediaListItem = ({
 
   return (
     <Wrapper
+      testID="simplified-media-list-button"
       onPress={onPress}
       isFirst={isFirst}
     >

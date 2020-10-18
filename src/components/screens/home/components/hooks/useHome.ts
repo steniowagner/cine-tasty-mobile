@@ -29,8 +29,8 @@ type ViewAllProps = {
 
 type State = {
   onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => void;
-  onPressTop3LearnMore: (id: number) => void;
-  onPressTrendingItem: (id: number) => void;
+  onPressTop3LearnMore: (mediaItem: SimplifiedMedia) => void;
+  onPressTrendingItem: (mediaItem: SimplifiedMedia) => void;
   shouldDisableHeaderActions: boolean;
   onSelectTVShows: () => void;
   onSelectMovies: () => void;

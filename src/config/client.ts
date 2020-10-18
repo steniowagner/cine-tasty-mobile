@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-underscore-dangle */
 import { IntrospectionFragmentMatcher, InMemoryCache } from 'apollo-cache-inmemory';
 import { SERVER_URL } from 'react-native-dotenv';
 import { ApolloClient } from 'apollo-client';
@@ -26,7 +28,14 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 });
 
 const makeClient = () => {
-  const cache = new InMemoryCache({ fragmentMatcher });
+  const cache = new InMemoryCache({
+    // @ts-ignore
+    dataIdFromObject: (obj) => {
+      // @ts-ignore
+      obj.id ? `${obj.__typename}-${obj.id}` : `${obj.__typename}-${obj.cursor}`;
+    },
+    fragmentMatcher,
+  });
 
   const httpLink = new HttpLink({
     uri: SERVER_URL,

@@ -141,13 +141,26 @@ export interface Locale {
     images: string;
   };
   mediaDetail: {
+    errorDescription: string;
+    errorSuggestion: string;
+    errorTitle: string;
     votes: string;
     sections: {
       productionCompanies: string;
+      productionCountries: string;
+      spokenLanguages: string;
       reviews: string;
       overview: string;
       details: string;
       videos: string;
+      cast: string;
+      crew: string;
+      images: string;
+      similar: string;
+      originalTitle: string;
+      releaseDate: string;
+      budget: string;
+      revenue: string;
     };
   };
   months: string[];

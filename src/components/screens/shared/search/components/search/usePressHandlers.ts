@@ -7,6 +7,7 @@ import {
   SearchMovie_search_items_BaseMovie as SearchMovieResult,
   SearchType,
 } from 'types/schema';
+import { RecentSearchItem } from 'types';
 
 import useRecentSearches from '../recent-searches/useRecentSearches';
 import { SearchStackParams } from '../../routes/route-params-types';
@@ -52,22 +53,27 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
         },
       },
       [SearchType.MOVIE]: {
-        onPressListItem: (item: SearchMovieResult) => {
+        onPressListItem: (movie: SearchMovieResult) => {
           persistItemToRecentSearches({
-            image: item.posterPath,
-            title: item.title,
-            id: item.id,
+            image: movie.posterPath,
+            title: movie.title,
+            id: movie.id,
           });
 
-          navigation.navigate('MEDIA_DETAIL', {
-            isMovie: true,
-            id: item.id,
+          navigation.navigate('MOVIE_DETAIL', {
+            genreIds: movie.genreIds || [],
+            voteAverage: movie.voteAverage,
+            posterPath: movie.posterPath,
+            voteCount: movie.voteCount,
+            title: movie.title,
+            id: movie.id,
           });
         },
-        onPressRecentSearchItem: (id: number) => {
-          navigation.navigate('MEDIA_DETAIL', {
-            isMovie: true,
-            id,
+        onPressRecentSearchItem: (movie: RecentSearchItem) => {
+          navigation.navigate('MOVIE_DETAIL', {
+            posterPath: movie.image,
+            title: movie.title,
+            id: movie.id,
           });
         },
       },
