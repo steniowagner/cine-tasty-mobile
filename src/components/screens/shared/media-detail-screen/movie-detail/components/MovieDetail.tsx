@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/display-name */
+import React, { useLayoutEffect } from 'react';
 import { ScrollView, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -11,6 +12,7 @@ import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import ProductionCompanies from '../../common/sections/ProductionCompanies';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
+import HeaderBackButton from '../../common/HeaderBackButton';
 import PeopleList from '../../common/people-list/PeopleList';
 import GeneralInfo from '../../common/sections/GeneralInfo';
 import Header from '../../common/header-info/HeaderInfo';
@@ -38,7 +40,17 @@ const formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-const MovieDetail = ({ route }: Props) => {
+const MovieDetail = ({ navigation, route }: Props) => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderBackButton
+          onPress={() => navigation.goBack()}
+        />
+      ),
+    });
+  }, []);
+
   const { isLoading, movie, t } = useMovieDetail({
     hasVoteAverage: !!route.params.voteAverage,
     hasVoteCount: !!route.params.voteCount,

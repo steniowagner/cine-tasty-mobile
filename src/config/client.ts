@@ -31,6 +31,7 @@ const makeClient = () => {
   const cache = new InMemoryCache({
     // @ts-ignore
     dataIdFromObject: (obj) => {
+      // @ts-ignore
       obj.id ? `${obj.__typename}-${obj.id}` : `${obj.__typename}-${obj.cursor}`;
     },
     fragmentMatcher,
