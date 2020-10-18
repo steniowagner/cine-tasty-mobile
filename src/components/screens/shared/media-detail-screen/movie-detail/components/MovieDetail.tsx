@@ -7,6 +7,7 @@ import { RouteProp } from '@react-navigation/native';
 import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import ImagesList from 'components/common/images-list/ImagesList';
 import Section from 'components/common/Section';
+import { formatCurrency, formatDate } from 'utils/formatters';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import ProductionCompanies from '../../common/sections/ProductionCompanies';
@@ -34,11 +35,6 @@ type Props = {
   navigation: MovieDetailScreenNavigationProp;
   route: MovieDetailScreenRouteProp;
 };
-
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
 
 const MovieDetail = ({ navigation, route }: Props) => {
   useLayoutEffect(() => {
@@ -91,15 +87,15 @@ const MovieDetail = ({ navigation, route }: Props) => {
                 },
                 {
                   title: t('translations:mediaDetail:sections:releaseDate'),
-                  value: movie.releaseDate || '-',
+                  value: formatDate(movie.releaseDate),
                 },
                 {
                   title: t('translations:mediaDetail:sections:budget'),
-                  value: movie.budget ? formatter.format(movie.budget) : '-',
+                  value: formatCurrency(movie.budget),
                 },
                 {
                   title: t('translations:mediaDetail:sections:revenue'),
-                  value: movie.revenue ? formatter.format(movie.revenue) : '-',
+                  value: formatCurrency(movie.revenue),
                 },
                 {
                   title: t('translations:mediaDetail:sections:productionCountries'),

@@ -128,6 +128,6 @@ describe('Testing <RecentSearches /> - [Famous]', () => {
 
     expect(onPressItem).toHaveBeenCalledTimes(1);
 
-    expect(onPressItem).toHaveBeenCalledWith(items[INDEX_ITEM_PRESSED].id);
+    expect(onPressItem).toHaveBeenCalledWith(items[INDEX_ITEM_PRESSED]);
   });
 });

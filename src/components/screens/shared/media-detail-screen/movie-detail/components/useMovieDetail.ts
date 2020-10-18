@@ -1,5 +1,5 @@
-import { useQuery } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/react-hooks';
 
 import {
   MovieDetail_movie as Movie,
