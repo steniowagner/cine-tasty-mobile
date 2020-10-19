@@ -63,7 +63,6 @@ export default gql`
         author
         content
         id
-        url
       }
       similar {
         voteAverage

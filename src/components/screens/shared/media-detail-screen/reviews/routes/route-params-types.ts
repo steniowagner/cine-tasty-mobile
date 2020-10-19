@@ -4,9 +4,10 @@ type Review = {
 };
 
 export type ReviewsExternalParams = {
+  mediaTitle: string;
   reviews: Review[];
 };
 
 export type MovieDetailInternalternalParams = {
-  REVIEWS: Review[];
+  REVIEWS: ReviewsExternalParams;
 };

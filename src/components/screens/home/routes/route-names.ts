@@ -1,6 +1,11 @@
 import { LocalStackRoute } from 'types';
 
-export type Routes = 'HOME' | 'FAMOUS_DETAIL' | 'MEDIA_DETAILS_VIEW_ALL' | 'MOVIE_DETAIL';
+export type Routes =
+  | 'HOME'
+  | 'FAMOUS_DETAIL'
+  | 'MEDIA_DETAILS_VIEW_ALL'
+  | 'MOVIE_DETAIL'
+  | 'REVIEWS';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   HOME: {
@@ -14,6 +19,9 @@ const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   },
   MOVIE_DETAIL: {
     id: 'MOVIE_DETAIL',
+  },
+  REVIEWS: {
+    id: 'REVIEWS',
   },
 };
 

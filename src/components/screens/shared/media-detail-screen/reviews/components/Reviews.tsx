@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -34,10 +35,9 @@ const Separator = styled(View)`
   background-color: ${({ theme }) => theme.colors.contrast};
 `;
 
-type ReviewsScreenRouteProp = RouteProp<MovieDetailInternalternalParams, 'REVIEWS'>;
-
-type Props = {
-  route: ReviewsScreenRouteProp;
+export type Props = {
+  navigation: StackNavigationProp<MovieDetailInternalternalParams, 'REVIEWS'>;
+  route: RouteProp<MovieDetailInternalternalParams, 'REVIEWS'>;
 };
 
 const Reviews = ({ route }: Props) => {

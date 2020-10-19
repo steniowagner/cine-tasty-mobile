@@ -100,11 +100,27 @@ const similar = [
   },
 ];
 
-const getNavigation = (push = () => {}) => ({
+const reviews = [
+  {
+    __typename: 'Review',
+    author: 'author01',
+    content: 'content01',
+    id: 'review01',
+  },
+  {
+    __typename: 'Review',
+    author: 'author02',
+    content: 'content02',
+    id: 'review02',
+  },
+];
+
+const getNavigation = (push = () => {}, navigate = () => {}) => ({
   setOptions: () => ({
     // eslint-disable-next-line react/display-name
     headerRight: () => <TouchableOpacity onPress={jest.fn} />,
   }),
+  navigate,
   push,
 });
 
@@ -342,11 +358,11 @@ describe('Testing <MovieDetail />', () => {
       }),
     };
 
-    const navigate = jest.fn();
+    const push = jest.fn();
 
     const { getAllByTestId } = render(
       renderMovieDetail({
-        navigation: getNavigation(navigate),
+        navigation: getNavigation(push),
         mockResolvers,
         route: {
           params: baseParams,
@@ -360,14 +376,14 @@ describe('Testing <MovieDetail />', () => {
 
     fireEvent.press(getAllByTestId('button-wrapper-cast')[INDEX_CAST_ITEM_SELECTED]);
 
-    expect(navigate).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+    expect(push).toHaveBeenCalledWith('FAMOUS_DETAIL', {
       id: Number(cast[INDEX_CAST_ITEM_SELECTED].id),
     });
   });
 
-  it('should call navigate with the correct params when press a Crew-item', () => {
+  it('should call push with the correct params when press a Crew-item', () => {
     const INDEX_CREW_ITEM_SELECTED = 0;
 
     const mockResolvers = {
@@ -376,11 +392,11 @@ describe('Testing <MovieDetail />', () => {
       }),
     };
 
-    const navigate = jest.fn();
+    const push = jest.fn();
 
     const { getAllByTestId } = render(
       renderMovieDetail({
-        navigation: getNavigation(navigate),
+        navigation: getNavigation(push),
         mockResolvers,
         route: {
           params: baseParams,
@@ -394,14 +410,14 @@ describe('Testing <MovieDetail />', () => {
 
     fireEvent.press(getAllByTestId('button-wrapper-crew')[INDEX_CREW_ITEM_SELECTED]);
 
-    expect(navigate).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+    expect(push).toHaveBeenCalledWith('FAMOUS_DETAIL', {
       id: Number(cast[INDEX_CREW_ITEM_SELECTED].id),
     });
   });
 
-  it('should call navigate with the correct params when press a Similar-item', () => {
+  it('should call push with the correct params when press a Similar-item', () => {
     const INDEX_SIMILAR_ITEM_SELECTED = 0;
 
     const mockResolvers = {
@@ -410,11 +426,11 @@ describe('Testing <MovieDetail />', () => {
       }),
     };
 
-    const navigate = jest.fn();
+    const push = jest.fn();
 
     const { getAllByTestId } = render(
       renderMovieDetail({
-        navigation: getNavigation(navigate),
+        navigation: getNavigation(push),
         mockResolvers,
         route: {
           params: baseParams,
@@ -430,14 +446,50 @@ describe('Testing <MovieDetail />', () => {
       getAllByTestId('simplified-media-list-button')[INDEX_SIMILAR_ITEM_SELECTED],
     );
 
-    expect(navigate).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('MOVIE_DETAIL', {
+    expect(push).toHaveBeenCalledWith('MOVIE_DETAIL', {
       voteAverage: similar[INDEX_SIMILAR_ITEM_SELECTED].voteAverage,
       posterPath: similar[INDEX_SIMILAR_ITEM_SELECTED].posterPath,
       voteCount: similar[INDEX_SIMILAR_ITEM_SELECTED].voteCount,
       title: similar[INDEX_SIMILAR_ITEM_SELECTED].title,
       id: similar[INDEX_SIMILAR_ITEM_SELECTED].id,
+    });
+  });
+
+  it('should call navigate with the correct params when press "ViewAll" Reviews', () => {
+    const title = 'movie-title';
+
+    const mockResolvers = {
+      Movie: () => ({
+        reviews,
+        title,
+      }),
+    };
+
+    const navigate = jest.fn();
+
+    const { getByTestId } = render(
+      renderMovieDetail({
+        navigation: getNavigation(undefined, navigate),
+        mockResolvers,
+        route: {
+          params: baseParams,
+        },
+      }),
+    );
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    fireEvent.press(getByTestId('view-all-button'));
+
+    expect(navigate).toHaveBeenCalledTimes(1);
+
+    expect(navigate).toHaveBeenCalledWith('REVIEWS', {
+      mediaTitle: title,
+      reviews,
     });
   });
 });

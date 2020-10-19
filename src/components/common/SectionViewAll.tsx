@@ -51,7 +51,7 @@ const ChevronRightIcon = styled(Icon).attrs(({ theme }) => ({
 }))``;
 
 type Props = {
-  onPressViewAll?: () => void;
+  onPressViewAll: () => void;
   withViewAll?: boolean;
   sectionTitle: string;
 };
