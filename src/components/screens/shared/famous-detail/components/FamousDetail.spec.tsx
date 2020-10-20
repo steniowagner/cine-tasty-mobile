@@ -72,10 +72,10 @@ const tvCast = [
 ];
 
 const renderFamousDetail = (mockResolvers?: IMocks) => {
-  const FamousDetailScreen = () => (
+  const FamousDetailScreen = ({ navigation }) => (
     <ThemeProvider theme={dark}>
       <AutoMockProvider mockResolvers={mockResolvers}>
-        <FamousDetail route={route} />
+        <FamousDetail navigation={navigation} route={route} />
       </AutoMockProvider>
     </ThemeProvider>
   );
