@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { DefaultTheme, withTheme } from 'styled-components';
 
 import Reviews, {
@@ -24,17 +24,21 @@ type Props = {
 };
 
 const HomeStack = ({ theme }: Props) => (
-  <Stack.Navigator>
+  <Stack.Navigator
+    headerMode="screen"
+  >
     <Stack.Screen
       options={{
         ...getTransparentHeaderOptions(theme),
+        headerTransparent: true,
       }}
       name={LOCAL_ROUTES.HOME.id}
       component={Home}
     />
     <Stack.Screen
       options={{
-        headerShown: false,
+        ...getTransparentHeaderOptions(theme),
+        ...TransitionPresets.SlideFromRightIOS,
       }}
       name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
       component={FamousDetail}

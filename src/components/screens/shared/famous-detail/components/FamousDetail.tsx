@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+/* eslint-disable react/display-name */
+import React, { useLayoutEffect, useRef } from 'react';
 import {
   Animated, StatusBar, FlatList, View,
 } from 'react-native';
@@ -17,6 +18,7 @@ import metrics from 'styles/metrics';
 
 import { FamousDetailParams } from '../routes/route-params-types';
 import FamousDetailLoading from './FamousDetailLoading';
+import HeaderBackButton from '../../HeaderBackButton';
 import useFamousDetail from './useFamousDetail';
 import HeaderInfo from './header/HeaderInfo';
 import DeathDay from './death-day/DeathDay';
@@ -55,6 +57,16 @@ type Props = {
 };
 
 const FamousDetail = ({ navigation, route }: Props) => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderBackButton
+          onPress={() => navigation.goBack()}
+        />
+      ),
+    });
+  }, []);
+
   const {
     backgroundImage, isLoading, famous, hasError, t,
   } = useFamousDetail({
