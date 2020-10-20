@@ -24,7 +24,9 @@ const FamousStack = ({ theme }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      headerMode="screen"
+    >
       <Stack.Screen
         name={LOCAL_ROUTES.FAMOUS.id}
         options={{
