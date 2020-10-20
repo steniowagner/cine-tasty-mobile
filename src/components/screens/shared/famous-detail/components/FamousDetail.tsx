@@ -168,17 +168,17 @@ const FamousDetail = ({ navigation, route }: Props) => {
               <FlatList
                 renderItem={({ item, index }) => (
                   <SimplifiedMediaListItem
-                    voteAverage={item.voteAverage}
-                    voteCount={item.voteCount}
-                    isFirst={index === 0}
-                    onPress={() => navigation.navigate('MOVIE_DETAIL', {
+                    onPress={() => navigation.push('MOVIE_DETAIL', {
                       voteAverage: item.voteAverage,
                       posterPath: item.posterPath,
                       voteCount: item.voteCount,
                       title: item.title,
                       id: item.id,
                     })}
+                    voteAverage={item.voteAverage}
+                    voteCount={item.voteCount}
                     image={item.posterPath}
+                    isFirst={index === 0}
                     title={item.title}
                   />
                 )}
@@ -201,7 +201,7 @@ const FamousDetail = ({ navigation, route }: Props) => {
                     voteAverage={item.voteAverage}
                     voteCount={item.voteCount}
                     isFirst={index === 0}
-                    onPress={() => navigation.navigate('MEDIA_DETAIL', {
+                    onPress={() => navigation.push('MEDIA_DETAIL', {
                       id: item.id,
                       isMovie: false,
                     })}
