@@ -6,12 +6,12 @@ import { RouteProp } from '@react-navigation/native';
 
 import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import ImagesList from 'components/common/images-list/ImagesList';
-import { formatCurrency, formatDate } from 'utils/formatters';
 import Advise from 'components/common/advise/Advise';
 import Section from 'components/common/Section';
+import { formatDate } from 'utils/formatters';
 
-import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import ProductionCompanies from '../../common/sections/ProductionCompanies';
+import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
 import PeopleList from '../../common/people-list/PeopleList';
@@ -20,28 +20,24 @@ import HeaderBackButton from '../../../HeaderBackButton';
 import Header from '../../common/header-info/HeaderInfo';
 import Tags from '../../common/sections/tags/Tags';
 import Videos from '../../common/sections/Videos';
-import useMovieDetail from './useMovieDetail';
+import useTVShowDetail from './useTVShowDetail';
 
-export const MOVIE_PRODUCTION_COUNTRIES_I18N_REF = 'translations:mediaDetail:sections:productionCountries';
-export const MOVIE_SPOKEN_LANGUAGES_I18N_REF = 'translations:mediaDetail:sections:spokenLanguages';
+export const TV_SHOW_ORIGINAL_TITLE_I18N_REF = 'translations:mediaDetail:sections:originalTitle';
+export const TV_SHOW_RELEASE_DATE_I18N_REF = 'translations:mediaDetail:sections:releaseDate';
 export const ERROR_DESCRIPTION_I18N_REF = 'translations:mediaDetail:errorDescription';
 export const ERROR_SUGGESTION_I18N_REF = 'translations:mediaDetail:errorSuggestion';
-export const MOVIE_ORIGINAL_TITLE_I18N_REF = 'translations:mediaDetail:sections:originalTitle';
-export const MOVIE_RELEASE_DATE_I18N_REF = 'translations:mediaDetail:sections:releaseDate';
-export const MOVIE_SIMILAR_I18N_REF = 'translations:mediaDetail:sections:similar';
-export const MOVIE_IMAGES_I18N_REF = 'translations:mediaDetail:sections:images';
-export const MOVIE_CREW_I18N_REF = 'translations:mediaDetail:sections:crew';
-export const MOVIE_CAST_I18N_REF = 'translations:mediaDetail:sections:cast';
+export const TV_SHOWS_SIMILAR_I18N_REF = 'translations:mediaDetail:sections:similar';
+export const TV_SHOWS_IMAGES_I18N_REF = 'translations:mediaDetail:sections:images';
+export const TV_SHOWS_CREW_I18N_REF = 'translations:mediaDetail:sections:crew';
+export const TV_SHOWS_CAST_I18N_REF = 'translations:mediaDetail:sections:cast';
 export const ERROR_TITLE_I18N_REF = 'translations:mediaDetail:errorTitle';
-export const MOVIE_REVENUE_I18N_REF = 'translations:mediaDetail:sections:revenue';
-export const MOVIE_BUDGET_I18N_REF = 'translations:mediaDetail:sections:budget';
 
 type Props = {
-  navigation: StackNavigationProp<MovieDetailInternalternalParams, 'MOVIE_DETAIL'>;
-  route: RouteProp<MovieDetailInternalternalParams, 'MOVIE_DETAIL'>;
+  navigation: StackNavigationProp<MovieDetailInternalternalParams, 'TV_SHOW_DETAIL'>;
+  route: RouteProp<MovieDetailInternalternalParams, 'TV_SHOW_DETAIL'>;
 };
 
-const MovieDetail = ({ navigation, route }: Props) => {
+const TVShowDetail = ({ navigation, route }: Props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -53,8 +49,8 @@ const MovieDetail = ({ navigation, route }: Props) => {
   }, []);
 
   const {
-    isLoading, hasError, movie, t,
-  } = useMovieDetail({
+    isLoading, hasError, tvShow, t,
+  } = useTVShowDetail({
     hasVoteAverage: !!route.params.voteAverage,
     hasVoteCount: !!route.params.voteCount,
     hasGenresIds: !!route.params.genreIds,
@@ -77,126 +73,106 @@ const MovieDetail = ({ navigation, route }: Props) => {
       bounces={false}
     >
       <Header
-        votesAverage={route.params.voteAverage || movie?.voteAverage}
-        voteCount={route.params.voteCount || movie?.voteCount}
-        thumbnailURL={movie?.backdropPath || ''}
-        imageURL={movie?.backdropPath || ''}
+        votesAverage={route.params.voteAverage || tvShow?.voteAverage}
+        voteCount={route.params.voteCount || tvShow?.voteCount}
+        thumbnailURL={tvShow?.backdropPath || ''}
+        imageURL={tvShow?.backdropPath || ''}
         posterURL={route.params.posterPath}
         title={route.params.title}
         isLoading={isLoading}
       />
       <Tags
-        tags={route.params.genreIds || movie?.genres || []}
+        tags={route.params.genreIds || tvShow?.genres || []}
         isLoading={!route.params.genreIds && isLoading}
-        releaseDate={movie?.releaseDate || '-'}
+        releaseDate={tvShow?.firstAirDate || '-'}
       />
       <Overview
-        overview={movie?.overview}
+        overview={tvShow?.overview}
         isLoading={isLoading}
       />
-      {!!movie && (
+      {!!tvShow && (
         <>
           <GeneralInfo
             infoItems={[
               {
-                title: t(MOVIE_ORIGINAL_TITLE_I18N_REF),
-                value: movie.originalTitle || '-',
+                title: t(TV_SHOW_ORIGINAL_TITLE_I18N_REF),
+                value: tvShow.name || '-',
               },
               {
-                title: t(MOVIE_RELEASE_DATE_I18N_REF),
-                value: formatDate(movie.releaseDate),
-              },
-              {
-                title: t(MOVIE_BUDGET_I18N_REF),
-                value: formatCurrency(movie.budget),
-              },
-              {
-                title: t(MOVIE_REVENUE_I18N_REF),
-                value: formatCurrency(movie.revenue),
-              },
-              {
-                title: t(MOVIE_PRODUCTION_COUNTRIES_I18N_REF),
-                value: movie.productionCountries.length
-                  ? movie.productionCountries.join(', ')
-                  : '-',
-              },
-              {
-                title: t(MOVIE_SPOKEN_LANGUAGES_I18N_REF),
-                value: movie.spokenLanguages.length
-                  ? movie.spokenLanguages.join(', ')
-                  : '-',
+                value: formatDate(tvShow.firstAirDate),
+                title: t(TV_SHOW_RELEASE_DATE_I18N_REF),
               },
             ]}
           />
-          {!!movie.cast.length && (
+          {!!tvShow.cast.length && (
             <PeopleList
               onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
-              sectionTitle={t(MOVIE_CAST_I18N_REF)}
-              dataset={movie.cast}
+              sectionTitle={t(TV_SHOWS_CAST_I18N_REF)}
+              dataset={tvShow.cast}
               type="cast"
             />
           )}
-          {!!movie.crew.length && (
+          {!!tvShow.crew.length && (
             <PeopleList
               onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
-              sectionTitle={t(MOVIE_CREW_I18N_REF)}
-              dataset={movie.crew}
+              sectionTitle={t(TV_SHOWS_CREW_I18N_REF)}
+              dataset={tvShow.crew}
               type="crew"
             />
           )}
-          {!!movie.images.length && (
+          {!!tvShow.images.length && (
             <Section
-              title={t(MOVIE_IMAGES_I18N_REF)}
+              title={t(TV_SHOWS_IMAGES_I18N_REF)}
             >
               <ImagesList
-                images={movie.images}
+                images={tvShow.images}
               />
             </Section>
           )}
-          {!!movie.videos.length && (
+          {!!tvShow.videos.length && (
           <Videos
-            videos={movie.videos}
+            videos={tvShow.videos}
           />
           )}
           <Reviews
             onPressViewAll={() => navigation.navigate('REVIEWS', {
-              mediaTitle: movie.title,
-              reviews: movie.reviews,
+              mediaTitle: tvShow.name,
+              reviews: tvShow.reviews,
             })}
-            reviews={movie.reviews}
+            reviews={tvShow.reviews}
           />
-          {!!movie.productionCompanies.length && (
+          {!!tvShow.productionCompanies.length && (
             <ProductionCompanies
-              productionCompanies={movie.productionCompanies}
+              productionCompanies={tvShow.productionCompanies}
             />
           )}
           <Section
             title={
-              movie.similar.length
-                ? t(MOVIE_SIMILAR_I18N_REF)
-                : `${t(MOVIE_SIMILAR_I18N_REF)} (0)`
+              tvShow.similar.length
+                ? t(TV_SHOWS_SIMILAR_I18N_REF)
+                : `${t(TV_SHOWS_SIMILAR_I18N_REF)} (0)`
             }
           >
             <FlatList
               keyExtractor={(item, index) => `${item.id}-${index}`}
               renderItem={({ item, index }) => (
                 <SimplifiedMediaListItem
-                  onPress={() => navigation.push('MOVIE_DETAIL', {
+                  onPress={() => navigation.push('TV_SHOW_DETAIL', {
                     voteAverage: item.voteAverage,
                     posterPath: item.posterPath,
                     voteCount: item.voteCount,
-                    title: item.title,
+                    title: item.name,
                     id: item.id,
                   })}
                   voteAverage={item.voteAverage}
                   voteCount={item.voteCount}
                   image={item.posterPath}
                   isFirst={index === 0}
-                  title={item.title}
+                  title={item.name}
                 />
               )}
               showsHorizontalScrollIndicator={false}
-              data={movie.similar}
+              data={tvShow.similar}
               horizontal
             />
           </Section>
@@ -206,4 +182,4 @@ const MovieDetail = ({ navigation, route }: Props) => {
   );
 };
 
-export default MovieDetail;
+export default TVShowDetail;

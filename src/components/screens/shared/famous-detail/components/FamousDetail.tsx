@@ -213,9 +213,12 @@ const FamousDetail = ({ navigation, route }: Props) => {
                     voteAverage={item.voteAverage}
                     voteCount={item.voteCount}
                     isFirst={index === 0}
-                    onPress={() => navigation.push('MEDIA_DETAIL', {
+                    onPress={() => navigation.push('TV_SHOW_DETAIL', {
+                      voteAverage: item.voteAverage,
+                      posterPath: item.posterPath,
+                      voteCount: item.voteCount,
+                      title: item.name,
                       id: item.id,
-                      isMovie: false,
                     })}
                     image={item.posterPath}
                     title={item.name}

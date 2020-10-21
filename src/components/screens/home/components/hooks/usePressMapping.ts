@@ -25,8 +25,8 @@ type ViewAllProps = {
 
 type State = {
   onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => void;
-  onPressTop3LearnMore: (id: number) => void;
-  onPressTrendingItem: (id: number) => void;
+  onPressTop3LearnMore: (media: SimplifiedMedia) => void;
+  onPressTrendingItem: (media: SimplifiedMedia) => void;
   onPressSearch: () => void;
 };
 
@@ -52,13 +52,27 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
     [],
   );
 
+  const onNavigateToTVShowDetailAfterPress = useCallback(
+    (tvShow: SimplifiedMedia): void => {
+      navigation.navigate('TV_SHOW_DETAIL', {
+        genreIds: tvShow.genreIds || [],
+        voteAverage: tvShow.voteAverage,
+        posterPath: tvShow.posterPath,
+        voteCount: tvShow.voteCount,
+        title: tvShow.title,
+        id: tvShow.id,
+      });
+    },
+    [],
+  );
+
   const {
     onPressTop3LearnMore,
     onPressTrendingItem,
     onPressViewAll,
     onPressSearch,
   } = useMemo(() => {
-    const pressMapping = {
+    const pressesHandlersMapping = {
       [SearchType.MOVIE]: {
         onPressTop3LearnMore: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
         onPressTrendingItem: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
@@ -82,15 +96,17 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
         },
       },
       [SearchType.TV]: {
-        onPressTop3LearnMore: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: false }),
-        onPressTrendingItem: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: false }),
-        onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-          onPressItem: (id: number) => navigation.navigate('MEDIA_DETAIL', { id, isMovie: false }),
-          initialDataset: sectionItems,
-          headerTitle: viewAllTitle,
-          sectionKey: sectionID,
-          isMovie: false,
-        }),
+        onPressTop3LearnMore: (tvShow: SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
+        onPressTrendingItem: (tvShow: SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
+        onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
+          navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
+            onPressItem: (tvShow: SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
+            initialDataset: sectionItems,
+            headerTitle: viewAllTitle,
+            sectionKey: sectionID,
+            isMovie: false,
+          });
+        },
         onPressSearch: () => {
           navigation.navigate('SEARCH', {
             i18nQueryByPaginationErrorRef: SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF,
@@ -105,7 +121,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
 
     const mediaSelected = isMoviesSelected ? SearchType.MOVIE : SearchType.TV;
 
-    return pressMapping[mediaSelected];
+    return pressesHandlersMapping[mediaSelected];
   }, [isMoviesSelected]);
 
   return {

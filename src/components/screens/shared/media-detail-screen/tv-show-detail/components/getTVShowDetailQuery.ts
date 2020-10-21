@@ -1,8 +1,18 @@
 import gql from 'graphql-tag';
 
-export const GET_MOVIE_DETAIL = gql`
-  query TVShowDetail($id: ID!, $language: ISO6391Language) {
+export default gql`
+  query TVShowDetail(
+    $id: ID!
+    $language: ISO6391Language
+    $withVoteAverage: Boolean!
+    $withGenresIds: Boolean!
+    $withVoteCount: Boolean!
+  ) {
     tvShow(id: $id, language: $language) {
+      genres(language: $language) @include(if: $withGenresIds)
+      voteAverage @include(if: $withVoteAverage)
+      voteCount @include(if: $withVoteCount)
+      images(id: $id)
       seasons {
         airDate
         episodeCount
@@ -46,12 +56,9 @@ export const GET_MOVIE_DETAIL = gql`
       inProduction
       languages
       lastAirDate
-      genres
       name
       status
       type
-      voteAverage
-      voteCount
       productionCompanies {
         id
         logoPath

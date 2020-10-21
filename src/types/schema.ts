@@ -600,6 +600,129 @@ export interface GetFamousDetailVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: MovieDetail
+// ====================================================
+
+export interface MovieDetail_movie_productionCompanies {
+  __typename: "ProductionCompany";
+  id: string | null;
+  logoPath: string | null;
+  name: string | null;
+}
+
+export interface MovieDetail_movie_cast {
+  __typename: "CastItem";
+  name: string | null;
+  profilePath: string | null;
+  id: string | null;
+  character: string | null;
+}
+
+export interface MovieDetail_movie_crew {
+  __typename: "CrewItem";
+  job: string | null;
+  id: string | null;
+  name: string | null;
+  profilePath: string | null;
+}
+
+export interface MovieDetail_movie_videos_thumbnail {
+  __typename: "Thumbnail";
+  /**
+   * 120x90
+   */
+  extraSmall: string | null;
+  /**
+   * 320x180
+   */
+  small: string | null;
+  /**
+   * 480x360
+   */
+  medium: string | null;
+  /**
+   * 640x480
+   */
+  large: string | null;
+  /**
+   * 1280x720
+   */
+  extraLarge: string | null;
+}
+
+export interface MovieDetail_movie_videos {
+  __typename: "MediaVideo";
+  thumbnail: MovieDetail_movie_videos_thumbnail | null;
+  key: string | null;
+  name: string | null;
+  site: string | null;
+  id: string | null;
+  type: string | null;
+}
+
+export interface MovieDetail_movie_reviews {
+  __typename: "Review";
+  author: string | null;
+  content: string | null;
+  id: string | null;
+}
+
+export interface MovieDetail_movie_similar {
+  __typename: "BaseMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number | null;
+}
+
+export interface MovieDetail_movie {
+  __typename: "Movie";
+  genres: string[];
+  voteAverage: number | null;
+  voteCount: number | null;
+  images: string[];
+  adult: boolean | null;
+  backdropPath: string | null;
+  id: string | null;
+  originalLanguage: string | null;
+  originalTitle: string | null;
+  overview: string | null;
+  title: string | null;
+  releaseDate: string | null;
+  productionCompanies: MovieDetail_movie_productionCompanies[];
+  runtime: number | null;
+  status: string | null;
+  tagline: string | null;
+  budget: number | null;
+  revenue: number | null;
+  spokenLanguages: string[];
+  productionCountries: string[];
+  cast: MovieDetail_movie_cast[];
+  crew: MovieDetail_movie_crew[];
+  videos: MovieDetail_movie_videos[];
+  reviews: MovieDetail_movie_reviews[];
+  similar: MovieDetail_movie_similar[];
+}
+
+export interface MovieDetail {
+  movie: MovieDetail_movie | null;
+}
+
+export interface MovieDetailVariables {
+  id: string;
+  language?: ISO6391Language | null;
+  withVoteAverage: boolean;
+  withGenresIds: boolean;
+  withVoteCount: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: TVShowDetail
 // ====================================================
 
@@ -735,6 +858,7 @@ export interface TVShowDetail_tvShow_reviews {
 
 export interface TVShowDetail_tvShow {
   __typename: "TVShow";
+  images: string[];
   seasons: TVShowDetail_tvShow_seasons[];
   lastEpisodeToAir: TVShowDetail_tvShow_lastEpisodeToAir | null;
   backdropPath: string | null;
@@ -776,132 +900,6 @@ export interface TVShowDetail {
 export interface TVShowDetailVariables {
   id: string;
   language?: ISO6391Language | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: MovieDetail
-// ====================================================
-
-export interface MovieDetail_movie_productionCompanies {
-  __typename: "ProductionCompany";
-  id: string | null;
-  logoPath: string | null;
-  name: string | null;
-}
-
-export interface MovieDetail_movie_cast {
-  __typename: "CastItem";
-  name: string | null;
-  profilePath: string | null;
-  id: string | null;
-  character: string | null;
-}
-
-export interface MovieDetail_movie_crew {
-  __typename: "CrewItem";
-  department: string | null;
-  id: string | null;
-  job: string | null;
-  name: string | null;
-  profilePath: string | null;
-}
-
-export interface MovieDetail_movie_videos_thumbnail {
-  __typename: "Thumbnail";
-  /**
-   * 120x90
-   */
-  extraSmall: string | null;
-  /**
-   * 320x180
-   */
-  small: string | null;
-  /**
-   * 480x360
-   */
-  medium: string | null;
-  /**
-   * 640x480
-   */
-  large: string | null;
-  /**
-   * 1280x720
-   */
-  extraLarge: string | null;
-}
-
-export interface MovieDetail_movie_videos {
-  __typename: "MediaVideo";
-  thumbnail: MovieDetail_movie_videos_thumbnail | null;
-  key: string | null;
-  name: string | null;
-  site: string | null;
-  id: string | null;
-  type: string | null;
-}
-
-export interface MovieDetail_movie_reviews {
-  __typename: "Review";
-  author: string | null;
-  content: string | null;
-  id: string | null;
-  url: string | null;
-}
-
-export interface MovieDetail_movie_similar {
-  __typename: "BaseMovie";
-  voteAverage: number | null;
-  posterPath: string | null;
-  voteCount: number | null;
-  genreIds: string[];
-  title: string | null;
-  id: number | null;
-}
-
-export interface MovieDetail_movie {
-  __typename: "Movie";
-  genres: string[];
-  voteAverage: number | null;
-  voteCount: number | null;
-  images: string[];
-  adult: boolean | null;
-  backdropPath: string | null;
-  id: string | null;
-  originalLanguage: string | null;
-  originalTitle: string | null;
-  overview: string | null;
-  title: string | null;
-  releaseDate: string | null;
-  productionCompanies: MovieDetail_movie_productionCompanies[];
-  runtime: number | null;
-  status: string | null;
-  tagline: string | null;
-  budget: number | null;
-  revenue: number | null;
-  spokenLanguages: string[];
-  productionCountries: string[];
-  cast: MovieDetail_movie_cast[];
-  crew: MovieDetail_movie_crew[];
-  videos: MovieDetail_movie_videos[];
-  reviews: MovieDetail_movie_reviews[];
-  similar: MovieDetail_movie_similar[];
-}
-
-export interface MovieDetail {
-  movie: MovieDetail_movie | null;
-}
-
-export interface MovieDetailVariables {
-  id: string;
-  language?: ISO6391Language | null;
-  withVoteAverage: boolean;
-  withGenresIds: boolean;
-  withVoteCount: boolean;
 }
 
 /* tslint:disable */
