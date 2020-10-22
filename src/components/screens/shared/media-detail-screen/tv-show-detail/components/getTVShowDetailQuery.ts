@@ -22,25 +22,10 @@ export default gql`
         posterPath
         seasonNumber
       }
-      lastEpisodeToAir {
-        airDate
-        episodeNumber
-        id
-        name
-        overview
-        productionCode
-        seasonNumber
-        showId
-        stillPath
-        voteAverage
-        voteCount
-      }
       backdropPath
       createdBy {
         id
-        creditId
         name
-        gender
         profilePath
       }
       networks {

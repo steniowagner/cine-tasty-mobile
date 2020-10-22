@@ -161,6 +161,16 @@ export interface Locale {
       releaseDate: string;
       budget: string;
       revenue: string;
+      numberOfEpisodes: string;
+      originalLanguage: string;
+      numberOfSeasons: string;
+      firstAirDate: string;
+      lastAirDate: string;
+      createdBy: string;
+      seasons: string;
+      episodeRunTime: string;
+      originCountry: string;
+      networks: string;
     };
   };
   months: string[];

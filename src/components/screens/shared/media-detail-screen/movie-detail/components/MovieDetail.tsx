@@ -11,7 +11,7 @@ import Advise from 'components/common/advise/Advise';
 import Section from 'components/common/Section';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
-import ProductionCompanies from '../../common/sections/ProductionCompanies';
+import ProductionCompanies from '../../common/sections/ProductionsList';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
 import PeopleList from '../../common/people-list/PeopleList';
@@ -22,6 +22,7 @@ import Tags from '../../common/sections/tags/Tags';
 import Videos from '../../common/sections/Videos';
 import useMovieDetail from './useMovieDetail';
 
+export const MOVIE_PRODUCTION_COMPANIES_I18N_REF = 'translations:mediaDetail:sections:productionCompanies';
 export const MOVIE_PRODUCTION_COUNTRIES_I18N_REF = 'translations:mediaDetail:sections:productionCountries';
 export const MOVIE_SPOKEN_LANGUAGES_I18N_REF = 'translations:mediaDetail:sections:spokenLanguages';
 export const ERROR_DESCRIPTION_I18N_REF = 'translations:mediaDetail:errorDescription';
@@ -166,9 +167,13 @@ const MovieDetail = ({ navigation, route }: Props) => {
             reviews={movie.reviews}
           />
           {!!movie.productionCompanies.length && (
-            <ProductionCompanies
-              productionCompanies={movie.productionCompanies}
-            />
+            <Section
+              title={t(MOVIE_PRODUCTION_COMPANIES_I18N_REF)}
+            >
+              <ProductionCompanies
+                productionsList={movie.productionCompanies}
+              />
+            </Section>
           )}
           <Section
             title={

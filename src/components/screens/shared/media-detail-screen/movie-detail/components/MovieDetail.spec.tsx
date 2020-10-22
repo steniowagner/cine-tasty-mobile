@@ -10,7 +10,7 @@ import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider'
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
 import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 
-import { SECTION_TITLE_I18N_REF as SECTION_PRODUCTION_COMPANIES_I18N_REF } from '../../common/sections/ProductionCompanies';
+import { SECTION_TITLE_I18N_REF as SECTION_PRODUCTION_COMPANIES_I18N_REF } from '../../common/sections/ProductionsList';
 import { SECTION_TITLE_I18N_REF as SECTION_OVERVIEW_I18N_REF } from '../../common/sections/overview/Overview';
 import { SECTION_TITLE_I18N_REF as SECTION_GENERAL_INFO_I18N_REF } from '../../common/sections/GeneralInfo';
 import { SECTION_TITLE_I18N_REF as SECTION_VIDEOS_INFO_I18N_REF } from '../../common/sections/Videos';
