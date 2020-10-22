@@ -33,7 +33,6 @@ const TextContentWrapper = styled(View)`
 const MediaTitleText = styled(Text).attrs({
   numberOfLines: 3,
 })`
-  margin-bottom: ${({ theme }) => theme.metrics.smallSize}px;
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
   color: ${({ theme }) => theme.colors.text};
   font-family: CircularStd-Black;

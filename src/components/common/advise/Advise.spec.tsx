@@ -52,7 +52,7 @@ describe('Testing <Advise />', () => {
   });
 
   it('should render correctly when the title prop is an empty string', () => {
-    const { getByText, getByTestId } = render(renderAdvise({ title: '' }));
+    const { queryByText, getByText, getByTestId } = render(renderAdvise({ title: '' }));
 
     expect(getByTestId('icon-wrapper')).not.toBeNull();
 
@@ -60,15 +60,13 @@ describe('Testing <Advise />', () => {
 
     expect(getByText(DEFAULT_SUGGESTION)).not.toBeNull();
 
-    try {
-      getByText(DEFAULT_TITLE);
-    } catch (err) {
-      expect(err.message).toEqual('No instances found');
-    }
+    expect(queryByText(DEFAULT_TITLE)).toBeNull();
   });
 
   it('should render correctly when the description prop is an empty string', () => {
-    const { getByText, getByTestId } = render(renderAdvise({ description: '' }));
+    const { queryByText, getByText, getByTestId } = render(
+      renderAdvise({ description: '' }),
+    );
 
     expect(getByTestId('icon-wrapper')).not.toBeNull();
 
@@ -76,15 +74,13 @@ describe('Testing <Advise />', () => {
 
     expect(getByText(DEFAULT_SUGGESTION)).not.toBeNull();
 
-    try {
-      getByText(DEFAULT_DESCRIPTION);
-    } catch (err) {
-      expect(err.message).toEqual('No instances found');
-    }
+    expect(queryByText(DEFAULT_DESCRIPTION)).toBeNull();
   });
 
   it('should render correctly when the suggestion prop is an empty string', () => {
-    const { getByText, getByTestId } = render(renderAdvise({ suggestion: '' }));
+    const { queryByText, getByText, getByTestId } = render(
+      renderAdvise({ suggestion: '' }),
+    );
 
     expect(getByTestId('icon-wrapper')).not.toBeNull();
 
@@ -92,10 +88,6 @@ describe('Testing <Advise />', () => {
 
     expect(getByText(DEFAULT_DESCRIPTION)).not.toBeNull();
 
-    try {
-      getByText(DEFAULT_SUGGESTION);
-    } catch (err) {
-      expect(err.message).toEqual('No instances found');
-    }
+    expect(queryByText(DEFAULT_SUGGESTION)).toBeNull();
   });
 });

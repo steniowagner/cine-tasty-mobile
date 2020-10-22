@@ -11,7 +11,7 @@ type PeopleListItem = {
 
 type Props = {
   dataset: CrewDataset | CastDataset;
-  type: 'cast' | 'crew';
+  type: 'cast' | 'crew' | 'creator';
 };
 
 type State = {
@@ -46,8 +46,8 @@ const usePeopleList = ({ dataset, type }: Props): State => {
     const crewParsedToPeople = crew.map(({
       job, profilePath, name, id,
     }) => ({
+      subText: job || '-',
       image: profilePath,
-      subText: job,
       name,
       id,
     }));
@@ -59,8 +59,8 @@ const usePeopleList = ({ dataset, type }: Props): State => {
     (cast: CastDataset): PeopleListItem[] => cast.map(({
       character, profilePath, name, id,
     }) => ({
+      subText: character || '-',
       image: profilePath,
-      subText: character,
       name,
       id,
     })),

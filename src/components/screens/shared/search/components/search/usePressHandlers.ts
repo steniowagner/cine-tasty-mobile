@@ -18,7 +18,7 @@ type State = {
   onPressListItem: (
     item: SearchPersonResult | SearchMovieResult | SearchTVShowResult,
   ) => void;
-  onPressRecentSearchItem: (id: number) => void;
+  onPressRecentSearchItem: (recentSearchItem: RecentSearchItem) => void;
 };
 
 type Props = {
@@ -46,9 +46,9 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
             id: item.id,
           });
         },
-        onPressRecentSearchItem: (id: number) => {
+        onPressRecentSearchItem: (person: RecentSearchItem) => {
           navigation.navigate('FAMOUS_DETAIL', {
-            id,
+            id: person.id,
           });
         },
       },
@@ -78,22 +78,27 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
         },
       },
       [SearchType.TV]: {
-        onPressListItem: (item: SearchTVShowResult) => {
+        onPressListItem: (tvShow: SearchTVShowResult) => {
           persistItemToRecentSearches({
-            image: item.posterPath,
-            title: item.title,
-            id: item.id,
+            image: tvShow.posterPath,
+            title: tvShow.title,
+            id: tvShow.id,
           });
 
-          navigation.navigate('MEDIA_DETAIL', {
-            isMovie: false,
-            id: item.id,
+          navigation.navigate('TV_SHOW_DETAIL', {
+            genreIds: tvShow.genreIds || [],
+            voteAverage: tvShow.voteAverage,
+            posterPath: tvShow.posterPath,
+            voteCount: tvShow.voteCount,
+            title: tvShow.title,
+            id: tvShow.id,
           });
         },
-        onPressRecentSearchItem: (id: number) => {
-          navigation.navigate('MEDIA_DETAIL', {
-            isMovie: false,
-            id,
+        onPressRecentSearchItem: (tvShow: RecentSearchItem) => {
+          navigation.navigate('TV_SHOW_DETAIL', {
+            posterPath: tvShow.image,
+            title: tvShow.title,
+            id: tvShow.id,
           });
         },
       },

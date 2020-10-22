@@ -92,6 +92,7 @@ const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
 
 type Props = {
   onPress: () => void;
+  withSubtext?: boolean;
   isFirst: boolean;
   subText: string;
   image: string;
@@ -100,7 +101,13 @@ type Props = {
 };
 
 const PeopleListItem = ({
-  onPress, isFirst, subText, image, name, type,
+  withSubtext = true,
+  onPress,
+  isFirst,
+  subText,
+  image,
+  name,
+  type,
 }: Props) => {
   const {
     isFallbackImageVisible,
@@ -148,11 +155,13 @@ const PeopleListItem = ({
           >
             {name}
           </PersonNameText>
-          <PersonSubText
-            testID="person-subtext"
-          >
-            {subText}
-          </PersonSubText>
+          {withSubtext && (
+            <PersonSubText
+              testID="person-subtext"
+            >
+              {subText}
+            </PersonSubText>
+          )}
         </TextContentWrapper>
       </ContentWrapper>
     </Wrapper>

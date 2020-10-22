@@ -11,14 +11,15 @@ import usePeopleList from './usePeopleList';
 type Props = {
   dataset: CrewDataset | CastDataset;
   onPressItem: (id: string) => void;
-  type: 'cast' | 'crew';
+  type: 'cast' | 'crew' | 'creator';
   sectionTitle: string;
+  noSubtext?: boolean;
 };
 
 const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
 const PeopleList = ({
-  sectionTitle, onPressItem, dataset, type,
+  sectionTitle, onPressItem, noSubtext, dataset, type,
 }: Props) => {
   const { items } = usePeopleList({ dataset, type });
 
@@ -33,6 +34,7 @@ const PeopleList = ({
           <PeopleListItem
             image={`${PERSON_IMAGE_URI}${item.image}`}
             onPress={() => onPressItem(item.id)}
+            withSubtext={noSubtext}
             subText={item.subText}
             isFirst={index === 0}
             name={item.name}

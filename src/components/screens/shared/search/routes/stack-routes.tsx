@@ -8,6 +8,7 @@ import Reviews, {
   Props as ReviewsExternalParams,
 } from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import MediaDetailScreen from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
+import TVShowDetail from 'components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 
@@ -62,6 +63,13 @@ const SearchStack = ({ route, theme }: Props) => (
         headerTitle: reviewsRoute.params.mediaTitle,
       })}
       component={Reviews}
+    />
+    <Stack.Screen
+      name={LOCAL_ROUTES.TV_SHOW_DETAIL.id}
+      options={() => ({
+        ...getTransparentHeaderOptions(theme),
+      })}
+      component={TVShowDetail}
     />
   </Stack.Navigator>
 );
