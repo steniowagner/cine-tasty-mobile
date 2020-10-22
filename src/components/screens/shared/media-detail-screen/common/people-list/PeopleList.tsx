@@ -11,7 +11,7 @@ import usePeopleList from './usePeopleList';
 type Props = {
   dataset: CrewDataset | CastDataset;
   onPressItem: (id: string) => void;
-  type: 'cast' | 'crew';
+  type: 'cast' | 'crew' | 'creator';
   sectionTitle: string;
   noSubtext?: boolean;
 };

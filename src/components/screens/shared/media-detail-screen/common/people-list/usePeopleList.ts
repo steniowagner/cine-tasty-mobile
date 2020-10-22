@@ -11,7 +11,7 @@ type PeopleListItem = {
 
 type Props = {
   dataset: CrewDataset | CastDataset;
-  type: 'cast' | 'crew';
+  type: 'cast' | 'crew' | 'creator';
 };
 
 type State = {

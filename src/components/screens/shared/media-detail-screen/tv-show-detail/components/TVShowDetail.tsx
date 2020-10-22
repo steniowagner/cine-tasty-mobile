@@ -160,7 +160,7 @@ const TVShowDetail = ({ navigation, route }: Props) => {
               sectionTitle={t(TV_SHOWS_CREATED_BY_I18N_REF)}
               dataset={tvShow.createdBy}
               noSubtext={false}
-              type="crew"
+              type="creator"
             />
           )}
           {!!tvShow?.cast.length && (
