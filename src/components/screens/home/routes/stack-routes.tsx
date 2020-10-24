@@ -4,11 +4,12 @@ import { DefaultTheme, withTheme } from 'styled-components';
 
 import TVShowDetail from 'components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
 import MoviedDetail from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
+import TVShowSeasonDetail from 'components/screens/shared/media-detail-screen/tv-show-seasons-screen/routes/stack-routes';
+import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 import Reviews, {
   Props as ReviewsExternalParams,
 } from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
 
-import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
@@ -74,6 +75,13 @@ const HomeStack = ({ theme }: Props) => (
         headerTitle: route.params.mediaTitle,
       })}
       component={Reviews}
+    />
+    <Stack.Screen
+      name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
+      options={({ route }: ReviewsExternalParams) => ({
+        ...getDefaultHeaderOptions(),
+      })}
+      component={TVShowSeasonDetail}
     />
   </Stack.Navigator>
 );

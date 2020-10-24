@@ -151,7 +151,11 @@ const TVShowDetail = ({ navigation, route }: Props) => {
           <SeeSeasonsButtonWrapper>
             <RoundedButton
               text={t(TV_SHOW_SEASONS_I18N_REF)}
-              onPress={() => {}}
+              onPress={() => navigation.navigate('TV_SHOW_SEASONS', {
+                numberOfSeasons: tvShow.numberOfSeasons,
+                title: tvShow.name,
+                id: tvShow.id,
+              })}
             />
           </SeeSeasonsButtonWrapper>
           {!!tvShow?.createdBy.length && (
