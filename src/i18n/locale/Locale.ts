@@ -145,6 +145,14 @@ export interface Locale {
     errorSuggestion: string;
     errorTitle: string;
     votes: string;
+    tvShow: {
+      seasonEpisode: {
+        readMoreSeasonOverview: string;
+        episodes: string;
+        airDate: string;
+        season: string;
+      };
+    };
     sections: {
       productionCompanies: string;
       productionCountries: string;

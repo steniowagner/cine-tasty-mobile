@@ -174,6 +174,14 @@ const en: Locale = {
     errorSuggestion: 'errorSuggestion',
     errorTitle: 'errorTitle',
     votes: 'Votes',
+    tvShow: {
+      seasonEpisode: {
+        readMoreSeasonOverview: 'Read More',
+        episodes: 'Episodes',
+        airDate: 'Aired in',
+        season: 'Season',
+      },
+    },
     sections: {
       productionCompanies: 'Production companies',
       productionCountries: 'Production countries',

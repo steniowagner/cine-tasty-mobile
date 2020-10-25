@@ -4,6 +4,6 @@ export type TVShowSeasonsNavigationParams = {
   id: string;
 };
 
-export type SearchStackParams = {
+export type TVShowSeasonsStackParams = {
   TV_SHOW_SEASONS: TVShowSeasonsNavigationParams;
 };

@@ -1,73 +1,103 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { withTheme, DefaultTheme } from 'styled-components';
 import { RouteProp } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 import metrics from 'styles/metrics';
 
-import {TVShowSeasonsDetail1, TVShowSeasonsDetail2, TVShowSeasonsDetail3} from '../components/tv-show-seasons-detail/TVShowSeasonsDetail';
-import { TVShowSeasonsNavigationParams } from './route-params-types';
-import LOCAL_ROUTES from './route-names';
-
-type Props = {
-  route: TVShowSeasonsNavigationParams;
-  theme: DefaultTheme;
-};
+import TVShowSeasonsDetailScreen from '../components/tv-show-seasons-detail/TVShowSeasonsDetail';
+import { TVShowSeasonsStackParams } from './route-params-types';
 
 const Tab = createMaterialTopTabNavigator();
 
-/* const buildSeasonsTabs = (numberOfSeasons: number) => (
-  <Tab.Navigator>
-    {Array(numberOfSeasons).fill({}).map((_, index) => (
-      <Tab.Screen key={index} name={`TVShowSeason-${index}`} component={TVShowSeasonDetail} />
-    ))}
-  </Tab.Navigator>
-); */
+const getTabStyleWidth = (numberOfSeasons: number): number => {
+  if (numberOfSeasons === 2) {
+    return metrics.width / 2;
+  }
 
-const Stack = createStackNavigator();
+  return metrics.width / 3;
+};
+
+export type Props = {
+  navigation: StackNavigationProp<TVShowSeasonsStackParams, 'TV_SHOW_SEASONS'>;
+  route: RouteProp<TVShowSeasonsStackParams, 'TV_SHOW_SEASONS'>;
+  theme: DefaultTheme;
+};
 
 const TVShowSeasonsDetail = ({ route, theme }: Props) => {
-  //  const SeasonTabs = buildSeasonsTabs(3);
-  const numberOfSeasons = 3;
-  const SeasonTabs = () => (
-    <Tab.Navigator
-      initialRouteName="Feed"
-      initialLayout={{ width: metrics.width, height: metrics.height }}
-      tabBarOptions={{
-        activeTintColor: '#e91e63',
-        labelStyle: { fontSize: 12 },
-        style: { backgroundColor: 'powderblue' },
-      }}
-    >
-      <Tab.Screen
-        name="Feed"
-        component={TVShowSeasonsDetail1}
-        options={{ tabBarLabel: 'Home' }}
-      />
-      <Tab.Screen
-        name="Notifications"
-        component={TVShowSeasonsDetail2}
-        options={{ tabBarLabel: 'Updates' }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={TVShowSeasonsDetail3}
-        options={{ tabBarLabel: 'Profile' }}
-      />
-    </Tab.Navigator>
-  );
+  const { t } = useTranslation();
+
+  const { numberOfSeasons } = route.params;
+
+  if (numberOfSeasons === 1) {
+    return (
+      <>
+        <StatusBar
+          backgroundColor={theme.colors.primary}
+          barStyle="dark-content"
+          animated
+        />
+        <TVShowSeasonsDetailScreen
+          id={route.params.id}
+          season={1}
+        />
+      </>
+    );
+  }
 
   return (
-    <Stack.Navigator
-      headerMode="screen"
-    >
-      <Stack.Screen
-        name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
-        component={SeasonTabs}
+    <>
+      <StatusBar
+        backgroundColor={theme.colors.primary}
+        barStyle="dark-content"
+        animated
       />
-    </Stack.Navigator>
-  )
+      <Tab.Navigator
+        initialLayout={{ width: metrics.width, height: metrics.height }}
+        tabBarOptions={{
+          activeTintColor: theme.colors.buttonText,
+          style: {
+            backgroundColor: theme.colors.primary,
+          },
+          indicatorStyle: {
+            backgroundColor: theme.colors.buttonText,
+            height: theme.metrics.extraSmallSize,
+          },
+          labelStyle: {
+            fontSize: theme.metrics.mediumSize * 1.2,
+            fontFamily: 'CircularStd-Bold',
+          },
+          tabStyle: {
+            width: getTabStyleWidth(numberOfSeasons),
+          },
+          scrollEnabled: true,
+        }}
+        lazy
+      >
+        {Array(numberOfSeasons)
+          .fill({})
+          .map((_, index) => (
+            <Tab.Screen
+              name={`${t(
+                'translations:mediaDetail:tvShow:seasonEpisode:season',
+              )} ${index + 1}`}
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+            >
+              {() => (
+                <TVShowSeasonsDetailScreen
+                  id={route.params.id}
+                  season={index + 1}
+                />
+              )}
+            </Tab.Screen>
+          ))}
+      </Tab.Navigator>
+    </>
+  );
 };
 
 export const SCREEN_ID = 'TV_SHOW_SEASONS';
