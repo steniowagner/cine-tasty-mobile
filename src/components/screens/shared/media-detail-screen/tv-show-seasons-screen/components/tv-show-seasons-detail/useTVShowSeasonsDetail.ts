@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import gql from 'graphql-tag';
 import { useTranslation } from 'react-i18next';
+import gql from 'graphql-tag';
 
 import useImperativeQuery from 'utils/useImperativeQuery';
 import {
-  TVShowSeasonsDetail_tvShowSeason_episodes as Episode,
   TVShowSeasonsDetail_tvShowSeason as TVShowSeason,
   TVShowSeasonsDetailVariables,
   TVShowSeasonsDetail,
@@ -36,31 +35,15 @@ const INITIAL_QUERY_STATE: QueryState = {
   hasError: false,
 };
 
-const INITIAL_MODAL_STATE: ModalState = {
-  isEpisodeDetailModalOpen: false,
-  isOverviewModalOpen: false,
-  modalContent: undefined,
-};
-
 type QueryState = {
   seasonDetail: TVShowSeason | undefined;
   isLoading: boolean;
   hasError: boolean;
 };
 
-type ModalState = {
-  modalContent: Episode | string | undefined;
-  isEpisodeDetailModalOpen: boolean;
-  isOverviewModalOpen: boolean;
-};
-
 type State = {
-  onPressOverviewReadMoreButton: (overview: string) => void;
-  onPressEpisodeButton: (episode: Episode) => void;
-  onPressCloseModal: () => void;
   t: (key: string) => string;
-} & QueryState &
-  ModalState;
+} & QueryState;
 
 type Props = {
   season: number;
@@ -69,7 +52,6 @@ type Props = {
 
 const useTVShowSeasonsDetail = ({ season, id }: Props): State => {
   const [queryState, setQueryState] = useState<QueryState>(INITIAL_QUERY_STATE);
-  const [modalState, setModalState] = useState<ModalState>(INITIAL_MODAL_STATE);
 
   const { t } = useTranslation();
 
@@ -104,36 +86,10 @@ const useTVShowSeasonsDetail = ({ season, id }: Props): State => {
     onQueryTVShowSeason();
   }, []);
 
-  const onPressOverviewReadMoreButton = useCallback((overview: string) => {
-    setModalState({
-      ...INITIAL_MODAL_STATE,
-      isOverviewModalOpen: true,
-      modalContent: overview,
-    });
-  }, []);
-
-  const onPressEpisodeButton = useCallback((episode: Episode) => {
-    setModalState({
-      ...INITIAL_MODAL_STATE,
-      isEpisodeDetailModalOpen: true,
-      modalContent: episode,
-    });
-  }, []);
-
-  const onPressCloseModal = useCallback(() => {
-    setModalState(INITIAL_MODAL_STATE);
-  }, []);
-
   return {
-    isEpisodeDetailModalOpen: modalState.isEpisodeDetailModalOpen,
-    isOverviewModalOpen: modalState.isOverviewModalOpen,
-    modalContent: modalState.modalContent,
     seasonDetail: queryState.seasonDetail,
-    onPressOverviewReadMoreButton,
     isLoading: queryState.isLoading,
     hasError: queryState.hasError,
-    onPressEpisodeButton,
-    onPressCloseModal,
     t,
   };
 };

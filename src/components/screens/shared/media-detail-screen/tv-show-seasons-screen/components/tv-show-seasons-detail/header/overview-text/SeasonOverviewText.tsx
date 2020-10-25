@@ -3,6 +3,8 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
 
 import useSeasonOverviewText from './useSeasonOverviewText';
+import EpisodeOverviewDetail from './EpisodeOverviewDetail';
+import ModalDetail from '../../ModalDetail';
 
 interface WrapperStyleProps {
   readonly shouldShowReadMoreButton: boolean | undefined;
@@ -36,15 +38,17 @@ const ReadMoreButton = styled(TouchableOpacity)`
 `;
 
 type Props = {
-  onPressReadMore: () => void;
   overview: string;
 };
 
-const SeasonOverviewText = ({ onPressReadMore, overview }: Props) => {
+const SeasonOverviewText = ({ overview }: Props) => {
   const {
     shouldShowReadMoreButton,
     onGetTextLayout,
+    onPressReadMore,
     numberOfLines,
+    onCloseModal,
+    isModalOpen,
     t,
   } = useSeasonOverviewText();
 
@@ -53,26 +57,37 @@ const SeasonOverviewText = ({ onPressReadMore, overview }: Props) => {
   }
 
   return (
-    <Wrapper
-      shouldShowReadMoreButton={shouldShowReadMoreButton}
-    >
-      <OverviewText
-        // @ts-ignore onTextLayout does exist on Text component
-        onTextLayout={({ nativeEvent: { lines } }) => onGetTextLayout(lines.length)}
-        numberOfLines={numberOfLines}
+    <>
+      <Wrapper
+        shouldShowReadMoreButton={shouldShowReadMoreButton}
       >
-        {overview}
-      </OverviewText>
-      {shouldShowReadMoreButton && (
-        <ReadMoreButton
-          onPress={onPressReadMore}
+        <OverviewText
+          // @ts-ignore onTextLayout does exist on Text component
+          onTextLayout={({ nativeEvent: { lines } }) => onGetTextLayout(lines.length)}
+          numberOfLines={numberOfLines}
         >
-          <ReadMoreText>
-            {t('translations:mediaDetail:tvShow:seasonEpisode:readMoreSeasonOverview')}
-          </ReadMoreText>
-        </ReadMoreButton>
+          {overview}
+        </OverviewText>
+        {shouldShowReadMoreButton && (
+          <ReadMoreButton
+            onPress={onPressReadMore}
+          >
+            <ReadMoreText>
+              {t('translations:mediaDetail:tvShow:seasonEpisode:readMoreSeasonOverview')}
+            </ReadMoreText>
+          </ReadMoreButton>
+        )}
+      </Wrapper>
+      {isModalOpen && (
+        <ModalDetail
+          onCloseModal={onCloseModal}
+        >
+          <EpisodeOverviewDetail
+            overview={overview}
+          />
+        </ModalDetail>
       )}
-    </Wrapper>
+    </>
   );
 };
 

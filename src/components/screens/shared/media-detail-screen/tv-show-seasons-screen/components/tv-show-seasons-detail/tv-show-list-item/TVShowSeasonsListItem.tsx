@@ -2,8 +2,13 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
 
+import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
+
+import useTVShowSeasonsListItem from './useTVShowSeasonsListItem';
+import EpisodeDetail from './EpisodeDetail';
+import ModalDetail from '../ModalDetail';
 
 const ListItemWrapper = styled(TouchableOpacity)`
   width: 100%;
@@ -50,25 +55,39 @@ const ChevronRightIcon = styled(Icon).attrs(({ theme }) => ({
 }))``;
 
 type Props = {
-  onPress: () => void;
+  episode: Episode;
   index: number;
-  title: string;
 };
 
-const TVShowSeasonsListItem = ({ onPress, index, title }: Props) => (
-  <ListItemWrapper
-    onPress={onPress}
-  >
-    <Row>
-      <EpisodeIndexWrapper>
-        <EpisodeIndexText>{index + 1}</EpisodeIndexText>
-      </EpisodeIndexWrapper>
-      <SeasonNameText>{title}</SeasonNameText>
-    </Row>
-    <TouchableOpacity>
-      <ChevronRightIcon />
-    </TouchableOpacity>
-  </ListItemWrapper>
-);
+const TVShowSeasonsListItem = ({ episode, index }: Props) => {
+  const { onPressListItem, onCloseModal, isModalOpen } = useTVShowSeasonsListItem();
+
+  return (
+    <>
+      <ListItemWrapper
+        onPress={onPressListItem}
+      >
+        <Row>
+          <EpisodeIndexWrapper>
+            <EpisodeIndexText>{index + 1}</EpisodeIndexText>
+          </EpisodeIndexWrapper>
+          <SeasonNameText>{episode.name}</SeasonNameText>
+        </Row>
+        <TouchableOpacity>
+          <ChevronRightIcon />
+        </TouchableOpacity>
+      </ListItemWrapper>
+      {isModalOpen && (
+        <ModalDetail
+          onCloseModal={onCloseModal}
+        >
+          <EpisodeDetail
+            episode={episode}
+          />
+        </ModalDetail>
+      )}
+    </>
+  );
+};
 
 export default TVShowSeasonsListItem;

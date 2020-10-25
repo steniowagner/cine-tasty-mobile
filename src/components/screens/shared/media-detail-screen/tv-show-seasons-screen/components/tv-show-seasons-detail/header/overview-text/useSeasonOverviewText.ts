@@ -13,13 +13,21 @@ type InternalState = {
   numberOfLines: number | undefined;
 };
 
+type ModalState = {
+  onPressReadMore: () => void;
+  onCloseModal: () => void;
+  isModalOpen: boolean;
+};
+
 type State = {
   onGetTextLayout: (linesLength: number) => void;
   t: (key: string) => string;
-} & InternalState;
+} & InternalState &
+  ModalState;
 
 const useSeasonOverviewText = (): State => {
   const [state, setState] = useState<InternalState>(INITIAL_STATE);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { t } = useTranslation();
 
@@ -42,8 +50,11 @@ const useSeasonOverviewText = (): State => {
 
   return {
     shouldShowReadMoreButton: state.shouldShowReadMoreButton,
+    onPressReadMore: () => setIsModalOpen(true),
+    onCloseModal: () => setIsModalOpen(false),
     numberOfLines: state.numberOfLines,
     onGetTextLayout,
+    isModalOpen,
     t,
   };
 };

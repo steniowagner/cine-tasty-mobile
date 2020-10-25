@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import styled from 'styled-components';
 
 import SeasonPosterImage from '../../../../common/header-info/PosterImage';
-import SeasonOverviewText from './SeasonOverviewText';
+import SeasonOverviewText from './overview-text/SeasonOverviewText';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -19,12 +19,11 @@ const SeasonPosterImageWrapper = styled(View)`
 `;
 
 type Props = {
-  onPressReadMoreButton: () => void;
   overview: string;
   image: string;
 };
 
-const Header = ({ onPressReadMoreButton, overview, image }: Props) => (
+const Header = ({ overview, image }: Props) => (
   <Wrapper>
     <SeasonPosterImageWrapper>
       <SeasonPosterImage
@@ -32,7 +31,6 @@ const Header = ({ onPressReadMoreButton, overview, image }: Props) => (
       />
     </SeasonPosterImageWrapper>
     <SeasonOverviewText
-      onPressReadMore={onPressReadMoreButton}
       overview={overview}
     />
   </Wrapper>

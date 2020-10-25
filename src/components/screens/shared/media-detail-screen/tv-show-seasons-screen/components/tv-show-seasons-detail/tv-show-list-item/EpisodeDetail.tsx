@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import { formatDate } from 'utils/formatters';
+import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 
 const MEDIA_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.MEDIA_POSTER_SIZE_CODE}`;
@@ -19,11 +20,21 @@ const Wrapper = styled(View)`
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
-const ProgressiveImageWrapper = styled(Image)`
+const EpisodeImage = styled(Image)`
   width: 100%;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
   border-top-left-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
   border-top-right-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+`;
+
+const EpisodeImageFallback = styled(View)`
+  width: 100%;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  border-top-right-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
 const EpisodeTitleText = styled(Text)`
@@ -48,6 +59,12 @@ const EpisodeAiredText = styled(Text)`
   color: ${({ theme }) => theme.colors.buttonText};
 `;
 
+const ImageOffIcon = styled(Icon).attrs(({ theme }) => ({
+  size: theme.metrics.getWidthFromDP('12%'),
+  color: theme.colors.buttonText,
+  name: 'image-off',
+}))``;
+
 type Props = {
   episode: Episode;
 };
@@ -57,11 +74,18 @@ const EpisodeDetail = ({ episode }: Props) => {
 
   return (
     <Wrapper>
-      <ProgressiveImageWrapper
-        source={{
-          uri: `${MEDIA_IMAGE_URI}${episode.stillPath}`,
-        }}
-      />
+      {episode.stillPath ? (
+        <EpisodeImage
+          resizeMode="contain"
+          source={{
+            uri: `${MEDIA_IMAGE_URI}${episode.stillPath}`,
+          }}
+        />
+      ) : (
+        <EpisodeImageFallback>
+          <ImageOffIcon />
+        </EpisodeImageFallback>
+      )}
       <ScrollView
         style={{ padding: CONSTANTS.VALUES.DEFAULT_SPACING }}
       >
@@ -73,9 +97,9 @@ const EpisodeDetail = ({ episode }: Props) => {
           withText
         />
         <EpisodeAiredText>
-          {`${t(
-            'translations:mediaDetail:tvShow:seasonEpisode:airDate',
-          )} ${formatDate(episode.airDate)}`}
+          {`${t('translations:mediaDetail:tvShow:seasonEpisode:airDate')} ${formatDate(
+            episode.airDate,
+          )}`}
         </EpisodeAiredText>
         <EpisodeOverviewText>{episode.overview}</EpisodeOverviewText>
       </ScrollView>

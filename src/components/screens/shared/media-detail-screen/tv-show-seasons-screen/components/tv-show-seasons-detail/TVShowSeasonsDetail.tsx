@@ -2,16 +2,12 @@ import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import styled from 'styled-components';
 
-import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import Advise from 'components/common/advise/Advise';
 import Section from 'components/common/Section';
 
+import TVShowSeasonsListItem from './tv-show-list-item/TVShowSeasonsListItem';
 import useTVShowSeasonsDetail from './useTVShowSeasonsDetail';
-import TVShowSeasonsListItem from './TVShowSeasonsListItem';
-import EpisodeOverviewDetail from './EpisodeOverviewDetail';
-import ModalDetail from './modal-detail/ModalDetail';
-import EpisodeDetail from './EpisodeDetail';
 import Header from './header/Header';
 
 const LineDivider = styled(View)`
@@ -28,16 +24,7 @@ type Params = {
 
 const TVShowSeasonsDetail = ({ season, id }: Params) => {
   const {
-    onPressOverviewReadMoreButton,
-    isEpisodeDetailModalOpen,
-    onPressEpisodeButton,
-    isOverviewModalOpen,
-    onPressCloseModal,
-    seasonDetail,
-    modalContent,
-    isLoading,
-    hasError,
-    t,
+    seasonDetail, isLoading, hasError, t,
   } = useTVShowSeasonsDetail({ season, id });
 
   if (isLoading) {
@@ -62,7 +49,6 @@ const TVShowSeasonsDetail = ({ season, id }: Params) => {
         ListHeaderComponent={() => (
           <>
             <Header
-              onPressReadMoreButton={() => onPressOverviewReadMoreButton(seasonDetail.overview)}
               overview={seasonDetail.overview}
               image={seasonDetail.posterPath}
             />
@@ -74,34 +60,15 @@ const TVShowSeasonsDetail = ({ season, id }: Params) => {
             </Section>
           </>
         )}
-        data={seasonDetail.episodes}
         keyExtractor={({ id: episodeId }) => episodeId}
+        data={seasonDetail.episodes}
         renderItem={({ item, index }) => (
           <TVShowSeasonsListItem
-            onPress={() => onPressEpisodeButton(item)}
-            title={item.name}
+            episode={item}
             index={index}
           />
         )}
       />
-      {isOverviewModalOpen && (
-        <ModalDetail
-          onCloseModal={onPressCloseModal}
-        >
-          <EpisodeOverviewDetail
-            overview={modalContent as string}
-          />
-        </ModalDetail>
-      )}
-      {isEpisodeDetailModalOpen && (
-        <ModalDetail
-          onCloseModal={onPressCloseModal}
-        >
-          <EpisodeDetail
-            episode={modalContent as Episode}
-          />
-        </ModalDetail>
-      )}
     </>
   );
 };
