@@ -75,6 +75,7 @@ const TVShowSeasonsDetail = ({ route, theme }: Props) => {
           },
           scrollEnabled: true,
         }}
+        lazyPreloadDistance={0}
         lazy
       >
         {Array(numberOfSeasons)

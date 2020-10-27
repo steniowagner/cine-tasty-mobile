@@ -67,6 +67,7 @@ const TVShowSeasonsListItem = ({ episode, index }: Props) => {
       <ListItemWrapper
         onPress={onPressListItem}
       >
+        {/* console.log('tv-show-seasons-list-item ', index) */}
         <Row>
           <EpisodeIndexWrapper>
             <EpisodeIndexText>{index + 1}</EpisodeIndexText>

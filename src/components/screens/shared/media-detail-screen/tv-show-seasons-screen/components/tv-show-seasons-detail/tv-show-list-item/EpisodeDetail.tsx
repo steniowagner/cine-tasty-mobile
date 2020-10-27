@@ -76,7 +76,6 @@ const EpisodeDetail = ({ episode }: Props) => {
     <Wrapper>
       {episode.stillPath ? (
         <EpisodeImage
-          resizeMode="contain"
           source={{
             uri: `${MEDIA_IMAGE_URI}${episode.stillPath}`,
           }}
