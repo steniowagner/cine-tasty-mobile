@@ -41,8 +41,13 @@ const TVShowSeasonsDetail = ({ route, theme }: Props) => {
           animated
         />
         <TVShowSeasonsDetailScreen
-          id={route.params.id}
-          season={1}
+          // @ts-ignore
+          route={{
+            params: {
+              id: route.params.id,
+              season: 1,
+            },
+          }}
         />
       </>
     );
@@ -82,19 +87,17 @@ const TVShowSeasonsDetail = ({ route, theme }: Props) => {
           .fill({})
           .map((_, index) => (
             <Tab.Screen
+              component={TVShowSeasonsDetailScreen}
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
               name={`${t(
                 'translations:mediaDetail:tvShow:seasonEpisode:season',
               )} ${index + 1}`}
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-            >
-              {() => (
-                <TVShowSeasonsDetailScreen
-                  id={route.params.id}
-                  season={index + 1}
-                />
-              )}
-            </Tab.Screen>
+              initialParams={{
+                id: route.params.id,
+                season: index + 1,
+              }}
+            />
           ))}
       </Tab.Navigator>
     </>

@@ -60,7 +60,7 @@ const GenreText = styled(Text)`
 `;
 
 const LearnMoreButtonWrapper = styled(View)`
-  width: 65%;
+  width: 80%;
 `;
 
 type Props = {

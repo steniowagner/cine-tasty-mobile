@@ -4,6 +4,9 @@ import { DefaultTheme, withTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import TVShowDetail from 'components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
+import TVShowSeasonDetail, {
+  Props as TVShowSeasonDetailExternalProps,
+} from 'components/screens/shared/media-detail-screen/tv-show-seasons-screen/routes/stack-routes';
 import MovieDetail from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import Reviews, {
   Props as ReviewsExternalParams,
@@ -65,6 +68,20 @@ const FamousStack = ({ theme }: Props) => {
           headerTitle: route.params.mediaTitle,
         })}
         component={Reviews}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
+        options={({ route }: TVShowSeasonDetailExternalProps) => ({
+          ...getDefaultHeaderOptions(),
+          headerTintColor: theme.colors.buttonText,
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+            shadowColor: 'transparent',
+            elevation: 0,
+          },
+          headerTitle: route.params.title,
+        })}
+        component={TVShowSeasonDetail}
       />
     </Stack.Navigator>
   );

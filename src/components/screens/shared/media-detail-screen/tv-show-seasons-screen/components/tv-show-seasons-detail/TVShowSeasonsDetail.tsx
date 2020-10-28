@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
 import LoadingIndicator from 'components/common/LoadingIndicator';
@@ -7,6 +8,7 @@ import Advise from 'components/common/advise/Advise';
 import Section from 'components/common/Section';
 
 import TVShowSeasonsListItem from './tv-show-list-item/TVShowSeasonsListItem';
+import { TVShowSeasonsStackParams } from '../../routes/route-params-types';
 import useTVShowSeasonsDetail from './useTVShowSeasonsDetail';
 import Header from './header/Header';
 
@@ -18,14 +20,16 @@ const LineDivider = styled(View)`
 `;
 
 type Params = {
-  season: number;
-  id: string;
+  route: RouteProp<TVShowSeasonsStackParams, 'SEASON_DETAIL'>;
 };
 
-const TVShowSeasonsDetail = ({ season, id }: Params) => {
+const TVShowSeasonsDetail = ({ route }: Params) => {
   const {
     seasonDetail, isLoading, hasError, t,
-  } = useTVShowSeasonsDetail({ season, id });
+  } = useTVShowSeasonsDetail({
+    season: route.params.season,
+    id: route.params.id,
+  });
 
   if (isLoading) {
     return <LoadingIndicator />;
