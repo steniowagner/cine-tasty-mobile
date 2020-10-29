@@ -152,6 +152,11 @@ export interface Locale {
         airDate: string;
         season: string;
       };
+      errors: {
+        description: string;
+        suggestion: string;
+        title: string;
+      };
     };
     sections: {
       productionCompanies: string;

@@ -24,7 +24,9 @@ type Props = {
 };
 
 const Header = ({ overview, image }: Props) => (
-  <Wrapper>
+  <Wrapper
+    testID="header-wrapper"
+  >
     <SeasonPosterImageWrapper>
       <SeasonPosterImage
         image={image}

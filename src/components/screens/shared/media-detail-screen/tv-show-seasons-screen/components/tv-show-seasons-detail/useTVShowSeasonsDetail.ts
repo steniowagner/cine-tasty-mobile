@@ -60,26 +60,24 @@ const useTVShowSeasonsDetail = ({ season, id }: Props): State => {
   );
 
   const onQueryTVShowSeason = useCallback(async () => {
-    const { data, errors } = await execQuery({
-      season,
-      id,
-    });
+    try {
+      const { data } = await execQuery({
+        season,
+        id,
+      });
 
-    if (errors) {
+      setQueryState(() => ({
+        seasonDetail: data.tvShowSeason,
+        isLoading: false,
+        hasError: false,
+      }));
+    } catch (err) {
       setQueryState(() => ({
         seasonDetail: undefined,
         isLoading: false,
         hasError: true,
       }));
-
-      return;
     }
-
-    setQueryState(() => ({
-      seasonDetail: data.tvShowSeason,
-      isLoading: false,
-      hasError: false,
-    }));
   }, []);
 
   useEffect(() => {

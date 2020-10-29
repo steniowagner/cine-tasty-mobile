@@ -181,6 +181,11 @@ const en: Locale = {
         airDate: 'Aired in',
         season: 'Season',
       },
+      errors: {
+        description: 'description',
+        suggestion: 'suggestion',
+        title: 'title',
+      },
     },
     sections: {
       productionCompanies: 'Production companies',
