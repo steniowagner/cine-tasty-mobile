@@ -5,7 +5,8 @@ export type Routes =
   | 'FAMOUS_DETAIL'
   | 'MOVIE_DETAIL'
   | 'REVIEWS'
-  | 'TV_SHOW_DETAIL';
+  | 'TV_SHOW_DETAIL'
+  | 'TV_SHOW_SEASONS';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   SEARCH: {
@@ -22,6 +23,9 @@ const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   },
   TV_SHOW_DETAIL: {
     id: 'TV_SHOW_DETAIL',
+  },
+  TV_SHOW_SEASONS: {
+    id: 'TV_SHOW_SEASONS',
   },
 };
 

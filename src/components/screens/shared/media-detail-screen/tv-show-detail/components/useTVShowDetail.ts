@@ -48,7 +48,7 @@ const useTVShowDetail = ({
     },
     fetchPolicy: 'cache-first',
   });
-
+  console.log(data);
   return {
     tvShow: data?.tvShow,
     isLoading: loading,

@@ -737,27 +737,10 @@ export interface TVShowDetail_tvShow_seasons {
   seasonNumber: number | null;
 }
 
-export interface TVShowDetail_tvShow_lastEpisodeToAir {
-  __typename: "LastEpisodeToAir";
-  airDate: string | null;
-  episodeNumber: number | null;
-  id: string | null;
-  name: string | null;
-  overview: string | null;
-  productionCode: string | null;
-  seasonNumber: number | null;
-  showId: string | null;
-  stillPath: string | null;
-  voteAverage: number | null;
-  voteCount: number | null;
-}
-
 export interface TVShowDetail_tvShow_createdBy {
   __typename: "Creator";
   id: string | null;
-  creditId: string | null;
   name: string | null;
-  gender: number | null;
   profilePath: string | null;
 }
 
@@ -858,9 +841,11 @@ export interface TVShowDetail_tvShow_reviews {
 
 export interface TVShowDetail_tvShow {
   __typename: "TVShow";
+  genres: string[];
+  voteAverage: number | null;
+  voteCount: number | null;
   images: string[];
   seasons: TVShowDetail_tvShow_seasons[];
-  lastEpisodeToAir: TVShowDetail_tvShow_lastEpisodeToAir | null;
   backdropPath: string | null;
   createdBy: TVShowDetail_tvShow_createdBy[];
   networks: TVShowDetail_tvShow_networks[];
@@ -871,12 +856,9 @@ export interface TVShowDetail_tvShow {
   inProduction: boolean | null;
   languages: string[];
   lastAirDate: string | null;
-  genres: string[];
   name: string | null;
   status: string | null;
   type: string | null;
-  voteAverage: number | null;
-  voteCount: number | null;
   productionCompanies: TVShowDetail_tvShow_productionCompanies[];
   originalLanguage: string | null;
   originalName: string | null;
@@ -899,6 +881,49 @@ export interface TVShowDetail {
 
 export interface TVShowDetailVariables {
   id: string;
+  language?: ISO6391Language | null;
+  withVoteAverage: boolean;
+  withGenresIds: boolean;
+  withVoteCount: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: TVShowSeasonsDetail
+// ====================================================
+
+export interface TVShowSeasonsDetail_tvShowSeason_episodes {
+  __typename: "TVShowSeasonEpisode";
+  stillPath: string | null;
+  voteAverage: number | null;
+  voteCount: number | null;
+  airDate: string | null;
+  id: string;
+  name: string | null;
+  overview: string | null;
+}
+
+export interface TVShowSeasonsDetail_tvShowSeason {
+  __typename: "TVShowSeason";
+  id: string;
+  name: string | null;
+  overview: string | null;
+  posterPath: string | null;
+  seasonNumber: number | null;
+  episodes: TVShowSeasonsDetail_tvShowSeason_episodes[];
+}
+
+export interface TVShowSeasonsDetail {
+  tvShowSeason: TVShowSeasonsDetail_tvShowSeason | null;
+}
+
+export interface TVShowSeasonsDetailVariables {
+  id: string;
+  season: number;
   language?: ISO6391Language | null;
 }
 

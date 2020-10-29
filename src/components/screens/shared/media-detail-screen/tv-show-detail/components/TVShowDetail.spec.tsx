@@ -569,4 +569,44 @@ describe('Testing <TVShowDetail />', () => {
       reviews,
     });
   });
+
+  it('should call navigate with the correct params when press "See All Seasons"', () => {
+    const name = 'tv-show-name';
+    const numberOfSeasons = 2;
+    const id = '123';
+
+    const mockResolvers = {
+      TVShow: () => ({
+        numberOfSeasons: numberOfSeasons,
+        name,
+        id,
+      }),
+    };
+
+    const navigate = jest.fn();
+
+    const { getByTestId } = render(
+      renderTVShowDetail({
+        navigation: getNavigation(undefined, navigate),
+        mockResolvers,
+        route: {
+          params: baseParams,
+        },
+      }),
+    );
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    fireEvent.press(getByTestId('rounded-button'));
+
+    expect(navigate).toHaveBeenCalledTimes(1);
+
+    expect(navigate).toHaveBeenCalledWith('TV_SHOW_SEASONS', {
+      numberOfSeasons,
+      title: name,
+      id,
+    });
+  });
 });

@@ -7,6 +7,10 @@ import Icon from 'components/common/Icon';
 
 import useStarsVotes from './useStarsVotes';
 
+interface VotesTextStyleProps {
+  readonly textColor?: string;
+}
+
 const Wrapper = styled(View)`
   flex-direction: row;
   align-items: center;
@@ -36,20 +40,23 @@ const EmptyStarIcon = styled(Icon).attrs(({ theme }) => ({
   margin-right: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
-const VotesText = styled(Text)`
+const VotesText = styled(Text)<VotesTextStyleProps>`
   margin-right: ${({ theme }) => theme.metrics.smallSize}px;
   font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ textColor, theme }) => textColor || theme.colors.text};
   font-family: CircularStd-Medium;
 `;
 
 type Props = {
+  textColor?: string;
   withText?: boolean;
   voteCount?: number;
   votes: number;
 };
 
-const StarsVotes = ({ voteCount, withText, votes }: Props) => {
+const StarsVotes = ({
+  textColor, voteCount, withText, votes,
+}: Props) => {
   const { numberEmptyStars, numberFullStars, numberHalfStars } = useStarsVotes(votes);
 
   const shouldShowVoteCount = withText && !!voteCount;
@@ -57,7 +64,13 @@ const StarsVotes = ({ voteCount, withText, votes }: Props) => {
 
   return (
     <Wrapper>
-      {shouldShowVotes && <VotesText>{votes.toFixed(1)}</VotesText>}
+      {shouldShowVotes && (
+      <VotesText
+        textColor={textColor}
+      >
+        {votes.toFixed(1)}
+      </VotesText>
+      )}
       <Wrapper
         testID="stars-wrapper"
       >
@@ -101,7 +114,13 @@ const StarsVotes = ({ voteCount, withText, votes }: Props) => {
           </Wrapper>
         )}
       </Wrapper>
-      {shouldShowVoteCount && <VotesText>{` (${voteCount})`}</VotesText>}
+      {shouldShowVoteCount && (
+        <VotesText
+          textColor={textColor}
+        >
+          {` (${voteCount})`}
+        </VotesText>
+      )}
     </Wrapper>
   );
 };

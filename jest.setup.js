@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+
 import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock';
 
 jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
@@ -11,6 +12,31 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key) => key }),
   getI18n: () => ({ language: 'en' }),
 }));
+
+jest.mock('react-native-reanimated', () => {
+  const { View } = require('react-native');
+  return {
+    Value: jest.fn(),
+    event: jest.fn(),
+    add: jest.fn(),
+    eq: jest.fn(),
+    set: jest.fn(),
+    cond: jest.fn(),
+    interpolate: jest.fn(),
+    View,
+    Extrapolate: { CLAMP: jest.fn() },
+    Transition: {
+      Together: 'Together',
+      Out: 'Out',
+      In: 'In',
+    },
+    Easing: {
+      in: jest.fn(),
+      out: jest.fn(),
+      inOut: jest.fn(),
+    },
+  };
+});
 
 jest.mock('react-native-gesture-handler', () => {
   const View = require('react-native/Libraries/Components/View/View');
