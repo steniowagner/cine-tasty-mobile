@@ -1,17 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { TextInput, View } from 'react-native';
-import { useHeaderHeight } from '@react-navigation/stack';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import styled from 'styled-components';
 
 import HeaderIconButton from 'components/common/HeaderIconButton';
 
-interface WrapperStyleProps {
-  readonly headerHeight: number;
-}
+const HEADER_HEIGHT = 44;
 
-const Wrapper = styled(View)<WrapperStyleProps>`
+const Wrapper = styled(View)`
   width: 100%;
-  height: ${({ headerHeight }) => 1.05 * headerHeight}px;
+  height: ${() => getStatusBarHeight() + HEADER_HEIGHT}px;
   justify-content: flex-end;
   padding-bottom: ${({ theme }) => theme.metrics.mediumSize}px;
   background-color: ${({ theme }) => theme.colors.contrast};
@@ -51,28 +49,11 @@ const SearchBar = ({
   onPressClose,
   placeholder,
 }: Props) => {
-  const [headerHeight, setHeaderHeight] = useState<number>(0);
-  const headerHeightRef = useRef<number>();
   const inputRef = useRef<TextInput>();
-
-  try {
-    headerHeightRef.current = useHeaderHeight();
-  } catch (err) {
-    headerHeightRef.current = 1;
-  }
-
-  useEffect(() => {
-    setHeaderHeight(headerHeightRef.current);
-
-    if (inputRef && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
 
   return (
     <Wrapper
       testID="searchbar-wrapper"
-      headerHeight={headerHeight}
     >
       <ContentWrapper>
         <HeaderIconButton

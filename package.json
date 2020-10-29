@@ -67,6 +67,7 @@
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.2.0",
     "react-native-shimmer-placeholder": "^1.0.35",
+    "react-native-status-bar-height": "^2.5.0",
     "react-native-svg": "^12.0.3",
     "react-native-tab-view": "^2.15.2",
     "react-native-vector-icons": "^6.6.0",
