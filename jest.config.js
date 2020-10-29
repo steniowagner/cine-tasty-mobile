@@ -9,6 +9,7 @@ const dependenciesToBeTranspiled = [
   'react-native-iphone-x-helper',
   'react-native-linear-gradient',
   'react-native-shimmer-placeholder',
+  'react-native-status-bar-height',
 ].join('|');
 
 module.exports = {
