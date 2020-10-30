@@ -5,8 +5,8 @@ import { IMocks } from 'graphql-tools';
 
 import { dark } from 'styles/themes';
 
-import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
+import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
+import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
 import TVShowSeasonsDetail, {
   EPISODES_ERROR_DESCRIPTION_I18N_REF,
   EPISODES_ERROR_SUGGESTION_I18N_REF,

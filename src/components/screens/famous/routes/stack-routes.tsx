@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import TVShowDetail from 'components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
 import TVShowSeasonDetail, {
   Props as TVShowSeasonDetailExternalProps,
-} from 'components/screens/shared/media-detail-screen/tv-show-seasons-screen/routes/stack-routes';
+} from 'components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
 import MovieDetail from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import Reviews, {
   Props as ReviewsExternalParams,

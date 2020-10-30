@@ -24,6 +24,11 @@ const LineDivider = styled(View)`
   background-color: ${({ theme }) => theme.colors.subText};
 `;
 
+const ListFooterComponent = styled(View)`
+  width: 100%;
+  height: ${({ theme }) => theme.metrics.extraLargeSize}px;
+`;
+
 type Params = {
   route: RouteProp<TVShowSeasonsStackParams, 'SEASON_DETAIL'>;
 };
@@ -54,6 +59,7 @@ const TVShowSeasonsDetail = ({ route }: Params) => {
   return (
     <>
       <FlatList
+        ListFooterComponent={() => <ListFooterComponent />}
         ItemSeparatorComponent={() => <LineDivider />}
         ListHeaderComponent={() => (
           <>

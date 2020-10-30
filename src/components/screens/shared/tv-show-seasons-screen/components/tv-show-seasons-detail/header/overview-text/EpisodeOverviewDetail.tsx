@@ -24,7 +24,11 @@ type Props = {
 const EpisodeOverviewDetail = ({ overview }: Props) => (
   <Wrapper>
     <ScrollView>
-      <DescriptionText>{overview}</DescriptionText>
+      <DescriptionText
+        testID="overview-description-text"
+      >
+        {overview}
+      </DescriptionText>
     </ScrollView>
   </Wrapper>
 );

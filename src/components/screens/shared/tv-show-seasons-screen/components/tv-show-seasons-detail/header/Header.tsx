@@ -2,8 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
-import SeasonPosterImage from '../../../../common/header-info/PosterImage';
-import SeasonOverviewText from './overview-text/SeasonOverviewText';
+import SeasonPosterImage from 'components/screens/shared/media-detail-screen/common/header-info/PosterImage';
+import SeasonOverviewText from './overview-text/season-overview-text/SeasonOverviewText';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -27,7 +27,9 @@ const Header = ({ overview, image }: Props) => (
   <Wrapper
     testID="header-wrapper"
   >
-    <SeasonPosterImageWrapper>
+    <SeasonPosterImageWrapper
+      testID="poster-image-wrapper"
+    >
       <SeasonPosterImage
         image={image}
       />
