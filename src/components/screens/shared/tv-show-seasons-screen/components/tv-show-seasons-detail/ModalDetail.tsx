@@ -41,10 +41,13 @@ const ModalDetail = ({ onCloseModal, children }: Props) => (
     hardwareAccelerated
     transparent
   >
-    <Wrapper>
+    <Wrapper
+      testID="modal-wrapper"
+    >
       <View>
         {children}
         <CloseButtonWrapper
+          testID="close-modal-button"
           onPress={onCloseModal}
         >
           <CloseIcon />

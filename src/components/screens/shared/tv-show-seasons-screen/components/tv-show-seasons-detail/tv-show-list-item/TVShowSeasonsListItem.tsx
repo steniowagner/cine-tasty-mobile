@@ -7,7 +7,7 @@ import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 
 import useTVShowSeasonsListItem from './useTVShowSeasonsListItem';
-import EpisodeDetail from './EpisodeDetail';
+import EpisodeDetail from './episode-detail/EpisodeDetail';
 import ModalDetail from '../ModalDetail';
 
 const ListItemWrapper = styled(TouchableOpacity)`
@@ -18,7 +18,7 @@ const ListItemWrapper = styled(TouchableOpacity)`
   padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
 `;
 
-const SeasonNameText = styled(Text).attrs({
+const EpisodeNameText = styled(Text).attrs({
   numberOfLines: 2,
 })`
   width: 75%;
@@ -68,16 +68,21 @@ const TVShowSeasonsListItem = ({ episode, index }: Props) => {
         onPress={onPressListItem}
         testID="episode-list-item"
       >
-        {/* console.log('tv-show-seasons-list-item ', index) */}
         <Row>
           <EpisodeIndexWrapper>
-            <EpisodeIndexText>{index + 1}</EpisodeIndexText>
+            <EpisodeIndexText
+              testID="episode-index-text"
+            >
+              {index + 1}
+            </EpisodeIndexText>
           </EpisodeIndexWrapper>
-          <SeasonNameText>{episode.name}</SeasonNameText>
+          <EpisodeNameText
+            testID="episode-name-text"
+          >
+            {episode.name}
+          </EpisodeNameText>
         </Row>
-        <TouchableOpacity>
-          <ChevronRightIcon />
-        </TouchableOpacity>
+        <ChevronRightIcon />
       </ListItemWrapper>
       {isModalOpen && (
         <ModalDetail

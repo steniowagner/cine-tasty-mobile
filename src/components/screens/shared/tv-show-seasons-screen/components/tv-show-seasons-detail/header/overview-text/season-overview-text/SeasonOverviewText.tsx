@@ -2,9 +2,9 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
 
+import EpisodeOverviewDetail from '../EpisodeOverviewDetail';
 import useSeasonOverviewText from './useSeasonOverviewText';
-import EpisodeOverviewDetail from './EpisodeOverviewDetail';
-import ModalDetail from '../../ModalDetail';
+import ModalDetail from '../../../ModalDetail';
 
 interface WrapperStyleProps {
   readonly shouldShowReadMoreButton: boolean | undefined;
@@ -44,36 +44,47 @@ type Props = {
 const SeasonOverviewText = ({ overview }: Props) => {
   const {
     shouldShowReadMoreButton,
+    readMoreButtonText,
     onGetTextLayout,
     onPressReadMore,
     numberOfLines,
     onCloseModal,
     isModalOpen,
-    t,
   } = useSeasonOverviewText();
 
   if (!overview) {
-    return <OverviewText>...</OverviewText>;
+    return (
+      <OverviewText
+        testID="overview-text"
+      >
+        ...
+      </OverviewText>
+    );
   }
 
   return (
     <>
       <Wrapper
         shouldShowReadMoreButton={shouldShowReadMoreButton}
+        testID="season-overview-wrapper"
       >
         <OverviewText
           // @ts-ignore onTextLayout does exist on Text component
           onTextLayout={({ nativeEvent: { lines } }) => onGetTextLayout(lines.length)}
           numberOfLines={numberOfLines}
+          testID="overview-text"
         >
           {overview}
         </OverviewText>
         {shouldShowReadMoreButton && (
           <ReadMoreButton
             onPress={onPressReadMore}
+            testID="read-more-button"
           >
-            <ReadMoreText>
-              {t('translations:mediaDetail:tvShow:seasonEpisode:readMoreSeasonOverview')}
+            <ReadMoreText
+              testID="read-more-text"
+            >
+              {readMoreButtonText}
             </ReadMoreText>
           </ReadMoreButton>
         )}

@@ -21,7 +21,7 @@ type InternalState = {
 };
 
 type TVariables = {
-  language: ISO6391Language;
+  language?: ISO6391Language;
   page: number;
 };
 
@@ -43,7 +43,6 @@ const useHomeTrendings = <TData = any>({ onGetData, query }: Props<TData>): Stat
       });
 
       const { data } = await execQuery({
-        language: ISO6391Language.PTBR,
         page: 1,
       });
 

@@ -11,7 +11,7 @@ import Reviews, {
 } from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import TVShowSeasonDetail, {
   Props as TVShowSeasonDetailExternalProps,
-} from 'components/screens/shared/media-detail-screen/tv-show-seasons-screen/routes/stack-routes';
+} from 'components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 

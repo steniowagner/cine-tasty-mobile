@@ -12,6 +12,7 @@ import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 
 const MEDIA_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.MEDIA_POSTER_SIZE_CODE}`;
+export const AIR_DATE_I18N_REF = 'translations:mediaDetail:tvShow:seasonEpisode:airDate';
 
 const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('90%')}px;
@@ -79,28 +80,39 @@ const EpisodeDetail = ({ episode }: Props) => {
           source={{
             uri: `${MEDIA_IMAGE_URI}${episode.stillPath}`,
           }}
+          testID="episode-image"
         />
       ) : (
-        <EpisodeImageFallback>
+        <EpisodeImageFallback
+          testID="episode-image-fallback"
+        >
           <ImageOffIcon />
         </EpisodeImageFallback>
       )}
       <ScrollView
         style={{ padding: CONSTANTS.VALUES.DEFAULT_SPACING }}
       >
-        <EpisodeTitleText>{episode.name}</EpisodeTitleText>
+        <EpisodeTitleText
+          testID="episode-title-text"
+        >
+          {episode.name}
+        </EpisodeTitleText>
         <StarsVotes
+          textColor="rgba(0, 0, 0, 0.8)"
           voteCount={episode.voteCount}
           votes={episode.voteAverage}
-          textColor="rgba(0, 0, 0, 0.8)"
           withText
         />
-        <EpisodeAiredText>
-          {`${t('translations:mediaDetail:tvShow:seasonEpisode:airDate')} ${formatDate(
-            episode.airDate,
-          )}`}
+        <EpisodeAiredText
+          testID="air-date-text"
+        >
+          {`${t(AIR_DATE_I18N_REF)} ${formatDate(episode.airDate)}`}
         </EpisodeAiredText>
-        <EpisodeOverviewText>{episode.overview}</EpisodeOverviewText>
+        <EpisodeOverviewText
+          testID="overview-text"
+        >
+          {episode.overview}
+        </EpisodeOverviewText>
       </ScrollView>
     </Wrapper>
   );
