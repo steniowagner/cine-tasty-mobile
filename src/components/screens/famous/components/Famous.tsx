@@ -113,6 +113,8 @@ const Famous = ({ navigation }: Props) => {
         renderItem={({ item, index }) => (
           <DefaultListItem
             onPress={() => navigation.navigate('FAMOUS_DETAIL', {
+              profileImage: item.profilePath,
+              name: item.name,
               id: item.id,
             })}
             numberOfColumns={NUMBER_FLATLIST_COLUMNS}

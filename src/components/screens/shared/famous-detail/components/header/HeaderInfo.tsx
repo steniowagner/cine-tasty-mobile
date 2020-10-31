@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
+import HeaderLoadingPlaceholder from './HeaderLoadingPlaceholder';
 import BirthDayText from './birthday-text/BirthDayText';
 import ProfileImage from './profile-image/ProfileImage';
 import InfoText from './InfoText';
@@ -18,6 +19,7 @@ const InfoWrapper = styled(View)`
 `;
 
 const InfoTextWrapper = styled(View)`
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('72%')}px;
   justify-content: center;
   padding-left: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
@@ -34,38 +36,56 @@ type Props = {
   knownForDepartment: string;
   profileImage: string;
   placeOfBirth: string;
+  isLoading: boolean;
   birthDate: string;
   name: string;
 };
 
 const HeaderInfo = ({
-  placeOfBirth,
   knownForDepartment,
+  placeOfBirth,
   profileImage,
+  isLoading,
   birthDate,
   name,
 }: Props) => (
   <Wrapper>
-    <NameText>{name}</NameText>
+    <NameText
+      testID="name-text"
+    >
+      {name}
+    </NameText>
     <InfoWrapper>
       <ProfileImage
         profileImage={profileImage}
       />
-      <InfoTextWrapper>
-        <BirthDayText
-          rawBirthDate={birthDate}
-        />
-        <InfoText
-          withVerticalMargin
-        >
-          {placeOfBirth}
-        </InfoText>
-        <InfoText
-          withCustomColor
-        >
-          {knownForDepartment}
-        </InfoText>
-      </InfoTextWrapper>
+      {isLoading ? (
+        <HeaderLoadingPlaceholder />
+      ) : (
+        <InfoTextWrapper>
+          {!!birthDate && (
+          <BirthDayText
+            rawBirthDate={birthDate}
+          />
+          )}
+          {!!placeOfBirth && (
+            <InfoText
+              // @ts-ignore
+              withVerticalMargin
+            >
+              {placeOfBirth}
+            </InfoText>
+          )}
+          {!!knownForDepartment && (
+            <InfoText
+              // @ts-ignore
+              withCustomColor
+            >
+              {knownForDepartment}
+            </InfoText>
+          )}
+        </InfoTextWrapper>
+      )}
     </InfoWrapper>
   </Wrapper>
 );

@@ -7,7 +7,7 @@ import { SCREEN_ID as TV_SHOW_DETAIL_SCREEN_ID } from 'components/screens/shared
 import { TVShowDetailExternalParams } from 'components/screens/shared/media-detail-screen/tv-show-detail/routes/route-params-types';
 
 import { SCREEN_ID as FAMOUS_DETAIL_ID } from 'components/screens/shared/famous-detail/routes/route-names';
-import { FamousDetailParams } from 'components/screens/shared/famous-detail/routes/route-params-types';
+import { ExternalFamousDetailParams } from 'components/screens/shared/famous-detail/routes/route-params-types';
 
 import { SearchType } from 'types/schema';
 
@@ -22,6 +22,6 @@ export type SearchNavigationParams = {
 export type SearchStackParams = {
   [TV_SHOW_DETAIL_SCREEN_ID]: TVShowDetailExternalParams;
   [MOVIE_DETAIL_SCREEN_ID]: MovieDetailExternalParams;
-  [FAMOUS_DETAIL_ID]: FamousDetailParams;
+  [FAMOUS_DETAIL_ID]: ExternalFamousDetailParams;
   SEARCH: SearchNavigationParams;
 };

@@ -107,7 +107,11 @@ describe('Testing <PeopleList />', () => {
 
     expect(onPressItem).toHaveBeenCalledTimes(1);
 
-    expect(onPressItem).toHaveBeenCalledWith(cast[INDEX_SELECTED].id);
+    expect(onPressItem).toHaveBeenCalledWith(
+      cast[INDEX_SELECTED].id,
+      cast[INDEX_SELECTED].name,
+      cast[INDEX_SELECTED].profilePath,
+    );
   });
 
   it('it should render correctly for "crew"', () => {
@@ -174,6 +178,10 @@ describe('Testing <PeopleList />', () => {
 
     expect(onPressItem).toHaveBeenCalledTimes(1);
 
-    expect(onPressItem).toHaveBeenCalledWith(crew[INDEX_SELECTED].id);
+    expect(onPressItem).toHaveBeenCalledWith(
+      crew[INDEX_SELECTED].id,
+      crew[INDEX_SELECTED].name,
+      crew[INDEX_SELECTED].profilePath,
+    );
   });
 });

@@ -421,12 +421,14 @@ describe('Testing <TVShowDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+      profileImage: cast[INDEX_CAST_ITEM_SELECTED].posterPath,
       id: Number(cast[INDEX_CAST_ITEM_SELECTED].id),
+      name: cast[INDEX_CAST_ITEM_SELECTED].name,
     });
   });
 
   it('should call push with the correct params when press a Created-By-item', () => {
-    const INDEX_CREW_ITEM_SELECTED = 0;
+    const INDEX_CREATED_BY_SELECTED = 0;
 
     const mockResolvers = {
       TVShow: () => ({
@@ -451,12 +453,14 @@ describe('Testing <TVShowDetail />', () => {
       jest.runAllTimers();
     });
 
-    fireEvent.press(getAllByTestId('button-wrapper-creator')[INDEX_CREW_ITEM_SELECTED]);
+    fireEvent.press(getAllByTestId('button-wrapper-creator')[INDEX_CREATED_BY_SELECTED]);
 
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith('FAMOUS_DETAIL', {
-      id: Number(createdBy[INDEX_CREW_ITEM_SELECTED].id),
+      profileImage: createdBy[INDEX_CREATED_BY_SELECTED].profilePath,
+      id: Number(createdBy[INDEX_CREATED_BY_SELECTED].id),
+      name: createdBy[INDEX_CREATED_BY_SELECTED].name,
     });
   });
 
@@ -490,7 +494,9 @@ describe('Testing <TVShowDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+      profileImage: cast[INDEX_CREW_ITEM_SELECTED].posterPath,
       id: Number(cast[INDEX_CREW_ITEM_SELECTED].id),
+      name: cast[INDEX_CREW_ITEM_SELECTED].name,
     });
   });
 

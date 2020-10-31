@@ -8,22 +8,19 @@ import CONSTANTS from 'utils/constants';
 
 const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
-export const DEFAULT_BORDER_RADIUSIMAGE_SIZE_PERCENTAGE = '1%';
-export const DEFAULT_IMAGE_SIZE_PERCENTAGE = '22%';
-
 const FamousImage = styled(Image)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP(DEFAULT_IMAGE_SIZE_PERCENTAGE)}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP(DEFAULT_IMAGE_SIZE_PERCENTAGE)}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
 const FallbackImageWrapper = styled(Animated.View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP(DEFAULT_IMAGE_SIZE_PERCENTAGE)}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP(DEFAULT_IMAGE_SIZE_PERCENTAGE)}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
   justify-content: center;
   align-items: center;
   position: absolute;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP(DEFAULT_BORDER_RADIUSIMAGE_SIZE_PERCENTAGE)}px;
+  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('1%')}px;
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 

@@ -131,7 +131,11 @@ const MovieDetail = ({ navigation, route }: Props) => {
           />
           {!!movie.cast.length && (
             <PeopleList
-              onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
+              onPressItem={(id: string, name: string, image: string) => navigation.push('FAMOUS_DETAIL', {
+                profileImage: image,
+                id: Number(id),
+                name,
+              })}
               sectionTitle={t(MOVIE_CAST_I18N_REF)}
               dataset={movie.cast}
               type="cast"
@@ -139,7 +143,11 @@ const MovieDetail = ({ navigation, route }: Props) => {
           )}
           {!!movie.crew.length && (
             <PeopleList
-              onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
+              onPressItem={(id: string, name: string, image: string) => navigation.push('FAMOUS_DETAIL', {
+                profileImage: image,
+                id: Number(id),
+                name,
+              })}
               sectionTitle={t(MOVIE_CREW_I18N_REF)}
               dataset={movie.crew}
               type="crew"
