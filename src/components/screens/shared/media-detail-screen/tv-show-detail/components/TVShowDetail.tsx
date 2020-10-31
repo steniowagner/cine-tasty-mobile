@@ -162,7 +162,11 @@ const TVShowDetail = ({ navigation, route }: Props) => {
           )}
           {!!tvShow?.createdBy.length && (
             <PeopleList
-              onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
+              onPressItem={(id: string, name: string, image: string) => navigation.push('FAMOUS_DETAIL', {
+                profileImage: image,
+                id: Number(id),
+                name,
+              })}
               sectionTitle={t(TV_SHOWS_CREATED_BY_I18N_REF)}
               dataset={tvShow.createdBy}
               noSubtext={false}
@@ -171,7 +175,11 @@ const TVShowDetail = ({ navigation, route }: Props) => {
           )}
           {!!tvShow?.cast.length && (
             <PeopleList
-              onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
+              onPressItem={(id: string, name: string, image: string) => navigation.push('FAMOUS_DETAIL', {
+                profileImage: image,
+                id: Number(id),
+                name,
+              })}
               sectionTitle={t(TV_SHOWS_CAST_I18N_REF)}
               dataset={tvShow.cast}
               type="cast"
@@ -179,7 +187,11 @@ const TVShowDetail = ({ navigation, route }: Props) => {
           )}
           {!!tvShow?.crew.length && (
             <PeopleList
-              onPressItem={(id: string) => navigation.push('FAMOUS_DETAIL', { id: Number(id) })}
+              onPressItem={(id: string, name: string, image: string) => navigation.push('FAMOUS_DETAIL', {
+                profileImage: image,
+                id: Number(id),
+                name,
+              })}
               sectionTitle={t(TV_SHOWS_CREW_I18N_REF)}
               dataset={tvShow.crew}
               type="crew"

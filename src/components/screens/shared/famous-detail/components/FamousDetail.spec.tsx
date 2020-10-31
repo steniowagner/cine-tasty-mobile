@@ -1,18 +1,27 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
+import { cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
-import { MockList, IMocks } from 'graphql-tools';
+import { IMocks } from 'graphql-tools';
 
 import { dark } from 'styles/themes';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
-import { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 
-import FamousDetail from './FamousDetail';
+import FamousDetail, {
+  CAST_MOVIES_SECTION_I18N_REF,
+  BIOGRAPHY_SECTION_I18N_REF,
+  TV_SHOWS_SECTION_I18N_REF,
+  IMAGES_SECTION_I18N_REF,
+  ERROR_DESCRIPTION_I18N_REF,
+  ERROR_SUGGESTION_I18N_REF,
+  ERROR_TITLE_I18N_REF,
+} from './FamousDetail';
 
 const route = {
   params: {
+    profileImage: 'profileImage',
+    name: 'name',
     id: 123,
   },
 };
@@ -31,42 +40,42 @@ const person = {
 
 const movieCast = [
   {
-    voteAverage: -14.422278991118858,
+    voteAverage: 1,
     posterPath: 'Hello World',
     mediaType: 'Hello World',
-    voteCount: -54.58661716105482,
+    voteCount: 1,
     title: 'Hello World',
-    id: 84,
+    id: 1,
     __typename: 'CastMovie',
   },
   {
-    voteAverage: -61.20140395771752,
+    voteAverage: 1,
     posterPath: 'Hello World',
     mediaType: 'Hello World',
-    voteCount: -45.105633420623725,
+    voteCount: 1,
     title: 'Hello World',
-    id: 39,
+    id: 2,
     __typename: 'CastMovie',
   },
 ];
 
 const tvCast = [
   {
-    voteAverage: 79.24046692747518,
+    voteAverage: 1,
     posterPath: 'Hello World',
     mediaType: 'Hello World',
-    voteCount: -50.84916555615129,
+    voteCount: 1,
     name: 'Hello World',
-    id: -94,
+    id: 1,
     __typename: 'CastTVShow',
   },
   {
-    voteAverage: 92.31814886121063,
+    voteAverage: 1,
     posterPath: 'Hello World',
     mediaType: 'Hello World',
-    voteCount: 1.4805898520850604,
+    voteCount: 2,
     name: 'Hello World',
-    id: 25,
+    id: 2,
     __typename: 'CastTVShow',
   },
 ];
@@ -84,18 +93,30 @@ const renderFamousDetail = (mockResolvers?: IMocks) => {
 };
 
 describe('Testing <FamousDetail />', () => {
-  beforeEach(setupTimeTravel);
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
 
   afterEach(cleanup);
 
-  it('should render the loading-state when the screen is mounted', () => {
-    const { getByTestId } = render(renderFamousDetail());
+  it('should render the loading-state correctly', () => {
+    const { queryByText, getByText, getByTestId } = render(renderFamousDetail());
 
-    expect(getByTestId('famous-detail-loading')).not.toBeNull();
+    expect(getByTestId('name-text').children[0]).toEqual(person.name);
 
-    act(() => {
-      jest.runAllTimers();
-    });
+    expect(getByTestId('loading-header-placeholder')).not.toBeNull();
+
+    expect(getByText(BIOGRAPHY_SECTION_I18N_REF)).not.toBeNull();
+
+    expect(getByTestId('biography-section')).not.toBeNull();
+
+    expect(getByTestId('profile-image')).not.toBeNull();
+
+    expect(queryByText(IMAGES_SECTION_I18N_REF)).toBeNull();
+
+    expect(queryByText(CAST_MOVIES_SECTION_I18N_REF)).toBeNull();
+
+    expect(queryByText(TV_SHOWS_SECTION_I18N_REF)).toBeNull();
   });
 
   it('should render the content correctly when all the data is returned', () => {
@@ -108,17 +129,29 @@ describe('Testing <FamousDetail />', () => {
       }),
     };
 
-    const { queryByTestId, getByTestId } = render(renderFamousDetail(mockResolvers));
+    const { queryByTestId, getByText, getByTestId } = render(
+      renderFamousDetail(mockResolvers),
+    );
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('famous-detail-loading')).toBeNull();
+    expect(queryByTestId('loading-header-placeholder')).toBeNull();
 
     expect(getByTestId('background-image-wrapper')).not.toBeNull();
 
+    expect(getByTestId('name-text').children[0]).toEqual(person.name);
+
     expect(queryByTestId('death-day-info')).not.toBeNull();
+
+    expect(getByText(BIOGRAPHY_SECTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(IMAGES_SECTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(CAST_MOVIES_SECTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(TV_SHOWS_SECTION_I18N_REF)).not.toBeNull();
 
     expect(getByTestId('scroll-content')).not.toBeNull();
 
@@ -144,7 +177,7 @@ describe('Testing <FamousDetail />', () => {
     expect(queryByTestId('death-day-info')).toBeNull();
   });
 
-  it('should not render the movie-cast section when the movie-cast field is an empty array', () => {
+  it('should render correctly the movie-cast section when the movie-cast field is an empty array', () => {
     const mockResolvers = {
       Person: () => ({
         ...person,
@@ -152,33 +185,18 @@ describe('Testing <FamousDetail />', () => {
       }),
     };
 
-    const { queryByTestId } = render(renderFamousDetail(mockResolvers));
+    const { getByText } = render(renderFamousDetail(mockResolvers));
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('movies-cast')).toBeNull();
+    expect(getByText(BIOGRAPHY_SECTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(`${CAST_MOVIES_SECTION_I18N_REF} (0)`)).not.toBeNull();
   });
 
-  it('should not render the movie-cast section when the movie-cast field is null', () => {
-    const mockResolvers = {
-      Person: () => ({
-        ...person,
-        moviesCast: null,
-      }),
-    };
-
-    const { queryByTestId } = render(renderFamousDetail(mockResolvers));
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(queryByTestId('movies-cast')).toBeNull();
-  });
-
-  it('should not render the tv-cast section when the tv-cast field is an empty array', () => {
+  it('should render the tv-cast section correctly when the tv-cast field is an empty array', () => {
     const mockResolvers = {
       Person: () => ({
         ...person,
@@ -186,30 +204,13 @@ describe('Testing <FamousDetail />', () => {
       }),
     };
 
-    const { queryByTestId } = render(renderFamousDetail(mockResolvers));
+    const { getByText } = render(renderFamousDetail(mockResolvers));
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('tv-cast')).toBeNull();
-  });
-
-  it('should not render the tv-cast section when the tv-cast field is null', () => {
-    const mockResolvers = {
-      Person: () => ({
-        ...person,
-        tvCast: null,
-      }),
-    };
-
-    const { queryByTestId } = render(renderFamousDetail(mockResolvers));
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(queryByTestId('tv-cast')).toBeNull();
+    expect(getByText(`${TV_SHOWS_SECTION_I18N_REF} (0)`)).not.toBeNull();
   });
 
   it('should render just a "-" on the biography section when the biography text is an empty string', () => {
@@ -247,12 +248,12 @@ describe('Testing <FamousDetail />', () => {
   });
 
   it('should render the Advise component when some error occur', () => {
-    const mockResolversWithNullPerson = {
+    const mockResolvers = {
       Person: () => new Error(),
     };
 
-    const { queryByTestId, getByTestId } = render(
-      renderFamousDetail(mockResolversWithNullPerson),
+    const { queryByText, queryByTestId, getByText, getByTestId } = render(
+      renderFamousDetail(mockResolvers),
     );
 
     act(() => {
@@ -261,7 +262,23 @@ describe('Testing <FamousDetail />', () => {
 
     expect(getByTestId('advise-wrapper')).not.toBeNull();
 
-    expect(queryByTestId('famous-detail-loading')).toBeNull();
+    expect(queryByText(ERROR_DESCRIPTION_I18N_REF)).not.toBeNull();
+
+    expect(queryByText(ERROR_SUGGESTION_I18N_REF)).not.toBeNull();
+
+    expect(queryByText(ERROR_TITLE_I18N_REF)).not.toBeNull();
+
+    expect(queryByTestId('biography-section')).toBeNull();
+
+    expect(queryByTestId('profile-image')).toBeNull();
+
+    expect(queryByText(BIOGRAPHY_SECTION_I18N_REF)).toBeNull();
+
+    expect(queryByText(IMAGES_SECTION_I18N_REF)).toBeNull();
+
+    expect(queryByText(CAST_MOVIES_SECTION_I18N_REF)).toBeNull();
+
+    expect(queryByText(TV_SHOWS_SECTION_I18N_REF)).toBeNull();
 
     expect(queryByTestId('background-image-wrapper')).toBeNull();
 

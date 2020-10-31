@@ -379,7 +379,9 @@ describe('Testing <MovieDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+      profileImage: cast[INDEX_CAST_ITEM_SELECTED].posterPath,
       id: Number(cast[INDEX_CAST_ITEM_SELECTED].id),
+      name: cast[INDEX_CAST_ITEM_SELECTED].name,
     });
   });
 
@@ -413,7 +415,9 @@ describe('Testing <MovieDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+      profileImage: cast[INDEX_CREW_ITEM_SELECTED].posterPath,
       id: Number(cast[INDEX_CREW_ITEM_SELECTED].id),
+      name: cast[INDEX_CREW_ITEM_SELECTED].name,
     });
   });
 

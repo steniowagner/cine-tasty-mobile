@@ -2,7 +2,7 @@ import { MODAL_ID as IMAGES_GALLERY_MODAL_ID } from 'components/screens/shared/i
 import { ImagesGalleryParams } from 'components/screens/shared/images-gallery/routes/route-params-types';
 
 import { SCREEN_ID as FAMOUS_DETAIL_ID } from 'components/screens/shared/famous-detail/routes/route-names';
-import { FamousDetailParams } from 'components/screens/shared/famous-detail/routes/route-params-types';
+import { ExternalFamousDetailParams } from 'components/screens/shared/famous-detail/routes/route-params-types';
 
 import { SearchNavigationParams } from 'components/screens/shared/search/routes/route-params-types';
 import { StackID as SEARCH_MODAL_ID } from 'components/screens/shared/search/routes/stack-routes';
@@ -13,8 +13,8 @@ import { MovieDetailExternalParams } from 'components/screens/shared/media-detai
 export type FamousStackParams = {
   [MOVIE_DETAIL_STACK_ID]: MovieDetailExternalParams;
   [IMAGES_GALLERY_MODAL_ID]: ImagesGalleryParams;
+  [FAMOUS_DETAIL_ID]: ExternalFamousDetailParams;
   [SEARCH_MODAL_ID]: SearchNavigationParams;
-  [FAMOUS_DETAIL_ID]: FamousDetailParams;
   FAMOUS: {
     headerTitle: string;
   };

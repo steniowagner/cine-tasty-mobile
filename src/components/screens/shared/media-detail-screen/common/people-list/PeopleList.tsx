@@ -9,8 +9,8 @@ import PeopleListItem from './PeopleListItem';
 import usePeopleList from './usePeopleList';
 
 type Props = {
+  onPressItem: (id: string, name: string, image: string) => void;
   dataset: CrewDataset | CastDataset;
-  onPressItem: (id: string) => void;
   type: 'cast' | 'crew' | 'creator';
   sectionTitle: string;
   noSubtext?: boolean;
@@ -33,7 +33,7 @@ const PeopleList = ({
         renderItem={({ index, item }) => (
           <PeopleListItem
             image={`${PERSON_IMAGE_URI}${item.image}`}
-            onPress={() => onPressItem(item.id)}
+            onPress={() => onPressItem(item.id, item.name, item.image)}
             withSubtext={noSubtext}
             subText={item.subText}
             isFirst={index === 0}

@@ -4,12 +4,12 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import getRandomImageFromDataset from 'utils/getRandomImageFromDataset';
+import CONSTANTS from 'utils/constants';
 import {
   GetFamousDetail_person as FamousDetail,
   GetFamousDetailVariables,
   GetFamousDetail,
 } from 'types/schema';
-import CONSTANTS from 'utils/constants';
 
 const PROFILE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
 const PROFILE_IMAGE_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_SIZE_CODE}`;
@@ -19,13 +19,10 @@ export const GET_FAMOUS_DETAIL = gql`
     person(id: $id, language: $language) {
       knownForDepartment
       placeOfBirth
-      profilePath
       biography
       birthday
       deathday
       images
-      name
-      id
       moviesCast {
         voteAverage
         posterPath
@@ -93,7 +90,7 @@ const useFamousDetail = ({ id }: Props): State => {
   const { t } = useTranslation();
 
   return {
-    famous: data ? data.person : undefined,
+    famous: data?.person,
     isLoading: loading,
     hasError: !!error,
     backgroundImage,

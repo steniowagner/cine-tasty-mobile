@@ -43,11 +43,15 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
           });
 
           navigation.navigate('FAMOUS_DETAIL', {
+            profileImage: item.image,
+            name: item.title,
             id: item.id,
           });
         },
         onPressRecentSearchItem: (person: RecentSearchItem) => {
           navigation.navigate('FAMOUS_DETAIL', {
+            profileImage: person.image,
+            name: person.title,
             id: person.id,
           });
         },
