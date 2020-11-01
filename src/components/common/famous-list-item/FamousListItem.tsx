@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, memo } from 'react';
 import {
   TouchableOpacity, Animated, Image, Text,
 } from 'react-native';
@@ -40,6 +40,8 @@ const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
   color: theme.colors.fallbackImageIcon,
 }))``;
 
+const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
+
 type Props = {
   numberOfColumns: number;
   image?: string;
@@ -47,8 +49,6 @@ type Props = {
   title?: string;
   index: number;
 };
-
-const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
 const FamousListItem = ({
   numberOfColumns, onPress, image, index, title,
@@ -71,6 +71,7 @@ const FamousListItem = ({
 
   return (
     <TouchableOpacity
+      testID="famous-list-item-button"
       style={wrapperMeasures}
       onPress={onPress}
     >
@@ -102,4 +103,4 @@ const FamousListItem = ({
   );
 };
 
-export default FamousListItem;
+export default memo(FamousListItem, () => true);

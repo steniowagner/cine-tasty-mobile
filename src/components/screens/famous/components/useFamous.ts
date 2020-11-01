@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import gql from 'graphql-tag';
 
@@ -12,12 +12,10 @@ import { usePaginatedQuery } from 'hooks';
 type State = {
   onPressTopReloadButton: () => Promise<void>;
   onPressBottomReloadButton: () => void;
-  onPullRefreshControl: () => void;
   hasPaginationError: boolean;
   famous: GetFamousItems[];
   onEndReached: () => void;
   isPaginating: boolean;
-  isRefreshing: boolean;
   isLoading: boolean;
   error: string;
 };
@@ -41,7 +39,6 @@ export const I18N_ENTRY_QUERY_ERROR_REF = 'translations:famous:i18EntryQueryErro
 const useFamous = (): State => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [famous, setFamous] = useState<GetFamousItems[]>([]);
-  const [isRefreshing, setIsRefrehing] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
   const { t } = useTranslation();
@@ -77,18 +74,6 @@ const useFamous = (): State => {
     query: GET_FAMOUS,
   });
 
-  const handleRefreshQuery = useCallback(async () => {
-    if (error) {
-      setError('');
-    }
-
-    setFamous([]);
-
-    await onReloadData();
-
-    setIsRefrehing(false);
-  }, [onReloadData, error]);
-
   const onPressTopReloadButton = useCallback(async (): Promise<void> => {
     setHasPaginationError(false);
 
@@ -105,19 +90,11 @@ const useFamous = (): State => {
     onPaginateQuery();
   }, []);
 
-  useEffect(() => {
-    if (isRefreshing) {
-      handleRefreshQuery();
-    }
-  }, [isRefreshing]);
-
   return {
-    onPullRefreshControl: () => setIsRefrehing(true),
     onEndReached: onPaginateQuery,
     onPressBottomReloadButton,
     onPressTopReloadButton,
     hasPaginationError,
-    isRefreshing,
     isPaginating,
     isLoading,
     famous,
