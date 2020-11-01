@@ -69,7 +69,7 @@ describe('Testing <Search /> - [Famous-Pagination-Error]', () => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT);
+    expect(queryByTestId('search-famous-list').props.data.length).toEqual(FAMOUS_COUNT);
 
     expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
 
@@ -79,7 +79,7 @@ describe('Testing <Search /> - [Famous-Pagination-Error]', () => {
 
     rerender(renderSearchFamous(mockResolversWithError));
 
-    fireEvent(queryByTestId('search-list'), 'onEndReached');
+    fireEvent(queryByTestId('search-famous-list'), 'onEndReached');
 
     expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
 
@@ -87,7 +87,7 @@ describe('Testing <Search /> - [Famous-Pagination-Error]', () => {
 
     expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
-    expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT);
+    expect(queryByTestId('search-famous-list').props.data.length).toEqual(FAMOUS_COUNT);
 
     act(() => {
       timeTravel(DEFAULT_ANIMATION_DURATION);

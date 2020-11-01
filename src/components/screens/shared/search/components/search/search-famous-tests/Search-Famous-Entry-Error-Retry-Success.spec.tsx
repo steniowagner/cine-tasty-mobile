@@ -75,7 +75,7 @@ describe('Testing <Search /> - [Famous # Entry-Error-Retry-Success]', () => {
       }
     });
 
-    expect(queryByTestId('search-list').props.data.length).toEqual(0);
+    expect(queryByTestId('search-famous-list').props.data.length).toEqual(0);
 
     expect(queryByTestId('top-reload-button')).not.toBeNull();
 
@@ -105,7 +105,7 @@ describe('Testing <Search /> - [Famous # Entry-Error-Retry-Success]', () => {
       }
     });
 
-    expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT);
+    expect(queryByTestId('search-famous-list').props.data.length).toEqual(FAMOUS_COUNT);
 
     expect(queryByTestId('top-reload-button')).toBeNull();
   });

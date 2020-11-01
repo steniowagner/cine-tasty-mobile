@@ -80,7 +80,7 @@ const FamousSearch = ({
       )}
       keyExtractor={({ id }) => `${id}`}
       onEndReached={onEndReached}
-      testID="search-list"
+      testID="search-famous-list"
       data={items}
     />
   );

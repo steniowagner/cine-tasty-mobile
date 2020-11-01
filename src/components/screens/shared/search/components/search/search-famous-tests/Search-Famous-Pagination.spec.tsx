@@ -62,9 +62,9 @@ describe('Testing <Search /> - [Famous-Pagination]', () => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('search-list')).not.toBeNull();
+    expect(queryByTestId('search-famous-list')).not.toBeNull();
 
-    fireEvent(queryByTestId('search-list'), 'onEndReached');
+    fireEvent(queryByTestId('search-famous-list'), 'onEndReached');
 
     expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
 
@@ -76,7 +76,9 @@ describe('Testing <Search /> - [Famous-Pagination]', () => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT * 2);
+    expect(queryByTestId('search-famous-list').props.data.length).toEqual(
+      FAMOUS_COUNT * 2,
+    );
 
     expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
 
@@ -102,9 +104,9 @@ describe('Testing <Search /> - [Famous-Pagination]', () => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('search-list')).not.toBeNull();
+    expect(queryByTestId('search-famous-list')).not.toBeNull();
 
-    fireEvent(queryByTestId('search-list'), 'onEndReached');
+    fireEvent(queryByTestId('search-famous-list'), 'onEndReached');
 
     expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
 
@@ -112,7 +114,7 @@ describe('Testing <Search /> - [Famous-Pagination]', () => {
 
     expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
-    expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT);
+    expect(queryByTestId('search-famous-list').props.data.length).toEqual(FAMOUS_COUNT);
 
     act(() => {
       jest.runAllTimers();

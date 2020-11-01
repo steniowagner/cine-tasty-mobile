@@ -7,6 +7,8 @@ import { MockList, IMocks } from 'graphql-tools';
 import { SearchType } from 'types/schema';
 import { dark } from 'styles/themes';
 
+jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+
 import timeTravel, {
   setupTimeTravel,
 } from '../../../../../../../../__mocks__/timeTravel';
@@ -15,30 +17,33 @@ import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator'
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
 import { SEARCH_MOVIES } from '../../../queries';
 
-import Search from '../Search';
+import Search, {
+  ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF,
+  ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF,
+  ADVISE_EMPTY_LIST_TITLE_I18N_REF,
+} from '../Search';
+
+const {
+  getItemFromStorage,
+} = require('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
 const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF = 'i18nMoviesQueryByPaginationErrorRef';
 const I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF = 'i18nMoviesQueryByTextErrorRef';
 const SOME_MOVIE_NAME = 'SOME_MOVIE_NAME';
 
-const defaultItems = [
-  {
-    voteAverage: 72.32837797280146,
-    posterPath: 'Hello World',
-    genreIds: ['Hello World', 'Hello World'],
-    title: 'Hello World',
-    id: 78,
+const defaultItems = Array(10)
+  .fill({})
+  .map((_, index) => ({
+    genreIds: Array(index + 1)
+      .fill('')
+      .map((_, index) => `genre-${index}`),
+    posterPath: `posterPath-${index}`,
     __typename: 'BaseMovie',
-  },
-  {
-    voteAverage: 31.0653079308008,
-    posterPath: 'Hello World',
-    genreIds: ['Hello World', 'Hello World'],
-    title: 'Hello World',
-    id: -6,
-    __typename: 'BaseMovie',
-  },
-];
+    title: `title-${index}`,
+    voteAverage: index,
+    voteCount: index,
+    id: index,
+  }));
 
 const getMockResolvers = (hasMore: boolean = false, items: any = defaultItems) => ({
   SearchQueryResult: () => ({
@@ -54,20 +59,32 @@ const params = {
   query: SEARCH_MOVIES,
 };
 
-const renderSearchMovies = (mockResolvers: IMocks = {}) => (
-  <ThemeProvider theme={dark}>
-    <AutoMockProvider mockResolvers={mockResolvers}>
-      <MockedNavigation component={Search} params={params} />
-    </AutoMockProvider>
-  </ThemeProvider>
-);
+const renderSearchMovies = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {
+  const SearchMovieScreen = ({ navigation, route }) => (
+    <ThemeProvider theme={dark}>
+      <AutoMockProvider mockResolvers={mockResolvers}>
+        <Search navigation={{ ...navigation, navigate }} route={route} />
+      </AutoMockProvider>
+    </ThemeProvider>
+  );
+
+  return <MockedNavigation component={SearchMovieScreen} params={params} />;
+};
 
 describe('Testing <Search /> - [Movies]', () => {
-  beforeEach(setupTimeTravel);
+  beforeEach(() => {
+    setupTimeTravel();
+  });
 
-  afterEach(cleanup);
+  afterEach(() => {
+    jest.clearAllMocks();
+
+    cleanup();
+  });
 
   it('should render correctly on the first render', () => {
+    getItemFromStorage.mockImplementationOnce(() => []);
+
     const { queryByTestId } = render(renderSearchMovies(getMockResolvers()));
 
     expect(queryByTestId('loading-media-search')).toBeNull();
@@ -139,5 +156,109 @@ describe('Testing <Search /> - [Movies]', () => {
     expect(queryByTestId('search-media-list').props.data.length).toEqual(
       defaultItems.length,
     );
+  });
+
+  it('should show an advise when the search returns an empty array', () => {
+    const { queryByTestId, getByText } = render(
+      renderSearchMovies(getMockResolvers(false, [])),
+    );
+
+    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
+
+    act(() => {
+      timeTravel(SEARCH_BY_QUERY_DELAY);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(queryByTestId('advise-wrapper')).not.toBeNull();
+
+    expect(queryByTestId('search-media-list').props.data).toEqual([]);
+
+    expect(getByText(ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(ADVISE_EMPTY_LIST_TITLE_I18N_REF)).not.toBeNull();
+  });
+
+  it('should navigate to tv-show-detail-screen when the user press a certain tv-show-item', () => {
+    const INDEX_ITEM_SELECTED = (Math.random() * (defaultItems.length - 1 - 0 + 1)) << 0;
+
+    const onPress = jest.fn();
+
+    const { getAllByTestId, getByTestId } = render(
+      renderSearchMovies(getMockResolvers(), onPress),
+    );
+
+    fireEvent(getByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
+
+    act(() => {
+      timeTravel(SEARCH_BY_QUERY_DELAY);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(getByTestId('search-media-list').props.data.length).toEqual(
+      defaultItems.length,
+    );
+
+    fireEvent.press(getAllByTestId('full-media-list-item')[INDEX_ITEM_SELECTED]);
+
+    expect(onPress).toHaveBeenCalledTimes(1);
+
+    expect(onPress).toHaveBeenCalledWith('MOVIE_DETAIL', {
+      voteAverage: defaultItems[INDEX_ITEM_SELECTED].voteAverage,
+      posterPath: defaultItems[INDEX_ITEM_SELECTED].posterPath,
+      voteCount: defaultItems[INDEX_ITEM_SELECTED].voteCount,
+      genreIds: defaultItems[INDEX_ITEM_SELECTED].genreIds,
+      title: defaultItems[INDEX_ITEM_SELECTED].title,
+      id: defaultItems[INDEX_ITEM_SELECTED].id,
+    });
+  });
+
+  it('should navigate to the movie-detail-screen when press some item on the RecentSearch', () => {
+    const recentMoviesSearched = Array(5)
+      .fill({})
+      .map((_, index) => ({
+        image: `image-${index}`,
+        title: `item-${index}`,
+        id: index,
+      }));
+
+    getItemFromStorage.mockImplementationOnce(() => recentMoviesSearched);
+
+    const INDEX_ITEM_SELECTED =
+      (Math.random() * (recentMoviesSearched.length - 1 - 0 + 1)) << 0;
+
+    const onPress = jest.fn();
+
+    const { getAllByTestId, getByTestId } = render(
+      renderSearchMovies(getMockResolvers(), onPress),
+    );
+
+    fireEvent(getByTestId('search-input'), 'onChangeText', '');
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(getByTestId('recent-searches-list')).not.toBeNull();
+
+    fireEvent.press(
+      getAllByTestId('recent-searches-list-item-button')[INDEX_ITEM_SELECTED],
+    );
+
+    expect(onPress).toHaveBeenCalledTimes(1);
+
+    expect(onPress).toHaveBeenCalledWith('MOVIE_DETAIL', {
+      posterPath: recentMoviesSearched[INDEX_ITEM_SELECTED].image,
+      title: recentMoviesSearched[INDEX_ITEM_SELECTED].title,
+      id: recentMoviesSearched[INDEX_ITEM_SELECTED].id,
+    });
   });
 });

@@ -7,6 +7,8 @@ import { MockList, IMocks } from 'graphql-tools';
 import { SearchType } from 'types/schema';
 import { dark } from 'styles/themes';
 
+jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+
 import timeTravel, {
   setupTimeTravel,
 } from '../../../../../../../../__mocks__/timeTravel';
@@ -15,31 +17,34 @@ import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator'
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
 import { SEARCH_TV_SHOWS } from '../../../queries';
 
-import Search from '../Search';
+const {
+  getItemFromStorage,
+} = require('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+
+import Search, {
+  ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF,
+  ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF,
+  ADVISE_EMPTY_LIST_TITLE_I18N_REF,
+} from '../Search';
 
 const I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF =
   'i18nTVShowsQueryByPaginationErrorRef';
 const I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF = 'i18nTVShowsQueryByTextErrorRef';
 const SOME_TV_SHOWS_NAME = 'SOME_TV_SHOWS_NAME';
 
-const defaultItems = [
-  {
-    voteAverage: 72.32837797280146,
-    posterPath: 'Hello World',
-    genreIds: ['Hello World', 'Hello World'],
-    title: 'Hello World',
-    id: 78,
+const defaultItems = Array(10)
+  .fill({})
+  .map((_, index) => ({
+    genreIds: Array(index + 1)
+      .fill('')
+      .map((_, index) => `genre-${index}`),
+    posterPath: `posterPath-${index}`,
     __typename: 'BaseTVShow',
-  },
-  {
-    voteAverage: 31.0653079308008,
-    posterPath: 'Hello World',
-    genreIds: ['Hello World', 'Hello World'],
-    title: 'Hello World',
-    id: -6,
-    __typename: 'BaseTVShow',
-  },
-];
+    name: `name-${index}`,
+    voteAverage: index,
+    voteCount: index,
+    id: index,
+  }));
 
 const getMockResolvers = (hasMore: boolean = false, items: any = defaultItems) => ({
   SearchQueryResult: () => ({
@@ -55,20 +60,30 @@ const params = {
   query: SEARCH_TV_SHOWS,
 };
 
-const renderSearchTVShows = (mockResolvers: IMocks = {}) => (
-  <ThemeProvider theme={dark}>
-    <AutoMockProvider mockResolvers={mockResolvers}>
-      <MockedNavigation component={Search} params={params} />
-    </AutoMockProvider>
-  </ThemeProvider>
-);
+const renderSearchTVShows = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {
+  const SearchTVShowsScreen = ({ navigation, route }) => (
+    <ThemeProvider theme={dark}>
+      <AutoMockProvider mockResolvers={mockResolvers}>
+        <Search navigation={{ ...navigation, navigate }} route={route} />
+      </AutoMockProvider>
+    </ThemeProvider>
+  );
+
+  return <MockedNavigation component={SearchTVShowsScreen} params={params} />;
+};
 
 describe('Testing <Search /> - [TVShows]', () => {
   beforeEach(setupTimeTravel);
 
-  afterEach(cleanup);
+  afterEach(() => {
+    jest.clearAllMocks();
+
+    cleanup();
+  });
 
   it('should render correctly on the first render', () => {
+    getItemFromStorage.mockImplementationOnce(() => []);
+
     const { queryByTestId } = render(renderSearchTVShows(getMockResolvers()));
 
     expect(queryByTestId('loading-media-search')).toBeNull();
@@ -140,5 +155,108 @@ describe('Testing <Search /> - [TVShows]', () => {
     expect(queryByTestId('search-media-list').props.data.length).toEqual(
       defaultItems.length,
     );
+  });
+
+  it('should show an advise when the search returns an empty array', () => {
+    const { queryByTestId, getByText } = render(
+      renderSearchTVShows(getMockResolvers(false, [])),
+    );
+
+    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_TV_SHOWS_NAME);
+
+    act(() => {
+      timeTravel(SEARCH_BY_QUERY_DELAY);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(queryByTestId('advise-wrapper')).not.toBeNull();
+
+    expect(queryByTestId('search-media-list').props.data).toEqual([]);
+
+    expect(getByText(ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(ADVISE_EMPTY_LIST_TITLE_I18N_REF)).not.toBeNull();
+  });
+
+  it('should navigate to tv-show-detail-screen when the user press a certain tv-show-item', () => {
+    const INDEX_ITEM_SELECTED = (Math.random() * (defaultItems.length - 1 - 0 + 1)) << 0;
+    const onPress = jest.fn();
+
+    const { getAllByTestId, getByTestId } = render(
+      renderSearchTVShows(getMockResolvers(), onPress),
+    );
+
+    fireEvent(getByTestId('search-input'), 'onChangeText', SOME_TV_SHOWS_NAME);
+
+    act(() => {
+      timeTravel(SEARCH_BY_QUERY_DELAY);
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(getByTestId('search-media-list').props.data.length).toEqual(
+      defaultItems.length,
+    );
+
+    fireEvent.press(getAllByTestId('full-media-list-item')[INDEX_ITEM_SELECTED]);
+
+    expect(onPress).toHaveBeenCalledTimes(1);
+
+    expect(onPress).toHaveBeenCalledWith('TV_SHOW_DETAIL', {
+      voteAverage: defaultItems[INDEX_ITEM_SELECTED].voteAverage,
+      posterPath: defaultItems[INDEX_ITEM_SELECTED].posterPath,
+      voteCount: defaultItems[INDEX_ITEM_SELECTED].voteCount,
+      genreIds: defaultItems[INDEX_ITEM_SELECTED].genreIds,
+      title: defaultItems[INDEX_ITEM_SELECTED].name,
+      id: defaultItems[INDEX_ITEM_SELECTED].id,
+    });
+  });
+
+  it('should navigate to the tv-show-detail-screen when press some item on the RecentSearch', () => {
+    const recentTVShowsSearched = Array(5)
+      .fill({})
+      .map((_, index) => ({
+        image: `image-${index}`,
+        title: `item-${index}`,
+        id: index,
+      }));
+
+    getItemFromStorage.mockImplementationOnce(() => recentTVShowsSearched);
+
+    const INDEX_ITEM_SELECTED =
+      (Math.random() * (recentTVShowsSearched.length - 1 - 0 + 1)) << 0;
+
+    const onPress = jest.fn();
+
+    const { getAllByTestId, getByTestId } = render(
+      renderSearchTVShows(getMockResolvers(), onPress),
+    );
+
+    fireEvent(getByTestId('search-input'), 'onChangeText', '');
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(getByTestId('recent-searches-list')).not.toBeNull();
+
+    fireEvent.press(
+      getAllByTestId('recent-searches-list-item-button')[INDEX_ITEM_SELECTED],
+    );
+
+    expect(onPress).toHaveBeenCalledTimes(1);
+
+    expect(onPress).toHaveBeenCalledWith('TV_SHOW_DETAIL', {
+      posterPath: recentTVShowsSearched[INDEX_ITEM_SELECTED].image,
+      title: recentTVShowsSearched[INDEX_ITEM_SELECTED].title,
+      id: recentTVShowsSearched[INDEX_ITEM_SELECTED].id,
+    });
   });
 });

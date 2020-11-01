@@ -75,7 +75,7 @@ describe('Testing <Search /> - [Famous-Pagination-Retry-Success]', () => {
 
     rerender(renderSearchFamous(mockResolversWithError));
 
-    fireEvent(queryByTestId('search-list'), 'onEndReached');
+    fireEvent(queryByTestId('search-famous-list'), 'onEndReached');
 
     act(() => {
       timeTravel(DEFAULT_ANIMATION_DURATION);
@@ -117,7 +117,9 @@ describe('Testing <Search /> - [Famous-Pagination-Retry-Success]', () => {
 
         expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
-        expect(queryByTestId('search-list').props.data.length).toEqual(FAMOUS_COUNT * 2);
+        expect(queryByTestId('search-famous-list').props.data.length).toEqual(
+          FAMOUS_COUNT * 2,
+        );
       }
     });
   });
