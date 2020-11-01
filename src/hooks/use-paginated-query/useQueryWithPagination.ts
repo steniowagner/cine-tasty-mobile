@@ -5,7 +5,7 @@ import { ApolloQueryResult } from 'apollo-client';
 
 import debounce from 'utils/debounce';
 
-export const PAGINATION_DELAY = 500;
+export const PAGINATION_DELAY = 1000;
 
 const initialPagination: Pagination = {
   isPaginating: false,
@@ -87,7 +87,7 @@ const useQueryWithPagination = <TData, TVariables>({
   }, [pagination]);
 
   const exec = useCallback(() => {
-    if (!pagination.hasMore) {
+    if (!pagination.hasMore || pagination.isPaginating) {
       return;
     }
 

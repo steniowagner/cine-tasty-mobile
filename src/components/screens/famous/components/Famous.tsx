@@ -1,13 +1,11 @@
 /* eslint-disable react/display-name */
-
 import React, { useLayoutEffect } from 'react';
 import { Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/getWrapperMeasures';
+// import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/getWrapperMeasures';
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
 import DefaultListItem from 'components/common/famous-list-item/FamousListItem';
-import CustomRefreshControl from 'components/common/CustomRefreshControl';
 import { SEARCH_PERSON } from 'components/screens/shared/search/queries';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
@@ -18,6 +16,10 @@ import metrics from 'styles/metrics';
 import LoadingFamousList from '../../../common/loading-famous-list/LoadingFamousList';
 import { FamousStackParams } from '../routes/route-params-types';
 import useFamous from './useFamous';
+
+export const QUERY_BY_PAGINATION_ERROR_I18N_REF = 'translations:famous:i18nQueryByPaginationErrorRef';
+export const QUERY_BY_TEXT_ERROR_I18N_REF = 'translations:famous:i18nQueryByTextErrorRef';
+export const SEARCH_BAR_PLACEHOLER_I18N_REF = 'translations:famous:searchBarPlaceholder';
 
 export const NUMBER_FLATLIST_COLUMNS = 3;
 
@@ -31,25 +33,21 @@ const Famous = ({ navigation }: Props) => {
   const {
     onPressBottomReloadButton,
     onPressTopReloadButton,
-    onPullRefreshControl,
     hasPaginationError,
     isPaginating,
     onEndReached,
-    isRefreshing,
     isLoading,
     famous,
     error,
   } = useFamous();
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
           onPress={() => navigation.navigate('SEARCH', {
-            i18nQueryByPaginationErrorRef:
-                'translations:famous:i18nQueryByPaginationErrorRef',
-            i18nSearchBarPlaceholderRef: 'translations:famous:searchBarPlaceholder',
-            i18nQueryByTextErrorRef: 'translations:famous:i18nQueryByTextErrorRef',
+            i18nQueryByPaginationErrorRef: QUERY_BY_PAGINATION_ERROR_I18N_REF,
+            i18nSearchBarPlaceholderRef: SEARCH_BAR_PLACEHOLER_I18N_REF,
+            i18nQueryByTextErrorRef: QUERY_BY_TEXT_ERROR_I18N_REF,
             searchType: SearchType.PERSON,
             query: SEARCH_PERSON,
           })}
@@ -80,12 +78,6 @@ const Famous = ({ navigation }: Props) => {
           onPress={onPressTopReloadButton}
         />
         )}
-        refreshControl={(
-          <CustomRefreshControl
-            onRefresh={onPullRefreshControl}
-            refreshing={isRefreshing}
-          />
-        )}
         ListFooterComponent={() => shouldShowListBottomReloadButton && (
         <ListFooterComponent
           onPressReloadButton={onPressBottomReloadButton}
@@ -104,11 +96,11 @@ const Famous = ({ navigation }: Props) => {
           android: 0.5,
           ios: 0.1,
         })}
-        getItemLayout={(_, index: number) => ({
+        /* getItemLayout={(_, index: number) => ({
           length: DEFAULT_LIST_ITEM_HEIGHT,
           offset: DEFAULT_LIST_ITEM_HEIGHT * Math.floor(index / NUMBER_FLATLIST_COLUMNS),
           index,
-        })}
+        })} */
         numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
           <DefaultListItem
