@@ -66,7 +66,7 @@ describe('Testing <Search /> - [Famous-Entry-Error]', () => {
       }
     });
 
-    expect(queryByTestId('search-list').props.data.length).toEqual(0);
+    expect(queryByTestId('search-famous-list').props.data.length).toEqual(0);
 
     expect(queryByTestId('top-reload-button')).not.toBeNull();
 

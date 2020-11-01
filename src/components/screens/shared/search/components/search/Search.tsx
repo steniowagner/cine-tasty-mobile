@@ -20,6 +20,10 @@ import MediaSearch from '../media-search/MediaSearch';
 import usePressHandlers from './usePressHandlers';
 import useSearch from './use-search/useSearch';
 
+export const ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF = 'translations:search:emptyList:description';
+export const ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF = 'translations:search:emptyList:suggestion';
+export const ADVISE_EMPTY_LIST_TITLE_I18N_REF = 'translations:search:emptyList:title';
+
 type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH'>;
 
 type SearchScreenRouteProp = RouteProp<SearchStackParams, 'SEARCH'>;
@@ -70,14 +74,6 @@ const Search = ({ navigation, route }: Props) => {
 
   return (
     <>
-      {shouldShowEmptyListAdvise && (
-        <Advise
-          description={t('translations:news:emptyList:description')}
-          suggestion={t('translations:news:emptyList:suggestion')}
-          title={t('translations:news:emptyList:title')}
-          icon="alert-box"
-        />
-      )}
       {route.params.searchType === SearchType.PERSON && (
         <FamousSearch
           onPressHeaderReloadButton={onPressHeaderReloadButton}
@@ -115,6 +111,14 @@ const Search = ({ navigation, route }: Props) => {
           errorMessage={errorMessage}
           isPaginating={isPaginating}
           isLoading={isLoading}
+        />
+      )}
+      {shouldShowEmptyListAdvise && (
+        <Advise
+          description={t(ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF)}
+          suggestion={t(ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF)}
+          title={t(ADVISE_EMPTY_LIST_TITLE_I18N_REF)}
+          icon="alert-box"
         />
       )}
       {shouldShowRecentSearches && (

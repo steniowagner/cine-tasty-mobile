@@ -128,6 +128,11 @@ export interface Locale {
   };
   search: {
     recent: string;
+    emptyList: {
+      description: string;
+      suggestion: string;
+      title: string;
+    };
   };
   famousDetail: {
     errorDescription: string;

@@ -103,6 +103,11 @@ const en: Locale = {
   },
   search: {
     recent: 'Recent',
+    emptyList: {
+      description: 'emptyList -- description',
+      suggestion: 'emptyList -- suggestion',
+      title: 'emptyList -- title',
+    },
   },
   months: [
     'January',

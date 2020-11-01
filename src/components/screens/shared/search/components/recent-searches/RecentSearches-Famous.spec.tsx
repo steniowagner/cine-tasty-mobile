@@ -28,7 +28,7 @@ const {
 
 const items = Array(ITEMS_COUNT)
   .fill({})
-  .map((item, index) => ({
+  .map((_, index) => ({
     id: index,
     title: `item-${index}`,
     image: `image-${index}`,
