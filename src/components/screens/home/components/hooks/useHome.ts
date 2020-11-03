@@ -149,8 +149,6 @@ const useHome = (
   }, [isMoviesSelected, hasTrendingMoviesError, hasTrendingTVShowsError]);
 
   const onSelectMovies = useCallback(() => {
-    console.log('onSelectTVShows');
-
     if (trendingMovies) {
       setShouldDisableHeaderActions(true);
       setIsTransitioningData(true);
@@ -160,7 +158,6 @@ const useHome = (
   }, [trendingMovies]);
 
   const onSelectTVShows = useCallback(() => {
-    console.log('onSelectTVShows');
     setShouldDisableHeaderActions(true);
 
     if (trendingTVShows) {
