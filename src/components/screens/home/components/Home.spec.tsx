@@ -35,6 +35,52 @@ import {
 } from './hooks/usePressMapping';
 import Home from './Home';
 
+const trendingMoviesItems = Array(10)
+  .fill({})
+  .map((_, index) => ({
+    genreIds: Array(index + 1)
+      .fill('')
+      .map((_, index) => `genre-${index}`),
+    posterPath: `posterPath-${index}`,
+    title: `title-${index}`,
+    __typename: 'BaseMovie',
+    voteAverage: index,
+    voteCount: index,
+    id: index,
+  }));
+
+const trendingMovies = {
+  nowPlaying: {
+    totalResults: 1,
+    totalPages: 2,
+    hasMore: true,
+    items: trendingMoviesItems,
+    __typename: 'TrendingMoviesQueryResult',
+  },
+  popular: {
+    totalResults: 1,
+    totalPages: 1,
+    hasMore: false,
+    items: trendingMoviesItems,
+    __typename: 'TrendingMoviesQueryResult',
+  },
+  topRated: {
+    totalResults: 1,
+    totalPages: 1,
+    hasMore: false,
+    items: trendingMoviesItems,
+    __typename: 'TrendingMoviesQueryResult',
+  },
+  upcoming: {
+    totalResults: 1,
+    totalPages: 1,
+    hasMore: false,
+    items: trendingMoviesItems,
+    __typename: 'TrendingMoviesQueryResult',
+  },
+  __typename: 'TrendingMovies',
+};
+
 type RenderHomeProps = {
   isMovieSelectedInitially?: boolean;
   navigate?: jest.FunctionLike;
@@ -65,7 +111,7 @@ describe('Testing <Home />', () => {
 
   afterEach(cleanup);
 
-  it('should render the loading state when the screen is mounted', () => {
+  it('should render the loading state when the screen is first mounted', () => {
     const { queryByTestId } = render(renderHome({}));
 
     expect(queryByTestId('loading-home')).not.toBeNull();
@@ -77,11 +123,9 @@ describe('Testing <Home />', () => {
     });
   });
 
-  it("should render the content properly when the query-result isnt' null", () => {
+  it.only("should render the content properly when the query-result isnt' null", () => {
     const mockResolvers = {
-      TrendingMoviesQueryResult: () => ({
-        items: () => new MockList(1),
-      }),
+      TrendingMovies: () => trendingMovies,
     };
 
     const { queryByTestId, queryAllByTestId } = render(renderHome({ mockResolvers }));

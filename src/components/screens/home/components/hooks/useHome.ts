@@ -76,6 +76,8 @@ const useHome = (
   const { trendingTVShows: homeTrendingTVShows } = useTrendingTVShows({
     rawTrendingTVShows: trendingTVShows,
   });
+  console.log(trendingMovies);
+  // console.log('trendingTVShows: ', trendingTVShows?.nowPlaying.items);
 
   const {
     hasError: hasTrendingMoviesError,
