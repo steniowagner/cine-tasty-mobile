@@ -435,4 +435,39 @@ describe('Testing <Home /> - [Movies]', () => {
       id: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].id,
     });
   });
+
+  it('should navigate to Movie-detail screen when the user select some top3-item', () => {
+    const TOP3_ITEM_SELECTED_INDEX = 0;
+
+    const mockResolvers = {
+      TrendingMovies: () => trendingMovies,
+    };
+
+    const navigate = jest.fn();
+
+    const { getAllByTestId } = render(renderHome({ mockResolvers, navigate }));
+
+    act(() => {
+      try {
+        jest.runAllTimers();
+      } catch (err) {}
+    });
+
+    fireEvent.press(getAllByTestId('rounded-button')[TOP3_ITEM_SELECTED_INDEX]);
+
+    expect(navigate).toHaveBeenCalledTimes(1);
+
+    const { id } = navigate.mock.calls[0][1];
+
+    expect(navigate).toHaveBeenCalledWith('MOVIE_DETAIL', {
+      voteAverage: trendingMovies.nowPlaying.items[id].voteAverage,
+      posterPath: trendingMovies.nowPlaying.items[id].posterPath,
+      voteCount: trendingMovies.nowPlaying.items[id].voteCount,
+      genreIds: trendingMovies.nowPlaying.items[id].genreIds,
+      title: trendingMovies.nowPlaying.items[id].title,
+      id: trendingMovies.nowPlaying.items[id].id,
+    });
+  });
+
+  it('should show the movies-content after press the "Movies" when the "TVShows" is selected', () => {});
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { MockList, IMocks } from 'graphql-tools';
+import { IMocks } from 'graphql-tools';
 
 import { SEARCH_TV_SHOWS } from 'components/screens/shared/search/queries';
 import { SearchType } from 'types/schema';
@@ -123,7 +123,7 @@ const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
   return <MockedNavigation component={HomeScreen} />;
 };
 
-describe('Testing <Home /> - [Movies]', () => {
+describe('Testing <Home /> - [TVShows]', () => {
   beforeEach(setupTimeTravel);
 
   afterEach(cleanup);
@@ -444,62 +444,5 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(queryAllByTestId('scrollview-content')).toEqual([]);
 
     expect(queryAllByTestId('section-wrapper')).toEqual([]);
-  });
-
-  it('should navigate to TVShow-detail screen when the user select some section-item', () => {
-    const sections = [
-      `home-section-${TV_SHOWS_ON_THE_AIR_SECTION_TITLE_i18N_REF}`,
-      `home-section-${TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF}`,
-      `home-section-${TV_SHOWS_TOP_RATED_SECTION_TITLE_i18N_REF}`,
-    ];
-
-    const SECTION_ITEM_INDEX_SELECTED =
-      (Math.random() * (trendingTVShowsItemsWithTitle.length - 1 - 0 + 1)) << 0;
-    const SECTION_SELECTED_INDEX = (Math.random() * (sections.length - 1 - 0 + 1)) << 0;
-
-    const mockResolvers = {
-      TrendingTVShows: () => trendingTVShows,
-    };
-
-    const navigate = jest.fn();
-
-    const { getAllByTestId, getByTestId } = render(
-      renderHome({ mockResolvers, navigate }),
-    );
-
-    act(() => {
-      try {
-        jest.runAllTimers();
-      } catch (err) {}
-    });
-
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
-
-    act(() => {
-      timeTravel(TRANSITIONING_DURATION);
-    });
-
-    act(() => {
-      try {
-        jest.runAllTimers();
-      } catch (err) {}
-    });
-
-    fireEvent.press(
-      getAllByTestId('simplified-media-list-button')[
-        SECTION_SELECTED_INDEX * 10 + SECTION_ITEM_INDEX_SELECTED
-      ],
-    );
-
-    expect(navigate).toHaveBeenCalledTimes(1);
-
-    expect(navigate).toHaveBeenCalledWith('TV_SHOW_DETAIL', {
-      voteAverage: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].voteAverage,
-      posterPath: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].posterPath,
-      voteCount: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].voteCount,
-      genreIds: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].genreIds,
-      title: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].title,
-      id: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].id,
-    });
   });
 });

@@ -95,6 +95,7 @@ const Top3ListItem = ({
         transform: [{ translateY }],
       }}
       width={width}
+      testID="wrapper"
     >
       <ProgressiveImage
         thumbnailURL={`${PROFILE_THUMBNAIL_URL}${image}`}
@@ -110,7 +111,9 @@ const Top3ListItem = ({
           withText
         />
         <GenreText>{genres.join('  \u2022  ')}</GenreText>
-        <LearnMoreButtonWrapper>
+        <LearnMoreButtonWrapper
+          testID="test"
+        >
           <RoundedButton
             onPress={onPress}
             text={t('translations:home:learMoreButtonText')}
