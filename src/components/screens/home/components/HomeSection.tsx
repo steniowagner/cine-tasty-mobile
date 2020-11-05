@@ -37,6 +37,7 @@ const HomeSection = ({
     <SectionViewAll
       onPressViewAll={onPressViewAll}
       sectionTitle={sectionTitle}
+      id={sectionTitle}
     />
     <FlatList
       renderItem={({ item, index }) => (
@@ -50,9 +51,9 @@ const HomeSection = ({
         />
       )}
       keyExtractor={(item, index) => `${item.id}-${index}`}
+      testID={`home-section-${sectionTitle}`}
       showsHorizontalScrollIndicator={false}
       data={items}
-      testID="movies-cast"
       horizontal
     />
   </Wrapper>

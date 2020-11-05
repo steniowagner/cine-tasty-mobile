@@ -19,7 +19,7 @@ import useTop3 from './top3/useTop3';
 
 export const TRENDING_TV_SHOWS_ERROR_REF_I18N = 'translations:home:trendingTvShows:error';
 export const TRENDING_MOVIES_ERROR_REF_I18N = 'translations:home:trendingMovies:error';
-export const TRANSITIONING_DURATION = 1200;
+export const TRANSITIONING_DURATION = 500;
 
 type ViewAllProps = {
   sectionItems: SimplifiedMedia[];
@@ -43,16 +43,11 @@ type State = {
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
-const useHome = (
-  navigation: HomeScreenNavigationProp,
-  isMovieSelectedInitially = true,
-): State => {
-  const [isMoviesSelected, setIsMovieSelected] = useState<boolean>(
-    isMovieSelectedInitially,
-  );
+const useHome = (navigation: HomeScreenNavigationProp): State => {
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
     true,
   );
+  const [isMoviesSelected, setIsMovieSelected] = useState<boolean>(true);
   const [trendingTVShows, setTrendingTVShows] = useState<TrendingTVShows>(undefined);
   const [trendingMovies, setTrendingMovies] = useState<TrendingMovies>(undefined);
   const [isTransitioningData, setIsTransitioningData] = useState<boolean>(false);
@@ -76,8 +71,6 @@ const useHome = (
   const { trendingTVShows: homeTrendingTVShows } = useTrendingTVShows({
     rawTrendingTVShows: trendingTVShows,
   });
-  console.log(trendingMovies);
-  // console.log('trendingTVShows: ', trendingTVShows?.nowPlaying.items);
 
   const {
     hasError: hasTrendingMoviesError,

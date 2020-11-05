@@ -54,9 +54,15 @@ type Props = {
   onPressViewAll: () => void;
   withViewAll?: boolean;
   sectionTitle: string;
+  id: string;
 };
 
-const SectionViewAll = ({ onPressViewAll, sectionTitle, withViewAll = true }: Props) => {
+const SectionViewAll = ({
+  onPressViewAll,
+  sectionTitle,
+  withViewAll = true,
+  id,
+}: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -68,7 +74,7 @@ const SectionViewAll = ({ onPressViewAll, sectionTitle, withViewAll = true }: Pr
       </SectionTitle>
       {withViewAll && (
         <ViewAllWrapper
-          testID="view-all-button"
+          testID={`view-all-button-${id}`}
           onPress={onPressViewAll}
         >
           <ViewAllText>{t('translations:home:viewAll')}</ViewAllText>

@@ -54,6 +54,7 @@ const ReviewsSection = ({ onPressViewAll, reviews }: Props) => {
         sectionTitle={`${sectionTitle} (${reviews.length})`}
         onPressViewAll={onPressViewAll}
         withViewAll={!!reviews.length}
+        id="reviews"
       />
       <FlatList
         onMomentumScrollEnd={onMomentumScrollEnd}
