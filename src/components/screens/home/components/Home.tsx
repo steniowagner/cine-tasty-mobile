@@ -10,9 +10,9 @@ import metrics from 'styles/metrics';
 
 import { HomeStackParams } from '../routes/route-params-types';
 import LoadingHome from './top3/LoadingTop3';
+import HomeSection from './HomeSection';
 import useHome from './hooks/useHome';
 import Header from './header/Header';
-import Section from './HomeSection';
 import Top3 from './top3/Top3';
 
 const PopupAdviceWrapper = styled(View)`
@@ -29,10 +29,9 @@ type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
-  isMovieSelectedInitially?: boolean;
 };
 
-const Home = ({ isMovieSelectedInitially, navigation }: Props) => {
+const Home = ({ navigation }: Props) => {
   const {
     shouldDisableHeaderActions,
     onPressTop3LearnMore,
@@ -45,7 +44,7 @@ const Home = ({ isMovieSelectedInitially, navigation }: Props) => {
     isLoading,
     trendings,
     top3,
-  } = useHome(navigation, isMovieSelectedInitially);
+  } = useHome(navigation);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -76,7 +75,7 @@ const Home = ({ isMovieSelectedInitially, navigation }: Props) => {
             top3Items={top3}
           />
           {trendings.map((trending) => (
-            <Section
+            <HomeSection
               onPressItem={(mediaItem: SimplifiedMedia) => onPressTrendingItem(mediaItem)}
               onPressViewAll={() => onPressViewAll({
                 viewAllTitle: trending.viewAllTitle,

@@ -566,7 +566,7 @@ describe('Testing <TVShowDetail />', () => {
       jest.runAllTimers();
     });
 
-    fireEvent.press(getByTestId('view-all-button'));
+    fireEvent.press(getByTestId('view-all-button-reviews'));
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
