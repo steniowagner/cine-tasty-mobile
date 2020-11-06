@@ -42,7 +42,6 @@ const movieCast = [
   {
     voteAverage: 1,
     posterPath: 'Hello World',
-    mediaType: 'Hello World',
     voteCount: 1,
     title: 'Hello World',
     id: 1,
@@ -51,7 +50,6 @@ const movieCast = [
   {
     voteAverage: 1,
     posterPath: 'Hello World',
-    mediaType: 'Hello World',
     voteCount: 1,
     title: 'Hello World',
     id: 2,
@@ -63,7 +61,6 @@ const tvCast = [
   {
     voteAverage: 1,
     posterPath: 'Hello World',
-    mediaType: 'Hello World',
     voteCount: 1,
     name: 'Hello World',
     id: 1,
@@ -72,7 +69,6 @@ const tvCast = [
   {
     voteAverage: 1,
     posterPath: 'Hello World',
-    mediaType: 'Hello World',
     voteCount: 2,
     name: 'Hello World',
     id: 2,
