@@ -74,7 +74,7 @@ const TVShowDetail = ({ navigation, route }: Props) => {
     hasGenresIds: !!route.params.genreIds,
     id: route.params.id,
   });
-  console.log(tvShow);
+
   if (hasError) {
     return (
       <Advise

@@ -255,8 +255,14 @@ describe('Testing <TVShowDetail />', () => {
       },
     };
 
-    const { queryByTestId, getAllByTestId, getByText, getByTestId } = render(
-      renderTVShowDetail({ route }),
+    const mockResolvers = {
+      TVShow: () => ({
+        numberOfSeasons: 2,
+      }),
+    };
+
+    const { queryByTestId, getByText, getByTestId } = render(
+      renderTVShowDetail({ mockResolvers, route }),
     );
 
     act(() => {
