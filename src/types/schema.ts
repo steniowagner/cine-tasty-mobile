@@ -554,7 +554,6 @@ export interface GetFamousDetail_person_moviesCast {
   __typename: "CastMovie";
   voteAverage: number | null;
   posterPath: string | null;
-  mediaType: string | null;
   voteCount: number | null;
   title: string | null;
   id: number | null;
@@ -564,7 +563,6 @@ export interface GetFamousDetail_person_tvCast {
   __typename: "CastTVShow";
   voteAverage: number | null;
   posterPath: string | null;
-  mediaType: string | null;
   voteCount: number | null;
   name: string | null;
   id: number | null;

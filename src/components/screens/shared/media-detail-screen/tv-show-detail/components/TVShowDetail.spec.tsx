@@ -46,7 +46,6 @@ const cast = [
   {
     voteAverage: 79.24046692747518,
     posterPath: 'Hello World',
-    mediaType: 'Hello World',
     voteCount: -50.84916555615129,
     name: 'Hello World',
     id: '1',
@@ -55,7 +54,6 @@ const cast = [
   {
     voteAverage: 92.31814886121063,
     posterPath: 'Hello World',
-    mediaType: 'Hello World',
     voteCount: 1.4805898520850604,
     name: 'Hello World',
     id: '2',
@@ -84,7 +82,6 @@ const crew = [
   {
     voteAverage: 79.24046692747518,
     posterPath: 'Hello World',
-    mediaType: 'Hello World',
     voteCount: -50.84916555615129,
     name: 'Hello World',
     id: '1',
@@ -93,7 +90,6 @@ const crew = [
   {
     voteAverage: 92.31814886121063,
     posterPath: 'Hello World',
-    mediaType: 'Hello World',
     voteCount: 1.4805898520850604,
     name: 'Hello World',
     id: '2',

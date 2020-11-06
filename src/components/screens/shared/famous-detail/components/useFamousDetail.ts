@@ -26,7 +26,6 @@ export const GET_FAMOUS_DETAIL = gql`
       moviesCast {
         voteAverage
         posterPath
-        mediaType
         voteCount
         title
         id
@@ -34,7 +33,6 @@ export const GET_FAMOUS_DETAIL = gql`
       tvCast {
         voteAverage
         posterPath
-        mediaType
         voteCount
         name
         id
