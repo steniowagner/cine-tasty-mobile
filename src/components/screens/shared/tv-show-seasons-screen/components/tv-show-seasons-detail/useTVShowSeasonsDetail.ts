@@ -22,8 +22,8 @@ const TV_SHOW_SEASONS_DETAIL = gql`
         voteCount
         overview
         airDate
-        id
         name
+        id
       }
     }
   }

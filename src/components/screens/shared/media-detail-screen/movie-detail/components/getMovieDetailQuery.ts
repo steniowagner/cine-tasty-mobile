@@ -13,10 +13,8 @@ export default gql`
       voteAverage @include(if: $withVoteAverage)
       voteCount @include(if: $withVoteCount)
       images(id: $id)
-      adult
       backdropPath
       id
-      originalLanguage
       originalTitle
       overview
       title
@@ -26,42 +24,32 @@ export default gql`
         logoPath
         name
       }
-      runtime
-      status
-      tagline
       budget
       revenue
       spokenLanguages
       productionCountries
       cast {
-        name
         profilePath
-        id
         character
+        name
+        id
       }
       crew {
+        profilePath
+        name
         job
         id
-        name
-        profilePath
       }
       videos {
         thumbnail {
           extraSmall
-          small
-          medium
-          large
-          extraLarge
         }
         key
-        name
-        site
         id
-        type
       }
       reviews {
-        author
         content
+        author
         id
       }
       similar {

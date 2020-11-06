@@ -148,7 +148,7 @@ const TVShowDetail = ({ navigation, route }: Props) => {
               },
             ]}
           />
-          {!!tvShow?.seasons.length && (
+          {tvShow?.numberOfSeasons > 0 && (
             <SeeSeasonsButtonWrapper>
               <RoundedButton
                 text={t(TV_SHOW_SEASONS_I18N_REF)}

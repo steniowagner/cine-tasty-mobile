@@ -13,101 +13,64 @@ export default gql`
       voteAverage @include(if: $withVoteAverage)
       voteCount @include(if: $withVoteCount)
       images(id: $id)
-      seasons {
-        airDate
-        episodeCount
-        id
-        name
-        overview
-        posterPath
-        seasonNumber
-      }
       backdropPath
       createdBy {
-        id
-        name
         profilePath
+        name
+        id
       }
       networks {
+        logoPath
         name
         id
-        logoPath
-        originCountry
       }
       episodeRunTime
       firstAirDate
-      homepage
-      id
-      inProduction
-      languages
       lastAirDate
       name
-      status
-      type
+      id
       productionCompanies {
-        id
         logoPath
         name
-        originCountry
+        id
       }
       originalLanguage
       originalName
+      originCountry
       overview
       videos {
         thumbnail {
           extraSmall
-          small
-          medium
-          large
-          extraLarge
         }
         key
-        name
-        site
         id
-        type
       }
       cast {
-        name
         profilePath
-        id
         character
-        gender
-        order
+        name
+        id
       }
       crew {
-        department
+        profilePath
+        name
         id
         job
-        name
-        gender
-        profilePath
       }
       similar {
-        originCountry
-        originalName
-        name
-        firstAirDate
-        backdropPath
-        genreIds
-        overview
         voteAverage
         posterPath
-        popularity
-        originalLanguage
         voteCount
+        name
         id
       }
-      popularity
       posterPath
       numberOfEpisodes
       numberOfSeasons
-      originCountry
       reviews {
         author
         content
         id
-        url
       }
     }
   }

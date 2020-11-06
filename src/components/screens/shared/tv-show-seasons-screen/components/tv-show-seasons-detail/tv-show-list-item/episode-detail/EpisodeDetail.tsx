@@ -49,7 +49,7 @@ const EpisodeOverviewText = styled(Text)`
   padding-bottom: ${CONSTANTS.VALUES.DEFAULT_SPACING * 2}px;
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('5%')}px;
   font-family: CircularStd-Medium;
-  color: rgba(0, 0, 0, 0.5);
+  color: ${({ theme }) => theme.colors.buttonText};
 `;
 
 const EpisodeAiredText = styled(Text)`
@@ -57,7 +57,7 @@ const EpisodeAiredText = styled(Text)`
   margin-top: ${({ theme }) => theme.metrics.smallSize}px;
   font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
   font-family: CircularStd-Medium;
-  color: ${({ theme }) => theme.colors.buttonText};
+  color: rgba(0, 0, 0, 0.5);
 `;
 
 const ImageOffIcon = styled(Icon).attrs(({ theme }) => ({

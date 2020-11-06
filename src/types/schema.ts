@@ -574,13 +574,10 @@ export interface GetFamousDetail_person {
   __typename: "Person";
   knownForDepartment: string | null;
   placeOfBirth: string | null;
-  profilePath: string | null;
   biography: string | null;
   birthday: string | null;
   deathday: string | null;
   images: string[];
-  name: string | null;
-  id: number | null;
   moviesCast: GetFamousDetail_person_moviesCast[];
   tvCast: GetFamousDetail_person_tvCast[];
 }
@@ -612,18 +609,18 @@ export interface MovieDetail_movie_productionCompanies {
 
 export interface MovieDetail_movie_cast {
   __typename: "CastItem";
-  name: string | null;
   profilePath: string | null;
-  id: string | null;
   character: string | null;
+  name: string | null;
+  id: string | null;
 }
 
 export interface MovieDetail_movie_crew {
   __typename: "CrewItem";
+  profilePath: string | null;
+  name: string | null;
   job: string | null;
   id: string | null;
-  name: string | null;
-  profilePath: string | null;
 }
 
 export interface MovieDetail_movie_videos_thumbnail {
@@ -632,38 +629,19 @@ export interface MovieDetail_movie_videos_thumbnail {
    * 120x90
    */
   extraSmall: string | null;
-  /**
-   * 320x180
-   */
-  small: string | null;
-  /**
-   * 480x360
-   */
-  medium: string | null;
-  /**
-   * 640x480
-   */
-  large: string | null;
-  /**
-   * 1280x720
-   */
-  extraLarge: string | null;
 }
 
 export interface MovieDetail_movie_videos {
   __typename: "MediaVideo";
   thumbnail: MovieDetail_movie_videos_thumbnail | null;
   key: string | null;
-  name: string | null;
-  site: string | null;
   id: string | null;
-  type: string | null;
 }
 
 export interface MovieDetail_movie_reviews {
   __typename: "Review";
-  author: string | null;
   content: string | null;
+  author: string | null;
   id: string | null;
 }
 
@@ -682,18 +660,13 @@ export interface MovieDetail_movie {
   voteAverage: number | null;
   voteCount: number | null;
   images: string[];
-  adult: boolean | null;
   backdropPath: string | null;
   id: string | null;
-  originalLanguage: string | null;
   originalTitle: string | null;
   overview: string | null;
   title: string | null;
   releaseDate: string | null;
   productionCompanies: MovieDetail_movie_productionCompanies[];
-  runtime: number | null;
-  status: string | null;
-  tagline: string | null;
   budget: number | null;
   revenue: number | null;
   spokenLanguages: string[];
@@ -726,38 +699,25 @@ export interface MovieDetailVariables {
 // GraphQL query operation: TVShowDetail
 // ====================================================
 
-export interface TVShowDetail_tvShow_seasons {
-  __typename: "Season";
-  airDate: string | null;
-  episodeCount: number | null;
-  id: string | null;
-  name: string | null;
-  overview: string | null;
-  posterPath: string | null;
-  seasonNumber: number | null;
-}
-
 export interface TVShowDetail_tvShow_createdBy {
   __typename: "Creator";
-  id: string | null;
-  name: string | null;
   profilePath: string | null;
+  name: string | null;
+  id: string | null;
 }
 
 export interface TVShowDetail_tvShow_networks {
   __typename: "Network";
+  logoPath: string | null;
   name: string | null;
   id: string | null;
-  logoPath: string | null;
-  originCountry: string | null;
 }
 
 export interface TVShowDetail_tvShow_productionCompanies {
   __typename: "ProductionCompany";
-  id: string | null;
   logoPath: string | null;
   name: string | null;
-  originCountry: string | null;
+  id: string | null;
 }
 
 export interface TVShowDetail_tvShow_videos_thumbnail {
@@ -766,68 +726,37 @@ export interface TVShowDetail_tvShow_videos_thumbnail {
    * 120x90
    */
   extraSmall: string | null;
-  /**
-   * 320x180
-   */
-  small: string | null;
-  /**
-   * 480x360
-   */
-  medium: string | null;
-  /**
-   * 640x480
-   */
-  large: string | null;
-  /**
-   * 1280x720
-   */
-  extraLarge: string | null;
 }
 
 export interface TVShowDetail_tvShow_videos {
   __typename: "MediaVideo";
   thumbnail: TVShowDetail_tvShow_videos_thumbnail | null;
   key: string | null;
-  name: string | null;
-  site: string | null;
   id: string | null;
-  type: string | null;
 }
 
 export interface TVShowDetail_tvShow_cast {
   __typename: "CastItem";
-  name: string | null;
   profilePath: string | null;
-  id: string | null;
   character: string | null;
-  gender: number | null;
-  order: number | null;
+  name: string | null;
+  id: string | null;
 }
 
 export interface TVShowDetail_tvShow_crew {
   __typename: "CrewItem";
-  department: string | null;
+  profilePath: string | null;
+  name: string | null;
   id: string | null;
   job: string | null;
-  name: string | null;
-  gender: number | null;
-  profilePath: string | null;
 }
 
 export interface TVShowDetail_tvShow_similar {
   __typename: "BaseTVShow";
-  originCountry: string[];
-  originalName: string | null;
-  name: string | null;
-  firstAirDate: string | null;
-  backdropPath: string | null;
-  genreIds: string[];
-  overview: string | null;
   voteAverage: number | null;
   posterPath: string | null;
-  popularity: number | null;
-  originalLanguage: string | null;
   voteCount: number | null;
+  name: string | null;
   id: number | null;
 }
 
@@ -836,7 +765,6 @@ export interface TVShowDetail_tvShow_reviews {
   author: string | null;
   content: string | null;
   id: string | null;
-  url: string | null;
 }
 
 export interface TVShowDetail_tvShow {
@@ -845,33 +773,26 @@ export interface TVShowDetail_tvShow {
   voteAverage: number | null;
   voteCount: number | null;
   images: string[];
-  seasons: TVShowDetail_tvShow_seasons[];
   backdropPath: string | null;
   createdBy: TVShowDetail_tvShow_createdBy[];
   networks: TVShowDetail_tvShow_networks[];
   episodeRunTime: number[];
   firstAirDate: string | null;
-  homepage: string | null;
-  id: string | null;
-  inProduction: boolean | null;
-  languages: string[];
   lastAirDate: string | null;
   name: string | null;
-  status: string | null;
-  type: string | null;
+  id: string | null;
   productionCompanies: TVShowDetail_tvShow_productionCompanies[];
   originalLanguage: string | null;
   originalName: string | null;
+  originCountry: string[];
   overview: string | null;
   videos: TVShowDetail_tvShow_videos[];
   cast: TVShowDetail_tvShow_cast[];
   crew: TVShowDetail_tvShow_crew[];
   similar: TVShowDetail_tvShow_similar[];
-  popularity: number | null;
   posterPath: string | null;
   numberOfEpisodes: number | null;
   numberOfSeasons: number | null;
-  originCountry: string[];
   reviews: TVShowDetail_tvShow_reviews[];
 }
 
@@ -885,46 +806,6 @@ export interface TVShowDetailVariables {
   withVoteAverage: boolean;
   withGenresIds: boolean;
   withVoteCount: boolean;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: TVShowSeasonsDetail
-// ====================================================
-
-export interface TVShowSeasonsDetail_tvShowSeason_episodes {
-  __typename: "TVShowSeasonEpisode";
-  stillPath: string | null;
-  voteAverage: number | null;
-  voteCount: number | null;
-  airDate: string | null;
-  id: string;
-  name: string | null;
-  overview: string | null;
-}
-
-export interface TVShowSeasonsDetail_tvShowSeason {
-  __typename: "TVShowSeason";
-  id: string;
-  name: string | null;
-  overview: string | null;
-  posterPath: string | null;
-  seasonNumber: number | null;
-  episodes: TVShowSeasonsDetail_tvShowSeason_episodes[];
-}
-
-export interface TVShowSeasonsDetail {
-  tvShowSeason: TVShowSeasonsDetail_tvShowSeason | null;
-}
-
-export interface TVShowSeasonsDetailVariables {
-  id: string;
-  season: number;
-  language?: ISO6391Language | null;
 }
 
 /* tslint:disable */
@@ -1042,6 +923,45 @@ export interface SearchTVShow {
 
 export interface SearchTVShowVariables {
   input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: TVShowSeasonsDetail
+// ====================================================
+
+export interface TVShowSeasonsDetail_tvShowSeason_episodes {
+  __typename: "TVShowSeasonEpisode";
+  voteAverage: number | null;
+  stillPath: string | null;
+  voteCount: number | null;
+  overview: string | null;
+  airDate: string | null;
+  name: string | null;
+  id: string;
+}
+
+export interface TVShowSeasonsDetail_tvShowSeason {
+  __typename: "TVShowSeason";
+  seasonNumber: number | null;
+  posterPath: string | null;
+  overview: string | null;
+  id: string;
+  episodes: TVShowSeasonsDetail_tvShowSeason_episodes[];
+}
+
+export interface TVShowSeasonsDetail {
+  tvShowSeason: TVShowSeasonsDetail_tvShowSeason | null;
+}
+
+export interface TVShowSeasonsDetailVariables {
+  id: string;
+  season: number;
+  language?: ISO6391Language | null;
 }
 
 /* tslint:disable */
