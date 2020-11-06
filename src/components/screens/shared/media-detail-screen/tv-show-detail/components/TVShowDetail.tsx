@@ -74,7 +74,7 @@ const TVShowDetail = ({ navigation, route }: Props) => {
     hasGenresIds: !!route.params.genreIds,
     id: route.params.id,
   });
-
+  console.log(tvShow);
   if (hasError) {
     return (
       <Advise
@@ -148,7 +148,7 @@ const TVShowDetail = ({ navigation, route }: Props) => {
               },
             ]}
           />
-          {!!tvShow?.seasons.length && (
+          {tvShow?.numberOfSeasons > 0 && (
             <SeeSeasonsButtonWrapper>
               <RoundedButton
                 text={t(TV_SHOW_SEASONS_I18N_REF)}

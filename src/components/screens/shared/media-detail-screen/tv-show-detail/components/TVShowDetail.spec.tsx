@@ -128,14 +128,12 @@ const reviews = [
     author: 'author01',
     content: 'content01',
     id: 'review01',
-    url: 'url01',
   },
   {
     __typename: 'Review',
     author: 'author02',
     content: 'content02',
     id: 'review02',
-    url: 'url02',
   },
 ];
 
