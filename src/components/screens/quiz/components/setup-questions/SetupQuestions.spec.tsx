@@ -9,7 +9,12 @@ import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
 import { difficulties, categories, types } from './options';
 import LOCAL_ROUTES from '../../routes/route-names';
-import SetupQuestions from './SetupQuestions';
+import SetupQuestions, {
+  QUIZ_NUMBER_OF_QUESTIONS_I18N_REF,
+  QUIZ_DIFFICULTY_I18N_REF,
+  QUIZ_CATEGORY_I18N_REF,
+  QUIZ_TYPE_I18N_REF,
+} from './SetupQuestions';
 import {
   I18N_DIFFICULTY_HEADER_TEXT_KEY,
   I18N_CATEGORY_HEADER_TEXT_KEY,
@@ -31,7 +36,7 @@ describe('Testing <SetupQuestions />', () => {
   afterEach(cleanup);
 
   it('should render correctly with the default params', () => {
-    const { getAllByTestId } = render(renderSetupQuestions());
+    const { getAllByTestId, getByText } = render(renderSetupQuestions());
 
     const [difficultySelected, categorySelected, typeSelected] = getAllByTestId(
       'option-value',
@@ -46,6 +51,14 @@ describe('Testing <SetupQuestions />', () => {
     expect(getAllByTestId('default-text')[0].children[0]).toEqual(
       String(INITIAL_NUMBER_QUESTIONS),
     );
+
+    expect(getByText(QUIZ_NUMBER_OF_QUESTIONS_I18N_REF)).not.toBeNull();
+
+    expect(getByText(QUIZ_DIFFICULTY_I18N_REF)).not.toBeNull();
+
+    expect(getByText(QUIZ_CATEGORY_I18N_REF)).not.toBeNull();
+
+    expect(getByText(QUIZ_TYPE_I18N_REF)).not.toBeNull();
   });
 
   it('should navigate to CustomModal correctly when the user press the difficulty-dropdown', () => {

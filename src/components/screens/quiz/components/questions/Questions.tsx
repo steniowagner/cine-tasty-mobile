@@ -11,7 +11,6 @@ import LoadingIndicator from 'components/common/LoadingIndicator';
 import Advise from 'components/common/advise/Advise';
 import { QuestionType } from 'types/schema';
 import Icon from 'components/common/Icon';
-import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
 import ListItemWrapper from './list-item-wrapper-question/ListItemWrapperQuestion';
@@ -19,6 +18,14 @@ import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
 import { QuizStackParams } from '../../routes/route-params-types';
 import BooleanQuestion from './boolean-question/BooleanQuestion';
 import useQuestions from './useQuestions';
+
+export const NO_QUESTIONS_ERROR_DESCRIPTION_I18N_REF = 'translations:quiz:noQuestionsAdviseDescription';
+export const NO_QUESTIONS_ERROR_SUGGESTION_I18N_REF = 'translations:quiz:noQuestionsAdviseSuggestion';
+export const NO_QUESTIONS_ERROR_TITLE_I18N_REF = 'translations:quiz:noQuestionsAdviseTitle';
+
+export const NO_CONNECTION_ERROR_DESCRIPTION_I18N_REF = 'translations:errors:network:description';
+export const NO_CONNECTION_ERROR_SUGGGESTION_I18N_REF = 'translations:errors:network:suggestion';
+export const NO_CONNECTION_ERROR_TITLE_I18N_REF = 'translations:errors:network:title';
 
 const RestartQuizIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('7%'),
@@ -56,19 +63,17 @@ const Questions = ({ navigation, route }: Props) => {
   const {
     currentQuestionIndex,
     questionsFlatListRef,
-    onSelectAnswer,
-    currentAnswer,
     onRestartQuiz,
     onPressNext,
     questions,
     loading,
-    error,
+    hasError,
   } = useQuestions(route, navigation);
 
   const { t } = useTranslation();
 
   useLayoutEffect(() => {
-    const hasErrorOrIsLoading = loading || error;
+    const hasErrorOrIsLoading = loading || hasError;
 
     if (hasErrorOrIsLoading && !!questions.length) {
       return;
@@ -79,50 +84,47 @@ const Questions = ({ navigation, route }: Props) => {
     if (questions[currentQuestionIndex]) {
       headerTitle = questions[currentQuestionIndex].category.split(':')[1].trim();
     }
-
     navigation.setOptions({
       title: headerTitle,
       headerRight: () => currentQuestionIndex > 0 && (
       <RestartQuizButton
         onPress={onRestartQuiz}
+        testID="retart-quiz-button"
       >
         <RestartQuizIcon />
       </RestartQuizButton>
       ),
     });
-  }, [currentQuestionIndex, loading, error]);
+  }, [currentQuestionIndex, loading, hasError]);
 
   if (loading) {
     return <LoadingIndicator />;
   }
 
-  if (
-    error
-    && error.message.includes(CONSTANTS.ERROR_MESSAGES.NETWORK_FAILED_CONNECTION)
-  ) {
+  if (hasError) {
     return (
       <ErrorWrapper
         testID="network-error-wrapper"
       >
         <Advise
-          description={t('translations:errors:network:description')}
-          suggestion={t('translations:errors:network:suggestion')}
-          title={t('translations:errors:network:title')}
+          description={t(NO_CONNECTION_ERROR_DESCRIPTION_I18N_REF)}
+          suggestion={t(NO_CONNECTION_ERROR_SUGGGESTION_I18N_REF)}
+          title={t(NO_CONNECTION_ERROR_TITLE_I18N_REF)}
           icon="server-network-off"
         />
       </ErrorWrapper>
     );
   }
 
-  if (!loading && !error && !questions.length) {
+  if (!loading && !hasError && !questions.length) {
     return (
       <ErrorWrapper
         testID="no-questions-error-wrapper"
       >
         <Advise
-          description={t('translations:quiz:noQuestionsAdviseDescription')}
-          suggestion={t('translations:quiz:noQuestionsAdviseSuggestion')}
-          title={t('translations:quiz:noQuestionsAdviseTitle')}
+          description={t(NO_QUESTIONS_ERROR_DESCRIPTION_I18N_REF)}
+          suggestion={t(NO_QUESTIONS_ERROR_SUGGESTION_I18N_REF)}
+          title={t(NO_QUESTIONS_ERROR_TITLE_I18N_REF)}
           icon="playlist-remove"
         />
       </ErrorWrapper>
@@ -135,23 +137,19 @@ const Questions = ({ navigation, route }: Props) => {
         <ListItemWrapper
           numberOfQuestions={route.params.numberOfQuestions}
           question={questions[index].question}
-          hasSelectedAnswer={!!currentAnswer}
           currentQuestionIndex={index + 1}
-          onPressNext={onPressNext}
         >
           <>
-            {item.type.toLocaleLowerCase()
-              === QuestionType.BOOLEAN.toLocaleLowerCase() && (
+            {item.type.toLowerCase() === QuestionType.BOOLEAN.toLowerCase() && (
               <BooleanQuestion
-                onSelectAnswer={onSelectAnswer}
-                answerSelected={currentAnswer}
+                isFocused={currentQuestionIndex === index}
+                onPressNext={onPressNext}
               />
             )}
-            {item.type.toLocaleLowerCase()
-              === QuestionType.MULTIPLE.toLocaleLowerCase() && (
+            {item.type.toLowerCase() === QuestionType.MULTIPLE.toLowerCase() && (
               <MultiChoiceQuestion
-                onSelectAnswer={onSelectAnswer}
-                answerSelected={currentAnswer}
+                isFocused={currentQuestionIndex === index}
+                onPressNext={onPressNext}
                 answers={item.options}
               />
             )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
 const Wrapper = styled(View)`
@@ -35,37 +35,16 @@ const QuestionText = styled(Text).attrs({
   text-align: center;
 `;
 
-const NextButton = styled(TouchableOpacity)`
-  width: 100%;
-  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
-  padding-vertical: ${({ theme }) => theme.metrics.largeSize}px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  border-bottom-left-radius: ${({ theme }) => theme.metrics.smallSize}px;
-  border-bottom-right-radius: ${({ theme }) => theme.metrics.smallSize}px;
-  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
-`;
-
-const NextText = styled(Text)`
-  font-family: CircularStd-Black;
-  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
-  color: white;
-  text-align: center;
-`;
-
 type Props = {
   currentQuestionIndex: number;
-  hasSelectedAnswer: boolean;
   numberOfQuestions: number;
-  onPressNext: () => void;
   children: JSX.Element;
   question: string;
 };
 
 const ListItemWrapper = ({
   currentQuestionIndex,
-  hasSelectedAnswer,
   numberOfQuestions,
-  onPressNext,
   children,
   question,
 }: Props) => (
@@ -98,13 +77,6 @@ const ListItemWrapper = ({
         </QuestionText>
       </TextWrapper>
       {children}
-      <NextButton
-        disabled={!hasSelectedAnswer}
-        onPress={onPressNext}
-        testID={!hasSelectedAnswer ? 'next-button-disabled' : 'next-button'}
-      >
-        <NextText>NEXT</NextText>
-      </NextButton>
     </CardWrapper>
   </Wrapper>
 );

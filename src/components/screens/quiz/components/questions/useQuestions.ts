@@ -4,7 +4,6 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
-import { ApolloError } from 'apollo-client';
 import gql from 'graphql-tag';
 
 import {
@@ -18,12 +17,11 @@ import { QuizStackParams } from '../../routes/route-params-types';
 export const GET_QUIZ_QUESTIONS = gql`
   query GetQuizQuestions($input: QuizInput!) {
     quiz(input: $input) {
-      options
-      category
-      type
-      difficulty
-      question
       correctAnswer
+      category
+      question
+      options
+      type
     }
   }
 `;
@@ -33,14 +31,12 @@ type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUEST
 type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'QUESTIONS'>;
 
 type State = {
-  onSelectAnswer: (answer: string) => void;
+  onPressNext: (currentAnswer: string) => void;
   currentQuestionIndex: number;
   onRestartQuiz: () => void;
   questionsFlatListRef: any;
-  onPressNext: () => void;
   questions: Questions[];
-  currentAnswer: string;
-  error: ApolloError;
+  hasError: boolean;
   answers: string[];
   loading: boolean;
 };
@@ -50,7 +46,6 @@ const useQuestions = (
   navigation: QuestionsScreenNavigationProp,
 ): State => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-  const [currentAnswer, setCurrentAnswer] = useState<string>('');
   const [answers, setAnswers] = useState<string[]>([]);
   const questionsFlatListRef = useRef(null);
 
@@ -70,25 +65,25 @@ const useQuestions = (
   );
 
   useEffect(() => {
-    if (currentAnswer) {
-      setCurrentAnswer('');
-    }
-
     if (questionsFlatListRef && questionsFlatListRef.current) {
       questionsFlatListRef.current.scrollToIndex({
-        index: currentQuestionIndex,
+        index: currentQuestionIndex === -1 ? 0 : currentQuestionIndex,
         animated: true,
       });
     }
   }, [currentQuestionIndex]);
 
-  const handleQuestionsListIndexPosition = (): void => {
+  const handleQuestionsFlatListIndexPosition = useCallback((): void => {
+    if (!data?.quiz.length) {
+      return;
+    }
+
     const nextIndex = currentQuestionIndex + 1;
     const isLastQuestion = nextIndex === data.quiz.length;
 
     if (isLastQuestion) {
       navigation.navigate('RESULTS', {
-        questions: data.quiz,
+        questions: data?.quiz,
         answers,
       });
 
@@ -96,30 +91,26 @@ const useQuestions = (
     }
 
     setCurrentQuestionIndex(nextIndex);
-  };
+  }, [currentQuestionIndex, data, answers]);
 
   useEffect(() => {
-    if (data && data.quiz && data.quiz.length) {
-      handleQuestionsListIndexPosition();
-    }
+    handleQuestionsFlatListIndexPosition();
   }, [answers]);
 
   const onRestartQuiz = useCallback(() => {
-    setCurrentQuestionIndex(0);
+    setCurrentQuestionIndex(-1);
     setAnswers([]);
   }, []);
 
   return {
-    onPressNext: () => setAnswers((prevAnswers) => [...prevAnswers, currentAnswer]),
+    onPressNext: (currentAnswer: string) => setAnswers((prevAnswers) => [...prevAnswers, currentAnswer]),
     questions: data ? data.quiz : [],
-    onSelectAnswer: setCurrentAnswer,
     currentQuestionIndex,
     questionsFlatListRef,
+    hasError: !!error,
     onRestartQuiz,
-    currentAnswer,
     loading,
     answers,
-    error,
   };
 };
 

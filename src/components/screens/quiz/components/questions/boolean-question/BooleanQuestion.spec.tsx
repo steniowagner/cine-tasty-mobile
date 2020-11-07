@@ -4,84 +4,103 @@ import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
 import { dark } from 'styles/themes';
 
-import BooleanQuestion from './BooleanQuestion';
+import BooleanQuestion, {
+  FALSE_TEXT_I18N_REF,
+  TRUE_TEXT_I18N_REF,
+} from './BooleanQuestion';
 
-const renderBooleanQuestion = (onSelectAnswer = jest.fn(), answerSelected?: string) => (
+const renderBooleanQuestion = (onPressNext = jest.fn()) => (
   <ThemeProvider theme={dark}>
-    <BooleanQuestion onSelectAnswer={onSelectAnswer} answerSelected={answerSelected} />
+    <BooleanQuestion onPressNext={onPressNext} isFocused />
   </ThemeProvider>
 );
 
 describe('Testing <BooleanQuestion />', () => {
   afterEach(cleanup);
 
-  it('it should render correctly', () => {
-    const { getByTestId, queryByTestId, getByText } = render(renderBooleanQuestion());
+  it("it should render correctly when there's no option selected", () => {
+    const { getByTestId, getByText } = render(renderBooleanQuestion());
 
     expect(getByTestId('boolean-question').props.children.length).toBe(2);
 
-    expect(getByText('True')).not.toBeNull();
+    expect(getByText(TRUE_TEXT_I18N_REF)).not.toBeNull();
 
-    expect(getByText('False')).not.toBeNull();
+    expect(getByText(FALSE_TEXT_I18N_REF)).not.toBeNull();
 
     expect(getByTestId('true-option-button')).not.toBeNull();
 
     expect(getByTestId('false-option-button')).not.toBeNull();
+  });
+
+  it('it should render correctly when the "TRUE" option is selected', () => {
+    const { getByTestId, queryByTestId } = render(renderBooleanQuestion());
+
+    expect(getByTestId('true-option-button')).not.toBeNull();
 
     expect(queryByTestId('true-option-button-selected')).toBeNull();
 
-    expect(queryByTestId('false-option-button-selected')).toBeNull();
-  });
+    expect(getByTestId('false-option-button')).not.toBeNull();
 
-  it('it should render correctly when the True option is selected', () => {
-    const { getByTestId, queryByTestId } = render(
-      renderBooleanQuestion(undefined, 'true'),
-    );
+    expect(queryByTestId('false-option-button-selected')).toBeNull();
+
+    fireEvent.press(getByTestId('true-option-button'));
+
+    expect(queryByTestId('true-option-button')).toBeNull();
 
     expect(getByTestId('true-option-button-selected')).not.toBeNull();
 
     expect(getByTestId('false-option-button')).not.toBeNull();
 
     expect(queryByTestId('false-option-button-selected')).toBeNull();
-
-    expect(queryByTestId('true-option-button')).toBeNull();
   });
 
-  it('it should render correctly when the False option is selected', () => {
-    const { queryByTestId, getByTestId } = render(
-      renderBooleanQuestion(undefined, 'false'),
-    );
+  it('it should render correctly when the "FALSE" option is selected', () => {
+    const { getByTestId, queryByTestId } = render(renderBooleanQuestion());
+
+    expect(getByTestId('false-option-button')).not.toBeNull();
+
+    expect(queryByTestId('false-option-button-selected')).toBeNull();
+
+    expect(getByTestId('true-option-button')).not.toBeNull();
+
+    expect(queryByTestId('true-option-button-selected')).toBeNull();
+
+    fireEvent.press(getByTestId('false-option-button'));
+
+    expect(queryByTestId('false-option-button')).toBeNull();
 
     expect(getByTestId('false-option-button-selected')).not.toBeNull();
 
     expect(getByTestId('true-option-button')).not.toBeNull();
 
     expect(queryByTestId('true-option-button-selected')).toBeNull();
-
-    expect(queryByTestId('false-option-button')).toBeNull();
   });
 
-  it('it should call onSelectAnswer with "true" when the True button is pressed', () => {
-    const onSelectAnswer = jest.fn();
+  it('it should call "onPressNext" with "true" when the "TRUE" option is selected and the "NEXT" button is pressed', () => {
+    const onPressNext = jest.fn();
 
-    const { getByTestId } = render(renderBooleanQuestion(onSelectAnswer));
+    const { getByTestId } = render(renderBooleanQuestion(onPressNext));
 
     fireEvent.press(getByTestId('true-option-button'));
 
-    expect(onSelectAnswer).toBeCalledTimes(1);
+    fireEvent.press(getByTestId('next-button'));
 
-    expect(onSelectAnswer).toHaveBeenCalledWith('true');
+    expect(onPressNext).toBeCalledTimes(1);
+
+    expect(onPressNext).toHaveBeenCalledWith('true');
   });
 
-  it('it should call onSelectAnswer with "false" when the False button is pressed', () => {
-    const onSelectAnswer = jest.fn();
+  it('it should call "onPressNext" with "false" when the "FALSE" option is selected and the "NEXT" button is pressed', () => {
+    const onPressNext = jest.fn();
 
-    const { getByTestId } = render(renderBooleanQuestion(onSelectAnswer));
+    const { getByTestId } = render(renderBooleanQuestion(onPressNext));
 
     fireEvent.press(getByTestId('false-option-button'));
 
-    expect(onSelectAnswer).toBeCalledTimes(1);
+    fireEvent.press(getByTestId('next-button'));
 
-    expect(onSelectAnswer).toHaveBeenCalledWith('false');
+    expect(onPressNext).toBeCalledTimes(1);
+
+    expect(onPressNext).toHaveBeenCalledWith('false');
   });
 });

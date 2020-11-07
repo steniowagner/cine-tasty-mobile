@@ -1,36 +1,47 @@
-import React from 'react';
-import { FlatList, View } from 'react-native';
-import styled from 'styled-components';
+import React, { useState, memo } from 'react';
+import { FlatList } from 'react-native';
+
+import metrics from 'styles/metrics';
 
 import MultiChoiceQuestionListItem from './MultiChoiceQuestionListItem';
-
-const Wrapper = styled(View)`
-  max-height: ${({ theme }) => theme.metrics.getHeightFromDP('47%')}px;
-  padding-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
-`;
+import NextButton from '../NextButton';
 
 type Props = {
-  onSelectAnswer: (answer: string) => void;
-  answerSelected: string;
+  onPressNext: (answerSelected: string) => void;
+  isFocused: boolean;
   answers: string[];
 };
 
-const MultiChoiceQuestion = ({ onSelectAnswer, answerSelected, answers }: Props) => (
-  <Wrapper>
-    <FlatList
-      alwaysBounceVertical={false}
-      testID="multi-choice-options"
-      renderItem={({ item }) => (
-        <MultiChoiceQuestionListItem
-          isSelected={answerSelected === item}
-          onSelectAnswer={onSelectAnswer}
-          answer={item}
-        />
-      )}
-      keyExtractor={(item) => item}
-      data={answers}
-    />
-  </Wrapper>
-);
+const MultiChoiceQuestion = ({ onPressNext, answers }: Props) => {
+  const [selectedAnswer, setSelectedAnswer] = useState<string>('');
 
-export default MultiChoiceQuestion;
+  return (
+    <>
+      <FlatList
+        alwaysBounceVertical={false}
+        contentContainerStyle={{
+          paddingHorizontal: metrics.smallSize,
+        }}
+        testID="multi-choice-options"
+        renderItem={({ item }) => (
+          <MultiChoiceQuestionListItem
+            onSelectAnswer={() => setSelectedAnswer(item)}
+            isSelected={selectedAnswer === item}
+            answer={item}
+          />
+        )}
+        keyExtractor={(item) => item}
+        data={answers}
+      />
+      <NextButton
+        onPress={() => onPressNext(selectedAnswer)}
+        isDisabled={!selectedAnswer}
+      />
+    </>
+  );
+};
+
+const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isFocused || !nextState.isFocused)
+  && (!previousState.isFocused || nextState.isFocused);
+
+export default memo(MultiChoiceQuestion, shouldComponentUpdate);

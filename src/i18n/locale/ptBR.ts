@@ -94,6 +94,9 @@ const en: Locale = {
     noQuestionsAdviseDescription:
       "Seems like we don't have enough questions for your taste today.",
     noQuestionsAdviseSuggestion: 'Try to change the search parameters.',
+    next: 'NEXT',
+    true: 'True',
+    false: 'False',
   },
   famous: {
     searchBarPlaceholder: 'Search for an Actor or Actress...',

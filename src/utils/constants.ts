@@ -21,12 +21,7 @@ const VALUES = {
   DEFAULT_SPACING: metrics.mediumSize,
 };
 
-const ERROR_MESSAGES = {
-  NETWORK_FAILED_CONNECTION: 'Network error: Network request failed',
-};
-
 export default {
-  ERROR_MESSAGES,
   VALUES,
   KEYS,
 };

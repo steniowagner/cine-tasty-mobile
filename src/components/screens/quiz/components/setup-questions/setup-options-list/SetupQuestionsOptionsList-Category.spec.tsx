@@ -10,9 +10,9 @@ import SetupQuestionsOptionsList, {
 import { categories } from '../options';
 
 type Props = {
-  onPressSelect: (indexOptionSelected: number) => void;
-  indexLastOptionSelected: number;
-  closeModal: () => void;
+  onPressSelect?: (indexOptionSelected: number) => void;
+  indexLastOptionSelected?: number;
+  closeModal?: () => void;
 };
 
 const renderSetupQuestionsCategoryOptionsList = ({
@@ -31,21 +31,17 @@ const renderSetupQuestionsCategoryOptionsList = ({
 );
 
 describe('Testing <SetupQuestionsOptionsList /> - [Category]', () => {
-  afterEach(cleanup);
-
   beforeEach(() => {
     jest.useFakeTimers();
   });
 
-  it('should render correctly', () => {
-    const indexLastOptionSelected = 0;
+  afterEach(cleanup);
+
+  it('should render correctly on the first render', () => {
+    const onPressSelect = jest.fn();
 
     const { getAllByTestId, getByText, getByTestId } = render(
-      renderSetupQuestionsCategoryOptionsList({
-        indexLastOptionSelected,
-        onPressSelect: jest.fn,
-        closeModal: jest.fn,
-      }),
+      renderSetupQuestionsCategoryOptionsList({ onPressSelect }),
     );
 
     expect(getByTestId('options-list')).not.toBeNull();
@@ -56,38 +52,25 @@ describe('Testing <SetupQuestionsOptionsList /> - [Category]', () => {
 
     expect(getAllByTestId('option-list-item').length).toEqual(categories.length);
 
-    const listItemTexts = getAllByTestId('list-item-text');
+    fireEvent.press(getByTestId('select-button'));
 
-    expect(listItemTexts[indexLastOptionSelected].props.isSelected).toEqual(true);
+    expect(onPressSelect).toHaveBeenCalledTimes(1);
 
-    expect(
-      listItemTexts
-        .slice(1)
-        .every(listItemText => listItemText.props.isSelected === false),
-    ).toEqual(true);
+    expect(onPressSelect).toHaveBeenCalledWith(0);
   });
 
   it('should change the selected item when the user press a different item than the current', () => {
     const indexCurrentOptionSelected = 0;
-    const indexNewOptionSelected = 1;
+    const indexNewOptionSelected = (Math.random() * (categories.length - 1 - 0 + 1)) << 0;
 
-    const { getAllByTestId } = render(
+    const onPressSelect = jest.fn();
+
+    const { getAllByTestId, getByTestId } = render(
       renderSetupQuestionsCategoryOptionsList({
         indexLastOptionSelected: indexCurrentOptionSelected,
-        onPressSelect: jest.fn,
-        closeModal: jest.fn,
+        onPressSelect,
       }),
     );
-
-    const listItemTexts = getAllByTestId('list-item-text');
-
-    expect(listItemTexts[indexCurrentOptionSelected].props.isSelected).toEqual(true);
-
-    expect(
-      listItemTexts
-        .slice(1)
-        .every(listItemText => listItemText.props.isSelected === false),
-    ).toEqual(true);
 
     fireEvent.press(getAllByTestId('option-list-item')[indexNewOptionSelected]);
 
@@ -95,35 +78,26 @@ describe('Testing <SetupQuestionsOptionsList /> - [Category]', () => {
       jest.runAllTimers();
     });
 
-    expect(listItemTexts[indexNewOptionSelected].props.isSelected).toEqual(true);
+    fireEvent.press(getByTestId('select-button'));
 
-    expect(
-      listItemTexts
-        .filter((item, index) => index !== indexNewOptionSelected)
-        .every(listItemText => listItemText.props.isSelected === false),
-    ).toEqual(true);
+    expect(onPressSelect).toHaveBeenCalledWith(indexNewOptionSelected);
   });
 
   it("shouldn't change the selected item when the user press the selected item", () => {
-    const indexOptionSelected = 2;
+    const indexOptionSelected = (Math.random() * (categories.length - 1 - 0 + 1)) << 0;
 
-    const { getAllByTestId } = render(
+    const onPressSelect = jest.fn();
+
+    const { getAllByTestId, getByTestId } = render(
       renderSetupQuestionsCategoryOptionsList({
         indexLastOptionSelected: indexOptionSelected,
-        onPressSelect: jest.fn,
-        closeModal: jest.fn,
+        onPressSelect,
       }),
     );
 
-    const listItemTexts = getAllByTestId('list-item-text');
+    fireEvent.press(getByTestId('select-button'));
 
-    expect(listItemTexts[indexOptionSelected].props.isSelected).toEqual(true);
-
-    expect(
-      listItemTexts
-        .filter((item, index) => index !== indexOptionSelected)
-        .every(listItemText => listItemText.props.isSelected === false),
-    ).toEqual(true);
+    expect(onPressSelect).toHaveBeenCalledWith(indexOptionSelected);
 
     fireEvent.press(getAllByTestId('option-list-item')[indexOptionSelected]);
 
@@ -131,17 +105,14 @@ describe('Testing <SetupQuestionsOptionsList /> - [Category]', () => {
       jest.runAllTimers();
     });
 
-    expect(listItemTexts[indexOptionSelected].props.isSelected).toEqual(true);
+    fireEvent.press(getByTestId('select-button'));
 
-    expect(
-      listItemTexts
-        .filter((item, index) => index !== indexOptionSelected)
-        .every(listItemText => listItemText.props.isSelected === false),
-    ).toEqual(true);
+    expect(onPressSelect).toHaveBeenCalledWith(indexOptionSelected);
   });
 
   it('should call the "onPressSelect" with the current selected option and "closeModal" when the user press the "Select button"', () => {
-    const indexLastOptionSelected = 1;
+    const indexLastOptionSelected =
+      (Math.random() * (categories.length - 1 - 0 + 1)) << 0;
     const onPressSelect = jest.fn();
     const closeModal = jest.fn();
 
