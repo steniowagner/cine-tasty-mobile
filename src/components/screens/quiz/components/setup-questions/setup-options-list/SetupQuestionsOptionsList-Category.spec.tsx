@@ -1,7 +1,6 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
-import 'jest-styled-components/native';
 
 import { dark } from 'styles/themes';
 
