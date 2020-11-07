@@ -32,8 +32,7 @@ const useResults = ({ navigation, route }: Props): State => {
     const { questions, answers } = route.params;
 
     const result = questions.map((dataItem, index) => ({
-      isCorrect:
-        dataItem.correctAnswer.toLocaleLowerCase() === answers[index].toLocaleLowerCase(),
+      isCorrect: dataItem.correctAnswer?.toLowerCase() === answers[index].toLowerCase(),
       answer: dataItem.correctAnswer,
       userAnswer: answers[index],
       question: dataItem.question,

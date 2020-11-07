@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components';
 import { dark } from 'styles/themes';
 
 import LOCAL_ROUTES from '../routes/route-names';
-
 import Quiz, {
   I18N_CHOOSE_QUESTIONS_REF,
   I18N_DESCRIPTION_REF,
@@ -13,15 +12,9 @@ import Quiz, {
   I18N_WELCOME_REF,
 } from './Quiz';
 
-const navigate = jest.fn();
-
-const navigation = {
-  navigate,
-};
-
-const renderQuiz = () => (
+const renderQuiz = (navigate = jest.fn()) => (
   <ThemeProvider theme={dark}>
-    <Quiz navigation={navigation} />
+    <Quiz navigation={{ navigate }} />
   </ThemeProvider>
 );
 
@@ -32,13 +25,18 @@ describe('Testing <Quiz />', () => {
     const { queryByText } = render(renderQuiz());
 
     expect(queryByText(I18N_CHOOSE_QUESTIONS_REF)).not.toBeNull();
+
     expect(queryByText(I18N_DESCRIPTION_REF)).not.toBeNull();
+
     expect(queryByText(I18N_CHALLENGE_REF)).not.toBeNull();
+
     expect(queryByText(I18N_WELCOME_REF)).not.toBeNull();
   });
 
   it('should call the navigate function correctly when the user press the "CHOOSE-QUESTIONS" button', () => {
-    const { queryByTestId } = render(renderQuiz());
+    const navigate = jest.fn();
+
+    const { queryByTestId } = render(renderQuiz(navigate));
 
     fireEvent.press(queryByTestId('rounded-button'));
 

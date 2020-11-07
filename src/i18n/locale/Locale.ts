@@ -119,6 +119,9 @@ export interface Locale {
     noQuestionsAdviseTitle: string;
     noQuestionsAdviseDescription: string;
     noQuestionsAdviseSuggestion: string;
+    next: string;
+    true: string;
+    false: string;
   };
   famous: {
     i18nQueryByPaginationErrorRef: string;

@@ -3,8 +3,6 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import Icon from 'components/common/Icon';
 import styled from 'styled-components';
 
-import metrics from 'styles/metrics';
-
 interface SelectionStyleProps {
   readonly isSelected: boolean;
 }
@@ -16,7 +14,7 @@ const ListItemWrapper = styled(TouchableOpacity)<SelectionStyleProps>`
   padding: ${({ theme }) => theme.metrics.mediumSize}px;
   background-color: ${({ isSelected, theme }) => (isSelected ? theme.colors.primary : 'white')};
   border-width: 1px;
-  border-color: ${({ isSelected, theme }) => (isSelected ? theme.colors.primary : 'rgba(0, 0, 0, 0.8)')};
+  border-color: ${({ isSelected, theme }) => (isSelected ? theme.colors.primary : theme.colors.buttonText)};
   border-radius: ${({ theme }) => theme.metrics.width}px;
 `;
 
@@ -30,10 +28,14 @@ const AnswerTextWrapper = styled(View)`
 const QuestionsIndicatorText = styled(Text)<SelectionStyleProps>`
   font-family: CircularStd-Bold;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: rgba(0, 0, 0, 0.8);
-  color: ${({ isSelected }) => (isSelected ? 'white' : 'rgba(0, 0, 0, 0.8)')};
+  color: ${({ theme }) => theme.colors.buttonText};
   text-align: center;
 `;
+
+const ItemIcon = styled(Icon).attrs(({ theme }) => ({
+  size: theme.metrics.getWidthFromDP('8%'),
+  color: theme.colors.buttonText,
+}))``;
 
 type Props = {
   onSelectAnswer: (answer: string) => void;
@@ -48,10 +50,8 @@ const MultiChoiceListItem = ({ onSelectAnswer, isSelected, answer }: Props) => (
     isSelected={isSelected}
     key={answer}
   >
-    <Icon
+    <ItemIcon
       name={isSelected ? 'check-circle' : 'checkbox-blank-circle-outline'}
-      color={isSelected ? 'white' : 'rgba(0, 0, 0, 0.8)'}
-      size={metrics.getWidthFromDP('8%')}
     />
     <AnswerTextWrapper>
       <QuestionsIndicatorText

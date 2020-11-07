@@ -10,6 +10,11 @@ import NumberOfQuestions from './NumberOfQuestionts';
 import useSetupQuestions from './useSetupQuestions';
 import DropdownOption from './DropdownOption';
 
+export const QUIZ_NUMBER_OF_QUESTIONS_I18N_REF = 'translations:quiz:numberOfQuestions';
+export const QUIZ_DIFFICULTY_I18N_REF = 'translations:quiz:difficulty';
+export const QUIZ_CATEGORY_I18N_REF = 'translations:quiz:category';
+export const QUIZ_TYPE_I18N_REF = 'translations:quiz:type';
+
 const Wrapper = styled(View)`
   width: 100%;
   height: 100%;
@@ -49,22 +54,22 @@ const SetupQuestions = ({ navigation }: Props) => {
   return (
     <Wrapper>
       <View>
-        <Label>{t('translations:quiz:difficulty')}</Label>
+        <Label>{t(QUIZ_DIFFICULTY_I18N_REF)}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('DIFFICULTY')}
           selectedOption={t(`translations:quiz:${questionDifficulty.id}`)}
         />
-        <Label>{t('translations:quiz:category')}</Label>
+        <Label>{t(QUIZ_CATEGORY_I18N_REF)}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('CATEGORY')}
           selectedOption={t(`translations:quiz:${questionCategory.id}`)}
         />
-        <Label>{t('translations:quiz:type')}</Label>
+        <Label>{t(QUIZ_TYPE_I18N_REF)}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('TYPE')}
           selectedOption={t(`translations:quiz:${questionType.id}`)}
         />
-        <Label>{t('translations:quiz:numberOfQuestions')}</Label>
+        <Label>{t(QUIZ_NUMBER_OF_QUESTIONS_I18N_REF)}</Label>
         <NumberOfQuestions
           onSetNumberQuestions={setNumberOfQuestions}
           numberOfQuestions={numberOfQuestions}
