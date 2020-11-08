@@ -8,23 +8,19 @@ import { TabNavigatorItem } from 'types';
 const items: TabNavigatorItem[] = [
   {
     id: HomeTabID,
-    activeIcon: 'home-variant',
-    inactiveIcon: 'home-variant-outline',
+    icon: 'home-variant-outline',
   },
   {
     id: FamousTabID,
-    activeIcon: 'account-group',
-    inactiveIcon: 'account-group-outline',
+    icon: 'account-star',
   },
   {
     id: QuizTabID,
-    activeIcon: 'comment-question',
-    inactiveIcon: 'comment-question-outline',
+    icon: 'comment-question',
   },
   {
     id: NewsTabID,
-    activeIcon: 'newspaper',
-    inactiveIcon: 'newspaper',
+    icon: 'newspaper',
   },
 ];
 

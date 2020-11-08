@@ -5,109 +5,88 @@ import { ThemeProvider } from 'styled-components';
 import { dark } from 'styles/themes';
 
 import TabNavigatorItem from './TabNavigatorItem';
+import items from './items';
 
-const item = {
-  title: 'Home',
-  activeIcon: 'home-variant',
-  inactiveIcon: 'home-variant-outline',
+type Props = {
+  onPress?: () => void;
+  isSelected?: boolean;
+  icon: string;
 };
 
+const renderTabNavigationItem = ({
+  icon,
+  isSelected = true,
+  onPress = jest.fn(),
+}: Props) => (
+  <ThemeProvider theme={dark}>
+    <TabNavigatorItem
+      isSelected={isSelected}
+      title="ItemTitle"
+      onPress={onPress}
+      icon={icon}
+      width={12}
+    />
+  </ThemeProvider>
+);
+
 describe('Testing <TabNavigatorItem />', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+  it('should renders correctly', () => {
+    const ITEM_SELECTED = (Math.random() * (items.length - 1 - 0 + 1)) << 0;
+
+    const { getByTestId } = render(
+      renderTabNavigationItem({ icon: items[ITEM_SELECTED].icon }),
+    );
+
+    expect(getByTestId('button-wrapper')).not.toBeNull();
+
+    expect(getByTestId('item-title')).not.toBeNull();
+
+    expect(getByTestId('icon').props.name).toEqual(items[ITEM_SELECTED].icon);
   });
 
-  describe('Testing the render', () => {
-    it('should renders correctly', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider theme={dark}>
-          <TabNavigatorItem
-            inactiveIcon={item.inactiveIcon}
-            activeIcon={item.activeIcon}
-            onPress={jest.fn()}
-            title="ItemTitle"
-            width={12}
-            isSelected
-          />
-        </ThemeProvider>,
-      );
+  it('should renders correctly when the item is selected', () => {
+    const ITEM_SELECTED = (Math.random() * (items.length - 1 - 0 + 1)) << 0;
 
-      expect(queryByTestId('button-wrapper')).not.toBeNull();
+    const { getByTestId } = render(
+      renderTabNavigationItem({ icon: items[ITEM_SELECTED].icon }),
+    );
 
-      expect(queryByTestId('item-title')).not.toBeNull();
+    expect(getByTestId('button-wrapper')).not.toBeNull();
 
-      expect(queryByTestId('icon').props.name).toBe(item.activeIcon);
-    });
+    expect(getByTestId('icon').props.name).toEqual(items[ITEM_SELECTED].icon);
+
+    expect(getByTestId('icon').props.color).toEqual(dark.colors.primary);
+
+    expect(getByTestId('item-title').props.color).toEqual(dark.colors.primary);
   });
 
-  describe('Testing the render with the selection-state', () => {
-    it('should renders correctly when the item is selected', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider theme={dark}>
-          <TabNavigatorItem
-            inactiveIcon={item.inactiveIcon}
-            activeIcon={item.activeIcon}
-            onPress={jest.fn()}
-            title="ItemTitle"
-            width={12}
-            isSelected
-          />
-        </ThemeProvider>,
-      );
+  it("should renders correctly when the item isn't selected", () => {
+    const ITEM_SELECTED = (Math.random() * (items.length - 1 - 0 + 1)) << 0;
 
-      expect(queryByTestId('button-wrapper')).not.toBeNull();
+    const { getByTestId } = render(
+      renderTabNavigationItem({ icon: items[ITEM_SELECTED].icon, isSelected: false }),
+    );
 
-      expect(queryByTestId('icon').props.name).toEqual(item.activeIcon);
+    expect(getByTestId('button-wrapper')).not.toBeNull();
 
-      expect(queryByTestId('icon').props.color).toEqual(dark.colors.primary);
+    expect(getByTestId('icon').props.name).toEqual(items[ITEM_SELECTED].icon);
 
-      expect(queryByTestId('item-title').props.color).toEqual(dark.colors.primary);
-    });
+    expect(getByTestId('icon').props.color).toEqual(dark.colors.inactiveWhite);
 
-    it("should renders correctly when the item isn't selected", () => {
-      const { queryByTestId } = render(
-        <ThemeProvider theme={dark}>
-          <TabNavigatorItem
-            inactiveIcon={item.inactiveIcon}
-            activeIcon={item.activeIcon}
-            onPress={jest.fn()}
-            isSelected={false}
-            title="ItemTitle"
-            width={12}
-          />
-        </ThemeProvider>,
-      );
-
-      expect(queryByTestId('button-wrapper')).not.toBeNull();
-
-      expect(queryByTestId('icon').props.name).toEqual(item.inactiveIcon);
-
-      expect(queryByTestId('icon').props.color).toEqual(dark.colors.inactiveWhite);
-
-      expect(queryByTestId('item-title').props.color).toEqual(dark.colors.inactiveWhite);
-    });
+    expect(getByTestId('item-title').props.color).toEqual(dark.colors.inactiveWhite);
   });
 
-  describe('Testing the press action', () => {
-    it('should call the onPress() action when is pressed', () => {
-      const onPress = jest.fn();
+  it('should call the "onPress" action when is pressed', () => {
+    const ITEM_SELECTED = (Math.random() * (items.length - 1 - 0 + 1)) << 0;
 
-      const { queryByTestId } = render(
-        <ThemeProvider theme={dark}>
-          <TabNavigatorItem
-            inactiveIcon={item.inactiveIcon}
-            activeIcon={item.activeIcon}
-            title="ItemTitle"
-            onPress={onPress}
-            width={12}
-            isSelected
-          />
-        </ThemeProvider>,
-      );
+    const onPress = jest.fn();
 
-      fireEvent.press(queryByTestId('button-wrapper'));
+    const { getByTestId } = render(
+      renderTabNavigationItem({ icon: items[ITEM_SELECTED].icon, onPress }),
+    );
 
-      expect(onPress).toHaveBeenCalledTimes(1);
-    });
+    fireEvent.press(getByTestId('button-wrapper'));
+
+    expect(onPress).toHaveBeenCalledTimes(1);
   });
 });
