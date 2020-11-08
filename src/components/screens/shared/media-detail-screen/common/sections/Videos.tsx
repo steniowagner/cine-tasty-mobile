@@ -26,13 +26,13 @@ const VideoListItemWrapper = styled(TouchableOpacity)<VideoListItemWrapperStyleP
   height: ${({ theme }) => theme.metrics.getWidthFromDP('36%')}px;
   margin-left: ${({ isFirst }) => (isFirst ? CONSTANTS.VALUES.DEFAULT_SPACING : 0)}px;
   margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  border-radius: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
 const VideoThumbnailImage = styled(Image)`
   width: 100%;
   height: 100%;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  border-radius: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
 const IconWrapper = styled(View)`
@@ -42,7 +42,7 @@ const IconWrapper = styled(View)`
   align-items: center;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.4);
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  border-radius: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
 const PlayIcon = styled(Icon).attrs(({ theme }) => ({

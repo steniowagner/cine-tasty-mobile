@@ -1,13 +1,13 @@
-import React, { Suspense } from 'react';
+import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
-import { Routes as HomeRoutes } from 'components/screens/home/routes/route-names';
 import { Routes as SettingsRoutes } from 'components/screens/settings/routes/route-names';
 import { Routes as FamousRoutes } from 'components/screens/famous/routes/route-names';
+import { Routes as HomeRoutes } from 'components/screens/home/routes/route-names';
 import { Routes as QuizRoutes } from 'components/screens/quiz/routes/route-names';
 import { Routes as NewsRoutes } from 'components/screens/news/routes/route-names';
 import metrics from 'styles/metrics';
@@ -25,19 +25,24 @@ const Wrapper = styled(View)`
 
 const ITEM_WIDTH = metrics.width / items.length;
 
-type BlacklistScreens =
+type ScreenAbleToShowTabNavigation =
   | HomeRoutes
   | QuizRoutes
   | NewsRoutes
   | FamousRoutes
   | SettingsRoutes;
 
-const blacklistScreens: BlacklistScreens[] = ['SETUP_QUESTIONS', 'QUESTIONS', 'RESULTS'];
+const screensAbleToShowTabNavigator: ScreenAbleToShowTabNavigation[] = [
+  'HOME',
+  'FAMOUS',
+  'QUIZ',
+  'NEWS',
+];
 
 const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
   const { t } = useTranslation();
 
-  const checkShouldShowTabNavigator = (): boolean => {
+  const shouldShowTabNavigator = useMemo((): boolean => {
     const currentTabState = state.routes[state.index].state;
 
     if (!currentTabState) {
@@ -52,10 +57,8 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
 
     const { name } = routes[index];
 
-    return !blacklistScreens.includes(name as BlacklistScreens);
-  };
-
-  const shouldShowTabNavigator = checkShouldShowTabNavigator();
+    return screensAbleToShowTabNavigator.includes(name as ScreenAbleToShowTabNavigation);
+  }, [state]);
 
   if (!shouldShowTabNavigator) {
     return null;
@@ -70,9 +73,8 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
           onPress={() => navigation.navigate(state.routeNames[index])}
           title={t(`translations:tabs:${item.id.toLowerCase()}`)}
           isSelected={index === state.index}
-          inactiveIcon={item.inactiveIcon}
-          activeIcon={item.activeIcon}
           width={ITEM_WIDTH}
+          icon={item.icon}
           key={item.id}
         />
       ))}
@@ -80,15 +82,4 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
   );
 };
 
-const TabNavigatorWrapper = (props: any) => (
-  <Suspense
-    fallback={<View />}
-  >
-    <TabNavigator
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    />
-  </Suspense>
-);
-
-export default TabNavigatorWrapper;
+export default TabNavigator;

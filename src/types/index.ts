@@ -24,8 +24,8 @@ import {
   TVShowDetail_tvShow_cast as TVShowCast,
   TVShowDetail_tvShow_crew as TVShowCrew,
 
-  Movie_movie_cast as MovieCast,
-  Movie_movie_crew as MovieCrew,
+  MovieDetail_movie_cast as MovieCast,
+  MovieDetail_movie_crew as MovieCrew,
 
   GetArticlesVariables,
   QuestionDifficulty,
@@ -44,8 +44,7 @@ export type LocalStackRoute<T> = {
 };
 
 export type TabNavigatorItem = {
-  inactiveIcon: string;
-  activeIcon: string;
+  icon: string;
   id: string;
 };
 

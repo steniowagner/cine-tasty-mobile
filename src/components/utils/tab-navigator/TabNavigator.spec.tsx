@@ -1,118 +1,96 @@
 import React from 'react';
+import { fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
-import { fireEvent, render } from '@testing-library/react-native';
 
 import { dark } from 'styles/themes';
 
 import TabNavigator from './TabNavigator';
 import items from './items';
 
-jest.mock('Dimensions');
-
-const routeNames = items.map(item => item.id);
-
-const index = 0;
-
-const state = {
-  routeNames,
-  index,
+const getState = (currentRouteName: string) => ({
+  routeNames: items.map(item => item.id),
+  index: 0,
   routes: [
     {
       state: {
         routes: [
           {
-            name: '',
+            name: currentRouteName,
           },
         ],
         index: 0,
       },
     },
   ],
-};
+});
+
+const renderTabNavigator = (navigate = jest.fn(), currentRouteName = 'HOME') => (
+  <ThemeProvider theme={dark}>
+    <TabNavigator navigation={{ navigate }} state={getState(currentRouteName)} />
+  </ThemeProvider>
+);
 
 describe('Testing <TabNavigator />', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.useFakeTimers();
   });
 
   describe('Testing the render', () => {
     it('should render correctly', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider theme={dark}>
-          <TabNavigator navigation={{ navigate: jest.fn() }} state={state} />
-        </ThemeProvider>,
-      );
+      const { getByTestId } = render(renderTabNavigator());
 
-      expect(queryByTestId('tab-wrapper')).not.toBeNull();
+      expect(getByTestId('tab-wrapper')).not.toBeNull();
 
-      expect(Array.isArray(queryByTestId('tab-wrapper').props.children)).toBe(true);
+      expect(Array.isArray(getByTestId('tab-wrapper').props.children)).toEqual(true);
 
-      expect(queryByTestId('tab-wrapper').props.children.length).toBe(items.length);
+      expect(getByTestId('tab-wrapper').props.children.length).toEqual(items.length);
     });
 
-    it('should return null when the current screen is on the blacklist', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider theme={dark}>
-          <TabNavigator
-            navigation={{ navigate: jest.fn() }}
-            state={{
-              routeNames,
-              index,
-              routes: [
-                {
-                  state: {
-                    routes: [
-                      {
-                        name: '',
-                      },
-                    ],
-                  },
-                },
-              ],
-            }}
-          />
-        </ThemeProvider>,
-      );
+    it('should return null when the current screen is not able to show the "TabNavigator"', () => {
+      const { queryByTestId } = render(renderTabNavigator(undefined, 'OTHER_SCREEN'));
 
       expect(queryByTestId('tab-wrapper')).toBeNull();
     });
-  });
 
-  describe('Testing the children state provided by state prop', () => {
-    it('should render children correctly', () => {
-      const { queryByTestId } = render(
-        <ThemeProvider theme={dark}>
-          <TabNavigator navigation={{ navigate: jest.fn() }} state={state} />
-        </ThemeProvider>,
-      );
-
-      expect(queryByTestId('tab-wrapper').props.children[index].props.isSelected).toBe(
-        true,
-      );
+    it('should render children correctly on the first render', () => {
+      const TAB_SELECTED_INDEX = 0;
+      const { getByTestId } = render(renderTabNavigator());
 
       expect(
-        queryByTestId('tab-wrapper')
-          .props.children.slice(1, items.length)
-          .every(item => item.props.isSelected === false),
-      ).toBe(true);
-    });
-  });
+        getByTestId('tab-wrapper').props.children[TAB_SELECTED_INDEX].props.isSelected,
+      ).toEqual(true);
 
-  describe('Testing the navigate() function passed to children', () => {
+      expect(
+        getByTestId('tab-wrapper')
+          .props.children.filter((_, index) => index !== TAB_SELECTED_INDEX)
+          .every(item => item.props.isSelected === false),
+      ).toEqual(true);
+    });
+
     it('should call the navigation() when is pressed', () => {
+      const INDEX_SELECTED = (Math.random() * (items.length - 1 - 0 + 1)) << 0;
+
       const navigate = jest.fn();
 
-      const { queryByTestId } = render(
-        <ThemeProvider theme={dark}>
-          <TabNavigator navigation={{ navigate }} state={state} />
-        </ThemeProvider>,
-      );
+      const { getByTestId } = render(renderTabNavigator(navigate));
 
-      fireEvent.press(queryByTestId('tab-wrapper').props.children[index]);
+      fireEvent.press(getByTestId('tab-wrapper').props.children[INDEX_SELECTED]);
 
       expect(navigate).toBeCalledTimes(1);
 
-      expect(navigate).toBeCalledWith(items[index].id);
+      expect(navigate).toBeCalledWith(items[INDEX_SELECTED].id);
+    });
+
+    it('should call navigation when the user press in a certain tab', () => {
+      const navigate = jest.fn();
+
+      const { getAllByTestId } = render(renderTabNavigator(navigate));
+
+      fireEvent.press(getAllByTestId('button-wrapper')[0]);
+
+      expect(navigate).toHaveBeenCalledTimes(1);
+
+      expect(navigate).toHaveBeenCalledWith('HOME');
     });
   });
 });
