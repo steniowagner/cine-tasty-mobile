@@ -1,66 +1,96 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
-import { MockList, IMocks } from 'graphql-tools';
+import { IMocks } from 'graphql-tools';
 
+import { CustomizedModalChildrenType } from 'types';
+import { ArticleLanguage } from 'types/schema';
 import { dark } from 'styles/themes';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../common/popup-advice/PopupAdvice';
+import { PAGINATION_DELAY } from 'hooks/use-paginated-query/useQueryWithPagination';
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import { I18N_QUERY_BY_PAGINATION_ERROR_REF } from './useNews';
+import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 
-import News from './News';
+import News, {
+  EMPTY_NEWS_DESCRIPTION_I18N_REF,
+  EMPTY_NEWS_SUGGESTION_I18N_REF,
+  EMPTY_NEWS_TITLE_I18N_REF,
+  FILTER_MESSAGE_I18N_REF,
+} from './News';
 
-const navigation = {
-  setOptions: () => ({
-    // eslint-disable-next-line react/display-name
-    headerRight: () => <TouchableOpacity onPress={jest.fn} />,
-  }),
+const news = Array(10)
+  .fill({})
+  .map((_, index) => ({
+    publishedAt: `publishedAt-${index}`,
+    content: `content-${index}`,
+    source: `source-${index}`,
+    author: `author-${index}`,
+    title: `title-${index}`,
+    image: `image-${index}`,
+    url: `url-${index}`,
+    id: `${index}`,
+    __typename: 'Article',
+  }));
+
+const renderNews = (mockResolvers?: IMocks, navigate = jest.fn()) => {
+  const NewsComponent = ({ navigation }) => (
+    <ThemeProvider theme={dark}>
+      <AutoMockProvider mockResolvers={mockResolvers}>
+        <News navigation={{ ...navigation, navigate }} />
+      </AutoMockProvider>
+    </ThemeProvider>
+  );
+
+  return <MockedNavigation component={NewsComponent} />;
 };
-
-const renderNews = (mockResolvers?: IMocks) => (
-  <ThemeProvider theme={dark}>
-    <AutoMockProvider mockResolvers={mockResolvers}>
-      <News navigation={navigation} />
-    </AutoMockProvider>
-  </ThemeProvider>
-);
 
 describe('Testing <News />', () => {
   beforeEach(setupTimeTravel);
 
   afterEach(cleanup);
 
-  it('should show the empty-list-state when the query returns an empty array of articles', () => {
+  it('it should call the "navigate" with the correct params when the user press the "filter-button"', () => {
+    const navigate = jest.fn();
+
     const mockResolvers = {
       Articles: () => ({
-        items: () => new MockList(0),
+        items: () => news,
       }),
     };
 
-    const { queryByTestId } = render(renderNews(mockResolvers));
-
-    expect(queryByTestId('news-loading-list')).not.toBeNull();
+    const { getByTestId } = render(renderNews(mockResolvers, navigate));
 
     act(() => {
-      jest.runAllTimers();
+      try {
+        jest.runAllTimers();
+      } catch (err) {}
     });
 
-    expect(queryByTestId('list-empty-component-wrapper')).not.toBeNull();
+    expect(getByTestId('header-icon-button-wrapper-tune')).not.toBeNull();
 
-    expect(queryByTestId('news-list')).toBeNull();
+    fireEvent.press(getByTestId('header-icon-button-wrapper-tune'));
+
+    expect(navigate).toHaveBeenCalledTimes(1);
+
+    expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
+
+    expect(navigate.mock.calls[0][1].headerText).toEqual(FILTER_MESSAGE_I18N_REF);
+
+    expect(navigate.mock.calls[0][1].type).toEqual(CustomizedModalChildrenType.LANGUAGE);
+
+    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
+
+    expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(
+      ArticleLanguage.EN,
+    );
   });
 
-  it('should paginate to the next page when the user reach the bottom of the news-list and the previous query return "hasMore" as "true"', () => {
-    const NEWS_COUNT = 10;
-
+  it('it should render the loading-state when the component mounts', () => {
     const mockResolvers = {
       Articles: () => ({
-        items: () => new MockList(NEWS_COUNT),
-        hasMore: true,
+        items: () => news,
       }),
     };
 
@@ -71,12 +101,59 @@ describe('Testing <News />', () => {
     act(() => {
       try {
         jest.runAllTimers();
-      } catch (err) {
-        console.log(err.message);
-      }
+      } catch (err) {}
+    });
+  });
+
+  it('should show the empty-list-state when the query returns an empty array of articles', () => {
+    const mockResolvers = {
+      Articles: () => ({
+        items: () => [],
+      }),
+    };
+
+    const { queryByTestId, getByText } = render(renderNews(mockResolvers));
+
+    expect(queryByTestId('news-loading-list')).not.toBeNull();
+
+    act(() => {
+      try {
+        jest.runAllTimers();
+      } catch (err) {}
     });
 
-    expect(queryByTestId('news-list').props.data.length).toEqual(NEWS_COUNT);
+    expect(queryByTestId('advise-wrapper')).not.toBeNull();
+
+    expect(getByText(EMPTY_NEWS_DESCRIPTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(EMPTY_NEWS_SUGGESTION_I18N_REF)).not.toBeNull();
+
+    expect(getByText(EMPTY_NEWS_TITLE_I18N_REF)).not.toBeNull();
+
+    expect(queryByTestId('news-list')).toBeNull();
+  });
+
+  it('should paginate to the next page when the user reach the bottom of the news-list and the previous query return "hasMore" as "true"', () => {
+    const mockResolvers = {
+      Articles: () => ({
+        items: () => news,
+        hasMore: true,
+      }),
+    };
+
+    const { queryByTestId, getByTestId } = render(renderNews(mockResolvers));
+
+    expect(getByTestId('news-loading-list')).not.toBeNull();
+
+    expect(queryByTestId('news-list')).toBeNull();
+
+    act(() => {
+      try {
+        jest.runAllTimers();
+      } catch (err) {}
+    });
+
+    expect(queryByTestId('news-list').props.data.length).toEqual(news.length);
 
     expect(queryByTestId('pagination-footer-wrapper')).toBeNull();
 
@@ -93,14 +170,16 @@ describe('Testing <News />', () => {
     expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
     act(() => {
-      try {
-        jest.runAllTimers();
-      } catch (err) {
-        console.log(err.message);
-      }
+      timeTravel(PAGINATION_DELAY);
     });
 
-    expect(queryByTestId('news-list').props.data.length).toEqual(NEWS_COUNT * 2);
+    act(() => {
+      try {
+        jest.runAllTimers();
+      } catch (err) {}
+    });
+
+    expect(queryByTestId('news-list').props.data.length).toEqual(news.length * 2);
 
     expect(queryByTestId('pagination-footer-wrapper')).toBeNull();
 
@@ -110,11 +189,9 @@ describe('Testing <News />', () => {
   });
 
   it('should not paginate to the next page when the user reach the bottom of the news-list and the previous query returned "hasMore" as "false"', () => {
-    const NEWS_COUNT = 10;
-
     const mockResolvers = {
       Articles: () => ({
-        items: () => new MockList(NEWS_COUNT),
+        items: () => news,
         hasMore: false,
       }),
     };
@@ -126,14 +203,10 @@ describe('Testing <News />', () => {
     act(() => {
       try {
         jest.runAllTimers();
-      } catch (err) {
-        console.log(err.message);
-      }
+      } catch (err) {}
     });
 
-    expect(queryByTestId('news-list').props.data.length).toEqual(NEWS_COUNT);
-
-    expect(queryByTestId('pagination-footer-wrapper')).toBeNull();
+    expect(queryByTestId('news-list').props.data.length).toEqual(news.length);
 
     expect(queryByTestId('loading-footer-wrapper')).toBeNull();
 
@@ -146,78 +219,19 @@ describe('Testing <News />', () => {
     expect(queryByTestId('loading-footer-wrapper')).toBeNull();
 
     expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(queryByTestId('news-list').props.data.length).toEqual(NEWS_COUNT);
-
-    expect(queryByTestId('pagination-footer-wrapper')).toBeNull();
-
-    expect(queryByTestId('loading-footer-wrapper')).toBeNull();
-
-    expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
-  });
-
-  it('should show an error message about pagination-error and a list-footer-error-state when the user tries to paginated and some error occurs', () => {
-    const NEWS_COUNT = 10;
-
-    const mockResolvers = {
-      Articles: () => ({
-        items: () => new MockList(NEWS_COUNT),
-        hasMore: true,
-      }),
-    };
-
-    const mockResolversWithError = {
-      Articles: () => new Error(),
-    };
-
-    const { queryByTestId, queryByText, rerender } = render(renderNews(mockResolvers));
-
-    expect(queryByTestId('news-loading-list')).not.toBeNull();
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(queryByTestId('news-list').props.data.length).toEqual(NEWS_COUNT);
-
-    expect(queryByTestId('pagination-footer-wrapper')).toBeNull();
-
-    expect(queryByTestId('loading-footer-wrapper')).toBeNull();
-
-    expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
-
-    rerender(renderNews(mockResolversWithError));
-
-    fireEvent(queryByTestId('news-list'), 'onEndReached');
-
-    expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
-
-    expect(queryByTestId('loading-footer-wrapper')).not.toBeNull();
-
-    expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
-
-    act(() => {
-      timeTravel(DEFAULT_ANIMATION_DURATION);
-    });
 
     act(() => {
       try {
         jest.runAllTimers();
-      } catch (err) {
-        expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
-
-        expect(queryByTestId('pagination-footer-reload-button')).not.toBeNull();
-
-        expect(queryByTestId('loading-footer-wrapper')).toBeNull();
-
-        expect(queryByTestId('popup-advice-wrapper')).not.toBeNull();
-
-        expect(queryByText(I18N_QUERY_BY_PAGINATION_ERROR_REF)).not.toBeNull();
-      }
+      } catch (err) {}
     });
+
+    expect(queryByTestId('news-list').props.data.length).toEqual(news.length);
+
+    expect(queryByTestId('pagination-footer-wrapper')).toBeNull();
+
+    expect(queryByTestId('loading-footer-wrapper')).toBeNull();
+
+    expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
   });
 });

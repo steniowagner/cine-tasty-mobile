@@ -26,21 +26,17 @@ describe('Testing <LangugeListItem />', () => {
   });
 
   it('should render correctly when is selected', () => {
-    const { getAllByTestId, getByTestId } = render(renderLanguageFilter(true));
+    const { getByTestId } = render(renderLanguageFilter(true));
 
-    expect(getAllByTestId('icon')).not.toBeNull();
+    expect(getByTestId('icon')).not.toBeNull();
 
     expect(getByTestId('outter-flag-wrapper').props.isSelected).toBe(true);
   });
 
   it('should render correctly when is not selected', () => {
-    const { getAllByTestId, getByTestId } = render(renderLanguageFilter(false));
+    const { queryByTestId, getByTestId } = render(renderLanguageFilter(false));
 
-    try {
-      expect(getAllByTestId('icon'));
-    } catch (err) {
-      expect(err.message).toEqual('No instances found with testID: icon');
-    }
+    expect(queryByTestId('icon')).toBeNull();
 
     expect(getByTestId('outter-flag-wrapper').props.isSelected).toBe(false);
   });

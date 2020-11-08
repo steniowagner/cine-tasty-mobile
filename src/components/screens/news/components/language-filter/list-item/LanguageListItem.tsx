@@ -21,7 +21,7 @@ const Wrapper = styled(TouchableOpacity)`
 
 const LanguageText = styled(Text)`
   margin-left: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  color: rgba(0, 0, 0, 0.8);
+  color: ${({ theme }) => theme.colors.buttonText};
   font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Bold;
 `;
@@ -42,7 +42,7 @@ const InnerFlagWrapper = styled(View)`
 
 const CheckIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('10%'),
-  name: 'check-circle-outline',
+  name: 'checkbox-marked-circle',
   color: theme.colors.primary,
 }))``;
 
@@ -57,9 +57,6 @@ type Props = {
   isSelected: boolean;
   name: string;
 };
-
-const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isSelected || !nextState.isSelected)
-  && (!previousState.isSelected || nextState.isSelected);
 
 const LanguageListItem = ({
   isSelected, onPress, name, Flag,
@@ -86,5 +83,8 @@ const LanguageListItem = ({
     {isSelected && <CheckIcon />}
   </Wrapper>
 );
+
+const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isSelected || !nextState.isSelected)
+  && (!previousState.isSelected || nextState.isSelected);
 
 export default memo(LanguageListItem, shouldComponentUpdate);

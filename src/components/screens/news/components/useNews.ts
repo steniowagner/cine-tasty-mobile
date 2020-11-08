@@ -10,8 +10,8 @@ import {
   GetArticles,
 } from 'types/schema';
 
+export const I18N_QUERY_BY_PAGINATION_ERROR_REF = 'translations:news:i18nQueryByPaginationErrorRef';
 export const I18N_ENTRY_QUERY_ERROR_REF = 'translations:news:i18EntryQueryErrorRef';
-export const I18N_QUERY_BY_PAGINATION_ERROR_REF = 'i18nQueryByPaginationErrorRef';
 
 export const GET_ARTICLES = gql`
   query GetArticles($page: Int!, $language: ArticleLanguage!) {
@@ -36,12 +36,10 @@ type State = {
   onPressTopReloadButton: () => Promise<void>;
   onPressFooterReloadButton: () => void;
   articleLanguage: ArticleLanguage;
-  onPullRefreshControl: () => void;
   hasPaginationError: boolean;
   t: (key: string) => string;
   onEndReached: () => void;
   isPaginating: boolean;
-  isRefreshing: boolean;
   articles: Article[];
   isLoading: boolean;
   error: string;
@@ -52,7 +50,6 @@ const useNews = (): State => {
   const [articleLanguage, setArticleLanguage] = useState<ArticleLanguage>(
     ArticleLanguage.EN,
   );
-  const [isRefreshing, setIsRefrehing] = useState<boolean>(false);
   const [articles, setArticles] = useState<Article[]>([]);
   const [error, setError] = useState<string>('');
 
@@ -101,24 +98,6 @@ const useNews = (): State => {
     onPaginateQuery();
   }, []);
 
-  const handleRefreshQuery = useCallback(async () => {
-    if (error) {
-      setError('');
-    }
-
-    setArticles([]);
-
-    await onReloadData();
-
-    setIsRefrehing(false);
-  }, [error]);
-
-  useEffect(() => {
-    if (isRefreshing) {
-      handleRefreshQuery();
-    }
-  }, [isRefreshing]);
-
   useEffect(() => {
     if (error) {
       setError('');
@@ -146,7 +125,6 @@ const useNews = (): State => {
   }, []);
 
   return {
-    onPullRefreshControl: () => setIsRefrehing(true),
     onEndReached: onPaginateQuery,
     onPressFooterReloadButton,
     onPressTopReloadButton,
@@ -154,7 +132,6 @@ const useNews = (): State => {
     hasPaginationError,
     articleLanguage,
     isPaginating,
-    isRefreshing,
     articles,
     isLoading,
     error,

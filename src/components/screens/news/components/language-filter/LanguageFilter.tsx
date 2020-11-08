@@ -1,7 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import styled from 'styled-components';
 
 import ModalSelectButton from 'components/common/ModalSelectButton';
 import { ArticleLanguage } from 'types/schema';
@@ -11,12 +9,6 @@ import useLanguageFilter from './useLanguageFilter';
 import languages from './languages';
 
 export const ANIMATION_TIMING = 400;
-
-const LineDivider = styled(View)`
-  width: 100%;
-  height: 1.8px;
-  background-color: #f2f2f2;
-`;
 
 type Props = {
   onSelectLanguage: (language: ArticleLanguage) => void;
@@ -54,7 +46,6 @@ const LanguageFilter = ({
             Flag={item.Flag}
           />
         )}
-        ItemSeparatorComponent={() => <LineDivider />}
         initialScrollIndex={initialFlatListIndex}
         getItemLayout={(_, index) => ({
           offset: ITEM_LIST_HEIGHT * index,

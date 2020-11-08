@@ -5,7 +5,6 @@ import { FlatList, Platform, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
-import CustomRefreshControl from 'components/common/CustomRefreshControl';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import HeaderIconButton from 'components/common/HeaderIconButton';
@@ -20,9 +19,14 @@ import NewsListItem from './list-item/NewsListItem';
 import NewsLoading from './loading-list/NewsLoading';
 import useNews from './useNews';
 
-const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
-
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
+
+export const EMPTY_NEWS_DESCRIPTION_I18N_REF = 'translations:news:emptyList:description';
+export const EMPTY_NEWS_SUGGESTION_I18N_REF = 'translations:news:emptyList:suggestion';
+export const EMPTY_NEWS_TITLE_I18N_REF = 'translations:news:emptyList:title';
+export const FILTER_MESSAGE_I18N_REF = 'translations:news:filterMessage';
+
+const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
 type NewsScreenNavigationProp = StackNavigationProp<NewsStackParams, 'NEWS'>;
 
@@ -35,12 +39,10 @@ const News = ({ navigation }: Props) => {
     onPressFooterReloadButton,
     onSelectArticleLanguage,
     onPressTopReloadButton,
-    onPullRefreshControl,
     hasPaginationError,
     articleLanguage,
     onEndReached,
     isPaginating,
-    isRefreshing,
     articles,
     isLoading,
     error,
@@ -52,8 +54,8 @@ const News = ({ navigation }: Props) => {
       headerRight: () => (
         <HeaderIconButton
           onPress={() => navigation.navigate('CUSTOM_MODAL', {
-            headerText: t('translations:news:filterMessage'),
             type: CustomizedModalChildrenType.LANGUAGE,
+            headerText: t(FILTER_MESSAGE_I18N_REF),
             extraData: {
               onPressSelect: onSelectArticleLanguage,
               lastItemSelected: articleLanguage,
@@ -79,9 +81,9 @@ const News = ({ navigation }: Props) => {
         testID="list-empty-component-wrapper"
       >
         <Advise
-          description={t('translations:news:emptyList:description')}
-          suggestion={t('translations:news:emptyList:suggestion')}
-          title={t('translations:news:emptyList:title')}
+          description={t(EMPTY_NEWS_DESCRIPTION_I18N_REF)}
+          suggestion={t(EMPTY_NEWS_SUGGESTION_I18N_REF)}
+          title={t(EMPTY_NEWS_TITLE_I18N_REF)}
           icon="alert-box"
         />
       </View>
@@ -114,12 +116,6 @@ const News = ({ navigation }: Props) => {
             image={item.image}
             text={item.title}
             url={item.url}
-          />
-        )}
-        refreshControl={(
-          <CustomRefreshControl
-            onRefresh={onPullRefreshControl}
-            refreshing={isRefreshing}
           />
         )}
         keyExtractor={(item, index) => `${item.id}${index}`}

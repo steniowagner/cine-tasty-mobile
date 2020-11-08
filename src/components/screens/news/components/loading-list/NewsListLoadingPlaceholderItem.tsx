@@ -8,11 +8,10 @@ import {
   TextWrapper as TextPlaceholderWrapper,
   LoadingWrapper,
   imageWrapper,
-} from './common-styles';
+} from '../list-item/common-styles';
 
 type Props = {
   theme: DefaultTheme;
-  index: number;
 };
 
 const textPlaceholderStyle = {
@@ -21,13 +20,12 @@ const textPlaceholderStyle = {
   borderRadius: metrics.extraSmallSize,
 };
 
-const NewsListItemPlaceholder = ({ index, theme }: Props) => (
+const NewsListItemPlaceholder = ({ theme }: Props) => (
   <LoadingWrapper
     testID="news-list-item"
   >
     <LoadingPlaceholder
       colors={theme.colors.loadingColors}
-      indexToDelayAnimation={index}
       style={imageWrapper}
     />
     <TextPlaceholderWrapper>
@@ -37,12 +35,10 @@ const NewsListItemPlaceholder = ({ index, theme }: Props) => (
           marginBottom: metrics.mediumSize,
           ...textPlaceholderStyle,
         }}
-        indexToDelayAnimation={index}
       />
       <LoadingPlaceholder
         colors={theme.colors.loadingColors}
         style={textPlaceholderStyle}
-        indexToDelayAnimation={index}
       />
     </TextPlaceholderWrapper>
   </LoadingWrapper>
