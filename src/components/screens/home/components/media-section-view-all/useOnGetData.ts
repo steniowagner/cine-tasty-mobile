@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import {
+  TrendingAiringTodayTVShows,
   TrendingOnTheAirTVShows,
   TrendingPopularTVShows,
   TrendingTopRatedTVShows,
@@ -25,6 +26,7 @@ type MovieData =
   | TrendingUpcomingMovies;
 
 type TVShowData =
+  | TrendingAiringTodayTVShows
   | TrendingOnTheAirTVShows
   | TrendingPopularTVShows
   | TrendingTopRatedTVShows;
@@ -109,10 +111,18 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
         },
         topRated: (data: TVShowData): DataResult => {
           const topRatedTVShowsData = data as TrendingTopRatedTVShows;
-          console.log('data: ', data);
+
           return {
             hasMore: topRatedTVShowsData.trendingTvShows.topRated.hasMore,
             items: topRatedTVShowsData.trendingTvShows.topRated.items,
+          };
+        },
+        airingToday: (data: TVShowData): DataResult => {
+          const topRatedTVShowsData = data as TrendingAiringTodayTVShows;
+
+          return {
+            hasMore: topRatedTVShowsData.trendingTvShows.airingToday.hasMore,
+            items: topRatedTVShowsData.trendingTvShows.airingToday.items,
           };
         },
       };

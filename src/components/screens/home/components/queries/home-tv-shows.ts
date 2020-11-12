@@ -20,6 +20,14 @@ export const GET_TRENDING_TV_SHOWS = gql`
           ...TrendingTVShow
         }
       }
+      airingToday(args: { page: $page, language: $language }) {
+        totalResults
+        totalPages
+        hasMore
+        items {
+          ...TrendingTVShow
+        }
+      }
       popular(args: { page: $page, language: $language }) {
         totalResults
         totalPages

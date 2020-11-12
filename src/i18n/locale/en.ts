@@ -161,6 +161,8 @@ const en: Locale = {
       popular: 'Popular',
       topRatedViewAllTitle: 'topRatedViewAllTitle',
       topRated: 'Top Rated',
+      airingToday: 'Airing Today',
+      airingTodayViewAllTitle: 'airingTodayViewAllTitle',
     },
     tvShowsPaginationError: 'tvShowsPaginationError',
     moviesPaginationError: 'moviesPaginationError',

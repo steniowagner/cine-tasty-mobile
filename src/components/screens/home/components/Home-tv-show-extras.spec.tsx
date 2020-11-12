@@ -63,6 +63,13 @@ const trendingTVShowsWithTitle = {
     items: trendingTVShowsItemsWithTitle,
     __typename: 'TrendingTVShowsQueryResult',
   },
+  airingToday: {
+    totalResults: 1,
+    totalPages: 2,
+    hasMore: true,
+    items: trendingTVShowsItemsWithTitle,
+    __typename: 'TrendingTVShowsQueryResult',
+  },
   __typename: 'TrendingTVShows',
 };
 
@@ -82,6 +89,13 @@ const trendingTVShows = {
     __typename: 'TrendingTVShowsQueryResult',
   },
   topRated: {
+    totalResults: 1,
+    totalPages: 2,
+    hasMore: true,
+    items: trendingTVShowsItems,
+    __typename: 'TrendingTVShowsQueryResult',
+  },
+  airingToday: {
     totalResults: 1,
     totalPages: 2,
     hasMore: true,

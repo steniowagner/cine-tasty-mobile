@@ -11,6 +11,8 @@ import { SCREEN_ID } from './media-section-view-all/MediaSectionViewAll';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
 import {
+  AIRING_TODAY_VIEW_ALL_TITLE_i18N_REF as TV_SHOWS_AIRING_TODAY_VIEW_ALL_TITLE_i18N_REF,
+  AIRING_TODAY_SECTION_TITLE_i18N_REF as TV_SHOWS_AIRING_TODAY_SECTION_TITLE_i18N_REF,
   ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF as TV_SHOWS_ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF,
   TOP_RATED_VIEW_ALL_TITLE_i18N_REF as TV_SHOWS_TOP_RATED_VIEW_ALL_TITLE_i18N_REF,
   ON_THE_AIR_SECTION_TITLE_i18N_REF as TV_SHOWS_ON_THE_AIR_SECTION_TITLE_i18N_REF,
@@ -26,7 +28,7 @@ import {
 } from './hooks/usePressMapping';
 import Home from './Home';
 
-const NUMBER_OF_SECTIONS = 3;
+const NUMBER_OF_SECTIONS = 4;
 
 const trendingTVShowsItems = Array(10)
   .fill({})
@@ -174,6 +176,14 @@ describe('Testing <Home /> - [TVShows]', () => {
     expect(getByTestId('top3-list')).not.toBeNull();
 
     expect(getAllByTestId('section-wrapper').length).toEqual(NUMBER_OF_SECTIONS);
+
+    // airing-today-section
+
+    expect(getByText(TV_SHOWS_AIRING_TODAY_SECTION_TITLE_i18N_REF)).not.toBeNull();
+
+    expect(
+      getByTestId(`home-section-${TV_SHOWS_AIRING_TODAY_SECTION_TITLE_i18N_REF}`),
+    ).not.toBeNull();
 
     // on-the-air-section
 

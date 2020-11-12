@@ -1,3 +1,4 @@
+export { AIRING_TODAY_TV_SHOWS } from './tv-shows/airingTodayTVShows';
 export { ON_THE_AIR_TV_SHOWS } from './tv-shows/onTheAirTVShows';
 export { TOP_RATED_TV_SHOWS } from './tv-shows/topRatedTVShows';
 export { POPULAR_TV_SHOWS } from './tv-shows/popularTVShows';

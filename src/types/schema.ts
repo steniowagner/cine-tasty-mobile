@@ -190,6 +190,45 @@ export interface TrendingUpcomingMoviesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TrendingAiringTodayTVShows
+// ====================================================
+
+export interface TrendingAiringTodayTVShows_trendingTvShows_airingToday_items {
+  __typename: "BaseTVShow";
+  voteAverage: number | null;
+  title: string | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  genreIds: string[];
+  id: number | null;
+}
+
+export interface TrendingAiringTodayTVShows_trendingTvShows_airingToday {
+  __typename: "TrendingTVShowsQueryResult";
+  hasMore: boolean;
+  items: TrendingAiringTodayTVShows_trendingTvShows_airingToday_items[];
+}
+
+export interface TrendingAiringTodayTVShows_trendingTvShows {
+  __typename: "TrendingTVShows";
+  airingToday: TrendingAiringTodayTVShows_trendingTvShows_airingToday;
+}
+
+export interface TrendingAiringTodayTVShows {
+  trendingTvShows: TrendingAiringTodayTVShows_trendingTvShows;
+}
+
+export interface TrendingAiringTodayTVShowsVariables {
+  page: number;
+  language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: TrendingOnTheAirTVShows
 // ====================================================
 
@@ -408,6 +447,24 @@ export interface TrendingMoviesVariables {
 // GraphQL query operation: TrendingTVShows
 // ====================================================
 
+export interface TrendingTVShows_trendingTvShows_airingToday_items {
+  __typename: "BaseTVShow";
+  voteAverage: number | null;
+  title: string | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  genreIds: string[];
+  id: number | null;
+}
+
+export interface TrendingTVShows_trendingTvShows_airingToday {
+  __typename: "TrendingTVShowsQueryResult";
+  totalResults: number;
+  totalPages: number;
+  hasMore: boolean;
+  items: TrendingTVShows_trendingTvShows_airingToday_items[];
+}
+
 export interface TrendingTVShows_trendingTvShows_onTheAir_items {
   __typename: "BaseTVShow";
   voteAverage: number | null;
@@ -464,6 +521,7 @@ export interface TrendingTVShows_trendingTvShows_topRated {
 
 export interface TrendingTVShows_trendingTvShows {
   __typename: "TrendingTVShows";
+  airingToday: TrendingTVShows_trendingTvShows_airingToday;
   onTheAir: TrendingTVShows_trendingTvShows_onTheAir;
   popular: TrendingTVShows_trendingTvShows_popular;
   topRated: TrendingTVShows_trendingTvShows_topRated;
@@ -525,12 +583,11 @@ export interface GetArticlesVariables {
 
 export interface GetQuizQuestions_quiz {
   __typename: "Question";
-  options: string[];
-  category: string;
-  type: string;
-  difficulty: string;
-  question: string;
   correctAnswer: string;
+  category: string;
+  question: string;
+  options: string[];
+  type: string;
 }
 
 export interface GetQuizQuestions {
