@@ -71,6 +71,8 @@ export interface Locale {
       popularViewAllTitle: string;
       topRated: string;
       topRatedViewAllTitle: string;
+      airingToday: string;
+      airingTodayViewAllTitle: string;
     };
   };
   news: {

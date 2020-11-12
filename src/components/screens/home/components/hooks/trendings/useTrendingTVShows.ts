@@ -20,6 +20,9 @@ export const POPULAR_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows
 export const TOP_RATED_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:topRatedViewAllTitle';
 export const TOP_RATED_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:topRated';
 
+export const AIRING_TODAY_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:airingTodayViewAllTitle';
+export const AIRING_TODAY_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:airingToday';
+
 type Props = {
   rawTrendingTVShows: TrendingTVShows;
 };
@@ -39,18 +42,23 @@ const useTrendingMovies = ({ rawTrendingTVShows }: Props): State => {
     (trendingItemKey: TrendingItemKey, dataset: TrendingTVShow[]): HomeSection => {
       const sectionMapping: Record<TrendingItemKey, Omit<HomeSection, 'data'>> = {
         onTheAir: {
-          viewAllTitle: t('translations:home:trendingTvShows:onTheAirViewAllTitle'),
-          sectionTitle: t('translations:home:trendingTvShows:onTheAir'),
+          viewAllTitle: t(ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF),
+          sectionTitle: t(ON_THE_AIR_SECTION_TITLE_i18N_REF),
           id: 'onTheAir',
         },
+        airingToday: {
+          viewAllTitle: t(AIRING_TODAY_VIEW_ALL_TITLE_i18N_REF),
+          sectionTitle: t(AIRING_TODAY_SECTION_TITLE_i18N_REF),
+          id: 'airingToday',
+        },
         popular: {
-          viewAllTitle: t('translations:home:trendingTvShows:popularViewAllTitle'),
-          sectionTitle: t('translations:home:trendingTvShows:popular'),
+          viewAllTitle: t(POPULAR_VIEW_ALL_TITLE_i18N_REF),
+          sectionTitle: t(POPULAR_SECTION_TITLE_i18N_REF),
           id: 'popular',
         },
         topRated: {
-          viewAllTitle: t('translations:home:trendingTvShows:topRatedViewAllTitle'),
-          sectionTitle: t('translations:home:trendingTvShows:topRated'),
+          viewAllTitle: t(TOP_RATED_VIEW_ALL_TITLE_i18N_REF),
+          sectionTitle: t(TOP_RATED_SECTION_TITLE_i18N_REF),
           id: 'topRated',
         },
       };

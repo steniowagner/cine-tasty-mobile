@@ -63,6 +63,7 @@ const useMediaSectionViewAll = ({
 
   const getTVShowProperQuery = useCallback((trendingMovieKey: TrendingMediaItemKey) => {
     const tvShowTrendingsMapping: Record<TrendingTVShowsKeys, DocumentNode> = {
+      airingToday: TrendingQueries.AIRING_TODAY_TV_SHOWS,
       onTheAir: TrendingQueries.ON_THE_AIR_TV_SHOWS,
       popular: TrendingQueries.POPULAR_TV_SHOWS,
       topRated: TrendingQueries.TOP_RATED_TV_SHOWS,
