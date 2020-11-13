@@ -43,7 +43,7 @@ const LanguageFilter = ({
             onPress={() => {
               setLanguageSelected(item.id);
             }}
-            Flag={item.Flag}
+            flag={item.flag}
           />
         )}
         initialScrollIndex={initialFlatListIndex}

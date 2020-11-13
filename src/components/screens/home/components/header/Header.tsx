@@ -1,9 +1,11 @@
 import React from 'react';
-import { Platform, View } from 'react-native';
+import { TouchableOpacity, Platform, View } from 'react-native';
 import styled from 'styled-components';
 
 import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import HeaderIconButton from 'components/common/HeaderIconButton';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import CONSTANTS from 'utils/constants';
 
 import MediaSwitcher from '../media-switcher/MediaSwitcher';
 
@@ -25,6 +27,12 @@ const Wrapper = styled(View)`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
+const SettingsButton = styled(TouchableOpacity)`
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
+  margin-left: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+`;
+
 type Props = {
   shouldDisableActions: boolean;
   onPresSwitchTVShows: () => void;
@@ -41,12 +49,15 @@ const Header = ({
   onPressSearch,
 }: Props) => (
   <Wrapper>
-    <HeaderIconButton
+    <SettingsButton
       disabled={shouldDisableActions}
       onPress={onPressSettings}
-      iconName="settings"
-      withMarginLeft
-    />
+      testID="header-icon-button-wrapper-settings"
+    >
+      <SVGIcon
+        id="settings"
+      />
+    </SettingsButton>
     <MediaSwitcher
       onSwitchToTVShows={onPresSwitchTVShows}
       onSwitchToMovies={onPressSwitchMovies}

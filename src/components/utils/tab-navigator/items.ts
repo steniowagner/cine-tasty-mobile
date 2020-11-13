@@ -8,7 +8,7 @@ import { TabNavigatorItem } from 'types';
 const items: TabNavigatorItem[] = [
   {
     id: HomeTabID,
-    icon: 'home-variant-outline',
+    icon: 'home-variant',
   },
   {
     id: FamousTabID,

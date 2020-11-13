@@ -11,7 +11,7 @@ const renderLanguageFilter = (isSelected: boolean, onPress = jest.fn()) => (
   <ThemeProvider theme={dark}>
     <LanguageListItem
       name={languages[0].name}
-      Flag={languages[0].Flag}
+      flag={languages[0].flag}
       isSelected={isSelected}
       onPress={onPress}
     />
