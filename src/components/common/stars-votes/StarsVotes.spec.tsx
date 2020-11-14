@@ -2,12 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import StarsVotes from './StarsVotes';
 
 const renderStarsVotes = (withText: boolean, votes: number, voteCount?: number) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <StarsVotes withText={withText} votes={votes} voteCount={voteCount} />
   </ThemeProvider>
 );

@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
 import { CustomizedModalChildrenType } from 'types';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
@@ -27,7 +27,7 @@ const getNavigationParam = (navigate = jest.fn) => ({
 });
 
 const renderSetupQuestions = (navigate = jest.fn) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <SetupQuestions navigation={getNavigationParam(navigate)} />
   </ThemeProvider>
 );

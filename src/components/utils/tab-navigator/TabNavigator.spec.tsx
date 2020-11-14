@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import TabNavigator from './TabNavigator';
 import items from './items';
@@ -25,7 +25,7 @@ const getState = (currentRouteName: string) => ({
 });
 
 const renderTabNavigator = (navigate = jest.fn(), currentRouteName = 'HOME') => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <TabNavigator navigation={{ navigate }} state={getState(currentRouteName)} />
   </ThemeProvider>
 );

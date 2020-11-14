@@ -21,7 +21,6 @@ import CustomModal, {
 } from 'components/screens/shared/customized-modal/routes/stack-routes';
 
 import TabNavigator from 'components/utils/tab-navigator/TabNavigator';
-import { ThemeID } from 'types';
 
 import HomeStack, {
   TabID as HomeTabID,
@@ -79,8 +78,8 @@ type Props = {
 const Routes = ({ theme }: Props) => (
   <>
     <StatusBar
-      barStyle={theme.id === ThemeID.DARK ? 'light-content' : 'dark-content'}
       backgroundColor={theme.colors.secondary}
+      barStyle="light-content"
       animated
     />
     <NavigationContainer

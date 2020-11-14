@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import ListItemWrapperQuestion from './ListItemWrapperQuestion';
 
@@ -14,7 +14,7 @@ const defaultProps = {
 };
 
 const renderQuestions = () => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <ListItemWrapperQuestion
       currentQuestionIndex={defaultProps.currentQuestionIndex}
       numberOfQuestions={defaultProps.numberOfQuestions}

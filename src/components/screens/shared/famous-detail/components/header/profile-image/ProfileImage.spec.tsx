@@ -3,12 +3,12 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import ProfileImage from './ProfileImage';
 
 const renderProfileImage = (profileImage = 'profileImage') => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <ProfileImage profileImage={profileImage} />
   </ThemeProvider>
 );

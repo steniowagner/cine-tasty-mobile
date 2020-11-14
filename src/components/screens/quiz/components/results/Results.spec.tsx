@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, render, act } from '@testing-library/react-native';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { correctAnswerConfig, incorrectAnswerConfig } from './ResultListItem';
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
@@ -43,7 +43,7 @@ const route: QuestionsScreenRouteProp = {
 };
 
 const renderResults = (mockedNavigation = navigation, mockedRoute = route) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <Results navigation={mockedNavigation} route={mockedRoute} />
   </ThemeProvider>
 );

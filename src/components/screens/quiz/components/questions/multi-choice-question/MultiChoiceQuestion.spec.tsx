@@ -2,14 +2,14 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import MultiChoiceQuestion from './MultiChoiceQuestion';
 
 const mockedAnswers = ['A', 'B', 'C', 'D'];
 
 const renderMultiChoice = (onPressNext = jest.fn()) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <MultiChoiceQuestion onPressNext={onPressNext} answers={mockedAnswers} isFocused />
   </ThemeProvider>
 );

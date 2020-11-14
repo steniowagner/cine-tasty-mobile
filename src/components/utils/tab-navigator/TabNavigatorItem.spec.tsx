@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import TabNavigatorItem from './TabNavigatorItem';
 import items from './items';
@@ -18,7 +18,7 @@ const renderTabNavigationItem = ({
   isSelected = true,
   onPress = jest.fn(),
 }: Props) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <TabNavigatorItem
       isSelected={isSelected}
       title="ItemTitle"
@@ -55,9 +55,9 @@ describe('Testing <TabNavigatorItem />', () => {
 
     expect(getByTestId('icon').props.name).toEqual(items[ITEM_SELECTED].icon);
 
-    expect(getByTestId('icon').props.color).toEqual(dark.colors.primary);
+    expect(getByTestId('icon').props.color).toEqual(theme.colors.primary);
 
-    expect(getByTestId('item-title').props.color).toEqual(dark.colors.primary);
+    expect(getByTestId('item-title').props.color).toEqual(theme.colors.primary);
   });
 
   it("should renders correctly when the item isn't selected", () => {
@@ -71,9 +71,9 @@ describe('Testing <TabNavigatorItem />', () => {
 
     expect(getByTestId('icon').props.name).toEqual(items[ITEM_SELECTED].icon);
 
-    expect(getByTestId('icon').props.color).toEqual(dark.colors.inactiveWhite);
+    expect(getByTestId('icon').props.color).toEqual(theme.colors.inactiveWhite);
 
-    expect(getByTestId('item-title').props.color).toEqual(dark.colors.inactiveWhite);
+    expect(getByTestId('item-title').props.color).toEqual(theme.colors.inactiveWhite);
   });
 
   it('should call the "onPress" action when is pressed', () => {

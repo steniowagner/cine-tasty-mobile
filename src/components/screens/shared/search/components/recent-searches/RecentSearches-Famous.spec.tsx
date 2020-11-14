@@ -7,14 +7,14 @@ import { ThemeProvider } from 'styled-components';
 jest.mock('../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
 import { SearchType } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import { STORAGE_SEARCH_SECTION } from './useRecentSearches';
 import RecentSearches from './RecentSearches';
 
 const renderRecentSearchFamous = (onPressItem: typeof jest.fn) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <RecentSearches searchType={SearchType.PERSON} onPressItem={onPressItem} />
   </ThemeProvider>
 );

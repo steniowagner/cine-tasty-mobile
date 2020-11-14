@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { SearchType } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import timeTravel, {
   setupTimeTravel,
@@ -38,7 +38,7 @@ const params = {
 };
 
 const renderSearchTVShows = (mockResolvers: IMocks = {}) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <AutoMockProvider mockResolvers={mockResolvers}>
       <MockedNavigation component={Search} params={params} />
     </AutoMockProvider>

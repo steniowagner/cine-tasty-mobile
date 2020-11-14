@@ -3,7 +3,7 @@ import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import EpisodeDetail from './EpisodeDetail';
 
@@ -19,7 +19,7 @@ const episodeMock: Episode = {
 };
 
 const renderEpisodeDetail = (episode: Episode = episodeMock) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <EpisodeDetail episode={episode} />
   </ThemeProvider>
 );

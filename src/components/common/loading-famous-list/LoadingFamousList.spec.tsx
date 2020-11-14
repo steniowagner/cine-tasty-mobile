@@ -2,14 +2,14 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import LoadingFamousList, { INITIAL_ITEMS_TO_RENDER } from './LoadingFamousList';
 import { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import { NUMBER_FLATLIST_COLUMNS } from '../../screens/famous/components/Famous';
 
 const renderLoadingFamousList = () => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <LoadingFamousList numberOfColumns={NUMBER_FLATLIST_COLUMNS} />
   </ThemeProvider>
 );

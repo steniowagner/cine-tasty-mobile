@@ -3,7 +3,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { AIR_DATE_I18N_REF } from './episode-detail/EpisodeDetail';
 import TVShowSeasonsListItem from './TVShowSeasonsListItem';
@@ -23,7 +23,7 @@ const renderTVShowSeasonsListItem = (
   index: number = 0,
   episode: Episode = episodeMock,
 ) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <TVShowSeasonsListItem episode={episode} index={index} />
   </ThemeProvider>
 );

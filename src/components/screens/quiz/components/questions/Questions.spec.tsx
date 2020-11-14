@@ -6,7 +6,7 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
 import CONSTANTS from 'utils/constants';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
@@ -61,7 +61,7 @@ type Props = {
 
 const renderQuestions = ({ route = routeParams, mockResolvers, navigate }: Props) => {
   const QuestionsComponent = ({ navigation }) => (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={mockResolvers}>
         <Questions navigation={{ ...navigation, navigate }} route={route} />
       </AutoMockProvider>

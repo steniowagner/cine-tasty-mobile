@@ -4,7 +4,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
@@ -139,7 +139,7 @@ const renderMovieDetail = ({
   route,
 }: Props) => {
   const MovieDetailScreen = () => (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={mockResolvers}>
         <MovieDetail navigation={navigation} route={route} />
       </AutoMockProvider>

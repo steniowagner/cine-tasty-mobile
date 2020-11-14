@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import BooleanQuestion, {
   FALSE_TEXT_I18N_REF,
@@ -10,7 +10,7 @@ import BooleanQuestion, {
 } from './BooleanQuestion';
 
 const renderBooleanQuestion = (onPressNext = jest.fn()) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <BooleanQuestion onPressNext={onPressNext} isFocused />
   </ThemeProvider>
 );

@@ -3,7 +3,7 @@ import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 jest.mock('../../../../../../styles/metrics', () => ({
   getHeightFromDP: jest.fn(),
@@ -32,7 +32,7 @@ const params = {
 };
 
 const renderImagesGallery = () => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <MockedNavigation component={ImagesGallery} params={params} />
   </ThemeProvider>
 );

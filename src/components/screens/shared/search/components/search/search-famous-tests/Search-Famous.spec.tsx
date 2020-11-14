@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { SearchType } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -63,7 +63,7 @@ const params = {
 
 const renderSearchFamous = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {
   const SearchFamousScreen = ({ navigation, route }) => (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={mockResolvers}>
         <Search navigation={{ ...navigation, navigate }} route={route} />
       </AutoMockProvider>

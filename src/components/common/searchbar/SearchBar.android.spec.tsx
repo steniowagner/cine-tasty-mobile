@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import SearchBar, { Props } from './SearchBar.android';
 
@@ -12,7 +12,7 @@ const renderSearchBar = ({
   onPressClose,
   placeholder,
 }: Props) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <SearchBar
       onTypeSearchQuery={onTypeSearchQuery}
       onPressSearch={onPressSearch}

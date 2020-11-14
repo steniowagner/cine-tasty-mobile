@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import SetupQuestionsOptionsList, {
   I18N_SELECT_BUTTON_KEY,
@@ -20,7 +20,7 @@ const renderSetupQuestionsDifficultyOptionsList = ({
   onPressSelect = jest.fn,
   closeModal = jest.fn,
 }: Props) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <SetupQuestionsOptionsList
       indexLastOptionSelected={indexLastOptionSelected}
       onPressSelect={onPressSelect}

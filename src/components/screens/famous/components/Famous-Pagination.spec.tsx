@@ -5,7 +5,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
@@ -30,7 +30,7 @@ const navigation = {
 
 const renderFamousScreen = (resolvers?: IMocks) => {
   const FamousScreen = () => (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={resolvers}>
         <Famous navigation={navigation} />
       </AutoMockProvider>

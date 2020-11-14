@@ -2,13 +2,13 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import NewsLoading, { INITIAL_ITEMS_TO_RENDER } from './NewsLoading';
 
 const renderNewsLoading = () => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <NewsLoading />
   </ThemeProvider>
 );

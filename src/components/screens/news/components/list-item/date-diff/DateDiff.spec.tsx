@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import DateDiff from './DateDiff';
 
@@ -42,7 +42,7 @@ jest.mock('react-i18next', () => ({
 }));
 
 const renderDateDiff = (now: Date, date: string) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <DateDiff date={date} now={now} />
   </ThemeProvider>
 );

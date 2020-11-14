@@ -3,7 +3,7 @@ import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import {
   DEFAULT_NUMBER_OF_LINES,
@@ -15,7 +15,7 @@ import MediaListItemDescription from './MediaItemDescription';
 const DESCRIPTION = 'SOME DESCRIPTION';
 
 const renderMediaItemDescription = () => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <MediaListItemDescription description={DESCRIPTION} />
   </ThemeProvider>
 );

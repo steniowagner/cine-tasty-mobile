@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import Advise, { Props } from './Advise';
 
@@ -28,7 +28,7 @@ const getParam = (
 };
 
 const renderAdvise = (optionalAdviseProps: OptionalAdviseProps = {}) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <Advise
       description={getParam(optionalAdviseProps, DEFAULT_DESCRIPTION, 'description')}
       suggestion={getParam(optionalAdviseProps, DEFAULT_SUGGESTION, 'suggestion')}

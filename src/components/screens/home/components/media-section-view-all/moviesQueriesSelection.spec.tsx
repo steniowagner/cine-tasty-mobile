@@ -14,7 +14,7 @@ jest.mock('hooks', () => ({
   usePaginatedQuery: params => mockUsePaginatedQuery(params),
 }));
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';
@@ -30,7 +30,7 @@ const renderMediaSectionViewAll = (
   },
   resolvers?: IMocks,
 ) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <AutoMockProvider mockResolvers={resolvers}>
       <MediaSectionViewAll
         route={{

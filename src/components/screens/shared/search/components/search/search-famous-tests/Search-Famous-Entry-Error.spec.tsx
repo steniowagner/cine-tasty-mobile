@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { SearchType } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../../../../common/popup-advice/PopupAdvice';
 import timeTravel, {
@@ -35,7 +35,7 @@ const params = {
 };
 
 const renderSearchFamous = (mockResolvers: IMocks = {}) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <AutoMockProvider mockResolvers={mockResolvers}>
       <MockedNavigation component={Search} params={params} />
     </AutoMockProvider>

@@ -3,14 +3,14 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import NewsListItemImage from './NewsListItemImage';
 
 jest.useFakeTimers();
 
 const renderNewsListItemImage = (imageURL = 'image') => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <NewsListItemImage image={imageURL} />
   </ThemeProvider>
 );
