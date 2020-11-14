@@ -50,7 +50,6 @@ const GeneralInfo = ({ infoItems }: Props) => {
     !!infoItems.length && (
       <Section
         title={t(SECTION_TITLE_I18N_REF)}
-        noMarginTop
       >
         <Wrapper
           testID="general-info-wrapper"

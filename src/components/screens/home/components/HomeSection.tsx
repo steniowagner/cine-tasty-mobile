@@ -9,7 +9,7 @@ import CONSTANTS from 'utils/constants';
 
 export const Wrapper = styled(View)`
   width: 100%;
-  margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
+  margin-vertical: ${({ theme }) => theme.metrics.extraLargeSize}px;
 `;
 
 export const SectionTextContentWrapper = styled(View)`

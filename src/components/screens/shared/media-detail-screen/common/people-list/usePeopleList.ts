@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import { TVShowDetail_tvShow_createdBy as TVShowCreatedBy } from 'types/schema';
 import { CrewDataset, CastDataset } from 'types';
 
 type PeopleListItem = {
@@ -10,7 +11,7 @@ type PeopleListItem = {
 };
 
 type Props = {
-  dataset: CrewDataset | CastDataset;
+  dataset: CrewDataset | CastDataset | TVShowCreatedBy[];
   type: 'cast' | 'crew' | 'creator';
 };
 

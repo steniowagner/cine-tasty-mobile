@@ -13,7 +13,6 @@ export const SECTION_TITLE_I18N_REF = 'translations:mediaDetail:sections:overvie
 
 const MediaItemDescriptionWrapper = styled(View)`
   padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize * 2}px;
 `;
 
 type Props = {
@@ -27,7 +26,6 @@ const Overview = ({ isLoading, overview }: Props) => {
   return (
     <Section
       title={t(SECTION_TITLE_I18N_REF)}
-      noMarginBottom
     >
       {isLoading ? (
         <LoadingOverview />

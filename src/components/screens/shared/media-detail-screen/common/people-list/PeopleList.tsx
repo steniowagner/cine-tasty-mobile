@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 
+import { TVShowDetail_tvShow_createdBy as TVShowCreatedBy } from 'types/schema';
 import { CrewDataset, CastDataset } from 'types';
 import Section from 'components/common/Section';
 import CONSTANTS from 'utils/constants';
@@ -10,7 +11,7 @@ import usePeopleList from './usePeopleList';
 
 type Props = {
   onPressItem: (id: string, name: string, image: string) => void;
-  dataset: CrewDataset | CastDataset;
+  dataset: CrewDataset | CastDataset | TVShowCreatedBy[];
   type: 'cast' | 'crew' | 'creator';
   sectionTitle: string;
   noSubtext?: boolean;

@@ -33,12 +33,6 @@ export const ERROR_DESCRIPTION_I18N_REF = 'translations:famousDetail:errorDescri
 export const ERROR_SUGGESTION_I18N_REF = 'translations:famousDetail:errorSuggestion';
 export const ERROR_TITLE_I18N_REF = 'translations:famousDetail:errorTitle';
 
-const SectionWrapper = styled(View)`
-  width: 100%;
-  margin-vertical: ${({ theme }) => theme.metrics.largeSize}px;
-  margin-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
-`;
-
 const BackgroundImageWrapper = styled(Animated.View)`
   width: 100%;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('100%')}px;
@@ -55,7 +49,7 @@ const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
 `;
 
 const BiographySectionWrapper = styled(View)`
-  margin-top: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  margin-top: ${({ theme }) => theme.metrics.getWidthFromDP('5%')}px;
 `;
 
 const ImagesSectionWrapper = styled(View)`
@@ -241,11 +235,9 @@ const FamousDetail = ({ navigation, route }: Props) => {
           isLoading={isLoading}
         />
         {!!famous?.deathday && (
-          <SectionWrapper>
-            <DeathDay
-              deathDate={famous.deathday}
-            />
-          </SectionWrapper>
+        <DeathDay
+          deathDate={famous.deathday}
+        />
         )}
         <BiographySectionWrapper
           testID="biography-section"
