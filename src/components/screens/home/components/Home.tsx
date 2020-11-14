@@ -50,11 +50,11 @@ const Home = ({ navigation }: Props) => {
     navigation.setOptions({
       header: () => (
         <Header
+          onPressSettings={() => navigation.navigate('SETTINGS')}
           shouldDisableActions={shouldDisableHeaderActions}
           onPresSwitchTVShows={onSelectTVShows}
           onPressSwitchMovies={onSelectMovies}
           onPressSearch={onPressSearch}
-          onPressSettings={() => {}}
         />
       ),
     });

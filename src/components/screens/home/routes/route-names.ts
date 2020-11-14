@@ -7,7 +7,8 @@ export type Routes =
   | 'MOVIE_DETAIL'
   | 'TV_SHOW_DETAIL'
   | 'REVIEWS'
-  | 'TV_SHOW_SEASONS';
+  | 'TV_SHOW_SEASONS'
+  | 'SETTINGS';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   HOME: {
@@ -30,6 +31,9 @@ const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   },
   TV_SHOW_SEASONS: {
     id: 'TV_SHOW_SEASONS',
+  },
+  SETTINGS: {
+    id: 'SETTINGS',
   },
 };
 
