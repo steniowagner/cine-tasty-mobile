@@ -1,89 +1,77 @@
 import { ArticleLanguage } from 'types/schema';
 import { NewsFilterLanguage } from 'types';
 
-import SaudiArabia from './flags/SaudiArabia';
-import Nederlands from './flags/Nederlands';
-import Portugal from './flags/Portugal';
-import Germany from './flags/Germany';
-import Finland from './flags/Finland';
-import France from './flags/France';
-import Russia from './flags/Russia';
-import Israel from './flags/Israel';
-import Norway from './flags/Norway';
-import Italy from './flags/Italy';
-import China from './flags/China';
-import Spain from './flags/Spain';
-import UK from './flags/UK';
+import { SupportedIcons } from 'components/common/svg-icon/getXML';
 
 type Language = {
   name: NewsFilterLanguage;
-  Flag: () => JSX.Element;
+  flag: SupportedIcons;
   id: ArticleLanguage;
 };
 
 const langauges: Language[] = [
   {
-    Flag: UK,
+    flag: 'uk',
     name: 'english',
     id: ArticleLanguage.EN,
   },
   {
-    Flag: SaudiArabia,
+    flag: 'saudi-arabia',
     name: 'arabic',
     id: ArticleLanguage.AR,
   },
   {
-    Flag: China,
+    flag: 'china',
     name: 'mandarim',
     id: ArticleLanguage.ZH,
   },
   {
-    Flag: Nederlands,
+    flag: 'nederlands',
     name: 'dutch',
     id: ArticleLanguage.NL,
   },
   {
-    Flag: France,
+    flag: 'france',
     name: 'french',
     id: ArticleLanguage.FR,
   },
   {
-    Flag: Germany,
+    flag: 'germany',
     name: 'german',
     id: ArticleLanguage.DE,
   },
   {
-    Flag: Israel,
+    flag: 'israel',
     name: 'hebrew',
     id: ArticleLanguage.HE,
   },
   {
-    Flag: Italy,
+    flag: 'italy',
     name: 'italian',
     id: ArticleLanguage.IT,
   },
   {
-    Flag: Norway,
+    flag: 'norway',
     name: 'norwegian',
     id: ArticleLanguage.NO,
   },
   {
-    Flag: Portugal,
+    flag: 'portugal',
     name: 'portuguese',
     id: ArticleLanguage.PT,
   },
   {
-    Flag: Russia,
+    flag: 'russia',
     name: 'russian',
     id: ArticleLanguage.RU,
   },
   {
-    Flag: Finland,
+    flag: 'finland',
     name: 'sami',
     id: ArticleLanguage.SE,
   },
   {
-    Flag: Spain,
+    flag: 'spain',
     name: 'spanish',
     id: ArticleLanguage.ES,
   },

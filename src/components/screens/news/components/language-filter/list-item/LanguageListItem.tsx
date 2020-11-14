@@ -2,6 +2,8 @@ import React, { memo } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import styled from 'styled-components';
 
+import { SupportedIcons } from 'components/common/svg-icon/getXML';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
@@ -52,14 +54,14 @@ const ContentWrapper = styled(View)`
 `;
 
 type Props = {
-  Flag: () => JSX.Element;
+  flag: SupportedIcons;
   onPress: () => void;
   isSelected: boolean;
   name: string;
 };
 
 const LanguageListItem = ({
-  isSelected, onPress, name, Flag,
+  isSelected, onPress, name, flag,
 }: Props) => (
   <Wrapper
     testID="language-filter-list-item"
@@ -71,7 +73,9 @@ const LanguageListItem = ({
         isSelected={isSelected}
       >
         <InnerFlagWrapper>
-          <Flag />
+          <SVGIcon
+            id={flag}
+          />
         </InnerFlagWrapper>
       </OutterFlagWrapper>
       <LanguageText
