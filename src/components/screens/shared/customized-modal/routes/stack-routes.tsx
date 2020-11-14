@@ -15,7 +15,11 @@ type Props = {
 };
 
 const CustomizedModalStack = ({ route }: Props) => (
-  <Stack.Navigator>
+  <Stack.Navigator
+    screenOptions={{
+      cardStyle: { backgroundColor: 'transparent' },
+    }}
+  >
     <Stack.Screen
       name={LOCAL_ROUTES.CUSTOM_MODAL.id}
       options={{

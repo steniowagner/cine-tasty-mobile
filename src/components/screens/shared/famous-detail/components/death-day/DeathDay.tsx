@@ -4,12 +4,14 @@ import styled from 'styled-components';
 
 import { formatDate } from 'utils/formatters';
 import Icon from 'components/common/Icon';
+import CONSTANTS from 'utils/constants';
 
 const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('35%')}px;
   flex-direction: row;
   align-items: center;
-  margin-top: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  margin-top: ${({ theme }) => theme.metrics.getWidthFromDP('12%')}px;
+  margin-left: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
   padding-horizontal: ${({ theme }) => theme.metrics.extraSmallSize}px;
   padding-vertical: ${({ theme }) => theme.metrics.extraSmallSize}px;
   border-radius: ${({ theme }) => theme.metrics.height}px;

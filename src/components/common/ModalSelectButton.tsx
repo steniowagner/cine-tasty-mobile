@@ -17,7 +17,7 @@ const SelectButton = styled(TouchableOpacity)`
 const SelectButtonText = styled(Text)`
   font-family: CircularStd-Black;
   font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  color: #262626;
+  color: ${({ theme }) => theme.colors.buttonText};
   text-transform: uppercase;
 `;
 

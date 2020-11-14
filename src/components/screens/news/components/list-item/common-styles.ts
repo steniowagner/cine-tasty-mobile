@@ -8,7 +8,7 @@ export const Wrapper = styled(TouchableOpacity)`
   flex-direction: row;
   align-items: center;
   margin-vertical: ${({ theme }) => theme.metrics.mediumSize}px;
-  padding-horizontal: ${({ theme }) => theme.metrics.largeSize}px;
+  padding-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
 export const LoadingWrapper = styled(View)`
@@ -20,7 +20,7 @@ export const LoadingWrapper = styled(View)`
 `;
 
 export const TextWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('54%')}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('55%')}px;
   margin-left: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
