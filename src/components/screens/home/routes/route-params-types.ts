@@ -17,5 +17,6 @@ export type HomeStackParams = {
   [TV_SHOW_DETAIL_SCREEN_ID]: TVShowDetailExternalParams;
   [MOVIE_DETAIL_SCREEN_ID]: MovieDetailExternalParams;
   [SEARCH_MODAL_ID]: SearchNavigationParams;
+  SETTINGS: undefined;
   HOME: undefined;
 };

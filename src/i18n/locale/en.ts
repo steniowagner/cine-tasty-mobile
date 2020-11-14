@@ -139,6 +139,7 @@ const en: Locale = {
   },
   home: {
     learMoreButtonText: 'LEARN MORE',
+    settings: 'Settings',
     tvShows: 'TV Shows',
     viewAll: 'View All',
     movies: 'Movies',
@@ -152,6 +153,16 @@ const en: Locale = {
       topRatedViewAllTitle: 'topRatedViewAllTitle',
       upcoming: 'Upcoming',
       upcomingViewAllTitle: 'upcomingViewAllTitle',
+    },
+    settingsSections: {
+      imageQualityDescription: 'imageQualityDescription',
+      imageQualityTitle: 'imageQualityTitle',
+      languageDescription: 'languageDescription',
+      languageTitle: 'languageTitle',
+      profileDescription: 'profileDescription',
+      profileTitle: 'profileTitle',
+      openSourceDescription: 'openSourceDescription',
+      openSourceTitle: 'openSourceTitle',
     },
     trendingTvShows: {
       error: 'trendingTVShowsError',

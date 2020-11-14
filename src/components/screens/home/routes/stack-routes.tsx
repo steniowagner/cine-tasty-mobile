@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { DefaultTheme, withTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import TVShowSeasonDetail, {
   Props as TVShowSeasonDetailExternalProps,
@@ -11,13 +12,13 @@ import FamousDetail from 'components/screens/shared/famous-detail/components/Fam
 import Reviews, {
   Props as ReviewsExternalParams,
 } from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
-
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 
 import MediaSectionViewAll, {
   Props as MediaSectionViewAllScreenProps,
 } from '../components/media-section-view-all/MediaSectionViewAll';
+import Settings from '../components/settings/Settings';
 import LOCAL_ROUTES from './route-names';
 import Home from '../components/Home';
 
@@ -26,73 +27,85 @@ const Stack = createStackNavigator();
 type Props = {
   theme: DefaultTheme;
 };
+// home:settings
+const HomeStack = ({ theme }: Props) => {
+  const { t } = useTranslation();
 
-const HomeStack = ({ theme }: Props) => (
-  <Stack.Navigator
-    headerMode="screen"
-  >
-    <Stack.Screen
-      options={{
-        ...getTransparentHeaderOptions(theme),
-        headerTransparent: true,
-      }}
-      name={LOCAL_ROUTES.HOME.id}
-      component={Home}
-    />
-    <Stack.Screen
-      options={{
-        ...getTransparentHeaderOptions(theme),
-        ...TransitionPresets.SlideFromRightIOS,
-      }}
-      name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
-      component={FamousDetail}
-    />
-    <Stack.Screen
-      name={LOCAL_ROUTES.MEDIA_DETAILS_VIEW_ALL.id}
-      options={({ route }: MediaSectionViewAllScreenProps) => ({
-        ...getDefaultHeaderOptions(),
-        headerTitle: route.params.headerTitle,
-      })}
-      component={MediaSectionViewAll}
-    />
-    <Stack.Screen
-      name={LOCAL_ROUTES.MOVIE_DETAIL.id}
-      options={() => ({
-        ...getTransparentHeaderOptions(theme),
-      })}
-      component={MoviedDetail}
-    />
-    <Stack.Screen
-      name={LOCAL_ROUTES.TV_SHOW_DETAIL.id}
-      options={() => ({
-        ...getTransparentHeaderOptions(theme),
-      })}
-      component={TVShowDetail}
-    />
-    <Stack.Screen
-      name={LOCAL_ROUTES.REVIEWS.id}
-      options={({ route }: ReviewsExternalParams) => ({
-        ...getDefaultHeaderOptions(),
-        headerTitle: route.params.mediaTitle,
-      })}
-      component={Reviews}
-    />
-    <Stack.Screen
-      name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
-      options={({ route }: TVShowSeasonDetailExternalProps) => ({
-        ...getDefaultHeaderOptions(),
-        headerTintColor: theme.colors.buttonText,
-        headerStyle: {
-          backgroundColor: theme.colors.primary,
-          shadowColor: 'transparent',
-          elevation: 0,
-        },
-        headerTitle: route.params.title,
-      })}
-      component={TVShowSeasonDetail}
-    />
-  </Stack.Navigator>
-);
+  return (
+    <Stack.Navigator
+      headerMode="screen"
+    >
+      <Stack.Screen
+        options={{
+          ...getTransparentHeaderOptions(theme),
+          headerTransparent: true,
+        }}
+        name={LOCAL_ROUTES.HOME.id}
+        component={Home}
+      />
+      <Stack.Screen
+        options={{
+          ...getTransparentHeaderOptions(theme),
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+        name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
+        component={FamousDetail}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.MEDIA_DETAILS_VIEW_ALL.id}
+        options={({ route }: MediaSectionViewAllScreenProps) => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: route.params.headerTitle,
+        })}
+        component={MediaSectionViewAll}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.MOVIE_DETAIL.id}
+        options={() => ({
+          ...getTransparentHeaderOptions(theme),
+        })}
+        component={MoviedDetail}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.TV_SHOW_DETAIL.id}
+        options={() => ({
+          ...getTransparentHeaderOptions(theme),
+        })}
+        component={TVShowDetail}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.REVIEWS.id}
+        options={({ route }: ReviewsExternalParams) => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: route.params.mediaTitle,
+        })}
+        component={Reviews}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
+        options={({ route }: TVShowSeasonDetailExternalProps) => ({
+          ...getDefaultHeaderOptions(),
+          headerTintColor: theme.colors.buttonText,
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+            shadowColor: 'transparent',
+            elevation: 0,
+          },
+          headerTitle: route.params.title,
+        })}
+        component={TVShowSeasonDetail}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.SETTINGS.id}
+        component={Settings}
+        options={() => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: t('translations:home:settings'),
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const Wrapper = (props: any) => (
   <RouteSuspenseWrapper>

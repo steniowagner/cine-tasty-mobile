@@ -35,6 +35,7 @@ export interface Locale {
   time: Record<Time, string>;
   home: {
     learMoreButtonText: string;
+    settings: string;
     viewAll: string;
     tvShows: string;
     movies: string;
@@ -49,6 +50,16 @@ export interface Locale {
         paginationError: string;
         placeholder: string;
       };
+    };
+    settingsSections: {
+      imageQualityDescription: string;
+      imageQualityTitle: string;
+      languageDescription: string;
+      languageTitle: string;
+      profileDescription: string;
+      profileTitle: string;
+      openSourceDescription: string;
+      openSourceTitle: string;
     };
     tvShowsPaginationError: string;
     moviesPaginationError: string;
