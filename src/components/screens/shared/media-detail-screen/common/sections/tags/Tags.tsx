@@ -8,8 +8,8 @@ import metrics from 'styles/metrics';
 
 export const NUMBER_ITEMS = 4;
 
-interface ReleaseYearStyleProp {
-  isFirst: boolean;
+interface ExtraTagStyleProp {
+  isExtra: boolean;
 }
 
 const Wrapper = styled(View)`
@@ -20,28 +20,28 @@ const Wrapper = styled(View)`
   margin-bottom: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
 `;
 
-const TagWrapper = styled(View)<ReleaseYearStyleProp>`
+const TagWrapper = styled(View)<ExtraTagStyleProp>`
   margin-right: ${({ theme }) => theme.metrics.smallSize}px;
   margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
   padding-horizontal: ${({ theme }) => theme.metrics.largeSize}px;
   padding-vertical: ${({ theme }) => theme.metrics.smallSize}px;
-  background-color: ${({ isFirst, theme }) => (isFirst ? theme.colors.contrast : theme.colors.primary)};
+  background-color: ${({ isExtra, theme }) => (isExtra ? theme.colors.contrast : theme.colors.primary)};
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
-const TagText = styled(Text)<ReleaseYearStyleProp>`
+const TagText = styled(Text)<ExtraTagStyleProp>`
   font-family: CircularStd-Medium;
-  color: ${({ isFirst, theme }) => (isFirst ? theme.colors.text : theme.colors.buttonText)};
+  color: ${({ isExtra, theme }) => (isExtra ? theme.colors.text : theme.colors.buttonText)};
   text-align: center;
 `;
 
 type Props = {
-  releaseDate: string;
+  extraTags: string[];
   isLoading: boolean;
   tags: string[];
 };
 
-const Tags = ({ isLoading, releaseDate, tags }: Props) => {
+const Tags = ({ extraTags, isLoading, tags }: Props) => {
   if (isLoading) {
     return (
       <Wrapper
@@ -66,21 +66,19 @@ const Tags = ({ isLoading, releaseDate, tags }: Props) => {
     );
   }
 
-  const releaseYear = releaseDate.split('-')[0];
-
   return (
     <Wrapper
       testID="tags"
     >
-      {[releaseYear, ...tags].map(
+      {[...extraTags, ...tags].map(
         (tag, index) => !!tag && (
         <TagWrapper
-          isFirst={index === 0}
+          isExtra={index < extraTags.length}
           testID="tag-wrapper"
           key={tag}
         >
           <TagText
-            isFirst={index === 0}
+            isExtra={index < extraTags.length}
             testID="tag-text"
           >
             {tag}

@@ -19,11 +19,13 @@ const tags = Array(NUMBER_TAGS)
   .fill('tag')
   .map((tag, index) => `${tag}-${index}`);
 
-const tagsWithReleaseYear = [RELEASE_YEAR, ...tags];
+const extraTags = [RELEASE_YEAR, 'MEDIA_TYPE'];
+
+const tagsWithReleaseYear = [...extraTags, ...tags];
 
 const renderTags = (isLoading = false) => (
   <ThemeProvider theme={dark}>
-    <Tags releaseDate={`${RELEASE_YEAR}-02-21`} isLoading={isLoading} tags={tags} />
+    <Tags extraTags={extraTags} isLoading={isLoading} tags={tags} />
   </ThemeProvider>
 );
 
@@ -35,14 +37,20 @@ describe('Testing <Tags />', () => {
   it('should render correctly when is not loading', () => {
     const { queryAllByTestId, getAllByTestId } = render(renderTags());
 
-    expect(getAllByTestId('tag-wrapper').length).toEqual(NUMBER_TAGS + 1);
+    expect(getAllByTestId('tag-wrapper').length).toEqual(NUMBER_TAGS + extraTags.length);
 
-    expect(expect(getAllByTestId('tag-text').length).toEqual(NUMBER_TAGS + 1));
+    expect(
+      expect(getAllByTestId('tag-text').length).toEqual(NUMBER_TAGS + +extraTags.length),
+    );
 
     expect(
       getAllByTestId('tag-text').every((tag, index) => {
         if (index === 0) {
-          return tag.children[0] === RELEASE_YEAR;
+          return tag.children[0] === extraTags[index];
+        }
+
+        if (index === 0) {
+          return tag.children[0] === extraTags[index];
         }
 
         return tag.children[0] === tagsWithReleaseYear[index];

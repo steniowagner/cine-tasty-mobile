@@ -204,7 +204,7 @@ describe('Testing <TVShowDetail />', () => {
       jest.runAllTimers();
     });
 
-    expect(getByTestId('tags').children.length).toEqual(genreIds.length + 1);
+    expect(getByTestId('tags').children.length).toEqual(genreIds.length + 2);
   });
 
   it('should render the loading-state correctly when Tags on the route prop is undefined', () => {
@@ -281,7 +281,7 @@ describe('Testing <TVShowDetail />', () => {
 
     expect(getByTestId('tags')).not.toBeNull();
 
-    expect(getByTestId('tags').children.length).toEqual(genreIds.length + 1);
+    expect(getByTestId('tags').children.length).toEqual(genreIds.length + 2);
 
     // Overview section
 

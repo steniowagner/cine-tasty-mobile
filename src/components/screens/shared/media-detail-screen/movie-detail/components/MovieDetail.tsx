@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { ScrollView, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -62,6 +62,10 @@ const MovieDetail = ({ navigation, route }: Props) => {
     id: route.params.id,
   });
 
+  const releaseDate = useMemo((): string => (movie?.releaseDate || '-').split('-')[0], [
+    movie,
+  ]);
+
   if (hasError) {
     return (
       <Advise
@@ -87,9 +91,9 @@ const MovieDetail = ({ navigation, route }: Props) => {
         isLoading={isLoading}
       />
       <Tags
+        extraTags={[releaseDate, t('translations:mediaDetail:movie:movie')]}
         tags={route.params.genreIds || movie?.genres || []}
         isLoading={!route.params.genreIds && isLoading}
-        releaseDate={movie?.releaseDate || '-'}
       />
       <Overview
         overview={movie?.overview}
