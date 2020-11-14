@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { ScrollView, FlatList, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -75,6 +75,11 @@ const TVShowDetail = ({ navigation, route }: Props) => {
     id: route.params.id,
   });
 
+  const firstAirDate = useMemo(
+    (): string => (tvShow?.firstAirDate || '-').split('-')[0],
+    [tvShow],
+  );
+
   if (hasError) {
     return (
       <Advise
@@ -100,9 +105,9 @@ const TVShowDetail = ({ navigation, route }: Props) => {
         isLoading={isLoading}
       />
       <Tags
+        extraTags={[firstAirDate, t('translations:mediaDetail:tvShow:tvShow')]}
         tags={route.params.genreIds || tvShow?.genres || []}
         isLoading={!route.params.genreIds && isLoading}
-        releaseDate={tvShow?.firstAirDate || '-'}
       />
       <Overview
         overview={tvShow?.overview}

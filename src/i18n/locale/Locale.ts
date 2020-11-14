@@ -156,6 +156,7 @@ export interface Locale {
     errorTitle: string;
     votes: string;
     tvShow: {
+      tvShow: string;
       seasonEpisode: {
         readMoreSeasonOverview: string;
         episodes: string;
@@ -167,6 +168,9 @@ export interface Locale {
         suggestion: string;
         title: string;
       };
+    };
+    movie: {
+      movie: string;
     };
     sections: {
       productionCompanies: string;

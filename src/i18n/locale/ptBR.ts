@@ -185,6 +185,7 @@ const en: Locale = {
     errorTitle: 'errorTitle',
     votes: 'Votes',
     tvShow: {
+      tvShow: 'TV-Show',
       seasonEpisode: {
         readMoreSeasonOverview: 'Read More',
         episodes: 'Episodes',
@@ -196,6 +197,9 @@ const en: Locale = {
         suggestion: 'suggestion',
         title: 'title',
       },
+    },
+    movie: {
+      movie: 'Movie',
     },
     sections: {
       productionCompanies: 'Production companies',
