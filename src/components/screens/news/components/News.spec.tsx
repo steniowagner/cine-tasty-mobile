@@ -6,7 +6,7 @@ import { IMocks } from 'graphql-tools';
 
 import { CustomizedModalChildrenType } from 'types';
 import { ArticleLanguage } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { PAGINATION_DELAY } from 'hooks/use-paginated-query/useQueryWithPagination';
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
@@ -36,7 +36,7 @@ const news = Array(10)
 
 const renderNews = (mockResolvers?: IMocks, navigate = jest.fn()) => {
   const NewsComponent = ({ navigation }) => (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={mockResolvers}>
         <News navigation={{ ...navigation, navigate }} />
       </AutoMockProvider>

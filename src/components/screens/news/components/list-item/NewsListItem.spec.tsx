@@ -3,7 +3,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import NewsListItem, { Props } from './NewsListItem';
 
@@ -47,7 +47,7 @@ type ExtraOptionalProps = {
 };
 
 const renderNewsListItem = (optionalProps: OptionalProps & ExtraOptionalProps = {}) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <NewsListItem
       withRTL={optionalProps.withRTL || false}
       source={optionalProps.source || 'source'}

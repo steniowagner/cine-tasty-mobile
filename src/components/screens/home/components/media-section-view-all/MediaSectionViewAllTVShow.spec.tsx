@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { PAGINATION_DELAY } from 'hooks/use-paginated-query/useQueryWithPagination';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../../common/popup-advice/PopupAdvice';
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
@@ -33,7 +33,7 @@ const renderMediaSectionViewAll = (
   },
   resolvers?: IMocks,
 ) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <AutoMockProvider mockResolvers={resolvers}>
       <MediaSectionViewAll
         route={{

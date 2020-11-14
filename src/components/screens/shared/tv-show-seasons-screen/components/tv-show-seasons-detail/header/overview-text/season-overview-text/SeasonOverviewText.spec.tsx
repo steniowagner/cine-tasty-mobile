@@ -2,13 +2,13 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { MAX_NUMBER_LINES, READ_MORE_I18N_REF } from './useSeasonOverviewText';
 import SeasonOverviewText from './SeasonOverviewText';
 
 const renderSeasonOverviewText = (overview?: string) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <SeasonOverviewText overview={overview} />
   </ThemeProvider>
 );

@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import PopupAdvice, { HIDE_POPUP_DELAY } from './PopupAdvice';
@@ -10,7 +10,7 @@ import PopupAdvice, { HIDE_POPUP_DELAY } from './PopupAdvice';
 const DEFAULT_TEXT = 'DEFAULT_TEXT';
 
 const renderPopupAdvice = (onFinishToShow = jest.fn, text = DEFAULT_TEXT) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <PopupAdvice onFinishToShow={onFinishToShow} text={text} />
   </ThemeProvider>
 );

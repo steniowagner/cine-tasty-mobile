@@ -4,14 +4,14 @@ import { Image } from 'react-native';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import ImagesGalleryListItem, { IMAGES_URI } from './ImagesGalleryListItem';
 
 const IMAGE_URL = 'SOME_IMAGE_URL';
 
 const renderImagesGalleryListItem = () => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <ImagesGalleryListItem imageURL={IMAGE_URL} />
   </ThemeProvider>
 );

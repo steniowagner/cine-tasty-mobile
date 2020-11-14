@@ -4,13 +4,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 const Stack = createStackNavigator();
 
 const MockedNavigator = ({ component, params = {} }) => (
   <ThemeProvider
-    theme={dark}
+    theme={theme}
   >
     <NavigationContainer>
       <Stack.Navigator>

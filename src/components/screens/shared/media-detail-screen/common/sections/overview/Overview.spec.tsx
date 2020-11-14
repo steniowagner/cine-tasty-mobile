@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from 'components/common/popup-advice/PopupAdvice';
 
@@ -13,7 +13,7 @@ import Overview, { SECTION_TITLE_I18N_REF } from './Overview';
 import { NUMBER_ITEMS } from './LoadingOverview';
 
 const renderOverview = (isLoading = false, overview = 'overview') => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <Overview isLoading={isLoading} overview={overview} />
   </ThemeProvider>
 );

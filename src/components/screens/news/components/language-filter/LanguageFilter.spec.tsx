@@ -3,7 +3,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { ArticleLanguage } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import LanguageFilter, { ANIMATION_TIMING } from './LanguageFilter';
@@ -13,7 +13,7 @@ const renderLanguageFilter = (
   lastFilterSelected: ArticleLanguage,
   onSelect = jest.fn(),
 ) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <LanguageFilter
       lastLanguageSelected={lastFilterSelected}
       onSelectLanguage={onSelect}

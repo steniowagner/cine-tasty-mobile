@@ -6,7 +6,7 @@ import { MockList, IMocks } from 'graphql-tools';
 import { DEFAULT_ANIMATION_DURATION } from 'components/common/popup-advice/PopupAdvice';
 import { SEARCH_PERSON } from 'components/screens/shared/search/queries';
 import { SearchType } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
@@ -34,7 +34,7 @@ const famouseItems = Array(5)
 
 const renderFamousScreen = ({ mockResolvers, navigate }: FamousScreenProps) => {
   const FamousScreen = ({ navigation }) => (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={mockResolvers}>
         <Famous navigation={{ ...navigation, navigate }} />
       </AutoMockProvider>

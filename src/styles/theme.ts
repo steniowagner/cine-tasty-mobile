@@ -1,10 +1,8 @@
 import { DefaultTheme } from 'styled-components';
 
-import { ThemeID } from 'types';
-import metrics from '../metrics';
+import metrics from './metrics';
 
-const dark: DefaultTheme = {
-  id: ThemeID.DARK,
+const theme: DefaultTheme = {
   colors: {
     primary: '#FFD700',
     lightPrimary: 'rgba(70, 117, 248, 0.4)',
@@ -29,4 +27,4 @@ const dark: DefaultTheme = {
   metrics,
 };
 
-export default dark;
+export default theme;

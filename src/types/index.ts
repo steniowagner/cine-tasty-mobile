@@ -34,11 +34,6 @@ import {
   GetArticles,
 } from './schema';
 
-export enum ThemeID {
-  DARK = 'DARK',
-  LIGHT = 'LIGHT',
-}
-
 export type LocalStackRoute<T> = {
   id: T;
 };

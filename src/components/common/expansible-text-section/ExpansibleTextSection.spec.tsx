@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from 'components/common/popup-advice/PopupAdvice';
 
@@ -17,7 +17,7 @@ const renderExpansibleTextSection = ({
   isLoading = false,
   text = 'text',
 }) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <ExpansibleTextSection
       sectionTitle={sectionTitle}
       isLoading={isLoading}

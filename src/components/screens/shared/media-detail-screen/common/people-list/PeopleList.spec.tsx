@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import PersonList from './PeopleList';
 
@@ -26,7 +26,7 @@ const crew = Array(3)
   }));
 
 const renderPersonList = ({ sectionTitle, onPressItem, dataset, type }) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <PersonList
       sectionTitle={sectionTitle}
       onPressItem={onPressItem}

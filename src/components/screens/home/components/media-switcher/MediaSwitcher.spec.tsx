@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import MediaSwitcher, { I18N_TV_SHOWS_KEY, I18N_MOVIES_KEY } from './MediaSwitcher';
@@ -18,7 +18,7 @@ const renderMediaSwitcher = ({
   onSwitchToMovies = jest.fn,
   isDisabled = false,
 }) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <MediaSwitcher
       onSwitchToTVShows={onSwitchToTVShows}
       onSwitchToMovies={onSwitchToMovies}

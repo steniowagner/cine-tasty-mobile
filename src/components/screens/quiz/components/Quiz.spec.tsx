@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import LOCAL_ROUTES from '../routes/route-names';
 import Quiz, {
@@ -13,7 +13,7 @@ import Quiz, {
 } from './Quiz';
 
 const renderQuiz = (navigate = jest.fn()) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <Quiz navigation={{ navigate }} />
   </ThemeProvider>
 );

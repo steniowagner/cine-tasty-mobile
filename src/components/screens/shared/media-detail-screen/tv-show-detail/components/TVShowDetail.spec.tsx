@@ -4,7 +4,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
@@ -161,7 +161,7 @@ const renderTVShowDetail = ({
   route,
 }: Props) => {
   const TVShowDetailScreen = () => (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={mockResolvers}>
         <TVShowDetail navigation={navigation} route={route} />
       </AutoMockProvider>

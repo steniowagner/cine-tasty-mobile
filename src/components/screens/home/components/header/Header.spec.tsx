@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import Header from './Header';
 
@@ -13,7 +13,7 @@ const renderHeader = ({
   onPressSettings = jest.fn,
   onPressSearch = jest.fn,
 }) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <Header
       shouldDisableActions={shouldDisableActions}
       onPresSwitchTVShows={onPresSwitchTVShows}

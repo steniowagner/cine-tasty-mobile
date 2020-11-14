@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import MockedNavigation from '../../../../__mocks__/MockedNavigator';
 import SearchBar, { Props } from './SearchBar.ios';
@@ -14,7 +14,7 @@ const renderSearchBar = ({
   placeholder,
 }: Props) => {
   const SearchBarIOS = () => (
-    <ThemeProvider theme={dark}>
+    <ThemeProvider theme={theme}>
       <SearchBar
         onTypeSearchQuery={onTypeSearchQuery}
         onPressSearch={onPressSearch}

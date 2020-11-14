@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { CustomizedModalChildrenType } from 'types';
 import { ArticleLanguage } from 'types/schema';
-import { dark } from 'styles/themes';
+import theme from 'styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import { ANIMATION_TIMING } from './useCustomizedModal';
@@ -28,7 +28,7 @@ const getNavigationParam = (goBack = jest.fn) => ({
 });
 
 const renderCustomizedModal = (onPressSelect = jest.fn, goBack = jest.fn) => (
-  <ThemeProvider theme={dark}>
+  <ThemeProvider theme={theme}>
     <CustomizedModal
       navigation={getNavigationParam(goBack)}
       route={getRouteParam(onPressSelect)}
