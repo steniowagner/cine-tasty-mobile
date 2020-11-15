@@ -155,10 +155,13 @@ const en: Locale = {
       upcomingViewAllTitle: 'upcomingViewAllTitle',
     },
     settingsSections: {
+      language: {
+        sectionDescription: 'languageDescription',
+        sectionTitle: 'languageTitle',
+        headerTitle: 'Language',
+      },
       imageQualityDescription: 'imageQualityDescription',
       imageQualityTitle: 'imageQualityTitle',
-      languageDescription: 'languageDescription',
-      languageTitle: 'languageTitle',
       profileDescription: 'profileDescription',
       profileTitle: 'profileTitle',
       openSourceDescription: 'openSourceDescription',

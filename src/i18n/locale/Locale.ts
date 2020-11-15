@@ -29,6 +29,12 @@ type ErrorDescription = {
   title: string;
 };
 
+type SettingsSection = {
+  sectionDescription: string;
+  sectionTitle: string;
+  headerTitle: string;
+};
+
 export interface Locale {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
   tabs: Record<Tabs, string>;
@@ -52,10 +58,9 @@ export interface Locale {
       };
     };
     settingsSections: {
+      language: SettingsSection;
       imageQualityDescription: string;
       imageQualityTitle: string;
-      languageDescription: string;
-      languageTitle: string;
       profileDescription: string;
       profileTitle: string;
       openSourceDescription: string;
