@@ -14,6 +14,7 @@ describe('Testing the handleLanguageDetection()', () => {
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'android',
+            select: () => 'pt_BR'.split('-'),
           },
           Dimensions: {
             get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
@@ -52,6 +53,7 @@ describe('Testing the handleLanguageDetection()', () => {
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'ios',
+            select: () => 'pt-BR'.split('_'),
           },
           Dimensions: {
             get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
@@ -92,6 +94,10 @@ describe('Testing the handleLanguageDetection()', () => {
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'ios',
+            select: {
+              android: 'pt-BR'.split('-'),
+              ios: 'pt-BR'.split('_'),
+            },
           },
           Dimensions: {
             get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
@@ -134,6 +140,7 @@ describe('Testing the handleLanguageDetection()', () => {
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'android',
+            select: () => 'x_Y'.split('-'),
           },
           Dimensions: {
             get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
@@ -184,6 +191,7 @@ describe('Testing the handleLanguageDetection()', () => {
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'ios',
+            select: () => 'x-Y'.split('_'),
           },
           Dimensions: {
             get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
@@ -227,6 +235,7 @@ describe('Testing the handleLanguageDetection()', () => {
         jest.mock('react-native', () => ({
           Platform: {
             OS: 'ios',
+            select: () => 'x-Y'.split('_'),
           },
           Dimensions: {
             get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
