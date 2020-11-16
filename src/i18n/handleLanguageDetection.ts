@@ -3,37 +3,52 @@ import { Platform, NativeModules } from 'react-native';
 import {
   getItemFromStorage,
   persistItemInStorage,
+  removeItemFromStorage,
 } from 'utils/async-storage-adapter/AsyncStorageAdapter';
 import CONSTANTS from 'utils/constants';
 
 // Android format: x_Y
 // iOS format: x-Y
-const normalizeLanguage = (language: string): string => {
-  const languagesMapping = {
-    // Portuguese (Brazil)
-    'pt-BR': 'ptBR',
-    pt_BR: 'ptBR',
+const defaultLanguagesMapping = {
+  // Portuguese (Brazil)
+  'pt-BR': 'ptBR',
+  pt_BR: 'ptBR',
 
-    // Portuguese (Portugal)
-    'pt-PT': 'ptPT',
-    pt_PT: 'ptPT',
+  // Portuguese (Portugal)
+  'pt-PT': 'ptPT',
+  pt_PT: 'ptPT',
 
-    // English (USA)
-    'en-US': 'en',
-    en_US: 'en',
+  // English (USA)
+  'en-US': 'en',
+  en_US: 'en',
 
-    // Spanish (Spain)
-    'es-US': 'es',
-    es_ES: 'es',
+  // Spanish (Spain)
+  'es-US': 'es',
+  es_ES: 'es',
 
-    // Swedish (Sweden)
-    'sv-US': 'sv',
-    sv_SE: 'sv',
-  };
+  // Swedish (Sweden)
+  'sv-US': 'sv',
+  sv_SE: 'sv',
+};
 
-  const normalizedLanguage = languagesMapping[language] || CONSTANTS.VALUES.FALLBACK_LANGUAGE;
+const fallbackLanguagesMapping = {
+  // Portuguese
+  pt: 'ptBR',
 
-  return normalizedLanguage;
+  // English
+  en: 'en',
+
+  // Spanish
+  es: 'es',
+
+  // Swedish
+  sv: 'sv',
+};
+
+const handleGetLanguageFallbackMapping = (language: string): string => {
+  const [languageSuffix] = language.split('_');
+
+  return fallbackLanguagesMapping[languageSuffix] || CONSTANTS.VALUES.FALLBACK_LANGUAGE;
 };
 
 const detectDeviceLanguage = (): string => {
@@ -46,6 +61,7 @@ const detectDeviceLanguage = (): string => {
 };
 
 const handleLanguageDetection = async (): Promise<string> => {
+  removeItemFromStorage(CONSTANTS.KEYS.LANGUAGE);
   const languagePreviouslySet = await getItemFromStorage<string, string>(
     CONSTANTS.KEYS.LANGUAGE,
     '',
@@ -57,7 +73,8 @@ const handleLanguageDetection = async (): Promise<string> => {
 
   const deviceLanguage = detectDeviceLanguage();
 
-  const languageToUse = normalizeLanguage(deviceLanguage);
+  const languageToUse = defaultLanguagesMapping[deviceLanguage]
+    || handleGetLanguageFallbackMapping(deviceLanguage);
 
   await persistItemInStorage(CONSTANTS.KEYS.LANGUAGE, languageToUse);
 
