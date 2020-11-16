@@ -77,7 +77,7 @@ describe('Testing <Settings />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('HOME');
+    expect(navigate).toHaveBeenCalledWith('LANGUAGE');
 
     jest.clearAllMocks();
 

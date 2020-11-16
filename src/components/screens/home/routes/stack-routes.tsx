@@ -18,6 +18,7 @@ import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 import MediaSectionViewAll, {
   Props as MediaSectionViewAllScreenProps,
 } from '../components/media-section-view-all/MediaSectionViewAll';
+import Language from '../components/settings/languages/Languages';
 import Settings from '../components/settings/Settings';
 import LOCAL_ROUTES from './route-names';
 import Home from '../components/Home';
@@ -101,6 +102,14 @@ const HomeStack = ({ theme }: Props) => {
         options={() => ({
           ...getDefaultHeaderOptions(),
           headerTitle: t('translations:home:settings'),
+        })}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.LANGUAGE.id}
+        component={Language}
+        options={() => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: t('translations:home:settingsSections:language:headerTitle'),
         })}
       />
     </Stack.Navigator>

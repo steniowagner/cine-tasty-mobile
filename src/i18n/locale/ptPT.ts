@@ -1,6 +1,13 @@
 import { Locale } from './Locale';
 
 const en: Locale = {
+  languages: {
+    en: 'ptPT-English',
+    es: 'ptPT-Spanish',
+    ptBR: 'ptPT-Brazilian Portuguese',
+    ptPT: 'ptPT-Portuguese',
+    sv: 'ptPT-Swendish',
+  },
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -155,10 +162,13 @@ const en: Locale = {
       upcomingViewAllTitle: 'upcomingViewAllTitle',
     },
     settingsSections: {
+      language: {
+        sectionDescription: 'languageDescription',
+        sectionTitle: 'languageTitle',
+        headerTitle: 'Language',
+      },
       imageQualityDescription: 'imageQualityDescription',
       imageQualityTitle: 'imageQualityTitle',
-      languageDescription: 'languageDescription',
-      languageTitle: 'languageTitle',
       profileDescription: 'profileDescription',
       profileTitle: 'profileTitle',
       openSourceDescription: 'openSourceDescription',

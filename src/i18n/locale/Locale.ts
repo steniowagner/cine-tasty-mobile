@@ -1,4 +1,4 @@
-import { NewsFilterLanguage } from 'types';
+import { NewsFilterLanguage, Languages } from 'types';
 
 type Time =
   | 'year'
@@ -29,8 +29,15 @@ type ErrorDescription = {
   title: string;
 };
 
+type SettingsSection = {
+  sectionDescription: string;
+  sectionTitle: string;
+  headerTitle: string;
+};
+
 export interface Locale {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
+  languages: Record<Languages, string>;
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;
   home: {
@@ -52,10 +59,9 @@ export interface Locale {
       };
     };
     settingsSections: {
+      language: SettingsSection;
       imageQualityDescription: string;
       imageQualityTitle: string;
-      languageDescription: string;
-      languageTitle: string;
       profileDescription: string;
       profileTitle: string;
       openSourceDescription: string;

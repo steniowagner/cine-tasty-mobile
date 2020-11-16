@@ -7,8 +7,8 @@ import { Props as SettingsSectionProps } from './SettingsSection';
 
 export const IMAGES_QUALITY_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:imageQualityTitle';
 export const IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:imageQualityDescription';
-export const LANGUAGE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:languageTitle';
-export const LANGUAGE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:languageDescription';
+export const LANGUAGE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:language:sectionTitle';
+export const LANGUAGE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:language:sectionDescription';
 export const PROFILE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:profileTitle';
 export const PROFILE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:profileDescription';
 export const OPEN_SOURCE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:openSourceTitle';
@@ -37,7 +37,7 @@ const useSettings = ({ navigation }: Props): State => {
       {
         description: t(LANGUAGE_SECTION_DESCRIPTION_I18N_REF),
         title: t(LANGUAGE_SECTION_TITLE_I18N_REF),
-        onPress: () => navigation.navigate('HOME'),
+        onPress: () => navigation.navigate('LANGUAGE'),
       },
       {
         description: t(PROFILE_SECTION_DESCRIPTION_I18N_REF),
