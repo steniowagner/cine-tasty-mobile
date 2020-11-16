@@ -18,7 +18,7 @@ import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 import MediaSectionViewAll, {
   Props as MediaSectionViewAllScreenProps,
 } from '../components/media-section-view-all/MediaSectionViewAll';
-import Language from '../components/settings/language/Language';
+import Language from '../components/settings/languages/Languages';
 import Settings from '../components/settings/Settings';
 import LOCAL_ROUTES from './route-names';
 import Home from '../components/Home';

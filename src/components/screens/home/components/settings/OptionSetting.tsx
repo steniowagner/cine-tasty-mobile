@@ -32,6 +32,7 @@ type Props = {
 const OptionSetting = ({ isSelected, onPress, title }: Props) => (
   <Wrapper
     onPress={onPress}
+    testID="option-settings"
   >
     <OptionSelectionIcon
       name={isSelected ? 'radiobox-marked' : 'radiobox-blank'}

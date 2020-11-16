@@ -1,6 +1,13 @@
 import { Locale } from './Locale';
 
 const en: Locale = {
+  languages: {
+    en: 'ptPT-English',
+    es: 'ptPT-Spanish',
+    ptBR: 'ptPT-Brazilian Portuguese',
+    ptPT: 'ptPT-Portuguese',
+    sv: 'ptPT-Swendish',
+  },
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
