@@ -11,8 +11,8 @@ export const LANGUAGE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSectio
 export const LANGUAGE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:language:sectionDescription';
 export const PROFILE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:profileTitle';
 export const PROFILE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:profileDescription';
-export const OPEN_SOURCE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:openSourceTitle';
-export const OPEN_SOURCE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:openSourceDescription';
+export const OPEN_SOURCE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:openSource:sectionTitle';
+export const OPEN_SOURCE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:openSource:sectionDescription';
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'SETTINGS'>;
 
@@ -47,7 +47,7 @@ const useSettings = ({ navigation }: Props): State => {
       {
         description: t(OPEN_SOURCE_SECTION_DESCRIPTION_I18N_REF),
         title: t(OPEN_SOURCE_SECTION_TITLE_I18N_REF),
-        onPress: () => navigation.navigate('HOME'),
+        onPress: () => navigation.navigate('OPEN_SOURCE'),
       },
     ],
     [],

@@ -3,7 +3,6 @@ import { Platform, NativeModules } from 'react-native';
 import {
   getItemFromStorage,
   persistItemInStorage,
-  removeItemFromStorage,
 } from 'utils/async-storage-adapter/AsyncStorageAdapter';
 import CONSTANTS from 'utils/constants';
 
@@ -61,7 +60,6 @@ const detectDeviceLanguage = (): string => {
 };
 
 const handleLanguageDetection = async (): Promise<string> => {
-  removeItemFromStorage(CONSTANTS.KEYS.LANGUAGE);
   const languagePreviouslySet = await getItemFromStorage<string, string>(
     CONSTANTS.KEYS.LANGUAGE,
     '',

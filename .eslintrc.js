@@ -2,7 +2,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   env: {
     jest: true,
-    'detox/detox': true,
   },
   extends: ['airbnb', 'plugin:react/recommended', 'prettier/@typescript-eslint'],
   parserOptions: {
@@ -13,6 +12,8 @@ module.exports = {
     },
   },
   rules: {
+    'react/require-default-props': [0],
+    'react/no-unused-prop-types': [0],
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'import/no-unresolved': 'off',
@@ -57,5 +58,5 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  plugins: ['react', 'detox', '@typescript-eslint', 'import'],
+  plugins: ['react', '@typescript-eslint', 'import'],
 };

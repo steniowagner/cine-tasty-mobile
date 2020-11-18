@@ -15,6 +15,7 @@ import Reviews, {
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 
+import OpenSource from '../components/settings/open-source/OpenSource';
 import MediaSectionViewAll, {
   Props as MediaSectionViewAllScreenProps,
 } from '../components/media-section-view-all/MediaSectionViewAll';
@@ -28,7 +29,7 @@ const Stack = createStackNavigator();
 type Props = {
   theme: DefaultTheme;
 };
-// home:settings
+
 const HomeStack = ({ theme }: Props) => {
   const { t } = useTranslation();
 
@@ -110,6 +111,14 @@ const HomeStack = ({ theme }: Props) => {
         options={() => ({
           ...getDefaultHeaderOptions(),
           headerTitle: t('translations:home:settingsSections:language:headerTitle'),
+        })}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.OPEN_SOURCE.id}
+        component={OpenSource}
+        options={() => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: t('translations:home:settingsSections:openSource:headerTitle'),
         })}
       />
     </Stack.Navigator>
