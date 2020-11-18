@@ -35,9 +35,19 @@ type SettingsSection = {
   headerTitle: string;
 };
 
+type OpenSourceSection = {
+  description: string;
+  title: string;
+};
+
 export interface Locale {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
   languages: Record<Languages, string>;
+  openSource: {
+    libraries: OpenSourceSection;
+    github: OpenSourceSection;
+    tmdb: OpenSourceSection;
+  };
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;
   home: {
@@ -59,13 +69,12 @@ export interface Locale {
       };
     };
     settingsSections: {
+      openSource: SettingsSection;
       language: SettingsSection;
       imageQualityDescription: string;
       imageQualityTitle: string;
       profileDescription: string;
       profileTitle: string;
-      openSourceDescription: string;
-      openSourceTitle: string;
     };
     tvShowsPaginationError: string;
     moviesPaginationError: string;

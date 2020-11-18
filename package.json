@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "build-android": "cd android && ./gradlew assembleRelease && cd ..",
-    "e2e:ios": "detox build --configuration ios.sim.release && detox test --configuration ios.sim.release --cleanup",
     "android-release": "npx react-native run-android --variant=release",
     "ios-se": "npx react-native run-ios --simulator \"iPhone SE\"",
     "start:clean": "npx react-native start --reset-cache",
@@ -71,7 +70,7 @@
     "react-native-status-bar-height": "^2.5.0",
     "react-native-svg": "^12.0.3",
     "react-native-tab-view": "^2.15.2",
-    "react-native-vector-icons": "^6.6.0",
+    "react-native-vector-icons": "^7.1.0",
     "styled-components": "^5.0.1",
     "yarn": "^1.22.4"
   },
@@ -92,11 +91,9 @@
     "apollo-link-schema": "^1.2.4",
     "babel-jest": "^24.9.0",
     "babel-plugin-module-resolver": "^4.0.0",
-    "detox": "^15.4.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-detox": "^1.0.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
@@ -112,19 +109,6 @@
     "react-native-dotenv": "^0.2.0",
     "react-test-renderer": "16.9.0",
     "typescript": "^3.7.3"
-  },
-  "detox": {
-    "test-runner": "jest",
-    "configurations": {
-      "ios.sim.release": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/CineTasty.app",
-        "build": "xcodebuild -workspace ios/CineTasty.xcworkspace -scheme CineTasty -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
-        "type": "ios.simulator",
-        "device": {
-          "type": "iPhone 11 Pro"
-        }
-      }
-    }
   },
   "eslintIgnore": [
     "*.spec.ts"

@@ -1,6 +1,20 @@
 import { Locale } from './Locale';
 
 const en: Locale = {
+  openSource: {
+    libraries: {
+      description: 'libraries-description',
+      title: 'libraries-title',
+    },
+    github: {
+      description: 'github-description',
+      title: 'github-title',
+    },
+    tmdb: {
+      description: 'tmdb-description',
+      title: 'tmdb-title',
+    },
+  },
   languages: {
     en: 'English',
     es: 'Spanish',
@@ -162,6 +176,11 @@ const en: Locale = {
       upcomingViewAllTitle: 'upcomingViewAllTitle',
     },
     settingsSections: {
+      openSource: {
+        sectionDescription: 'openSourceDescription',
+        sectionTitle: 'openSourceTitle',
+        headerTitle: 'Open-Source',
+      },
       language: {
         sectionDescription: 'languageDescription',
         sectionTitle: 'languageTitle',
@@ -171,8 +190,6 @@ const en: Locale = {
       imageQualityTitle: 'imageQualityTitle',
       profileDescription: 'profileDescription',
       profileTitle: 'profileTitle',
-      openSourceDescription: 'openSourceDescription',
-      openSourceTitle: 'openSourceTitle',
     },
     trendingTvShows: {
       error: 'trendingTVShowsError',
