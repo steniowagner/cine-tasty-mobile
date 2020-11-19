@@ -9,8 +9,8 @@ export const IMAGES_QUALITY_SECTION_TITLE_I18N_REF = 'translations:home:settings
 export const IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:imageQualityDescription';
 export const LANGUAGE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:language:sectionTitle';
 export const LANGUAGE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:language:sectionDescription';
-export const PROFILE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:profileTitle';
-export const PROFILE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:profileDescription';
+export const ABOUT_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:about:sectionTitle';
+export const ABOUT_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:about:sectionDescription';
 export const OPEN_SOURCE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:openSource:sectionTitle';
 export const OPEN_SOURCE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:openSource:sectionDescription';
 
@@ -40,9 +40,9 @@ const useSettings = ({ navigation }: Props): State => {
         onPress: () => navigation.navigate('LANGUAGE'),
       },
       {
-        description: t(PROFILE_SECTION_DESCRIPTION_I18N_REF),
-        title: t(PROFILE_SECTION_TITLE_I18N_REF),
-        onPress: () => navigation.navigate('HOME'),
+        description: t(ABOUT_SECTION_DESCRIPTION_I18N_REF),
+        title: t(ABOUT_SECTION_TITLE_I18N_REF),
+        onPress: () => navigation.navigate('ABOUT'),
       },
       {
         description: t(OPEN_SOURCE_SECTION_DESCRIPTION_I18N_REF),

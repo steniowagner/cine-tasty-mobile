@@ -10,7 +10,8 @@ export type Routes =
   | 'TV_SHOW_SEASONS'
   | 'SETTINGS'
   | 'LANGUAGE'
-  | 'OPEN_SOURCE';
+  | 'OPEN_SOURCE'
+  | 'ABOUT';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   HOME: {
@@ -42,6 +43,9 @@ const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   },
   OPEN_SOURCE: {
     id: 'OPEN_SOURCE',
+  },
+  ABOUT: {
+    id: 'ABOUT',
   },
 };
 

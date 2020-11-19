@@ -71,10 +71,9 @@ export interface Locale {
     settingsSections: {
       openSource: SettingsSection;
       language: SettingsSection;
+      about: SettingsSection;
       imageQualityDescription: string;
       imageQualityTitle: string;
-      profileDescription: string;
-      profileTitle: string;
     };
     tvShowsPaginationError: string;
     moviesPaginationError: string;

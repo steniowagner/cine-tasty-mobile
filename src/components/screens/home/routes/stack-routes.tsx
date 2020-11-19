@@ -20,6 +20,7 @@ import MediaSectionViewAll, {
   Props as MediaSectionViewAllScreenProps,
 } from '../components/media-section-view-all/MediaSectionViewAll';
 import Language from '../components/settings/languages/Languages';
+import About from '../components/settings/about/About';
 import Settings from '../components/settings/Settings';
 import LOCAL_ROUTES from './route-names';
 import Home from '../components/Home';
@@ -119,6 +120,14 @@ const HomeStack = ({ theme }: Props) => {
         options={() => ({
           ...getDefaultHeaderOptions(),
           headerTitle: t('translations:home:settingsSections:openSource:headerTitle'),
+        })}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.ABOUT.id}
+        component={About}
+        options={() => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: t('translations:home:settingsSections:about:headerTitle'),
         })}
       />
     </Stack.Navigator>

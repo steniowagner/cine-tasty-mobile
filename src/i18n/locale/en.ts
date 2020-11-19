@@ -186,10 +186,13 @@ const en: Locale = {
         sectionTitle: 'languageTitle',
         headerTitle: 'Language',
       },
+      about: {
+        sectionDescription: 'aboutDescription',
+        sectionTitle: 'aboutTitle',
+        headerTitle: 'About',
+      },
       imageQualityDescription: 'imageQualityDescription',
       imageQualityTitle: 'imageQualityTitle',
-      profileDescription: 'profileDescription',
-      profileTitle: 'profileTitle',
     },
     trendingTvShows: {
       error: 'trendingTVShowsError',
