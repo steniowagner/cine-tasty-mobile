@@ -9,6 +9,7 @@ import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
 import socialNetworks from './socialNetworks';
+import HeartBeating from './HeartBeating';
 
 interface SocialNetworkButtonStyleProps {
   readonly isMiddle: boolean;
@@ -46,7 +47,8 @@ const SoftwareEngineerText = styled(Text)`
 `;
 
 const AboutText = styled(Text)`
-  margin-vertical: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
+  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Medium;
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('4.5%')}px;
   padding-horizontal: ${({ theme }) => theme.metrics.extraLargeSize}px;
@@ -86,6 +88,13 @@ const BeautifulImage = styled(Image).attrs(() => ({
   border-width: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
+const SoftwareEngineerWrapper = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+`;
+
 const About = () => {
   const { t } = useTranslation();
 
@@ -105,7 +114,12 @@ const About = () => {
       >
         <BeautifulImage />
         <NameText>Stenio Wagner</NameText>
-        <SoftwareEngineerText>{t('translations:softwareEngineer')}</SoftwareEngineerText>
+        <SoftwareEngineerWrapper>
+          <SoftwareEngineerText>
+            {t('translations:softwareEngineer')}
+          </SoftwareEngineerText>
+          <HeartBeating />
+        </SoftwareEngineerWrapper>
         <AboutText>{t('translations:about')}</AboutText>
         <SocialNetworkButtonsWrapper>
           {socialNetworks.map((socialNetwork, index) => (
