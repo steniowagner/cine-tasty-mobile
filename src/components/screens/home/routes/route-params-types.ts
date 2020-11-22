@@ -20,5 +20,6 @@ export type HomeStackParams = {
   OPEN_SOURCE: undefined;
   LANGUAGE: undefined;
   SETTINGS: undefined;
+  ABOUT: undefined;
   HOME: undefined;
 };

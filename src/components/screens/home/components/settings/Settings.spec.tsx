@@ -10,8 +10,8 @@ import {
   IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF,
   LANGUAGE_SECTION_TITLE_I18N_REF,
   LANGUAGE_SECTION_DESCRIPTION_I18N_REF,
-  PROFILE_SECTION_TITLE_I18N_REF,
-  PROFILE_SECTION_DESCRIPTION_I18N_REF,
+  ABOUT_SECTION_TITLE_I18N_REF,
+  ABOUT_SECTION_DESCRIPTION_I18N_REF,
   OPEN_SOURCE_SECTION_TITLE_I18N_REF,
   OPEN_SOURCE_SECTION_DESCRIPTION_I18N_REF,
 } from './useSettings';
@@ -51,9 +51,9 @@ describe('Testing <Settings />', () => {
 
     expect(getByText(LANGUAGE_SECTION_DESCRIPTION_I18N_REF)).not.toBeNull();
 
-    expect(getByText(PROFILE_SECTION_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(ABOUT_SECTION_TITLE_I18N_REF)).not.toBeNull();
 
-    expect(getByText(PROFILE_SECTION_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(ABOUT_SECTION_DESCRIPTION_I18N_REF)).not.toBeNull();
 
     expect(getByText(OPEN_SOURCE_SECTION_TITLE_I18N_REF)).not.toBeNull();
 
@@ -85,7 +85,7 @@ describe('Testing <Settings />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('HOME');
+    expect(navigate).toHaveBeenCalledWith('ABOUT');
 
     jest.clearAllMocks();
 

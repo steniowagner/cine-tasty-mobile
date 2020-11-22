@@ -43,6 +43,8 @@ type OpenSourceSection = {
 export interface Locale {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
   languages: Record<Languages, string>;
+  softwareEngineer: string;
+  about: string;
   openSource: {
     libraries: OpenSourceSection;
     github: OpenSourceSection;
@@ -71,10 +73,9 @@ export interface Locale {
     settingsSections: {
       openSource: SettingsSection;
       language: SettingsSection;
+      about: SettingsSection;
       imageQualityDescription: string;
       imageQualityTitle: string;
-      profileDescription: string;
-      profileTitle: string;
     };
     tvShowsPaginationError: string;
     moviesPaginationError: string;

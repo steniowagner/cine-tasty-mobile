@@ -1,6 +1,9 @@
 import { Locale } from './Locale';
 
 const en: Locale = {
+  softwareEngineer: 'Software Engineer',
+  about:
+    "Hey!\n\nI'm Full-Stack Software Engineer that loves apply his knowledge to solve problems, create amazing products and impact lives!",
   openSource: {
     libraries: {
       description: 'libraries-description',
@@ -186,10 +189,13 @@ const en: Locale = {
         sectionTitle: 'languageTitle',
         headerTitle: 'Language',
       },
+      about: {
+        sectionDescription: 'aboutDescription',
+        sectionTitle: 'aboutTitle',
+        headerTitle: 'About',
+      },
       imageQualityDescription: 'imageQualityDescription',
       imageQualityTitle: 'imageQualityTitle',
-      profileDescription: 'profileDescription',
-      profileTitle: 'profileTitle',
     },
     trendingTvShows: {
       error: 'trendingTVShowsError',
