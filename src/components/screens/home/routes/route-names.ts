@@ -11,7 +11,8 @@ export type Routes =
   | 'SETTINGS'
   | 'LANGUAGE'
   | 'OPEN_SOURCE'
-  | 'ABOUT';
+  | 'ABOUT'
+  | 'IMAGES_QUALITY';
 
 const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   HOME: {
@@ -46,6 +47,9 @@ const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
   },
   ABOUT: {
     id: 'ABOUT',
+  },
+  IMAGES_QUALITY: {
+    id: 'IMAGES_QUALITY',
   },
 };
 

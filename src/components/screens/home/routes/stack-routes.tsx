@@ -15,6 +15,7 @@ import Reviews, {
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
 import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 
+import ImagesQuality from '../components/settings/images-quality/ImagesQuality';
 import OpenSource from '../components/settings/open-source/OpenSource';
 import MediaSectionViewAll, {
   Props as MediaSectionViewAllScreenProps,
@@ -128,6 +129,14 @@ const HomeStack = ({ theme }: Props) => {
         options={() => ({
           ...getDefaultHeaderOptions(),
           headerTitle: t('translations:home:settingsSections:about:headerTitle'),
+        })}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.IMAGES_QUALITY.id}
+        component={ImagesQuality}
+        options={() => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: t('translations:home:settingsSections:imagesQuality:headerTitle'),
         })}
       />
     </Stack.Navigator>

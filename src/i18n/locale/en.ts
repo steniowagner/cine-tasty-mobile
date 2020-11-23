@@ -18,6 +18,12 @@ const en: Locale = {
       title: 'tmdb-title',
     },
   },
+  imageQualities: {
+    low: 'Low',
+    medium: 'Medium',
+    high: 'High',
+    'very-high': 'Very High',
+  },
   languages: {
     en: 'English',
     es: 'Spanish',
@@ -194,8 +200,11 @@ const en: Locale = {
         sectionTitle: 'aboutTitle',
         headerTitle: 'About',
       },
-      imageQualityDescription: 'imageQualityDescription',
-      imageQualityTitle: 'imageQualityTitle',
+      imagesQuality: {
+        sectionDescription: 'imagesQualityDescription',
+        sectionTitle: 'imagesQualityTitle',
+        headerTitle: 'Images Quality',
+      },
     },
     trendingTvShows: {
       error: 'trendingTVShowsError',
