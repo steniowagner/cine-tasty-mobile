@@ -5,8 +5,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParams } from '../../routes/route-params-types';
 import { Props as SettingsSectionProps } from './SettingsSection';
 
-export const IMAGES_QUALITY_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:imageQualityTitle';
-export const IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:imageQualityDescription';
+export const IMAGES_QUALITY_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:imagesQuality:sectionTitle';
+export const IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:imagesQuality:sectionDescription';
 export const LANGUAGE_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:language:sectionTitle';
 export const LANGUAGE_SECTION_DESCRIPTION_I18N_REF = 'translations:home:settingsSections:language:sectionDescription';
 export const ABOUT_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:about:sectionTitle';
@@ -32,7 +32,7 @@ const useSettings = ({ navigation }: Props): State => {
       {
         description: t(IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF),
         title: t(IMAGES_QUALITY_SECTION_TITLE_I18N_REF),
-        onPress: () => navigation.navigate('HOME'),
+        onPress: () => navigation.navigate('IMAGES_QUALITY'),
       },
       {
         description: t(LANGUAGE_SECTION_DESCRIPTION_I18N_REF),

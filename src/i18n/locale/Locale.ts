@@ -1,4 +1,4 @@
-import { NewsFilterLanguage, Languages } from 'types';
+import { NewsFilterLanguage, ImageQualities, Languages } from 'types';
 
 type Time =
   | 'year'
@@ -42,6 +42,7 @@ type OpenSourceSection = {
 
 export interface Locale {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
+  imageQualities: Record<ImageQualities, string>;
   languages: Record<Languages, string>;
   softwareEngineer: string;
   about: string;
@@ -71,11 +72,10 @@ export interface Locale {
       };
     };
     settingsSections: {
+      imagesQuality: SettingsSection;
       openSource: SettingsSection;
       language: SettingsSection;
       about: SettingsSection;
-      imageQualityDescription: string;
-      imageQualityTitle: string;
     };
     tvShowsPaginationError: string;
     moviesPaginationError: string;

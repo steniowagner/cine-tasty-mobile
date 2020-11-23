@@ -140,3 +140,5 @@ export type CrewDataset = (TVShowCrew | MovieCrew)[];
 export type CastDataset = (TVShowCast | MovieCast)[];
 
 export type Languages = 'en' | 'es' | 'sv' | 'ptPT' | 'ptBR';
+
+export type ImageQualities = 'low' | 'medium' | 'high' | 'very-high';
