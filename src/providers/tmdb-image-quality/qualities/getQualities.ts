@@ -23,9 +23,9 @@ const getQualitiesBasedScreenClassification = (
 };
 
 const getImageQualityFromStore = async (): Promise<ImageQualities> => {
-  const imageQualityFromStore = await getItemFromStorage<undefined, ImageQualities>(
+  const imageQualityFromStore = await getItemFromStorage<ImageQualities, ImageQualities>(
     CONSTANTS.KEYS.IMAGES_QUALITY,
-    undefined,
+    'medium',
   );
 
   return imageQualityFromStore;
