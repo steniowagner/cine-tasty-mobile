@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
 import { Dimensions, Platform } from 'react-native';
 
-import { DeviceScreenHeight } from 'types';
+import { DeviceScreenClassification } from 'types';
 
 type State = {
-  screenClassification: DeviceScreenHeight;
+  screenClassification: DeviceScreenClassification;
 };
 
 const { width, height } = Dimensions.get('window');
 
 const useClassifyDeviceScreen = (): State => {
-  const iOSScreenClassification = useMemo((): DeviceScreenHeight => {
+  const iOSScreenClassification = useMemo((): DeviceScreenClassification => {
     if (width <= 320 && height <= 480) {
       return 'xsmall';
     }
@@ -30,7 +30,7 @@ const useClassifyDeviceScreen = (): State => {
     return 'xlarge';
   }, []);
 
-  const androidScreenClassification = useMemo((): DeviceScreenHeight => {
+  const androidScreenClassification = useMemo((): DeviceScreenClassification => {
     if (width >= 960 && height >= 720) {
       return 'xlarge';
     }
