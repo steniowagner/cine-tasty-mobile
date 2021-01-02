@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import { SimplifiedMedia } from 'types';
 import metrics from 'styles/metrics';
-
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { HomeStackParams } from '../routes/route-params-types';
 import LoadingHome from './top3/LoadingTop3';
 import HomeSection from './HomeSection';
@@ -66,6 +66,7 @@ const Home = ({ navigation }: Props) => {
 
   return (
     <>
+      <TMDBImage />
       {!errorMessage && (
         <ScrollView
           testID="scrollview-content"

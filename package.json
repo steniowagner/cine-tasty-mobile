@@ -5,7 +5,7 @@
   "scripts": {
     "build-android": "cd android && ./gradlew assembleRelease && cd ..",
     "android-release": "npx react-native run-android --variant=release",
-    "ios-se": "npx react-native run-ios --simulator \"iPhone SE\"",
+    "ios-se": "npx react-native run-ios --simulator \"iPhone 8\"",
     "start:clean": "npx react-native start --reset-cache",
     "android": "npx react-native run-android",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx .",
