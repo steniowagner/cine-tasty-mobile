@@ -11,7 +11,7 @@ import { ImageQualities } from 'types';
 
 export const IMAGE_QUALITIES_I18N_REF = 'translations:imageQualities';
 
-export const qualities: ImageQualities[] = ['low', 'medium', 'high', 'very-high'];
+export const qualities: ImageQualities[] = ['low', 'medium', 'high', 'veryHigh'];
 
 type Quality = {
   quality: ImageQualities;

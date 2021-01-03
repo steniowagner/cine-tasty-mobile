@@ -10,6 +10,7 @@
     "baseUrl": "./src",
     "paths": {
       "components": ["./components"],
+      "providers": ["./providers"],
       "routes": ["./routes"],
       "config": ["./config"],
       "styles": ["./styles"],
