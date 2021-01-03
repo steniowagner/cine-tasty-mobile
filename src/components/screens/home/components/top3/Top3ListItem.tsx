@@ -3,9 +3,10 @@ import { Animated, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
+
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import RoundedButton from 'components/common/RoundedButton';
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 
 import {
   ITEM_MARGING_HORIZONTAL,
@@ -93,14 +94,10 @@ const Top3ListItem = ({
       width={width}
       testID="wrapper"
     >
-      <TMDBImage
+      <ProgressiveImage
+        borderRadius={ITEM_BORDER_RADIUS}
         imageType="poster"
         image={image}
-        style={{
-          width: '100%',
-          height: '100%',
-          borderRadius: ITEM_BORDER_RADIUS,
-        }}
       />
       <SmokeShadow />
       <TextContentWrapper>

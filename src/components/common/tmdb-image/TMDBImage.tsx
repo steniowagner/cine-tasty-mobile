@@ -7,9 +7,11 @@ import { ImagesTypes } from 'types';
 
 import useTMDBImage from './useTMDBImage';
 
+type Style = StyleProp<ImageStyle> | { opacity: Animated.Value };
+
 type Props = {
-  style: StyleProp<ImageStyle>;
   resizeMode?: ImageResizeMode;
+  style: Style | Style[];
   imageType: ImagesTypes;
   isThumbnail?: boolean;
   isAnimated?: boolean;
@@ -49,11 +51,11 @@ const TMDBImage = ({
 
   return (
     <Image
+      style={style as StyleProp<ImageStyle> | StyleProp<ImageStyle>[]}
       blurRadius={blurRadius}
       resizeMode={resizeMode}
       onError={onError}
       onLoad={onLoad}
-      style={style}
       source={{
         uri,
       }}
