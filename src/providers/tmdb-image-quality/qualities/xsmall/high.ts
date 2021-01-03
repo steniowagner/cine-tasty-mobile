@@ -1,10 +1,10 @@
-import { ImagesTypes } from 'types';
+import { ImageType, ImageSize } from 'types';
 
-const high: Record<ImagesTypes, string> = {
-  poster: 'xsmall-high-poster',
-  backdrop: 'xsmall-high-backdrop',
-  still: 'xsmall-high-still',
-  profile: 'xsmall-high-profile',
+const high: Record<ImageType, ImageSize> = {
+  poster: 'w154',
+  backdrop: 'w154',
+  still: 'w154',
+  profile: 'w92',
 };
 
 export default high;

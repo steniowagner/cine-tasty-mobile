@@ -1,10 +1,10 @@
-import { ImagesTypes } from 'types';
+import { ImageType, ImageSize } from 'types';
 
-const medium: Record<ImagesTypes, string> = {
-  poster: 'large-medium-poster',
-  backdrop: 'large-medium-backdrop',
-  still: 'large-medium-still',
-  profile: 'large-medium-profile',
+const medium: Record<ImageType, ImageSize> = {
+  poster: 'w300',
+  backdrop: 'w300',
+  still: 'w300',
+  profile: 'w185',
 };
 
 export default medium;

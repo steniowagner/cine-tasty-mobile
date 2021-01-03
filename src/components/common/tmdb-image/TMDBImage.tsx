@@ -3,7 +3,7 @@ import {
   Animated, Image, StyleProp, ImageStyle, ImageResizeMode,
 } from 'react-native';
 
-import { ImagesTypes } from 'types';
+import { ImageType } from 'types';
 
 import useTMDBImage from './useTMDBImage';
 
@@ -12,7 +12,7 @@ type Style = StyleProp<ImageStyle> | { opacity: Animated.Value };
 type Props = {
   resizeMode?: ImageResizeMode;
   style: Style | Style[];
-  imageType: ImagesTypes;
+  imageType: ImageType;
   isThumbnail?: boolean;
   isAnimated?: boolean;
   onError?: () => void;

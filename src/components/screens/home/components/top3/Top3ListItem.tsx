@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
-
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import RoundedButton from 'components/common/RoundedButton';
+import CONSTANTS from 'utils/constants';
 
 import {
   ITEM_MARGING_HORIZONTAL,
@@ -15,6 +15,9 @@ import {
   ITEM_WIDTH,
   ITEM_HEIGHT,
 } from './commonStyles';
+
+const PROFILE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
+const PROFILE_IMAGE_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_SIZE_CODE}`;
 
 interface ItemWrapperStyleProps {
   readonly isTheMiddle: boolean;
@@ -95,9 +98,9 @@ const Top3ListItem = ({
       testID="wrapper"
     >
       <ProgressiveImage
+        thumbnailURL={`${PROFILE_THUMBNAIL_URL}${image}`}
+        imageURL={`${PROFILE_IMAGE_URL}${image}`}
         borderRadius={ITEM_BORDER_RADIUS}
-        imageType="poster"
-        image={image}
       />
       <SmokeShadow />
       <TextContentWrapper>
