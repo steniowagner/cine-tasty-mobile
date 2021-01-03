@@ -1,17 +1,61 @@
 import React from 'react';
-import { View } from 'react-native';
+import {
+  Animated, Image, StyleProp, ImageStyle, ImageResizeMode,
+} from 'react-native';
 
-import { useTMDBImageQuality } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import { ImagesTypes } from 'types';
 
-const TMDBImage = () => {
-  const asd = useTMDBImageQuality();
-  console.log('asd: ', asd);
+import useTMDBImage from './useTMDBImage';
+
+type Props = {
+  style: StyleProp<ImageStyle>;
+  resizeMode?: ImageResizeMode;
+  imageType: ImagesTypes;
+  isThumbnail?: boolean;
+  isAnimated?: boolean;
+  onError?: () => void;
+  onLoad?: () => void;
+  blurRadius?: number;
+  image: string;
+};
+
+const TMDBImage = ({
+  isThumbnail = false,
+  isAnimated = false,
+  blurRadius = 0,
+  resizeMode,
+  imageType,
+  onError,
+  onLoad,
+  style,
+  image,
+}: Props) => {
+  const { uri } = useTMDBImage({ isThumbnail, imageType, image });
+
+  if (isAnimated) {
+    return (
+      <Animated.Image
+        blurRadius={blurRadius}
+        resizeMode={resizeMode}
+        onError={onError}
+        onLoad={onLoad}
+        style={style}
+        source={{
+          uri,
+        }}
+      />
+    );
+  }
+
   return (
-    <View
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#f0f',
+    <Image
+      blurRadius={blurRadius}
+      resizeMode={resizeMode}
+      onError={onError}
+      onLoad={onLoad}
+      style={style}
+      source={{
+        uri,
       }}
     />
   );

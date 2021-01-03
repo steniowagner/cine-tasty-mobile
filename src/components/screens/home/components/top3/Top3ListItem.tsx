@@ -3,10 +3,9 @@ import { Animated, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import RoundedButton from 'components/common/RoundedButton';
-import CONSTANTS from 'utils/constants';
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 
 import {
   ITEM_MARGING_HORIZONTAL,
@@ -15,9 +14,6 @@ import {
   ITEM_WIDTH,
   ITEM_HEIGHT,
 } from './commonStyles';
-
-const PROFILE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
-const PROFILE_IMAGE_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_SIZE_CODE}`;
 
 interface ItemWrapperStyleProps {
   readonly isTheMiddle: boolean;
@@ -97,10 +93,14 @@ const Top3ListItem = ({
       width={width}
       testID="wrapper"
     >
-      <ProgressiveImage
-        thumbnailURL={`${PROFILE_THUMBNAIL_URL}${image}`}
-        imageURL={`${PROFILE_IMAGE_URL}${image}`}
-        borderRadius={ITEM_BORDER_RADIUS}
+      <TMDBImage
+        imageType="poster"
+        image={image}
+        style={{
+          width: '100%',
+          height: '100%',
+          borderRadius: ITEM_BORDER_RADIUS,
+        }}
       />
       <SmokeShadow />
       <TextContentWrapper>
