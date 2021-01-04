@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
 import PersonList from './PeopleList';
@@ -26,14 +27,16 @@ const crew = Array(3)
   }));
 
 const renderPersonList = ({ sectionTitle, onPressItem, dataset, type }) => (
-  <ThemeProvider theme={theme}>
-    <PersonList
-      sectionTitle={sectionTitle}
-      onPressItem={onPressItem}
-      dataset={dataset}
-      type={type}
-    />
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <PersonList
+        sectionTitle={sectionTitle}
+        onPressItem={onPressItem}
+        dataset={dataset}
+        type={type}
+      />
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 describe('Testing <PeopleList />', () => {

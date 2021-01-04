@@ -22,7 +22,7 @@ const en: Locale = {
     low: 'Low',
     medium: 'Medium',
     high: 'High',
-    'very-high': 'Very High',
+    veryHigh: 'Very High',
   },
   languages: {
     en: 'English',

@@ -2,6 +2,8 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
@@ -22,7 +24,7 @@ const trendingMoviesItems = Array(10)
     genreIds: Array(index + 1)
       .fill('')
       .map((_, index) => `genre-${index}`),
-    posterPath: `posterPath-${index}`,
+    posterPath: `/posterPath-${index}`,
     title: `title-${index}`,
     __typename: 'BaseMovie',
     voteAverage: index,
@@ -76,7 +78,11 @@ const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
     );
   };
 
-  return <MockedNavigation component={HomeScreen} />;
+  return (
+    <TMDBImageQualityProvider>
+      <MockedNavigation component={HomeScreen} />
+    </TMDBImageQualityProvider>
+  );
 };
 
 describe('Testing <Home /> - [Movies -- Extras]', () => {

@@ -1,10 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, Animated, Image } from 'react-native';
+import { TouchableOpacity, Animated } from 'react-native';
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 interface WrapperStyleProps {
   readonly isFirst?: boolean;
@@ -24,12 +26,6 @@ const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
-const ItemImage = styled(Image)`
-  width: 100%;
-  height: 100%;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-`;
-
 const FallbackImageWrapper = styled(Animated.View)`
   width: 100%;
   height: 100%;
@@ -44,8 +40,6 @@ const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('14%'),
   color: theme.colors.fallbackImageIcon,
 }))``;
-
-const IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
 type Props = {
   onPress: () => void;
@@ -69,13 +63,17 @@ const ImageListItem = ({ onPress, isFirst, image }: Props) => {
       onPress={onPress}
       isFirst={isFirst}
     >
-      <ItemImage
-        source={{
-          uri: `${IMAGE_URI}${image}`,
-        }}
+      <TMDBImage
+        imageType="backdrop"
         resizeMode="cover"
         onError={onError}
         onLoad={onLoad}
+        image={image}
+        style={{
+          width: '100%',
+          height: '100%',
+          borderRadius: metrics.extraSmallSize,
+        }}
       />
       {isFallbackImageVisible && (
         <FallbackImageWrapper

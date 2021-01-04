@@ -4,6 +4,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
@@ -161,11 +162,13 @@ const renderTVShowDetail = ({
   route,
 }: Props) => {
   const TVShowDetailScreen = () => (
-    <ThemeProvider theme={theme}>
-      <AutoMockProvider mockResolvers={mockResolvers}>
-        <TVShowDetail navigation={navigation} route={route} />
-      </AutoMockProvider>
-    </ThemeProvider>
+    <TMDBImageQualityProvider>
+      <ThemeProvider theme={theme}>
+        <AutoMockProvider mockResolvers={mockResolvers}>
+          <TVShowDetail navigation={navigation} route={route} />
+        </AutoMockProvider>
+      </ThemeProvider>
+    </TMDBImageQualityProvider>
   );
 
   return <MockedNavigation component={TVShowDetailScreen} />;

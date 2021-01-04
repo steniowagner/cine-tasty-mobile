@@ -5,6 +5,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../common/popup-advice/PopupAdvice';
@@ -33,11 +34,13 @@ const navigation = {
 };
 
 const renderFamousScreen = (resolvers?: IMocks) => (
-  <ThemeProvider theme={theme}>
-    <AutoMockProvider mockResolvers={resolvers}>
-      <Famous navigation={navigation} />
-    </AutoMockProvider>
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <AutoMockProvider mockResolvers={resolvers}>
+        <Famous navigation={navigation} />
+      </AutoMockProvider>
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 describe('Testing <Famous /> [Pagination-After-Error]', () => {

@@ -4,6 +4,7 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SearchType } from 'types/schema';
 import theme from 'styles/theme';
 
@@ -38,7 +39,7 @@ const defaultItems = Array(10)
     genreIds: Array(index + 1)
       .fill('')
       .map((_, index) => `genre-${index}`),
-    posterPath: `posterPath-${index}`,
+    posterPath: `/posterPath-${index}`,
     __typename: 'BaseTVShow',
     name: `name-${index}`,
     voteAverage: index,
@@ -62,11 +63,13 @@ const params = {
 
 const renderSearchTVShows = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {
   const SearchTVShowsScreen = ({ navigation, route }) => (
-    <ThemeProvider theme={theme}>
-      <AutoMockProvider mockResolvers={mockResolvers}>
-        <Search navigation={{ ...navigation, navigate }} route={route} />
-      </AutoMockProvider>
-    </ThemeProvider>
+    <TMDBImageQualityProvider>
+      <ThemeProvider theme={theme}>
+        <AutoMockProvider mockResolvers={mockResolvers}>
+          <Search navigation={{ ...navigation, navigate }} route={route} />
+        </AutoMockProvider>
+      </ThemeProvider>
+    </TMDBImageQualityProvider>
   );
 
   return <MockedNavigation component={SearchTVShowsScreen} params={params} />;

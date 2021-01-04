@@ -1,12 +1,11 @@
 import React, { useMemo, memo } from 'react';
-import {
-  TouchableOpacity, Animated, Image, Text,
-} from 'react-native';
+import { TouchableOpacity, Animated, Text } from 'react-native';
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
-import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 import getWrapperMeasures from './getWrapperMeasures';
 
@@ -17,12 +16,6 @@ const PersonName = styled(Text).attrs({
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
   font-family: CircularStd-Medium;
   color: ${({ theme }) => theme.colors.text};
-`;
-
-const PersonImage = styled(Image)`
-  width: 100%;
-  height: 70%;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
 const FallbackImageWrapper = styled(Animated.View)`
@@ -39,8 +32,6 @@ const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('14%'),
   color: theme.colors.fallbackImageIcon,
 }))``;
-
-const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
 type Props = {
   numberOfColumns: number;
@@ -76,11 +67,15 @@ const FamousListItem = ({
       onPress={onPress}
     >
       <>
-        <PersonImage
+        <TMDBImage
+          imageType="profile"
           onError={onError}
           onLoad={onLoad}
-          source={{
-            uri: `${PERSON_IMAGE_URI}${image}`,
+          image={image}
+          style={{
+            width: '100%',
+            height: '70%',
+            borderRadius: metrics.extraSmallSize,
           }}
         />
         {isFallbackImageVisible && (

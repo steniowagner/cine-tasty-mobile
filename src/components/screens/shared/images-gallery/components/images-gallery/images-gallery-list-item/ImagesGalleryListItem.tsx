@@ -1,16 +1,12 @@
 import React, { memo } from 'react';
-import { ActivityIndicator, Image, View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 
 import useImagesGalleryListItem from './useImagesGalleryListItem';
-
-interface GalleryImageStyleProps {
-  readonly isLandscape?: boolean;
-  readonly isPortrait?: boolean;
-}
 
 export const IMAGES_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_IMAGE_SIZE_CODE}`;
 
@@ -19,21 +15,6 @@ const Wrapper = styled(View)`
   height: 100%;
   justify-content: center;
   align-items: center;
-`;
-
-const GalleryImage = styled(Image)<GalleryImageStyleProps>`
-  width: 100%;
-  height: ${({ isLandscape, isPortrait }) => {
-    if (isLandscape) {
-      return '40%';
-    }
-
-    if (isPortrait) {
-      return '70%';
-    }
-
-    return '0%';
-  }};
 `;
 
 const CustomActivityIndicator = styled(ActivityIndicator).attrs(({ theme }) => ({
@@ -86,16 +67,29 @@ const ImagesGalleryListItem = ({ imageURL }: Props) => {
   }
 
   if (isLandscape || isPortrait) {
+    const height = (function () {
+      if (isLandscape) {
+        return '40%';
+      }
+
+      if (isPortrait) {
+        return '70%';
+      }
+
+      return '0%';
+    }());
+
     return (
       <Wrapper
         testID="images-gallery-list-item"
       >
-        <GalleryImage
-          source={{
-            uri: `${IMAGES_URI}${imageURL}`,
+        <TMDBImage
+          imageType="backdrop"
+          image={imageURL}
+          style={{
+            width: '100%',
+            height,
           }}
-          isLandscape={isLandscape}
-          isPortrait={isPortrait}
         />
       </Wrapper>
     );

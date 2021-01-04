@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
 import theme from 'styles/theme';
 
@@ -23,9 +24,11 @@ const renderTVShowSeasonsListItem = (
   index: number = 0,
   episode: Episode = episodeMock,
 ) => (
-  <ThemeProvider theme={theme}>
-    <TVShowSeasonsListItem episode={episode} index={index} />
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <TVShowSeasonsListItem episode={episode} index={index} />
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 describe('Testing <TVShowSeasonsListItem />', () => {

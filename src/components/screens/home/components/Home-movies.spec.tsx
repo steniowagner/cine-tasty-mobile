@@ -2,11 +2,13 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SEARCH_MOVIES } from 'components/screens/shared/search/queries';
 import { SearchType } from 'types/schema';
 
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import { SCREEN_ID } from './media-section-view-all/MediaSectionViewAll';
+
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import {
   NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF as MOVIES_NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF,
@@ -34,7 +36,7 @@ const trendingMoviesItems = Array(10)
     genreIds: Array(index + 1)
       .fill('')
       .map((_, index) => `genre-${index}`),
-    posterPath: `posterPath-${index}`,
+    posterPath: `/posterPath-${index}`,
     title: `title-${index}`,
     __typename: 'BaseMovie',
     voteAverage: index,
@@ -88,7 +90,11 @@ const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
     );
   };
 
-  return <MockedNavigation component={HomeScreen} />;
+  return (
+    <TMDBImageQualityProvider>
+      <MockedNavigation component={HomeScreen} />
+    </TMDBImageQualityProvider>
+  );
 };
 
 describe('Testing <Home /> - [Movies]', () => {

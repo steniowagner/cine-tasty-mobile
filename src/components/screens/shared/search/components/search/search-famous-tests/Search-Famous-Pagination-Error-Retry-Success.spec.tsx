@@ -4,6 +4,7 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SearchType } from 'types/schema';
 import theme from 'styles/theme';
 
@@ -42,11 +43,13 @@ const params = {
 };
 
 const renderSearchFamous = (mockResolvers: IMocks = {}) => (
-  <ThemeProvider theme={theme}>
-    <AutoMockProvider mockResolvers={mockResolvers}>
-      <MockedNavigation component={Search} params={params} />
-    </AutoMockProvider>
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <AutoMockProvider mockResolvers={mockResolvers}>
+        <MockedNavigation component={Search} params={params} />
+      </AutoMockProvider>
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 describe('Testing <Search /> - [Famous-Pagination-Retry-Success]', () => {

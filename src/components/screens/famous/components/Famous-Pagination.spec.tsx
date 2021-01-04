@@ -5,6 +5,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
 import { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
@@ -30,11 +31,13 @@ const navigation = {
 
 const renderFamousScreen = (resolvers?: IMocks) => {
   const FamousScreen = () => (
-    <ThemeProvider theme={theme}>
-      <AutoMockProvider mockResolvers={resolvers}>
-        <Famous navigation={navigation} />
-      </AutoMockProvider>
-    </ThemeProvider>
+    <TMDBImageQualityProvider>
+      <ThemeProvider theme={theme}>
+        <AutoMockProvider mockResolvers={resolvers}>
+          <Famous navigation={navigation} />
+        </AutoMockProvider>
+      </ThemeProvider>
+    </TMDBImageQualityProvider>
   );
 
   return <MockedNavigation component={FamousScreen} />;

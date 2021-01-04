@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SEARCH_TV_SHOWS } from 'components/screens/shared/search/queries';
 import { SearchType } from 'types/schema';
 
@@ -36,7 +37,7 @@ const trendingTVShowsItems = Array(10)
     genreIds: Array(index + 1)
       .fill('')
       .map((_, index) => `genre-${index}`),
-    posterPath: `posterPath-${index}`,
+    posterPath: `/posterPath-${index}`,
     __typename: 'BaseTVShow',
     name: `name-${index}`,
     voteAverage: index,
@@ -50,7 +51,7 @@ const trendingTVShowsItemsWithTitle = Array(10)
     genreIds: Array(index + 1)
       .fill('')
       .map((_, index) => `genre-${index}`),
-    posterPath: `posterPath-${index}`,
+    posterPath: `/posterPath-${index}`,
     __typename: 'BaseTVShow',
     title: `name-${index}`,
     voteAverage: index,
@@ -122,7 +123,11 @@ const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
     );
   };
 
-  return <MockedNavigation component={HomeScreen} />;
+  return (
+    <TMDBImageQualityProvider>
+      <MockedNavigation component={HomeScreen} />
+    </TMDBImageQualityProvider>
+  );
 };
 
 describe('Testing <Home /> - [TVShows]', () => {

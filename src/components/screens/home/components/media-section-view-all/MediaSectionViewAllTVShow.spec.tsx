@@ -3,6 +3,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { PAGINATION_DELAY } from 'hooks/use-paginated-query/useQueryWithPagination';
 import theme from 'styles/theme';
 
@@ -33,21 +34,23 @@ const renderMediaSectionViewAll = (
   },
   resolvers?: IMocks,
 ) => (
-  <ThemeProvider theme={theme}>
-    <AutoMockProvider mockResolvers={resolvers}>
-      <MediaSectionViewAll
-        route={{
-          params: {
-            initialDataset,
-            onPressItem,
-            sectionKey,
-            headerTitle,
-            isMovie,
-          },
-        }}
-      />
-    </AutoMockProvider>
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <AutoMockProvider mockResolvers={resolvers}>
+        <MediaSectionViewAll
+          route={{
+            params: {
+              initialDataset,
+              onPressItem,
+              sectionKey,
+              headerTitle,
+              isMovie,
+            },
+          }}
+        />
+      </AutoMockProvider>
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 const getMockResolvers = (hasMore: boolean = false) => ({

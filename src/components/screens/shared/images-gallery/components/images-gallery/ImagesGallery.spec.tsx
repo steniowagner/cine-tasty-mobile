@@ -3,6 +3,7 @@ import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
 jest.mock('../../../../../../styles/metrics', () => ({
@@ -32,9 +33,11 @@ const params = {
 };
 
 const renderImagesGallery = () => (
-  <ThemeProvider theme={theme}>
-    <MockedNavigation component={ImagesGallery} params={params} />
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <MockedNavigation component={ImagesGallery} params={params} />
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 describe('Testing <ImagesGallery />', () => {

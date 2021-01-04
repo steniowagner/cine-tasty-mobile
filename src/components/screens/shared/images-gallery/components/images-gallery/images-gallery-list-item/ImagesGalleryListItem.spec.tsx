@@ -4,6 +4,7 @@ import { Image } from 'react-native';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
 import ImagesGalleryListItem, { IMAGES_URI } from './ImagesGalleryListItem';
@@ -11,9 +12,11 @@ import ImagesGalleryListItem, { IMAGES_URI } from './ImagesGalleryListItem';
 const IMAGE_URL = 'SOME_IMAGE_URL';
 
 const renderImagesGalleryListItem = () => (
-  <ThemeProvider theme={theme}>
-    <ImagesGalleryListItem imageURL={IMAGE_URL} />
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <ImagesGalleryListItem imageURL={IMAGE_URL} />
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 describe('Testing <ImagesGalleryListItem />', () => {

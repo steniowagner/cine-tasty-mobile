@@ -4,7 +4,6 @@ import { FlatList } from 'react-native';
 import { TVShowDetail_tvShow_createdBy as TVShowCreatedBy } from 'types/schema';
 import { CrewDataset, CastDataset } from 'types';
 import Section from 'components/common/Section';
-import CONSTANTS from 'utils/constants';
 
 import PeopleListItem from './PeopleListItem';
 import usePeopleList from './usePeopleList';
@@ -16,8 +15,6 @@ type Props = {
   sectionTitle: string;
   noSubtext?: boolean;
 };
-
-const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
 
 const PeopleList = ({
   sectionTitle, onPressItem, noSubtext, dataset, type,
@@ -33,11 +30,11 @@ const PeopleList = ({
         showsHorizontalScrollIndicator={false}
         renderItem={({ index, item }) => (
           <PeopleListItem
-            image={`${PERSON_IMAGE_URI}${item.image}`}
             onPress={() => onPressItem(item.id, item.name, item.image)}
             withSubtext={noSubtext}
             subText={item.subText}
             isFirst={index === 0}
+            image={item.image}
             name={item.name}
             type={type}
           />

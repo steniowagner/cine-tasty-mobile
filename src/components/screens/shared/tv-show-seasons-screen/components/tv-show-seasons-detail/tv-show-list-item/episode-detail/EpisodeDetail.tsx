@@ -1,17 +1,16 @@
 import React from 'react';
-import {
-  ScrollView, Image, Text, View,
-} from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { formatDate } from 'utils/formatters';
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
-const MEDIA_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.MEDIA_POSTER_SIZE_CODE}`;
 export const AIR_DATE_I18N_REF = 'translations:mediaDetail:tvShow:seasonEpisode:airDate';
 
 const Wrapper = styled(View)`
@@ -19,13 +18,6 @@ const Wrapper = styled(View)`
   max-height: ${({ theme }) => theme.metrics.getHeightFromDP('80%')}px;
   background-color: white;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-`;
-
-const EpisodeImage = styled(Image)`
-  width: 100%;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
-  border-top-left-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  border-top-right-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
 const EpisodeImageFallback = styled(View)`
@@ -76,11 +68,16 @@ const EpisodeDetail = ({ episode }: Props) => {
   return (
     <Wrapper>
       {episode.stillPath ? (
-        <EpisodeImage
-          source={{
-            uri: `${MEDIA_IMAGE_URI}${episode.stillPath}`,
-          }}
+        <TMDBImage
+          image={episode.stillPath}
           testID="episode-image"
+          imageType="still"
+          style={{
+            width: '100%',
+            height: metrics.getWidthFromDP('30%'),
+            borderTopLeftRadius: metrics.extraSmallSize,
+            borderTopRightRadius: metrics.extraSmallSize,
+          }}
         />
       ) : (
         <EpisodeImageFallback

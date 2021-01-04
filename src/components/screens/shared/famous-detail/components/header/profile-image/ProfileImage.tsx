@@ -1,18 +1,11 @@
 import React from 'react';
-import { Animated, Image } from 'react-native';
+import { Animated } from 'react-native';
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
-import CONSTANTS from 'utils/constants';
-
-const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
-
-const FamousImage = styled(Image)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-`;
+import metrics from 'styles/metrics';
 
 const FallbackImageWrapper = styled(Animated.View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
@@ -46,13 +39,17 @@ const ProfileImage = ({ profileImage }: Props) => {
 
   return (
     <>
-      <FamousImage
+      <TMDBImage
+        imageType="profile"
         onError={onError}
         onLoad={onLoad}
-        source={{
-          uri: `${PERSON_IMAGE_URI}${profileImage}`,
-        }}
+        image={profileImage}
         testID="profile-image"
+        style={{
+          width: metrics.getWidthFromDP('22%'),
+          height: metrics.getWidthFromDP('22%'),
+          borderRadius: metrics.extraSmallSize,
+        }}
       />
       {isFallbackImageVisible && (
         <FallbackImageWrapper

@@ -25,7 +25,7 @@ const useTMDBImage = ({ isThumbnail, imageType, image }: Props): State => {
     }
 
     return `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${imagesQualities[imageType]}${image}`;
-  }, [isThumbnail]);
+  }, [isThumbnail, imageType, image]);
 
   return {
     uri,
