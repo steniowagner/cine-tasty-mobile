@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import styled from 'styled-components';
+
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
+import { ImageType } from 'types';
 
 import useProgressiveImage from './useProgressiveImage';
 
@@ -31,12 +34,12 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
+  imageType: ImageType;
   borderRadius?: number;
-  thumbnailURL: string;
-  imageURL: string;
+  image: string;
 };
 
-const ProgressiveImage = ({ borderRadius = 0, thumbnailURL, imageURL }: Props) => {
+const ProgressiveImage = ({ borderRadius = 0, imageType, image }: Props) => {
   const {
     thumbnailOpacity,
     onLoadThumbnail,
@@ -50,7 +53,14 @@ const ProgressiveImage = ({ borderRadius = 0, thumbnailURL, imageURL }: Props) =
       borderRadius={borderRadius}
     >
       {!isImageLoaded && (
-        <Animated.Image
+        <TMDBImage
+          onLoad={onLoadThumbnail}
+          imageType={imageType}
+          resizeMode="cover"
+          blurRadius={1}
+          image={image}
+          isThumbnail
+          isAnimated
           style={[
             styles.container,
             {
@@ -58,13 +68,14 @@ const ProgressiveImage = ({ borderRadius = 0, thumbnailURL, imageURL }: Props) =
               borderRadius: Number(borderRadius),
             },
           ]}
-          source={{ uri: thumbnailURL }}
-          onLoad={onLoadThumbnail}
-          blurRadius={1}
-          resize="cover"
         />
       )}
-      <Animated.Image
+      <TMDBImage
+        onLoad={onLoadImage}
+        imageType={imageType}
+        resizeMode="cover"
+        image={image}
+        isAnimated
         style={[
           styles.imageOverlay,
           {
@@ -73,9 +84,6 @@ const ProgressiveImage = ({ borderRadius = 0, thumbnailURL, imageURL }: Props) =
           },
           styles.container,
         ]}
-        onLoad={onLoadImage}
-        source={{ uri: imageURL }}
-        resize="cover"
       />
     </ForegroundLayer>
   );

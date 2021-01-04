@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 
 jest.mock('../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SearchType } from 'types/schema';
 import theme from 'styles/theme';
 
@@ -14,9 +15,11 @@ import { STORAGE_SEARCH_SECTION } from './useRecentSearches';
 import RecentSearches from './RecentSearches';
 
 const renderRecentSearchFamous = (onPressItem: typeof jest.fn) => (
-  <ThemeProvider theme={theme}>
-    <RecentSearches searchType={SearchType.PERSON} onPressItem={onPressItem} />
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <RecentSearches searchType={SearchType.PERSON} onPressItem={onPressItem} />
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 const STORAGE_KEY = `${STORAGE_SEARCH_SECTION}:${SearchType.PERSON.toString()}`;
@@ -56,7 +59,7 @@ describe('Testing <RecentSearches /> - [Famous]', () => {
 
     expect(queryAllByTestId('recent-searches-list-item').length).toEqual(ITEMS_COUNT);
 
-    expect(getItemFromStorage).toHaveBeenCalledTimes(1);
+    expect(getItemFromStorage).toHaveBeenCalledTimes(2);
 
     expect(getItemFromStorage).toHaveBeenCalledWith(STORAGE_KEY, []);
   });
@@ -74,7 +77,7 @@ describe('Testing <RecentSearches /> - [Famous]', () => {
 
     expect(queryAllByTestId('recent-searches-list-item').length).toEqual(0);
 
-    expect(getItemFromStorage).toHaveBeenCalledTimes(1);
+    expect(getItemFromStorage).toHaveBeenCalledTimes(2);
 
     expect(getItemFromStorage).toHaveBeenCalledWith(STORAGE_KEY, []);
   });

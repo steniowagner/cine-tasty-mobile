@@ -1,13 +1,14 @@
 import React from 'react';
 import {
-  TouchableOpacity, Animated, Image, Text, View,
+  TouchableOpacity, Animated, Text, View,
 } from 'react-native';
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
 import { RecentSearchItem } from 'types';
-import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 const IMAGE_WIDTH_PERCENTAGE = '21%';
 const IMAGE_HEIGHT_PERCENTAGE = '21%';
@@ -23,12 +24,6 @@ const Wrapper = styled(View)`
 const PressableContent = styled(TouchableOpacity)`
   flex-direction: row;
   align-items: center;
-`;
-
-const ItemImage = styled(Image)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP(IMAGE_WIDTH_PERCENTAGE)}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP(IMAGE_HEIGHT_PERCENTAGE)}px;
-  border-radius: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
 const FallbackImageWrapper = styled(Animated.View)`
@@ -78,8 +73,6 @@ type Props = {
   item: RecentSearchItem;
 };
 
-const PERSON_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.RECENT_SEARCH_SIZE_CODE}`;
-
 const RecentSearchesListItem = ({ onPressRemove, onPressItem, item }: Props) => {
   const {
     isFallbackImageVisible,
@@ -100,11 +93,15 @@ const RecentSearchesListItem = ({ onPressRemove, onPressItem, item }: Props) => 
         testID="recent-searches-list-item-button"
       >
         <>
-          <ItemImage
+          <TMDBImage
             onError={onError}
             onLoad={onLoad}
-            source={{
-              uri: `${PERSON_IMAGE_URI}${item.image}`,
+            image={item.image}
+            imageType="profile"
+            style={{
+              width: metrics.getWidthFromDP(IMAGE_WIDTH_PERCENTAGE),
+              height: metrics.getWidthFromDP(IMAGE_HEIGHT_PERCENTAGE),
+              borderRadius: metrics.smallSize,
             }}
           />
           {isFallbackImageVisible && (

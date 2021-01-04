@@ -4,15 +4,11 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import getRandomImageFromDataset from 'utils/getRandomImageFromDataset';
-import CONSTANTS from 'utils/constants';
 import {
   GetFamousDetail_person as FamousDetail,
   GetFamousDetailVariables,
   GetFamousDetail,
 } from 'types/schema';
-
-const PROFILE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
-const PROFILE_IMAGE_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.LARGE_SIZE_CODE}`;
 
 export const GET_FAMOUS_DETAIL = gql`
   query GetFamousDetail($id: Int!, $language: ISO6391Language) {
@@ -41,14 +37,9 @@ export const GET_FAMOUS_DETAIL = gql`
   }
 `;
 
-type BackgroundImage = {
-  thumbnailURL: string;
-  imageURL: string;
-};
-
 type State = {
-  backgroundImage: BackgroundImage;
   t: (key: string) => string;
+  backgroundImage: string;
   famous: FamousDetail;
   isLoading: boolean;
   hasError: boolean;
@@ -69,23 +60,17 @@ const useFamousDetail = ({ id }: Props): State => {
     },
   );
 
-  const backgroundImage = useMemo((): BackgroundImage | undefined => {
-    if (data && data.person) {
-      const imageSelected = getRandomImageFromDataset(
-        data.person.images,
-        data.person.profilePath,
-      );
+  const { t } = useTranslation();
 
-      return {
-        thumbnailURL: `${PROFILE_THUMBNAIL_URL}${imageSelected}`,
-        imageURL: `${PROFILE_IMAGE_URL}${imageSelected}`,
-      };
+  const backgroundImage = useMemo((): string => {
+    if (data && data.person) {
+      const imageSelected = getRandomImageFromDataset(data.person.images, '');
+
+      return imageSelected;
     }
 
-    return undefined;
+    return '';
   }, [data]);
-
-  const { t } = useTranslation();
 
   return {
     famous: data?.person,

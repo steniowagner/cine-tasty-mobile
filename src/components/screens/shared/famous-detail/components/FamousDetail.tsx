@@ -204,8 +204,8 @@ const FamousDetail = ({ navigation, route }: Props) => {
           }}
         >
           <ProgressiveImage
-            thumbnailURL={backgroundImage?.thumbnailURL}
-            imageURL={backgroundImage?.imageURL}
+            image={backgroundImage}
+            imageType="backdrop"
           />
         </Animated.View>
         <SmokeShadow />

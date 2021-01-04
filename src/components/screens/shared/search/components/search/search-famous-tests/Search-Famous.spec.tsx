@@ -4,6 +4,7 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SearchType } from 'types/schema';
 import theme from 'styles/theme';
 
@@ -63,11 +64,13 @@ const params = {
 
 const renderSearchFamous = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {
   const SearchFamousScreen = ({ navigation, route }) => (
-    <ThemeProvider theme={theme}>
-      <AutoMockProvider mockResolvers={mockResolvers}>
-        <Search navigation={{ ...navigation, navigate }} route={route} />
-      </AutoMockProvider>
-    </ThemeProvider>
+    <TMDBImageQualityProvider>
+      <ThemeProvider theme={theme}>
+        <AutoMockProvider mockResolvers={mockResolvers}>
+          <Search navigation={{ ...navigation, navigate }} route={route} />
+        </AutoMockProvider>
+      </ThemeProvider>
+    </TMDBImageQualityProvider>
   );
 
   return <MockedNavigation component={SearchFamousScreen} params={params} />;

@@ -5,12 +5,12 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
-import { ImageType } from 'types';
+import { ImageType, ImageSize } from 'types';
 
 import getQualitiesBasedScreenClassification from './qualities/getQualities';
 import useClassifyDeviceScreen from './useClassifyDeviceScreen';
 
-const TMDBImageQualityContext = createContext<Record<ImageType, string> | undefined>(
+const TMDBImageQualityContext = createContext<Record<ImageType, ImageSize> | undefined>(
   undefined,
 );
 
@@ -24,7 +24,7 @@ export const TMDBImageQualityProvider = ({ children }: Props) => {
   >(undefined);
 
   const { screenClassification } = useClassifyDeviceScreen();
-  console.log('screenClassification: ', screenClassification);
+
   const handleSetImagesQualities = useCallback(async () => {
     const qualities = await getQualitiesBasedScreenClassification(screenClassification);
 

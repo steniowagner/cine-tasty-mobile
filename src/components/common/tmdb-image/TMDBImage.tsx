@@ -18,6 +18,7 @@ type Props = {
   onError?: () => void;
   onLoad?: () => void;
   blurRadius?: number;
+  testID?: string;
   image: string;
 };
 
@@ -28,6 +29,7 @@ const TMDBImage = ({
   resizeMode,
   imageType,
   onError,
+  testID,
   onLoad,
   style,
   image,
@@ -41,6 +43,7 @@ const TMDBImage = ({
         resizeMode={resizeMode}
         onError={onError}
         onLoad={onLoad}
+        testID={testID}
         style={style}
         source={{
           uri,
@@ -56,6 +59,7 @@ const TMDBImage = ({
       resizeMode={resizeMode}
       onError={onError}
       onLoad={onLoad}
+      testID={testID}
       source={{
         uri,
       }}

@@ -3,6 +3,8 @@ import { render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+
 const mockUsePaginatedQuery = jest.fn();
 
 mockUsePaginatedQuery.mockImplementation(() => ({
@@ -30,21 +32,23 @@ const renderMediaSectionViewAll = (
   },
   resolvers?: IMocks,
 ) => (
-  <ThemeProvider theme={theme}>
-    <AutoMockProvider mockResolvers={resolvers}>
-      <MediaSectionViewAll
-        route={{
-          params: {
-            initialDataset,
-            onPressItem,
-            sectionKey,
-            headerTitle,
-            isMovie,
-          },
-        }}
-      />
-    </AutoMockProvider>
-  </ThemeProvider>
+  <TMDBImageQualityProvider>
+    <ThemeProvider theme={theme}>
+      <AutoMockProvider mockResolvers={resolvers}>
+        <MediaSectionViewAll
+          route={{
+            params: {
+              initialDataset,
+              onPressItem,
+              sectionKey,
+              headerTitle,
+              isMovie,
+            },
+          }}
+        />
+      </AutoMockProvider>
+    </ThemeProvider>
+  </TMDBImageQualityProvider>
 );
 
 describe('Testing the query selection for pagination on <MediaSectionViewAll /> - [TV-Shows]', () => {

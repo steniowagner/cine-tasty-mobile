@@ -1,13 +1,15 @@
 import React from 'react';
 import {
-  TouchableOpacity, Animated, Image, Text, View,
+  TouchableOpacity, Animated, Text, View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
-import CONSTANTS from 'utils/constants';
 import Icon from 'components/common/Icon';
+import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 interface WrapperStyleProps {
   readonly isFirst: boolean;
@@ -18,12 +20,6 @@ const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   height: ${({ theme }) => theme.metrics.getWidthFromDP('55%')}px;
   margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
   margin-left: ${({ isFirst }) => (isFirst ? CONSTANTS.VALUES.DEFAULT_SPACING : 0)}px;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-`;
-
-const PersonImage = styled(Image)`
-  width: 100%;
-  height: 100%;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
@@ -125,12 +121,16 @@ const PeopleListItem = ({
       isFirst={isFirst}
       onPress={onPress}
     >
-      <PersonImage
+      <TMDBImage
         testID="person-image"
+        imageType="poster"
         onError={onError}
         onLoad={onLoad}
-        source={{
-          uri: image,
+        image={image}
+        style={{
+          width: '100%',
+          height: '100%',
+          borderRadius: metrics.extraSmallSize,
         }}
       />
       {isFallbackImageVisible && (

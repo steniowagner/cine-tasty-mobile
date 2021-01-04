@@ -1,20 +1,13 @@
 import React from 'react';
-import { Animated, Image } from 'react-native';
+import { Animated } from 'react-native';
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
-import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
 export const IMAGE_HEIGHT = metrics.getWidthFromDP('40%');
-
-const MediaPosterImage = styled(Image)`
-  width: 30%;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('40%')}px;
-  margin-horizontal: ${({ theme }) => theme.metrics.smallSize}px;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-`;
 
 const FallbackMediaPosterImage = styled(Animated.View)`
   width: 30%;
@@ -36,8 +29,6 @@ type Props = {
   image: string;
 };
 
-const POSTER_IMAGE_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
-
 const MediaImage = ({ image }: Props) => {
   const {
     isFallbackImageVisible,
@@ -51,11 +42,16 @@ const MediaImage = ({ image }: Props) => {
 
   return (
     <>
-      <MediaPosterImage
+      <TMDBImage
         onError={onError}
         onLoad={onLoad}
-        source={{
-          uri: `${POSTER_IMAGE_URL}${image}`,
+        image={image}
+        imageType="poster"
+        style={{
+          width: '30%',
+          height: metrics.getWidthFromDP('40%'),
+          marginHorizontal: metrics.smallSize,
+          borderRadius: metrics.extraSmallSize,
         }}
       />
       {isFallbackImageVisible && (

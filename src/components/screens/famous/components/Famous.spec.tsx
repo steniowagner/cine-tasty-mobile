@@ -3,6 +3,7 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
+import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { DEFAULT_ANIMATION_DURATION } from 'components/common/popup-advice/PopupAdvice';
 import { SEARCH_PERSON } from 'components/screens/shared/search/queries';
 import { SearchType } from 'types/schema';
@@ -34,11 +35,13 @@ const famouseItems = Array(5)
 
 const renderFamousScreen = ({ mockResolvers, navigate }: FamousScreenProps) => {
   const FamousScreen = ({ navigation }) => (
-    <ThemeProvider theme={theme}>
-      <AutoMockProvider mockResolvers={mockResolvers}>
-        <Famous navigation={{ ...navigation, navigate }} />
-      </AutoMockProvider>
-    </ThemeProvider>
+    <TMDBImageQualityProvider>
+      <ThemeProvider theme={theme}>
+        <AutoMockProvider mockResolvers={mockResolvers}>
+          <Famous navigation={{ ...navigation, navigate }} />
+        </AutoMockProvider>
+      </ThemeProvider>
+    </TMDBImageQualityProvider>
   );
 
   return <MockedNavigation component={FamousScreen} />;

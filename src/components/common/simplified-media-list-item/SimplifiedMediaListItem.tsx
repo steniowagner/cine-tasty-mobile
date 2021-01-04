@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-  TouchableOpacity, Animated, Image, Text, View,
+  TouchableOpacity, Animated, Text, View,
 } from 'react-native';
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
-import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 export const MEDIA_IMAGE_DEFAULT_BORDER_RADIUS = '2%';
 export const MEDIA_IMAGE_DEFAULT_MARGIN_BOTTOM = '2%';
@@ -37,13 +38,6 @@ const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   margin-right: ${({ theme }) => theme.metrics.largeSize}px;
 `;
 
-const MediaImage = styled(Image)`
-  width: ${MEDIA_IMAGE_DEFAULT_WIDTH};
-  height: ${MEDIA_IMAGE_DEFAULT_HEIGHT};
-  margin-bottom: ${({ theme }) => theme.metrics.getWidthFromDP(MEDIA_IMAGE_DEFAULT_MARGIN_BOTTOM)}px;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP(MEDIA_IMAGE_DEFAULT_BORDER_RADIUS)}px;
-`;
-
 const DefaultText = styled(Text).attrs({
   numberOfLines: 2,
 })<DefaultTextStyleProps>`
@@ -68,8 +62,6 @@ const FallbackImageWrapper = styled(Animated.View)`
   border-radius: ${({ theme }) => theme.metrics.getWidthFromDP(MEDIA_IMAGE_DEFAULT_BORDER_RADIUS)}px;
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
-
-const MEDIA_IMAGE_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.MEDIA_POSTER_SIZE_CODE}`;
 
 const StarIcon = styled(Icon).attrs(({ theme }) => ({
   size: theme.metrics.getWidthFromDP('6%'),
@@ -115,11 +107,16 @@ const SimplifiedMediaListItem = ({
       isFirst={isFirst}
     >
       <>
-        <MediaImage
+        <TMDBImage
+          imageType="poster"
           onError={onError}
           onLoad={onLoad}
-          source={{
-            uri: `${MEDIA_IMAGE_URI}${image}`,
+          image={image}
+          style={{
+            width: MEDIA_IMAGE_DEFAULT_WIDTH,
+            height: MEDIA_IMAGE_DEFAULT_HEIGHT,
+            marginBottom: metrics.getWidthFromDP(MEDIA_IMAGE_DEFAULT_MARGIN_BOTTOM),
+            borderRadius: metrics.getWidthFromDP(MEDIA_IMAGE_DEFAULT_BORDER_RADIUS),
           }}
         />
         {isFallbackImageVisible && (

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import styled from 'styled-components';
 
+import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import {
   TVShowDetail_tvShow_productionCompanies as TVShowProductionCompanies,
   MovieDetail_movie_productionCompanies as MovieProductionCompanies,
   TVShowDetail_tvShow_networks as TVShowNetworks,
 } from 'types/schema';
 import CONSTANTS from 'utils/constants';
-
-const COMPANY_LOGO_URI = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.PROFILE_SIZE_CODE}`;
+import metrics from 'styles/metrics';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -28,11 +28,6 @@ const ListItemWrapper = styled(View)`
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
   align-items: center;
   justify-content: center;
-`;
-
-const CompanyLogoImage = styled(Image)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('24%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
 `;
 
 const ItemText = styled(Text)`
@@ -56,11 +51,14 @@ const ProductionsList = ({ productionsList }: Props) => (
         key={productionItem.id}
       >
         {productionItem.logoPath ? (
-          <CompanyLogoImage
-            source={{
-              uri: `${COMPANY_LOGO_URI}${productionItem.logoPath || ''}`,
-            }}
+          <TMDBImage
+            image={productionItem.logoPath || ''}
             resizeMode="contain"
+            imageType="profile"
+            style={{
+              width: metrics.getWidthFromDP('24%'),
+              height: metrics.getWidthFromDP('10%'),
+            }}
           />
         ) : (
           <ItemText>{productionItem.name}</ItemText>
