@@ -7717,6 +7717,11 @@ react-native-shimmer-placeholder@^1.0.35:
   resolved "https://registry.yarnpkg.com/react-native-shimmer-placeholder/-/react-native-shimmer-placeholder-1.0.36.tgz#b24ba4afa95f4861fa8dd8262fe0a50ebba2d883"
   integrity sha512-GUFvCwXqiOkzK7PdzQVo9TNzh4dQT9sj+xvJu/8X3yU1S3GkKK1/SVQXpoNwdFZz2lfHJ5FWzoQDxd+3TDQODA==
 
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
+
 react-native-status-bar-height@^2.5.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.6.0.tgz#b6afd25b6e3d533c43d0fcdcfd5cafd775592cea"
