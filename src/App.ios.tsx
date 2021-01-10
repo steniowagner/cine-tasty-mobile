@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
 
@@ -7,7 +6,6 @@ import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImage
 import theme from 'styles/theme';
 
 import RouteSuspenseWrapper from './components/common/RouteSuspenseWrapper';
-import AndroidNavigationBar from './components/utils/AndroidNavigationBar.android';
 import Navigation from './routes/Routes';
 import makeClient from './config/client';
 
@@ -26,7 +24,6 @@ const App = () => (
             <Navigation />
           </RouteSuspenseWrapper>
         </ApolloProvider>
-        {Platform.OS === 'android' && <AndroidNavigationBar />}
       </>
     </ThemeProvider>
   </TMDBImageQualityProvider>
