@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
-import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 import { getDefaultHeaderOptions } from 'routes/constants';
 
 import SetupQuestions from '../components/setup-questions/SetupQuestions';
@@ -55,12 +54,6 @@ const QuizStack = () => {
   );
 };
 
-const Wrapper = () => (
-  <RouteSuspenseWrapper>
-    <QuizStack />
-  </RouteSuspenseWrapper>
-);
-
 export const TabID = LOCAL_ROUTES.QUIZ.id;
 
-export default Wrapper;
+export default QuizStack;

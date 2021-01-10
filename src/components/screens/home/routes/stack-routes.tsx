@@ -13,7 +13,6 @@ import Reviews, {
   Props as ReviewsExternalParams,
 } from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
-import RouteSuspenseWrapper from 'components/common/RouteSuspenseWrapper';
 
 import ImagesQuality from '../components/settings/images-quality/ImagesQuality';
 import OpenSource from '../components/settings/open-source/OpenSource';
@@ -143,15 +142,6 @@ const HomeStack = ({ theme }: Props) => {
   );
 };
 
-const Wrapper = (props: any) => (
-  <RouteSuspenseWrapper>
-    <HomeStack
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    />
-  </RouteSuspenseWrapper>
-);
-
 export const TabID = LOCAL_ROUTES.HOME.id;
 
-export default withTheme(Wrapper);
+export default withTheme(HomeStack);
