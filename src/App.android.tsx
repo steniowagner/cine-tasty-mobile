@@ -1,9 +1,7 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { ThemeProvider } from 'styled-components';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import theme from 'styles/theme';
+import { TMDBImageQualityProvider, ThemeContextProvider } from 'providers';
 
 import AndroidNavigationBar from './components/utils/AndroidNavigationBar.android';
 import RouteSuspenseWrapper from './components/common/RouteSuspenseWrapper';
@@ -13,10 +11,8 @@ import makeClient from './config/client';
 const client = makeClient();
 
 const App = () => (
-  <TMDBImageQualityProvider>
-    <ThemeProvider
-      theme={theme}
-    >
+  <ThemeContextProvider>
+    <TMDBImageQualityProvider>
       <>
         <ApolloProvider
           client={client}
@@ -27,8 +23,8 @@ const App = () => (
         </ApolloProvider>
         <AndroidNavigationBar />
       </>
-    </ThemeProvider>
-  </TMDBImageQualityProvider>
+    </TMDBImageQualityProvider>
+  </ThemeContextProvider>
 );
 
 export default App;
