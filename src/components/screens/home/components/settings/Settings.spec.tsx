@@ -17,7 +17,7 @@ import {
 } from './useSettings';
 import Settings from './Settings';
 
-const NUMBER_SECTIONS = 4;
+const NUMBER_SECTIONS = 5;
 
 const renderSettings = (navigate = jest.fn()) => {
   const SettingsScreen = ({ navigation }) => {
@@ -85,11 +85,19 @@ describe('Testing <Settings />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('ABOUT');
+    expect(navigate).toHaveBeenCalledWith('THEME');
 
     jest.clearAllMocks();
 
     fireEvent.press(getAllByTestId('settings-section-button')[3]);
+
+    expect(navigate).toHaveBeenCalledTimes(1);
+
+    expect(navigate).toHaveBeenCalledWith('ABOUT');
+
+    jest.clearAllMocks();
+
+    fireEvent.press(getAllByTestId('settings-section-button')[4]);
 
     expect(navigate).toHaveBeenCalledTimes(1);
 

@@ -76,6 +76,7 @@ export interface Locale {
       openSource: SettingsSection;
       language: SettingsSection;
       about: SettingsSection;
+      theme: SettingsSection;
     };
     tvShowsPaginationError: string;
     moviesPaginationError: string;
@@ -228,4 +229,8 @@ export interface Locale {
     };
   };
   months: string[];
+  theme: {
+    dark: string;
+    light: string;
+  };
 }

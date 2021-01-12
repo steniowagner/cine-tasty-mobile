@@ -1,9 +1,7 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { ThemeProvider } from 'styled-components';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import theme from 'styles/theme';
+import { TMDBImageQualityProvider, ThemeContextProvider } from 'providers';
 
 import RouteSuspenseWrapper from './components/common/RouteSuspenseWrapper';
 import Navigation from './routes/Routes';
@@ -12,10 +10,8 @@ import makeClient from './config/client';
 const client = makeClient();
 
 const App = () => (
-  <TMDBImageQualityProvider>
-    <ThemeProvider
-      theme={theme}
-    >
+  <ThemeContextProvider>
+    <TMDBImageQualityProvider>
       <>
         <ApolloProvider
           client={client}
@@ -25,8 +21,8 @@ const App = () => (
           </RouteSuspenseWrapper>
         </ApolloProvider>
       </>
-    </ThemeProvider>
-  </TMDBImageQualityProvider>
+    </TMDBImageQualityProvider>
+  </ThemeContextProvider>
 );
 
 export default App;

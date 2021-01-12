@@ -1,7 +1,10 @@
 import 'styled-components';
 
+import { ThemeId } from '../types';
+
 declare module 'styled-components' {
   export interface DefaultTheme {
+    id: ThemeId;
     metrics: {
       getHeightFromDP: (heightPercentage: string) => number;
       getWidthFromDP: (widthPercentage: string) => number;

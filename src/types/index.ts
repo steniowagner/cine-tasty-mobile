@@ -148,3 +148,8 @@ export type DeviceScreenClassification = 'xsmall' | 'small' | 'medium' | 'large'
 export type ImageType = 'backdrop' | 'poster' | 'still' | 'profile';
 
 export type ImageSize = 'w45' | 'w92' | 'w154' | 'w185' | 'w300' | 'w342' | 'h632' | 'w500' | 'w780' | 'w1280' | 'original';
+
+export enum ThemeId {
+  DARK = 'DARK',
+  LIGHT = 'LIGHT',
+}
