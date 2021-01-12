@@ -1,4 +1,6 @@
-import { useEffect, useState, useMemo } from 'react';
+import {
+  useCallback, useEffect, useState, useMemo,
+} from 'react';
 import { DefaultTheme } from 'styled-components';
 
 import {
@@ -10,7 +12,10 @@ import { ThemeId } from 'types';
 
 import { dark, light } from 'styles/themes';
 
+const undefinedTheme = { ...dark, id: undefined };
+
 type State = {
+  handleInitialThemeSelection: () => Promise<void>;
   onToggleTheme: () => void;
   theme: DefaultTheme;
 };
@@ -18,38 +23,41 @@ type State = {
 const useTheme = (): State => {
   const [theme, setTheme] = useState<ThemeId>(null);
 
-  const handleThemeSelection = async (): Promise<void> => {
-    const themeSaved = await getItemFromStorage<ThemeId, null>(
+  const handleInitialThemeSelection = useCallback(async (): Promise<void> => {
+    const themeFromStorage = await getItemFromStorage<ThemeId, null>(
       CONSTANTS.KEYS.APP_THEME,
       null,
     );
 
-    if (!themeSaved) {
+    if (!themeFromStorage) {
       setTheme(ThemeId.DARK);
 
       return;
     }
 
-    setTheme(themeSaved);
-  };
-
-  useEffect(() => {
-    handleThemeSelection();
+    setTheme(themeFromStorage);
   }, []);
 
+  useEffect(() => {
+    if (theme) {
+      persistItemInStorage(CONSTANTS.KEYS.APP_THEME, theme);
+    }
+  }, [theme]);
+
   const onToggleTheme = () => {
-    setTheme((previousTheme: ThemeId) => {
-      const themeSelected = previousTheme === ThemeId.DARK ? ThemeId.LIGHT : ThemeId.DARK;
-
-      persistItemInStorage(CONSTANTS.KEYS.APP_THEME, themeSelected);
-
-      return themeSelected;
-    });
+    setTheme((previousTheme: ThemeId) => (previousTheme === ThemeId.DARK ? ThemeId.LIGHT : ThemeId.DARK));
   };
 
-  const themeSelected = useMemo(() => (theme === ThemeId.DARK ? dark : light), [theme]);
+  const themeSelected = useMemo(() => {
+    if (!theme) {
+      return undefinedTheme;
+    }
+
+    return theme === ThemeId.DARK ? dark : light;
+  }, [theme]);
 
   return {
+    handleInitialThemeSelection,
     theme: themeSelected,
     onToggleTheme,
   };

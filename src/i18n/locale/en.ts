@@ -2,6 +2,10 @@ import { Locale } from './Locale';
 
 const en: Locale = {
   softwareEngineer: 'Software Engineer',
+  theme: {
+    dark: 'Dark',
+    light: 'Light',
+  },
   about:
     "Hey!\n\nI'm Full-Stack Software Engineer that loves apply his knowledge to solve problems, create amazing products and impact lives!",
   openSource: {
@@ -204,6 +208,11 @@ const en: Locale = {
         sectionDescription: 'imagesQualityDescription',
         sectionTitle: 'imagesQualityTitle',
         headerTitle: 'Images Quality',
+      },
+      theme: {
+        sectionDescription: 'themeDescription',
+        sectionTitle: 'themeTitle',
+        headerTitle: 'Theme',
       },
     },
     trendingTvShows: {

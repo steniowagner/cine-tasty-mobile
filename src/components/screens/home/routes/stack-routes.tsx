@@ -16,10 +16,12 @@ import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/con
 
 import ImagesQuality from '../components/settings/images-quality/ImagesQuality';
 import OpenSource from '../components/settings/open-source/OpenSource';
+import ThemeSettings from '../components/settings/theme/ThemeSettings';
 import MediaSectionViewAll, {
   Props as MediaSectionViewAllScreenProps,
 } from '../components/media-section-view-all/MediaSectionViewAll';
 import Language from '../components/settings/languages/Languages';
+
 import About from '../components/settings/about/About';
 import Settings from '../components/settings/Settings';
 import LOCAL_ROUTES from './route-names';
@@ -136,6 +138,14 @@ const HomeStack = ({ theme }: Props) => {
         options={() => ({
           ...getDefaultHeaderOptions(),
           headerTitle: t('translations:home:settingsSections:imagesQuality:headerTitle'),
+        })}
+      />
+      <Stack.Screen
+        name={LOCAL_ROUTES.THEME.id}
+        component={ThemeSettings}
+        options={() => ({
+          ...getDefaultHeaderOptions(),
+          headerTitle: t('translations:home:settingsSections:theme:headerTitle'),
         })}
       />
     </Stack.Navigator>

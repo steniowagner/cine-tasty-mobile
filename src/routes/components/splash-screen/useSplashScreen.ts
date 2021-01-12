@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import SplashScreen from 'react-native-splash-screen';
+import { DefaultTheme } from 'styled-components';
 
 import {
   getItemFromStorage,
@@ -7,22 +8,15 @@ import {
 } from 'utils/async-storage-adapter/AsyncStorageAdapter';
 import CONSTANTS from 'utils/constants';
 import { ImageQualities } from 'types';
+import { useThemeProvider } from 'providers/theme/Theme';
 
 type Props = {
+  theme: DefaultTheme;
   onLoad: () => void;
 };
 
-const useSplashScreen = ({ onLoad }: Props) => {
-  const handleAppThemeOptionSelection = useCallback(async () => {
-    const selectedThemeOption = await getItemFromStorage<string, undefined>(
-      CONSTANTS.KEYS.APP_THEME,
-      undefined,
-    );
-
-    if (!selectedThemeOption) {
-      await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, 'dark');
-    }
-  }, []);
+const useSplashScreen = ({ onLoad, theme }: Props) => {
+  const { handleInitialThemeSelection } = useThemeProvider();
 
   const handleImageSizeOptionSelection = useCallback(async () => {
     const selectedImageSizesOption = await getItemFromStorage<ImageQualities, undefined>(
@@ -38,12 +32,16 @@ const useSplashScreen = ({ onLoad }: Props) => {
   useEffect(() => {
     handleImageSizeOptionSelection();
 
-    handleAppThemeOptionSelection();
-
-    onLoad();
-
-    SplashScreen.hide();
+    handleInitialThemeSelection();
   }, []);
+
+  useEffect(() => {
+    if (theme && theme.id) {
+      onLoad();
+
+      SplashScreen.hide();
+    }
+  }, [theme]);
 };
 
 export default useSplashScreen;

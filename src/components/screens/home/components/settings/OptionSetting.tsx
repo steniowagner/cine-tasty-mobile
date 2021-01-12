@@ -29,15 +29,22 @@ type Props = {
   title: string;
 };
 
+export const UNMARKED_OPTION_ICON = 'radiobox-blank';
+export const MARKED_OPTION_ICON = 'radiobox-marked';
+
 const OptionSetting = ({ isSelected, onPress, title }: Props) => (
   <Wrapper
     onPress={onPress}
     testID="option-settings"
   >
     <OptionSelectionIcon
-      name={isSelected ? 'radiobox-marked' : 'radiobox-blank'}
+      name={isSelected ? MARKED_OPTION_ICON : UNMARKED_OPTION_ICON}
     />
-    <OptionTitle>{title}</OptionTitle>
+    <OptionTitle
+      testID="option-title"
+    >
+      {title}
+    </OptionTitle>
   </Wrapper>
 );
 
