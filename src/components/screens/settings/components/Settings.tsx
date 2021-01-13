@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import styled from 'styled-components';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { HomeStackParams } from '../../routes/route-params-types';
+import { HomeStackParams } from '../../home/routes/route-params-types';
 import SettingsSection from './SettingsSection';
 import useSettings from './useSettings';
 

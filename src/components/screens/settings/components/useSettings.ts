@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { HomeStackParams } from '../../routes/route-params-types';
+import { HomeStackParams } from '../../home/routes/route-params-types';
 import { Props as SettingsSectionProps } from './SettingsSection';
 
 export const IMAGES_QUALITY_SECTION_TITLE_I18N_REF = 'translations:home:settingsSections:imagesQuality:sectionTitle';

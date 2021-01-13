@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import theme from 'styles/theme';
 
-import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
+import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import {
   IMAGES_QUALITY_SECTION_TITLE_I18N_REF,
   IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF,
