@@ -98,7 +98,9 @@ const Top3ListItem = ({
         imageType="backdrop"
         image={image}
       />
-      <SmokeShadow />
+      <SmokeShadow
+        isTheMiddle={false}
+      />
       <TextContentWrapper>
         <TitleText>{title}</TitleText>
         <StarsVotes

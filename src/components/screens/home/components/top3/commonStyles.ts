@@ -37,10 +37,22 @@ export const ListWrapper = styled(View)`
   })}px;
 `;
 
+export const LoadingSmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
+  colors: ['transparent', theme.colors.background],
+}))<Pick<ItemWrapperStyleProps, 'isTheMiddle'>>`
+  width: ${ITEM_WIDTH}px;
+  height: ${ITEM_HEIGHT}px;
+  margin-horizontal: ${({ isTheMiddle, theme }) => (isTheMiddle ? theme.metrics.largeSize : 0)}px;
+  margin-top: ${({ isTheMiddle }) => (!isTheMiddle ? ITEM_MARGING_TOP : 0)}px;
+  border-radius: ${ITEM_BORDER_RADIUS}px;
+  position: absolute;
+`;
+
 export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
-  colors: ['rgba(38, 38, 38, 0)', 'rgba(38, 38, 38, 0.8)', theme.colors.background],
-}))`
-  width: 100%;
-  height: 100%;
+  colors: ['transparent', theme.colors.backgroundAlphax1, theme.colors.background],
+}))<Pick<ItemWrapperStyleProps, 'isTheMiddle'>>`
+  width: ${ITEM_WIDTH}px;
+  height: ${ITEM_HEIGHT}px;
+  margin-horizontal: ${({ isTheMiddle, theme }) => (isTheMiddle ? theme.metrics.largeSize : 0)}px;
   position: absolute;
 `;

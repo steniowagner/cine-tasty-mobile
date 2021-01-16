@@ -10,6 +10,10 @@ interface WrapperStyleProps {
   readonly withMarginLeft?: boolean;
 }
 
+interface HeaderIconStyleProps {
+  readonly followThemeTextColor?: boolean;
+}
+
 const Wrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
   hitSlop: {
     top: theme.metrics.mediumSize,
@@ -25,12 +29,13 @@ const Wrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
   align-items: center;
 `;
 
-const HeaderIcon = styled(Icon).attrs(({ theme }) => ({
+const HeaderIcon = styled(Icon).attrs(({ followThemeTextColor, theme }) => ({
   size: theme.metrics.getWidthFromDP('7%'),
-  color: theme.colors.text,
-}))``;
+  color: followThemeTextColor ? theme.colors.text : 'white',
+}))<HeaderIconStyleProps>``;
 
 type Props = {
+  followThemeTextColor?: boolean;
   withMarginRight?: boolean;
   withMarginLeft?: boolean;
   onPress: () => void;
@@ -39,6 +44,7 @@ type Props = {
 };
 
 const HeaderIconButton = ({
+  followThemeTextColor,
   withMarginRight,
   withMarginLeft,
   disabled,
@@ -53,6 +59,7 @@ const HeaderIconButton = ({
     onPress={onPress}
   >
     <HeaderIcon
+      followThemeTextColor={followThemeTextColor}
       name={iconName}
     />
   </Wrapper>

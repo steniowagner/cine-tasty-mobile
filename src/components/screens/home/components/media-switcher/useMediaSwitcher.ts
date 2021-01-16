@@ -1,7 +1,11 @@
-import { useCallback, useState, useRef } from 'react';
+import {
+  useCallback, useState, useMemo, useRef,
+} from 'react';
 import { Animated } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { DefaultTheme } from 'styled-components';
+
+import { ThemeId } from 'types';
 
 export const ANIMATION_DURATION = 100;
 
@@ -60,22 +64,54 @@ const useMediaSwitcher = ({
     animateSwitch(0, onSwitchToTVShows);
   }, [isMovieSelected]);
 
+  const tvShowsButtonBackgroudColorOutputRange = useMemo(() => {
+    if (theme.id === ThemeId.DARK) {
+      return [theme.colors.primary, theme.colors.contrast];
+    }
+
+    return [theme.colors.primary, theme.colors.fallbackImageBackground];
+  }, [theme]);
+
+  const tvShowsTextColorOutputRange = useMemo(() => {
+    if (theme.id === ThemeId.DARK) {
+      return [theme.colors.buttonText, theme.colors.text];
+    }
+
+    return [theme.colors.buttonText, theme.colors.inactiveWhite];
+  }, [theme]);
+
+  const moviesButtonBackgroudColorOutputRange = useMemo(() => {
+    if (theme.id === ThemeId.DARK) {
+      return [theme.colors.contrast, theme.colors.primary];
+    }
+
+    return [theme.colors.fallbackImageBackground, theme.colors.primary];
+  }, [theme]);
+
+  const moviesTextColorOutputRange = useMemo(() => {
+    if (theme.id === ThemeId.DARK) {
+      return [theme.colors.text, theme.colors.buttonText];
+    }
+
+    return [theme.colors.inactiveWhite, theme.colors.buttonText];
+  }, [theme]);
+
   return {
     tvShowsButtonBackgroudColor: switchAnimatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [theme.colors.primary, theme.colors.contrast],
+      outputRange: tvShowsButtonBackgroudColorOutputRange,
     }),
     tvShowsTextColor: switchAnimatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [theme.colors.buttonText, theme.colors.text],
+      outputRange: tvShowsTextColorOutputRange,
     }),
     moviesButtonBackgroudColor: switchAnimatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [theme.colors.contrast, theme.colors.primary],
+      outputRange: moviesButtonBackgroudColorOutputRange,
     }),
     moviesTextColor: switchAnimatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [theme.colors.text, theme.colors.buttonText],
+      outputRange: moviesTextColorOutputRange,
     }),
     onPressTVShows,
     onPressMovies,
