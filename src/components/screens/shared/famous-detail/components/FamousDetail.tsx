@@ -1,10 +1,12 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect, useCallback, useRef } from 'react';
-import { Animated, FlatList, View } from 'react-native';
+import {
+  StatusBar, Animated, FlatList, View,
+} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import { RouteProp } from '@react-navigation/native';
-import styled from 'styled-components';
+import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import ExpansibleTextSection from 'components/common/expansible-text-section/ExpansibleTextSection';
@@ -16,6 +18,7 @@ import {
   GetFamousDetail_person_moviesCast as MovieCast,
   GetFamousDetail_person_tvCast as TVShowCast,
 } from 'types/schema';
+import { useStatusBarStyle } from 'hooks';
 import metrics from 'styles/metrics';
 
 import { FamousDetailParams } from '../routes/route-params-types';
@@ -72,9 +75,12 @@ type QuestionsScreenRouteProp = RouteProp<FamousDetailParams, 'FAMOUS_DETAIL'>;
 type Props = {
   navigation: QuestionsScreenNavigationProp;
   route: QuestionsScreenRouteProp;
+  theme: DefaultTheme;
 };
 
-const FamousDetail = ({ navigation, route }: Props) => {
+const FamousDetail = ({ navigation, theme, route }: Props) => {
+  const { barStyle } = useStatusBarStyle({ theme });
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -197,6 +203,11 @@ const FamousDetail = ({ navigation, route }: Props) => {
 
   return (
     <>
+      <StatusBar
+        backgroundColor={theme.colors.secondary}
+        barStyle={barStyle}
+        animated
+      />
       <BackgroundImageWrapper
         testID="background-image-wrapper"
       >
@@ -266,4 +277,4 @@ const FamousDetail = ({ navigation, route }: Props) => {
   );
 };
 
-export default FamousDetail;
+export default withTheme(FamousDetail);
