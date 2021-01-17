@@ -72,14 +72,6 @@ const useMediaSwitcher = ({
     return [theme.colors.primary, theme.colors.fallbackImageBackground];
   }, [theme]);
 
-  const tvShowsTextColorOutputRange = useMemo(() => {
-    if (theme.id === ThemeId.DARK) {
-      return [theme.colors.buttonText, theme.colors.inactiveWhite];
-    }
-
-    return [theme.colors.buttonText, theme.colors.inactiveWhite];
-  }, [theme]);
-
   const moviesButtonBackgroudColorOutputRange = useMemo(() => {
     if (theme.id === ThemeId.DARK) {
       return [theme.colors.contrast, theme.colors.primary];
@@ -95,7 +87,7 @@ const useMediaSwitcher = ({
     }),
     tvShowsTextColor: switchAnimatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: tvShowsTextColorOutputRange,
+      outputRange: [theme.colors.buttonText, theme.colors.inactiveWhite],
     }),
     moviesButtonBackgroudColor: switchAnimatedValue.interpolate({
       inputRange: [0, 1],
