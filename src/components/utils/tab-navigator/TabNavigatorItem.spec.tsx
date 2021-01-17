@@ -55,9 +55,9 @@ describe('Testing <TabNavigatorItem />', () => {
 
     expect(getByTestId('icon').props.name).toEqual(items[ITEM_SELECTED].icon);
 
-    expect(getByTestId('icon').props.color).toEqual(theme.colors.primary);
+    expect(getByTestId('icon').props.color).toEqual(theme.colors.text);
 
-    expect(getByTestId('item-title').props.color).toEqual(theme.colors.primary);
+    expect(getByTestId('item-title').props.color).toEqual(theme.colors.text);
   });
 
   it("should renders correctly when the item isn't selected", () => {
