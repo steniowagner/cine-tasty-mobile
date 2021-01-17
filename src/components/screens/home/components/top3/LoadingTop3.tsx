@@ -7,9 +7,9 @@ import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPla
 import {
   ITEM_MARGING_HORIZONTAL,
   ITEM_BORDER_RADIUS,
+  LoadingSmokeShadow,
   ITEM_MARGING_TOP,
   ListWrapper,
-  SmokeShadow,
   ITEM_HEIGHT,
   GapFlatlist,
   ITEM_WIDTH,
@@ -43,7 +43,9 @@ const LoadingTop3 = ({ theme }: Props) => (
               width: ITEM_WIDTH,
             }}
           />
-          <SmokeShadow />
+          <LoadingSmokeShadow
+            isTheMiddle={index === 1}
+          />
         </>
       )}
       showsHorizontalScrollIndicator={false}

@@ -31,7 +31,7 @@ const TagWrapper = styled(View)<ExtraTagStyleProp>`
 
 const TagText = styled(Text)<ExtraTagStyleProp>`
   font-family: CircularStd-Medium;
-  color: ${({ isExtra, theme }) => (isExtra ? theme.colors.text : theme.colors.buttonText)};
+  color: ${({ isExtra, theme }) => (isExtra ? 'white' : theme.colors.buttonText)};
   text-align: center;
 `;
 

@@ -76,7 +76,6 @@ const Row = styled(View)`
 `;
 
 type Props = {
-  thumbnailURL: string;
   votesAverage: number;
   isLoading: boolean;
   voteCount: number;
@@ -86,7 +85,6 @@ type Props = {
 };
 
 const HeaderInfo = ({
-  thumbnailURL,
   votesAverage,
   isLoading,
   voteCount,
@@ -99,7 +97,6 @@ const HeaderInfo = ({
   return (
     <Wrapper>
       <BackgroundImage
-        thumbnailURL={thumbnailURL}
         isLoading={isLoading}
         imageURL={imageURL}
       />

@@ -19,9 +19,7 @@ const InfoWrapper = styled(View)`
 `;
 
 const InfoTextWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('72%')}px;
-  justify-content: center;
-  padding-left: ${({ theme }) => theme.metrics.mediumSize}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('63%')}px;
 `;
 
 const NameText = styled(Text)`
@@ -30,6 +28,20 @@ const NameText = styled(Text)`
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
   font-family: CircularStd-Black;
   color: ${({ theme }) => theme.colors.text};
+`;
+
+const KnownForDepartmentWrapper = styled(View)`
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('18%')}px;
+  justify-content: center;
+  align-items: center;
+  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  padding-vertical: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  background-color: ${({ theme }) => theme.colors.primary};
+`;
+
+const TextContentWrapper = styled(View)`
+  justify-content: center;
+  padding-left: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
 type Props = {
@@ -62,29 +74,33 @@ const HeaderInfo = ({
       {isLoading ? (
         <HeaderLoadingPlaceholder />
       ) : (
-        <InfoTextWrapper>
-          {!!birthDate && (
-          <BirthDayText
-            rawBirthDate={birthDate}
-          />
-          )}
-          {!!placeOfBirth && (
-            <InfoText
-              // @ts-ignore
-              withVerticalMargin
-            >
-              {placeOfBirth}
-            </InfoText>
-          )}
+        <TextContentWrapper>
+          <InfoTextWrapper>
+            {!!birthDate && (
+            <BirthDayText
+              rawBirthDate={birthDate}
+            />
+            )}
+            {!!placeOfBirth && (
+              <InfoText
+                // @ts-ignore
+                withVerticalMargin
+              >
+                {placeOfBirth}
+              </InfoText>
+            )}
+          </InfoTextWrapper>
           {!!knownForDepartment && (
-            <InfoText
-              // @ts-ignore
-              withCustomColor
-            >
-              {knownForDepartment}
-            </InfoText>
+            <KnownForDepartmentWrapper>
+              <InfoText
+                // @ts-ignore
+                withCustomColor
+              >
+                {knownForDepartment}
+              </InfoText>
+            </KnownForDepartmentWrapper>
           )}
-        </InfoTextWrapper>
+        </TextContentWrapper>
       )}
     </InfoWrapper>
   </Wrapper>

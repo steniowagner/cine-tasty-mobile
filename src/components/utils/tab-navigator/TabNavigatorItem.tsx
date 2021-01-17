@@ -1,9 +1,10 @@
-import React, { memo } from 'react';
+import React, { useMemo, memo } from 'react';
 import { TouchableOpacity, Platform, Text } from 'react-native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
+import { ThemeId } from 'types';
 
 interface WrapperButtonProps {
   readonly width: number;
@@ -40,7 +41,11 @@ const NavigatorItem = withTheme(
   ({
     icon, isSelected, onPress, theme, width, title,
   }: Props) => {
-    const color = isSelected ? theme.colors.primary : theme.colors.inactiveWhite;
+    const color = useMemo(() => {
+      const selectedColor = theme.id === ThemeId.DARK ? theme.colors.primary : theme.colors.text;
+
+      return isSelected ? selectedColor : theme.colors.inactiveWhite;
+    }, [isSelected, theme]);
 
     return (
       <Wrapper

@@ -16,7 +16,7 @@ describe('Testing <StarsVotes />', () => {
   it('should render correctly when the "withText" prop is "true"', () => {
     const { getByTestId, getByText } = render(renderStarsVotes(true, 5, 10));
 
-    expect(getByText('5.0')).not.toBeNull();
+    expect(getByText('5.0 ')).not.toBeNull();
 
     expect(getByText(' (10)')).not.toBeNull();
 

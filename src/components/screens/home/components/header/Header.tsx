@@ -66,6 +66,7 @@ const Header = ({
     <HeaderIconButton
       disabled={shouldDisableActions}
       onPress={onPressSearch}
+      followThemeTextColor
       iconName="magnify"
       withMarginRight
     />

@@ -1,11 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import styled from 'styled-components';
-
-const CustomIcon = styled(MaterialCommunityIcons)`
-  margin-top: ${Platform.OS === 'ios' ? 2 : 0}px;
-`;
 
 type Props = {
   color?: string;
@@ -14,7 +8,7 @@ type Props = {
 };
 
 const Icon = ({ color, name, size }: Props) => (
-  <CustomIcon
+  <MaterialCommunityIcons
     testID="icon"
     color={color}
     name={name}

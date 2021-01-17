@@ -41,7 +41,6 @@ const EmptyStarIcon = styled(Icon).attrs(({ theme }) => ({
 `;
 
 const VotesText = styled(Text)<VotesTextStyleProps>`
-  margin-right: ${({ theme }) => theme.metrics.smallSize}px;
   font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
   color: ${({ textColor, theme }) => textColor || theme.colors.text};
   font-family: CircularStd-Medium;
@@ -65,11 +64,11 @@ const StarsVotes = ({
   return (
     <Wrapper>
       {shouldShowVotes && (
-      <VotesText
-        textColor={textColor}
-      >
-        {votes.toFixed(1)}
-      </VotesText>
+        <VotesText
+          textColor={textColor}
+        >
+          {`${votes.toFixed(1)} `}
+        </VotesText>
       )}
       <Wrapper
         testID="stars-wrapper"

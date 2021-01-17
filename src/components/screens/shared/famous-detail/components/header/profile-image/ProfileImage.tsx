@@ -7,9 +7,11 @@ import { useLoadListItemImage } from 'hooks';
 import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
+const IMAGE_SQUARE_PERCENTAGE = '28%';
+
 const FallbackImageWrapper = styled(Animated.View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('22%')}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP(IMAGE_SQUARE_PERCENTAGE)}px;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP(IMAGE_SQUARE_PERCENTAGE)}px;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -46,8 +48,8 @@ const ProfileImage = ({ profileImage }: Props) => {
         image={profileImage}
         testID="profile-image"
         style={{
-          width: metrics.getWidthFromDP('22%'),
-          height: metrics.getWidthFromDP('22%'),
+          width: metrics.getWidthFromDP(IMAGE_SQUARE_PERCENTAGE),
+          height: metrics.getWidthFromDP(IMAGE_SQUARE_PERCENTAGE),
           borderRadius: metrics.extraSmallSize,
         }}
       />

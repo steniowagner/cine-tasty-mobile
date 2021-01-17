@@ -9,8 +9,8 @@ import MediaSwitcher, { I18N_TV_SHOWS_KEY, I18N_MOVIES_KEY } from './MediaSwitch
 import { ANIMATION_DURATION } from './useMediaSwitcher';
 
 const PRIMARY_COLOR_RGBA = 'rgba(255, 215, 0, 1)';
-const CONTRAST_COLOR_RGBA = 'rgba(77, 77, 77, 1)';
-const TEXT_RGBA = 'rgba(255, 255, 255, 1)';
+const CONTRAST_COLOR_RGBA = 'rgba(207, 207, 207, 1)';
+const TEXT_RGBA = 'rgba(187, 187, 187, 1)';
 const BUTTON_TEXT_RGBA = 'rgba(38, 38, 38, 1)';
 
 const renderMediaSwitcher = ({

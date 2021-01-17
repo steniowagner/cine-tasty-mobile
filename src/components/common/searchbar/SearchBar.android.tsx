@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { TextInput, View } from 'react-native';
-import styled from 'styled-components';
+import { StatusBar, TextInput, View } from 'react-native';
+import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import HeaderIconButton from 'components/common/HeaderIconButton';
 
@@ -33,6 +33,7 @@ export type Props = {
   onPressSearch: () => void;
   onPressClose: () => void;
   placeholder: string;
+  theme: DefaultTheme;
 };
 
 const SearchBar = ({
@@ -40,6 +41,7 @@ const SearchBar = ({
   onPressSearch,
   onPressClose,
   placeholder,
+  theme,
 }: Props) => {
   const inputRef = useRef<TextInput>();
   useEffect(() => {
@@ -49,23 +51,30 @@ const SearchBar = ({
   }, []);
 
   return (
-    <Wrapper
-      testID="searchbar-wrapper"
-    >
-      <HeaderIconButton
-        iconName="close"
-        onPress={onPressClose}
-        withMarginLeft
+    <>
+      <StatusBar
+        backgroundColor={theme.colors.secondary}
+        barStyle="light-content"
+        animated
       />
-      <Input
-        testID="search-input"
-        onChangeText={(text: string) => onTypeSearchQuery(text)}
-        onSubmitEditing={onPressSearch}
-        placeholder={placeholder}
-        ref={inputRef}
-      />
-    </Wrapper>
+      <Wrapper
+        testID="searchbar-wrapper"
+      >
+        <HeaderIconButton
+          iconName="close"
+          onPress={onPressClose}
+          withMarginLeft
+        />
+        <Input
+          testID="search-input"
+          onChangeText={(text: string) => onTypeSearchQuery(text)}
+          onSubmitEditing={onPressSearch}
+          placeholder={placeholder}
+          ref={inputRef}
+        />
+      </Wrapper>
+    </>
   );
 };
 
-export default SearchBar;
+export default withTheme(SearchBar);

@@ -62,6 +62,7 @@ const News = ({ navigation }: Props) => {
             },
           })}
           disabled={isLoading}
+          followThemeTextColor
           withMarginRight
           iconName="tune"
         />

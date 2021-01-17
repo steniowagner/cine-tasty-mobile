@@ -19,7 +19,7 @@ const ArrowLeftIcon = styled(Icon).attrs(({ theme }) => ({
     android: theme.metrics.getWidthFromDP('6.5%'),
     ios: theme.metrics.getWidthFromDP('9%'),
   }),
-  color: theme.colors.text,
+  color: 'white',
   name: Platform.select({
     android: 'arrow-left',
     ios: 'chevron-left',

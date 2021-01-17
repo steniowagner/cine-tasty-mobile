@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import RoundedButton from 'components/common/RoundedButton';
+import { ThemeId } from 'types';
 
 import {
   ITEM_MARGING_HORIZONTAL,
@@ -33,6 +34,14 @@ const TextContentWrapper = styled(View)`
   justify-content: flex-end;
   position: absolute;
   bottom: 0;
+`;
+
+const StarsWrapper = styled(View)`
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => (theme.id === ThemeId.LIGHT ? theme.colors.buttonText : 'transparent')};
+  padding: ${({ theme }) => (theme.id === ThemeId.LIGHT ? theme.metrics.mediumSize : 0)}px;
+  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
 const TitleText = styled(Text).attrs({
@@ -98,14 +107,19 @@ const Top3ListItem = ({
         imageType="backdrop"
         image={image}
       />
-      <SmokeShadow />
+      <SmokeShadow
+        isTheMiddle={false}
+      />
       <TextContentWrapper>
         <TitleText>{title}</TitleText>
-        <StarsVotes
-          voteCount={voteCount}
-          votes={voteAverage}
-          withText
-        />
+        <StarsWrapper>
+          <StarsVotes
+            voteCount={voteCount}
+            votes={voteAverage}
+            textColor="white"
+            withText
+          />
+        </StarsWrapper>
         <GenreText>{genres.join('  \u2022  ')}</GenreText>
         <LearnMoreButtonWrapper
           testID="test"

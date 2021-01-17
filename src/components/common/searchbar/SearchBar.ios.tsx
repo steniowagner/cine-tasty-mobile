@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { TextInput, View } from 'react-native';
+import { StatusBar, TextInput, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import styled from 'styled-components';
+import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import HeaderIconButton from 'components/common/HeaderIconButton';
 
@@ -33,7 +33,7 @@ const Input = styled(TextInput).attrs(({ placeholder, theme }) => ({
   margin-left: ${({ theme }) => theme.metrics.smallSize}px;
   font-family: CircularStd-Book;
   font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  color: ${({ theme }) => theme.colors.text};
+  color: white;
 `;
 
 export type Props = {
@@ -41,6 +41,7 @@ export type Props = {
   onPressSearch?: () => void;
   onPressClose: () => void;
   placeholder: string;
+  theme: DefaultTheme;
 };
 
 const SearchBar = ({
@@ -48,29 +49,37 @@ const SearchBar = ({
   onPressSearch,
   onPressClose,
   placeholder,
+  theme,
 }: Props) => {
   const inputRef = useRef<TextInput>();
 
   return (
-    <Wrapper
-      testID="searchbar-wrapper"
-    >
-      <ContentWrapper>
-        <HeaderIconButton
-          iconName="close"
-          onPress={onPressClose}
-          withMarginLeft
-        />
-        <Input
-          testID="search-input"
-          onChangeText={(text: string) => onTypeSearchQuery(text)}
-          onSubmitEditing={onPressSearch}
-          placeholder={placeholder}
-          ref={inputRef}
-        />
-      </ContentWrapper>
-    </Wrapper>
+    <>
+      <StatusBar
+        backgroundColor={theme.colors.secondary}
+        barStyle="light-content"
+        animated
+      />
+      <Wrapper
+        testID="searchbar-wrapper"
+      >
+        <ContentWrapper>
+          <HeaderIconButton
+            iconName="close"
+            onPress={onPressClose}
+            withMarginLeft
+          />
+          <Input
+            testID="search-input"
+            onChangeText={(text: string) => onTypeSearchQuery(text)}
+            onSubmitEditing={onPressSearch}
+            placeholder={placeholder}
+            ref={inputRef}
+          />
+        </ContentWrapper>
+      </Wrapper>
+    </>
   );
 };
 
-export default SearchBar;
+export default withTheme(SearchBar);
