@@ -141,4 +141,40 @@ describe('Testing <ThemeSettings />', () => {
       ThemeId.LIGHT,
     );
   });
+
+  it('should not change the theme when the current theme is dark and the user press on the dark-option', () => {
+    getItemFromStorage.mockImplementationOnce(() => ThemeId.DARK);
+
+    const { getAllByTestId } = render(renderThemeSettings());
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    fireEvent.press(getAllByTestId('option-settings')[0]);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not change the theme when the current theme is light and the user press on the light-option', () => {
+    getItemFromStorage.mockImplementationOnce(() => ThemeId.LIGHT);
+
+    const { getAllByTestId } = render(renderThemeSettings());
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    fireEvent.press(getAllByTestId('option-settings')[1]);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
+  });
 });

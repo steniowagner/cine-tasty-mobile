@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useThemeProvider } from 'providers/theme/Theme';
@@ -22,20 +22,36 @@ const useThemeSettingsOption = (): State => {
   const { themeId, onToggleTheme } = useThemeProvider();
   const { t } = useTranslation();
 
+  const onPressDarkOption = useCallback(() => {
+    if (themeId === ThemeId.DARK) {
+      return;
+    }
+
+    onToggleTheme();
+  }, [themeId]);
+
+  const onPressLightOption = useCallback(() => {
+    if (themeId === ThemeId.LIGHT) {
+      return;
+    }
+
+    onToggleTheme();
+  }, [themeId]);
+
   const themeOptions = useMemo(
     () => [
       {
         id: ThemeId.DARK,
-        onPress: onToggleTheme,
+        onPress: onPressDarkOption,
         title: t(DARK_I18N_REF),
       },
       {
         id: ThemeId.LIGHT,
-        onPress: onToggleTheme,
+        onPress: onPressLightOption,
         title: t(LIGHT_I18N_REF),
       },
     ],
-    [onToggleTheme],
+    [onPressLightOption, onPressDarkOption, onToggleTheme],
   );
 
   return {
