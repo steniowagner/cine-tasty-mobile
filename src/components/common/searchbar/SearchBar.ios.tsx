@@ -33,7 +33,7 @@ const Input = styled(TextInput).attrs(({ placeholder, theme }) => ({
   margin-left: ${({ theme }) => theme.metrics.smallSize}px;
   font-family: CircularStd-Book;
   font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  color: ${({ theme }) => theme.colors.text};
+  color: white;
 `;
 
 export type Props = {

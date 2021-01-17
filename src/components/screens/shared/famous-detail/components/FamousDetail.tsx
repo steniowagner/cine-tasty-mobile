@@ -40,7 +40,13 @@ const BackgroundImageWrapper = styled(Animated.View)`
 `;
 
 const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
-  colors: ['transparent', theme.colors.background],
+  colors: [
+    theme.colors.backgroundAlphax4,
+    theme.colors.backgroundAlphax3,
+    theme.colors.backgroundAlphax2,
+    theme.colors.backgroundAlphax1,
+    theme.colors.background,
+  ],
 }))`
   width: 100%;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('100%')}px;

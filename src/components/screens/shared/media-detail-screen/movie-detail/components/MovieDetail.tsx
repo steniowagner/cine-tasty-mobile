@@ -84,7 +84,6 @@ const MovieDetail = ({ navigation, route }: Props) => {
       <Header
         votesAverage={route.params.voteAverage || movie?.voteAverage}
         voteCount={route.params.voteCount || movie?.voteCount}
-        thumbnailURL={movie?.backdropPath || ''}
         imageURL={movie?.backdropPath || ''}
         posterURL={route.params.posterPath}
         title={route.params.title}
