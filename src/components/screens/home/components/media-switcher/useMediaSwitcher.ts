@@ -74,7 +74,7 @@ const useMediaSwitcher = ({
 
   const tvShowsTextColorOutputRange = useMemo(() => {
     if (theme.id === ThemeId.DARK) {
-      return [theme.colors.buttonText, theme.colors.text];
+      return [theme.colors.buttonText, theme.colors.inactiveWhite];
     }
 
     return [theme.colors.buttonText, theme.colors.inactiveWhite];
@@ -86,14 +86,6 @@ const useMediaSwitcher = ({
     }
 
     return [theme.colors.fallbackImageBackground, theme.colors.primary];
-  }, [theme]);
-
-  const moviesTextColorOutputRange = useMemo(() => {
-    if (theme.id === ThemeId.DARK) {
-      return [theme.colors.text, theme.colors.buttonText];
-    }
-
-    return [theme.colors.inactiveWhite, theme.colors.buttonText];
   }, [theme]);
 
   return {
@@ -111,7 +103,7 @@ const useMediaSwitcher = ({
     }),
     moviesTextColor: switchAnimatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: moviesTextColorOutputRange,
+      outputRange: [theme.colors.inactiveWhite, theme.colors.buttonText],
     }),
     onPressTVShows,
     onPressMovies,

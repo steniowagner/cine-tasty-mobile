@@ -8,7 +8,6 @@ export const dark: DefaultTheme = {
   id: ThemeId.DARK,
   colors: {
     primary: '#FFD700',
-    lightPrimary: 'rgba(70, 117, 248, 0.4)',
     secondary: '#111',
     background: '#222',
     backgroundAlphax1: 'rgba(38, 38, 38, 0.8)',
@@ -26,6 +25,7 @@ export const dark: DefaultTheme = {
     fallbackImageBackground: '#cfcfcf',
     fallbackImageIcon: '#4d4d4d',
     buttonText: '#262626',
+    inputBackground: '#4d4d4d',
   },
   metrics,
 };

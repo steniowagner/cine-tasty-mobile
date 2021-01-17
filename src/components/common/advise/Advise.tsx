@@ -17,7 +17,7 @@ const IconWrapper = styled(View)`
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('27.5%')}px;
-  background-color: ${({ theme }) => theme.colors.lightPrimary};
+  background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 const Title = styled(Text).attrs({
@@ -51,7 +51,7 @@ const Suggestion = styled(Text).attrs({
 
 const AdviseIcon = styled(Icon).attrs(({ theme, name }) => ({
   size: theme.metrics.getWidthFromDP('20%'),
-  color: theme.colors.text,
+  color: theme.colors.buttonText,
   name,
 }))``;
 

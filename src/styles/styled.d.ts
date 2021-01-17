@@ -25,7 +25,6 @@ declare module 'styled-components' {
       backgroundAlphax4: string;
       fallbackImageIcon: string;
       loadingColors: string[];
-      lightPrimary: string;
       primary: string;
       popup: string;
       secondary: string;
@@ -37,6 +36,7 @@ declare module 'styled-components' {
       androidToolbar: string;
       inactiveWhite: string;
       darkLayer: string;
+      inputBackground: string;
     };
   }
 }

@@ -11,7 +11,7 @@ const InnerContentWrapper = styled(TouchableOpacity)`
   align-items: center;
   padding: ${({ theme }) => theme.metrics.mediumSize}px;
   border-radius: ${({ theme }) => theme.metrics.smallSize}px;
-  background-color: ${({ theme }) => theme.colors.contrast};
+  background-color: ${({ theme }) => theme.colors.inputBackground};
 `;
 
 const OptionText = styled(Text)`
