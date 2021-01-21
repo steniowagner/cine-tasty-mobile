@@ -2,6 +2,8 @@ import React, { memo } from 'react';
 import { Linking, View, Text } from 'react-native';
 import styled from 'styled-components';
 
+import { ThemeId } from 'types';
+
 import { TextWrapper, Wrapper } from './common-styles';
 import NewsImage from './news-image/NewsListItemImage';
 import DateDiff from './date-diff/DateDiff';
@@ -9,16 +11,22 @@ import DateDiff from './date-diff/DateDiff';
 const SourceText = styled(Text).attrs({
   numberOfLines: 1,
 })`
-  margin-right: ${({ theme }) => theme.metrics.smallSize}px;
+  max-width: 80%;
   font-family: CircularStd-Bold;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const BottomTextContentWrapper = styled(View)`
-  width: 70%;
+const BottomTextContentContainer = styled(View)`
   flex-direction: row;
   margin-top: ${({ theme }) => theme.metrics.largeSize}px;
+`;
+
+const BottomTextContentWrapper = styled(View)`
+  flex-direction: row;
+  padding: ${({ theme }) => (theme.id === ThemeId.LIGHT ? theme.metrics.smallSize : 0)}px;
+  background-color: ${({ theme }) => (theme.id === ThemeId.LIGHT ? theme.colors.buttonText : 'transparent')};
+  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
 const NewsText = styled(Text)<{ withRTL: boolean }>`
@@ -55,13 +63,15 @@ const NewsListItem = ({
       >
         {text}
       </NewsText>
-      <BottomTextContentWrapper>
-        <SourceText>{`${source}  \u2022`}</SourceText>
-        <DateDiff
-          now={new Date()}
-          date={date}
-        />
-      </BottomTextContentWrapper>
+      <BottomTextContentContainer>
+        <BottomTextContentWrapper>
+          <SourceText>{`${source}  \u2022  `}</SourceText>
+          <DateDiff
+            now={new Date()}
+            date={date}
+          />
+        </BottomTextContentWrapper>
+      </BottomTextContentContainer>
     </TextWrapper>
   </Wrapper>
 );

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 const DefaultText = styled(Text)`
   font-family: CircularStd-Medium;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => theme.colors.text};
+  color: white;
 `;
 
 const ONE_MINUTE_IN_SECONDS = 60;
