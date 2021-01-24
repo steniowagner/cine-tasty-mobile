@@ -9,6 +9,8 @@ import { ImagesGalleryParams } from 'components/screens/shared/images-gallery/ro
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import metrics from 'styles/metrics';
 
+// @ts-ignore
+// eslint-disable-next-line import/extensions
 import ImagesGalleryListItem from './images-gallery-list-item/ImagesGalleryListItem';
 import useImageGallery from './useImagesGallery';
 

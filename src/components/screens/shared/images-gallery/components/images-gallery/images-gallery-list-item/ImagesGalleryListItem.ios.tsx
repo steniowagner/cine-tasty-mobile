@@ -1,10 +1,12 @@
 import React, { memo } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Animated, View } from 'react-native';
+import { PinchGestureHandler } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
+import useTMDBImage from 'components/common/tmdb-image/useTMDBImage';
 import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
+import { useImagePinch } from 'hooks';
 
 import useImagesGalleryListItem from './useImagesGalleryListItem';
 
@@ -44,6 +46,14 @@ const ImagesGalleryListItem = ({ imageURL }: Props) => {
     imageURL: `${IMAGES_URI}${imageURL}`,
   });
 
+  const { uri } = useTMDBImage({
+    isThumbnail: false,
+    imageType: 'backdrop',
+    image: imageURL,
+  });
+
+  const { onPinchStateChange, onPinchEvent, pinchScale } = useImagePinch();
+
   if (isLoading) {
     return (
       <Wrapper
@@ -67,30 +77,35 @@ const ImagesGalleryListItem = ({ imageURL }: Props) => {
   }
 
   if (isLandscape || isPortrait) {
-    const height = (function () {
-      if (isLandscape) {
-        return '40%';
-      }
+    let height = '0%';
 
-      if (isPortrait) {
-        return '70%';
-      }
+    if (isLandscape) {
+      height = '40%';
+    }
 
-      return '0%';
-    }());
+    if (isPortrait) {
+      height = '70%';
+    }
 
     return (
       <Wrapper
         testID="images-gallery-list-item"
       >
-        <TMDBImage
-          imageType="backdrop"
-          image={imageURL}
-          style={{
-            width: '100%',
-            height,
-          }}
-        />
+        <PinchGestureHandler
+          onHandlerStateChange={onPinchStateChange}
+          onGestureEvent={onPinchEvent}
+        >
+          <Animated.Image
+            source={{ uri }}
+            style={[
+              { width: '100%', height },
+              {
+                transform: [{ scale: pinchScale }],
+              },
+            ]}
+            resizeMode="contain"
+          />
+        </PinchGestureHandler>
       </Wrapper>
     );
   }

@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
-import ImagesGalleryListItem, { IMAGES_URI } from './ImagesGalleryListItem';
+import ImagesGalleryListItem, { IMAGES_URI } from './ImagesGalleryListItem.ios';
 
 const IMAGE_URL = 'SOME_IMAGE_URL';
 
