@@ -19,7 +19,7 @@ const SourceText = styled(Text).attrs({
 
 const BottomTextContentContainer = styled(View)`
   flex-direction: row;
-  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
+  margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
 const BottomTextContentWrapper = styled(View)`
