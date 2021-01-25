@@ -42,6 +42,7 @@ const Routes = ({ theme }: Props) => {
             background: theme.colors.background,
             card: theme.colors.secondary,
             primary: theme.colors.text,
+            notification: 'transparent',
             border: theme.colors.text,
             text: theme.colors.text,
           },
