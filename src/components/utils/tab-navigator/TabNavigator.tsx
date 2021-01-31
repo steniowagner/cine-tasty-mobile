@@ -61,6 +61,16 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
   return (
     <Wrapper
       testID="tab-wrapper"
+      style={{
+        shadowColor: '#000000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+      }}
     >
       {items.map((item, index) => (
         <TabNavigatorItem

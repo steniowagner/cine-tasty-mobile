@@ -23,6 +23,7 @@ declare module 'styled-components' {
       backgroundAlphax2: string;
       backgroundAlphax3: string;
       backgroundAlphax4: string;
+      backgroundAlphax5: string;
       fallbackImageIcon: string;
       loadingColors: string[];
       primary: string;

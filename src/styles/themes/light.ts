@@ -14,6 +14,7 @@ export const light: DefaultTheme = {
     backgroundAlphax2: 'rgba(242,242,242, 0.6)',
     backgroundAlphax3: 'rgba(242,242,242, 0.4)',
     backgroundAlphax4: 'rgba(242,242,242, 0.2)',
+    backgroundAlphax5: 'rgba(242,242,242, 0.1)',
     contrast: '#4d4d4d',
     text: '#111111',
     subText: '#4d4d4d',

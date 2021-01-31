@@ -21,7 +21,9 @@ import {
   POPULAR_VIEW_ALL_TITLE_i18N_REF as TV_SHOWS_POPULAR_VIEW_ALL_TITLE_i18N_REF,
   POPULAR_SECTION_TITLE_i18N_REF as TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF,
 } from './hooks/trendings/useTrendingTVShows';
+import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
 import { TRENDING_TV_SHOWS_ERROR_REF_I18N } from './hooks/useHome';
+import { I18N_TV_SHOWS_KEY } from './header/Header';
 import {
   SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF,
   SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF,
@@ -164,7 +166,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -230,7 +232,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -282,7 +284,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -334,7 +336,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -386,10 +388,10 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
-      timeTravel(TRANSITIONING_DURATION);
+      timeTravel(TRANSITIONING_DURATION + SWITCH_ANIMATION_DURATION_MS);
     });
 
     act(() => {
@@ -434,7 +436,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
