@@ -8,10 +8,10 @@ import HeaderIconButton from 'components/common/HeaderIconButton';
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import CONSTANTS from 'utils/constants';
 
-import MediaSwitcher from '../media-switcher/MediaSwitcher2';
+import MediaSwitcher from '../media-switcher/MediaSwitcher';
 
-const I18N_TV_SHOWS_KEY = 'translations:home:tvShows';
-const I18N_MOVIES_KEY = 'translations:home:movies';
+export const I18N_TV_SHOWS_KEY = 'translations:home:tvShows';
+export const I18N_MOVIES_KEY = 'translations:home:movies';
 
 const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
   colors: [

@@ -14,6 +14,8 @@ import {
   POPULAR_SECTION_TITLE_i18N_REF as TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF,
 } from './hooks/trendings/useTrendingTVShows';
 import Home from './Home';
+import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
+import { I18N_TV_SHOWS_KEY } from './header/Header';
 
 const trendingTVShowsItems = Array(10)
   .fill({})
@@ -152,7 +154,7 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -207,7 +209,7 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);

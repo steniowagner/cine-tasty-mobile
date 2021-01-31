@@ -5,25 +5,31 @@ import { ThemeProvider } from 'styled-components';
 import theme from 'styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
-import MediaSwitcher, { I18N_TV_SHOWS_KEY, I18N_MOVIES_KEY } from './MediaSwitcher';
-import { ANIMATION_DURATION } from './useMediaSwitcher';
+import { SWITCH_ANIMATION_DURATION_MS } from './useMediaSwitcher';
+import MediaSwitcher from './MediaSwitcher';
 
-const PRIMARY_COLOR_RGBA = 'rgba(255, 215, 0, 1)';
-const CONTRAST_COLOR_RGBA = 'rgba(207, 207, 207, 1)';
-const TEXT_RGBA = 'rgba(187, 187, 187, 1)';
-const BUTTON_TEXT_RGBA = 'rgba(38, 38, 38, 1)';
+const INACTIVE_TEXT_RGBA = 'rgba(255, 255, 255, 1)';
+const ACTIVE_TEXT_RGBA = 'rgba(38, 38, 38, 1)';
 
-const renderMediaSwitcher = ({
-  onSwitchToTVShows = jest.fn,
-  onSwitchToMovies = jest.fn,
-  isDisabled = false,
-}) => (
+const NUMBER_SWITCH_ITEMS = 2;
+const switchTitlesI18NRefs = Array(NUMBER_SWITCH_ITEMS)
+  .fill('')
+  .map((_, index) => `switch-title-${index}`);
+const defaultPresses = Array(NUMBER_SWITCH_ITEMS).fill(() => {});
+
+type SwitchPress = () => void;
+
+const getMediaSwitcherProps = (switchPresses: SwitchPress[]) =>
+  Array(NUMBER_SWITCH_ITEMS)
+    .fill({})
+    .map((_, index) => ({
+      titlei18nRef: switchTitlesI18NRefs[index],
+      onPress: switchPresses[index],
+    }));
+
+const renderMediaSwitcher = (switchPresses = defaultPresses, isDisabled = false) => (
   <ThemeProvider theme={theme}>
-    <MediaSwitcher
-      onSwitchToTVShows={onSwitchToTVShows}
-      onSwitchToMovies={onSwitchToMovies}
-      isDisabled={isDisabled}
-    />
+    <MediaSwitcher items={getMediaSwitcherProps(switchPresses)} isDisabled={isDisabled} />
   </ThemeProvider>
 );
 
@@ -33,323 +39,206 @@ describe('Testing <MediaSwitcher />', () => {
   afterEach(cleanup);
 
   it('should render correctly on the first render', () => {
-    const { getByTestId, getByText } = render(renderMediaSwitcher({}));
+    const { getByTestId, getByText } = render(renderMediaSwitcher());
 
-    expect(getByText(I18N_TV_SHOWS_KEY)).not.toBeNull();
-
-    expect(getByText(I18N_MOVIES_KEY)).not.toBeNull();
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
+    expect(switchTitlesI18NRefs.every(titlei18nRef => getByText(titlei18nRef))).toBe(
+      true,
     );
 
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
+    expect(getByTestId('switch-title-0-text').props.style.color).toEqual(
+      ACTIVE_TEXT_RGBA,
+    );
 
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      TEXT_RGBA,
+    expect(getByTestId('switch-title-1-text').props.style.color).toEqual(
+      INACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switcher-indicator').props.style.opacity).toEqual(1);
+
+    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
+      0,
     );
   });
 
-  it('should switch the selection from the "movies" to "tv-shows when the "tv-shows" button is pressed', () => {
-    const onSwitchToTVShows = jest.fn();
-    const { getByTestId } = render(renderMediaSwitcher({ onSwitchToTVShows }));
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION);
-    });
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-  });
-
-  it('should switch the selection from the "movies" to "tv-shows" and then back to "movies" again when the user press on the "tv-shows" button and then press "movies" button', () => {
-    const { getByTestId } = render(renderMediaSwitcher({}));
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION);
-    });
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    fireEvent.press(getByTestId('media-switcher-movies-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION);
-    });
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-  });
-
-  it('should not change the selection-state when the current selection is "movies" and the movies button is pressed', () => {
-    const onSwitchToMovies = jest.fn();
-
-    const { getByTestId } = render(renderMediaSwitcher({ onSwitchToMovies }));
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    fireEvent.press(getByTestId('media-switcher-movies-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION);
-    });
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    expect(onSwitchToMovies).toHaveBeenCalledTimes(0);
-  });
-
-  it('should not change the selection-state when the current selection is "tv-shows" and the tv-shows button is pressed', () => {
-    const onSwitchToTVShows = jest.fn();
-
-    const { getByTestId } = render(renderMediaSwitcher({ onSwitchToTVShows }));
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION);
-    });
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION);
-    });
-
-    expect(
-      getByTestId('media-switcher-movies-button').props.style.backgroundColor,
-    ).toEqual(CONTRAST_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-movies-text').props.style.color).toEqual(
-      TEXT_RGBA,
-    );
-
-    expect(
-      getByTestId('media-switcher-tv-shows-button').props.style.backgroundColor,
-    ).toEqual(PRIMARY_COLOR_RGBA);
-
-    expect(getByTestId('media-switcher-tv-shows-text').props.style.color).toEqual(
-      BUTTON_TEXT_RGBA,
-    );
-
-    expect(onSwitchToTVShows).toHaveBeenCalledTimes(1);
-  });
-
-  it('should call the "onSwitchToTVShows" when the user press the "tv-shows" button', () => {
-    const onSwitchToTVShows = jest.fn();
-
-    const { getByTestId } = render(renderMediaSwitcher({ onSwitchToTVShows }));
-
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION + 1);
-    });
-
-    expect(onSwitchToTVShows).toHaveBeenCalledTimes(1);
-
-    expect(onSwitchToTVShows).toHaveBeenCalledWith();
-  });
-
-  it('should call the "onSwitchToMovies" when the user press the "movies" button when the seleted-button is "tv-shows" button', () => {
-    const onSwitchToMovies = jest.fn();
-
-    const { getByTestId } = render(renderMediaSwitcher({ onSwitchToMovies }));
-
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION + 1);
-    });
-
-    fireEvent.press(getByTestId('media-switcher-movies-button'));
-
-    act(() => {
-      timeTravel(ANIMATION_DURATION + 1);
-    });
-
-    expect(onSwitchToMovies).toHaveBeenCalledTimes(1);
-
-    expect(onSwitchToMovies).toHaveBeenCalledWith();
-  });
-
-  it('should not call the "onSwitchToTVShows" when the user press the "tv-shows" button and the "isDisabled" is "true"', () => {
-    const onSwitchToTVShows = jest.fn();
+  it('should switch the selection from the currently-selected-item to the next-item when the next-item is pressed', () => {
+    const pressFirstItem = jest.fn();
+    const pressSecondItem = jest.fn();
 
     const { getByTestId } = render(
-      renderMediaSwitcher({ onSwitchToTVShows, isDisabled: true }),
+      renderMediaSwitcher([pressFirstItem, pressSecondItem]),
     );
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    expect(getByTestId('switch-title-0-text').props.style.color).toEqual(
+      ACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switch-title-1-text').props.style.color).toEqual(
+      INACTIVE_TEXT_RGBA,
+    );
+
+    fireEvent.press(getByTestId('switch-title-1-button'));
 
     act(() => {
-      timeTravel(ANIMATION_DURATION + 1);
+      timeTravel(SWITCH_ANIMATION_DURATION_MS);
     });
 
-    expect(onSwitchToTVShows).toHaveBeenCalledTimes(0);
+    expect(getByTestId('switch-title-0-text').props.style.color).toEqual(
+      INACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switch-title-1-text').props.style.color).toEqual(
+      ACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
+      750,
+    );
+
+    expect(pressFirstItem).toHaveBeenCalledTimes(0);
+
+    expect(pressSecondItem).toHaveBeenCalledTimes(1);
   });
 
-  it('should not call the "onSwitchToMovies" when the user press the "movies" button and the "isDisabled" is "true"', () => {
-    const onSwitchToMovies = jest.fn();
+  it('should switch the selection from the currently-selected-item to the next-item (user press next-item) and the back to the firstly-selected-item (user press previous-item)', () => {
+    const pressFirstItem = jest.fn();
+    const pressSecondItem = jest.fn();
 
     const { getByTestId } = render(
-      renderMediaSwitcher({ onSwitchToMovies, isDisabled: true }),
+      renderMediaSwitcher([pressFirstItem, pressSecondItem]),
     );
 
-    fireEvent.press(getByTestId('media-switcher-movies-button'));
+    expect(getByTestId('switch-title-0-text').props.style.color).toEqual(
+      ACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switch-title-1-text').props.style.color).toEqual(
+      INACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
+      0,
+    );
+
+    fireEvent.press(getByTestId('switch-title-1-button'));
 
     act(() => {
-      timeTravel(ANIMATION_DURATION + 1);
+      timeTravel(SWITCH_ANIMATION_DURATION_MS);
     });
 
-    expect(onSwitchToMovies).toHaveBeenCalledTimes(0);
+    expect(getByTestId('switch-title-0-text').props.style.color).toEqual(
+      INACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switch-title-1-text').props.style.color).toEqual(
+      ACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
+      750,
+    );
+
+    fireEvent.press(getByTestId('switch-title-0-button'));
+
+    act(() => {
+      timeTravel(SWITCH_ANIMATION_DURATION_MS);
+    });
+
+    expect(getByTestId('switch-title-0-text').props.style.color).toEqual(
+      ACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switch-title-1-text').props.style.color).toEqual(
+      INACTIVE_TEXT_RGBA,
+    );
+
+    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
+      0,
+    );
+
+    expect(pressFirstItem).toHaveBeenCalledTimes(1);
+
+    expect(pressSecondItem).toHaveBeenCalledTimes(1);
   });
 
-  it('should render the component with a lower opacity when the "isDisabled" is "true"', () => {
-    const { getByTestId } = render(renderMediaSwitcher({ isDisabled: true }));
+  it('should not change the the current-item-selected when the item-pressed is the current-item-selected', () => {
+    const pressFirstItem = jest.fn();
+    const pressSecondItem = jest.fn();
 
-    expect(getByTestId('media-switcher-wrapper').props.isDisabled).toEqual(true);
+    const { getByTestId } = render(
+      renderMediaSwitcher([pressFirstItem, pressSecondItem]),
+    );
+
+    fireEvent.press(getByTestId('switch-title-0-button'));
+
+    act(() => {
+      timeTravel(SWITCH_ANIMATION_DURATION_MS);
+    });
+
+    expect(pressFirstItem).toHaveBeenCalledTimes(0);
+
+    expect(pressSecondItem).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not change the the current-item-selected when the item-pressed is the current-item-selected', () => {
+    const pressFirstItem = jest.fn();
+    const pressSecondItem = jest.fn();
+
+    const { getByTestId } = render(
+      renderMediaSwitcher([pressFirstItem, pressSecondItem]),
+    );
+
+    fireEvent.press(getByTestId('switch-title-1-button'));
+
+    act(() => {
+      timeTravel(SWITCH_ANIMATION_DURATION_MS);
+    });
+
+    fireEvent.press(getByTestId('switch-title-1-button'));
+
+    act(() => {
+      timeTravel(SWITCH_ANIMATION_DURATION_MS);
+    });
+
+    expect(pressFirstItem).toHaveBeenCalledTimes(0);
+
+    expect(pressSecondItem).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not call the press-first-item-callback when "isDisabled" is "true" and the user press the first-item', () => {
+    const pressFirstItem = jest.fn();
+
+    const { getByTestId } = render(
+      renderMediaSwitcher([pressFirstItem, jest.fn()], true),
+    );
+
+    fireEvent.press(getByTestId('switch-title-0-button'));
+
+    act(() => {
+      timeTravel(SWITCH_ANIMATION_DURATION_MS);
+    });
+
+    expect(pressFirstItem).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not call the press-first-item-callback when "isDisabled" is "true" and the user press the second-item', () => {
+    const pressSecondItem = jest.fn();
+
+    const { getByTestId } = render(
+      renderMediaSwitcher([jest.fn(), pressSecondItem], true),
+    );
+
+    fireEvent.press(getByTestId('switch-title-1-button'));
+
+    act(() => {
+      timeTravel(SWITCH_ANIMATION_DURATION_MS);
+    });
+
+    expect(pressSecondItem).toHaveBeenCalledTimes(0);
+  });
+
+  it('should render correctly when "isDisabled" is "true"', () => {
+    const { getByTestId } = render(renderMediaSwitcher(undefined, true));
+
+    expect(getByTestId('switcher-indicator').props.style.opacity).toEqual(0.5);
   });
 });

@@ -1,109 +1,121 @@
 import React from 'react';
-import { TouchableOpacity, Animated, View } from 'react-native';
-import styled, { withTheme, DefaultTheme } from 'styled-components';
+import {
+  TouchableOpacity, LayoutChangeEvent, Animated, View,
+} from 'react-native';
+import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import useMediaSwitcher from './useMediaSwitcher';
-
-export const I18N_TV_SHOWS_KEY = 'translations:home:tvShows';
-export const I18N_MOVIES_KEY = 'translations:home:movies';
-
-interface OptionButtonStyleProps {
-  readonly isRight?: boolean;
-  readonly isLeft?: boolean;
-}
+import useMediaSwitcher, { SwitchItem } from './useMediaSwitcher';
 
 interface WrapperStyleProps {
-  readonly isDisabled: boolean;
+  readonly opacity: number;
+  readonly width: number;
 }
 
-const TouchableOpacityAnimated = Animated.createAnimatedComponent(TouchableOpacity);
+interface DynamicWidthStyleProps {
+  readonly width: number;
+}
 
 const Wrapper = styled(View)<WrapperStyleProps>`
-  flex-direction: row;
-  align-items: center;
-  opacity: ${({ isDisabled }) => (isDisabled ? 0.6 : 1)};
+  width: ${({ width }) => width}px;
+  border-radius: ${({ theme }) => theme.metrics.height}px;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  opacity: ${({ opacity }) => opacity};
 `;
 
-const OptionButton = styled(TouchableOpacityAnimated)<OptionButtonStyleProps>`
-  border-radius: 4px;
-  padding-horizontal: ${({ theme }) => theme.metrics.largeSize}px;
-  padding-vertical: ${({ theme }) => theme.metrics.smallSize}px;
-  border-top-left-radius: ${({ isLeft, theme }) => (isLeft ? theme.metrics.extraSmallSize : 0)}px;
-  border-bottom-left-radius: ${({ isLeft, theme }) => (isLeft ? theme.metrics.extraSmallSize : 0)}px;
-  border-top-right-radius: ${({ isRight, theme }) => (isRight ? theme.metrics.extraSmallSize : 0)}px;
-  border-bottom-right-radius: ${({ isRight, theme }) => (isRight ? theme.metrics.extraSmallSize : 0)}px;
+const SwitcherIndicator = styled(Animated.View)<DynamicWidthStyleProps>`
+  width: ${({ width }) => width}px;
+  height: 100%;
+  border-radius: ${({ theme }) => theme.metrics.height}px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  border: ${({ theme }) => `${theme.metrics.extraSmallSize}px solid ${theme.colors.secondary}`};
+  position: absolute;
 `;
 
 const OptionText = styled(Animated.Text)`
-  text-align: center;
+  padding-horizontal: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  padding-vertical: ${({ theme }) => theme.metrics.mediumSize}px;
   font-family: CircularStd-Black;
-  font-size: ${({ theme }) => theme.metrics.mediumSize * 1.2}px;
+  font-size: ${({ theme }) => theme.metrics.largeSize}px;
+`;
+
+const Row = styled(View)`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const OptionButton = styled(TouchableOpacity)<DynamicWidthStyleProps>`
+  width: ${({ width }) => width}px;
+  justify-content: center;
+  align-items: center;
 `;
 
 type Props = {
-  onSwitchToTVShows: () => void;
-  onSwitchToMovies: () => void;
   theme: DefaultTheme;
+  items: SwitchItem[];
   isDisabled: boolean;
 };
 
-const MediaSwitcher = ({
-  onSwitchToTVShows,
-  onSwitchToMovies,
-  isDisabled,
-  theme,
-}: Props) => {
+const MediaSwitcher = ({ isDisabled, items, theme }: Props) => {
   const {
-    tvShowsButtonBackgroudColor,
-    moviesButtonBackgroudColor,
-    tvShowsTextColor,
-    moviesTextColor,
-    onPressTVShows,
-    onPressMovies,
-    t,
-  } = useMediaSwitcher({
-    onSwitchToTVShows,
-    onSwitchToMovies,
-    theme,
-  });
+    switchItemWidth,
+    wrapperOpacity,
+    translateX,
+    switchItems,
+    isSwitching,
+  } = useMediaSwitcher({ theme, items });
 
   return (
     <Wrapper
+      width={items.length * switchItemWidth}
+      opacity={wrapperOpacity}
+      style={{
+        shadowColor: '#000000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+      }}
       testID="media-switcher-wrapper"
-      isDisabled={isDisabled}
     >
-      <OptionButton
-        style={{ backgroundColor: moviesButtonBackgroudColor }}
-        testID="media-switcher-movies-button"
-        onPress={onPressMovies}
-        disabled={isDisabled}
-        isLeft
-      >
-        <OptionText
-          testID="media-switcher-movies-text"
-          style={{
-            color: moviesTextColor,
-          }}
-        >
-          {t(I18N_MOVIES_KEY)}
-        </OptionText>
-      </OptionButton>
-      <OptionButton
-        style={{ backgroundColor: tvShowsButtonBackgroudColor }}
-        testID="media-switcher-tv-shows-button"
-        onPress={onPressTVShows}
-        disabled={isDisabled}
-        isRight
-      >
-        <OptionText
-          testID="media-switcher-tv-shows-text"
-          style={{
-            color: tvShowsTextColor,
-          }}
-        >
-          {t(I18N_TV_SHOWS_KEY)}
-        </OptionText>
-      </OptionButton>
+      <SwitcherIndicator
+        width={switchItemWidth}
+        testID="switcher-indicator"
+        style={{
+          opacity: isDisabled ? 0.5 : 1,
+          transform: [
+            {
+              translateX: translateX.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, switchItemWidth],
+                extrapolate: 'clamp',
+              }),
+            },
+          ],
+        }}
+      />
+      <Row>
+        {switchItems.map((switchItem) => (
+          <OptionButton
+            disabled={isSwitching || isDisabled}
+            onPress={switchItem.onPress}
+            testID={`${switchItem.title}-button`}
+            width={switchItemWidth}
+            key={switchItem.title}
+          >
+            <OptionText
+              onLayout={(event: LayoutChangeEvent) => switchItem.onLayout(event)}
+              style={{ color: switchItem.textColor }}
+              testID={`${switchItem.title}-text`}
+            >
+              {switchItem.title}
+            </OptionText>
+          </OptionButton>
+        ))}
+      </Row>
     </Wrapper>
   );
 };

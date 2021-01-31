@@ -1,105 +1,139 @@
 import {
   useCallback, useState, useMemo, useRef,
 } from 'react';
-import { Animated } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { LayoutChangeEvent, Animated } from 'react-native';
 import { DefaultTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
-import { ThemeId } from 'types';
+import metrics from 'styles/metrics';
 
-export const ANIMATION_DURATION = 100;
+export const SWITCH_ANIMATION_DURATION_MS = 300;
+
+export type SwitchItem = {
+  titlei18nRef: string;
+  onPress: () => void;
+};
+
+type EnhancedSwitchItem = {
+  onLayout: (event: LayoutChangeEvent) => void;
+  textColor: Animated.AnimatedInterpolation;
+  onPress: () => void;
+  title: string;
+};
 
 type State = {
-  tvShowsButtonBackgroudColor: Animated.AnimatedInterpolation;
-  moviesButtonBackgroudColor: Animated.AnimatedInterpolation;
-  tvShowsTextColor: Animated.AnimatedInterpolation;
-  moviesTextColor: Animated.AnimatedInterpolation;
-  onPressTVShows: () => void;
-  t: (key: string) => string;
-  onPressMovies: () => void;
+  switchItems: EnhancedSwitchItem[];
+  translateX: Animated.Value;
+  switchItemWidth: number;
+  wrapperOpacity: number;
+  isSwitching: boolean;
 };
 
 type Props = {
-  onSwitchToTVShows: () => void;
-  onSwitchToMovies: () => void;
   theme: DefaultTheme;
+  items: SwitchItem[];
 };
 
-const useMediaSwitcher = ({
-  onSwitchToTVShows,
-  onSwitchToMovies,
-  theme,
-}: Props): State => {
-  const [isMovieSelected, setIsMovieSelected] = useState<boolean>(true);
-  const switchAnimatedValue = useRef(new Animated.Value(1)).current;
+const useMediaSwitcher = ({ theme, items }: Props): State => {
+  const [switchItemsWidths, setSwitchItemsWidth] = useState<number[]>([]);
+  const [isSwitching, setIsSwitching] = useState<boolean>(false);
 
   const { t } = useTranslation();
 
-  const animateSwitch = useCallback((toValue: number, callback: () => void): void => {
-    Animated.timing(switchAnimatedValue, {
-      duration: ANIMATION_DURATION,
-      toValue,
-    }).start(() => {
-      callback();
+  const translateX = useRef(new Animated.Value(0)).current;
+  const textColors = useRef(new Animated.Value(0)).current;
+
+  const onAniamateSwitch = useCallback((index: number, onFinishAnimation: () => void) => {
+    // @ts-ignore this only works if "userNativeDriver" is "true"
+    // eslint-disable-next-line no-underscore-dangle
+    if (textColors.__getValue() === index) {
+      return;
+    }
+
+    setIsSwitching(true);
+
+    Animated.parallel([
+      Animated.timing(translateX, {
+        duration: SWITCH_ANIMATION_DURATION_MS,
+        useNativeDriver: true,
+        toValue: index,
+      }),
+      Animated.timing(textColors, {
+        duration: SWITCH_ANIMATION_DURATION_MS,
+        toValue: index,
+      }),
+    ]).start(() => {
+      setIsSwitching(false);
+      onFinishAnimation();
     });
   }, []);
 
-  const onPressMovies = useCallback(() => {
-    if (isMovieSelected) {
-      return;
+  const onSwitchItemLayout = useCallback(
+    (event: LayoutChangeEvent, switchItemindex: number) => {
+      const isSwitchItemAlreadyMeasured = !!switchItemsWidths[switchItemindex];
+
+      if (isSwitchItemAlreadyMeasured) {
+        return;
+      }
+
+      const { width } = event.nativeEvent.layout;
+
+      setSwitchItemsWidth((previousSwitchItemsWidths: number[]) => Object.assign([...previousSwitchItemsWidths], { [switchItemindex]: width }));
+    },
+    [switchItemsWidths],
+  );
+
+  const switchItemWidth = useMemo(() => {
+    if (switchItemsWidths.length !== items.length) {
+      return metrics.width;
     }
 
-    setIsMovieSelected(true);
+    let width = 0;
 
-    animateSwitch(1, onSwitchToMovies);
-  }, [isMovieSelected]);
-
-  const onPressTVShows = useCallback(() => {
-    if (!isMovieSelected) {
-      return;
+    for (let i = 0; i < switchItemsWidths.length; i += 1) {
+      if (switchItemsWidths[i] > width) {
+        width = switchItemsWidths[i];
+      }
     }
 
-    setIsMovieSelected(false);
+    return width;
+  }, [switchItemsWidths]);
 
-    animateSwitch(0, onSwitchToTVShows);
-  }, [isMovieSelected]);
+  const switchItems = useMemo(
+    () => [
+      {
+        onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 0),
+        textColor: textColors.interpolate({
+          inputRange: [0, 1],
+          outputRange: [theme.colors.buttonText, theme.colors.text],
+        }),
+        onPress: () => onAniamateSwitch(0, items[0].onPress),
+        title: t(items[0].titlei18nRef),
+      },
+      {
+        onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 1),
+        textColor: textColors.interpolate({
+          inputRange: [0, 1],
+          outputRange: [theme.colors.text, theme.colors.buttonText],
+        }),
+        onPress: () => onAniamateSwitch(1, items[1].onPress),
+        title: t(items[1].titlei18nRef),
+      },
+    ],
+    [onSwitchItemLayout, switchItemWidth, textColors, theme, items],
+  );
 
-  const tvShowsButtonBackgroudColorOutputRange = useMemo(() => {
-    if (theme.id === ThemeId.DARK) {
-      return [theme.colors.primary, theme.colors.contrast];
-    }
-
-    return [theme.colors.primary, theme.colors.fallbackImageBackground];
-  }, [theme]);
-
-  const moviesButtonBackgroudColorOutputRange = useMemo(() => {
-    if (theme.id === ThemeId.DARK) {
-      return [theme.colors.contrast, theme.colors.primary];
-    }
-
-    return [theme.colors.fallbackImageBackground, theme.colors.primary];
-  }, [theme]);
+  const wrapperOpacity = useMemo(
+    () => (switchItemsWidths.length === switchItems.length ? 1 : 0),
+    [switchItemsWidths],
+  );
 
   return {
-    tvShowsButtonBackgroudColor: switchAnimatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: tvShowsButtonBackgroudColorOutputRange,
-    }),
-    tvShowsTextColor: switchAnimatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [theme.colors.buttonText, theme.colors.inactiveWhite],
-    }),
-    moviesButtonBackgroudColor: switchAnimatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: moviesButtonBackgroudColorOutputRange,
-    }),
-    moviesTextColor: switchAnimatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [theme.colors.inactiveWhite, theme.colors.buttonText],
-    }),
-    onPressTVShows,
-    onPressMovies,
-    t,
+    switchItemWidth,
+    wrapperOpacity,
+    isSwitching,
+    switchItems,
+    translateX,
   };
 };
 

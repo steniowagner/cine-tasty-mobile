@@ -13,8 +13,10 @@ import {
   UPCOMING_SECTION_TITLE_i18N_REF as MOVIES_UPCOMING_SECTION_TITLE_i18N_REF,
 } from './hooks/trendings/useTrendingMovies';
 
-import Home from './Home';
+import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
+import { I18N_MOVIES_KEY, I18N_TV_SHOWS_KEY } from './header/Header';
+import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
 
@@ -151,10 +153,10 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-tv-shows-button'));
+    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
 
     act(() => {
-      timeTravel(TRANSITIONING_DURATION);
+      timeTravel(TRANSITIONING_DURATION + SWITCH_ANIMATION_DURATION_MS);
     });
 
     act(() => {
@@ -201,7 +203,7 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId('media-switcher-movies-button'));
+    fireEvent.press(getByTestId(`${I18N_MOVIES_KEY}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION * 2);
