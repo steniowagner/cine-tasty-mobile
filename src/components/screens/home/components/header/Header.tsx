@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TouchableOpacity, Platform, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
 
 import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
@@ -7,7 +8,24 @@ import HeaderIconButton from 'components/common/HeaderIconButton';
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import CONSTANTS from 'utils/constants';
 
-import MediaSwitcher from '../media-switcher/MediaSwitcher';
+import MediaSwitcher from '../media-switcher/MediaSwitcher2';
+
+const I18N_TV_SHOWS_KEY = 'translations:home:tvShows';
+const I18N_MOVIES_KEY = 'translations:home:movies';
+
+const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
+  colors: [
+    theme.colors.background,
+    theme.colors.backgroundAlphax1,
+    theme.colors.backgroundAlphax2,
+    theme.colors.backgroundAlphax3,
+    theme.colors.backgroundAlphax4,
+    theme.colors.backgroundAlphax5,
+  ],
+}))`
+  width: 100%;
+  height: 15%;
+`;
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -47,30 +65,48 @@ const Header = ({
   onPressSwitchMovies,
   onPressSettings,
   onPressSearch,
-}: Props) => (
-  <Wrapper>
-    <SettingsButton
-      disabled={shouldDisableActions}
-      onPress={onPressSettings}
-      testID="header-icon-button-wrapper-settings"
-    >
-      <SVGIcon
-        id="settings"
-      />
-    </SettingsButton>
-    <MediaSwitcher
-      onSwitchToTVShows={onPresSwitchTVShows}
-      onSwitchToMovies={onPressSwitchMovies}
-      isDisabled={shouldDisableActions}
-    />
-    <HeaderIconButton
-      disabled={shouldDisableActions}
-      onPress={onPressSearch}
-      followThemeTextColor
-      iconName="magnify"
-      withMarginRight
-    />
-  </Wrapper>
-);
+}: Props) => {
+  const items = useMemo(
+    () => [
+      {
+        onPress: onPressSwitchMovies,
+        titlei18nRef: I18N_MOVIES_KEY,
+      },
+      {
+        onPress: onPresSwitchTVShows,
+        titlei18nRef: I18N_TV_SHOWS_KEY,
+      },
+    ],
+    [onPressSwitchMovies, onPresSwitchTVShows],
+  );
+
+  return (
+    <>
+      <Wrapper>
+        <SettingsButton
+          disabled={shouldDisableActions}
+          onPress={onPressSettings}
+          testID="header-icon-button-wrapper-settings"
+        >
+          <SVGIcon
+            id="settings"
+          />
+        </SettingsButton>
+        <MediaSwitcher
+          isDisabled={shouldDisableActions}
+          items={items}
+        />
+        <HeaderIconButton
+          disabled={shouldDisableActions}
+          onPress={onPressSearch}
+          followThemeTextColor
+          iconName="magnify"
+          withMarginRight
+        />
+      </Wrapper>
+      <SmokeShadow />
+    </>
+  );
+};
 
 export default Header;
