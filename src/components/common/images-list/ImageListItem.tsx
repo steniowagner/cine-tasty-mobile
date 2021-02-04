@@ -65,7 +65,6 @@ const ImageListItem = ({ onPress, isFirst, image }: Props) => {
     >
       <TMDBImage
         imageType="backdrop"
-        resizeMode="cover"
         onError={onError}
         onLoad={onLoad}
         image={image}

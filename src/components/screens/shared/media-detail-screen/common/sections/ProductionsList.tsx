@@ -53,7 +53,6 @@ const ProductionsList = ({ productionsList }: Props) => (
         {productionItem.logoPath ? (
           <TMDBImage
             image={productionItem.logoPath || ''}
-            resizeMode="contain"
             imageType="profile"
             style={{
               width: metrics.getWidthFromDP('24%'),
