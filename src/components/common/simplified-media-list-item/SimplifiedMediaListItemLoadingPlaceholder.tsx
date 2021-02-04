@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import styled, { DefaultTheme, withTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import metrics from 'styles/metrics';
 
@@ -33,14 +33,12 @@ const Wrapper = styled(View)<WrapperStyleProps>`
 
 type Props = {
   indexToDelayAnimation: number;
-  theme: DefaultTheme;
   isFirst: boolean;
 };
 
 const SimplifiedMediaListItemLoadingPlaceholder = ({
   indexToDelayAnimation,
   isFirst,
-  theme,
 }: Props) => (
   <Wrapper
     isFirst={isFirst}
@@ -52,7 +50,6 @@ const SimplifiedMediaListItemLoadingPlaceholder = ({
         borderRadius: metrics.getWidthFromDP(MEDIA_IMAGE_DEFAULT_BORDER_RADIUS),
         marginBottom: metrics.getWidthFromDP(MEDIA_IMAGE_DEFAULT_MARGIN_BOTTOM),
       }}
-      colors={theme.colors.loadingColors}
       indexToDelayAnimation={indexToDelayAnimation}
     />
     <LoadingPlaceholder
@@ -61,7 +58,6 @@ const SimplifiedMediaListItemLoadingPlaceholder = ({
         height: metrics.mediumSize,
         borderRadius: metrics.height,
       }}
-      colors={theme.colors.loadingColors}
       indexToDelayAnimation={indexToDelayAnimation}
     />
     <LoadingPlaceholder
@@ -71,10 +67,9 @@ const SimplifiedMediaListItemLoadingPlaceholder = ({
         marginTop: metrics.smallSize,
         borderRadius: metrics.height,
       }}
-      colors={theme.colors.loadingColors}
       indexToDelayAnimation={indexToDelayAnimation}
     />
   </Wrapper>
 );
 
-export default withTheme(SimplifiedMediaListItemLoadingPlaceholder);
+export default SimplifiedMediaListItemLoadingPlaceholder;

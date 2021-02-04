@@ -2,14 +2,14 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'styles/theme';
+import { dark as theme } from 'styles/themes/dark';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import { SWITCH_ANIMATION_DURATION_MS } from './useMediaSwitcher';
 import MediaSwitcher from './MediaSwitcher';
 
-const INACTIVE_TEXT_RGBA = 'rgba(255, 255, 255, 1)';
-const ACTIVE_TEXT_RGBA = 'rgba(38, 38, 38, 1)';
+const ACTIVE_TEXT_RGBA = theme.colors.buttonText;
+const INACTIVE_TEXT_RGBA = theme.colors.text;
 
 const NUMBER_SWITCH_ITEMS = 2;
 const switchTitlesI18NRefs = Array(NUMBER_SWITCH_ITEMS)

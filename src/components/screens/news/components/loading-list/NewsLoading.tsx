@@ -17,7 +17,11 @@ const NewsLoading = () => (
     style={{
       flex: 1,
     }}
-    renderItem={() => <NewsListLoadingPlaceholderItem />}
+    renderItem={({ index }) => (
+      <NewsListLoadingPlaceholderItem
+        index={index}
+      />
+    )}
     keyExtractor={(item) => item}
     testID="news-loading-list"
     data={newsLoadingItems}

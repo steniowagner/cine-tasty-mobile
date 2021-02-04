@@ -1,6 +1,5 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { withTheme, DefaultTheme } from 'styled-components';
 
 import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
 
@@ -15,15 +14,11 @@ import {
   ITEM_WIDTH,
 } from './commonStyles';
 
-type Props = {
-  theme: DefaultTheme;
-};
-
 const loadingItems = Array(3)
   .fill(0)
   .map((_item, index) => index);
 
-const LoadingTop3 = ({ theme }: Props) => (
+const LoadingTop3 = () => (
   <ListWrapper
     testID="loading-home"
   >
@@ -33,7 +28,6 @@ const LoadingTop3 = ({ theme }: Props) => (
       renderItem={({ index }) => (
         <>
           <LoadingPlaceholder
-            colors={theme.colors.loadingColors}
             indexToDelayAnimation={index}
             style={{
               marginHorizontal: index === 1 ? ITEM_MARGING_HORIZONTAL : 0,
@@ -64,4 +58,4 @@ const LoadingTop3 = ({ theme }: Props) => (
   </ListWrapper>
 );
 
-export default withTheme(LoadingTop3);
+export default LoadingTop3;

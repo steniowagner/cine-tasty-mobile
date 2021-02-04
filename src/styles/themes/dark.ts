@@ -20,7 +20,7 @@ export const dark: DefaultTheme = {
     subText: 'rgba(255, 255, 255, 0.5)',
     androidToolbar: '#222',
     inactiveWhite: '#AAAAAA',
-    loadingColors: ['#353535', '#4f4f4f'],
+    loadingColor: '#4A4A4A',
     darkLayer: 'rgba(0, 0, 0, 0.4)',
     popup: 'rgba(0, 0, 0, 0.9)',
     fallbackImageBackground: '#cfcfcf',

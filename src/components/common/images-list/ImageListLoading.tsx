@@ -1,44 +1,39 @@
 import React from 'react';
 import { View } from 'react-native';
-import styled, { DefaultTheme, withTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
+import metrics from 'styles/metrics';
 
 const ListWrapper = styled(View)`
   flex-direction: row;
 `;
 
-type Props = {
-  theme: DefaultTheme;
-};
-
 const items = Array(3)
   .fill(0)
   .map((item, index) => `${item + index}`);
 
-const ImageListLoading = ({ theme }: Props) => (
+const ImageListLoading = () => (
   <>
     <LoadingPlaceholder
-      colors={theme.colors.loadingColors}
       indexToDelayAnimation={7}
       style={{
         marginVertical: 20,
-        width: theme.metrics.getWidthFromDP('30%'),
-        borderRadius: theme.metrics.height,
-        height: theme.metrics.largeSize,
+        width: metrics.getWidthFromDP('30%'),
+        borderRadius: metrics.height,
+        height: metrics.largeSize,
       }}
     />
     <ListWrapper>
       {items.map((item, index) => (
         <LoadingPlaceholder
-          colors={theme.colors.loadingColors}
           indexToDelayAnimation={8 + index}
           key={item}
           style={{
-            width: theme.metrics.getWidthFromDP('45%'),
-            height: theme.metrics.getWidthFromDP('32%'),
-            marginRight: theme.metrics.largeSize,
-            borderRadius: theme.metrics.extraSmallSize,
+            width: metrics.getWidthFromDP('45%'),
+            height: metrics.getWidthFromDP('32%'),
+            marginRight: metrics.largeSize,
+            borderRadius: metrics.extraSmallSize,
           }}
         />
       ))}
@@ -46,4 +41,4 @@ const ImageListLoading = ({ theme }: Props) => (
   </>
 );
 
-export default withTheme(ImageListLoading);
+export default ImageListLoading;

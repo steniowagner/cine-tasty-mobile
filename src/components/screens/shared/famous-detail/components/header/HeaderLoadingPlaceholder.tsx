@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import styled, { DefaultTheme, withTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
 import metrics from 'styles/metrics';
@@ -16,15 +16,10 @@ const TextLoadingWrapper = styled(View)`
   margin-left: ${({ theme }) => theme.metrics.mediumSize}px;
 `;
 
-type Props = {
-  theme: DefaultTheme;
-};
-
-const HeaderLoadingPlaceholder = ({ theme }: Props) => {
+const HeaderLoadingPlaceholder = () => {
   const TextLoadingPlaceholder = useCallback(
     (withMarginVertical: boolean = false) => (
       <LoadingPlaceholder
-        colors={theme.colors.loadingColors}
         style={{
           marginVertical: withMarginVertical
             ? metrics.getWidthFromDP(DEFAULT_MARGIN_VERTICAL_PERCENTAGE)
@@ -35,7 +30,7 @@ const HeaderLoadingPlaceholder = ({ theme }: Props) => {
         }}
       />
     ),
-    [theme],
+    [],
   );
 
   return (
@@ -51,4 +46,4 @@ const HeaderLoadingPlaceholder = ({ theme }: Props) => {
   );
 };
 
-export default withTheme(HeaderLoadingPlaceholder);
+export default HeaderLoadingPlaceholder;

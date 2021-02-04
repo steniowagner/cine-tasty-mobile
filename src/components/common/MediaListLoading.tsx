@@ -1,48 +1,43 @@
 import React from 'react';
 import { View } from 'react-native';
-import styled, { DefaultTheme, withTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
 import {
   WRAPPER_DEFAULT_WIDTH,
   WRAPPER_DEFAULT_HEIGHT,
 } from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
+import metrics from 'styles/metrics';
 
 const ListWrapper = styled(View)`
   flex-direction: row;
 `;
 
-type Props = {
-  theme: DefaultTheme;
-};
-
 const items = Array(3)
   .fill(0)
   .map((item, index) => `${item + index}`);
 
-const MediaListLoading = ({ theme }: Props) => (
+const MediaListLoading = () => (
   <>
     <LoadingPlaceholder
-      colors={theme.colors.loadingColors}
       indexToDelayAnimation={7}
       style={{
         marginVertical: 20,
-        width: theme.metrics.getWidthFromDP('30%'),
-        borderRadius: theme.metrics.height,
-        height: theme.metrics.largeSize,
+        width: metrics.getWidthFromDP('30%'),
+        borderRadius: metrics.height,
+        height: metrics.largeSize,
       }}
     />
     <ListWrapper>
       {items.map((item, index) => (
         <LoadingPlaceholder
-          colors={theme.colors.loadingColors}
           indexToDelayAnimation={8 + index}
           key={item}
           style={{
-            width: theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_WIDTH),
-            height: theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_HEIGHT),
-            marginRight: theme.metrics.largeSize,
-            borderRadius: theme.metrics.extraSmallSize,
+            width: metrics.getWidthFromDP(WRAPPER_DEFAULT_WIDTH),
+            height: metrics.getWidthFromDP(WRAPPER_DEFAULT_HEIGHT),
+            marginRight: metrics.largeSize,
+            borderRadius: metrics.extraSmallSize,
           }}
         />
       ))}
@@ -50,4 +45,4 @@ const MediaListLoading = ({ theme }: Props) => (
   </>
 );
 
-export default withTheme(MediaListLoading);
+export default MediaListLoading;
