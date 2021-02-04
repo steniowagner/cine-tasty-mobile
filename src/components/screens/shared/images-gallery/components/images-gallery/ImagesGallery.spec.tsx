@@ -41,7 +41,10 @@ const renderImagesGallery = () => (
 );
 
 describe('Testing <ImagesGallery />', () => {
-  beforeEach(setupTimeTravel);
+  beforeEach(() => {
+    setupTimeTravel();
+    jest.resetModules();
+  });
 
   afterEach(cleanup);
 
@@ -64,7 +67,7 @@ describe('Testing <ImagesGallery />', () => {
 
     expect(queryAllByTestId('placeholder-list-item').length).toEqual(IMAGES.length - 1);
 
-    expect(queryAllByTestId('images-gallery-list-item').length).toEqual(1);
+    expect(queryAllByTestId('images-gallery-list-item').length).toEqual(0);
 
     expect(queryAllByTestId('images-gallery-list-item-loading').length).toEqual(0);
   });

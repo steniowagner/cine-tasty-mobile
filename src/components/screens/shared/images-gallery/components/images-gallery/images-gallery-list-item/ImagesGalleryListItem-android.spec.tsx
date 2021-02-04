@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
-import ImagesGalleryListItem, { IMAGES_URI } from './ImagesGalleryListItem.ios';
+import ImagesGalleryListItem, { IMAGES_URI } from './ImagesGalleryListItem.android';
 
 const IMAGE_URL = 'SOME_IMAGE_URL';
 
@@ -27,7 +27,7 @@ describe('Testing <ImagesGalleryListItem />', () => {
 
   afterEach(cleanup);
 
-  it('should render correctly when the app is fetches the width and size of the image successfully', () => {
+  it('should render correctly when the app fetches the image size successfully', () => {
     const getSizeMock = jest.spyOn(Image, 'getSize');
 
     getSizeMock.mockImplementation(
@@ -49,7 +49,7 @@ describe('Testing <ImagesGalleryListItem />', () => {
     expect(getSizeMock.mock.calls[0][0]).toEqual(`${IMAGES_URI}${IMAGE_URL}`);
   });
 
-  it('should render correctly when the app is fetching the width and size of the image', () => {
+  it('should render correctly when the app is fetching the image size', () => {
     const getSizeMock = jest.spyOn(Image, 'getSize');
 
     getSizeMock.mockImplementation(
@@ -73,7 +73,7 @@ describe('Testing <ImagesGalleryListItem />', () => {
     expect(getSizeMock.mock.calls[0][0]).toEqual(`${IMAGES_URI}${IMAGE_URL}`);
   });
 
-  it('should render correctly when the app receive and error when try to fetch the width and size of the image', () => {
+  it('should render correctly when the app receive and error when try to fetch image size', () => {
     const getSizeMock = jest.spyOn(Image, 'getSize');
 
     getSizeMock.mockImplementation(

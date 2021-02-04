@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-underscore-dangle */
 import { IntrospectionFragmentMatcher, InMemoryCache } from 'apollo-cache-inmemory';
-import { SERVER_URL } from 'react-native-dotenv';
+import { SERVER_URL } from '@env';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
