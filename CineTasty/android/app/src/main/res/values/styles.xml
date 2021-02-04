@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+      <item name="android:statusBarColor">
+          @color/primary
+      </item>
+      <item name="android:windowBackground">@color/primary</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+      <item name="android:windowBackground">@drawable/background_splash</item>
+      <item name="android:statusBarColor">@color/primary</item>
+    </style>
+
+</resources>
