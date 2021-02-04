@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { View, Animated } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styled from 'styled-components';
 
 const Wrapper = styled(View)`
@@ -11,7 +11,7 @@ const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
 `;
 
-const HeartIcon = Animated.createAnimatedComponent(Icon);
+const HeartIcon = Animated.createAnimatedComponent(View);
 
 const HeartBeating = () => {
   const heartSize = useRef(new Animated.Value(20)).current;
@@ -53,8 +53,8 @@ const HeartBeating = () => {
       <HeartIcon
         name="heart"
         style={{
-          fontSize: heartSize,
-          color: '#EF010B',
+          // fontSize: heartSize,
+          backgroundColor: '#EF010B',
         }}
         size={heartSize}
       />

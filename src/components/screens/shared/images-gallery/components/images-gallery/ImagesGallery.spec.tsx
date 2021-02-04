@@ -41,11 +41,14 @@ const renderImagesGallery = () => (
 );
 
 describe('Testing <ImagesGallery />', () => {
-  beforeEach(setupTimeTravel);
+  beforeEach(() => {
+    setupTimeTravel();
+    jest.resetModules();
+  });
 
   afterEach(cleanup);
 
-  it.only('should render correctly on the first render', () => {
+  it('should render correctly on the first render', () => {
     const { getByTestId, queryAllByTestId, queryByText } = render(renderImagesGallery());
 
     expect(queryByText(`${INDEX_INITIAL_IMAGE + 1}/${IMAGES.length}`)).not.toBeNull();
@@ -64,9 +67,9 @@ describe('Testing <ImagesGallery />', () => {
 
     expect(queryAllByTestId('placeholder-list-item').length).toEqual(IMAGES.length - 1);
 
-    expect(queryAllByTestId('images-gallery-list-item-loading').length).toEqual(0);
     expect(queryAllByTestId('images-gallery-list-item').length).toEqual(0);
 
+    expect(queryAllByTestId('images-gallery-list-item-loading').length).toEqual(0);
   });
 
   it('should update the index-marker when the user swipe the list', () => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Image } from 'react-native';
 
 type ImageMode = 'NONE' | 'PORTRAIT' | 'LANDSCAPE';
@@ -26,7 +26,7 @@ const useImagesGalleryListItem = ({ imageURL }: Props): State => {
   const [dimensions, setDimensions] = useState<Dimensions>(null);
   const [imageMode, setImageMode] = useState<ImageMode>('NONE');
 
-  useEffect(() => {
+  const getImageSize = useCallback(() => {
     Image.getSize(
       imageURL,
       (width, height) => {
@@ -41,6 +41,10 @@ const useImagesGalleryListItem = ({ imageURL }: Props): State => {
         setImageStatus('ERROR');
       },
     );
+  }, [imageURL]);
+
+  useEffect(() => {
+    getImageSize();
   }, []);
 
   useEffect(() => {

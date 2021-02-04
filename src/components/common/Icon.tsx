@@ -1,5 +1,6 @@
 import React from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View } from 'react-native';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
   color?: string;
@@ -8,7 +9,7 @@ type Props = {
 };
 
 const Icon = ({ color, name, size }: Props) => (
-  <MaterialCommunityIcons
+  <View
     testID="icon"
     color={color}
     name={name}
