@@ -16,8 +16,8 @@ export type SwitchItem = {
 
 type EnhancedSwitchItem = {
   onLayout: (event: LayoutChangeEvent) => void;
-  textColor: Animated.AnimatedInterpolation;
   onPress: () => void;
+  textColor: string;
   title: string;
 };
 
@@ -37,36 +37,33 @@ type Props = {
 const useMediaSwitcher = ({ theme, items }: Props): State => {
   const [switchItemsWidths, setSwitchItemsWidth] = useState<number[]>([]);
   const [isSwitching, setIsSwitching] = useState<boolean>(false);
+  const [indexSelected, setIndexSelected] = useState<number>(0);
 
   const { t } = useTranslation();
 
   const translateX = useRef(new Animated.Value(0)).current;
-  const textColors = useRef(new Animated.Value(0)).current;
 
-  const onAniamateSwitch = useCallback((index: number, onFinishAnimation: () => void) => {
-    // @ts-ignore this only works if "userNativeDriver" is "true"
-    // eslint-disable-next-line no-underscore-dangle
-    if (textColors.__getValue() === index) {
-      return;
-    }
+  const onAniamateSwitch = useCallback(
+    (index: number, onFinishAnimation: () => void) => {
+      if (indexSelected === index) {
+        return;
+      }
 
-    setIsSwitching(true);
+      setIndexSelected(index);
 
-    Animated.parallel([
+      setIsSwitching(true);
+
       Animated.timing(translateX, {
         duration: SWITCH_ANIMATION_DURATION_MS,
         useNativeDriver: true,
         toValue: index,
-      }),
-      Animated.timing(textColors, {
-        duration: SWITCH_ANIMATION_DURATION_MS,
-        toValue: index,
-      }),
-    ]).start(() => {
-      setIsSwitching(false);
-      onFinishAnimation();
-    });
-  }, []);
+      }).start(() => {
+        setIsSwitching(false);
+        onFinishAnimation();
+      });
+    },
+    [indexSelected],
+  );
 
   const onSwitchItemLayout = useCallback(
     (event: LayoutChangeEvent, switchItemindex: number) => {
@@ -103,24 +100,18 @@ const useMediaSwitcher = ({ theme, items }: Props): State => {
     () => [
       {
         onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 0),
-        textColor: textColors.interpolate({
-          inputRange: [0, 1],
-          outputRange: [theme.colors.buttonText, theme.colors.text],
-        }),
+        textColor: indexSelected === 0 ? theme.colors.buttonText : theme.colors.text,
         onPress: () => onAniamateSwitch(0, items[0].onPress),
         title: t(items[0].titlei18nRef),
       },
       {
         onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 1),
-        textColor: textColors.interpolate({
-          inputRange: [0, 1],
-          outputRange: [theme.colors.text, theme.colors.buttonText],
-        }),
+        textColor: indexSelected === 1 ? theme.colors.buttonText : theme.colors.text,
         onPress: () => onAniamateSwitch(1, items[1].onPress),
         title: t(items[1].titlei18nRef),
       },
     ],
-    [onSwitchItemLayout, switchItemWidth, textColors, theme, items],
+    [onSwitchItemLayout, switchItemWidth, indexSelected, theme, items],
   );
 
   const wrapperOpacity = useMemo(

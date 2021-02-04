@@ -20,7 +20,7 @@ export const light: DefaultTheme = {
     subText: '#4d4d4d',
     androidToolbar: '#F2F2F2',
     inactiveWhite: '#AAAAAA',
-    loadingColors: ['#AAAAAA', '#CCCCCC'],
+    loadingColor: '#AAAAAA',
     darkLayer: 'rgba(0, 0, 0, 0.4)',
     popup: 'rgba(0, 0, 0, 0.9)',
     fallbackImageBackground: '#cfcfcf',

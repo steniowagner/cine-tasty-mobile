@@ -25,7 +25,7 @@ declare module 'styled-components' {
       backgroundAlphax4: string;
       backgroundAlphax5: string;
       fallbackImageIcon: string;
-      loadingColors: string[];
+      loadingColor: string;
       primary: string;
       popup: string;
       secondary: string;

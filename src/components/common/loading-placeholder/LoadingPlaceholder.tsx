@@ -7,7 +7,6 @@ import useLoadingPlaceholder from './useLoadingPlaceholder';
 type Props = {
   indexToDelayAnimation?: number;
   theme: DefaultTheme;
-  colors?: string[];
   testID?: string;
   style: object;
 };
@@ -18,15 +17,13 @@ const LoadingPlaceholder = ({
   style,
   theme,
 }: Props) => {
-  const { color } = useLoadingPlaceholder({
-    colors: theme.colors.loadingColors,
+  const { opacity } = useLoadingPlaceholder({
     indexToDelayAnimation,
   });
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return (
     <Animated.View
-      style={{ ...style, backgroundColor: color }}
+      style={{ ...style, backgroundColor: theme.colors.loadingColor, opacity }}
       testID={testID || 'loading-placeholder'}
     />
   );

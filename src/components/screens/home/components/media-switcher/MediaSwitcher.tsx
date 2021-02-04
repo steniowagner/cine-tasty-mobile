@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  TouchableOpacity, LayoutChangeEvent, Animated, View,
+  TouchableOpacity, LayoutChangeEvent, Animated, View, Text,
 } from 'react-native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
@@ -32,7 +32,7 @@ const SwitcherIndicator = styled(Animated.View)<DynamicWidthStyleProps>`
   position: absolute;
 `;
 
-const OptionText = styled(Animated.Text)`
+const OptionText = styled(Text)`
   padding-horizontal: ${({ theme }) => theme.metrics.extraLargeSize}px;
   padding-vertical: ${({ theme }) => theme.metrics.mediumSize}px;
   font-family: CircularStd-Black;
