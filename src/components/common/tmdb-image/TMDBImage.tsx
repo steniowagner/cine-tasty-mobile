@@ -1,7 +1,6 @@
 import React from 'react';
-import {
-  Animated, Image, StyleProp, ImageStyle, ImageResizeMode,
-} from 'react-native';
+import { Animated, StyleProp, ImageStyle } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import { ImageType } from 'types';
 
@@ -10,7 +9,6 @@ import useTMDBImage from './useTMDBImage';
 type Style = StyleProp<ImageStyle> | { opacity: Animated.Value };
 
 type Props = {
-  resizeMode?: ImageResizeMode;
   style: Style | Style[];
   imageType: ImageType;
   isThumbnail?: boolean;
@@ -26,7 +24,6 @@ const TMDBImage = ({
   isThumbnail = false,
   isAnimated = false,
   blurRadius = 0,
-  resizeMode,
   imageType,
   onError,
   testID,
@@ -40,7 +37,7 @@ const TMDBImage = ({
     return (
       <Animated.Image
         blurRadius={blurRadius}
-        resizeMode={resizeMode}
+        resizeMode="cover"
         onError={onError}
         onLoad={onLoad}
         testID={testID}
@@ -53,16 +50,16 @@ const TMDBImage = ({
   }
 
   return (
-    <Image
+    <FastImage
+      // @ts-ignore
       style={style as StyleProp<ImageStyle> | StyleProp<ImageStyle>[]}
-      blurRadius={blurRadius}
-      resizeMode={resizeMode}
-      onError={onError}
-      onLoad={onLoad}
-      testID={testID}
       source={{
         uri,
       }}
+      resizeMode={FastImage.resizeMode.cover}
+      onError={onError}
+      onLoad={onLoad}
+      testID={testID}
     />
   );
 };

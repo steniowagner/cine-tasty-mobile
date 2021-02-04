@@ -56,7 +56,6 @@ const ProgressiveImage = ({ borderRadius = 0, imageType, image }: Props) => {
         <TMDBImage
           onLoad={onLoadThumbnail}
           imageType={imageType}
-          resizeMode="cover"
           blurRadius={1}
           image={image}
           isThumbnail
@@ -73,7 +72,6 @@ const ProgressiveImage = ({ borderRadius = 0, imageType, image }: Props) => {
       <TMDBImage
         onLoad={onLoadImage}
         imageType={imageType}
-        resizeMode="cover"
         image={image}
         isAnimated
         style={[

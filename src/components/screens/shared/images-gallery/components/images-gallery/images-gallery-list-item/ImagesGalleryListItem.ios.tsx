@@ -103,7 +103,6 @@ const ImagesGalleryListItem = ({ imageURL }: Props) => {
                 transform: [{ scale: pinchScale }],
               },
             ]}
-            resizeMode="contain"
           />
         </PinchGestureHandler>
       </Wrapper>
