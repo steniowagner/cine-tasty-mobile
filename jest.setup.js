@@ -13,6 +13,12 @@ jest.mock('react-i18next', () => ({
   getI18n: () => ({ language: 'en' }),
 }));
 
+jest.mock('react-native-fast-image', () => {
+  const { View } = require('react-native');
+
+  return View;
+});
+
 jest.mock('react-native-reanimated', () => {
   const { View } = require('react-native');
   return {
