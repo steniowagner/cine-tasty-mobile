@@ -16,7 +16,20 @@ jest.mock('react-i18next', () => ({
 jest.mock('react-native-fast-image', () => {
   const { View } = require('react-native');
 
-  return View;
+  const FastImageComponent = View;
+
+  FastImageComponent.displayName = 'FastImage';
+
+  const FastImage = FastImageComponent;
+
+  FastImage.resizeMode = {
+    contain: 'contain',
+    cover: 'cover',
+    stretch: 'stretch',
+    center: 'center',
+  };
+
+  return FastImage;
 });
 
 jest.mock('react-native-reanimated', () => {
