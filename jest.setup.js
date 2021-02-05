@@ -13,6 +13,25 @@ jest.mock('react-i18next', () => ({
   getI18n: () => ({ language: 'en' }),
 }));
 
+jest.mock('react-native-fast-image', () => {
+  const { View } = require('react-native');
+
+  const FastImageComponent = View;
+
+  FastImageComponent.displayName = 'FastImage';
+
+  const FastImage = FastImageComponent;
+
+  FastImage.resizeMode = {
+    contain: 'contain',
+    cover: 'cover',
+    stretch: 'stretch',
+    center: 'center',
+  };
+
+  return FastImage;
+});
+
 jest.mock('react-native-reanimated', () => {
   const { View } = require('react-native');
   return {

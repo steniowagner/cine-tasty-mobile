@@ -7,8 +7,6 @@ import theme from 'styles/theme';
 
 import NewsListItemImage from './NewsListItemImage';
 
-jest.useFakeTimers();
-
 const renderNewsListItemImage = (imageURL = 'image') => (
   <ThemeProvider theme={theme}>
     <NewsListItemImage image={imageURL} />
