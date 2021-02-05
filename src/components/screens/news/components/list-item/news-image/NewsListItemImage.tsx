@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Animated, Image, View } from 'react-native';
+import { Animated, View } from 'react-native';
 import styled from 'styled-components';
+import FastImage from 'react-native-fast-image';
 
 import Icon from 'components/common/Icon';
 
 import { imageWrapper } from '../common-styles';
 
-const ImageContent = styled(Image)`
+const ImageContent = styled(FastImage)`
   width: ${imageWrapper.width}px;
   height: ${imageWrapper.height}px;
   border-radius: ${imageWrapper.borderRadius}px;
