@@ -8,6 +8,8 @@ target 'CineTasty' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
+
   target 'CineTastyTests' do
     inherit! :complete
     # Pods for testing

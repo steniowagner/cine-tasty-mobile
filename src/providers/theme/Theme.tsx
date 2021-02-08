@@ -7,7 +7,9 @@ import useTheme from './useTheme';
 
 type ThemeContextProps = {
   handleInitialThemeSelection: () => Promise<void>;
-  onToggleTheme: () => void;
+  onSetLightTheme: () => void;
+  onSetSystemTheme: () => void;
+  onSetDarkTheme: () => void;
   themeId: ThemeId;
 };
 
@@ -16,7 +18,13 @@ type Props = {
 };
 
 const ThemeContextProvider = ({ children }: Props) => {
-  const { handleInitialThemeSelection, onToggleTheme, theme } = useTheme();
+  const {
+    handleInitialThemeSelection,
+    onSetSystemTheme,
+    onSetLightTheme,
+    onSetDarkTheme,
+    theme,
+  } = useTheme();
 
   useEffect(() => {
     handleInitialThemeSelection();
@@ -26,8 +34,10 @@ const ThemeContextProvider = ({ children }: Props) => {
     <ThemeContext.Provider
       value={{
         handleInitialThemeSelection,
+        onSetSystemTheme,
         themeId: theme.id,
-        onToggleTheme,
+        onSetLightTheme,
+        onSetDarkTheme,
       }}
     >
       <ThemeProvider
@@ -43,7 +53,9 @@ export { ThemeContextProvider };
 
 const ThemeContext = createContext<ThemeContextProps>({
   handleInitialThemeSelection: () => new Promise((resolve) => resolve()),
-  onToggleTheme: () => {},
+  onSetSystemTheme: () => {},
+  onSetLightTheme: () => {},
+  onSetDarkTheme: () => {},
   themeId: null,
 });
 

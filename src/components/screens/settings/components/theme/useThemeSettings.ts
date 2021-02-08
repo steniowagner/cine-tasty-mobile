@@ -1,11 +1,9 @@
-import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useCallback } from 'react';
 
 import { useThemeProvider } from 'providers/theme/Theme';
 import { ThemeId } from 'types';
 
-export const LIGHT_I18N_REF = 'translations:theme:light';
-export const DARK_I18N_REF = 'translations:theme:dark';
+import useGetThemeOptions from './useGetThemeOptions';
 
 type ThemeOption = {
   onPress: () => void;
@@ -19,15 +17,19 @@ type State = {
 };
 
 const useThemeSettingsOption = (): State => {
-  const { themeId, onToggleTheme } = useThemeProvider();
-  const { t } = useTranslation();
+  const {
+    onSetSystemTheme,
+    onSetLightTheme,
+    onSetDarkTheme,
+    themeId,
+  } = useThemeProvider();
 
   const onPressDarkOption = useCallback(() => {
     if (themeId === ThemeId.DARK) {
       return;
     }
 
-    onToggleTheme();
+    onSetDarkTheme();
   }, [themeId]);
 
   const onPressLightOption = useCallback(() => {
@@ -35,24 +37,22 @@ const useThemeSettingsOption = (): State => {
       return;
     }
 
-    onToggleTheme();
+    onSetLightTheme();
   }, [themeId]);
 
-  const themeOptions = useMemo(
-    () => [
-      {
-        id: ThemeId.DARK,
-        onPress: onPressDarkOption,
-        title: t(DARK_I18N_REF),
-      },
-      {
-        id: ThemeId.LIGHT,
-        onPress: onPressLightOption,
-        title: t(LIGHT_I18N_REF),
-      },
-    ],
-    [onPressLightOption, onPressDarkOption, onToggleTheme],
-  );
+  const onPressSystemPreferencesOption = useCallback(() => {
+    if (themeId === ThemeId.SYSTEM) {
+      return;
+    }
+
+    onSetSystemTheme();
+  }, [themeId]);
+
+  const { themeOptions } = useGetThemeOptions({
+    onPressSystemPreferencesOption,
+    onPressLightOption,
+    onPressDarkOption,
+  });
 
   return {
     selectedTheme: themeId,

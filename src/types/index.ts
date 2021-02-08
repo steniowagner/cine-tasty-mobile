@@ -152,4 +152,5 @@ export type ImageSize = 'w45' | 'w92' | 'w154' | 'w185' | 'w300' | 'w342' | 'h63
 export enum ThemeId {
   DARK = 'DARK',
   LIGHT = 'LIGHT',
+  SYSTEM = 'SYSTEM',
 }

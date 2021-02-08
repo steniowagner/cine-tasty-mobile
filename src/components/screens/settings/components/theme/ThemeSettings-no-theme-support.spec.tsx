@@ -14,7 +14,7 @@ const {
 import { ThemeContextProvider } from 'providers';
 
 import { UNMARKED_OPTION_ICON, MARKED_OPTION_ICON } from '../OptionSetting';
-import { DARK_I18N_REF, LIGHT_I18N_REF } from './useThemeSettings';
+import { DARK_I18N_REF, LIGHT_I18N_REF } from './useGetThemeOptions';
 import ThemeSettings from './ThemeSettings';
 
 const renderThemeSettings = () => (
@@ -23,7 +23,7 @@ const renderThemeSettings = () => (
   </ThemeContextProvider>
 );
 
-describe('Testing <ThemeSettings />', () => {
+describe('Testing <ThemeSettings /> - [No theme support]', () => {
   beforeEach(() => {
     jest.resetModules();
     jest.resetAllMocks();
@@ -105,9 +105,9 @@ describe('Testing <ThemeSettings />', () => {
 
     expect(getAllByTestId('icon')[1].props.name).toEqual(UNMARKED_OPTION_ICON);
 
-    expect(persistItemInStorage).toHaveBeenCalledTimes(2);
+    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
 
-    expect(persistItemInStorage).nthCalledWith(2, CONSTANTS.KEYS.APP_THEME, ThemeId.DARK);
+    expect(persistItemInStorage).nthCalledWith(1, CONSTANTS.KEYS.APP_THEME, ThemeId.DARK);
   });
 
   it('should change theme to light when the user select the dark-theme-option and the dark-theme is currently selected', () => {
@@ -133,10 +133,10 @@ describe('Testing <ThemeSettings />', () => {
 
     expect(getAllByTestId('icon')[1].props.name).toEqual(MARKED_OPTION_ICON);
 
-    expect(persistItemInStorage).toHaveBeenCalledTimes(2);
+    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
 
     expect(persistItemInStorage).nthCalledWith(
-      2,
+      1,
       CONSTANTS.KEYS.APP_THEME,
       ThemeId.LIGHT,
     );
@@ -156,8 +156,6 @@ describe('Testing <ThemeSettings />', () => {
     act(() => {
       jest.runAllTimers();
     });
-
-    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
   });
 
   it('should not change the theme when the current theme is light and the user press on the light-option', () => {
@@ -174,7 +172,5 @@ describe('Testing <ThemeSettings />', () => {
     act(() => {
       jest.runAllTimers();
     });
-
-    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
   });
 });

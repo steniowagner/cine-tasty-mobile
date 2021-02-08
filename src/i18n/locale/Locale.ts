@@ -232,5 +232,6 @@ export interface Locale {
   theme: {
     dark: string;
     light: string;
+    system: string;
   };
 }
