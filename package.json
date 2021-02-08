@@ -19,7 +19,8 @@
     "clear": "kill $(lsof -t -i:8081); yarn clear:ios; yarn clear:android; yarn clear:cache",
     "schema:download": "npx apollo client:download-schema --endpoint=http://localhost:3000",
     "schema:generate": "npx apollo client:codegen src/types/schema.ts --localSchemaFile=schema.json --includes=src/**/*.ts,src/**/*.tsx --addTypename --target=typescript --outputFlat",
-    "generate:types": "yarn schema:download && yarn schema:generate"
+    "generate:types": "yarn schema:download && yarn schema:generate",
+    "postinstall": "jetify -r"
   },
   "husky": {
     "hooks": {
@@ -53,6 +54,7 @@
     "react": "16.13.1",
     "react-i18next": "^11.3.3",
     "react-native": "0.63.4",
+    "react-native-appearance": "^0.3.4",
     "react-native-dotenv": "^2.5.1",
     "react-native-fast-image": "^8.3.4",
     "react-native-gesture-handler": "^1.6.0",
@@ -97,6 +99,7 @@
     "graphql-tools": "^4.0.7",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
+    "jetifier": "^1.6.6",
     "lint-staged": "^10.0.8",
     "metro-react-native-babel-preset": "^0.59.0",
     "mockdate": "^2.0.5",

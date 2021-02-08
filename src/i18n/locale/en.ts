@@ -5,6 +5,7 @@ const en: Locale = {
   theme: {
     dark: 'Dark',
     light: 'Light',
+    system: 'Follow System Preferences',
   },
   about:
     "Hey!\n\nI'm Full-Stack Software Engineer that loves apply his knowledge to solve problems, create amazing products and impact lives!",

@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { DefaultTheme, withTheme } from 'styled-components';
+import { AppearanceProvider } from 'react-native-appearance';
 
 import { useStatusBarStyle } from 'hooks';
 
@@ -29,7 +30,7 @@ const Routes = ({ theme }: Props) => {
   }, [isSplashScreenLoaded]);
 
   return (
-    <>
+    <AppearanceProvider>
       <StatusBar
         backgroundColor={theme.colors.secondary}
         barStyle={barStyle}
@@ -50,7 +51,7 @@ const Routes = ({ theme }: Props) => {
       >
         {renderContent()}
       </NavigationContainer>
-    </>
+    </AppearanceProvider>
   );
 };
 
