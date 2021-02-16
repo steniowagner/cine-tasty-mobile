@@ -1,5 +1,4 @@
 import React from 'react';
-import { YellowBox } from 'react-native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { withTheme, DefaultTheme } from 'styled-components';
 import { RouteProp } from '@react-navigation/native';
@@ -18,8 +17,6 @@ import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/con
 import { SearchStackParams } from './route-params-types';
 import Search from '../components/search/Search';
 import LOCAL_ROUTES from './route-names';
-
-YellowBox.ignoreWarnings(['Non-serializable values were found in the navigation state']);
 
 const Stack = createStackNavigator();
 
