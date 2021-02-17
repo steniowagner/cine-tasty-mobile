@@ -32,8 +32,8 @@ export const ListWrapper = styled(View)`
   width: 100%;
   height: ${ITEM_HEIGHT + ITEM_MARGING_TOP}px;
   margin-top: ${({ theme }) => Platform.select({
-    android: theme.metrics.getWidthFromDP('20%'),
-    ios: theme.metrics.getWidthFromDP('25%'),
+    android: theme.metrics.getWidthFromDP('22%'),
+    ios: theme.metrics.getWidthFromDP('30%'),
   })}px;
 `;
 

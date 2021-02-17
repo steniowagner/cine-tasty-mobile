@@ -31,19 +31,19 @@ const useClassifyDeviceScreen = (): State => {
   }, []);
 
   const androidScreenClassification = useMemo((): DeviceScreenClassification => {
-    if (width >= 960 && height >= 720) {
+    if (height >= 960 && width >= 720) {
       return 'xlarge';
     }
 
-    if (width >= 640 && height >= 480) {
+    if (height >= 640 && width >= 480) {
       return 'large';
     }
 
-    if (width >= 470 && height >= 320) {
+    if (height >= 470 && width >= 320) {
       return 'medium';
     }
 
-    if (width >= 426 && height >= 320) {
+    if (height >= 426 && width >= 320) {
       return 'small';
     }
 
