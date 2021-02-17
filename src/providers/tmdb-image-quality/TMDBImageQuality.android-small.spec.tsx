@@ -18,7 +18,7 @@ jest.mock('react-native', () => {
       select: ({ android }) => android,
     },
     Dimensions: {
-      get: jest.fn().mockReturnValue({ width: 426, height: 320 }),
+      get: jest.fn().mockReturnValue({ width: 320, height: 426 }),
     },
     PixelRatio: {
       roundToNearestPixel: () => 1,
