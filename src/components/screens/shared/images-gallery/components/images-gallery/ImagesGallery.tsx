@@ -1,31 +1,21 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
 import { ImagesGalleryParams } from 'components/screens/shared/images-gallery/routes/route-params-types';
 import HeaderIconButton from 'components/common/HeaderIconButton';
-import metrics from 'styles/metrics';
 
 // @ts-ignore
 // eslint-disable-next-line import/extensions
-import ImagesGalleryListItem from './images-gallery-list-item/ImagesGalleryListItem';
+import ImagesGalleryList from './images-gallery-list/ImagesGalleryList';
+import ThumbsGalleryList from './thumbs-gallery-list/ThumbsGalleryList';
 import useImageGallery from './useImagesGallery';
 
-const PlaceholderListItem = styled(View)`
-  width: ${({ theme }) => theme.metrics.width}px;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CustomActivityIndicator = styled(ActivityIndicator).attrs(({ theme }) => ({
-  color: theme.colors.text,
-  size: 'large',
-}))`
-  align-self: center;
+const Wrapper = styled(View)`
+  flex: 1;
 `;
 
 type ImagesGalleryNavigationProp = StackNavigationProp<
@@ -44,7 +34,8 @@ const ImagesGallery = ({ navigation, route }: Props) => {
   const {
     isIndexesAllowedToRenderImage,
     onFlatlistMomentumScrollEnd,
-    indexSelectedImage,
+    onPressBottomListItem,
+    indexImageSelected,
   } = useImageGallery({
     indexFirstItemSelected: route.params.indexSelected,
     gallerySize: route.params.gallerySize,
@@ -52,9 +43,9 @@ const ImagesGallery = ({ navigation, route }: Props) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: `${indexSelectedImage + 1}/${route.params.gallerySize}`,
+      title: `${indexImageSelected + 1}/${route.params.gallerySize}`,
     });
-  }, [indexSelectedImage]);
+  }, [indexImageSelected]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -70,42 +61,19 @@ const ImagesGallery = ({ navigation, route }: Props) => {
   }, []);
 
   return (
-    <FlatList
-      onMomentumScrollEnd={onFlatlistMomentumScrollEnd}
-      contentContainerStyle={{
-        justifyContent: 'center',
-      }}
-      renderItem={({ item, index }) => {
-        if (isIndexesAllowedToRenderImage[index]) {
-          return (
-            <ImagesGalleryListItem
-              imageURL={item}
-            />
-          );
-        }
-
-        return (
-          <PlaceholderListItem
-            testID="placeholder-list-item"
-          >
-            <CustomActivityIndicator />
-          </PlaceholderListItem>
-        );
-      }}
-      initialScrollIndex={route.params.indexSelected}
-      showsHorizontalScrollIndicator={false}
-      getItemLayout={(data, index) => ({
-        offset: metrics.width * index,
-        length: metrics.width,
-        index,
-      })}
-      keyExtractor={(item) => item}
-      data={route.params.images}
-      testID="images-list"
-      bounces={false}
-      pagingEnabled
-      horizontal
-    />
+    <Wrapper>
+      <ImagesGalleryList
+        isIndexesAllowedToRenderImage={isIndexesAllowedToRenderImage}
+        onFlatlistMomentumScrollEnd={onFlatlistMomentumScrollEnd}
+        indexImageSelected={indexImageSelected}
+        images={route.params.images}
+      />
+      <ThumbsGalleryList
+        onPressBottomListItem={onPressBottomListItem}
+        indexImageSelected={indexImageSelected}
+        thumbs={route.params.images}
+      />
+    </Wrapper>
   );
 };
 
