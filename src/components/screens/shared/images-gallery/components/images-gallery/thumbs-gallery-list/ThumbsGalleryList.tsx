@@ -26,9 +26,11 @@ const ThumbsGalleryList = ({
         - THUMB_SIZE / 2
         - metrics.extraLargeSize
       > metrics.width / 2;
+
     const middleScreenOffset = indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
       + metrics.extraLargeSize
       - (metrics.width / 2 - THUMB_SIZE / 2);
+
     const offset = isThumbBeyondHalfScreen ? middleScreenOffset : 0;
 
     bottomListRef.current.scrollToOffset({

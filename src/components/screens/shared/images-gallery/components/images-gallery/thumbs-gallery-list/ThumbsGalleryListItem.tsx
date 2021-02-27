@@ -30,6 +30,7 @@ const ThumbListItem = ({ isSelected, onPress, image }: Props) => (
   <Wrapper
     isSelected={isSelected}
     onPress={onPress}
+    testID="thumb-list-item"
   >
     <TMDBImage
       imageType="profile"
