@@ -5,8 +5,9 @@ import metrics from 'styles/metrics';
 
 type State = {
   onFlatlistMomentumScrollEnd: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  onPressBottomListItem: (index: number) => void;
   isIndexesAllowedToRenderImage: boolean[];
-  indexSelectedImage: number;
+  indexImageSelected: number;
 };
 
 type Props = {
@@ -18,7 +19,7 @@ const useImageGallery = ({ indexFirstItemSelected, gallerySize }: Props): State 
   const initialIndexesAllowedToRenderImage = useMemo(
     (): boolean[] => Array(gallerySize)
       .fill(false)
-      .map((value, index) => index === indexFirstItemSelected),
+      .map((_, index) => index === indexFirstItemSelected),
     [],
   );
 
@@ -26,7 +27,7 @@ const useImageGallery = ({ indexFirstItemSelected, gallerySize }: Props): State 
     boolean[]
   >(initialIndexesAllowedToRenderImage);
 
-  const [indexSelectedImage, setIndexSelectedImage] = useState<number>(
+  const [indexImageSelected, setIndexImageSelected] = useState<number>(
     indexFirstItemSelected,
   );
 
@@ -61,15 +62,22 @@ const useImageGallery = ({ indexFirstItemSelected, gallerySize }: Props): State 
 
       permitImageAtIndexToRender(currentPageIndex);
 
-      setIndexSelectedImage(currentPageIndex);
+      setIndexImageSelected(currentPageIndex);
     },
     [],
   );
 
+  const onPressBottomListItem = useCallback((indexSelected: number) => {
+    permitImageAtIndexToRender(indexSelected);
+
+    setIndexImageSelected(indexSelected);
+  }, []);
+
   return {
     isIndexesAllowedToRenderImage,
     onFlatlistMomentumScrollEnd,
-    indexSelectedImage,
+    onPressBottomListItem,
+    indexImageSelected,
   };
 };
 

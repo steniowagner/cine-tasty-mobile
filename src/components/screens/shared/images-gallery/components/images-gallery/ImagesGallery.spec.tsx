@@ -72,8 +72,8 @@ describe('Testing <ImagesGallery />', () => {
     expect(queryAllByTestId('images-gallery-list-item-loading').length).toEqual(0);
   });
 
-  it('should update the index-marker when the user swipe the list', () => {
-    const { getByTestId, queryAllByTestId, queryByText } = render(renderImagesGallery());
+  it('should update the index-marker when the user swipe the images-list', () => {
+    const { getByTestId, queryByText } = render(renderImagesGallery());
 
     const eventData = {
       nativeEvent: {
@@ -96,6 +96,32 @@ describe('Testing <ImagesGallery />', () => {
     });
 
     expect(queryByText(`${INDEX_INITIAL_IMAGE + 2}/${IMAGES.length}`)).not.toBeNull();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+  });
+
+  it('should update the index-marker when the user swipe the thumb-list', () => {
+    const { getAllByTestId, queryByText } = render(renderImagesGallery());
+
+    const indexThumbSelected = (Math.random() * (IMAGES.length - 1 - 0 + 1)) << 0;
+
+    expect(queryByText(`${INDEX_INITIAL_IMAGE + 1}/${IMAGES.length}`)).not.toBeNull();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    const thumbSelected = getAllByTestId('thumb-list-item')[indexThumbSelected];
+
+    fireEvent.press(thumbSelected);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(queryByText(`${indexThumbSelected + 1}/${IMAGES.length}`)).not.toBeNull();
 
     act(() => {
       jest.runAllTimers();
