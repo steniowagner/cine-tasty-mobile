@@ -3,15 +3,13 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import { Icons } from 'components/common/svg-icon/icons';
+import metrics from 'styles/metrics';
 
 interface WrapperStyleProps {
   readonly withMarginRight?: boolean;
   readonly withMarginLeft?: boolean;
-}
-
-interface HeaderIconStyleProps {
-  readonly followThemeTextColor?: boolean;
 }
 
 const Wrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
@@ -29,22 +27,15 @@ const Wrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
   align-items: center;
 `;
 
-const HeaderIcon = styled(Icon).attrs(({ followThemeTextColor, theme }) => ({
-  size: theme.metrics.getWidthFromDP('7%'),
-  color: followThemeTextColor ? theme.colors.text : 'white',
-}))<HeaderIconStyleProps>``;
-
 type Props = {
-  followThemeTextColor?: boolean;
   withMarginRight?: boolean;
   withMarginLeft?: boolean;
   onPress: () => void;
   disabled?: boolean;
-  iconName: string;
+  iconName: Icons;
 };
 
 const HeaderIconButton = ({
-  followThemeTextColor,
   withMarginRight,
   withMarginLeft,
   disabled,
@@ -58,9 +49,9 @@ const HeaderIconButton = ({
     disabled={disabled}
     onPress={onPress}
   >
-    <HeaderIcon
-      followThemeTextColor={followThemeTextColor}
-      name={iconName}
+    <SVGIcon
+      size={metrics.getWidthFromDP('7%')}
+      id={iconName}
     />
   </Wrapper>
 );
