@@ -37,7 +37,6 @@ describe('Testing <SearchBar />', () => {
 
     expect(getByTestId('searchbar-wrapper')).not.toBeNull();
     expect(getByTestId('header-icon-button-wrapper-close')).not.toBeNull();
-    expect(getByTestId('icon').props.name).toEqual('close');
     expect(getByTestId('search-input').props.placeholder).toEqual(placeholder);
   });
 

@@ -4,8 +4,9 @@ import styled from 'styled-components';
 
 import { SupportedIcons } from 'components/common/svg-icon/getXML';
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
+
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('10%');
 
 interface SelectedItemStyleProps {
   readonly isSelected: boolean;
@@ -38,15 +39,9 @@ const OutterFlagWrapper = styled(View)<SelectedItemStyleProps>`
 `;
 
 const InnerFlagWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
+  width: ${DEFAULT_ICON_SIZE}px;
+  height: ${DEFAULT_ICON_SIZE}px;
 `;
-
-const CheckIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('10%'),
-  name: 'checkbox-marked-circle',
-  color: theme.colors.primary,
-}))``;
 
 const ContentWrapper = styled(View)`
   flex-direction: row;
@@ -74,6 +69,7 @@ const LanguageListItem = ({
       >
         <InnerFlagWrapper>
           <SVGIcon
+            size={DEFAULT_ICON_SIZE}
             id={flag}
           />
         </InnerFlagWrapper>
@@ -84,7 +80,13 @@ const LanguageListItem = ({
         {name}
       </LanguageText>
     </ContentWrapper>
-    {isSelected && <CheckIcon />}
+    {isSelected && (
+      <SVGIcon
+        size={DEFAULT_ICON_SIZE}
+        colorThemeRef="primary"
+        id="checkbox-circle"
+      />
+    )}
   </Wrapper>
 );
 

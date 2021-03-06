@@ -28,11 +28,9 @@ describe('Testing <MultiChoiceQuestion />', () => {
       mockedAnswers.length,
     );
 
-    expect(
-      getAllByTestId('icon').every(
-        icon => icon.props.name === 'checkbox-blank-circle-outline',
-      ),
-    ).toBe(true);
+    expect(getAllByTestId('icon-checkbox-blank-circle-outline').length).toEqual(
+      mockedAnswers.length,
+    );
   });
 
   it('it shoud change the style of them selected item from non-selected-style to selected-style', () => {
@@ -49,12 +47,14 @@ describe('Testing <MultiChoiceQuestion />', () => {
     });
 
     expect(
-      getAllByTestId('icon')
+      getAllByTestId(/icon/)
         .filter((_, index) => index !== INDEX_OPTION_SELECTED)
-        .every(icon => icon.props.name === 'checkbox-blank-circle-outline'),
+        .every(icon => icon.props.testID === 'icon-checkbox-blank-circle-outline'),
     ).toEqual(true);
 
-    expect(getAllByTestId('icon')[INDEX_OPTION_SELECTED].props.name).toBe('check-circle');
+    expect(getAllByTestId(/icon/)[INDEX_OPTION_SELECTED].props.testID).toBe(
+      'icon-checkbox-circle',
+    );
   });
 
   it('it should change the selected item after every item selection', () => {
@@ -67,12 +67,12 @@ describe('Testing <MultiChoiceQuestion />', () => {
         jest.runAllTimers();
       });
 
-      expect(getAllByTestId('icon')[i].props.name).toBe('check-circle');
+      expect(getAllByTestId(/icon/)[i].props.testID).toBe('icon-checkbox-circle');
 
       expect(
-        getAllByTestId('icon')
+        getAllByTestId(/icon/)
           .filter((_, index) => index !== i)
-          .every(icon => icon.props.name === 'checkbox-blank-circle-outline'),
+          .every(icon => icon.props.testID === 'icon-checkbox-blank-circle-outline'),
       ).toEqual(true);
     }
   });

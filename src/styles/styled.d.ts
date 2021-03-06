@@ -24,6 +24,9 @@ declare module 'styled-components' {
     inactiveWhite: string;
     darkLayer: string;
     inputBackground: string;
+    red: string;
+    green: string;
+    white: string;
   };
 
   export type Metrics = {

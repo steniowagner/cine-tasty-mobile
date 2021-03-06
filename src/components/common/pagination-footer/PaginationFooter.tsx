@@ -4,7 +4,9 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from '../Icon';
+import metrics from 'styles/metrics';
+
+import SVGIcon from '../svg-icon/SVGIcon';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -12,12 +14,6 @@ const Wrapper = styled(View)`
   justify-content: center;
   align-items: center;
 `;
-
-const LoadMoreIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('10%'),
-  color: theme.colors.text,
-  name: 'reload',
-}))``;
 
 const LoadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   hitSlop: {
@@ -56,7 +52,10 @@ const PaginationFooter = ({ onPressReloadButton, isPaginating, hasError }: Props
         testID="pagination-footer-reload-button"
         onPress={onPressReloadButton}
       >
-        <LoadMoreIcon />
+        <SVGIcon
+          size={metrics.getWidthFromDP('10%')}
+          id="restart"
+        />
       </LoadButton>
     )}
   </Wrapper>

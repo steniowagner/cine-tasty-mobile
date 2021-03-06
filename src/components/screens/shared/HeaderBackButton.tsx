@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Platform } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 const IconWrapper = styled(TouchableOpacity)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
@@ -14,18 +15,6 @@ const IconWrapper = styled(TouchableOpacity)`
   background-color: rgba(0, 0, 0, 0.8);
 `;
 
-const ArrowLeftIcon = styled(Icon).attrs(({ theme }) => ({
-  size: Platform.select({
-    android: theme.metrics.getWidthFromDP('6.5%'),
-    ios: theme.metrics.getWidthFromDP('9%'),
-  }),
-  color: 'white',
-  name: Platform.select({
-    android: 'arrow-left',
-    ios: 'chevron-left',
-  }),
-}))``;
-
 type Props = {
   onPress: () => void;
 };
@@ -34,7 +23,17 @@ const HeaderBackButton = ({ onPress }: Props) => (
   <IconWrapper
     onPress={onPress}
   >
-    <ArrowLeftIcon />
+    <SVGIcon
+      size={Platform.select({
+        android: metrics.getWidthFromDP('6.5%'),
+        ios: metrics.getWidthFromDP('9%'),
+      })}
+      id={Platform.select({
+        android: 'arrow-back',
+        ios: 'chevron-left',
+      })}
+      colorThemeRef="white"
+    />
   </IconWrapper>
 );
 

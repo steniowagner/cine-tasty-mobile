@@ -13,7 +13,6 @@ type OptionalAdviseProps = {
 const DEFAULT_DESCRIPTION = 'description';
 const DEFAULT_SUGGESTION = 'suggestion';
 const DEFAULT_TITLE = 'title';
-const DEFAULT_ICON = 'icon';
 
 const getParam = (
   optionalFields: OptionalAdviseProps,
@@ -33,7 +32,7 @@ const renderAdvise = (optionalAdviseProps: OptionalAdviseProps = {}) => (
       description={getParam(optionalAdviseProps, DEFAULT_DESCRIPTION, 'description')}
       suggestion={getParam(optionalAdviseProps, DEFAULT_SUGGESTION, 'suggestion')}
       title={getParam(optionalAdviseProps, DEFAULT_TITLE, 'title')}
-      icon={getParam(optionalAdviseProps, DEFAULT_ICON, 'icon')}
+      icon={'account'}
     />
   </ThemeProvider>
 );

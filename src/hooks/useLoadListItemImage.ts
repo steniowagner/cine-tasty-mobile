@@ -13,6 +13,8 @@ type State = {
   hasError: boolean;
 };
 
+export const ANIMATION_DURATION = 400;
+
 export const useLoadListItemImage = ({ image }: Props): State => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState<boolean>(true);
   const [hasError, setImageHasError] = useState<boolean>(false);
@@ -23,8 +25,8 @@ export const useLoadListItemImage = ({ image }: Props): State => {
   useEffect(() => {
     if (isLoaded && !hasError) {
       Animated.timing(fallbackImageWrapperOpacity, {
+        duration: ANIMATION_DURATION,
         useNativeDriver: true,
-        duration: 400,
         toValue: 0,
       }).start(() => setIsFallbackImageVisible(false));
     }

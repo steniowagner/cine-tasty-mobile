@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 const Wrapper = styled(TouchableOpacity)`
   width: 100%;
@@ -28,13 +29,6 @@ const SectionDescription = styled(Text)`
 const TextWrapper = styled(View)`
   width: 85%;
 `;
-
-const ArrowRightIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('8%'),
-  color: theme.colors.text,
-  name: 'arrow-right',
-}))``;
-
 export type Props = {
   onPress: () => void;
   description: string;
@@ -50,7 +44,10 @@ const SettingsSection = ({ description, onPress, title }: Props) => (
       <SectionTitle>{title}</SectionTitle>
       <SectionDescription>{description}</SectionDescription>
     </TextWrapper>
-    <ArrowRightIcon />
+    <SVGIcon
+      id="chevron-right"
+      size={metrics.getWidthFromDP('8%')}
+    />
   </Wrapper>
 );
 

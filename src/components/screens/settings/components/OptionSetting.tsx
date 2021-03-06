@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 const Wrapper = styled(TouchableOpacity)`
   flex-direction: row;
@@ -18,28 +19,34 @@ const OptionTitle = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-const OptionSelectionIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('7%'),
-  color: theme.colors.text,
-}))``;
-
 type Props = {
   onPress: () => void;
   isSelected: boolean;
   title: string;
 };
 
-export const UNMARKED_OPTION_ICON = 'radiobox-blank';
-export const MARKED_OPTION_ICON = 'radiobox-marked';
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('7%');
+
+const RadioBoxMarkedIcon = () => (
+  <SVGIcon
+    size={DEFAULT_ICON_SIZE}
+    id="radiobox-marked"
+  />
+);
+
+const RadioBoxUnmarkedIcon = () => (
+  <SVGIcon
+    size={DEFAULT_ICON_SIZE}
+    id="radiobox-blank"
+  />
+);
 
 const OptionSetting = ({ isSelected, onPress, title }: Props) => (
   <Wrapper
     onPress={onPress}
     testID="option-settings"
   >
-    <OptionSelectionIcon
-      name={isSelected ? MARKED_OPTION_ICON : UNMARKED_OPTION_ICON}
-    />
+    {isSelected ? <RadioBoxMarkedIcon /> : <RadioBoxUnmarkedIcon />}
     <OptionTitle
       testID="option-title"
     >

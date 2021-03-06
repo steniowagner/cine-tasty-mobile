@@ -28,7 +28,7 @@ describe('Testing <LangugeListItem />', () => {
   it('should render correctly when is selected', () => {
     const { getByTestId } = render(renderLanguageFilter(true));
 
-    expect(getByTestId('icon')).not.toBeNull();
+    expect(getByTestId('icon-checkbox-circle')).not.toBeNull();
 
     expect(getByTestId('outter-flag-wrapper').props.isSelected).toBe(true);
   });
@@ -36,7 +36,7 @@ describe('Testing <LangugeListItem />', () => {
   it('should render correctly when is not selected', () => {
     const { queryByTestId, getByTestId } = render(renderLanguageFilter(false));
 
-    expect(queryByTestId('icon')).toBeNull();
+    expect(queryByTestId('icon-checkbox-circle')).toBeNull();
 
     expect(getByTestId('outter-flag-wrapper').props.isSelected).toBe(false);
   });

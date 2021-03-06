@@ -3,7 +3,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 import useStarsVotes from './useStarsVotes';
 
@@ -14,30 +15,6 @@ interface VotesTextStyleProps {
 const Wrapper = styled(View)`
   flex-direction: row;
   align-items: center;
-`;
-
-const FullStarIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.extraLargeSize,
-  color: '#FFD700',
-  name: 'star',
-}))`
-  margin-right: ${({ theme }) => theme.metrics.extraSmallSize}px;
-`;
-
-const HalfStarIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.extraLargeSize,
-  color: '#FFD700',
-  name: 'star-half',
-}))`
-  margin-right: ${({ theme }) => theme.metrics.extraSmallSize}px;
-`;
-
-const EmptyStarIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.extraLargeSize,
-  color: '#FFD700',
-  name: 'star-outline',
-}))`
-  margin-right: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
 const VotesText = styled(Text)<VotesTextStyleProps>`
@@ -79,9 +56,15 @@ const StarsVotes = ({
           >
             {Array(numberFullStars)
               .fill({})
-              .map((fullStar, index) => (
-                <FullStarIcon
+              .map((_, index) => (
+                <SVGIcon
                   key={`${index}-full-star`}
+                  size={metrics.extraLargeSize}
+                  colorThemeRef="primary"
+                  id="star-full"
+                  style={{
+                    marginRight: metrics.extraSmallSize,
+                  }}
                 />
               ))}
           </Wrapper>
@@ -92,9 +75,15 @@ const StarsVotes = ({
           >
             {Array(numberHalfStars)
               .fill({})
-              .map((halfStar, index) => (
-                <HalfStarIcon
+              .map((_, index) => (
+                <SVGIcon
                   key={`${index}-half-star`}
+                  size={metrics.extraLargeSize}
+                  colorThemeRef="primary"
+                  id="star-half"
+                  style={{
+                    marginRight: metrics.extraSmallSize,
+                  }}
                 />
               ))}
           </Wrapper>
@@ -105,9 +94,15 @@ const StarsVotes = ({
           >
             {Array(numberEmptyStars)
               .fill({})
-              .map((emptyStar, index) => (
-                <EmptyStarIcon
+              .map((_, index) => (
+                <SVGIcon
                   key={`${index}-empty-star`}
+                  size={metrics.extraLargeSize}
+                  colorThemeRef="primary"
+                  id="star-empty"
+                  style={{
+                    marginRight: metrics.extraSmallSize,
+                  }}
                 />
               ))}
           </Wrapper>

@@ -4,9 +4,10 @@ import { PinchGestureHandler, gestureHandlerRootHOC } from 'react-native-gesture
 import styled from 'styled-components';
 
 import useTMDBImage from 'components/common/tmdb-image/useTMDBImage';
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import CONSTANTS from 'utils/constants';
 import { useImagePinch } from 'hooks';
+import metrics from 'styles/metrics';
 
 import useImagesGalleryListItem from './useImagesGalleryListItem';
 
@@ -29,11 +30,6 @@ const ImageOffWrapper = styled(View)`
   justify-content: center;
   align-items: center;
 `;
-
-const ImageOffIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('25%'),
-  color: 'white',
-}))``;
 
 type Props = {
   imageURL: string;
@@ -69,8 +65,10 @@ const ImagesGalleryListItem = ({ imageURL }: Props) => {
       <ImageOffWrapper
         testID="image-error-wrapper"
       >
-        <ImageOffIcon
-          name="image-off"
+        <SVGIcon
+          size={metrics.getWidthFromDP('25%')}
+          colorThemeRef="white"
+          id="image-off"
         />
       </ImageOffWrapper>
     );

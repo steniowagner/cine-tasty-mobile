@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 const InnerContentWrapper = styled(TouchableOpacity)`
   width: 100%;
@@ -20,12 +21,6 @@ const OptionText = styled(Text)`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-const ArrowDownIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('7%'),
-  color: theme.colors.text,
-  name: 'chevron-down-box',
-}))``;
-
 type Props = {
   selectedOption: string;
   onPress: () => void;
@@ -41,7 +36,10 @@ const DropdownOption = ({ selectedOption, onPress }: Props) => (
     >
       {selectedOption}
     </OptionText>
-    <ArrowDownIcon />
+    <SVGIcon
+      size={metrics.getWidthFromDP('7%')}
+      id="chevron-down-box"
+    />
   </InnerContentWrapper>
 );
 

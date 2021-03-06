@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components';
-import Icon from 'components/common/Icon';
+
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 interface ListItemWrapperStyleProps {
   readonly isSelected: boolean;
@@ -23,12 +25,6 @@ const ListItemText = styled(Text)`
   color: ${({ theme }) => theme.colors.buttonText};
 `;
 
-const CheckIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('8%'),
-  name: 'check-circle',
-  color: theme.colors.buttonText,
-}))``;
-
 type Props = {
   onPress: () => void;
   isSelected: boolean;
@@ -49,7 +45,13 @@ const OptionListItem = ({ isSelected, onPress, title }: Props) => (
     >
       {title}
     </ListItemText>
-    {isSelected && <CheckIcon />}
+    {isSelected && (
+      <SVGIcon
+        size={metrics.getWidthFromDP('8%')}
+        id="checkbox-circle"
+        colorThemeRef="buttonText"
+      />
+    )}
   </ListItemWrapper>
 );
 

@@ -52,7 +52,6 @@ const ImagesGallery = ({ navigation, route }: Props) => {
       headerLeft: () => (
         <HeaderIconButton
           onPress={() => navigation.goBack()}
-          followThemeTextColor
           iconName="close"
           withMarginLeft
         />

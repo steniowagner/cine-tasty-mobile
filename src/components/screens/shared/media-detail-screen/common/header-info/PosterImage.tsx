@@ -2,15 +2,10 @@ import React from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components';
 
+import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
-import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
-
-const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('14%'),
-  color: theme.colors.fallbackImageIcon,
-}))``;
 
 const FallbackImageWrapper = styled(Animated.View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('30%')}px;
@@ -22,6 +17,8 @@ const FallbackImageWrapper = styled(Animated.View)`
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
+
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type Props = {
   image: string;
@@ -60,9 +57,19 @@ const PosterImage = ({ image }: Props) => {
             },
           ]}
         >
-          <FallbackImageIcon
-            name={hasError ? 'image-off' : 'movie'}
-          />
+          {renderSVGIconConditionally({
+            condition: hasError,
+            ifTrue: {
+              colorThemeRef: 'fallbackImageIcon',
+              size: DEFAULT_ICON_SIZE,
+              id: 'image-off',
+            },
+            ifFalse: {
+              colorThemeRef: 'fallbackImageIcon',
+              size: DEFAULT_ICON_SIZE,
+              id: 'account',
+            },
+          })}
         </FallbackImageWrapper>
       )}
     </>

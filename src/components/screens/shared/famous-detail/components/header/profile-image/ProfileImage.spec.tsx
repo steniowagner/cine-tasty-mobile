@@ -4,8 +4,12 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import { ANIMATION_DURATION } from 'hooks/useLoadListItemImage';
 import theme from 'styles/theme';
 
+import timeTravel, {
+  setupTimeTravel,
+} from '../../../../../../../../__mocks__/timeTravel';
 import ProfileImage from './ProfileImage';
 
 const renderProfileImage = (profileImage = 'profileImage') => (
@@ -19,6 +23,7 @@ const renderProfileImage = (profileImage = 'profileImage') => (
 describe('Testing <ProfileImage />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    setupTimeTravel();
   });
 
   afterEach(cleanup);
@@ -30,11 +35,11 @@ describe('Testing <ProfileImage />', () => {
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 
-    expect(getByTestId('icon').props.name).toBe('account');
+    expect(getByTestId('icon-account')).not.toBeNull();
   });
 
   it('should render only the image after the image be loaded', () => {
-    const { getByTestId } = render(renderProfileImage());
+    const { queryByTestId, getByTestId } = render(renderProfileImage());
 
     act(() => {
       jest.runAllTimers();
@@ -42,36 +47,42 @@ describe('Testing <ProfileImage />', () => {
 
     fireEvent(getByTestId('profile-image'), 'onLoad');
 
+    act(() => {
+      timeTravel(ANIMATION_DURATION);
+    });
+
     expect(getByTestId('profile-image')).not.toBeNull();
 
-    try {
-      expect(getByTestId('fallback-image-wrapper'));
-    } catch (err) {
-      expect(err.message.includes('No instances found')).toBe(true);
-    }
-
-    try {
-      expect(getByTestId('icon'));
-    } catch (err) {
-      expect(err.message).toEqual('No instances found');
-    }
+    expect(queryByTestId('fallback-image-wrapper')).toBeNull();
   });
 
   it("should render the error layout when there's some error when try to load the image", () => {
     const { getByTestId } = render(renderProfileImage());
 
+    act(() => {
+      jest.runAllTimers();
+    });
+
     fireEvent(getByTestId('profile-image'), 'onError');
+
+    act(() => {
+      timeTravel(ANIMATION_DURATION);
+    });
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 
-    expect(getByTestId('icon').props.name).toBe('image-off');
+    expect(getByTestId('icon-image-off')).not.toBeNull();
   });
 
   it('should render the error layout when the image URL is null', () => {
     const { getByTestId } = render(renderProfileImage(null));
 
+    act(() => {
+      jest.runAllTimers();
+    });
+
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 
-    expect(getByTestId('icon').props.name).toBe('image-off');
+    expect(getByTestId('icon-image-off')).not.toBeNull();
   });
 });

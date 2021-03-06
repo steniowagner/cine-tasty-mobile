@@ -2,7 +2,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from '../Icon';
+import { SupportedIcons } from 'components/common/svg-icon/getXML';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -49,17 +51,11 @@ const Suggestion = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.text};
 `;
 
-const AdviseIcon = styled(Icon).attrs(({ theme, name }) => ({
-  size: theme.metrics.getWidthFromDP('20%'),
-  color: theme.colors.buttonText,
-  name,
-}))``;
-
 export type Props = {
+  icon: SupportedIcons;
   description: string;
   suggestion: string;
   title: string;
-  icon: string;
 };
 
 const Advise = ({
@@ -71,8 +67,10 @@ const Advise = ({
     <IconWrapper
       testID="icon-wrapper"
     >
-      <AdviseIcon
-        name={icon}
+      <SVGIcon
+        size={metrics.getWidthFromDP('20%')}
+        colorThemeRef="buttonText"
+        id={icon}
       />
     </IconWrapper>
     {!!title && <Title>{title}</Title>}

@@ -51,7 +51,6 @@ const Famous = ({ navigation }: Props) => {
             searchType: SearchType.PERSON,
             query: SEARCH_PERSON,
           })}
-          followThemeTextColor
           iconName="magnify"
           withMarginRight
         />

@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Modal, View } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -13,21 +14,15 @@ const Wrapper = styled(View)`
 `;
 
 const CloseButtonWrapper = styled(TouchableOpacity)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('13%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('13%')}px;
+  width: ${({ theme }) => theme.metrics.getWidthFromDP('16%')}px;
+  height: ${({ theme }) => theme.metrics.getWidthFromDP('16%')}px;
   justify-content: center;
   align-items: center;
   align-self: center;
   margin-top: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('6.5%')}px;
+  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('8%')}px;
   background-color: ${({ theme }) => theme.colors.primary};
 `;
-
-const CloseIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('8%'),
-  color: theme.colors.buttonText,
-  name: 'close',
-}))``;
 
 type Props = {
   onCloseModal: () => void;
@@ -50,7 +45,11 @@ const ModalDetail = ({ onCloseModal, children }: Props) => (
           testID="close-modal-button"
           onPress={onCloseModal}
         >
-          <CloseIcon />
+          <SVGIcon
+            size={metrics.getWidthFromDP('9%')}
+            colorThemeRef="buttonText"
+            id="close"
+          />
         </CloseButtonWrapper>
       </View>
     </Wrapper>

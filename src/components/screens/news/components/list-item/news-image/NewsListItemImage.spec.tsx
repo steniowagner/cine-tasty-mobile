@@ -5,7 +5,8 @@ import { ThemeProvider } from 'styled-components';
 
 import theme from 'styles/theme';
 
-import NewsListItemImage from './NewsListItemImage';
+import timeTravel, { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
+import NewsListItemImage, { ANIMATION_DURATION } from './NewsListItemImage';
 
 const renderNewsListItemImage = (imageURL = 'image') => (
   <ThemeProvider theme={theme}>
@@ -16,6 +17,7 @@ const renderNewsListItemImage = (imageURL = 'image') => (
 describe('Testing <NewsListItemImage />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    setupTimeTravel();
   });
 
   afterEach(cleanup);
@@ -27,11 +29,11 @@ describe('Testing <NewsListItemImage />', () => {
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 
-    expect(getByTestId('icon').props.name).toBe('image');
+    expect(getByTestId('icon-image')).not.toBeNull();
   });
 
   it('should render only the image after the image be loaded', () => {
-    const { getByTestId } = render(renderNewsListItemImage());
+    const { queryByTestId, getByTestId } = render(renderNewsListItemImage());
 
     act(() => {
       jest.runAllTimers();
@@ -39,19 +41,15 @@ describe('Testing <NewsListItemImage />', () => {
 
     fireEvent(getByTestId('news-image'), 'onLoad');
 
+    act(() => {
+      timeTravel(ANIMATION_DURATION);
+    });
+
     expect(getByTestId('news-image')).not.toBeNull();
 
-    try {
-      expect(getByTestId('fallback-image-wrapper'));
-    } catch (err) {
-      expect(err.message.includes('No instances found')).toBe(true);
-    }
+    expect(queryByTestId('fallback-image-wrapper')).toBeNull();
 
-    try {
-      expect(getByTestId('icon'));
-    } catch (err) {
-      expect(err.message).toEqual('No instances found');
-    }
+    expect(queryByTestId('icon-image')).toBeNull();
   });
 
   it("should render the error layout when there's some error when try to load the image", () => {
@@ -61,7 +59,7 @@ describe('Testing <NewsListItemImage />', () => {
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 
-    expect(getByTestId('icon').props.name).toBe('image-off');
+    expect(getByTestId('icon-image-off')).not.toBeNull();
   });
 
   it('should render the error layout when the image URL is null', () => {
@@ -69,6 +67,6 @@ describe('Testing <NewsListItemImage />', () => {
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 
-    expect(getByTestId('icon').props.name).toBe('image-off');
+    expect(getByTestId('icon-image-off')).not.toBeNull();
   });
 });

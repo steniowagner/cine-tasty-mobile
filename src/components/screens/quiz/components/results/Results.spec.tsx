@@ -5,7 +5,6 @@ import { cleanup, render, act } from '@testing-library/react-native';
 
 import theme from 'styles/theme';
 
-import { correctAnswerConfig, incorrectAnswerConfig } from './ResultListItem';
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { QuizStackParams } from '../../routes/route-params-types';
 import Results from './Results';
@@ -48,10 +47,12 @@ const renderResults = (mockedNavigation = navigation, mockedRoute = route) => (
   </ThemeProvider>
 );
 
-jest.useFakeTimers();
-
 describe('Testing <Results />', () => {
   afterEach(cleanup);
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
 
   it('it should render the results correctly', () => {
     const { getAllByTestId } = render(renderResults());
@@ -60,10 +61,10 @@ describe('Testing <Results />', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId('icon')[0].props.color).toEqual(incorrectAnswerConfig.color);
-    expect(getAllByTestId('icon')[0].props.name).toEqual(incorrectAnswerConfig.icon);
+    const icons = getAllByTestId(/icon/);
 
-    expect(getAllByTestId('icon')[1].props.color).toEqual(correctAnswerConfig.color);
-    expect(getAllByTestId('icon')[1].props.name).toEqual(correctAnswerConfig.icon);
+    expect(icons[0].props.testID).toEqual('icon-close-circle');
+
+    expect(icons[1].props.testID).toEqual('icon-checkbox-circle');
   });
 });

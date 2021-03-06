@@ -2,9 +2,9 @@ import React from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components';
 
+import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
-import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
 export const IMAGE_HEIGHT = metrics.getWidthFromDP('40%');
@@ -20,10 +20,7 @@ const FallbackMediaPosterImage = styled(Animated.View)`
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
-const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('12%'),
-  color: theme.colors.fallbackImageIcon,
-}))``;
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
 type Props = {
   image: string;
@@ -63,9 +60,19 @@ const MediaImage = ({ image }: Props) => {
             },
           ]}
         >
-          <FallbackImageIcon
-            name={hasError ? 'image-off' : 'movie'}
-          />
+          {renderSVGIconConditionally({
+            condition: hasError,
+            ifTrue: {
+              colorThemeRef: 'fallbackImageIcon',
+              size: DEFAULT_ICON_SIZE,
+              id: 'image-off',
+            },
+            ifFalse: {
+              colorThemeRef: 'fallbackImageIcon',
+              size: DEFAULT_ICON_SIZE,
+              id: 'video-vintage',
+            },
+          })}
         </FallbackMediaPosterImage>
       )}
     </>

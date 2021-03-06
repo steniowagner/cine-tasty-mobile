@@ -3,9 +3,9 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import CONSTANTS from 'utils/constants';
-
-import Icon from './Icon';
+import metrics from 'styles/metrics';
 
 export const Wrapper = styled(View)`
   width: 100%;
@@ -44,12 +44,6 @@ const ViewAllText = styled(Text)`
   color: #262626;
 `;
 
-const ChevronRightIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('7%'),
-  color: '#262626',
-  name: 'chevron-right',
-}))``;
-
 type Props = {
   onPressViewAll: () => void;
   withViewAll?: boolean;
@@ -78,7 +72,11 @@ const SectionViewAll = ({
           onPress={onPressViewAll}
         >
           <ViewAllText>{t('translations:home:viewAll')}</ViewAllText>
-          <ChevronRightIcon />
+          <SVGIcon
+            size={metrics.getWidthFromDP('7%')}
+            colorThemeRef="buttonText"
+            id="chevron-right"
+          />
         </ViewAllWrapper>
       )}
     </SectionTextContentWrapper>

@@ -60,7 +60,7 @@ describe('Testing <LanguageFilter />', () => {
 
     expect(getByTestId('languages-list').props.initialScrollIndex).toBe(INDEX_SELECTED);
 
-    expect(getByTestId('icon')).not.toBeNull();
+    expect(getByTestId('icon-checkbox-circle')).not.toBeNull();
   });
 
   it('should call "onSelectLanguage" when the "select-button" is pressed with a different language than the one received', () => {
