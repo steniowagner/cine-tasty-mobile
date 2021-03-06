@@ -29,6 +29,7 @@ const SectionDescription = styled(Text)`
 const TextWrapper = styled(View)`
   width: 85%;
 `;
+
 export type Props = {
   onPress: () => void;
   description: string;
