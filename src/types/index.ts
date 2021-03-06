@@ -3,7 +3,7 @@ import {
   ApolloQueryResult,
   FetchMoreOptions,
 } from 'apollo-client';
-
+import { SupportedIcons } from 'components/common/svg-icon/getXML';
 import {
   SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
   SearchPerson_search_items_BasePerson as SearchPersonResult,
@@ -39,7 +39,8 @@ export type LocalStackRoute<T> = {
 };
 
 export type TabNavigatorItem = {
-  icon: string;
+  inactiveIcon: SupportedIcons;
+  activeIcon: SupportedIcons;
   id: string;
 };
 

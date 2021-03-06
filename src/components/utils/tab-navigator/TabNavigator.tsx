@@ -77,8 +77,9 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
           onPress={() => navigation.navigate(state.routeNames[index])}
           title={t(`translations:tabs:${item.id.toLowerCase()}`)}
           isSelected={index === state.index}
+          inactiveIcon={item.inactiveIcon}
+          activeIcon={item.activeIcon}
           width={ITEM_WIDTH}
-          icon={item.icon}
           key={item.id}
         />
       ))}

@@ -2,9 +2,12 @@ import React, { useMemo, memo } from 'react';
 import { TouchableOpacity, Platform, Text } from 'react-native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
+import { SupportedIcons } from 'components/common/svg-icon/getXML';
 import metrics from 'styles/metrics';
 import { ThemeId } from 'types';
+
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
 interface WrapperButtonProps {
   readonly width: number;
@@ -29,19 +32,25 @@ const ItemText = styled(Text)<ItemTextProps>`
 `;
 
 type Props = {
+  inactiveIcon: SupportedIcons;
+  activeIcon: SupportedIcons;
   onPress: () => void;
   isSelected: boolean;
   theme: DefaultTheme;
   title: string;
   width: number;
-  icon: string;
 };
 
 const NavigatorItem = withTheme(
   ({
-    icon, isSelected, onPress, theme, width, title,
+    inactiveIcon, activeIcon, isSelected, onPress, theme, width, title,
   }: Props) => {
-    const color = useMemo(() => {
+    const selectedIconColor = useMemo(
+      () => (theme.id === ThemeId.DARK ? 'primary' : 'text'),
+      [theme],
+    );
+
+    const textColor = useMemo(() => {
       const selectedColor = theme.id === ThemeId.DARK ? theme.colors.primary : theme.colors.text;
 
       return isSelected ? selectedColor : theme.colors.inactiveWhite;
@@ -53,14 +62,22 @@ const NavigatorItem = withTheme(
         onPress={onPress}
         width={width}
       >
-        <Icon
-          size={metrics.getWidthFromDP('8%')}
-          color={color}
-          name={icon}
-        />
+        {renderSVGIconConditionally({
+          condition: isSelected,
+          ifTrue: {
+            colorThemeRef: selectedIconColor,
+            size: DEFAULT_ICON_SIZE,
+            id: activeIcon,
+          },
+          ifFalse: {
+            colorThemeRef: 'inactiveWhite',
+            size: DEFAULT_ICON_SIZE,
+            id: inactiveIcon,
+          },
+        })}
         <ItemText
           testID="item-title"
-          color={color}
+          color={textColor}
         >
           {title}
         </ItemText>
