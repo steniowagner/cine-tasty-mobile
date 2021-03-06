@@ -3,7 +3,8 @@ import { Animated, View } from 'react-native';
 import styled from 'styled-components';
 import FastImage from 'react-native-fast-image';
 
-import Icon from 'components/common/Icon';
+import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
+import metrics from 'styles/metrics';
 
 import { imageWrapper } from '../common-styles';
 
@@ -23,10 +24,8 @@ const FallbackImageWrapper = styled(Animated.View)`
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
-const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('14%'),
-  color: theme.colors.fallbackImageIcon,
-}))``;
+export const ANIMATION_DURATION = 400;
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
 type Props = {
   image: string;
@@ -42,8 +41,8 @@ const NewsListItemImage = ({ image }: Props) => {
   useEffect(() => {
     if (isImageLoaded && !isImageWithError) {
       Animated.timing(fallbackImageWrapperOpacity, {
+        duration: ANIMATION_DURATION,
         useNativeDriver: true,
-        duration: 400,
         toValue: 0,
       }).start(() => setIsFallbackImageVisible(false));
     }
@@ -72,9 +71,19 @@ const NewsListItemImage = ({ image }: Props) => {
             },
           ]}
         >
-          <FallbackImageIcon
-            name={isImageWithError ? 'image-off' : 'image'}
-          />
+          {renderSVGIconConditionally({
+            condition: isImageWithError,
+            ifTrue: {
+              colorThemeRef: 'fallbackImageIcon',
+              size: DEFAULT_ICON_SIZE,
+              id: 'image-off',
+            },
+            ifFalse: {
+              colorThemeRef: 'fallbackImageIcon',
+              size: DEFAULT_ICON_SIZE,
+              id: 'image',
+            },
+          })}
         </FallbackImageWrapper>
       )}
     </View>

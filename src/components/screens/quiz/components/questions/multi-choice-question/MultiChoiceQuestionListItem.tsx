@@ -1,7 +1,9 @@
 import React, { memo } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
-import Icon from 'components/common/Icon';
 import styled from 'styled-components';
+
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 interface SelectionStyleProps {
   readonly isSelected: boolean;
@@ -32,10 +34,21 @@ const QuestionsIndicatorText = styled(Text)<SelectionStyleProps>`
   text-align: center;
 `;
 
-const ItemIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('8%'),
-  color: theme.colors.buttonText,
-}))``;
+const CloseIcon = () => (
+  <SVGIcon
+    size={metrics.getWidthFromDP('8%')}
+    id="checkbox-circle"
+    colorThemeRef="buttonText"
+  />
+);
+
+const EmptyCheckbox = () => (
+  <SVGIcon
+    size={metrics.getWidthFromDP('8%')}
+    id="checkbox-blank-circle-outline"
+    colorThemeRef="buttonText"
+  />
+);
 
 type Props = {
   onSelectAnswer: (answer: string) => void;
@@ -50,9 +63,7 @@ const MultiChoiceListItem = ({ onSelectAnswer, isSelected, answer }: Props) => (
     isSelected={isSelected}
     key={answer}
   >
-    <ItemIcon
-      name={isSelected ? 'check-circle' : 'checkbox-blank-circle-outline'}
-    />
+    {isSelected ? <CloseIcon /> : <EmptyCheckbox />}
     <AnswerTextWrapper>
       <QuestionsIndicatorText
         isSelected={isSelected}

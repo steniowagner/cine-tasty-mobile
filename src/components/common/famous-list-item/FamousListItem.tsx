@@ -2,9 +2,9 @@ import React, { useMemo, memo } from 'react';
 import { TouchableOpacity, Animated, Text } from 'react-native';
 import styled from 'styled-components';
 
+import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
-import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
 import getWrapperMeasures from './getWrapperMeasures';
@@ -28,10 +28,7 @@ const FallbackImageWrapper = styled(Animated.View)`
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
-const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('14%'),
-  color: theme.colors.fallbackImageIcon,
-}))``;
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type Props = {
   numberOfColumns: number;
@@ -87,9 +84,19 @@ const FamousListItem = ({
               },
             ]}
           >
-            <FallbackImageIcon
-              name={hasError ? 'image-off' : 'account'}
-            />
+            {renderSVGIconConditionally({
+              condition: hasError,
+              ifTrue: {
+                colorThemeRef: 'fallbackImageIcon',
+                size: DEFAULT_ICON_SIZE,
+                id: 'image-off',
+              },
+              ifFalse: {
+                colorThemeRef: 'fallbackImageIcon',
+                size: DEFAULT_ICON_SIZE,
+                id: 'account',
+              },
+            })}
           </FallbackImageWrapper>
         )}
       </>

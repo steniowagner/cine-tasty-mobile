@@ -4,9 +4,10 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
+import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from 'components/common/tmdb-image/TMDBImage';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import { useLoadListItemImage } from 'hooks';
-import Icon from 'components/common/Icon';
 import { RecentSearchItem } from 'types';
 import metrics from 'styles/metrics';
 
@@ -36,16 +37,7 @@ const FallbackImageWrapper = styled(Animated.View)`
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
-const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('10%'),
-  color: theme.colors.fallbackImageIcon,
-}))``;
-
-const CloseIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.extraLargeSize,
-  color: theme.colors.text,
-  name: 'close',
-}))``;
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('10%');
 
 const ItemText = styled(Text).attrs({
   numberOfLines: 2,
@@ -113,9 +105,19 @@ const RecentSearchesListItem = ({ onPressRemove, onPressItem, item }: Props) => 
                 },
               ]}
             >
-              <FallbackImageIcon
-                name={hasError ? 'image-off' : 'account'}
-              />
+              {renderSVGIconConditionally({
+                condition: hasError,
+                ifTrue: {
+                  colorThemeRef: 'fallbackImageIcon',
+                  size: DEFAULT_ICON_SIZE,
+                  id: 'image-off',
+                },
+                ifFalse: {
+                  colorThemeRef: 'fallbackImageIcon',
+                  size: DEFAULT_ICON_SIZE,
+                  id: 'account',
+                },
+              })}
             </FallbackImageWrapper>
           )}
         </>
@@ -125,7 +127,10 @@ const RecentSearchesListItem = ({ onPressRemove, onPressItem, item }: Props) => 
         testID="recent-searches-list-item-close-button"
         onPress={onPressRemove}
       >
-        <CloseIcon />
+        <SVGIcon
+          size={metrics.extraLargeSize}
+          id="close"
+        />
       </CloseButtonWrapper>
     </Wrapper>
   );

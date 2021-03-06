@@ -3,8 +3,9 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
 
 import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 import useTVShowSeasonsListItem from './useTVShowSeasonsListItem';
 import EpisodeDetail from './episode-detail/EpisodeDetail';
@@ -48,12 +49,6 @@ const Row = styled(View)`
   align-items: center;
 `;
 
-const ChevronRightIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('10%'),
-  color: theme.colors.primary,
-  name: 'chevron-right',
-}))``;
-
 type Props = {
   episode: Episode;
   index: number;
@@ -82,7 +77,11 @@ const TVShowSeasonsListItem = ({ episode, index }: Props) => {
             {episode.name}
           </EpisodeNameText>
         </Row>
-        <ChevronRightIcon />
+        <SVGIcon
+          size={metrics.getWidthFromDP('10%')}
+          colorThemeRef="primary"
+          id="chevron-right"
+        />
       </ListItemWrapper>
       {isModalOpen && (
         <ModalDetail

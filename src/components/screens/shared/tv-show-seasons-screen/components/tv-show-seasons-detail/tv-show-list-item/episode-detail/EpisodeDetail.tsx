@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import TMDBImage from 'components/common/tmdb-image/TMDBImage';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import { formatDate } from 'utils/formatters';
-import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
@@ -52,12 +52,6 @@ const EpisodeAiredText = styled(Text)`
   color: rgba(0, 0, 0, 0.5);
 `;
 
-const ImageOffIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('12%'),
-  color: theme.colors.buttonText,
-  name: 'image-off',
-}))``;
-
 type Props = {
   episode: Episode;
 };
@@ -65,9 +59,9 @@ type Props = {
 const EpisodeDetail = ({ episode }: Props) => {
   const { t } = useTranslation();
 
-  return (
-    <Wrapper>
-      {episode.stillPath ? (
+  const renderImage = useCallback(() => {
+    if (episode.stillPath) {
+      return (
         <TMDBImage
           image={episode.stillPath}
           testID="episode-image"
@@ -79,13 +73,25 @@ const EpisodeDetail = ({ episode }: Props) => {
             borderTopRightRadius: metrics.extraSmallSize,
           }}
         />
-      ) : (
-        <EpisodeImageFallback
-          testID="episode-image-fallback"
-        >
-          <ImageOffIcon />
-        </EpisodeImageFallback>
-      )}
+      );
+    }
+
+    return (
+      <EpisodeImageFallback
+        testID="episode-image-fallback"
+      >
+        <SVGIcon
+          size={metrics.getWidthFromDP('12%')}
+          colorThemeRef="buttonText"
+          id="image-off"
+        />
+      </EpisodeImageFallback>
+    );
+  }, [episode]);
+
+  return (
+    <Wrapper>
+      {renderImage()}
       <ScrollView
         style={{ padding: CONSTANTS.VALUES.DEFAULT_SPACING }}
       >

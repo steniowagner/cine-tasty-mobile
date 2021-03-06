@@ -2,9 +2,9 @@ import React from 'react';
 import { TouchableOpacity, Animated } from 'react-native';
 import styled from 'styled-components';
 
+import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from 'hooks';
-import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
@@ -36,10 +36,7 @@ const FallbackImageWrapper = styled(Animated.View)`
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
-const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('14%'),
-  color: theme.colors.fallbackImageIcon,
-}))``;
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
 type Props = {
   onPress: () => void;
@@ -83,9 +80,19 @@ const ImageListItem = ({ onPress, isFirst, image }: Props) => {
             },
           ]}
         >
-          <FallbackImageIcon
-            name={hasError ? 'image-off' : 'image'}
-          />
+          {renderSVGIconConditionally({
+            condition: hasError,
+            ifTrue: {
+              colorThemeRef: 'fallbackImageIcon',
+              size: DEFAULT_ICON_SIZE,
+              id: 'image-off',
+            },
+            ifFalse: {
+              colorThemeRef: 'fallbackImageIcon',
+              size: DEFAULT_ICON_SIZE,
+              id: 'image',
+            },
+          })}
         </FallbackImageWrapper>
       )}
     </Wrapper>

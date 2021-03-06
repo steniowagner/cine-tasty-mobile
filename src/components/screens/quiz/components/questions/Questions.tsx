@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import LoadingIndicator from 'components/common/LoadingIndicator';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import Advise from 'components/common/advise/Advise';
 import { QuestionType } from 'types/schema';
-import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
 import ListItemWrapper from './list-item-wrapper-question/ListItemWrapperQuestion';
@@ -26,12 +26,6 @@ export const NO_QUESTIONS_ERROR_TITLE_I18N_REF = 'translations:quiz:noQuestionsA
 export const NO_CONNECTION_ERROR_DESCRIPTION_I18N_REF = 'translations:errors:network:description';
 export const NO_CONNECTION_ERROR_SUGGGESTION_I18N_REF = 'translations:errors:network:suggestion';
 export const NO_CONNECTION_ERROR_TITLE_I18N_REF = 'translations:errors:network:title';
-
-const RestartQuizIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('7%'),
-  color: theme.colors.text,
-  name: 'rotate-left',
-}))``;
 
 const RestartQuizButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   hitSlop: {
@@ -91,7 +85,10 @@ const Questions = ({ navigation, route }: Props) => {
         onPress={onRestartQuiz}
         testID="retart-quiz-button"
       >
-        <RestartQuizIcon />
+        <SVGIcon
+          size={metrics.getWidthFromDP('8%')}
+          id="restart"
+        />
       </RestartQuizButton>
       ),
     });

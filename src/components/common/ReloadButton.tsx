@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 
-import Icon from './Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import metrics from 'styles/metrics';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -10,12 +11,6 @@ const Wrapper = styled(View)`
   align-items: center;
   margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize}px;
 `;
-
-const LoadMoreIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('10%'),
-  color: theme.colors.text,
-  name: 'reload',
-}))``;
 
 const LoadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   hitSlop: {
@@ -35,7 +30,10 @@ const ReloadButton = ({ onPress }: Props) => (
     <LoadButton
       onPress={onPress}
     >
-      <LoadMoreIcon />
+      <SVGIcon
+        size={metrics.getWidthFromDP('10%')}
+        id="restart"
+      />
     </LoadButton>
   </Wrapper>
 );

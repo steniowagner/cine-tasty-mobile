@@ -27,6 +27,9 @@ export const light: DefaultTheme = {
     fallbackImageIcon: '#4d4d4d',
     buttonText: '#262626',
     inputBackground: '#CCCCCC',
+    red: '#D5233B',
+    green: '#32BE70',
+    white: '#FFFFFF',
   },
   metrics,
 };

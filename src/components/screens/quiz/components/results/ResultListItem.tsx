@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import metrics from 'styles/metrics';
 import { QuizResult } from 'types';
 
@@ -60,12 +60,7 @@ type Props = {
   result: QuizResult;
 };
 
-export const incorrectAnswerConfig = { color: '#D5233B', icon: 'close-circle' };
-export const correctAnswerConfig = { color: '#32BE70', icon: 'check-circle' };
-
 const ResultListItem = ({ result }: Props) => {
-  const { color, icon } = result.isCorrect ? correctAnswerConfig : incorrectAnswerConfig;
-
   const { t } = useTranslation();
 
   return (
@@ -82,10 +77,10 @@ const ResultListItem = ({ result }: Props) => {
       }}
     >
       <IconWrapper>
-        <Icon
+        <SVGIcon
+          id={result.isCorrect ? 'checkbox-circle' : 'close-circle'}
+          colorThemeRef={result.isCorrect ? 'green' : 'red'}
           size={metrics.getWidthFromDP('14%')}
-          color={color}
-          name={icon}
         />
       </IconWrapper>
       <TextContentWrapper>

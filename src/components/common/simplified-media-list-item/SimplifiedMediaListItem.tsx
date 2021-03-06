@@ -4,9 +4,10 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
+import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from 'components/common/tmdb-image/TMDBImage';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import { useLoadListItemImage } from 'hooks';
-import Icon from 'components/common/Icon';
 import metrics from 'styles/metrics';
 
 export const MEDIA_IMAGE_DEFAULT_BORDER_RADIUS = '2%';
@@ -63,15 +64,7 @@ const FallbackImageWrapper = styled(Animated.View)`
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
-const StarIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('6%'),
-  color: '#FFD700',
-}))``;
-
-const FallbackImageIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('14%'),
-  color: theme.colors.fallbackImageIcon,
-}))``;
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type Props = {
   onPress: () => void;
@@ -128,16 +121,28 @@ const SimplifiedMediaListItem = ({
               },
             ]}
           >
-            <FallbackImageIcon
-              name={hasError ? 'image-off' : 'video-vintage'}
-            />
+            {renderSVGIconConditionally({
+              condition: hasError,
+              ifTrue: {
+                colorThemeRef: 'fallbackImageIcon',
+                size: DEFAULT_ICON_SIZE,
+                id: 'image-off',
+              },
+              ifFalse: {
+                colorThemeRef: 'fallbackImageIcon',
+                size: DEFAULT_ICON_SIZE,
+                id: 'video-vintage',
+              },
+            })}
           </FallbackImageWrapper>
         )}
       </>
       <DefaultText>{title}</DefaultText>
       <StarsContentWrapper>
-        <StarIcon
-          name="star"
+        <SVGIcon
+          id="star-full"
+          size={metrics.getWidthFromDP('6%')}
+          colorThemeRef="primary"
         />
         <DefaultText
           withMarginLeft

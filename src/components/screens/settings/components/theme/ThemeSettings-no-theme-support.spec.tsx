@@ -13,7 +13,6 @@ const {
 
 import { ThemeContextProvider } from 'providers';
 
-import { UNMARKED_OPTION_ICON, MARKED_OPTION_ICON } from '../OptionSetting';
 import { DARK_I18N_REF, LIGHT_I18N_REF } from './useGetThemeOptions';
 import ThemeSettings from './ThemeSettings';
 
@@ -55,9 +54,9 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId('icon')[0].props.name).toEqual(MARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-marked');
 
-    expect(getAllByTestId('icon')[1].props.name).toEqual(UNMARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-blank');
 
     act(() => {
       jest.runAllTimers();
@@ -73,9 +72,9 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId('icon')[0].props.name).toEqual(UNMARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-blank');
 
-    expect(getAllByTestId('icon')[1].props.name).toEqual(MARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-marked');
 
     act(() => {
       jest.runAllTimers();
@@ -91,9 +90,9 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId('icon')[0].props.name).toEqual(UNMARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-blank');
 
-    expect(getAllByTestId('icon')[1].props.name).toEqual(MARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-marked');
 
     fireEvent.press(getAllByTestId('option-settings')[0]);
 
@@ -101,9 +100,9 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId('icon')[0].props.name).toEqual(MARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-marked');
 
-    expect(getAllByTestId('icon')[1].props.name).toEqual(UNMARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-blank');
 
     expect(persistItemInStorage).toHaveBeenCalledTimes(1);
 
@@ -119,9 +118,9 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId('icon')[0].props.name).toEqual(MARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-marked');
 
-    expect(getAllByTestId('icon')[1].props.name).toEqual(UNMARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-blank');
 
     fireEvent.press(getAllByTestId('option-settings')[1]);
 
@@ -129,9 +128,9 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId('icon')[0].props.name).toEqual(UNMARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-blank');
 
-    expect(getAllByTestId('icon')[1].props.name).toEqual(MARKED_OPTION_ICON);
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-marked');
 
     expect(persistItemInStorage).toHaveBeenCalledTimes(1);
 

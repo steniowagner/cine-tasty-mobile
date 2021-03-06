@@ -5,11 +5,11 @@ import {
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import Icon from 'components/common/Icon';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import metrics from 'styles/metrics';
 
 import socialNetworks from './socialNetworks';
-import HeartBeating from './HeartBeating';
+// import HeartBeating from './HeartBeating';
 
 interface SocialNetworkButtonStyleProps {
   readonly isMiddle: boolean;
@@ -95,6 +95,8 @@ const SoftwareEngineerWrapper = styled(View)`
   height: 35px;
 `;
 
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
+
 const About = () => {
   const { t } = useTranslation();
 
@@ -118,7 +120,7 @@ const About = () => {
           <SoftwareEngineerText>
             {t('translations:softwareEngineer')}
           </SoftwareEngineerText>
-          <HeartBeating />
+          {/* <HeartBeating /> */}
         </SoftwareEngineerWrapper>
         <AboutText>{t('translations:about')}</AboutText>
         <SocialNetworkButtonsWrapper>
@@ -129,10 +131,10 @@ const About = () => {
               key={socialNetwork.url}
               isMiddle={index === 1}
             >
-              <Icon
-                color="#fff"
-                name={socialNetwork.icon}
-                size={metrics.getWidthFromDP('8%')}
+              <SVGIcon
+                size={DEFAULT_ICON_SIZE}
+                colorThemeRef="white"
+                id={socialNetwork.icon}
               />
             </SocialNetworkButton>
           ))}

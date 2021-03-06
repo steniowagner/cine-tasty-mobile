@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import { formatDate } from 'utils/formatters';
-import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('35%')}px;
@@ -34,11 +35,6 @@ const DateText = styled(Text)`
   color: ${({ theme }) => theme.colors.buttonText};
 `;
 
-const CrossIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('5%'),
-  color: 'black',
-}))``;
-
 type Props = {
   deathDate: string;
 };
@@ -51,8 +47,10 @@ const DeathInfo = ({ deathDate }: Props) => {
       testID="death-day-info"
     >
       <IconWrapper>
-        <CrossIcon
-          name="christianity"
+        <SVGIcon
+          size={metrics.extraLargeSize}
+          colorThemeRef="buttonText"
+          id="christianity"
         />
       </IconWrapper>
       <DateText>{dateText}</DateText>

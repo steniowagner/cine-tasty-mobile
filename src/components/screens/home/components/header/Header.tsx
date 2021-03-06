@@ -7,6 +7,7 @@ import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphone
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 import MediaSwitcher from '../media-switcher/MediaSwitcher';
 
@@ -89,6 +90,7 @@ const Header = ({
           testID="header-icon-button-wrapper-settings"
         >
           <SVGIcon
+            size={metrics.getWidthFromDP('6%')}
             id="settings"
           />
         </SettingsButton>
@@ -99,7 +101,6 @@ const Header = ({
         <HeaderIconButton
           disabled={shouldDisableActions}
           onPress={onPressSearch}
-          followThemeTextColor
           iconName="magnify"
           withMarginRight
         />

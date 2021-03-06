@@ -5,13 +5,14 @@ import {
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import Section from 'components/common/Section';
 import {
   TVShowDetail_tvShow_videos as TVShowVideos,
   MovieDetail_movie_videos as MovieVideos,
 } from 'types/schema';
-import Icon from 'components/common/Icon';
 import CONSTANTS from 'utils/constants';
+import metrics from 'styles/metrics';
 
 export const SECTION_TITLE_I18N_REF = 'translations:mediaDetail:sections:videos';
 
@@ -45,11 +46,6 @@ const IconWrapper = styled(View)`
   border-radius: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
-const PlayIcon = styled(Icon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('10%'),
-  color: 'white',
-}))``;
-
 type Props = {
   videos: (TVShowVideos | MovieVideos)[];
 };
@@ -75,8 +71,9 @@ const Videos = ({ videos }: Props) => {
               }}
             />
             <IconWrapper>
-              <PlayIcon
-                name="play-circle-outline"
+              <SVGIcon
+                size={metrics.getWidthFromDP('12%')}
+                id="play-circle"
               />
             </IconWrapper>
           </VideoListItemWrapper>
