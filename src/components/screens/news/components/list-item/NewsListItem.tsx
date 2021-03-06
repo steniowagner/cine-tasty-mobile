@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Linking, View, Text } from 'react-native';
+import { Linking, Text } from 'react-native';
 import styled from 'styled-components';
 
 import { ThemeId } from 'types';
@@ -11,28 +11,16 @@ import DateDiff from './date-diff/DateDiff';
 const SourceText = styled(Text).attrs({
   numberOfLines: 1,
 })`
-  max-width: 80%;
   font-family: CircularStd-Bold;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-const BottomTextContentContainer = styled(View)`
-  flex-direction: row;
-  margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
-`;
-
-const BottomTextContentWrapper = styled(View)`
-  flex-direction: row;
-  padding: ${({ theme }) => (theme.id === ThemeId.LIGHT ? theme.metrics.smallSize : 0)}px;
-  background-color: ${({ theme }) => (theme.id === ThemeId.LIGHT ? theme.colors.buttonText : 'transparent')};
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  color: ${({ theme }) => (theme.id === ThemeId.DARK ? theme.colors.primary : theme.colors.buttonText)};
 `;
 
 const NewsText = styled(Text)<{ withRTL: boolean }>`
+  margin-vertical: ${({ theme }) => theme.metrics.mediumSize}px;
   font-family: CircularStd-Medium;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => (theme.id === ThemeId.DARK ? theme.colors.text : theme.colors.subText)};
   text-align: ${({ withRTL }) => (withRTL ? 'right' : 'left')};
 `;
 
@@ -56,6 +44,7 @@ const NewsListItem = ({
       image={image}
     />
     <TextWrapper>
+      <SourceText>{source}</SourceText>
       <NewsText
         testID="news-text"
         withRTL={withRTL}
@@ -63,15 +52,10 @@ const NewsListItem = ({
       >
         {text}
       </NewsText>
-      <BottomTextContentContainer>
-        <BottomTextContentWrapper>
-          <SourceText>{`${source}  \u2022  `}</SourceText>
-          <DateDiff
-            now={new Date()}
-            date={date}
-          />
-        </BottomTextContentWrapper>
-      </BottomTextContentContainer>
+      <DateDiff
+        now={new Date()}
+        date={date}
+      />
     </TextWrapper>
   </Wrapper>
 );
