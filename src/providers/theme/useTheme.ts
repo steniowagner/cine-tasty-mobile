@@ -5,11 +5,10 @@ import {
   getItemFromStorage,
   persistItemInStorage,
 } from 'utils/async-storage-adapter/AsyncStorageAdapter';
+import { useSystemThemePreference } from 'hooks';
 import { dark, light } from 'styles/themes';
 import CONSTANTS from 'utils/constants';
 import { ThemeId } from 'types';
-
-import useSystemThemePreference from './useSystemThemePreference';
 
 const undefinedTheme = { ...dark, id: undefined };
 
@@ -72,7 +71,9 @@ const useTheme = (): State => {
     }
 
     if (theme === ThemeId.SYSTEM) {
-      return systemTheme === ThemeId.DARK ? dark : light;
+      return systemTheme === ThemeId.DARK
+        ? { ...dark, id: ThemeId.SYSTEM }
+        : { ...light, id: ThemeId.SYSTEM };
     }
 
     return theme === ThemeId.DARK ? dark : light;
