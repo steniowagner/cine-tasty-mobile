@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
+import KnownForDepartment from './known-for-department/KnownForDepartment';
 import HeaderLoadingPlaceholder from './HeaderLoadingPlaceholder';
 import BirthDayText from './birthday-text/BirthDayText';
 import ProfileImage from './profile-image/ProfileImage';
@@ -28,15 +29,6 @@ const NameText = styled(Text)`
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
   font-family: CircularStd-Black;
   color: ${({ theme }) => theme.colors.text};
-`;
-
-const KnownForDepartmentWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('18%')}px;
-  justify-content: center;
-  align-items: center;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  padding-vertical: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 const TextContentWrapper = styled(View)`
@@ -90,16 +82,9 @@ const HeaderInfo = ({
               </InfoText>
             )}
           </InfoTextWrapper>
-          {!!knownForDepartment && (
-            <KnownForDepartmentWrapper>
-              <InfoText
-                // @ts-ignore
-                withCustomColor
-              >
-                {knownForDepartment}
-              </InfoText>
-            </KnownForDepartmentWrapper>
-          )}
+          <KnownForDepartment
+            knownForDepartment={knownForDepartment}
+          />
         </TextContentWrapper>
       )}
     </InfoWrapper>
