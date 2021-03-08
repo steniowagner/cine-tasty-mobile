@@ -64,7 +64,7 @@ describe('Testing <ThemeProvider /> [System Light Theme]', () => {
       jest.runAllTimers();
     });
 
-    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.LIGHT);
+    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.SYSTEM);
   });
 
   it('should change the theme correctly when the user presses the system-option and the current theme is dark and the system-theme is light', () => {
@@ -78,7 +78,7 @@ describe('Testing <ThemeProvider /> [System Light Theme]', () => {
 
     fireEvent.press(getByTestId('toggle-button'));
 
-    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.LIGHT);
+    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.SYSTEM);
   });
 
   it('should change the theme correctly when the user presses the system-option and the current theme is light and the system-theme is light', () => {
@@ -92,6 +92,6 @@ describe('Testing <ThemeProvider /> [System Light Theme]', () => {
 
     fireEvent.press(getByTestId('toggle-button'));
 
-    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.LIGHT);
+    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.SYSTEM);
   });
 });

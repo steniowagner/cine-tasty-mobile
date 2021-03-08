@@ -7,7 +7,7 @@ type State = {
   systemTheme: ThemeId;
 };
 
-const useSystemThemePreference = (): State => {
+export const useSystemThemePreference = (): State => {
   const systemColorScheme = useColorScheme();
 
   const systemTheme = useMemo(() => {
@@ -22,5 +22,3 @@ const useSystemThemePreference = (): State => {
     systemTheme,
   };
 };
-
-export default useSystemThemePreference;
