@@ -1,11 +1,12 @@
 import React from 'react';
 import { Animated, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import RoundedButton from 'components/common/RoundedButton';
+import { useGetCurrentTheme } from 'hooks';
 import { ThemeId } from 'types';
 
 import {
@@ -19,6 +20,10 @@ import {
 interface ItemWrapperStyleProps {
   readonly isTheMiddle: boolean;
   readonly width: number;
+}
+
+interface StarsWrapperStyleProps {
+  readonly currentTheme: ThemeId;
 }
 
 const Wrapper = styled(Animated.View)<ItemWrapperStyleProps>`
@@ -36,11 +41,11 @@ const TextContentWrapper = styled(View)`
   bottom: 0;
 `;
 
-const StarsWrapper = styled(View)`
+const StarsWrapper = styled(View)<StarsWrapperStyleProps>`
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => (theme.id === ThemeId.LIGHT ? theme.colors.buttonText : 'transparent')};
-  padding: ${({ theme }) => (theme.id === ThemeId.LIGHT ? theme.metrics.mediumSize : 0)}px;
+  background-color: ${({ currentTheme, theme }) => (currentTheme === ThemeId.LIGHT ? theme.colors.buttonText : 'transparent')};
+  padding: ${({ currentTheme, theme }) => (currentTheme === ThemeId.LIGHT ? theme.metrics.mediumSize : 0)}px;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
@@ -73,6 +78,7 @@ type Props = {
   isTheMiddle: boolean;
   onPress: () => void;
   voteAverage: number;
+  theme: DefaultTheme;
   voteCount: number;
   genres: string[];
   width: number;
@@ -89,8 +95,10 @@ const Top3ListItem = ({
   genres,
   width,
   image,
+  theme,
   title,
 }: Props) => {
+  const { currentTheme } = useGetCurrentTheme({ theme });
   const { t } = useTranslation();
 
   return (
@@ -112,7 +120,9 @@ const Top3ListItem = ({
       />
       <TextContentWrapper>
         <TitleText>{title}</TitleText>
-        <StarsWrapper>
+        <StarsWrapper
+          currentTheme={currentTheme}
+        >
           <StarsVotes
             voteCount={voteCount}
             votes={voteAverage}
@@ -134,4 +144,4 @@ const Top3ListItem = ({
   );
 };
 
-export default Top3ListItem;
+export default withTheme(Top3ListItem);

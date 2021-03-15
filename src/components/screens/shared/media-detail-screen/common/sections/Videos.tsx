@@ -74,6 +74,7 @@ const Videos = ({ videos }: Props) => {
               <SVGIcon
                 size={metrics.getWidthFromDP('12%')}
                 id="play-circle"
+                colorThemeRef="white"
               />
             </IconWrapper>
           </VideoListItemWrapper>

@@ -4,6 +4,7 @@ import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
 import { SupportedIcons } from 'components/common/svg-icon/getXML';
+import { useGetCurrentTheme } from 'hooks';
 import metrics from 'styles/metrics';
 import { ThemeId } from 'types';
 
@@ -45,16 +46,18 @@ const NavigatorItem = withTheme(
   ({
     inactiveIcon, activeIcon, isSelected, onPress, theme, width, title,
   }: Props) => {
+    const { currentTheme } = useGetCurrentTheme({ theme });
+
     const selectedIconColor = useMemo(
-      () => (theme.id === ThemeId.DARK ? 'primary' : 'text'),
-      [theme],
+      () => (currentTheme === ThemeId.DARK ? 'primary' : 'text'),
+      [currentTheme],
     );
 
     const textColor = useMemo(() => {
-      const selectedColor = theme.id === ThemeId.DARK ? theme.colors.primary : theme.colors.text;
+      const selectedColor = currentTheme === ThemeId.DARK ? theme.colors.primary : theme.colors.text;
 
       return isSelected ? selectedColor : theme.colors.inactiveWhite;
-    }, [isSelected, theme]);
+    }, [isSelected, currentTheme]);
 
     return (
       <Wrapper
