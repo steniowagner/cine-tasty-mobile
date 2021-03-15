@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 import { StatusBarStyle } from 'react-native';
 import { DefaultTheme } from 'styled-components';
 
-import { useSystemThemePreference } from 'hooks';
 import { ThemeId } from 'types';
+
+import { useGetCurrentTheme } from './useGetCurrentTheme';
 
 type Props = {
   theme: DefaultTheme;
@@ -14,24 +15,15 @@ type State = {
 };
 
 export const useStatusBarStyle = ({ theme }: Props): State => {
-  const { systemTheme } = useSystemThemePreference();
-
-  const barStyleBasedSystemPreferences = useMemo(
-    () => (systemTheme === ThemeId.LIGHT ? 'dark-content' : 'light-content'),
-    [systemTheme],
-  );
+  const { currentTheme } = useGetCurrentTheme({ theme });
 
   const barStyle = useMemo(() => {
-    if (theme.id === ThemeId.SYSTEM) {
-      return barStyleBasedSystemPreferences;
-    }
-
-    if (theme.id === ThemeId.LIGHT) {
+    if (currentTheme === ThemeId.LIGHT) {
       return 'dark-content';
     }
 
     return 'light-content';
-  }, [theme]);
+  }, [currentTheme]);
 
   return {
     barStyle,

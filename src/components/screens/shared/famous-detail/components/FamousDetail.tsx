@@ -3,10 +3,10 @@ import React, { useLayoutEffect, useCallback, useRef } from 'react';
 import {
   StatusBar, Animated, FlatList, View,
 } from 'react-native';
+import styled, { DefaultTheme, withTheme } from 'styled-components';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import { RouteProp } from '@react-navigation/native';
-import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import ExpansibleTextSection from 'components/common/expansible-text-section/ExpansibleTextSection';
@@ -18,8 +18,9 @@ import {
   GetFamousDetail_person_moviesCast as MovieCast,
   GetFamousDetail_person_tvCast as TVShowCast,
 } from 'types/schema';
-import { useStatusBarStyle } from 'hooks';
+import { useGetCurrentTheme, useStatusBarStyle } from 'hooks';
 import metrics from 'styles/metrics';
+import { ThemeId } from 'types';
 
 import { FamousDetailParams } from '../routes/route-params-types';
 import HeaderBackButton from '../../HeaderBackButton';
@@ -36,21 +37,31 @@ export const ERROR_DESCRIPTION_I18N_REF = 'translations:famousDetail:errorDescri
 export const ERROR_SUGGESTION_I18N_REF = 'translations:famousDetail:errorSuggestion';
 export const ERROR_TITLE_I18N_REF = 'translations:famousDetail:errorTitle';
 
+interface SmokeShadowStyleProps {
+  readonly currentTheme: ThemeId;
+}
+
 const BackgroundImageWrapper = styled(Animated.View)`
   width: 100%;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('100%')}px;
   position: absolute;
 `;
 
-const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
-  colors: [
-    theme.colors.backgroundAlphax4,
-    theme.colors.backgroundAlphax3,
-    theme.colors.backgroundAlphax2,
-    theme.colors.backgroundAlphax1,
-    theme.colors.background,
-  ],
-}))`
+const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
+  ({ currentTheme, theme }) => {
+    const backgroundAlphax4Count = currentTheme === ThemeId.DARK ? 1 : 5;
+
+    return {
+      colors: [
+        ...Array(backgroundAlphax4Count).fill(theme.colors.backgroundAlphax4),
+        theme.colors.backgroundAlphax3,
+        theme.colors.backgroundAlphax2,
+        theme.colors.backgroundAlphax1,
+        theme.colors.background,
+      ],
+    };
+  },
+)`
   width: 100%;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('100%')}px;
   position: absolute;
@@ -79,6 +90,7 @@ type Props = {
 };
 
 const FamousDetail = ({ navigation, theme, route }: Props) => {
+  const { currentTheme } = useGetCurrentTheme({ theme });
   const { barStyle } = useStatusBarStyle({ theme });
 
   useLayoutEffect(() => {
@@ -225,7 +237,9 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
             imageType="backdrop"
           />
         </Animated.View>
-        <SmokeShadow />
+        <SmokeShadow
+          currentTheme={currentTheme}
+        />
       </BackgroundImageWrapper>
       <Animated.ScrollView
         scrollEventThrottle={16}
