@@ -1,11 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useRef, useCallback } from 'react';
 import {
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-  ActivityIndicator,
-  FlatList,
-  View,
+  NativeSyntheticEvent, NativeScrollEvent, FlatList, View,
 } from 'react-native';
 import styled from 'styled-components';
 
@@ -18,15 +14,6 @@ import ImagesGalleryListItem from './images-gallery-list-item/ImagesGalleryListI
 const PlaceholderListItem = styled(View)`
   width: ${({ theme }) => theme.metrics.width}px;
   height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CustomActivityIndicator = styled(ActivityIndicator).attrs(({ theme }) => ({
-  color: theme.colors.text,
-  size: 'large',
-}))`
-  align-self: center;
 `;
 
 type Props = {
@@ -60,13 +47,11 @@ const ImagesGalleryList = ({
   return (
     <FlatList
       onMomentumScrollEnd={onFlatlistMomentumScrollEnd}
-      contentContainerStyle={{
-        justifyContent: 'center',
-      }}
       renderItem={({ item, index }) => {
         if (isIndexesAllowedToRenderImage[index]) {
           return (
             <ImagesGalleryListItem
+              isFocused={indexImageSelected === index}
               imageURL={item}
             />
           );
@@ -75,9 +60,7 @@ const ImagesGalleryList = ({
         return (
           <PlaceholderListItem
             testID="placeholder-list-item"
-          >
-            <CustomActivityIndicator />
-          </PlaceholderListItem>
+          />
         );
       }}
       initialScrollIndex={indexImageSelected}

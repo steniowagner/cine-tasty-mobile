@@ -57,7 +57,7 @@ const ThumbsGalleryList = ({
       style={{
         bottom: Platform.select({
           android: metrics.getWidthFromDP('14%'),
-          ios: metrics.getWidthFromDP('18%'),
+          ios: metrics.getWidthFromDP('10%'),
         }),
         position: 'absolute',
       }}
