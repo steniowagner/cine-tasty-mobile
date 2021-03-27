@@ -11,6 +11,7 @@
     "paths": {
       "components": ["./components"],
       "providers": ["./providers"],
+      "@graphql/*": ["./graphql/*"],
       "routes": ["./routes"],
       "config": ["./config"],
       "styles": ["./styles"],

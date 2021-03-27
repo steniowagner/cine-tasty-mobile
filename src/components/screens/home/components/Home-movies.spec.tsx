@@ -3,7 +3,6 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { SEARCH_MOVIES } from 'components/screens/shared/search/queries';
 import { SearchType } from 'types/schema';
 
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
@@ -394,7 +393,7 @@ describe('Testing <Home /> - [Movies]', () => {
       i18nQueryByTextErrorRef: SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
       i18nSearchBarPlaceholderRef: SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
       searchType: SearchType.MOVIE,
-      query: SEARCH_MOVIES,
+      queryId: 'search_movie',
     });
   });
 

@@ -155,3 +155,5 @@ export enum ThemeId {
   LIGHT = 'LIGHT',
   SYSTEM = 'SYSTEM',
 }
+
+export type CineTastyQuery = 'search_movie' | 'search_tv' | 'search_famous';

@@ -15,7 +15,6 @@ import timeTravel, {
 import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
-import { SEARCH_PERSON } from '../../../queries';
 
 import Search from '../Search';
 
@@ -39,7 +38,7 @@ const params = {
   i18nQueryByPaginationErrorRef: I18N_FAMOUS_QUERY_BY_PAGINATION_ERROR_REF,
   i18nQueryByTextErrorRef: I18N_FAMOUS_QUERY_BY_TEXT_ERROR_REF,
   searchType: SearchType.PERSON,
-  query: SEARCH_PERSON,
+  queryId: 'search_famous',
 };
 
 const renderSearchFamous = (mockResolvers: IMocks = {}) => (

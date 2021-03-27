@@ -3,7 +3,6 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { SEARCH_TV_SHOWS } from 'components/screens/shared/search/queries';
 import { SearchType } from 'types/schema';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
@@ -415,7 +414,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       i18nQueryByTextErrorRef: SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF,
       i18nSearchBarPlaceholderRef: SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF,
       searchType: SearchType.TV,
-      query: SEARCH_TV_SHOWS,
+      queryId: 'search_tv',
     });
   });
 
