@@ -16,7 +16,6 @@ import timeTravel, {
 import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
-import { SEARCH_MOVIES } from '../../../queries';
 
 import Search, {
   ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF,
@@ -57,7 +56,7 @@ const params = {
   i18nQueryByPaginationErrorRef: I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF,
   i18nQueryByTextErrorRef: I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF,
   searchType: SearchType.MOVIE,
-  query: SEARCH_MOVIES,
+  queryId: 'search_movie',
 };
 
 const renderSearchMovies = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {

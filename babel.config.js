@@ -35,6 +35,7 @@ module.exports = {
           utils: './src/utils',
           types: './src/types',
           i18n: './src/i18n',
+          '@graphql': './src/graphql',
         },
       },
     ],

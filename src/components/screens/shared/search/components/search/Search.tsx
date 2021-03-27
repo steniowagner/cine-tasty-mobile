@@ -51,7 +51,7 @@ const Search = ({ navigation, route }: Props) => {
     i18nQueryByPaginationErrorRef: route.params.i18nQueryByPaginationErrorRef,
     i18nQueryByTextErrorRef: route.params.i18nQueryByTextErrorRef,
     searchType: route.params.searchType,
-    query: route.params.query,
+    queryId: route.params.queryId,
   });
 
   const { onPressRecentSearchItem, onPressListItem } = usePressHandlers({

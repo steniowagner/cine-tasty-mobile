@@ -6,7 +6,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 // import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/getWrapperMeasures';
 import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
 import DefaultListItem from 'components/common/famous-list-item/FamousListItem';
-import { SEARCH_PERSON } from 'components/screens/shared/search/queries';
 import PaginatedListHeader from 'components/common/PaginatedListHeader';
 import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
 import HeaderIconButton from 'components/common/HeaderIconButton';
@@ -49,7 +48,7 @@ const Famous = ({ navigation }: Props) => {
             i18nSearchBarPlaceholderRef: SEARCH_BAR_PLACEHOLER_I18N_REF,
             i18nQueryByTextErrorRef: QUERY_BY_TEXT_ERROR_I18N_REF,
             searchType: SearchType.PERSON,
-            query: SEARCH_PERSON,
+            queryId: 'search_famous',
           })}
           iconName="magnify"
           withMarginRight

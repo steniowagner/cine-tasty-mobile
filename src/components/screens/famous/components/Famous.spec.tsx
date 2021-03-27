@@ -5,14 +5,13 @@ import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { DEFAULT_ANIMATION_DURATION } from 'components/common/popup-advice/PopupAdvice';
-import { SEARCH_PERSON } from 'components/screens/shared/search/queries';
 import { SearchType } from 'types/schema';
 import theme from 'styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
-import { I18N_ENTRY_QUERY_ERROR_REF, GET_FAMOUS } from './useFamous';
+import { I18N_ENTRY_QUERY_ERROR_REF } from './useFamous';
 import Famous, {
   QUERY_BY_PAGINATION_ERROR_I18N_REF,
   SEARCH_BAR_PLACEHOLER_I18N_REF,
@@ -78,7 +77,7 @@ describe('Testing <Famous />', () => {
       i18nSearchBarPlaceholderRef: SEARCH_BAR_PLACEHOLER_I18N_REF,
       i18nQueryByTextErrorRef: QUERY_BY_TEXT_ERROR_I18N_REF,
       searchType: SearchType.PERSON,
-      query: SEARCH_PERSON,
+      queryId: 'search_famous',
     });
 
     act(() => {

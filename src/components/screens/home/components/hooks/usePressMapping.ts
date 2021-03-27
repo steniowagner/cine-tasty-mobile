@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { SEARCH_MOVIES, SEARCH_TV_SHOWS } from 'components/screens/shared/search/queries';
 import { TrendingMediaItemKey, SimplifiedMedia } from 'types';
 import { SearchType } from 'types/schema';
 
@@ -91,7 +90,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
             i18nQueryByTextErrorRef: SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
             i18nSearchBarPlaceholderRef: SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
             searchType: SearchType.MOVIE,
-            query: SEARCH_MOVIES,
+            queryId: 'search_movie',
           });
         },
       },
@@ -113,7 +112,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
             i18nQueryByTextErrorRef: SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF,
             i18nSearchBarPlaceholderRef: SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF,
             searchType: SearchType.TV,
-            query: SEARCH_TV_SHOWS,
+            queryId: 'search_tv',
           });
         },
       },

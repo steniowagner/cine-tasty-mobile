@@ -1,7 +1,12 @@
-import { useCallback, useState, useEffect } from 'react';
-import { DocumentNode } from 'graphql';
+import {
+  useCallback, useState, useEffect, useMemo,
+} from 'react';
 
-import { PaginatedQueryResult, SearchResult, SearchItem } from 'types';
+import { getQuery } from '@graphql/queries';
+
+import {
+  PaginatedQueryResult, CineTastyQuery, SearchResult, SearchItem,
+} from 'types';
 import useImperativeQuery from 'utils/useImperativeQuery';
 import { useTranslation } from 'react-i18next';
 import { SearchType } from 'types/schema';
@@ -33,14 +38,14 @@ type Props = {
   i18nQueryByPaginationErrorRef: string;
   i18nQueryByTextErrorRef: string;
   searchType: SearchType;
-  query: DocumentNode;
+  queryId: CineTastyQuery;
 };
 
 const useSearch = ({
   i18nQueryByPaginationErrorRef,
   i18nQueryByTextErrorRef,
   searchType,
-  query,
+  queryId,
 }: Props): State => {
   const [queryResult, setQueryResult] = useState<PaginatedQueryResult>(
     INITIAL_QUERY_RESULT,
@@ -49,6 +54,8 @@ const useSearch = ({
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [queryString, setQueryString] = useState<string>('');
+
+  const query = useMemo(() => getQuery(queryId), [queryId]);
 
   const search = useImperativeQuery<SearchResult>(query);
 

@@ -13,9 +13,8 @@ import {
   TOP_RATED_SECTION_TITLE_i18N_REF as TV_SHOWS_TOP_RATED_SECTION_TITLE_i18N_REF,
   POPULAR_SECTION_TITLE_i18N_REF as TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF,
 } from './hooks/trendings/useTrendingTVShows';
-import Home from './Home';
-import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
 import { I18N_TV_SHOWS_KEY } from './header/Header';
+import Home from './Home';
 
 const trendingTVShowsItems = Array(10)
   .fill({})
