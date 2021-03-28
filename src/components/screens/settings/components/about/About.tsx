@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import { light as lightTheme } from 'styles/themes/light';
 import metrics from 'styles/metrics';
 
 import socialNetworks from './socialNetworks';
-// import HeartBeating from './HeartBeating';
 
 interface SocialNetworkButtonStyleProps {
   readonly isMiddle: boolean;
@@ -34,15 +34,15 @@ const CardWrapper = styled(View)`
 const NameText = styled(Text)`
   font-family: CircularStd-Black;
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
-  color: #262626;
+  color: ${lightTheme.colors.text};
   text-align: center;
 `;
 
 const SoftwareEngineerText = styled(Text)`
-  margin-top: ${({ theme }) => theme.metrics.smallSize}px;
+  margin-right: ${({ theme }) => theme.metrics.smallSize}px;
   font-family: CircularStd-Medium;
   font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
-  color: #858585;
+  color: ${lightTheme.colors.subText};
   text-align: center;
 `;
 
@@ -52,7 +52,7 @@ const AboutText = styled(Text)`
   font-family: CircularStd-Medium;
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('4.5%')}px;
   padding-horizontal: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  color: #262626;
+  color: ${lightTheme.colors.text};
   text-align: center;
 `;
 
@@ -91,8 +91,7 @@ const BeautifulImage = styled(Image).attrs(() => ({
 const SoftwareEngineerWrapper = styled(View)`
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  height: 35px;
+  margin-top: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
@@ -120,7 +119,11 @@ const About = () => {
           <SoftwareEngineerText>
             {t('translations:softwareEngineer')}
           </SoftwareEngineerText>
-          {/* <HeartBeating /> */}
+          <SVGIcon
+            size={DEFAULT_ICON_SIZE}
+            id="heart"
+            colorThemeRef="red"
+          />
         </SoftwareEngineerWrapper>
         <AboutText>{t('translations:about')}</AboutText>
         <SocialNetworkButtonsWrapper>
