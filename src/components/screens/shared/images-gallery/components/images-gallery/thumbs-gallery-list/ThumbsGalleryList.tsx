@@ -3,7 +3,10 @@ import { Platform, FlatList } from 'react-native';
 
 import metrics from 'styles/metrics';
 
-import useThumbsGalleryList from './use-thumbs-gallery-list';
+import useThumbsGalleryList, {
+  THUMB_SPACING,
+  THUMB_SIZE,
+} from './use-thumbs-gallery-list';
 import ThumbsGalleryListItem from './ThumbsGalleryListItem';
 
 type ThumbsGalleryListProps = {
@@ -37,6 +40,11 @@ const ThumbsGalleryList = ({
       contentContainerStyle={{
         paddingHorizontal: metrics.extraLargeSize,
       }}
+      getItemLayout={(_data, index) => ({
+        offset: (THUMB_SPACING + THUMB_SIZE) * index,
+        length: THUMB_SPACING + THUMB_SIZE,
+        index,
+      })}
       initialScrollIndex={indexImageSelected}
       showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => item}

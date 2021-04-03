@@ -3,8 +3,8 @@ import { FlatList } from 'react-native';
 
 import metrics from 'styles/metrics';
 
-const THUMB_SIZE = metrics.getWidthFromDP('24%');
-const THUMB_SPACING = metrics.mediumSize;
+export const THUMB_SIZE = metrics.getWidthFromDP('24%');
+export const THUMB_SPACING = metrics.mediumSize;
 
 type UseThumbsGalleryListProps = {
   indexImageSelected: number;
@@ -13,7 +13,7 @@ type UseThumbsGalleryListProps = {
 const useThumbsGalleryList = ({ indexImageSelected }: UseThumbsGalleryListProps) => {
   const thumbsListRef = useRef<FlatList>();
 
-  const handleMoveBottomList = useCallback(() => {
+  const handleMoveThumbsGalleryList = useCallback(() => {
     const isThumbBeyondHalfScreen = indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
         - THUMB_SIZE / 2
         - metrics.extraLargeSize
@@ -33,7 +33,7 @@ const useThumbsGalleryList = ({ indexImageSelected }: UseThumbsGalleryListProps)
 
   useEffect(() => {
     if (thumbsListRef && thumbsListRef.current) {
-      handleMoveBottomList();
+      handleMoveThumbsGalleryList();
     }
   }, [indexImageSelected]);
 
