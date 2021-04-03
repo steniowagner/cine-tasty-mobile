@@ -1,9 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect } from 'react';
-import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import styled from 'styled-components';
 
 import { ImagesGalleryParams } from 'components/screens/shared/images-gallery/routes/route-params-types';
 import HeaderIconButton from 'components/common/HeaderIconButton';
@@ -12,11 +10,8 @@ import HeaderIconButton from 'components/common/HeaderIconButton';
 // eslint-disable-next-line import/extensions
 import ImagesGalleryList from './images-gallery-list/ImagesGalleryList';
 import ThumbsGalleryList from './thumbs-gallery-list/ThumbsGalleryList';
-import useImageGallery from './useImagesGallery';
-
-const Wrapper = styled(View)`
-  flex: 1;
-`;
+import useImageGallery from './use-images-gallery';
+import * as S from './images-gallery-styles';
 
 type ImagesGalleryNavigationProp = StackNavigationProp<
   ImagesGalleryParams,
@@ -60,7 +55,7 @@ const ImagesGallery = ({ navigation, route }: Props) => {
   }, []);
 
   return (
-    <Wrapper>
+    <S.Wrapper>
       <ImagesGalleryList
         isIndexesAllowedToRenderImage={isIndexesAllowedToRenderImage}
         onFlatlistMomentumScrollEnd={onFlatlistMomentumScrollEnd}
@@ -72,7 +67,7 @@ const ImagesGallery = ({ navigation, route }: Props) => {
         indexImageSelected={indexImageSelected}
         thumbs={route.params.images}
       />
-    </Wrapper>
+    </S.Wrapper>
   );
 };
 

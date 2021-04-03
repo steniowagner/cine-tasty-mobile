@@ -3,19 +3,15 @@ import { NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 
 import metrics from 'styles/metrics';
 
-type State = {
-  onFlatlistMomentumScrollEnd: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-  onPressBottomListItem: (index: number) => void;
-  isIndexesAllowedToRenderImage: boolean[];
-  indexImageSelected: number;
-};
-
-type Props = {
+type UseImageGalleryProps = {
   indexFirstItemSelected: number;
   gallerySize: number;
 };
 
-const useImageGallery = ({ indexFirstItemSelected, gallerySize }: Props): State => {
+const useImageGallery = ({
+  indexFirstItemSelected,
+  gallerySize,
+}: UseImageGalleryProps) => {
   const initialIndexesAllowedToRenderImage = useMemo(
     (): boolean[] => Array(gallerySize)
       .fill(false)
