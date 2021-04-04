@@ -1,14 +1,15 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 import { Platform, FlatList } from 'react-native';
 
 import metrics from 'styles/metrics';
 
+import useThumbsGalleryList, {
+  THUMB_SPACING,
+  THUMB_SIZE,
+} from './use-thumbs-gallery-list';
 import ThumbsGalleryListItem from './ThumbsGalleryListItem';
 
-const THUMB_SIZE = metrics.getWidthFromDP('24%');
-const THUMB_SPACING = metrics.mediumSize;
-
-type Props = {
+type ThumbsGalleryListProps = {
   onPressBottomListItem: (indexThumbSelected: number) => void;
   indexImageSelected: number;
   thumbs: string[];
@@ -18,32 +19,8 @@ const ThumbsGalleryList = ({
   onPressBottomListItem,
   indexImageSelected,
   thumbs,
-}: Props) => {
-  const bottomListRef = useRef<FlatList>();
-
-  const handleMoveBottomList = useCallback(() => {
-    const isThumbBeyondHalfScreen = indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
-        - THUMB_SIZE / 2
-        - metrics.extraLargeSize
-      > metrics.width / 2;
-
-    const middleScreenOffset = indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
-      + metrics.extraLargeSize
-      - (metrics.width / 2 - THUMB_SIZE / 2);
-
-    const offset = isThumbBeyondHalfScreen ? middleScreenOffset : 0;
-
-    bottomListRef.current.scrollToOffset({
-      animated: true,
-      offset,
-    });
-  }, [indexImageSelected]);
-
-  useEffect(() => {
-    if (bottomListRef && bottomListRef.current) {
-      handleMoveBottomList();
-    }
-  }, [indexImageSelected]);
+}: ThumbsGalleryListProps) => {
+  const { thumbsListRef } = useThumbsGalleryList({ indexImageSelected });
 
   return (
     <FlatList
@@ -55,20 +32,24 @@ const ThumbsGalleryList = ({
         />
       )}
       style={{
-        bottom: Platform.select({
-          android: metrics.getWidthFromDP('14%'),
-          ios: metrics.getWidthFromDP('10%'),
+        height: Platform.select({
+          ios: metrics.getWidthFromDP('36%'),
+          android: metrics.getWidthFromDP('42%'),
         }),
-        position: 'absolute',
       }}
       contentContainerStyle={{
         paddingHorizontal: metrics.extraLargeSize,
       }}
+      getItemLayout={(_data, index) => ({
+        offset: (THUMB_SPACING + THUMB_SIZE) * index,
+        length: THUMB_SPACING + THUMB_SIZE,
+        index,
+      })}
       initialScrollIndex={indexImageSelected}
       showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => item}
       testID="thumb-list"
-      ref={bottomListRef}
+      ref={thumbsListRef}
       data={thumbs}
       horizontal
     />

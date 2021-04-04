@@ -10,18 +10,11 @@ type Dimensions = {
   width: number;
 };
 
-type State = {
-  isLandscape: boolean;
-  isPortrait: boolean;
-  isLoading: boolean;
-  hasError: boolean;
-};
-
-type Props = {
+type UseImagesGalleryListItemProps = {
   imageURL: string;
 };
 
-const useImagesGalleryListItem = ({ imageURL }: Props): State => {
+const useImagesGalleryListItem = ({ imageURL }: UseImagesGalleryListItemProps) => {
   const [imageStatus, setImageStatus] = useState<ImageStatus>('LOADING');
   const [dimensions, setDimensions] = useState<Dimensions>(null);
   const [imageMode, setImageMode] = useState<ImageMode>('NONE');
@@ -54,11 +47,9 @@ const useImagesGalleryListItem = ({ imageURL }: Props): State => {
 
     const isLandscape = dimensions.width > dimensions.height;
 
-    if (isLandscape) {
-      setImageMode('LANDSCAPE');
-    } else {
-      setImageMode('PORTRAIT');
-    }
+    const mode = isLandscape ? 'LANDSCAPE' : 'PORTRAIT';
+
+    setImageMode(mode);
   }, [dimensions]);
 
   return {

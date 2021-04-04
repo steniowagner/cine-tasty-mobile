@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import theme from 'styles/theme';
 
-import ImagesGalleryListItem, { IMAGES_URI } from './ImagesGalleryListItem.android';
+import ImagesGalleryListItem from './ImagesGalleryListItemComponent';
 
 const IMAGE_URL = 'SOME_IMAGE_URL';
 
@@ -46,7 +46,9 @@ describe('Testing <ImagesGalleryListItem />', () => {
 
     expect(getSizeMock).toHaveBeenCalledTimes(1);
 
-    expect(getSizeMock.mock.calls[0][0]).toEqual(`${IMAGES_URI}${IMAGE_URL}`);
+    expect(getSizeMock.mock.calls[0][0]).toEqual(
+      `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
+    );
   });
 
   it('should render correctly when the app is fetching the image size', () => {
@@ -70,7 +72,9 @@ describe('Testing <ImagesGalleryListItem />', () => {
 
     expect(getSizeMock).toHaveBeenCalledTimes(1);
 
-    expect(getSizeMock.mock.calls[0][0]).toEqual(`${IMAGES_URI}${IMAGE_URL}`);
+    expect(getSizeMock.mock.calls[0][0]).toEqual(
+      `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
+    );
   });
 
   it('should render correctly when the app receive and error when try to fetch image size', () => {
@@ -92,6 +96,8 @@ describe('Testing <ImagesGalleryListItem />', () => {
 
     expect(getSizeMock).toHaveBeenCalledTimes(1);
 
-    expect(getSizeMock.mock.calls[0][0]).toEqual(`${IMAGES_URI}${IMAGE_URL}`);
+    expect(getSizeMock.mock.calls[0][0]).toEqual(
+      `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
+    );
   });
 });

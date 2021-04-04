@@ -1,22 +1,15 @@
-/* eslint-disable react/display-name */
-import React, { useEffect, useRef, useCallback } from 'react';
-import {
-  NativeSyntheticEvent, NativeScrollEvent, FlatList, View,
-} from 'react-native';
-import styled from 'styled-components';
+import React from 'react';
+import { NativeSyntheticEvent, NativeScrollEvent, FlatList } from 'react-native';
 
 import metrics from 'styles/metrics';
 
 // @ts-ignore
 // eslint-disable-next-line import/extensions
 import ImagesGalleryListItem from './images-gallery-list-item/ImagesGalleryListItem';
+import useImagesGalleryList from './use-images-gallery-list';
+import * as S from './images-gallery-list-styles';
 
-const PlaceholderListItem = styled(View)`
-  width: ${({ theme }) => theme.metrics.width}px;
-  height: 100%;
-`;
-
-type Props = {
+type ImagesGalleryListProps = {
   onFlatlistMomentumScrollEnd: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   isIndexesAllowedToRenderImage: boolean[];
   indexImageSelected: number;
@@ -28,21 +21,8 @@ const ImagesGalleryList = ({
   onFlatlistMomentumScrollEnd,
   indexImageSelected,
   images,
-}: Props) => {
-  const topListRef = useRef<FlatList>();
-
-  const handleMoveTopList = useCallback(() => {
-    topListRef.current.scrollToIndex({
-      index: indexImageSelected,
-      animated: true,
-    });
-  }, [indexImageSelected]);
-
-  useEffect(() => {
-    if (topListRef && topListRef.current) {
-      handleMoveTopList();
-    }
-  }, [indexImageSelected]);
+}: ImagesGalleryListProps) => {
+  const { galleryListRef } = useImagesGalleryList({ indexImageSelected });
 
   return (
     <FlatList
@@ -58,7 +38,7 @@ const ImagesGalleryList = ({
         }
 
         return (
-          <PlaceholderListItem
+          <S.PlaceholderListItem
             testID="placeholder-list-item"
           />
         );
@@ -73,7 +53,7 @@ const ImagesGalleryList = ({
       keyExtractor={(item) => item}
       data={images}
       testID="images-list"
-      ref={topListRef}
+      ref={galleryListRef}
       bounces={false}
       pagingEnabled
       horizontal
