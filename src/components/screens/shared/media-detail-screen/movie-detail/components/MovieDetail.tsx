@@ -20,8 +20,8 @@ import PeopleList from '../../common/people-list/PeopleList';
 import GeneralInfo from '../../common/sections/GeneralInfo';
 import HeaderBackButton from '../../../HeaderBackButton';
 import Header from '../../common/header-info/HeaderInfo';
+import Videos from '../../common/sections/videos/Videos';
 import Tags from '../../common/sections/tags/Tags';
-import Videos from '../../common/sections/Videos';
 import useMovieDetail from './useMovieDetail';
 
 export const MOVIE_PRODUCTION_COMPANIES_I18N_REF = 'translations:mediaDetail:sections:productionCompanies';

@@ -11,9 +11,10 @@ import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider'
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
 import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 
+import * as T from 'i18n/tags';
+
 import { SECTION_TITLE_I18N_REF as SECTION_OVERVIEW_I18N_REF } from '../../common/sections/overview/Overview';
 import { SECTION_TITLE_I18N_REF as SECTION_GENERAL_INFO_I18N_REF } from '../../common/sections/GeneralInfo';
-import { SECTION_TITLE_I18N_REF as SECTION_VIDEOS_INFO_I18N_REF } from '../../common/sections/Videos';
 import { NUMBER_ITEMS } from '../../common/sections/tags/Tags';
 import MovieDetail, {
   MOVIE_PRODUCTION_COUNTRIES_I18N_REF,
@@ -304,7 +305,7 @@ describe('Testing <MovieDetail />', () => {
 
     // Videos section
 
-    expect(getByText(SECTION_VIDEOS_INFO_I18N_REF)).not.toBeNull();
+    expect(getByText(T.VIDEOS_SECTION_I18N)).not.toBeNull();
 
     expect(getByTestId('videos-list')).not.toBeNull();
 
