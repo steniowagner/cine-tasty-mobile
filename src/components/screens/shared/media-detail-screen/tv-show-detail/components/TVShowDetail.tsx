@@ -23,8 +23,8 @@ import PeopleList from '../../common/people-list/PeopleList';
 import GeneralInfo from '../../common/sections/GeneralInfo';
 import HeaderBackButton from '../../../HeaderBackButton';
 import Header from '../../common/header-info/HeaderInfo';
+import Videos from '../../common/sections/videos/Videos';
 import Tags from '../../common/sections/tags/Tags';
-import Videos from '../../common/sections/Videos';
 import useTVShowDetail from './useTVShowDetail';
 
 export const TV_SHOWS_NUMBER_NUMBER_OF_EPISODES_I18N_REF = 'translations:mediaDetail:sections:numberOfEpisodes';
