@@ -4,8 +4,8 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 
+import { GET_QUIZ_QUESTIONS } from '@graphql/queries';
 import {
   GetQuizQuestions_quiz as Questions,
   GetQuizQuestionsVariables,
@@ -13,18 +13,6 @@ import {
 } from 'types/schema';
 
 import { QuizStackParams } from '../../routes/route-params-types';
-
-export const GET_QUIZ_QUESTIONS = gql`
-  query GetQuizQuestions($input: QuizInput!) {
-    quiz(input: $input) {
-      correctAnswer
-      category
-      question
-      options
-      type
-    }
-  }
-`;
 
 type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUESTIONS'>;
 

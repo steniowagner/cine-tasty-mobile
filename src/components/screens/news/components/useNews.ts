@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import gql from 'graphql-tag';
 
+import { GET_ARTICLES } from '@graphql/queries';
 import { usePaginatedQuery } from 'hooks';
 import {
   GetArticles_articles_items as Article,
@@ -12,24 +12,6 @@ import {
 
 export const I18N_QUERY_BY_PAGINATION_ERROR_REF = 'translations:news:i18nQueryByPaginationErrorRef';
 export const I18N_ENTRY_QUERY_ERROR_REF = 'translations:news:i18EntryQueryErrorRef';
-
-export const GET_ARTICLES = gql`
-  query GetArticles($page: Int!, $language: ArticleLanguage!) {
-    articles(page: $page, language: $language) {
-      items {
-        publishedAt
-        content
-        source
-        author
-        title
-        image
-        url
-        id
-      }
-      hasMore
-    }
-  }
-`;
 
 type State = {
   onSelectArticleLanguage: (language: ArticleLanguage) => void;

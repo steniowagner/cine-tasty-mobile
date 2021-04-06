@@ -1,41 +1,14 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 
 import getRandomImageFromDataset from 'utils/getRandomImageFromDataset';
+import { GET_FAMOUS_DETAIL } from '@graphql/queries';
 import {
   GetFamousDetail_person as FamousDetail,
   GetFamousDetailVariables,
   GetFamousDetail,
 } from 'types/schema';
-
-export const GET_FAMOUS_DETAIL = gql`
-  query GetFamousDetail($id: Int!, $language: ISO6391Language) {
-    person(id: $id, language: $language) {
-      knownForDepartment
-      placeOfBirth
-      biography
-      birthday
-      deathday
-      images
-      moviesCast {
-        voteAverage
-        posterPath
-        voteCount
-        title
-        id
-      }
-      tvCast {
-        voteAverage
-        posterPath
-        voteCount
-        name
-        id
-      }
-    }
-  }
-`;
 
 type State = {
   t: (key: string) => string;

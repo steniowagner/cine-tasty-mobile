@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import gql from 'graphql-tag';
 
 import {
   GetFamous_people_items as GetFamousItems,
   GetFamousVariables,
   GetFamous,
 } from 'types/schema';
+import { GET_FAMOUS } from '@graphql/queries';
 import { usePaginatedQuery } from 'hooks';
 
 type State = {
@@ -19,19 +19,6 @@ type State = {
   isLoading: boolean;
   error: string;
 };
-
-export const GET_FAMOUS = gql`
-  query GetFamous($page: Int!) {
-    people(page: $page) {
-      hasMore
-      items {
-        profilePath
-        name
-        id
-      }
-    }
-  }
-`;
 
 export const I18N_QUERY_BY_PAGINATION_ERROR_REF = 'translations:famous:i18nQueryByPaginationErrorRef';
 export const I18N_ENTRY_QUERY_ERROR_REF = 'translations:famous:i18EntryQueryErrorRef';
