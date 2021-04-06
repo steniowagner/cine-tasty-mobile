@@ -14,7 +14,6 @@ import useMediaSectionViewAll from './useMediaSectionViewAll';
 export const SCREEN_ID = 'MEDIA_DETAILS_VIEW_ALL';
 
 export type ExternalProps = {
-  onPressItem: (item: SimplifiedMedia) => void;
   initialDataset: SimplifiedMedia[];
   sectionKey: TrendingMediaItemKey;
   headerTitle: string;
@@ -26,21 +25,22 @@ export type Props = {
   route: RouteProp<HomeStackParams, 'MEDIA_DETAILS_VIEW_ALL'>;
 };
 
-const MediaSectionViewAll = ({ route }: Props) => {
+const MediaSectionViewAll = ({ navigation, route }: Props) => {
   const {
+    shouldShowListBottomReloadButton,
     onPressBottomReloadButton,
     hasPaginationError,
     onEndReached,
     isPaginating,
+    onPressItem,
     dataset,
     error,
   } = useMediaSectionViewAll({
     initialMediaItems: route.params.initialDataset,
     trendingMediaItemKey: route.params.sectionKey,
     isMovie: route.params.isMovie,
+    navigation,
   });
-
-  const shouldShowListBottomReloadButton = !!dataset.length && (hasPaginationError || isPaginating);
 
   return (
     <>
@@ -58,7 +58,7 @@ const MediaSectionViewAll = ({ route }: Props) => {
         })}
         renderItem={({ item }) => (
           <MediaSectionViewAllListItem
-            onPressDetails={() => route.params.onPressItem(item)}
+            onPressDetails={() => onPressItem(item)}
             voteCount={item.voteCount}
             votes={item.voteAverage}
             image={item.posterPath}
@@ -66,7 +66,7 @@ const MediaSectionViewAll = ({ route }: Props) => {
             title={item.title}
           />
         )}
-        keyExtractor={({ id }) => `${id}`}
+        keyExtractor={({ id }, index) => `${id}-${index}`}
         testID="media-view-all-list"
         onEndReached={onEndReached}
         data={dataset}

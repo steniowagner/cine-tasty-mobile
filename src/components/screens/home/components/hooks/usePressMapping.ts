@@ -22,13 +22,6 @@ type ViewAllProps = {
   viewAllTitle: string;
 };
 
-type State = {
-  onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => void;
-  onPressTop3LearnMore: (media: SimplifiedMedia) => void;
-  onPressTrendingItem: (media: SimplifiedMedia) => void;
-  onPressSearch: () => void;
-};
-
 type Props = {
   navigation: HomeScreenNavigationProp;
   isMoviesSelected: boolean;
@@ -36,7 +29,7 @@ type Props = {
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
-const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
+const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
   const onNavigateToMovieDetailAfterPress = useCallback(
     (movie: SimplifiedMedia): void => {
       navigation.navigate('MOVIE_DETAIL', {
@@ -77,7 +70,6 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
         onPressTrendingItem: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
           navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-            onPressItem: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
             initialDataset: sectionItems,
             headerTitle: viewAllTitle,
             sectionKey: sectionID,
@@ -99,7 +91,6 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props): State => {
         onPressTrendingItem: (tvShow: SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
           navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
-            onPressItem: (tvShow: SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
             initialDataset: sectionItems,
             headerTitle: viewAllTitle,
             sectionKey: sectionID,

@@ -1,17 +1,15 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 import { DocumentNode } from 'graphql';
 
 import { ISO6391Language } from 'types/schema';
-import * as Queries from '@graphql/queries';
+import { getQuery } from '@graphql/queries';
 import { usePaginatedQuery } from 'hooks';
-import {
-  TrendingTVShowsKeys,
-  TrendingMoviesKeys,
-  TrendingMediaItemKey,
-  SimplifiedMedia,
-} from 'types';
+import * as Types from 'types';
 
+import { getTVShowProperQuery, getMovieProperQuery } from './get-proper-query';
+import { HomeStackParams } from '../../routes/route-params-types';
 import useOnGetData, { Data } from './useOnGetData';
 
 export const I18N_PAGINATE_TV_SHOWS_ERROR_REF = 'translations:home:tvShowsPaginationError';
@@ -23,66 +21,39 @@ type PaginationVariables = {
 };
 
 type Props = {
-  trendingMediaItemKey: TrendingMediaItemKey;
-  initialMediaItems: SimplifiedMedia[];
+  navigation: StackNavigationProp<HomeStackParams, 'MEDIA_DETAILS_VIEW_ALL'>;
+  trendingMediaItemKey: Types.TrendingMediaItemKey;
+  initialMediaItems: Types.SimplifiedMedia[];
   isMovie: boolean;
-};
-
-type State = {
-  onPressBottomReloadButton: () => void;
-  hasPaginationError: boolean;
-  dataset: SimplifiedMedia[];
-  onEndReached: () => void;
-  isPaginating: boolean;
-  error: string;
 };
 
 const useMediaSectionViewAll = ({
   trendingMediaItemKey,
   initialMediaItems,
+  navigation,
   isMovie,
-}: Props): State => {
-  const [mediaItems, setMediaItems] = useState<SimplifiedMedia[]>(initialMediaItems);
+}: Props) => {
+  const [mediaItems, setMediaItems] = useState<Types.SimplifiedMedia[]>(
+    initialMediaItems,
+  );
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
+  const onGetData = useOnGetData({ trendingMediaItemKey, isMovie });
   const { t } = useTranslation();
 
-  const onGetData = useOnGetData({ trendingMediaItemKey, isMovie });
-
-  const getMovieProperQuery = useCallback((trendingMovieKey: TrendingMediaItemKey) => {
-    const movieTrendingsMapping: Record<TrendingMoviesKeys, DocumentNode> = {
-      nowPlaying: Queries.NOW_PLAYING_MOVIES,
-      popular: Queries.POPULAR_MOVIES,
-      topRated: Queries.TOP_RATED_MOVIES,
-      upcoming: Queries.UPCOMING_MOVIES,
-    };
-
-    return movieTrendingsMapping[trendingMovieKey];
-  }, []);
-
-  const getTVShowProperQuery = useCallback((trendingMovieKey: TrendingMediaItemKey) => {
-    const tvShowTrendingsMapping: Record<TrendingTVShowsKeys, DocumentNode> = {
-      airingToday: Queries.AIRING_TODAY_TV_SHOWS,
-      onTheAir: Queries.ON_THE_AIR_TV_SHOWS,
-      popular: Queries.POPULAR_TV_SHOWS,
-      topRated: Queries.TOP_RATED_TV_SHOWS,
-    };
-
-    return tvShowTrendingsMapping[trendingMovieKey];
-  }, []);
-
-  const getProperQuery = useCallback(
-    (): DocumentNode => (isMovie
+  const properQuery = useMemo((): DocumentNode => {
+    const queryId = isMovie
       ? getMovieProperQuery(trendingMediaItemKey)
-      : getTVShowProperQuery(trendingMediaItemKey)),
-    [trendingMediaItemKey, isMovie],
-  );
+      : getTVShowProperQuery(trendingMediaItemKey);
+
+    return getQuery(queryId);
+  }, [trendingMediaItemKey, isMovie]);
 
   const handleOnGetData = useCallback((data: Data): boolean => {
     const { hasMore, items } = onGetData(data);
 
-    setMediaItems((preiviousMediaItems: SimplifiedMedia[]) => [
+    setMediaItems((preiviousMediaItems: Types.SimplifiedMedia[]) => [
       ...preiviousMediaItems,
       ...items,
     ]);
@@ -104,7 +75,7 @@ const useMediaSectionViewAll = ({
     onEntryQueryError: () => {},
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
-    query: getProperQuery(),
+    query: properQuery,
   });
 
   const onPressBottomReloadButton = useCallback(() => {
@@ -115,12 +86,37 @@ const useMediaSectionViewAll = ({
     onPaginateQuery();
   }, []);
 
+  const shouldShowListBottomReloadButton = useMemo(
+    () => !!mediaItems.length && (hasPaginationError || isPaginating),
+    [hasPaginationError, isPaginating, mediaItems],
+  );
+
+  const onPressItem = useCallback(
+    (item: Types.SimplifiedMedia) => {
+      const nextRoute = isMovie ? 'MOVIE_DETAIL' : 'TV_SHOW_DETAIL';
+
+      const params = {
+        genreIds: item.genreIds || [],
+        voteAverage: item.voteAverage,
+        posterPath: item.posterPath,
+        voteCount: item.voteCount,
+        title: item.title,
+        id: item.id,
+      };
+
+      navigation.navigate(nextRoute, params);
+    },
+    [isMovie],
+  );
+
   return {
+    shouldShowListBottomReloadButton,
     onEndReached: onPaginateQuery,
     onPressBottomReloadButton,
     dataset: mediaItems,
     hasPaginationError,
     isPaginating,
+    onPressItem,
     error,
   };
 };

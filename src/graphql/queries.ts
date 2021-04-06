@@ -531,6 +531,40 @@ export const getQuery = (queryId: CineTastyQuery) => {
       return SEARCH_MOVIES;
     case 'search_famous':
       return SEARCH_PERSON;
+    case 'get_famous':
+      return GET_FAMOUS;
+    case 'now_playing_movies':
+      return NOW_PLAYING_MOVIES;
+    case 'popular_movies':
+      return POPULAR_MOVIES;
+    case 'top_rated_movies':
+      return TOP_RATED_MOVIES;
+    case 'upcoming_movies':
+      return UPCOMING_MOVIES;
+    case 'airing_today_tv_shows':
+      return AIRING_TODAY_TV_SHOWS;
+    case 'on_the_air_tv_shows':
+      return ON_THE_AIR_TV_SHOWS;
+    case 'popular_tv_shows':
+      return POPULAR_TV_SHOWS;
+    case 'top_rated_tv_shows':
+      return TOP_RATED_TV_SHOWS;
+    case 'get_trending_movies':
+      return GET_TRENDING_MOVIES;
+    case 'get_trending_tv_shows':
+      return GET_TRENDING_TV_SHOWS;
+    case 'get_articles':
+      return GET_ARTICLES;
+    case 'get_quiz_questions':
+      return GET_QUIZ_QUESTIONS;
+    case 'get_famous_detail':
+      return GET_FAMOUS_DETAIL;
+    case 'tv_show_seasons_detail':
+      return TV_SHOW_SEASONS_DETAIL;
+    case 'get_tv_show_detail':
+      return GET_TV_SHOW_DETAIL;
+    case 'get_movie_detail':
+      return GET_MOVIE_DETAIL;
     default:
       return undefined;
   }

@@ -24,11 +24,12 @@ const mockedInitialDataset = Array(5)
     id: index,
   }));
 
+const navigate = jest.fn();
+
 const renderMediaSectionViewAll = (
   {
     initialDataset = mockedInitialDataset,
     sectionKey = 'nowPlaying',
-    onPressItem = jest.fn,
     headerTitle = '',
     isMovie = true,
   },
@@ -38,10 +39,10 @@ const renderMediaSectionViewAll = (
     <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={resolvers}>
         <MediaSectionViewAll
+          navigation={{ navigate }}
           route={{
             params: {
               initialDataset,
-              onPressItem,
               sectionKey,
               headerTitle,
               isMovie,
@@ -110,19 +111,21 @@ describe('Testing <MediaSectionViewAll /> - [Movies]', () => {
   });
 
   it('should call "onPressItem" correctly when some item on the list is pressed', () => {
-    const onPressItem = jest.fn();
-
-    const INDEX_ITEM_PRESSED = 3;
+    const INDEX_ITEM_PRESSED =
+      (Math.random() * (mockedInitialDataset.length - 1 - 0 + 1)) << 0;
 
     const { queryAllByTestId } = render(
-      renderMediaSectionViewAll({ onPressItem }, getMockResolvers()),
+      renderMediaSectionViewAll({}, getMockResolvers()),
     );
 
     fireEvent.press(queryAllByTestId('full-media-list-item')[INDEX_ITEM_PRESSED]);
 
-    expect(onPressItem).toHaveBeenCalledTimes(1);
+    expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(onPressItem).toHaveBeenCalledWith(mockedInitialDataset[INDEX_ITEM_PRESSED]);
+    expect(navigate).toHaveBeenCalledWith(
+      'MOVIE_DETAIL',
+      mockedInitialDataset[INDEX_ITEM_PRESSED],
+    );
   });
 
   it('shound show an error message when the user scroll to the end of the list and some error occurs during the pagination', () => {
