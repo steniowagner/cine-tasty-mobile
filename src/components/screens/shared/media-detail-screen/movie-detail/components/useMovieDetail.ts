@@ -1,13 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
+import { GET_MOVIE_DETAIL } from '@graphql/queries';
 import {
   MovieDetail_movie as Movie,
   MovieDetailVariables,
   MovieDetail,
 } from 'types/schema';
-
-import GET_MOVIE_DETAIL from './getMovieDetailQuery';
 
 type Props = {
   hasVoteAverage: boolean;

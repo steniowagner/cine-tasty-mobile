@@ -9,7 +9,7 @@ import {
 } from 'types';
 import { TrendingTVShows, TrendingMovies } from 'types/schema';
 
-import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '../queries';
+import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '@graphql/queries';
 import { HomeStackParams } from '../../routes/route-params-types';
 import useTrendingTVShows from './trendings/useTrendingTVShows';
 import useTrendingMovies from './trendings/useTrendingMovies';

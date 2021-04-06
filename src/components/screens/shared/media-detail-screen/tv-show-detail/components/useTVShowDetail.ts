@@ -1,13 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
+import { GET_TV_SHOW_DETAIL } from '@graphql/queries';
 import {
   TVShowDetail_tvShow as TVShow,
   TVShowDetailVariables,
   TVShowDetail,
 } from 'types/schema';
-
-import GET_TV_SHOW_DETAIL from './getTVShowDetailQuery';
 
 type Props = {
   hasVoteAverage: boolean;

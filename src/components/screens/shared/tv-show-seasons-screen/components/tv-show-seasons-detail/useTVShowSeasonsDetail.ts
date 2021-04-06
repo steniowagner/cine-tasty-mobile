@@ -1,33 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import gql from 'graphql-tag';
 
+import { TV_SHOW_SEASONS_DETAIL } from '@graphql/queries';
 import useImperativeQuery from 'utils/useImperativeQuery';
 import {
   TVShowSeasonsDetail_tvShowSeason as TVShowSeason,
   TVShowSeasonsDetailVariables,
   TVShowSeasonsDetail,
 } from 'types/schema';
-
-const TV_SHOW_SEASONS_DETAIL = gql`
-  query TVShowSeasonsDetail($id: ID!, $season: Int!, $language: ISO6391Language) {
-    tvShowSeason(id: $id, season: $season, language: $language) {
-      seasonNumber
-      posterPath
-      overview
-      id
-      episodes {
-        voteAverage
-        stillPath
-        voteCount
-        overview
-        airDate
-        name
-        id
-      }
-    }
-  }
-`;
 
 const INITIAL_QUERY_STATE: QueryState = {
   seasonDetail: undefined,

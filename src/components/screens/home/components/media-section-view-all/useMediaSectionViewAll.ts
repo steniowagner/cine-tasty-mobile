@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { DocumentNode } from 'graphql';
 
 import { ISO6391Language } from 'types/schema';
+import * as Queries from '@graphql/queries';
 import { usePaginatedQuery } from 'hooks';
 import {
   TrendingTVShowsKeys,
@@ -11,7 +12,6 @@ import {
   SimplifiedMedia,
 } from 'types';
 
-import * as TrendingQueries from './queries';
 import useOnGetData, { Data } from './useOnGetData';
 
 export const I18N_PAGINATE_TV_SHOWS_ERROR_REF = 'translations:home:tvShowsPaginationError';
@@ -52,10 +52,10 @@ const useMediaSectionViewAll = ({
 
   const getMovieProperQuery = useCallback((trendingMovieKey: TrendingMediaItemKey) => {
     const movieTrendingsMapping: Record<TrendingMoviesKeys, DocumentNode> = {
-      nowPlaying: TrendingQueries.NOW_PLAYING_MOVIES,
-      popular: TrendingQueries.POPULAR_MOVIES,
-      topRated: TrendingQueries.TOP_RATED_MOVIES,
-      upcoming: TrendingQueries.UPCOMING_MOVIES,
+      nowPlaying: Queries.NOW_PLAYING_MOVIES,
+      popular: Queries.POPULAR_MOVIES,
+      topRated: Queries.TOP_RATED_MOVIES,
+      upcoming: Queries.UPCOMING_MOVIES,
     };
 
     return movieTrendingsMapping[trendingMovieKey];
@@ -63,10 +63,10 @@ const useMediaSectionViewAll = ({
 
   const getTVShowProperQuery = useCallback((trendingMovieKey: TrendingMediaItemKey) => {
     const tvShowTrendingsMapping: Record<TrendingTVShowsKeys, DocumentNode> = {
-      airingToday: TrendingQueries.AIRING_TODAY_TV_SHOWS,
-      onTheAir: TrendingQueries.ON_THE_AIR_TV_SHOWS,
-      popular: TrendingQueries.POPULAR_TV_SHOWS,
-      topRated: TrendingQueries.TOP_RATED_TV_SHOWS,
+      airingToday: Queries.AIRING_TODAY_TV_SHOWS,
+      onTheAir: Queries.ON_THE_AIR_TV_SHOWS,
+      popular: Queries.POPULAR_TV_SHOWS,
+      topRated: Queries.TOP_RATED_TV_SHOWS,
     };
 
     return tvShowTrendingsMapping[trendingMovieKey];

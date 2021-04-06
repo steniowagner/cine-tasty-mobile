@@ -16,11 +16,11 @@ jest.mock('hooks', () => ({
   usePaginatedQuery: params => mockUsePaginatedQuery(params),
 }));
 
+import * as Queries from '@graphql/queries';
 import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';
-import * as TVShowsQueries from './queries';
 
 const renderMediaSectionViewAll = (
   {
@@ -62,7 +62,7 @@ describe('Testing the query selection for pagination on <MediaSectionViewAll /> 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
     expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(
-      TVShowsQueries.NOW_PLAYING_MOVIES,
+      Queries.NOW_PLAYING_MOVIES,
     );
   });
 
@@ -71,9 +71,7 @@ describe('Testing the query selection for pagination on <MediaSectionViewAll /> 
 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
-    expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(
-      TVShowsQueries.POPULAR_MOVIES,
-    );
+    expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(Queries.POPULAR_MOVIES);
   });
 
   it('shound select the TopRated-query', () => {
@@ -82,7 +80,7 @@ describe('Testing the query selection for pagination on <MediaSectionViewAll /> 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
     expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(
-      TVShowsQueries.TOP_RATED_MOVIES,
+      Queries.TOP_RATED_MOVIES,
     );
   });
 
@@ -91,8 +89,6 @@ describe('Testing the query selection for pagination on <MediaSectionViewAll /> 
 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
-    expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(
-      TVShowsQueries.UPCOMING_MOVIES,
-    );
+    expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(Queries.UPCOMING_MOVIES);
   });
 });
