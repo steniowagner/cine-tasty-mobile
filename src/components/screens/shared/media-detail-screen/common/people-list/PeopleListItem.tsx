@@ -11,9 +11,9 @@ import { useLoadListItemImage } from 'hooks';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
-interface WrapperStyleProps {
-  readonly isFirst: boolean;
-}
+type WrapperStyleProps = {
+  isFirst: boolean;
+};
 
 const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('40%')}px;

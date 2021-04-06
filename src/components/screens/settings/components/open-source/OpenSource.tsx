@@ -14,9 +14,9 @@ import libraries from './libraries';
 const GITHUB_URL = 'https://github.com/steniowagner';
 const TMDB_API_URL = 'https://www.themoviedb.org/';
 
-interface DefaultItemTextStyleProps {
-  readonly isSubtext?: boolean;
-}
+type DefaultItemTextStyleProps = {
+  isSubtext?: boolean;
+};
 
 const SectionWrapper = styled(View)`
   width: 100%;

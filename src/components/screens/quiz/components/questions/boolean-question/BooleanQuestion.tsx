@@ -8,9 +8,9 @@ import NextButton from '../NextButton';
 export const TRUE_TEXT_I18N_REF = 'translations:quiz:true';
 export const FALSE_TEXT_I18N_REF = 'translations:quiz:false';
 
-interface OptionSelectedStyleProps {
-  readonly isSelected: boolean;
-}
+type OptionSelectedStyleProps = {
+  isSelected: boolean;
+};
 
 const Wrapper = styled(View)`
   width: 100%;

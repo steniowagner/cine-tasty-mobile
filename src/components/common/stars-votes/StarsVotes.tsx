@@ -8,9 +8,9 @@ import metrics from 'styles/metrics';
 
 import useStarsVotes from './useStarsVotes';
 
-interface VotesTextStyleProps {
-  readonly textColor?: string;
-}
+type VotesTextStyleProps = {
+  textColor?: string;
+};
 
 const Wrapper = styled(View)`
   flex-direction: row;

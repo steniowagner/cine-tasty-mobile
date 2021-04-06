@@ -6,9 +6,9 @@ import EpisodeOverviewDetail from '../EpisodeOverviewDetail';
 import useSeasonOverviewText from './useSeasonOverviewText';
 import ModalDetail from '../../../ModalDetail';
 
-interface WrapperStyleProps {
-  readonly shouldShowReadMoreButton: boolean | undefined;
-}
+type WrapperStyleProps = {
+  shouldShowReadMoreButton: boolean | undefined;
+};
 
 const Wrapper = styled(View)<WrapperStyleProps>`
   opacity: ${({ shouldShowReadMoreButton }) => (typeof shouldShowReadMoreButton === 'boolean' ? 1 : 0)};

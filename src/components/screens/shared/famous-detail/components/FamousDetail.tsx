@@ -37,9 +37,9 @@ export const ERROR_DESCRIPTION_I18N_REF = 'translations:famousDetail:errorDescri
 export const ERROR_SUGGESTION_I18N_REF = 'translations:famousDetail:errorSuggestion';
 export const ERROR_TITLE_I18N_REF = 'translations:famousDetail:errorTitle';
 
-interface SmokeShadowStyleProps {
-  readonly currentTheme: ThemeId;
-}
+type SmokeShadowStyleProps = {
+  currentTheme: ThemeId;
+};
 
 const BackgroundImageWrapper = styled(Animated.View)`
   width: 100%;

@@ -14,9 +14,9 @@ import {
   WRAPPER_DEFAULT_HEIGHT,
 } from './SimplifiedMediaListItem';
 
-interface WrapperStyleProps {
-  readonly isFirst?: boolean;
-}
+type WrapperStyleProps = {
+  isFirst?: boolean;
+};
 
 const Wrapper = styled(View)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_WIDTH)}px;

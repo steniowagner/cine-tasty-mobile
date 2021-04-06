@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import useKnownForDepartment from './useKnownForDepartment';
 import InfoText from '../InfoText';
 
-interface KnownForDepartmentWrapperStyleProps {
-  readonly opacity: number;
-  readonly width: number;
-}
+type KnownForDepartmentWrapperStyleProps = {
+  opacity: number;
+  width: number;
+};
 
 const KnownForDepartmentWrapper = styled(View)<KnownForDepartmentWrapperStyleProps>`
   width: ${({ theme, width }) => theme.metrics.largeSize + width}px;

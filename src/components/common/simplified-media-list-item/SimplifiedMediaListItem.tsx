@@ -18,13 +18,13 @@ export const MEDIA_IMAGE_DEFAULT_HEIGHT = '70%';
 export const WRAPPER_DEFAULT_WIDTH = '40%';
 export const WRAPPER_DEFAULT_HEIGHT = '75%';
 
-interface DefaultTextStyleProps {
-  readonly withMarginLeft?: boolean;
-}
+type DefaultTextStyleProps = {
+  withMarginLeft?: boolean;
+};
 
-interface WrapperStyleProps {
-  readonly isFirst?: boolean;
-}
+type WrapperStyleProps = {
+  isFirst?: boolean;
+};
 
 const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({ theme }) => theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_WIDTH)}px;

@@ -10,13 +10,13 @@ import { ThemeId } from 'types';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
-interface WrapperButtonProps {
-  readonly width: number;
-}
+type WrapperButtonProps = {
+  width: number;
+};
 
-interface ItemTextProps {
-  readonly color: string;
-}
+type ItemTextProps = {
+  color: string;
+};
 
 const Wrapper = styled(TouchableOpacity)<WrapperButtonProps>`
   width: ${({ width }) => width}px;

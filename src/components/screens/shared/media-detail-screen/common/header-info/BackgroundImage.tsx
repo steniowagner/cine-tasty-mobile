@@ -8,9 +8,9 @@ import ProgressiveImage from 'components/common/progressive-image/ProgressiveIma
 import { useGetCurrentTheme } from 'hooks';
 import { ThemeId } from 'types';
 
-interface SmokeShadowStyleProps {
-  readonly currentTheme: ThemeId;
-}
+type SmokeShadowStyleProps = {
+  currentTheme: ThemeId;
+};
 
 const Wrapper = styled(View)`
   width: 100%;

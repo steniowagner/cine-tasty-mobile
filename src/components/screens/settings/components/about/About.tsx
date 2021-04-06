@@ -11,10 +11,10 @@ import metrics from 'styles/metrics';
 
 import socialNetworks from './socialNetworks';
 
-interface SocialNetworkButtonStyleProps {
-  readonly isMiddle: boolean;
-  readonly color: string;
-}
+type SocialNetworkButtonStyleProps = {
+  isMiddle: boolean;
+  color: string;
+};
 
 const Wrapper = styled(View)`
   width: 100%;
