@@ -251,8 +251,6 @@ describe('Testing <Home /> - [TVShows]', () => {
 
     expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
 
-    expect(typeof navigate.mock.calls[0][1].onPressItem).toEqual('function');
-
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
@@ -303,8 +301,6 @@ describe('Testing <Home /> - [TVShows]', () => {
 
     expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
 
-    expect(typeof navigate.mock.calls[0][1].onPressItem).toEqual('function');
-
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
@@ -354,8 +350,6 @@ describe('Testing <Home /> - [TVShows]', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
-
-    expect(typeof navigate.mock.calls[0][1].onPressItem).toEqual('function');
 
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 

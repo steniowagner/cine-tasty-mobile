@@ -156,4 +156,4 @@ export enum ThemeId {
   SYSTEM = 'SYSTEM',
 }
 
-export type CineTastyQuery = 'search_movie' | 'search_tv' | 'search_famous';
+export type CineTastyQuery = 'search_movie' | 'search_tv' | 'search_famous' | 'get_famous' | 'now_playing_movies' | 'popular_movies' | 'top_rated_movies' | 'upcoming_movies' | 'airing_today_tv_shows' | 'on_the_air_tv_shows' | 'popular_tv_shows' | 'top_rated_tv_shows' | 'get_trending_movies' | 'get_trending_tv_shows' | 'get_articles' | 'get_quiz_questions' | 'get_famous_detail' | 'tv_show_seasons_detail' | 'get_tv_show_detail' | 'get_movie_detail';
