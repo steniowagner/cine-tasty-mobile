@@ -7,9 +7,9 @@ import { ImageType } from 'types';
 
 import useProgressiveImage from './useProgressiveImage';
 
-interface ForegroundLayerStyleProps {
-  readonly borderRadius?: number;
-}
+type ForegroundLayerStyleProps = {
+  borderRadius?: number;
+};
 
 const ForegroundLayer = styled(View)<ForegroundLayerStyleProps>`
   height: 100%;

@@ -4,15 +4,15 @@ import styled from 'styled-components';
 
 import CONSTANTS from 'utils/constants';
 
-interface WrapperPaddingStyleProps {
-  readonly withHorizontalPadding?: boolean;
-  readonly noMarginBottom?: boolean;
-  readonly noMarginTop?: boolean;
-}
+type WrapperPaddingStyleProps = {
+  withHorizontalPadding?: boolean;
+  noMarginBottom?: boolean;
+  noMarginTop?: boolean;
+};
 
-interface TitleMarginStyleProps {
-  readonly withMarginLeft?: boolean;
-}
+type TitleMarginStyleProps = {
+  withMarginLeft?: boolean;
+};
 
 const Wrapper = styled(View)<WrapperPaddingStyleProps>`
   width: 100%;

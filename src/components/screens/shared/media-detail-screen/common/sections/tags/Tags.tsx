@@ -8,9 +8,9 @@ import metrics from 'styles/metrics';
 
 export const NUMBER_ITEMS = 4;
 
-interface ExtraTagStyleProp {
+type ExtraTagStyleProp = {
   isExtra: boolean;
-}
+};
 
 const Wrapper = styled(View)`
   width: 100%;

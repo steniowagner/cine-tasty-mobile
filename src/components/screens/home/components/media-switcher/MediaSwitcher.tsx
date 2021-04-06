@@ -6,14 +6,14 @@ import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import useMediaSwitcher, { SwitchItem } from './useMediaSwitcher';
 
-interface WrapperStyleProps {
-  readonly opacity: number;
-  readonly width: number;
-}
+type WrapperStyleProps = {
+  opacity: number;
+  width: number;
+};
 
-interface DynamicWidthStyleProps {
-  readonly width: number;
-}
+type DynamicWidthStyleProps = {
+  width: number;
+};
 
 const Wrapper = styled(View)<WrapperStyleProps>`
   width: ${({ width }) => width}px;

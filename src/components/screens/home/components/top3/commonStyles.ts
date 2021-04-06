@@ -12,10 +12,10 @@ export const ITEM_MARGING_TOP = 50;
 
 export const SPACER_ITEM_SIZE = (metrics.width - (ITEM_WIDTH + 2 * metrics.largeSize)) / 2;
 
-interface ItemWrapperStyleProps {
-  readonly isTheMiddle: boolean;
-  readonly width: number;
-}
+type ItemWrapperStyleProps = {
+  isTheMiddle: boolean;
+  width: number;
+};
 
 export const ItemWrapper = styled(Animated.View)<ItemWrapperStyleProps>`
   width: ${ITEM_WIDTH}px;

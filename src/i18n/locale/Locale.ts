@@ -40,7 +40,7 @@ type OpenSourceSection = {
   title: string;
 };
 
-export interface Locale {
+export type Locale = {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
   imageQualities: Record<ImageQualities, string>;
   languages: Record<Languages, string>;
@@ -234,4 +234,4 @@ export interface Locale {
     light: string;
     system: string;
   };
-}
+};

@@ -8,9 +8,9 @@ import metrics from 'styles/metrics';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('10%');
 
-interface SelectedItemStyleProps {
-  readonly isSelected: boolean;
-}
+type SelectedItemStyleProps = {
+  isSelected: boolean;
+};
 
 export const ITEM_LIST_HEIGHT = metrics.getWidthFromDP('20%');
 

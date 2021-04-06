@@ -17,14 +17,14 @@ import {
   ITEM_HEIGHT,
 } from './commonStyles';
 
-interface ItemWrapperStyleProps {
-  readonly isTheMiddle: boolean;
-  readonly width: number;
-}
+type ItemWrapperStyleProps = {
+  isTheMiddle: boolean;
+  width: number;
+};
 
-interface StarsWrapperStyleProps {
-  readonly currentTheme: ThemeId;
-}
+type StarsWrapperStyleProps = {
+  currentTheme: ThemeId;
+};
 
 const Wrapper = styled(Animated.View)<ItemWrapperStyleProps>`
   width: ${ITEM_WIDTH}px;

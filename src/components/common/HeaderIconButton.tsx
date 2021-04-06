@@ -7,10 +7,10 @@ import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import { Icons } from 'components/common/svg-icon/icons';
 import metrics from 'styles/metrics';
 
-interface WrapperStyleProps {
-  readonly withMarginRight?: boolean;
-  readonly withMarginLeft?: boolean;
-}
+type WrapperStyleProps = {
+  withMarginRight?: boolean;
+  withMarginLeft?: boolean;
+};
 
 const Wrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
   hitSlop: {

@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import metrics from 'styles/metrics';
 
-interface ListItemWrapperStyleProps {
-  readonly isSelected: boolean;
-}
+type ListItemWrapperStyleProps = {
+  isSelected: boolean;
+};
 
 const ListItemWrapper = styled(TouchableOpacity)<ListItemWrapperStyleProps>`
   width: 100%;

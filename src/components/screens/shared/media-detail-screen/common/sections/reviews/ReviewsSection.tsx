@@ -11,9 +11,9 @@ import {
 import ReviewSectionListItem from './ReviewSectionListItem';
 import useReviewsSection from './useReviewsSection';
 
-interface DotStyleProps {
-  readonly isSelected: boolean;
-}
+type DotStyleProps = {
+  isSelected: boolean;
+};
 
 const ContentWrapper = styled(View)`
   width: 100%;

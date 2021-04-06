@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 export const DEFAULT_MARGIN_VERTICAL_PERCENTAGE = '2%';
 
-interface InfoTextStyle {
-  readonly withVerticalMargin?: number;
-  readonly withCustomColor?: number;
-}
+type InfoTextStyle = {
+  withVerticalMargin?: number;
+  withCustomColor?: number;
+};
 
 const InfoText = styled(Text)<InfoTextStyle>`
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
