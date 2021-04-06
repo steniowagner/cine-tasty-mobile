@@ -16,7 +16,7 @@ import { formatDate } from 'utils/formatters';
 import { useStatusBarStyle } from 'hooks';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
-import ProductionCompanies from '../../common/sections/ProductionsList';
+import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
 import PeopleList from '../../common/people-list/PeopleList';
@@ -243,13 +243,6 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
                 />
               </Section>
             )}
-            <Reviews
-              onPressViewAll={() => navigation.navigate('REVIEWS', {
-                mediaTitle: tvShow.name,
-                reviews: tvShow.reviews,
-              })}
-              reviews={tvShow.reviews}
-            />
             {!!tvShow?.productionCompanies.length && (
               <Section
                 title={t(TV_SHOWS_PRODUCTION_COMPANIES_I18N_REF)}
@@ -259,6 +252,13 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
                 />
               </Section>
             )}
+            <Reviews
+              onPressViewAll={() => navigation.navigate('REVIEWS', {
+                mediaTitle: tvShow.name,
+                reviews: tvShow.reviews,
+              })}
+              reviews={tvShow.reviews}
+            />
             <Section
               title={
                 tvShow?.similar.length

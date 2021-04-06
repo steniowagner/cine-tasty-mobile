@@ -13,7 +13,7 @@ import Section from 'components/common/Section';
 import { useStatusBarStyle } from 'hooks';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
-import ProductionCompanies from '../../common/sections/ProductionsList';
+import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
 import PeopleList from '../../common/people-list/PeopleList';
@@ -188,13 +188,6 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
               videos={movie.videos}
             />
             )}
-            <Reviews
-              onPressViewAll={() => navigation.navigate('REVIEWS', {
-                mediaTitle: movie.title,
-                reviews: movie.reviews,
-              })}
-              reviews={movie.reviews}
-            />
             {!!movie.productionCompanies.length && (
               <Section
                 title={t(MOVIE_PRODUCTION_COMPANIES_I18N_REF)}
@@ -204,6 +197,13 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
                 />
               </Section>
             )}
+            <Reviews
+              onPressViewAll={() => navigation.navigate('REVIEWS', {
+                mediaTitle: movie.title,
+                reviews: movie.reviews,
+              })}
+              reviews={movie.reviews}
+            />
             <Section
               title={
                 movie.similar.length
