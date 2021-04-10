@@ -11,7 +11,7 @@ import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider'
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
 import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 
-import * as T from 'i18n/tags';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import { SECTION_TITLE_I18N_REF as SECTION_OVERVIEW_I18N_REF } from '../../common/sections/overview/Overview';
 import { SECTION_TITLE_I18N_REF as SECTION_GENERAL_INFO_I18N_REF } from '../../common/sections/GeneralInfo';
@@ -305,7 +305,7 @@ describe('Testing <MovieDetail />', () => {
 
     // Videos section
 
-    expect(getByText(T.VIDEOS_SECTION)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_VIDEOS)).not.toBeNull();
 
     expect(getByTestId('videos-list')).not.toBeNull();
 

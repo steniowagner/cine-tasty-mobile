@@ -5,8 +5,8 @@ import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
-import * as T from 'i18n/tags';
 
 import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
@@ -346,7 +346,7 @@ describe('Testing <TVShowDetail />', () => {
 
     // Videos section
 
-    expect(getByText(T.VIDEOS_SECTION)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_VIDEOS)).not.toBeNull();
 
     expect(getByTestId('videos-list')).not.toBeNull();
 

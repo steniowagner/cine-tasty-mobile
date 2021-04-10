@@ -10,7 +10,7 @@ import {
   MovieDetail_movie_videos as MovieVideos,
 } from 'types/schema';
 import metrics from 'styles/metrics';
-import * as T from 'i18n/tags';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import * as S from './videos-styles';
 
@@ -25,7 +25,7 @@ const Videos = ({ videos }: VideosProps) => {
 
   return (
     <Section
-      title={t(T.VIDEOS_SECTION)}
+      title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_VIDEOS)}
     >
       <FlatList
         showsHorizontalScrollIndicator={false}

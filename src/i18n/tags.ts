@@ -233,5 +233,3 @@ export const MEDIA_DETAIL_SECTIONS_ORIGINAL_COUNTRY = 'translations:mediaDetail:
 export const MEDIA_DETAIL_SECTIONS_CREATED_BY = 'translations:mediaDetail:sections:createdBy';
 export const MEDIA_DETAIL_SECTIONS_SEASONS = 'translations:mediaDetail:sections:seasons';
 export const MEDIA_DETAIL_SECTIONS_NETWORKS = 'translations:mediaDetail:sections:networks';
-
-export const VIDEOS_SECTION = 'translations:mediaDetail:sections:videos';
