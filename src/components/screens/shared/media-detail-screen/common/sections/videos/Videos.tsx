@@ -25,7 +25,7 @@ const Videos = ({ videos }: VideosProps) => {
 
   return (
     <Section
-      title={t(T.VIDEOS_SECTION_I18N)}
+      title={t(T.VIDEOS_SECTION)}
     >
       <FlatList
         showsHorizontalScrollIndicator={false}

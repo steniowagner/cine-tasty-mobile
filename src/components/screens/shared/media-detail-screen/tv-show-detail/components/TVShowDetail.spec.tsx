@@ -346,7 +346,7 @@ describe('Testing <TVShowDetail />', () => {
 
     // Videos section
 
-    expect(getByText(T.VIDEOS_SECTION_I18N)).not.toBeNull();
+    expect(getByText(T.VIDEOS_SECTION)).not.toBeNull();
 
     expect(getByTestId('videos-list')).not.toBeNull();
 
