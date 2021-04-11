@@ -19,6 +19,7 @@ import {
   GetFamousDetail_person_tvCast as TVShowCast,
 } from 'types/schema';
 import { useGetCurrentTheme, useStatusBarStyle } from 'hooks';
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 import { ThemeId } from 'types';
 
@@ -27,15 +28,6 @@ import HeaderBackButton from '../../HeaderBackButton';
 import useFamousDetail from './useFamousDetail';
 import HeaderInfo from './header/HeaderInfo';
 import DeathDay from './death-day/DeathDay';
-
-export const CAST_MOVIES_SECTION_I18N_REF = 'translations:famousDetail:castMovies';
-export const BIOGRAPHY_SECTION_I18N_REF = 'translations:famousDetail:biography';
-export const TV_SHOWS_SECTION_I18N_REF = 'translations:famousDetail:castTV';
-export const IMAGES_SECTION_I18N_REF = 'translations:famousDetail:images';
-
-export const ERROR_DESCRIPTION_I18N_REF = 'translations:famousDetail:errorDescription';
-export const ERROR_SUGGESTION_I18N_REF = 'translations:famousDetail:errorSuggestion';
-export const ERROR_TITLE_I18N_REF = 'translations:famousDetail:errorTitle';
 
 type SmokeShadowStyleProps = {
   currentTheme: ThemeId;
@@ -113,8 +105,8 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
 
   const renderImagesSection = useCallback((images: string[]) => {
     const sectionImagesTitle = images.length > 0
-      ? t(IMAGES_SECTION_I18N_REF)
-      : `${t(IMAGES_SECTION_I18N_REF)} (0)`;
+      ? t(TRANSLATIONS.FAMOUS_DETAIL_IMAGES)
+      : `${t(TRANSLATIONS.FAMOUS_DETAIL_IMAGES)} (0)`;
 
     return (
       <ImagesSectionWrapper>
@@ -132,8 +124,8 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
 
   const renderMovieCastSection = useCallback((movieCast: MovieCast[]) => {
     const sectionCastMoviesTitle = movieCast.length > 0
-      ? t(CAST_MOVIES_SECTION_I18N_REF)
-      : `${t(CAST_MOVIES_SECTION_I18N_REF)} (0)`;
+      ? t(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)
+      : `${t(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)} (0)`;
 
     return (
       <Section
@@ -168,8 +160,8 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
 
   const renderTVShowCastSection = useCallback((tvShowCast: TVShowCast[]) => {
     const sectionCastTVShowsTitle = tvShowCast.length > 0
-      ? t(TV_SHOWS_SECTION_I18N_REF)
-      : `${t(TV_SHOWS_SECTION_I18N_REF)} (0)`;
+      ? t(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)
+      : `${t(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)} (0)`;
 
     return (
       <Section
@@ -205,9 +197,9 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
   if (hasError) {
     return (
       <Advise
-        description={t(ERROR_DESCRIPTION_I18N_REF)}
-        suggestion={t(ERROR_SUGGESTION_I18N_REF)}
-        title={t(ERROR_TITLE_I18N_REF)}
+        description={t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_DESCRIPTION)}
+        suggestion={t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_SUGGESTION)}
+        title={t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_TITLE)}
         icon="alert-box"
       />
     );
@@ -274,7 +266,7 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
           testID="biography-section"
         >
           <ExpansibleTextSection
-            sectionTitle={t(BIOGRAPHY_SECTION_I18N_REF)}
+            sectionTitle={t(TRANSLATIONS.FAMOUS_DETAIL_BIOGRAPGY)}
             text={famous?.biography}
             isLoading={isLoading}
           />

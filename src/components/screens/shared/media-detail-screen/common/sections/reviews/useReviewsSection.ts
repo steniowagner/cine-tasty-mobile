@@ -2,6 +2,7 @@ import { useCallback, useState, useRef } from 'react';
 import { NativeSyntheticEvent, NativeScrollEvent, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 
 type State = {
@@ -34,7 +35,7 @@ const useReviewsSection = (): State => {
   );
 
   return {
-    sectionTitle: t('translations:mediaDetail:sections:reviews'),
+    sectionTitle: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_REVIEW),
     indexReviewSelected,
     onMomentumScrollEnd,
     flatListRef,

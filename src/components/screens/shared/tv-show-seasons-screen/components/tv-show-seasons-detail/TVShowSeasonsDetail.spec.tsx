@@ -4,16 +4,12 @@ import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
-import TVShowSeasonsDetail, {
-  EPISODES_ERROR_DESCRIPTION_I18N_REF,
-  EPISODES_ERROR_SUGGESTION_I18N_REF,
-  EPISODES_ERROR_TITLE_I18N_REF,
-  EPISODES_SECTION_I18N_REF,
-} from './TVShowSeasonsDetail';
+import TVShowSeasonsDetail from './TVShowSeasonsDetail';
 
 const params = {
   season: 1,
@@ -102,7 +98,9 @@ describe('Testing <TVShowSeasonsDetail />', () => {
 
     expect(getByTestId('header-wrapper')).not.toBeNull();
 
-    expect(getByText(EPISODES_SECTION_I18N_REF)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_EPISODE),
+    ).not.toBeNull();
   });
 
   it('should render an advise when some error occurs', () => {
@@ -124,10 +122,14 @@ describe('Testing <TVShowSeasonsDetail />', () => {
 
     expect(getByTestId('advise-wrapper')).not.toBeNull();
 
-    expect(getByText(EPISODES_ERROR_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION),
+    ).not.toBeNull();
 
-    expect(getByText(EPISODES_ERROR_SUGGESTION_I18N_REF)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION),
+    ).not.toBeNull();
 
-    expect(getByText(EPISODES_ERROR_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE)).not.toBeNull();
   });
 });

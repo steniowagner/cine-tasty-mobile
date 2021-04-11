@@ -6,6 +6,7 @@ import { IMocks } from 'graphql-tools';
 
 import { CustomizedModalChildrenType } from 'types';
 import { ArticleLanguage } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 import { PAGINATION_DELAY } from 'hooks/use-paginated-query/useQueryWithPagination';
@@ -13,12 +14,7 @@ import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 
-import News, {
-  EMPTY_NEWS_DESCRIPTION_I18N_REF,
-  EMPTY_NEWS_SUGGESTION_I18N_REF,
-  EMPTY_NEWS_TITLE_I18N_REF,
-  FILTER_MESSAGE_I18N_REF,
-} from './News';
+import News from './News';
 
 const news = Array(10)
   .fill({})
@@ -76,7 +72,9 @@ describe('Testing <News />', () => {
 
     expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
 
-    expect(navigate.mock.calls[0][1].headerText).toEqual(FILTER_MESSAGE_I18N_REF);
+    expect(navigate.mock.calls[0][1].headerText).toEqual(
+      TRANSLATIONS.NEWS_FILTER_MESSAGE,
+    );
 
     expect(navigate.mock.calls[0][1].type).toEqual(CustomizedModalChildrenType.LANGUAGE);
 
@@ -124,11 +122,11 @@ describe('Testing <News />', () => {
 
     expect(queryByTestId('advise-wrapper')).not.toBeNull();
 
-    expect(getByText(EMPTY_NEWS_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.NEWS_EMPTY_LIST_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(EMPTY_NEWS_SUGGESTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.NEWS_EMPTY_LIST_SUGGESTION)).not.toBeNull();
 
-    expect(getByText(EMPTY_NEWS_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.NEWS_EMPTY_LIST_TITLE)).not.toBeNull();
 
     expect(queryByTestId('news-list')).toBeNull();
   });

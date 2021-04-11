@@ -7,21 +7,10 @@ import {
   TrendingTVShows,
   TrendingTVShow,
 } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 import { HomeSection } from 'types';
 
 import parseTrendingToSimplifiedMedia from './parseTrendingToSimplifiedMedia';
-
-export const ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:onTheAirViewAllTitle';
-export const ON_THE_AIR_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:onTheAir';
-
-export const POPULAR_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:popularViewAllTitle';
-export const POPULAR_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:popular';
-
-export const TOP_RATED_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:topRatedViewAllTitle';
-export const TOP_RATED_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:topRated';
-
-export const AIRING_TODAY_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingTvShows:airingTodayViewAllTitle';
-export const AIRING_TODAY_SECTION_TITLE_i18N_REF = 'translations:home:trendingTvShows:airingToday';
 
 type Props = {
   rawTrendingTVShows: TrendingTVShows;
@@ -42,23 +31,23 @@ const useTrendingMovies = ({ rawTrendingTVShows }: Props): State => {
     (trendingItemKey: TrendingItemKey, dataset: TrendingTVShow[]): HomeSection => {
       const sectionMapping: Record<TrendingItemKey, Omit<HomeSection, 'data'>> = {
         onTheAir: {
-          viewAllTitle: t(ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF),
-          sectionTitle: t(ON_THE_AIR_SECTION_TITLE_i18N_REF),
+          viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ON_THE_AIR_VIEW_ALL),
+          sectionTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ON_THE_AIR),
           id: 'onTheAir',
         },
         airingToday: {
-          viewAllTitle: t(AIRING_TODAY_VIEW_ALL_TITLE_i18N_REF),
-          sectionTitle: t(AIRING_TODAY_SECTION_TITLE_i18N_REF),
+          viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_AIRING_TODAY_VIEW_ALL),
+          sectionTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_AIRING_TODAY),
           id: 'airingToday',
         },
         popular: {
-          viewAllTitle: t(POPULAR_VIEW_ALL_TITLE_i18N_REF),
-          sectionTitle: t(POPULAR_SECTION_TITLE_i18N_REF),
+          viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_POPULAR_VIEW_ALL),
+          sectionTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_POPULAR),
           id: 'popular',
         },
         topRated: {
-          viewAllTitle: t(TOP_RATED_VIEW_ALL_TITLE_i18N_REF),
-          sectionTitle: t(TOP_RATED_SECTION_TITLE_i18N_REF),
+          viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_TOP_RATED_VIEW_ALL),
+          sectionTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_TOP_RATED),
           id: 'topRated',
         },
       };

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 
 import BackgroundImage from './BackgroundImage';
@@ -117,7 +118,7 @@ const HeaderInfo = ({
                 />
                 <Row>
                   <NumberOfVotesText>{voteCount}</NumberOfVotesText>
-                  <VotesText>{t('translations:mediaDetail:votes')}</VotesText>
+                  <VotesText>{t(TRANSLATIONS.MEDIA_DETAIL_VOTES)}</VotesText>
                 </Row>
               </View>
               <VotesValueText>{votesAverage.toFixed(1)}</VotesValueText>

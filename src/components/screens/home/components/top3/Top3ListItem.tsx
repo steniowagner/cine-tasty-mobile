@@ -6,6 +6,7 @@ import styled, { DefaultTheme, withTheme } from 'styled-components';
 import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
 import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import RoundedButton from 'components/common/RoundedButton';
+import * as TRANSLATIONS from 'i18n/tags';
 import { useGetCurrentTheme } from 'hooks';
 import { ThemeId } from 'types';
 
@@ -136,7 +137,7 @@ const Top3ListItem = ({
         >
           <RoundedButton
             onPress={onPress}
-            text={t('translations:home:learMoreButtonText')}
+            text={t(TRANSLATIONS.HOME_LEARN_MORE)}
           />
         </LearnMoreButtonWrapper>
       </TextContentWrapper>

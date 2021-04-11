@@ -4,9 +4,9 @@ import { ThemeProvider } from 'styled-components';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
-import { AIR_DATE_I18N_REF } from './episode-detail/EpisodeDetail';
 import TVShowSeasonsListItem from './TVShowSeasonsListItem';
 
 const episodeMock: Episode = {
@@ -64,7 +64,7 @@ describe('Testing <TVShowSeasonsListItem />', () => {
     expect(getByTestId('episode-title-text').children[0]).toEqual(episodeMock.name);
 
     expect(getByTestId('air-date-text').children[0]).toEqual(
-      `${AIR_DATE_I18N_REF} ${episodeMock.airDate}`,
+      `${TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE} ${episodeMock.airDate}`,
     );
 
     expect(getByTestId('overview-text').children[0]).toEqual(episodeMock.overview);

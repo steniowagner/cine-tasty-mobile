@@ -3,17 +3,12 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
-import {
-  ON_THE_AIR_SECTION_TITLE_i18N_REF as TV_SHOWS_ON_THE_AIR_SECTION_TITLE_i18N_REF,
-  TOP_RATED_SECTION_TITLE_i18N_REF as TV_SHOWS_TOP_RATED_SECTION_TITLE_i18N_REF,
-  POPULAR_SECTION_TITLE_i18N_REF as TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF,
-} from './hooks/trendings/useTrendingTVShows';
-import { I18N_TV_SHOWS_KEY } from './header/Header';
 import Home from './Home';
 
 const trendingTVShowsItems = Array(10)
@@ -153,7 +148,7 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -183,9 +178,10 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
 
   it('should navigate to TVShow-detail screen when the user select some section-item', () => {
     const sections = [
-      `home-section-${TV_SHOWS_ON_THE_AIR_SECTION_TITLE_i18N_REF}`,
-      `home-section-${TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF}`,
-      `home-section-${TV_SHOWS_TOP_RATED_SECTION_TITLE_i18N_REF}`,
+      `home-section-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ON_THE_AIR}`,
+      `home-section-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_POPULAR}`,
+      `home-section-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_TOP_RATED}`,
+      `home-section-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_AIRING_TODAY}`,
     ];
 
     const SECTION_ITEM_INDEX_SELECTED =
@@ -208,7 +204,7 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);

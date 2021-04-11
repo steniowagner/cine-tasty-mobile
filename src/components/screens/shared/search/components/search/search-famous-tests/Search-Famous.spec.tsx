@@ -6,6 +6,7 @@ import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SearchType } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
@@ -16,12 +17,7 @@ import timeTravel, {
 import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
-
-import Search, {
-  ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF,
-  ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF,
-  ADVISE_EMPTY_LIST_TITLE_I18N_REF,
-} from '../Search';
+import Search from '../Search';
 
 const {
   getItemFromStorage,
@@ -164,11 +160,11 @@ describe('Testing <Search /> - [Famous]', () => {
 
     expect(queryByTestId('search-famous-list').props.data).toEqual([]);
 
-    expect(getByText(ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_SUGGESTION)).not.toBeNull();
 
-    expect(getByText(ADVISE_EMPTY_LIST_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_TITLE)).not.toBeNull();
   });
 
   it('should navigate to tv-show-detail-screen when the user press a certain tv-show-item', () => {

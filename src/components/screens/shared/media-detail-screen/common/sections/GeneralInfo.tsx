@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import Section from 'components/common/Section';
-
-export const SECTION_TITLE_I18N_REF = 'translations:mediaDetail:sections:details';
+import * as TRANSLATIONS from 'i18n/tags';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -49,7 +48,7 @@ const GeneralInfo = ({ infoItems }: Props) => {
   return (
     !!infoItems.length && (
       <Section
-        title={t(SECTION_TITLE_I18N_REF)}
+        title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_DETAILS)}
       >
         <Wrapper
           testID="general-info-wrapper"

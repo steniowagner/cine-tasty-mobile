@@ -4,27 +4,11 @@ import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SearchType } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import { SCREEN_ID } from './media-section-view-all/MediaSectionViewAll';
-
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
-import {
-  NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF as MOVIES_NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF,
-  NOW_PLAYING_SECTION_TITLE_i18N_REF as MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF,
-  TOP_RATED_VIEW_ALL_TITLE_i18N_REF as MOVIES_TOP_RATED_VIEW_ALL_TITLE_i18N_REF,
-  UPCOMING_VIEW_ALL_TITLE_i18N_REF as MOVIES_UPCOMING_VIEW_ALL_TITLE_i18N_REF,
-  TOP_RATED_SECTION_TITLE_i18N_REF as MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF,
-  UPCOMING_SECTION_TITLE_i18N_REF as MOVIES_UPCOMING_SECTION_TITLE_i18N_REF,
-  POPULAR_VIEW_ALL_TITLE_i18N_REF as MOVIES_POPULAR_VIEW_ALL_TITLE_i18N_REF,
-  POPULAR_SECTION_TITLE_i18N_REF as MOVIES_POPULAR_SECTION_TITLE_i18N_REF,
-} from './hooks/trendings/useTrendingMovies';
-import { TRENDING_MOVIES_ERROR_REF_I18N } from './hooks/useHome';
-import {
-  SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
-  SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
-  SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
-} from './hooks/usePressMapping';
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
@@ -140,34 +124,34 @@ describe('Testing <Home /> - [Movies]', () => {
 
     // now-playing-section
 
-    expect(getByText(MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`),
     ).not.toBeNull();
 
     // top-rated-section
 
-    expect(getByText(MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`),
     ).not.toBeNull();
 
     // upcoming-section
 
-    expect(getByText(MOVIES_UPCOMING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`),
     ).not.toBeNull();
 
     // popular-section
 
-    expect(getByText(MOVIES_UPCOMING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`),
     ).not.toBeNull();
 
     act(() => {
@@ -197,7 +181,7 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(getByTestId('popup-advice-wrapper')).not.toBeNull();
 
     expect(getByTestId('popup-advice-message').children[0]).toEqual(
-      TRENDING_MOVIES_ERROR_REF_I18N,
+      TRANSLATIONS.HOME_TRENDING_MOVIES_ERROR,
     );
 
     expect(queryByTestId('loading-home')).toBeNull();
@@ -225,7 +209,7 @@ describe('Testing <Home /> - [Movies]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
@@ -239,7 +223,7 @@ describe('Testing <Home /> - [Movies]', () => {
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
-      MOVIES_NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF,
+      TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING_VIEW_ALL,
     );
 
     expect(navigate.mock.calls[0][1].sectionKey).toEqual('nowPlaying');
@@ -263,7 +247,7 @@ describe('Testing <Home /> - [Movies]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${MOVIES_POPULAR_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
@@ -277,7 +261,7 @@ describe('Testing <Home /> - [Movies]', () => {
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
-      MOVIES_POPULAR_VIEW_ALL_TITLE_i18N_REF,
+      TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR_VIEW_ALL,
     );
 
     expect(navigate.mock.calls[0][1].sectionKey).toEqual('popular');
@@ -301,7 +285,7 @@ describe('Testing <Home /> - [Movies]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
@@ -315,7 +299,7 @@ describe('Testing <Home /> - [Movies]', () => {
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
-      MOVIES_TOP_RATED_VIEW_ALL_TITLE_i18N_REF,
+      TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED_VIEW_ALL,
     );
 
     expect(navigate.mock.calls[0][1].sectionKey).toEqual('topRated');
@@ -339,7 +323,7 @@ describe('Testing <Home /> - [Movies]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
@@ -353,7 +337,7 @@ describe('Testing <Home /> - [Movies]', () => {
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
-      MOVIES_UPCOMING_VIEW_ALL_TITLE_i18N_REF,
+      TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING_VIEW_ALL,
     );
 
     expect(navigate.mock.calls[0][1].sectionKey).toEqual('upcoming');
@@ -381,9 +365,9 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith('SEARCH', {
-      i18nQueryByPaginationErrorRef: SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
-      i18nQueryByTextErrorRef: SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
-      i18nSearchBarPlaceholderRef: SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
+      i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
+      i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
+      i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PLACEHOLDER,
       searchType: SearchType.MOVIE,
       queryId: 'search_movie',
     });
@@ -391,10 +375,10 @@ describe('Testing <Home /> - [Movies]', () => {
 
   it('should navigate to TVShow-detail screen when the user select some section-item', () => {
     const sections = [
-      `home-section-${MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF}`,
-      `home-section-${MOVIES_POPULAR_SECTION_TITLE_i18N_REF}`,
-      `home-section-${MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF}`,
-      `home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`,
+      `home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`,
+      `home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`,
+      `home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`,
+      `home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`,
     ];
 
     const SECTION_ITEM_INDEX_SELECTED =

@@ -4,20 +4,13 @@ import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
 
-import FamousDetail, {
-  CAST_MOVIES_SECTION_I18N_REF,
-  BIOGRAPHY_SECTION_I18N_REF,
-  TV_SHOWS_SECTION_I18N_REF,
-  IMAGES_SECTION_I18N_REF,
-  ERROR_DESCRIPTION_I18N_REF,
-  ERROR_SUGGESTION_I18N_REF,
-  ERROR_TITLE_I18N_REF,
-} from './FamousDetail';
+import FamousDetail from './FamousDetail';
 
 const route = {
   params: {
@@ -105,17 +98,17 @@ describe('Testing <FamousDetail />', () => {
 
     expect(getByTestId('loading-header-placeholder')).not.toBeNull();
 
-    expect(getByText(BIOGRAPHY_SECTION_I18N_REF)).not.toBeNull();
-
     expect(getByTestId('biography-section')).not.toBeNull();
 
     expect(getByTestId('profile-image')).not.toBeNull();
 
-    expect(queryByText(IMAGES_SECTION_I18N_REF)).toBeNull();
+    expect(getByText(TRANSLATIONS.FAMOUS_DETAIL_BIOGRAPGY)).not.toBeNull();
 
-    expect(queryByText(CAST_MOVIES_SECTION_I18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_IMAGES)).toBeNull();
 
-    expect(queryByText(TV_SHOWS_SECTION_I18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)).toBeNull();
+
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)).toBeNull();
   });
 
   it('should render the content correctly when all the data is returned', () => {
@@ -144,13 +137,13 @@ describe('Testing <FamousDetail />', () => {
 
     expect(queryByTestId('death-day-info')).not.toBeNull();
 
-    expect(getByText(BIOGRAPHY_SECTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.FAMOUS_DETAIL_BIOGRAPGY)).not.toBeNull();
 
-    expect(getByText(IMAGES_SECTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.FAMOUS_DETAIL_IMAGES)).not.toBeNull();
 
-    expect(getByText(CAST_MOVIES_SECTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)).not.toBeNull();
 
-    expect(getByText(TV_SHOWS_SECTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)).not.toBeNull();
 
     expect(getByTestId('scroll-content')).not.toBeNull();
 
@@ -190,9 +183,9 @@ describe('Testing <FamousDetail />', () => {
       jest.runAllTimers();
     });
 
-    expect(getByText(BIOGRAPHY_SECTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.FAMOUS_DETAIL_BIOGRAPGY)).not.toBeNull();
 
-    expect(getByText(`${CAST_MOVIES_SECTION_I18N_REF} (0)`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES} (0)`)).not.toBeNull();
   });
 
   it('should render the tv-cast section correctly when the tv-cast field is an empty array', () => {
@@ -209,7 +202,7 @@ describe('Testing <FamousDetail />', () => {
       jest.runAllTimers();
     });
 
-    expect(getByText(`${TV_SHOWS_SECTION_I18N_REF} (0)`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.FAMOUS_DETAIL_CAST_TV} (0)`)).not.toBeNull();
   });
 
   it('should render just a "-" on the biography section when the biography text is an empty string', () => {
@@ -261,23 +254,23 @@ describe('Testing <FamousDetail />', () => {
 
     expect(getByTestId('advise-wrapper')).not.toBeNull();
 
-    expect(queryByText(ERROR_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_ERROR_DESCRIPTION)).not.toBeNull();
 
-    expect(queryByText(ERROR_SUGGESTION_I18N_REF)).not.toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_ERROR_SUGGESTION)).not.toBeNull();
 
-    expect(queryByText(ERROR_TITLE_I18N_REF)).not.toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_ERROR_TITLE)).not.toBeNull();
 
     expect(queryByTestId('biography-section')).toBeNull();
 
     expect(queryByTestId('profile-image')).toBeNull();
 
-    expect(queryByText(BIOGRAPHY_SECTION_I18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_BIOGRAPGY)).toBeNull();
 
-    expect(queryByText(IMAGES_SECTION_I18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_IMAGES)).toBeNull();
 
-    expect(queryByText(CAST_MOVIES_SECTION_I18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)).toBeNull();
 
-    expect(queryByText(TV_SHOWS_SECTION_I18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)).toBeNull();
 
     expect(queryByTestId('background-image-wrapper')).toBeNull();
 

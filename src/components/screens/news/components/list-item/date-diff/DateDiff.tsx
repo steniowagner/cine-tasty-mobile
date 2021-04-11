@@ -3,6 +3,7 @@ import { Text } from 'react-native';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import { ThemeId } from 'types';
 
 const DefaultText = styled(Text)`
@@ -25,17 +26,17 @@ type Props = {
 const DateDiff = ({ now, date }: Props) => {
   const { t } = useTranslation();
 
-  const handleYearsPassed = (value: number): string => t('translations:time:year', { value });
+  const handleYearsPassed = (value: number): string => t(TRANSLATIONS.TIME_YEAR, { value });
 
-  const handleMonthsPassed = (value: number): string => t('translations:time:month', { value });
+  const handleMonthsPassed = (value: number): string => t(TRANSLATIONS.TIME_MONTH, { value });
 
-  const handleDaysPassed = (value: number): string => t('translations:time:day', { value });
+  const handleDaysPassed = (value: number): string => t(TRANSLATIONS.TIME_DAY, { value });
 
-  const handleHoursPassed = (value: number): string => t('translations:time:hour', { value });
+  const handleHoursPassed = (value: number): string => t(TRANSLATIONS.TIME_HOUR, { value });
 
-  const handleMinutesPassed = (value: number): string => t('translations:time:minute', { value });
+  const handleMinutesPassed = (value: number): string => t(TRANSLATIONS.TIME_MINUTE, { value });
 
-  const handleSecondsPassed = (value: number): string => t('translations:time:second', { value });
+  const handleSecondsPassed = (value: number): string => t(TRANSLATIONS.TIME_SECOND, { value });
 
   const getDateDiffInSeconds = (): number => {
     const peaceNewsDate = new Date(date);

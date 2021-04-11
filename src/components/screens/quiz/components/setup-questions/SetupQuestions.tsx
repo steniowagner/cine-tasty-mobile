@@ -4,16 +4,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
 import RoundedButton from 'components/common/RoundedButton';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import NumberOfQuestions from './NumberOfQuestionts';
 import useSetupQuestions from './useSetupQuestions';
 import DropdownOption from './DropdownOption';
-
-export const QUIZ_NUMBER_OF_QUESTIONS_I18N_REF = 'translations:quiz:numberOfQuestions';
-export const QUIZ_DIFFICULTY_I18N_REF = 'translations:quiz:difficulty';
-export const QUIZ_CATEGORY_I18N_REF = 'translations:quiz:category';
-export const QUIZ_TYPE_I18N_REF = 'translations:quiz:type';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -54,22 +50,22 @@ const SetupQuestions = ({ navigation }: Props) => {
   return (
     <Wrapper>
       <View>
-        <Label>{t(QUIZ_DIFFICULTY_I18N_REF)}</Label>
+        <Label>{t(TRANSLATIONS.QUIZ_DIFFICULTY)}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('DIFFICULTY')}
-          selectedOption={t(`translations:quiz:${questionDifficulty.id}`)}
+          selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionDifficulty.id}`)}
         />
-        <Label>{t(QUIZ_CATEGORY_I18N_REF)}</Label>
+        <Label>{t(TRANSLATIONS.QUIZ_CATEGORY)}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('CATEGORY')}
-          selectedOption={t(`translations:quiz:${questionCategory.id}`)}
+          selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionCategory.id}`)}
         />
-        <Label>{t(QUIZ_TYPE_I18N_REF)}</Label>
+        <Label>{t(TRANSLATIONS.QUIZ_TYPE)}</Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('TYPE')}
-          selectedOption={t(`translations:quiz:${questionType.id}`)}
+          selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionType.id}`)}
         />
-        <Label>{t(QUIZ_NUMBER_OF_QUESTIONS_I18N_REF)}</Label>
+        <Label>{t(TRANSLATIONS.QUIZ_NUMBER_OF_QUESTIONS)}</Label>
         <NumberOfQuestions
           onSetNumberQuestions={setNumberOfQuestions}
           numberOfQuestions={numberOfQuestions}
@@ -78,7 +74,7 @@ const SetupQuestions = ({ navigation }: Props) => {
       <SafeAreaView>
         <RoundedButtonWrapper>
           <RoundedButton
-            text={t('translations:quiz:startButton')}
+            text={t(TRANSLATIONS.QUIZ_START_BUTTON)}
             onPress={onPressStartQuiz}
           />
         </RoundedButtonWrapper>

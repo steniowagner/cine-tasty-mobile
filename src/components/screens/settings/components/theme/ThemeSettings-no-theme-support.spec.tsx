@@ -1,8 +1,12 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
+import { ThemeContextProvider } from 'providers';
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import { ThemeId } from 'types';
+
+import ThemeSettings from './ThemeSettings';
 
 jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -11,10 +15,7 @@ const {
   getItemFromStorage,
 } = require('utils/async-storage-adapter/AsyncStorageAdapter');
 
-import { ThemeContextProvider } from 'providers';
-
-import { DARK_I18N_REF, LIGHT_I18N_REF } from './useGetThemeOptions';
-import ThemeSettings from './ThemeSettings';
+jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
 
 const renderThemeSettings = () => (
   <ThemeContextProvider>
@@ -36,9 +37,13 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
 
     expect(getAllByTestId('option-settings').length).toEqual(2);
 
-    expect(getAllByTestId('option-title')[0].children[0]).toEqual(DARK_I18N_REF);
+    expect(getAllByTestId('option-title')[0].children[0]).toEqual(
+      TRANSLATIONS.THEME_DARK,
+    );
 
-    expect(getAllByTestId('option-title')[1].children[0]).toEqual(LIGHT_I18N_REF);
+    expect(getAllByTestId('option-title')[1].children[0]).toEqual(
+      TRANSLATIONS.THEME_LIGHT,
+    );
 
     act(() => {
       jest.runAllTimers();

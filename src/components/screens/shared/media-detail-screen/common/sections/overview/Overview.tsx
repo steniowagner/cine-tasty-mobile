@@ -5,11 +5,10 @@ import styled from 'styled-components';
 
 import MediaItemDescription from 'components/common/media-item-description/MediaItemDescription';
 import Section from 'components/common/Section';
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 
 import LoadingOverview from './LoadingOverview';
-
-export const SECTION_TITLE_I18N_REF = 'translations:mediaDetail:sections:overview';
 
 const MediaItemDescriptionWrapper = styled(View)`
   padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
@@ -25,7 +24,7 @@ const Overview = ({ isLoading, overview }: Props) => {
 
   return (
     <Section
-      title={t(SECTION_TITLE_I18N_REF)}
+      title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)}
     >
       {isLoading ? (
         <LoadingOverview />

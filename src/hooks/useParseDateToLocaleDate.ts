@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import * as TRANSLATIONS from 'i18n/tags';
+
 type State = {
   dateText: string;
 };
@@ -16,7 +18,7 @@ export const useParseDateToLocaleDate = (rawDateString: string): State => {
 
       let parsedDate: string;
 
-      const monthText = t(`translations:months.${Number(month) - 1}`);
+      const monthText = t(`${TRANSLATIONS.MONTHS}.${Number(month) - 1}`);
 
       switch (currentLanguage) {
         case 'ptBR':

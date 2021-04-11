@@ -14,6 +14,7 @@ import Advise from 'components/common/advise/Advise';
 import Section from 'components/common/Section';
 import { formatDate } from 'utils/formatters';
 import { useStatusBarStyle } from 'hooks';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
@@ -26,26 +27,6 @@ import Header from '../../common/header-info/HeaderInfo';
 import Videos from '../../common/sections/videos/Videos';
 import Tags from '../../common/sections/tags/Tags';
 import useTVShowDetail from './useTVShowDetail';
-
-export const TV_SHOWS_NUMBER_NUMBER_OF_EPISODES_I18N_REF = 'translations:mediaDetail:sections:numberOfEpisodes';
-export const TV_SHOWS_NUMBER_NUMBER_OF_SEASONS_I18N_REF = 'translations:mediaDetail:sections:numberOfSeasons';
-export const TV_SHOWS_PRODUCTION_COMPANIES_I18N_REF = 'translations:mediaDetail:sections:productionCompanies';
-export const TV_SHOW_ORIGINAL_LANGUAGE_I18N_REF = 'translations:mediaDetail:sections:originalLanguage';
-export const TV_SHOWS_EPISODE_RUN_TIME_I18N_REF = 'translations:mediaDetail:sections:episodeRunTime';
-export const TV_SHOWS_ORIGIN_COUNTRY_I18N_REF = 'translations:mediaDetail:sections:originCountry';
-export const TV_SHOWS_FIRST_AIR_DATE_I18N_REF = 'translations:mediaDetail:sections:firstAirDate';
-export const TV_SHOW_ORIGINAL_TITLE_I18N_REF = 'translations:mediaDetail:sections:originalTitle';
-export const TV_SHOWS_LAST_AIR_DATE_I18N_REF = 'translations:mediaDetail:sections:lastAirDate';
-export const TV_SHOWS_CREATED_BY_I18N_REF = 'translations:mediaDetail:sections:createdBy';
-export const TV_SHOWS_NETWORKS_I18N_REF = 'translations:mediaDetail:sections:networks';
-export const ERROR_DESCRIPTION_I18N_REF = 'translations:mediaDetail:errorDescription';
-export const ERROR_SUGGESTION_I18N_REF = 'translations:mediaDetail:errorSuggestion';
-export const TV_SHOWS_SIMILAR_I18N_REF = 'translations:mediaDetail:sections:similar';
-export const TV_SHOW_SEASONS_I18N_REF = 'translations:mediaDetail:sections:seasons';
-export const TV_SHOWS_IMAGES_I18N_REF = 'translations:mediaDetail:sections:images';
-export const TV_SHOWS_CREW_I18N_REF = 'translations:mediaDetail:sections:crew';
-export const TV_SHOWS_CAST_I18N_REF = 'translations:mediaDetail:sections:cast';
-export const ERROR_TITLE_I18N_REF = 'translations:mediaDetail:errorTitle';
 
 const SeeSeasonsButtonWrapper = styled(View)`
   width: 100%;
@@ -95,9 +76,9 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
           animated
         />
         <Advise
-          description={t(ERROR_DESCRIPTION_I18N_REF)}
-          suggestion={t(ERROR_SUGGESTION_I18N_REF)}
-          title={t(ERROR_TITLE_I18N_REF)}
+          description={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_DESCRIPTION)}
+          suggestion={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_SUGGESTION)}
+          title={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_TITLE)}
           icon="alert-box"
         />
       </>
@@ -123,7 +104,7 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
           isLoading={isLoading}
         />
         <Tags
-          extraTags={[firstAirDate, t('translations:mediaDetail:tvShow:tvShow')]}
+          extraTags={[firstAirDate, t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_TITLE)]}
           tags={route.params.genreIds || tvShow?.genres || []}
           isLoading={!route.params.genreIds && isLoading}
         />
@@ -136,37 +117,37 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
             <GeneralInfo
               infoItems={[
                 {
-                  title: t(TV_SHOW_ORIGINAL_TITLE_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE),
                   value: tvShow.name || '-',
                 },
                 {
                   value: tvShow.originalLanguage,
-                  title: t(TV_SHOW_ORIGINAL_LANGUAGE_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_LANGUAGE),
                 },
                 {
-                  title: t(TV_SHOWS_NUMBER_NUMBER_OF_EPISODES_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_EPISODES),
                   value: tvShow.numberOfEpisodes ? String(tvShow.numberOfEpisodes) : '-',
                 },
                 {
-                  title: t(TV_SHOWS_NUMBER_NUMBER_OF_SEASONS_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_SEASONS),
                   value: tvShow.numberOfSeasons ? String(tvShow.numberOfSeasons) : '-',
                 },
                 {
-                  title: t(TV_SHOWS_EPISODE_RUN_TIME_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_EPISODE_RUNTIME),
                   value: tvShow.episodeRunTime.length
                     ? tvShow.episodeRunTime.join(', ')
                     : '-',
                 },
                 {
-                  title: t(TV_SHOWS_ORIGIN_COUNTRY_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_COUNTRY),
                   value: tvShow.originCountry ? tvShow.originCountry.join(', ') : '-',
                 },
                 {
-                  title: t(TV_SHOWS_FIRST_AIR_DATE_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_FIRST_AIR_DATE),
                   value: formatDate(tvShow.firstAirDate),
                 },
                 {
-                  title: t(TV_SHOWS_LAST_AIR_DATE_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_LAST_AIR_DATE),
                   value: formatDate(tvShow.lastAirDate),
                 },
               ]}
@@ -174,7 +155,7 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
             {tvShow?.numberOfSeasons > 0 && (
               <SeeSeasonsButtonWrapper>
                 <RoundedButton
-                  text={t(TV_SHOW_SEASONS_I18N_REF)}
+                  text={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SEASONS)}
                   onPress={() => navigation.navigate('TV_SHOW_SEASONS', {
                     numberOfSeasons: tvShow.numberOfSeasons,
                     title: tvShow.name,
@@ -190,7 +171,7 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
                   id: Number(id),
                   name,
                 })}
-                sectionTitle={t(TV_SHOWS_CREATED_BY_I18N_REF)}
+                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREATED_BY)}
                 dataset={tvShow.createdBy}
                 noSubtext={false}
                 type="creator"
@@ -203,7 +184,7 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
                   id: Number(id),
                   name,
                 })}
-                sectionTitle={t(TV_SHOWS_CAST_I18N_REF)}
+                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
                 dataset={tvShow.cast}
                 type="cast"
               />
@@ -215,14 +196,14 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
                   id: Number(id),
                   name,
                 })}
-                sectionTitle={t(TV_SHOWS_CREW_I18N_REF)}
+                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)}
                 dataset={tvShow.crew}
                 type="crew"
               />
             )}
             {!!tvShow?.images.length && (
               <Section
-                title={t(TV_SHOWS_IMAGES_I18N_REF)}
+                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}
               >
                 <ImagesList
                   images={tvShow.images}
@@ -236,7 +217,7 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
             )}
             {!!tvShow?.networks.length && (
               <Section
-                title={t(TV_SHOWS_NETWORKS_I18N_REF)}
+                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NETWORKS)}
               >
                 <ProductionCompanies
                   productionsList={tvShow.networks}
@@ -245,7 +226,7 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
             )}
             {!!tvShow?.productionCompanies.length && (
               <Section
-                title={t(TV_SHOWS_PRODUCTION_COMPANIES_I18N_REF)}
+                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES)}
               >
                 <ProductionCompanies
                   productionsList={tvShow.productionCompanies}
@@ -262,8 +243,8 @@ const TVShowDetail = ({ navigation, theme, route }: Props) => {
             <Section
               title={
                 tvShow?.similar.length
-                  ? t(TV_SHOWS_SIMILAR_I18N_REF)
-                  : `${t(TV_SHOWS_SIMILAR_I18N_REF)} (0)`
+                  ? t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)
+                  : `${t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)} (0)`
               }
             >
               <FlatList

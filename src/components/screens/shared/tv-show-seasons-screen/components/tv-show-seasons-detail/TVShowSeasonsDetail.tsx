@@ -6,16 +6,12 @@ import styled from 'styled-components';
 import LoadingIndicator from 'components/common/LoadingIndicator';
 import Advise from 'components/common/advise/Advise';
 import Section from 'components/common/Section';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import TVShowSeasonsListItem from './tv-show-list-item/TVShowSeasonsListItem';
 import { TVShowSeasonsStackParams } from '../../routes/route-params-types';
 import useTVShowSeasonsDetail from './useTVShowSeasonsDetail';
 import Header from './header/Header';
-
-export const EPISODES_ERROR_DESCRIPTION_I18N_REF = 'translations:mediaDetail:tvShow:errors:description';
-export const EPISODES_ERROR_SUGGESTION_I18N_REF = 'translations:mediaDetail:tvShow:errors:suggestion';
-export const EPISODES_SECTION_I18N_REF = 'translations:mediaDetail:tvShow:seasonEpisode:episodes';
-export const EPISODES_ERROR_TITLE_I18N_REF = 'translations:mediaDetail:tvShow:errors:title';
 
 const LineDivider = styled(View)`
   width: 100%;
@@ -48,9 +44,9 @@ const TVShowSeasonsDetail = ({ route }: Params) => {
   if (hasError) {
     return (
       <Advise
-        description={t(EPISODES_ERROR_DESCRIPTION_I18N_REF)}
-        suggestion={t(EPISODES_ERROR_SUGGESTION_I18N_REF)}
-        title={t(EPISODES_ERROR_TITLE_I18N_REF)}
+        description={t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION)}
+        suggestion={t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION)}
+        title={t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE)}
         icon="server-network-off"
       />
     );
@@ -68,7 +64,7 @@ const TVShowSeasonsDetail = ({ route }: Params) => {
               image={seasonDetail.posterPath}
             />
             <Section
-              title={t(EPISODES_SECTION_I18N_REF)}
+              title={t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_EPISODE)}
               noMarginBottom
             >
               <></>

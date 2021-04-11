@@ -11,10 +11,9 @@ import MovieDetail from 'components/screens/shared/media-detail-screen/movie-det
 import Reviews, {
   Props as ReviewsExternalParams,
 } from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
-
 import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
-
+import * as TRANSLATIONS from 'i18n/tags';
 import Famous from '../components/Famous';
 import LOCAL_ROUTES from './route-names';
 
@@ -35,7 +34,7 @@ const FamousStack = ({ theme }: Props) => {
         name={LOCAL_ROUTES.FAMOUS.id}
         options={{
           ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:tabs:famous'),
+          headerTitle: t(TRANSLATIONS.TABS_FAMOUS),
         }}
         component={Famous}
       />

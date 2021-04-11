@@ -6,13 +6,11 @@ import styled from 'styled-components';
 import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import HeaderIconButton from 'components/common/HeaderIconButton';
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
 import MediaSwitcher from '../media-switcher/MediaSwitcher';
-
-export const I18N_TV_SHOWS_KEY = 'translations:home:tvShows';
-export const I18N_MOVIES_KEY = 'translations:home:movies';
 
 const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
   colors: [
@@ -71,11 +69,11 @@ const Header = ({
     () => [
       {
         onPress: onPressSwitchMovies,
-        titlei18nRef: I18N_MOVIES_KEY,
+        titlei18nRef: TRANSLATIONS.HOME_MOVIES,
       },
       {
         onPress: onPresSwitchTVShows,
-        titlei18nRef: I18N_TV_SHOWS_KEY,
+        titlei18nRef: TRANSLATIONS.HOME_TV_SHOWS,
       },
     ],
     [onPressSwitchMovies, onPresSwitchTVShows],

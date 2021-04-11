@@ -3,13 +3,10 @@ import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
-import {
-  DEFAULT_NUMBER_OF_LINES,
-  READ_MORE_I18N_KEY,
-  READ_LESS_I18N_KEY,
-} from './useMediaItemDescription';
+import { DEFAULT_NUMBER_OF_LINES } from './useMediaItemDescription';
 import MediaListItemDescription from './MediaItemDescription';
 
 const DESCRIPTION = 'SOME DESCRIPTION';
@@ -49,7 +46,9 @@ describe('Testing <MediaItemDescription />', () => {
       DEFAULT_NUMBER_OF_LINES,
     );
 
-    expect(getByTestId('expandable-read-text').children[0]).toEqual(READ_MORE_I18N_KEY);
+    expect(getByTestId('expandable-read-text').children[0]).toEqual(
+      TRANSLATIONS.FAMOUS_DETAIL_READ_MORE,
+    );
   });
 
   it('should render correctly when the text is less than the value stored on DEFAULT_NUMBER_OF_LINES', () => {
@@ -122,7 +121,9 @@ describe('Testing <MediaItemDescription />', () => {
       DEFAULT_NUMBER_OF_LINES,
     );
 
-    expect(getByTestId('expandable-read-text').children[0]).toEqual(READ_MORE_I18N_KEY);
+    expect(getByTestId('expandable-read-text').children[0]).toEqual(
+      TRANSLATIONS.FAMOUS_DETAIL_READ_MORE,
+    );
 
     fireEvent.press(getByTestId('expandable-read-button'));
 
@@ -134,7 +135,9 @@ describe('Testing <MediaItemDescription />', () => {
       INCREASED_NUMBER_OF_LINES,
     );
 
-    expect(getByTestId('expandable-read-text').children[0]).toEqual(READ_LESS_I18N_KEY);
+    expect(getByTestId('expandable-read-text').children[0]).toEqual(
+      TRANSLATIONS.FAMOUS_DETAIL_READ_LESS,
+    );
   });
 
   it('should show correctly when the user press the "READ-LESS" button', () => {
@@ -165,7 +168,9 @@ describe('Testing <MediaItemDescription />', () => {
       INCREASED_NUMBER_OF_LINES,
     );
 
-    expect(getByTestId('expandable-read-text').children[0]).toEqual(READ_LESS_I18N_KEY);
+    expect(getByTestId('expandable-read-text').children[0]).toEqual(
+      TRANSLATIONS.FAMOUS_DETAIL_READ_LESS,
+    );
 
     fireEvent.press(getByTestId('expandable-read-button'));
 
@@ -177,6 +182,8 @@ describe('Testing <MediaItemDescription />', () => {
       DEFAULT_NUMBER_OF_LINES,
     );
 
-    expect(getByTestId('expandable-read-text').children[0]).toEqual(READ_MORE_I18N_KEY);
+    expect(getByTestId('expandable-read-text').children[0]).toEqual(
+      TRANSLATIONS.FAMOUS_DETAIL_READ_MORE,
+    );
   });
 });

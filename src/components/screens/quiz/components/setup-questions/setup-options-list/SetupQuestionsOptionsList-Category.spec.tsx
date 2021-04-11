@@ -2,11 +2,10 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
-import SetupQuestionsOptionsList, {
-  I18N_SELECT_BUTTON_KEY,
-} from './SetupQuestionsOptionsList';
+import SetupQuestionsOptionsList from './SetupQuestionsOptionsList';
 import { categories } from '../options';
 
 type Props = {
@@ -48,7 +47,7 @@ describe('Testing <SetupQuestionsOptionsList /> - [Category]', () => {
 
     expect(getByTestId('select-button')).not.toBeNull();
 
-    expect(getByText(I18N_SELECT_BUTTON_KEY)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SELECT)).not.toBeNull();
 
     expect(getAllByTestId('option-list-item').length).toEqual(categories.length);
 

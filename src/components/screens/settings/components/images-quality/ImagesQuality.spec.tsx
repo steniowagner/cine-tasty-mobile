@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import theme from 'styles/theme';
 
@@ -15,7 +16,7 @@ const {
   persistItemInStorage,
 } = require('utils/async-storage-adapter/AsyncStorageAdapter');
 
-import { IMAGE_QUALITIES_I18N_REF, qualities } from './useImagesQuality';
+import { qualities } from './useImagesQuality';
 import ImagesQuality from './ImagesQuality';
 
 const renderImagesQualitySettings = () => (
@@ -32,13 +33,13 @@ describe('Testing <ImagesQuality />', () => {
 
     expect(getAllByTestId('option-settings').length).toEqual(4);
 
-    expect(getByText(`${IMAGE_QUALITIES_I18N_REF}:${qualities[0]}`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.IMAGE_QUALITIES}:${qualities[0]}`)).not.toBeNull();
 
-    expect(getByText(`${IMAGE_QUALITIES_I18N_REF}:${qualities[1]}`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.IMAGE_QUALITIES}:${qualities[1]}`)).not.toBeNull();
 
-    expect(getByText(`${IMAGE_QUALITIES_I18N_REF}:${qualities[2]}`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.IMAGE_QUALITIES}:${qualities[2]}`)).not.toBeNull();
 
-    expect(getByText(`${IMAGE_QUALITIES_I18N_REF}:${qualities[3]}`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.IMAGE_QUALITIES}:${qualities[3]}`)).not.toBeNull();
   });
 
   it('should call "onPress" with the correct params when the user press on the list-item', () => {

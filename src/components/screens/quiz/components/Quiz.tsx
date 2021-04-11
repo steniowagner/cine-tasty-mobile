@@ -5,14 +5,10 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import RoundedButton from 'components/common/RoundedButton';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import { QuizStackParams } from '../routes/route-params-types';
 import LOCAL_ROUTES from '../routes/route-names';
-
-export const I18N_CHOOSE_QUESTIONS_REF = 'translations:quiz:chooseQuestions';
-export const I18N_DESCRIPTION_REF = 'translations:quiz:decription';
-export const I18N_CHALLENGE_REF = 'translations:quiz:challenge';
-export const I18N_WELCOME_REF = 'translations:quiz:welcome';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -48,12 +44,12 @@ const Quiz = ({ navigation }: Props) => {
 
   return (
     <Wrapper>
-      <LargeText>{t(I18N_WELCOME_REF)}</LargeText>
-      <SubText>{t(I18N_DESCRIPTION_REF)}</SubText>
-      <LargeText>{t(I18N_CHALLENGE_REF)}</LargeText>
+      <LargeText>{t(TRANSLATIONS.QUIZ_WELCOME)}</LargeText>
+      <SubText>{t(TRANSLATIONS.QUIZ_DESCRIPTION)}</SubText>
+      <LargeText>{t(TRANSLATIONS.QUIZ_CHALLENGE)}</LargeText>
       <RoundedButton
         onPress={() => navigation.navigate(LOCAL_ROUTES.SETUP_QUESTIONS.id)}
-        text={t(I18N_CHOOSE_QUESTIONS_REF)}
+        text={t(TRANSLATIONS.QUIZ_CHOOSE_QUESTIONS)}
       />
     </Wrapper>
   );

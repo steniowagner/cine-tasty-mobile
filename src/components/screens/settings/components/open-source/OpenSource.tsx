@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { SvgCssUri } from 'react-native-svg';
 import styled from 'styled-components';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
@@ -74,9 +75,9 @@ const OpenSource = () => {
       }}
     >
       <SectionWrapper>
-        <SectionTitle>{t('translations:openSource:tmdb:title')}</SectionTitle>
+        <SectionTitle>{t(TRANSLATIONS.OPEN_SOURCE_TMDB_TITLE)}</SectionTitle>
         <SectionDescrpition>
-          {t('translations:openSource:tmdb:description')}
+          {t(TRANSLATIONS.OPEN_SOURCE_TMDB_DESCRIPTION)}
         </SectionDescrpition>
         <SvgCssUri
           width={metrics.getWidthFromDP('50%')}
@@ -88,18 +89,18 @@ const OpenSource = () => {
         />
       </SectionWrapper>
       <SectionWrapper>
-        <SectionTitle>{t('translations:openSource:github:title')}</SectionTitle>
+        <SectionTitle>{t(TRANSLATIONS.OPEN_SOURCE_GITHUB_TITLE)}</SectionTitle>
         <SectionDescrpition>
-          {t('translations:openSource:github:description')}
+          {t(TRANSLATIONS.OPEN_SOURCE_GITHUB_DESCRIPTION)}
         </SectionDescrpition>
         <LinkButton
           url={GITHUB_URL}
         />
       </SectionWrapper>
       <SectionWrapper>
-        <SectionTitle>{t('translations:openSource:libraries:title')}</SectionTitle>
+        <SectionTitle>{t(TRANSLATIONS.OPEN_SOURCE_LIBRARIES_TITLE)}</SectionTitle>
         <SectionDescrpition>
-          {t('translations:openSource:libraries:description')}
+          {t(TRANSLATIONS.OPEN_SOURCE_LIBRARIES_DESCRIPTION)}
         </SectionDescrpition>
         {libraries.map((library) => (
           <TouchableOpacity

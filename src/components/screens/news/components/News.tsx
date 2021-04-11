@@ -11,6 +11,7 @@ import HeaderIconButton from 'components/common/HeaderIconButton';
 import Advise from 'components/common/advise/Advise';
 import { CustomizedModalChildrenType } from 'types';
 import { ArticleLanguage } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 
 import { NewsStackParams } from '../routes/route-params-types';
@@ -20,11 +21,6 @@ import NewsLoading from './loading-list/NewsLoading';
 import useNews from './useNews';
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
-
-export const EMPTY_NEWS_DESCRIPTION_I18N_REF = 'translations:news:emptyList:description';
-export const EMPTY_NEWS_SUGGESTION_I18N_REF = 'translations:news:emptyList:suggestion';
-export const EMPTY_NEWS_TITLE_I18N_REF = 'translations:news:emptyList:title';
-export const FILTER_MESSAGE_I18N_REF = 'translations:news:filterMessage';
 
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
@@ -55,7 +51,7 @@ const News = ({ navigation }: Props) => {
         <HeaderIconButton
           onPress={() => navigation.navigate('CUSTOM_MODAL', {
             type: CustomizedModalChildrenType.LANGUAGE,
-            headerText: t(FILTER_MESSAGE_I18N_REF),
+            headerText: t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
             extraData: {
               onPressSelect: onSelectArticleLanguage,
               lastItemSelected: articleLanguage,
@@ -81,9 +77,9 @@ const News = ({ navigation }: Props) => {
         testID="list-empty-component-wrapper"
       >
         <Advise
-          description={t(EMPTY_NEWS_DESCRIPTION_I18N_REF)}
-          suggestion={t(EMPTY_NEWS_SUGGESTION_I18N_REF)}
-          title={t(EMPTY_NEWS_TITLE_I18N_REF)}
+          description={t(TRANSLATIONS.NEWS_EMPTY_LIST_DESCRIPTION)}
+          suggestion={t(TRANSLATIONS.NEWS_EMPTY_LIST_SUGGESTION)}
+          title={t(TRANSLATIONS.NEWS_EMPTY_LIST_TITLE)}
           icon="alert-box"
         />
       </View>

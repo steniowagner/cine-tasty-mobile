@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const READ_MORE_I18N_KEY = 'translations:famousDetail:readMore';
-export const READ_LESS_I18N_KEY = 'translations:famousDetail:readLess';
+import * as TRANSLATIONS from 'i18n/tags';
+
 export const DEFAULT_NUMBER_OF_LINES = 5;
 
 type State = {
@@ -47,10 +47,10 @@ const useMediaItemDescription = (): State => {
     const isReadMoreActive = numberOfLines === DEFAULT_NUMBER_OF_LINES;
 
     if (isReadMoreActive) {
-      return t(READ_MORE_I18N_KEY);
+      return t(TRANSLATIONS.FAMOUS_DETAIL_READ_MORE);
     }
 
-    return t(READ_LESS_I18N_KEY);
+    return t(TRANSLATIONS.FAMOUS_DETAIL_READ_LESS);
   }, [numberOfLines]);
 
   return {

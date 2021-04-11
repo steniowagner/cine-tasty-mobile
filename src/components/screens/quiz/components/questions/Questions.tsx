@@ -11,6 +11,7 @@ import LoadingIndicator from 'components/common/LoadingIndicator';
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import Advise from 'components/common/advise/Advise';
 import { QuestionType } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 
 import ListItemWrapper from './list-item-wrapper-question/ListItemWrapperQuestion';
@@ -18,14 +19,6 @@ import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
 import { QuizStackParams } from '../../routes/route-params-types';
 import BooleanQuestion from './boolean-question/BooleanQuestion';
 import useQuestions from './useQuestions';
-
-export const NO_QUESTIONS_ERROR_DESCRIPTION_I18N_REF = 'translations:quiz:noQuestionsAdviseDescription';
-export const NO_QUESTIONS_ERROR_SUGGESTION_I18N_REF = 'translations:quiz:noQuestionsAdviseSuggestion';
-export const NO_QUESTIONS_ERROR_TITLE_I18N_REF = 'translations:quiz:noQuestionsAdviseTitle';
-
-export const NO_CONNECTION_ERROR_DESCRIPTION_I18N_REF = 'translations:errors:network:description';
-export const NO_CONNECTION_ERROR_SUGGGESTION_I18N_REF = 'translations:errors:network:suggestion';
-export const NO_CONNECTION_ERROR_TITLE_I18N_REF = 'translations:errors:network:title';
 
 const RestartQuizButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   hitSlop: {
@@ -104,9 +97,9 @@ const Questions = ({ navigation, route }: Props) => {
         testID="network-error-wrapper"
       >
         <Advise
-          description={t(NO_CONNECTION_ERROR_DESCRIPTION_I18N_REF)}
-          suggestion={t(NO_CONNECTION_ERROR_SUGGGESTION_I18N_REF)}
-          title={t(NO_CONNECTION_ERROR_TITLE_I18N_REF)}
+          description={t(TRANSLATIONS.ERRORS_NETWORK_ERROR_DESCRIPTION)}
+          suggestion={t(TRANSLATIONS.ERRORS_NETWORK_ERROR_SUGGESTION)}
+          title={t(TRANSLATIONS.ERRORS_NETWORK_ERROR_TITLE)}
           icon="server-network-off"
         />
       </ErrorWrapper>
@@ -119,9 +112,9 @@ const Questions = ({ navigation, route }: Props) => {
         testID="no-questions-error-wrapper"
       >
         <Advise
-          description={t(NO_QUESTIONS_ERROR_DESCRIPTION_I18N_REF)}
-          suggestion={t(NO_QUESTIONS_ERROR_SUGGESTION_I18N_REF)}
-          title={t(NO_QUESTIONS_ERROR_TITLE_I18N_REF)}
+          description={t(TRANSLATIONS.QUIZ_NO_QUESTIONS_ADVISE_DESCRIPTION)}
+          suggestion={t(TRANSLATIONS.QUIZ_NO_QUESTIONS_ADVISE_SUGGESTION)}
+          title={t(TRANSLATIONS.QUIZ_NO_QUESTIONS_ADVISE_TITLE)}
           icon="playlist-remove"
         />
       </ErrorWrapper>

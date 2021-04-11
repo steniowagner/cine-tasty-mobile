@@ -2,12 +2,11 @@ import React from 'react';
 import { FlatList } from 'react-native';
 
 import ModalSelectButton from 'components/common/ModalSelectButton';
+import * as TRANSLATIONS from 'i18n/tags';
 import { QuizFilterOption } from 'types';
 
 import useSetupOptionsList from './useSetupQuestionsOptionsList';
 import OptionListItem from './OptionListItem';
-
-export const I18N_SELECT_BUTTON_KEY = 'translations:news:selectFilterMessage';
 
 type Props = {
   onPressSelect: (indexOptionSelected: number) => void;
@@ -32,7 +31,7 @@ const SetupQuestionsOptionsList = ({
         renderItem={({ item, index }) => (
           <OptionListItem
             isSelected={indexOptionSelected === index}
-            title={t(`translations:quiz:${item.id}`)}
+            title={t(`${TRANSLATIONS.QUIZ}:${item.id}`)}
             onPress={() => onSelectOption(index)}
           />
         )}
@@ -41,7 +40,7 @@ const SetupQuestionsOptionsList = ({
         data={options}
       />
       <ModalSelectButton
-        title={t(I18N_SELECT_BUTTON_KEY)}
+        title={t(TRANSLATIONS.SELECT)}
         onPress={() => {
           onPressSelect(indexOptionSelected);
           closeModal();

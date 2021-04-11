@@ -3,6 +3,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
+
 import {
   CustomizedModalChildrenType,
   QuizFilterOption,
@@ -12,10 +14,6 @@ import {
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import { difficulties, categories, types } from './options';
-
-export const I18N_DIFFICULTY_HEADER_TEXT_KEY = 'translations:quiz:setDifficulty';
-export const I18N_CATEGORY_HEADER_TEXT_KEY = 'translations:quiz:setCategory';
-export const I18N_TYPE_HEADER_TEXT_KEY = 'translations:quiz:setType';
 
 export const INITIAL_NUMBER_QUESTIONS = 10;
 
@@ -70,19 +68,19 @@ const useSetupQuestions = ({ navigation }: Props): State => {
       let headerText: string = '';
 
       if (option === 'CATEGORY') {
-        headerText = t(I18N_CATEGORY_HEADER_TEXT_KEY);
+        headerText = t(TRANSLATIONS.QUIZ_SET_CATEGORY);
         currentOptionSelected = questionCategory;
         currentDataset = categories;
       }
 
       if (option === 'DIFFICULTY') {
-        headerText = t(I18N_DIFFICULTY_HEADER_TEXT_KEY);
+        headerText = t(TRANSLATIONS.QUIZ_SET_DIFFICULTY);
         currentOptionSelected = questionDifficulty;
         currentDataset = difficulties;
       }
 
       if (option === 'TYPE') {
-        headerText = t(I18N_TYPE_HEADER_TEXT_KEY);
+        headerText = t(TRANSLATIONS.QUIZ_SET_TYPE);
         currentOptionSelected = questionType;
         currentDataset = types;
       }

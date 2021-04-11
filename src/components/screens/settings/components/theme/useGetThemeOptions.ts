@@ -1,13 +1,10 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import { ThemeId } from 'types';
 
 import useCheckHasThemeSupport from './useCheckHasThemeSupport';
-
-export const SYSTEM_I18N_REF = 'translations:theme:system';
-export const LIGHT_I18N_REF = 'translations:theme:light';
-export const DARK_I18N_REF = 'translations:theme:dark';
 
 type ThemeOption = {
   onPress: () => void;
@@ -36,7 +33,7 @@ const useGetThemeSettingsOption = ({
   const systemPreferenceOption = useMemo(
     (): ThemeOption => ({
       onPress: onPressSystemPreferencesOption,
-      title: t(SYSTEM_I18N_REF),
+      title: t(TRANSLATIONS.THEME_SYSTEM_PREFERENCES),
       id: ThemeId.SYSTEM,
     }),
     [],
@@ -46,12 +43,12 @@ const useGetThemeSettingsOption = ({
     () => [
       {
         onPress: onPressDarkOption,
-        title: t(DARK_I18N_REF),
+        title: t(TRANSLATIONS.THEME_DARK),
         id: ThemeId.DARK,
       },
       {
         onPress: onPressLightOption,
-        title: t(LIGHT_I18N_REF),
+        title: t(TRANSLATIONS.THEME_LIGHT),
         id: ThemeId.LIGHT,
       },
     ],

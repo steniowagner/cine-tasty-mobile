@@ -3,6 +3,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import ModalSelectButton from 'components/common/ModalSelectButton';
 import { ArticleLanguage } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import LanguageListItem, { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem';
 import useLanguageFilter from './useLanguageFilter';
@@ -38,7 +39,7 @@ const LanguageFilter = ({
       <FlatList
         renderItem={({ item }) => (
           <LanguageListItem
-            name={t(`translations:news:languages:${item.name}`)}
+            name={t(`${TRANSLATIONS.NEWS_LANGUAGES}:${item.name}`)}
             isSelected={languageSelected === item.id}
             onPress={() => {
               setLanguageSelected(item.id);
@@ -57,7 +58,7 @@ const LanguageFilter = ({
         data={languages}
       />
       <ModalSelectButton
-        title={t('translations:news:selectFilterMessage')}
+        title={t(TRANSLATIONS.SELECT)}
         onPress={onPressSelectButton}
       />
     </>

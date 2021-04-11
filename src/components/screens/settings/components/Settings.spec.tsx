@@ -2,19 +2,10 @@ import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
-import {
-  IMAGES_QUALITY_SECTION_TITLE_I18N_REF,
-  IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF,
-  LANGUAGE_SECTION_TITLE_I18N_REF,
-  LANGUAGE_SECTION_DESCRIPTION_I18N_REF,
-  ABOUT_SECTION_TITLE_I18N_REF,
-  ABOUT_SECTION_DESCRIPTION_I18N_REF,
-  OPEN_SOURCE_SECTION_TITLE_I18N_REF,
-  OPEN_SOURCE_SECTION_DESCRIPTION_I18N_REF,
-} from './useSettings';
 import Settings from './Settings';
 
 const NUMBER_SECTIONS = 5;
@@ -41,23 +32,23 @@ describe('Testing <Settings />', () => {
 
     expect(getByTestId('settings-wrapper').children.length).toEqual(NUMBER_SECTIONS);
 
-    expect(getByText(IMAGES_QUALITY_SECTION_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_IMAGES_QUALITY_SECTION_TITLE)).not.toBeNull();
 
-    expect(getByText(IMAGES_QUALITY_SECTION_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_IMAGES_QUALITY_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(LANGUAGE_SECTION_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_LANGUAGE_SECTION_TITLE)).not.toBeNull();
 
-    expect(getByText(LANGUAGE_SECTION_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_LANGUAGE_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(LANGUAGE_SECTION_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_LANGUAGE_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(ABOUT_SECTION_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_ABOUT_SECTION_TITLE)).not.toBeNull();
 
-    expect(getByText(ABOUT_SECTION_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_ABOUT_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(OPEN_SOURCE_SECTION_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_OPEN_SOURCE_SECTION_TITLE)).not.toBeNull();
 
-    expect(getByText(OPEN_SOURCE_SECTION_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.SETTINGS_OPEN_SOURCE_DESCRIPTION)).not.toBeNull();
   });
 
   it('should call "navigate" correctly when press the section', () => {

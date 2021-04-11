@@ -12,6 +12,7 @@ import {
   SearchMovie_search_items_BaseMovie as SearchMovieResult,
   SearchType,
 } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import { SearchStackParams } from '../../routes/route-params-types';
 import RecentSearches from '../recent-searches/RecentSearches';
@@ -19,10 +20,6 @@ import FamousSearch from '../famous-search/FamousSearch';
 import MediaSearch from '../media-search/MediaSearch';
 import usePressHandlers from './usePressHandlers';
 import useSearch from './use-search/useSearch';
-
-export const ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF = 'translations:search:emptyList:description';
-export const ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF = 'translations:search:emptyList:suggestion';
-export const ADVISE_EMPTY_LIST_TITLE_I18N_REF = 'translations:search:emptyList:title';
 
 type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH'>;
 
@@ -115,9 +112,9 @@ const Search = ({ navigation, route }: Props) => {
       )}
       {shouldShowEmptyListAdvise && (
         <Advise
-          description={t(ADVISE_EMPTY_LIST_DESCRIPTION_I18N_REF)}
-          suggestion={t(ADVISE_EMPTY_LIST_SUGGESTION_I18N_REF)}
-          title={t(ADVISE_EMPTY_LIST_TITLE_I18N_REF)}
+          description={t(TRANSLATIONS.SEARCH_EMPTY_LIST_DESCRIPTION)}
+          suggestion={t(TRANSLATIONS.SEARCH_EMPTY_LIST_SUGGESTION)}
+          title={t(TRANSLATIONS.SEARCH_EMPTY_LIST_TITLE)}
           icon="alert-box"
         />
       )}

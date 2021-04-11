@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import RNRestart from 'react-native-restart';
 
 import { persistItemInStorage } from 'utils/async-storage-adapter/AsyncStorageAdapter';
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import { Languages } from 'types';
-
-export const LANGUAGES_I18N_REF = 'translations:languages';
 
 type LanguageItem = {
   onPress: () => void;
@@ -35,7 +34,7 @@ const useLanguages = (): State => {
 
         RNRestart.Restart();
       },
-      title: t(`${LANGUAGES_I18N_REF}:${languageKey}`),
+      title: t(`${TRANSLATIONS.LANGUAGES}:${languageKey}`),
       id: languageKey,
     }));
   }, [i18n]);

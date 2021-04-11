@@ -4,6 +4,7 @@
 export const SOFTWARE_ENGINEER = 'translations:softwareEngineer';
 export const ABOUT = 'translations:about';
 export const MONTHS = 'translations:months';
+export const SELECT = 'translations:select';
 
 // THEME
 export const THEME_SYSTEM_PREFERENCES = 'translations:theme:system';
@@ -11,36 +12,30 @@ export const THEME_LIGHT = 'translations:theme:light';
 export const THEME_DARK = 'translations:theme:dark';
 
 // OPEN-SOURCE
-export const OPEN_SOURCE_LIBRARY_DESCRIPTION = 'translations:openSource:libraries:description';
-export const OPEN_SOURCE_TITLE = 'translations:openSource:libraries:title';
+export const OPEN_SOURCE_LIBRARIES_DESCRIPTION = 'translations:openSource:libraries:description';
+export const OPEN_SOURCE_LIBRARIES_TITLE = 'translations:openSource:libraries:title';
 export const OPEN_SOURCE_GITHUB_DESCRIPTION = 'translations:openSource:github:description';
 export const OPEN_SOURCE_GITHUB_TITLE = 'translations:openSource:github:title';
 export const OPEN_SOURCE_TMDB_DESCRIPTION = 'translations:openSource:tmdb:description';
 export const OPEN_SOURCE_TMDB_TITLE = 'translations:openSource:tmdb:title';
 
 // IMAGES-QUALITIES
-export const IMAGES_QUALITIES_LOW = 'translations:imagesQualities:low';
-export const IMAGES_QUALITIES_MEDIUM = 'translations:imagesQualities:medium';
-export const IMAGES_QUALITIES_HIGH = 'translations:imagesQualities:high';
-export const IMAGES_QUALITIES_VERY_HIGH = 'translations:imagesQualities:veryHigh';
+export const IMAGE_QUALITIES = 'translations:imageQualities';
 
 // LANGUAGES
-export const LANGUAGES_EN = 'translations:languages:en';
-export const LANGUAGES_ES = 'translations:languages:es';
-export const LANGUAGES_PTBR = 'translations:languages:ptBR';
-export const LANGUAGES_PTPT = 'translations:languages:ptPT';
-export const LANGUAGES_SV = 'translations:languages:sv';
+export const LANGUAGES = 'translations:languages';
 
 // ERRORS
-export const ERRORS_PAGINATION_FAMOUS_ERROR = 'translations:errors:paginateFamousError';
-export const ERRORS_SEARCH_FAMOUS_ERROR = 'translations:errors:searchFamousError';
-export const ERRORS_RELOAD_NEWS_ERROR = 'translations:errors:reloadNewsError';
-export const ERRORS_LOAD_MORE_NEWS_ERROR = 'translations:errors:loadMoreNewsError';
+// export const ERRORS_PAGINATION_FAMOUS_ERROR = 'translations:errors:paginateFamousError';
+// export const ERRORS_SEARCH_FAMOUS_ERROR = 'translations:errors:searchFamousError';
+// export const ERRORS_RELOAD_NEWS_ERROR = 'translations:errors:reloadNewsError';
+// export const ERRORS_LOAD_MORE_NEWS_ERROR = 'translations:errors:loadMoreNewsError';
 export const ERRORS_NETWORK_ERROR_DESCRIPTION = 'translations:errors:network:description';
 export const ERRORS_NETWORK_ERROR_SUGGESTION = 'translations:errors:network:suggestion';
 export const ERRORS_NETWORK_ERROR_TITLE = 'translations:errors:network:title';
 
 // TABS
+export const TABS = 'translations:tabs';
 export const TABS_HOME = 'translations:tabs:home';
 export const TABS_NEWS = 'translations:tabs:news';
 export const TABS_FAMOUS = 'translations:tabs:famous';
@@ -63,49 +58,37 @@ export const TIME_SECOND = 'translations:time:second';
 // NEWS
 export const NEWS_QUERY_BY_PAGINATION_ERROR = 'translations:news:i18nQueryByPaginationErrorRef';
 export const NEWS_ENTRY_QUERY_ERROR = 'translations:news:i18EntryQueryErrorRef';
-export const NEWS_LANGUAGES_ENGLISH = 'translations:news:languages:english';
-export const NEWS_LANGUAGES_ARABIC = 'translations:news:languages:arabic';
-export const NEWS_LANGUAGES_MANDARIM = 'translations:news:languages:mandarim';
-export const NEWS_LANGUAGES_DUTCH = 'translations:news:languages:dutch';
-export const NEWS_LANGUAGES_FRENCH = 'translations:news:languages:french';
-export const NEWS_LANGUAGES_GERMAN = 'translations:news:languages:german';
-export const NEWS_LANGUAGES_HEBREW = 'translations:news:languages:hebrew';
-export const NEWS_LANGUAGES_ITALIAN = 'translations:news:languages:italian';
-export const NEWS_LANGUAGES_NORWEGIAN = 'translations:news:languages:norwegian';
-export const NEWS_LANGUAGES_PORTUGUESE = 'translations:news:languages:portuguese';
-export const NEWS_LANGUAGES_RUSSIAN = 'translations:news:languages:russian';
-export const NEWS_LANGUAGES_SAMI = 'translations:news:languages:sami';
-export const NEWS_LANGUAGES_SPANISH = 'translations:news:languages:spanish';
+export const NEWS_LANGUAGES = 'translations:news:languages';
 export const NEWS_FILTER_MESSAGE = 'translations:news:filterMessage';
-export const NEWS_SELECT_FILTER_MESSAGE = 'translations:news:selectFilterMessage';
 export const NEWS_EMPTY_LIST_DESCRIPTION = 'translations:news:emptyList:description';
 export const NEWS_EMPTY_LIST_SUGGESTION = 'translations:news:emptyList:suggestion';
 export const NEWS_EMPTY_LIST_TITLE = 'translations:news:emptyList:title';
 
 // QUIZ
+export const QUIZ = 'translations:quiz';
 export const QUIZ_WELCOME = 'translations:quiz:welcome';
-export const QUIZ_DESCRIPTION = 'translations:quiz:description';
+export const QUIZ_DESCRIPTION = 'translations:quiz:decription';
 export const QUIZ_CHALLENGE = 'translations:quiz:challenge';
 export const QUIZ_CHOOSE_QUESTIONS = 'translations:quiz:chooseQuestions';
 export const QUIZ_START_BUTTON = 'translations:quiz:startButton';
 export const QUIZ_CATEGORY = 'translations:quiz:category';
+export const QUIZ_CATEGORY_MIXED = 'translations:quiz:categoryMixed';
+export const QUIZ_CATEGORY_MOVIE = 'translations:quiz:categoryMovie';
+export const QUIZ_CATEGORY_TV = 'translations:quiz:categoryTv';
 export const QUIZ_TYPE = 'translations:quiz:type';
+export const QUIZ_TYPE_MULTIPLE = 'translations:quiz:typeMultiple';
+export const QUIZ_TYPE_BOOLEAN = 'translations:quiz:typeBoolean';
+export const QUIZ_TYPE_MIXED = 'translations:quiz:typeMixed';
 export const QUIZ_NUMBER_OF_QUESTIONS = 'translations:quiz:numberOfQuestions';
 export const QUIZ_SET_DIFFICULTY = 'translations:quiz:setDifficulty';
 export const QUIZ_SET_CATEGORY = 'translations:quiz:setCategory';
 export const QUIZ_SET_TYPE = 'translations:quiz:setType';
 export const QUIZ_MODAL_SELECT_TEXT = 'translations:quiz:modalSelectText';
-export const QUIZ_CATEGORY_MIXED = 'translations:quiz:categoryMixed';
-export const QUIZ_CATEGORY_MOVIE = 'translations:quiz:categoryMovie';
-export const QUIZ_CATEGORY_TV = 'translations:quiz:categoryTv';
 export const QUIZ_DIFFICULTY = 'translations:quiz:difficulty';
 export const QUIZ_DIFFICULTY_EASY = 'translations:quiz:difficultyEasy';
 export const QUIZ_DIFFICULTY_MEDIUM = 'translations:quiz:difficultyMedium';
 export const QUIZ_DIFFICULTY_HARD = 'translations:quiz:difficultyHard';
 export const QUIZ_DIFFICULTY_MIXED = 'translations:quiz:difficultyMixed';
-export const QUIZ_TYPE_MULTIPLE = 'translations:quiz:typeMultiple';
-export const QUIZ_TYPE_BOOLEAN = 'translations:quiz:typeBoolean';
-export const QUIZ_TYPE_MIXED = 'translations:quiz:typeMixed';
 export const QUIZ_PLAY_AGAIN_DESCRIPTION = 'translations:quiz:playAgainDescription';
 export const QUIZ_PLAY_AGAIN = 'translations:quiz:playAgain';
 export const QUIZ_ANSWER = 'translations:quiz:answer';
@@ -128,7 +111,7 @@ export const FAMOUS_ENTRY_QUERY_ERROR = 'translations:famous:i18EntryQueryErrorR
 
 // SEARCH
 export const SEARCH_RECENT = 'translations:search:recent';
-export const SEARCH_EMPTY_LIST_DESCRIPTION = 'translations:search:emptyList:recent';
+export const SEARCH_EMPTY_LIST_DESCRIPTION = 'translations:search:emptyList:description';
 export const SEARCH_EMPTY_LIST_SUGGESTION = 'translations:search:emptyList:suggestion';
 export const SEARCH_EMPTY_LIST_TITLE = 'translations:search:emptyList:title';
 
@@ -151,7 +134,7 @@ export const HOME_VIEW_ALL = 'translations:home:viewAll';
 export const HOME_MOVIES = 'translations:home:movies';
 export const HOME_TRENDING_MOVIES_ERROR = 'translations:home:trendingMovies:error';
 export const HOME_TRENDING_MOVIES_NOW_PLAYING_VIEW_ALL = 'translations:home:trendingMovies:nowPlayingViewAllTitle';
-export const HOME_TRENDING_MOVIES_NOW_PLAYING = 'translations:home:trendingMovies:nowPlaying:';
+export const HOME_TRENDING_MOVIES_NOW_PLAYING = 'translations:home:trendingMovies:nowPlaying';
 export const HOME_TRENDING_MOVIES_POPULAR_VIEW_ALL = 'translations:home:trendingMovies:popularViewAllTitle';
 export const HOME_TRENDING_MOVIES_POPULAR = 'translations:home:trendingMovies:popular';
 export const HOME_TRENDING_MOVIES_TOP_RATED_VIEW_ALL = 'translations:home:trendingMovies:topRatedViewAllTitle';
@@ -208,6 +191,7 @@ export const MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION = 'translations:mediaDetai
 export const MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION = 'translations:mediaDetail:tvShow:errors:suggestion';
 export const MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE = 'translations:mediaDetail:tvShow:errors:title';
 export const MEDIA_DETAIL_MOVIE_TITLE = 'translations:mediaDetail:movie:movie';
+export const MEDIA_DETAIL_SECTIONS_OVERVIEW = 'translations:mediaDetail:sections:overview';
 export const MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES = 'translations:mediaDetail:sections:productionCompanies';
 export const MEDIA_DETAIL_SECTIONS_PRODUCTION_COUNTRIES = 'translations:mediaDetail:sections:productionCountries';
 export const MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES = 'translations:mediaDetail:sections:spokenLanguages';
@@ -217,7 +201,6 @@ export const MEDIA_DETAIL_SECTIONS_BUDGET = 'translations:mediaDetail:sections:b
 export const MEDIA_DETAIL_SECTIONS_REVENUE = 'translations:mediaDetail:sections:revenue';
 export const MEDIA_DETAIL_SECTIONS_REVIEW = 'translations:mediaDetail:sections:review';
 export const MEDIA_DETAIL_SECTIONS_DETAILS = 'translations:mediaDetail:sections:details';
-
 export const MEDIA_DETAIL_SECTIONS_VIDEOS = 'translations:mediaDetail:sections:videos';
 export const MEDIA_DETAIL_SECTIONS_CAST = 'translations:mediaDetail:sections:cast';
 export const MEDIA_DETAIL_SECTIONS_CREW = 'translations:mediaDetail:sections:crew';

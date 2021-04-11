@@ -3,23 +3,14 @@ import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
 import { CustomizedModalChildrenType } from 'types';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
 import { difficulties, categories, types } from './options';
 import LOCAL_ROUTES from '../../routes/route-names';
-import SetupQuestions, {
-  QUIZ_NUMBER_OF_QUESTIONS_I18N_REF,
-  QUIZ_DIFFICULTY_I18N_REF,
-  QUIZ_CATEGORY_I18N_REF,
-  QUIZ_TYPE_I18N_REF,
-} from './SetupQuestions';
-import {
-  I18N_DIFFICULTY_HEADER_TEXT_KEY,
-  I18N_CATEGORY_HEADER_TEXT_KEY,
-  I18N_TYPE_HEADER_TEXT_KEY,
-} from './useSetupQuestions';
+import SetupQuestions from './SetupQuestions';
 
 const getNavigationParam = (navigate = jest.fn) => ({
   ...navigation,
@@ -52,13 +43,13 @@ describe('Testing <SetupQuestions />', () => {
       String(INITIAL_NUMBER_QUESTIONS),
     );
 
-    expect(getByText(QUIZ_NUMBER_OF_QUESTIONS_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_NUMBER_OF_QUESTIONS)).not.toBeNull();
 
-    expect(getByText(QUIZ_DIFFICULTY_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_DIFFICULTY)).not.toBeNull();
 
-    expect(getByText(QUIZ_CATEGORY_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_CATEGORY)).not.toBeNull();
 
-    expect(getByText(QUIZ_TYPE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_TYPE)).not.toBeNull();
   });
 
   it('should navigate to CustomModal correctly when the user press the difficulty-dropdown', () => {
@@ -78,7 +69,9 @@ describe('Testing <SetupQuestions />', () => {
     expect(navigate.mock.calls[0][1].type).toEqual(
       CustomizedModalChildrenType.MEDIA_FILTER,
     );
-    expect(navigate.mock.calls[0][1].headerText).toEqual(I18N_DIFFICULTY_HEADER_TEXT_KEY);
+    expect(navigate.mock.calls[0][1].headerText).toEqual(
+      TRANSLATIONS.QUIZ_SET_DIFFICULTY,
+    );
     expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
   });
 
@@ -99,7 +92,7 @@ describe('Testing <SetupQuestions />', () => {
     expect(navigate.mock.calls[0][1].type).toEqual(
       CustomizedModalChildrenType.MEDIA_FILTER,
     );
-    expect(navigate.mock.calls[0][1].headerText).toEqual(I18N_CATEGORY_HEADER_TEXT_KEY);
+    expect(navigate.mock.calls[0][1].headerText).toEqual(TRANSLATIONS.QUIZ_SET_CATEGORY);
     expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
   });
 
@@ -120,7 +113,7 @@ describe('Testing <SetupQuestions />', () => {
     expect(navigate.mock.calls[0][1].type).toEqual(
       CustomizedModalChildrenType.MEDIA_FILTER,
     );
-    expect(navigate.mock.calls[0][1].headerText).toEqual(I18N_TYPE_HEADER_TEXT_KEY);
+    expect(navigate.mock.calls[0][1].headerText).toEqual(TRANSLATIONS.QUIZ_SET_TYPE);
     expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
   });
 

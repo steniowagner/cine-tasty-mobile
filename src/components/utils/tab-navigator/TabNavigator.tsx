@@ -9,6 +9,7 @@ import { Routes as FamousRoutes } from 'components/screens/famous/routes/route-n
 import { Routes as HomeRoutes } from 'components/screens/home/routes/route-names';
 import { Routes as QuizRoutes } from 'components/screens/quiz/routes/route-names';
 import { Routes as NewsRoutes } from 'components/screens/news/routes/route-names';
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 
 import TabNavigatorItem from './TabNavigatorItem';
@@ -75,7 +76,7 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
       {items.map((item, index) => (
         <TabNavigatorItem
           onPress={() => navigation.navigate(state.routeNames[index])}
-          title={t(`translations:tabs:${item.id.toLowerCase()}`)}
+          title={t(`${TRANSLATIONS.TABS}:${item.id.toLowerCase()}`)}
           isSelected={index === state.index}
           inactiveIcon={item.inactiveIcon}
           activeIcon={item.activeIcon}

@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import { getDefaultHeaderOptions } from 'routes/constants';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import LOCAL_ROUTES from './route-names';
 import News from '../components/News';
@@ -17,7 +18,7 @@ const NewsStack = () => {
       <Stack.Screen
         options={{
           ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:tabs:news'),
+          headerTitle: t(TRANSLATIONS.TABS_NEWS),
         }}
         name={LOCAL_ROUTES.NEWS.id}
         component={News}

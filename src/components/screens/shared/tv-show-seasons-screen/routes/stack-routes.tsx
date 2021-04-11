@@ -6,6 +6,7 @@ import { withTheme, DefaultTheme } from 'styled-components';
 import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 
 import TVShowSeasonsDetailScreen from '../components/tv-show-seasons-detail/TVShowSeasonsDetail';
@@ -91,7 +92,7 @@ const TVShowSeasonsDetail = ({ route, theme }: Props) => {
               // eslint-disable-next-line react/no-array-index-key
               key={index}
               name={`${t(
-                'translations:mediaDetail:tvShow:seasonEpisode:season',
+                TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON,
               )} ${index + 1}`}
               initialParams={{
                 id: route.params.id,

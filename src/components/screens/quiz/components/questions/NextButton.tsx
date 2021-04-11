@@ -3,6 +3,8 @@ import { TouchableOpacity, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
+import * as TRANSLATIONS from 'i18n/tags';
+
 const NextTouchable = styled(TouchableOpacity)`
   width: 100%;
   margin-top: ${({ theme }) => theme.metrics.largeSize}px;
@@ -35,7 +37,7 @@ const NextButton = ({ onPress, isDisabled }: Props) => {
       testID="next-button"
       onPress={onPress}
     >
-      <NextText>{t('translations:quiz:next')}</NextText>
+      <NextText>{t(TRANSLATIONS.QUIZ_NEXT)}</NextText>
     </NextTouchable>
   );
 };

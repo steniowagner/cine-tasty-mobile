@@ -5,8 +5,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import { light as lightTheme } from 'styles/themes/light';
+import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 
 import socialNetworks from './socialNetworks';
@@ -116,16 +117,14 @@ const About = () => {
         <BeautifulImage />
         <NameText>Stenio Wagner</NameText>
         <SoftwareEngineerWrapper>
-          <SoftwareEngineerText>
-            {t('translations:softwareEngineer')}
-          </SoftwareEngineerText>
+          <SoftwareEngineerText>{t(TRANSLATIONS.SOFTWARE_ENGINEER)}</SoftwareEngineerText>
           <SVGIcon
             size={DEFAULT_ICON_SIZE}
             id="heart"
             colorThemeRef="red"
           />
         </SoftwareEngineerWrapper>
-        <AboutText>{t('translations:about')}</AboutText>
+        <AboutText>{t(TRANSLATIONS.ABOUT)}</AboutText>
         <SocialNetworkButtonsWrapper>
           {socialNetworks.map((socialNetwork, index) => (
             <SocialNetworkButton

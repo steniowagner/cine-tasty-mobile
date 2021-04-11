@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import theme from 'styles/theme';
 
@@ -10,8 +11,6 @@ jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
 const {
   persistItemInStorage,
 } = require('utils/async-storage-adapter/AsyncStorageAdapter');
-
-import { LANGUAGES_I18N_REF } from './useLanguages';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -49,15 +48,15 @@ describe('Testing <Languages />', () => {
 
     expect(getAllByTestId('option-settings').length).toEqual(5);
 
-    expect(getByText(`${LANGUAGES_I18N_REF}:en`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.LANGUAGES}:en`)).not.toBeNull();
 
-    expect(getByText(`${LANGUAGES_I18N_REF}:es`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.LANGUAGES}:es`)).not.toBeNull();
 
-    expect(getByText(`${LANGUAGES_I18N_REF}:sv`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.LANGUAGES}:sv`)).not.toBeNull();
 
-    expect(getByText(`${LANGUAGES_I18N_REF}:ptPT`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.LANGUAGES}:ptPT`)).not.toBeNull();
 
-    expect(getByText(`${LANGUAGES_I18N_REF}:ptBR`)).not.toBeNull();
+    expect(getByText(`${TRANSLATIONS.LANGUAGES}:ptBR`)).not.toBeNull();
   });
 
   it('should call "onPress" with the correct params when the user press on the list-item', () => {
