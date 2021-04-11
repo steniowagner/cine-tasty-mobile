@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
 
@@ -71,7 +72,7 @@ const SectionViewAll = ({
           testID={`view-all-button-${id}`}
           onPress={onPressViewAll}
         >
-          <ViewAllText>{t('translations:home:viewAll')}</ViewAllText>
+          <ViewAllText>{t(TRANSLATIONS.HOME_VIEW_ALL)}</ViewAllText>
           <SVGIcon
             size={metrics.getWidthFromDP('7%')}
             colorThemeRef="buttonText"

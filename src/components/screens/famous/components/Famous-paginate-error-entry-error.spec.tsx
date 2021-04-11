@@ -6,12 +6,12 @@ import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../common/popup-advice/PopupAdvice';
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import { I18N_QUERY_BY_PAGINATION_ERROR_REF } from './useFamous';
 import Famous from './Famous';
 
 const FAMOUS_COUNT = 10;
@@ -96,7 +96,7 @@ describe('Testing <Famous /> [Pagination-Entry-Error]', () => {
 
         expect(queryByTestId('popup-advice-wrapper')).not.toBeNull();
 
-        expect(queryByText(I18N_QUERY_BY_PAGINATION_ERROR_REF)).not.toBeNull();
+        expect(queryByText(TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR)).not.toBeNull();
       }
     });
   });

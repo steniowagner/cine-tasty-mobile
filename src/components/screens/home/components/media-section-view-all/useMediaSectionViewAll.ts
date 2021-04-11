@@ -6,14 +6,12 @@ import { DocumentNode } from 'graphql';
 import { ISO6391Language } from 'types/schema';
 import { getQuery } from '@graphql/queries';
 import { usePaginatedQuery } from 'hooks';
+import * as TRANSLATIONS from 'i18n/tags';
 import * as Types from 'types';
 
 import { getTVShowProperQuery, getMovieProperQuery } from './get-proper-query';
 import { HomeStackParams } from '../../routes/route-params-types';
 import useOnGetData, { Data } from './useOnGetData';
-
-export const I18N_PAGINATE_TV_SHOWS_ERROR_REF = 'translations:home:tvShowsPaginationError';
-export const I18N_PAGINATE_MOVIES_ERROR_REF = 'translations:home:moviesPaginationError';
 
 type PaginationVariables = {
   language?: ISO6391Language | null;
@@ -64,8 +62,8 @@ const useMediaSectionViewAll = ({
   const { onPaginateQuery, isPaginating } = usePaginatedQuery<Data, PaginationVariables>({
     onPaginationQueryError: () => {
       const i18nErrorRef = isMovie
-        ? I18N_PAGINATE_MOVIES_ERROR_REF
-        : I18N_PAGINATE_TV_SHOWS_ERROR_REF;
+        ? TRANSLATIONS.HOME_MOVIES_PAGINATION_ERROR
+        : TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR;
 
       setError(t(i18nErrorRef));
 

@@ -2,12 +2,10 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
-import BooleanQuestion, {
-  FALSE_TEXT_I18N_REF,
-  TRUE_TEXT_I18N_REF,
-} from './BooleanQuestion';
+import BooleanQuestion from './BooleanQuestion';
 
 const renderBooleanQuestion = (onPressNext = jest.fn()) => (
   <ThemeProvider theme={theme}>
@@ -23,9 +21,9 @@ describe('Testing <BooleanQuestion />', () => {
 
     expect(getByTestId('boolean-question').props.children.length).toBe(2);
 
-    expect(getByText(TRUE_TEXT_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_TRUE)).not.toBeNull();
 
-    expect(getByText(FALSE_TEXT_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_FALSE)).not.toBeNull();
 
     expect(getByTestId('true-option-button')).not.toBeNull();
 

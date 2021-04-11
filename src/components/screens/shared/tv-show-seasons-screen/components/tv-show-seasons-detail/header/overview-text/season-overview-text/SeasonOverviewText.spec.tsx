@@ -2,9 +2,10 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
-import { MAX_NUMBER_LINES, READ_MORE_I18N_REF } from './useSeasonOverviewText';
+import { MAX_NUMBER_LINES } from './useSeasonOverviewText';
 import SeasonOverviewText from './SeasonOverviewText';
 
 const renderSeasonOverviewText = (overview?: string) => (
@@ -77,7 +78,9 @@ describe('Testing <SeasonOverviewText />', () => {
 
     expect(getByTestId('read-more-button')).not.toBeNull();
 
-    expect(getByTestId('read-more-text').children[0]).toEqual(READ_MORE_I18N_REF);
+    expect(getByTestId('read-more-text').children[0]).toEqual(
+      TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_READ_MORE_SEASON_OVERVIEW,
+    );
   });
 
   it('should show the full-overview on a modal when the "read-more" button is pressed', () => {

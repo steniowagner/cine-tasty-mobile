@@ -5,37 +5,15 @@ import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
-import * as T from 'i18n/tags';
 
 import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
 import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 
-import { SECTION_TITLE_I18N_REF as SECTION_OVERVIEW_I18N_REF } from '../../common/sections/overview/Overview';
-import { SECTION_TITLE_I18N_REF as SECTION_GENERAL_INFO_I18N_REF } from '../../common/sections/GeneralInfo';
 import { NUMBER_ITEMS } from '../../common/sections/tags/Tags';
-import TVShowDetail, {
-  TV_SHOWS_NUMBER_NUMBER_OF_EPISODES_I18N_REF,
-  TV_SHOWS_NUMBER_NUMBER_OF_SEASONS_I18N_REF,
-  TV_SHOWS_PRODUCTION_COMPANIES_I18N_REF,
-  TV_SHOW_ORIGINAL_LANGUAGE_I18N_REF,
-  TV_SHOWS_EPISODE_RUN_TIME_I18N_REF,
-  TV_SHOWS_ORIGIN_COUNTRY_I18N_REF,
-  TV_SHOWS_FIRST_AIR_DATE_I18N_REF,
-  TV_SHOW_ORIGINAL_TITLE_I18N_REF,
-  TV_SHOWS_LAST_AIR_DATE_I18N_REF,
-  TV_SHOWS_CREATED_BY_I18N_REF,
-  TV_SHOWS_NETWORKS_I18N_REF,
-  ERROR_DESCRIPTION_I18N_REF,
-  ERROR_SUGGESTION_I18N_REF,
-  TV_SHOWS_SIMILAR_I18N_REF,
-  TV_SHOW_SEASONS_I18N_REF,
-  TV_SHOWS_IMAGES_I18N_REF,
-  TV_SHOWS_CREW_I18N_REF,
-  TV_SHOWS_CAST_I18N_REF,
-  ERROR_TITLE_I18N_REF,
-} from './TVShowDetail';
+import TVShowDetail from './TVShowDetail';
 
 const baseParams = {
   posterPath: 'posterPath',
@@ -199,7 +177,7 @@ describe('Testing <TVShowDetail />', () => {
 
     expect(getByTestId('media-info-wrapper')).not.toBeNull();
 
-    expect(getByText(SECTION_OVERVIEW_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)).not.toBeNull();
 
     expect(getByTestId('tags')).not.toBeNull();
 
@@ -229,7 +207,7 @@ describe('Testing <TVShowDetail />', () => {
 
     expect(getByTestId('media-info-wrapper')).not.toBeNull();
 
-    expect(getByText(SECTION_OVERVIEW_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)).not.toBeNull();
 
     expect(queryByTestId('tags')).toBeNull();
 
@@ -288,33 +266,39 @@ describe('Testing <TVShowDetail />', () => {
 
     // Overview section
 
-    expect(getByText(SECTION_OVERVIEW_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)).not.toBeNull();
 
     expect(getByTestId('media-item-description-wrapper')).not.toBeNull();
 
     // General-info section
 
-    expect(getByText(SECTION_GENERAL_INFO_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_DETAILS)).not.toBeNull();
 
     expect(getByTestId('general-info-wrapper')).not.toBeNull();
 
     expect(getByTestId('general-info-wrapper').children.length).toEqual(8);
 
-    expect(getByText(TV_SHOW_ORIGINAL_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE)).not.toBeNull();
 
-    expect(getByText(TV_SHOW_ORIGINAL_LANGUAGE_I18N_REF)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_LANGUAGE),
+    ).not.toBeNull();
 
-    expect(getByText(TV_SHOWS_NUMBER_NUMBER_OF_EPISODES_I18N_REF)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_EPISODES),
+    ).not.toBeNull();
 
-    expect(getByText(TV_SHOWS_NUMBER_NUMBER_OF_SEASONS_I18N_REF)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_SEASONS),
+    ).not.toBeNull();
 
-    expect(getByText(TV_SHOWS_EPISODE_RUN_TIME_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_EPISODE_RUNTIME)).not.toBeNull();
 
-    expect(getByText(TV_SHOWS_ORIGIN_COUNTRY_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_COUNTRY)).not.toBeNull();
 
-    expect(getByText(TV_SHOWS_FIRST_AIR_DATE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_FIRST_AIR_DATE)).not.toBeNull();
 
-    expect(getByText(TV_SHOWS_LAST_AIR_DATE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_LAST_AIR_DATE)).not.toBeNull();
 
     // See seasons
 
@@ -322,37 +306,37 @@ describe('Testing <TVShowDetail />', () => {
 
     // Created by
 
-    expect(getByText(TV_SHOWS_CREATED_BY_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREATED_BY)).not.toBeNull();
 
     expect(getByTestId('people-list-creator')).not.toBeNull();
 
     // Crew
 
-    expect(getByText(TV_SHOWS_CREW_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)).not.toBeNull();
 
     expect(getByTestId('people-list-crew')).not.toBeNull();
 
     // Cast section
 
-    expect(getByText(TV_SHOWS_CAST_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)).not.toBeNull();
 
     expect(getByTestId('people-list-cast')).not.toBeNull();
 
     // Images section
 
-    expect(getByText(TV_SHOWS_IMAGES_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)).not.toBeNull();
 
     expect(getByTestId('images-list')).not.toBeNull();
 
     // Videos section
 
-    expect(getByText(T.VIDEOS_SECTION_I18N)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_VIDEOS)).not.toBeNull();
 
     expect(getByTestId('videos-list')).not.toBeNull();
 
     // Networks
 
-    expect(getByText(TV_SHOWS_PRODUCTION_COMPANIES_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NETWORKS)).not.toBeNull();
 
     // Reviews section
 
@@ -360,11 +344,13 @@ describe('Testing <TVShowDetail />', () => {
 
     // Production-Companies section
 
-    expect(getByText(TV_SHOWS_PRODUCTION_COMPANIES_I18N_REF)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES),
+    ).not.toBeNull();
 
     // Similar section
 
-    expect(getByText(TV_SHOWS_SIMILAR_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)).not.toBeNull();
   });
 
   it('should render the Advise component when some error occur', () => {
@@ -387,11 +373,11 @@ describe('Testing <TVShowDetail />', () => {
 
     expect(getByTestId('advise-wrapper')).not.toBeNull();
 
-    expect(getByText(ERROR_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_ERROR_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(ERROR_SUGGESTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_ERROR_SUGGESTION)).not.toBeNull();
 
-    expect(getByText(ERROR_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_ERROR_TITLE)).not.toBeNull();
   });
 
   it('should call navigate with the correct params when press a Cast-item', () => {

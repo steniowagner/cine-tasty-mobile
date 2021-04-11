@@ -3,15 +3,13 @@ import { useTranslation } from 'react-i18next';
 
 import { GET_ARTICLES } from '@graphql/queries';
 import { usePaginatedQuery } from 'hooks';
+import * as TRANSLATIONS from 'i18n/tags';
 import {
   GetArticles_articles_items as Article,
   GetArticlesVariables,
   ArticleLanguage,
   GetArticles,
 } from 'types/schema';
-
-export const I18N_QUERY_BY_PAGINATION_ERROR_REF = 'translations:news:i18nQueryByPaginationErrorRef';
-export const I18N_ENTRY_QUERY_ERROR_REF = 'translations:news:i18EntryQueryErrorRef';
 
 type State = {
   onSelectArticleLanguage: (language: ArticleLanguage) => void;
@@ -53,11 +51,11 @@ const useNews = (): State => {
     GetArticlesVariables
   >({
     onPaginationQueryError: () => {
-      setError(t(I18N_QUERY_BY_PAGINATION_ERROR_REF));
+      setError(t(TRANSLATIONS.NEWS_QUERY_BY_PAGINATION_ERROR));
       setHasPaginationError(true);
     },
     onEntryQueryError: () => {
-      setError(t(I18N_ENTRY_QUERY_ERROR_REF));
+      setError(t(TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR));
 
       if (hasPaginationError) {
         setHasPaginationError(false);

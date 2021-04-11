@@ -7,6 +7,7 @@ import {
   GetFamous,
 } from 'types/schema';
 import { GET_FAMOUS } from '@graphql/queries';
+import * as TRANSLATIONS from 'i18n/tags';
 import { usePaginatedQuery } from 'hooks';
 
 type State = {
@@ -19,9 +20,6 @@ type State = {
   isLoading: boolean;
   error: string;
 };
-
-export const I18N_QUERY_BY_PAGINATION_ERROR_REF = 'translations:famous:i18nQueryByPaginationErrorRef';
-export const I18N_ENTRY_QUERY_ERROR_REF = 'translations:famous:i18EntryQueryErrorRef';
 
 const useFamous = (): State => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
@@ -46,11 +44,11 @@ const useFamous = (): State => {
     GetFamousVariables
   >({
     onPaginationQueryError: () => {
-      setError(t(I18N_QUERY_BY_PAGINATION_ERROR_REF));
+      setError(t(TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR));
       setHasPaginationError(true);
     },
     onEntryQueryError: () => {
-      setError(t(I18N_ENTRY_QUERY_ERROR_REF));
+      setError(t(TRANSLATIONS.FAMOUS_ENTRY_QUERY_ERROR));
 
       if (hasPaginationError) {
         setHasPaginationError(false);

@@ -2,6 +2,11 @@ import React from 'react';
 import { Text } from 'react-native';
 import { cleanup, render, act } from '@testing-library/react-native';
 
+import { ThemeContextProvider } from 'providers';
+import * as TRANSLATIONS from 'i18n/tags';
+
+import useThemeSettings from './useThemeSettings';
+
 jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
 
@@ -21,11 +26,6 @@ jest.mock('react-native', () => {
     View,
   };
 });
-
-import { ThemeContextProvider } from 'providers';
-
-import { DARK_I18N_REF, LIGHT_I18N_REF, SYSTEM_I18N_REF } from './useGetThemeOptions';
-import useThemeSettings from './useThemeSettings';
 
 // Had some problems testing the ThemeSettings with react-native-svg
 const OptionsSettingsWithouIcon = () => {
@@ -64,11 +64,17 @@ describe('Testing <ThemeSettings /> [Android - With theme-support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId('option-title')[0].children[0]).toEqual(DARK_I18N_REF);
+    expect(getAllByTestId('option-title')[0].children[0]).toEqual(
+      TRANSLATIONS.THEME_DARK,
+    );
 
-    expect(getAllByTestId('option-title')[1].children[0]).toEqual(LIGHT_I18N_REF);
+    expect(getAllByTestId('option-title')[1].children[0]).toEqual(
+      TRANSLATIONS.THEME_LIGHT,
+    );
 
-    expect(getAllByTestId('option-title')[2].children[0]).toEqual(SYSTEM_I18N_REF);
+    expect(getAllByTestId('option-title')[2].children[0]).toEqual(
+      TRANSLATIONS.THEME_SYSTEM_PREFERENCES,
+    );
 
     act(() => {
       jest.runAllTimers();

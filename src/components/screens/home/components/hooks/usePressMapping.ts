@@ -3,16 +3,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { TrendingMediaItemKey, SimplifiedMedia } from 'types';
 import { SearchType } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import { HomeStackParams } from '../../routes/route-params-types';
-
-export const SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF = 'translations:home:search:movie:queryByTextError';
-export const SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF = 'translations:home:search:movie:paginationError';
-export const SEARCH_MOVIE_PLACEHOLDER_I18N_REF = 'translations:home:search:movie:placeholder';
-
-export const SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF = 'translations:home:search:tvShows:queryByTextError';
-export const SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF = 'translations:home:search:tvShows:paginationError';
-export const SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF = 'translations:home:search:tvShows:placeholder';
 
 export const TRANSITIONING_DURATION = 1200;
 
@@ -78,9 +71,10 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
         },
         onPressSearch: () => {
           navigation.navigate('SEARCH', {
-            i18nQueryByPaginationErrorRef: SEARCH_MOVIE_PAGINATION_ERROR_I18N_REF,
-            i18nQueryByTextErrorRef: SEARCH_MOVIE_QUERY_BY_TEXT_ERROR_I18N_REF,
-            i18nSearchBarPlaceholderRef: SEARCH_MOVIE_PLACEHOLDER_I18N_REF,
+            i18nQueryByPaginationErrorRef:
+              TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
+            i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
+            i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PLACEHOLDER,
             searchType: SearchType.MOVIE,
             queryId: 'search_movie',
           });
@@ -99,9 +93,9 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
         },
         onPressSearch: () => {
           navigation.navigate('SEARCH', {
-            i18nQueryByPaginationErrorRef: SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF,
-            i18nQueryByTextErrorRef: SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF,
-            i18nSearchBarPlaceholderRef: SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF,
+            i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR,
+            i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
+            i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_PLACEHOLDER,
             searchType: SearchType.TV,
             queryId: 'search_tv',
           });

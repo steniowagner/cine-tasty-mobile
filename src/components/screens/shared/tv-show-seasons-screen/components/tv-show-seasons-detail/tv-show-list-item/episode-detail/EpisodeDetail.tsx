@@ -8,10 +8,9 @@ import StarsVotes from 'components/common/stars-votes/StarsVotes';
 import TMDBImage from 'components/common/tmdb-image/TMDBImage';
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
 import { formatDate } from 'utils/formatters';
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import metrics from 'styles/metrics';
-
-export const AIR_DATE_I18N_REF = 'translations:mediaDetail:tvShow:seasonEpisode:airDate';
 
 const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('90%')}px;
@@ -109,7 +108,9 @@ const EpisodeDetail = ({ episode }: Props) => {
         <EpisodeAiredText
           testID="air-date-text"
         >
-          {`${t(AIR_DATE_I18N_REF)} ${formatDate(episode.airDate)}`}
+          {`${t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE)} ${formatDate(
+            episode.airDate,
+          )}`}
         </EpisodeAiredText>
         <EpisodeOverviewText
           testID="overview-text"

@@ -5,18 +5,14 @@ import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { DEFAULT_ANIMATION_DURATION } from 'components/common/popup-advice/PopupAdvice';
+import * as TRANSLATIONS from 'i18n/tags';
 import { SearchType } from 'types/schema';
 import theme from 'styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
-import { I18N_ENTRY_QUERY_ERROR_REF } from './useFamous';
-import Famous, {
-  QUERY_BY_PAGINATION_ERROR_I18N_REF,
-  SEARCH_BAR_PLACEHOLER_I18N_REF,
-  QUERY_BY_TEXT_ERROR_I18N_REF,
-} from './Famous';
+import Famous from './Famous';
 
 type FamousScreenProps = {
   navigate?: typeof jest.fn;
@@ -73,9 +69,9 @@ describe('Testing <Famous />', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith('SEARCH', {
-      i18nQueryByPaginationErrorRef: QUERY_BY_PAGINATION_ERROR_I18N_REF,
-      i18nSearchBarPlaceholderRef: SEARCH_BAR_PLACEHOLER_I18N_REF,
-      i18nQueryByTextErrorRef: QUERY_BY_TEXT_ERROR_I18N_REF,
+      i18nQueryByPaginationErrorRef: TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR,
+      i18nSearchBarPlaceholderRef: TRANSLATIONS.FAMOUS_SEARCHBAR_PLACEHOLDER,
+      i18nQueryByTextErrorRef: TRANSLATIONS.FAMOUS_QUERY_BY_TEXT_ERROR,
       searchType: SearchType.PERSON,
       queryId: 'search_famous',
     });
@@ -156,7 +152,7 @@ describe('Testing <Famous />', () => {
     expect(getByTestId('popup-advice-wrapper')).not.toBeNull();
 
     expect(getByTestId('popup-advice-message').children[0]).toEqual(
-      I18N_ENTRY_QUERY_ERROR_REF,
+      TRANSLATIONS.FAMOUS_ENTRY_QUERY_ERROR,
     );
 
     expect(getByTestId('top-reload-button')).not.toBeNull();
@@ -186,7 +182,7 @@ describe('Testing <Famous />', () => {
     expect(getByTestId('popup-advice-wrapper')).not.toBeNull();
 
     expect(getByTestId('popup-advice-message').children[0]).toEqual(
-      I18N_ENTRY_QUERY_ERROR_REF,
+      TRANSLATIONS.FAMOUS_ENTRY_QUERY_ERROR,
     );
 
     expect(getByTestId('top-reload-button')).not.toBeNull();

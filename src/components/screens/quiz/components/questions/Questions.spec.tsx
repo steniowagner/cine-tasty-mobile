@@ -5,21 +5,14 @@ import { IMocks } from 'graphql-tools';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
-import CONSTANTS from 'utils/constants';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
 import { QuizStackParams } from '../../routes/route-params-types';
 import LOCAL_ROUTES from '../../routes/route-names';
-import Questions, {
-  NO_QUESTIONS_ERROR_DESCRIPTION_I18N_REF,
-  NO_QUESTIONS_ERROR_SUGGESTION_I18N_REF,
-  NO_QUESTIONS_ERROR_TITLE_I18N_REF,
-  NO_CONNECTION_ERROR_DESCRIPTION_I18N_REF,
-  NO_CONNECTION_ERROR_SUGGGESTION_I18N_REF,
-  NO_CONNECTION_ERROR_TITLE_I18N_REF,
-} from './Questions';
+import Questions from './Questions';
 
 const quiz = [
   {
@@ -239,11 +232,11 @@ describe('Testing <Questions />', () => {
 
     expect(getByTestId('no-questions-error-wrapper')).not.toBe(null);
 
-    expect(getByText(NO_QUESTIONS_ERROR_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_NO_QUESTIONS_ADVISE_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(NO_QUESTIONS_ERROR_SUGGESTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_NO_QUESTIONS_ADVISE_SUGGESTION)).not.toBeNull();
 
-    expect(getByText(NO_QUESTIONS_ERROR_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.QUIZ_NO_QUESTIONS_ADVISE_TITLE)).not.toBeNull();
   });
 
   it('it should render the network-error when it receives a connection error', () => {
@@ -261,10 +254,10 @@ describe('Testing <Questions />', () => {
 
     expect(getByTestId('network-error-wrapper')).not.toBe(null);
 
-    expect(getByText(NO_CONNECTION_ERROR_DESCRIPTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.ERRORS_NETWORK_ERROR_DESCRIPTION)).not.toBeNull();
 
-    expect(getByText(NO_CONNECTION_ERROR_SUGGGESTION_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.ERRORS_NETWORK_ERROR_SUGGESTION)).not.toBeNull();
 
-    expect(getByText(NO_CONNECTION_ERROR_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.ERRORS_NETWORK_ERROR_TITLE)).not.toBeNull();
   });
 });

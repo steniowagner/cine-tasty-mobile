@@ -11,6 +11,7 @@ import { formatCurrency, formatDate } from 'utils/formatters';
 import Advise from 'components/common/advise/Advise';
 import Section from 'components/common/Section';
 import { useStatusBarStyle } from 'hooks';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
@@ -23,21 +24,6 @@ import Header from '../../common/header-info/HeaderInfo';
 import Videos from '../../common/sections/videos/Videos';
 import Tags from '../../common/sections/tags/Tags';
 import useMovieDetail from './useMovieDetail';
-
-export const MOVIE_PRODUCTION_COMPANIES_I18N_REF = 'translations:mediaDetail:sections:productionCompanies';
-export const MOVIE_PRODUCTION_COUNTRIES_I18N_REF = 'translations:mediaDetail:sections:productionCountries';
-export const MOVIE_SPOKEN_LANGUAGES_I18N_REF = 'translations:mediaDetail:sections:spokenLanguages';
-export const ERROR_DESCRIPTION_I18N_REF = 'translations:mediaDetail:errorDescription';
-export const ERROR_SUGGESTION_I18N_REF = 'translations:mediaDetail:errorSuggestion';
-export const MOVIE_ORIGINAL_TITLE_I18N_REF = 'translations:mediaDetail:sections:originalTitle';
-export const MOVIE_RELEASE_DATE_I18N_REF = 'translations:mediaDetail:sections:releaseDate';
-export const MOVIE_SIMILAR_I18N_REF = 'translations:mediaDetail:sections:similar';
-export const MOVIE_IMAGES_I18N_REF = 'translations:mediaDetail:sections:images';
-export const MOVIE_CREW_I18N_REF = 'translations:mediaDetail:sections:crew';
-export const MOVIE_CAST_I18N_REF = 'translations:mediaDetail:sections:cast';
-export const ERROR_TITLE_I18N_REF = 'translations:mediaDetail:errorTitle';
-export const MOVIE_REVENUE_I18N_REF = 'translations:mediaDetail:sections:revenue';
-export const MOVIE_BUDGET_I18N_REF = 'translations:mediaDetail:sections:budget';
 
 type Props = {
   navigation: StackNavigationProp<MovieDetailInternalternalParams, 'MOVIE_DETAIL'>;
@@ -80,9 +66,9 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
           animated
         />
         <Advise
-          description={t(ERROR_DESCRIPTION_I18N_REF)}
-          suggestion={t(ERROR_SUGGESTION_I18N_REF)}
-          title={t(ERROR_TITLE_I18N_REF)}
+          description={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_DESCRIPTION)}
+          suggestion={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_SUGGESTION)}
+          title={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_TITLE)}
           icon="alert-box"
         />
       </>
@@ -108,7 +94,7 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
           isLoading={isLoading}
         />
         <Tags
-          extraTags={[releaseDate, t('translations:mediaDetail:movie:movie')]}
+          extraTags={[releaseDate, t(TRANSLATIONS.MEDIA_DETAIL_MOVIE_TITLE)]}
           tags={route.params.genreIds || movie?.genres || []}
           isLoading={!route.params.genreIds && isLoading}
         />
@@ -121,29 +107,29 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
             <GeneralInfo
               infoItems={[
                 {
-                  title: t(MOVIE_ORIGINAL_TITLE_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE),
                   value: movie.originalTitle || '-',
                 },
                 {
-                  title: t(MOVIE_RELEASE_DATE_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_RELEASE_DATE),
                   value: formatDate(movie.releaseDate),
                 },
                 {
-                  title: t(MOVIE_BUDGET_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_BUDGET),
                   value: formatCurrency(movie.budget),
                 },
                 {
-                  title: t(MOVIE_REVENUE_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_REVENUE),
                   value: formatCurrency(movie.revenue),
                 },
                 {
-                  title: t(MOVIE_PRODUCTION_COUNTRIES_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COUNTRIES),
                   value: movie.productionCountries.length
                     ? movie.productionCountries.join(', ')
                     : '-',
                 },
                 {
-                  title: t(MOVIE_SPOKEN_LANGUAGES_I18N_REF),
+                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES),
                   value: movie.spokenLanguages.length
                     ? movie.spokenLanguages.join(', ')
                     : '-',
@@ -157,7 +143,7 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
                   id: Number(id),
                   name,
                 })}
-                sectionTitle={t(MOVIE_CAST_I18N_REF)}
+                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
                 dataset={movie.cast}
                 type="cast"
               />
@@ -169,14 +155,14 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
                   id: Number(id),
                   name,
                 })}
-                sectionTitle={t(MOVIE_CREW_I18N_REF)}
+                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)}
                 dataset={movie.crew}
                 type="crew"
               />
             )}
             {!!movie.images.length && (
               <Section
-                title={t(MOVIE_IMAGES_I18N_REF)}
+                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}
               >
                 <ImagesList
                   images={movie.images}
@@ -190,7 +176,7 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
             )}
             {!!movie.productionCompanies.length && (
               <Section
-                title={t(MOVIE_PRODUCTION_COMPANIES_I18N_REF)}
+                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES)}
               >
                 <ProductionCompanies
                   productionsList={movie.productionCompanies}
@@ -207,8 +193,8 @@ const MovieDetail = ({ navigation, theme, route }: Props) => {
             <Section
               title={
                 movie.similar.length
-                  ? t(MOVIE_SIMILAR_I18N_REF)
-                  : `${t(MOVIE_SIMILAR_I18N_REF)} (0)`
+                  ? t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)
+                  : `${t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)} (0)`
               }
             >
               <FlatList

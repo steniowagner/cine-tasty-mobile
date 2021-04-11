@@ -4,30 +4,14 @@ import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { SearchType } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
+import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import { SCREEN_ID } from './media-section-view-all/MediaSectionViewAll';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
-import {
-  AIRING_TODAY_VIEW_ALL_TITLE_i18N_REF as TV_SHOWS_AIRING_TODAY_VIEW_ALL_TITLE_i18N_REF,
-  AIRING_TODAY_SECTION_TITLE_i18N_REF as TV_SHOWS_AIRING_TODAY_SECTION_TITLE_i18N_REF,
-  ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF as TV_SHOWS_ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF,
-  TOP_RATED_VIEW_ALL_TITLE_i18N_REF as TV_SHOWS_TOP_RATED_VIEW_ALL_TITLE_i18N_REF,
-  ON_THE_AIR_SECTION_TITLE_i18N_REF as TV_SHOWS_ON_THE_AIR_SECTION_TITLE_i18N_REF,
-  TOP_RATED_SECTION_TITLE_i18N_REF as TV_SHOWS_TOP_RATED_SECTION_TITLE_i18N_REF,
-  POPULAR_VIEW_ALL_TITLE_i18N_REF as TV_SHOWS_POPULAR_VIEW_ALL_TITLE_i18N_REF,
-  POPULAR_SECTION_TITLE_i18N_REF as TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF,
-} from './hooks/trendings/useTrendingTVShows';
-import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
-import { TRENDING_TV_SHOWS_ERROR_REF_I18N } from './hooks/useHome';
-import { I18N_TV_SHOWS_KEY } from './header/Header';
-import {
-  SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF,
-  SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF,
-  SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF,
-} from './hooks/usePressMapping';
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
@@ -165,7 +149,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -185,34 +169,34 @@ describe('Testing <Home /> - [TVShows]', () => {
 
     // airing-today-section
 
-    expect(getByText(TV_SHOWS_AIRING_TODAY_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_AIRING_TODAY)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${TV_SHOWS_AIRING_TODAY_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_AIRING_TODAY}`),
     ).not.toBeNull();
 
     // on-the-air-section
 
-    expect(getByText(TV_SHOWS_ON_THE_AIR_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ON_THE_AIR)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${TV_SHOWS_ON_THE_AIR_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ON_THE_AIR}`),
     ).not.toBeNull();
 
     // top-rated-section
 
-    expect(getByText(TV_SHOWS_TOP_RATED_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_TOP_RATED)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${TV_SHOWS_TOP_RATED_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_TOP_RATED}`),
     ).not.toBeNull();
 
     // popular-section
 
-    expect(getByText(TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_POPULAR)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_POPULAR}`),
     ).not.toBeNull();
   });
 
@@ -231,7 +215,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -244,7 +228,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${TV_SHOWS_ON_THE_AIR_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ON_THE_AIR}`),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
@@ -258,7 +242,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
-      TV_SHOWS_ON_THE_AIR_VIEW_ALL_TITLE_i18N_REF,
+      TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ON_THE_AIR_VIEW_ALL,
     );
 
     expect(navigate.mock.calls[0][1].sectionKey).toEqual('onTheAir');
@@ -281,7 +265,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -294,7 +278,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${TV_SHOWS_POPULAR_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_POPULAR}`),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
@@ -308,7 +292,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
-      TV_SHOWS_POPULAR_VIEW_ALL_TITLE_i18N_REF,
+      TRANSLATIONS.HOME_TRENDING_TV_SHOWS_POPULAR_VIEW_ALL,
     );
 
     expect(navigate.mock.calls[0][1].sectionKey).toEqual('popular');
@@ -331,7 +315,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -344,7 +328,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${TV_SHOWS_TOP_RATED_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_TV_SHOWS_TOP_RATED}`),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
@@ -358,7 +342,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
-      TV_SHOWS_TOP_RATED_VIEW_ALL_TITLE_i18N_REF,
+      TRANSLATIONS.HOME_TRENDING_TV_SHOWS_TOP_RATED_VIEW_ALL,
     );
 
     expect(navigate.mock.calls[0][1].sectionKey).toEqual('topRated');
@@ -381,7 +365,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION + SWITCH_ANIMATION_DURATION_MS);
@@ -404,9 +388,9 @@ describe('Testing <Home /> - [TVShows]', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith('SEARCH', {
-      i18nQueryByPaginationErrorRef: SEARCH_TV_SHOWS_PAGINATION_ERROR_I18N_REF,
-      i18nQueryByTextErrorRef: SEARCH_TV_SHOWS_QUERY_BY_TEXT_ERROR_I18N_REF,
-      i18nSearchBarPlaceholderRef: SEARCH_TV_SHOWS_PLACEHOLDER_I18N_REF,
+      i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR,
+      i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
+      i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_PLACEHOLDER,
       searchType: SearchType.TV,
       queryId: 'search_tv',
     });
@@ -429,7 +413,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION);
@@ -444,7 +428,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     expect(getByTestId('popup-advice-wrapper')).not.toBeNull();
 
     expect(getByTestId('popup-advice-message').children[0]).toEqual(
-      TRENDING_TV_SHOWS_ERROR_REF_I18N,
+      TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ERROR,
     );
 
     expect(queryByTestId('loading-home')).toBeNull();

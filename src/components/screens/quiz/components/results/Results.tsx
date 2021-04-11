@@ -5,6 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
 import RoundedButton from 'components/common/RoundedButton';
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 
 import { QuizStackParams } from '../../routes/route-params-types';
@@ -41,7 +42,7 @@ const Results = ({ navigation, route }: Props) => {
     );
 
     navigation.setOptions({
-      title: `${t('translations:quiz:scores')} ${scores}/${results.length}!`,
+      title: `${t(TRANSLATIONS.QUIZ_SCORES)} ${scores}/${results.length}!`,
     });
   }, [results]);
 
@@ -63,7 +64,7 @@ const Results = ({ navigation, route }: Props) => {
       />
       <PlayAgainButtonWrapper>
         <RoundedButton
-          text={t('translations:quiz:playAgain')}
+          text={t(TRANSLATIONS.QUIZ_PLAY_AGAIN)}
           onPress={onPressPlayAgain}
         />
       </PlayAgainButtonWrapper>

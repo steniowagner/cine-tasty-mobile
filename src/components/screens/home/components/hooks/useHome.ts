@@ -8,6 +8,7 @@ import {
   TrendingMediaItemKey, HomeTop3Item, HomeSection, SimplifiedMedia,
 } from 'types';
 import { TrendingTVShows, TrendingMovies } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '@graphql/queries';
 import { HomeStackParams } from '../../routes/route-params-types';
@@ -17,8 +18,6 @@ import useHomeTrendings from './useHomeTrendings';
 import usePressMapping from './usePressMapping';
 import useTop3 from './top3/useTop3';
 
-export const TRENDING_TV_SHOWS_ERROR_REF_I18N = 'translations:home:trendingTvShows:error';
-export const TRENDING_MOVIES_ERROR_REF_I18N = 'translations:home:trendingMovies:error';
 export const TRANSITIONING_DURATION = 500;
 
 type ViewAllProps = {
@@ -133,11 +132,11 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
 
   const errorMessage = useMemo((): string => {
     if (isMoviesSelected && hasTrendingMoviesError) {
-      return t(TRENDING_MOVIES_ERROR_REF_I18N);
+      return t(TRANSLATIONS.HOME_TRENDING_MOVIES_ERROR);
     }
 
     if (!isMoviesSelected && hasTrendingTVShowsError) {
-      return t(TRENDING_TV_SHOWS_ERROR_REF_I18N);
+      return t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ERROR);
     }
 
     return '';

@@ -2,14 +2,14 @@ import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'styles/theme';
-
 import { DEFAULT_ANIMATION_DURATION } from 'components/common/popup-advice/PopupAdvice';
+import * as TRANSLATIONS from 'i18n/tags';
+import theme from 'styles/theme';
 
 import timeTravel, {
   setupTimeTravel,
 } from '../../../../../../../../__mocks__/timeTravel';
-import Overview, { SECTION_TITLE_I18N_REF } from './Overview';
+import Overview from './Overview';
 import { NUMBER_ITEMS } from './LoadingOverview';
 
 const renderOverview = (isLoading = false, overview = 'overview') => (
@@ -28,7 +28,7 @@ describe('Testing <Overview />', () => {
       renderOverview(),
     );
 
-    expect(getByText(SECTION_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)).not.toBeNull();
 
     expect(getByTestId('description-text')).not.toBeNull();
 
@@ -46,7 +46,7 @@ describe('Testing <Overview />', () => {
       timeTravel(DEFAULT_ANIMATION_DURATION);
     });
 
-    expect(getByText(SECTION_TITLE_I18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)).not.toBeNull();
 
     expect(queryByTestId('description-text')).toBeNull();
 

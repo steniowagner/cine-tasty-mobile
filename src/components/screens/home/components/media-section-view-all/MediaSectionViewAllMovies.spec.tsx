@@ -5,12 +5,12 @@ import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
 import { PAGINATION_DELAY } from 'hooks/use-paginated-query/useQueryWithPagination';
+import * as TRANSLATIONS from 'i18n/tags';
 import theme from 'styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../../common/popup-advice/PopupAdvice';
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
-import { I18N_PAGINATE_MOVIES_ERROR_REF } from './useMediaSectionViewAll';
 import MediaSectionViewAll from './MediaSectionViewAll';
 
 const mockedInitialDataset = Array(5)
@@ -154,7 +154,7 @@ describe('Testing <MediaSectionViewAll /> - [Movies]', () => {
     expect(getByTestId('popup-advice-message')).not.toBeNull();
 
     expect(getByTestId('popup-advice-message').children[0]).toEqual(
-      I18N_PAGINATE_MOVIES_ERROR_REF,
+      TRANSLATIONS.HOME_MOVIES_PAGINATION_ERROR,
     );
   });
 

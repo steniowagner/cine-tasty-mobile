@@ -3,10 +3,9 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import NextButton from '../NextButton';
+import * as TRANSLATIONS from 'i18n/tags';
 
-export const TRUE_TEXT_I18N_REF = 'translations:quiz:true';
-export const FALSE_TEXT_I18N_REF = 'translations:quiz:false';
+import NextButton from '../NextButton';
 
 type OptionSelectedStyleProps = {
   isSelected: boolean;
@@ -55,7 +54,7 @@ const BooleanQuestion = ({ onPressNext }: Props) => {
             selectedAnswer === true ? 'true-option-button-selected' : 'true-option-button'
           }
         >
-          <OptionText>{t(TRUE_TEXT_I18N_REF)}</OptionText>
+          <OptionText>{t(TRANSLATIONS.QUIZ_TRUE)}</OptionText>
         </OptionButton>
         <OptionButton
           onPress={() => setSelectedAnswer(false)}
@@ -66,7 +65,7 @@ const BooleanQuestion = ({ onPressNext }: Props) => {
               : 'false-option-button'
           }
         >
-          <OptionText>{t(FALSE_TEXT_I18N_REF)}</OptionText>
+          <OptionText>{t(TRANSLATIONS.QUIZ_FALSE)}</OptionText>
         </OptionButton>
       </Wrapper>
       <NextButton

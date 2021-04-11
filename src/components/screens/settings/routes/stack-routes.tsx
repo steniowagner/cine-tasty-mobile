@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import { getDefaultHeaderOptions } from 'routes/constants';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import ImagesQuality from '../components/images-quality/ImagesQuality';
 import OpenSource from '../components/open-source/OpenSource';
@@ -22,7 +23,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         component={Settings}
         options={() => ({
           ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:home:settingsSections:language:headerTitle'),
+          headerTitle: t(TRANSLATIONS.HOME_SETTINGS),
         })}
       />
       <StackNavigator.Screen
@@ -30,7 +31,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         component={Language}
         options={() => ({
           ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:home:settingsSections:language:headerTitle'),
+          headerTitle: t(TRANSLATIONS.SETTINGS_LANGUAGE_HEADER_TITLE),
         })}
       />
       <StackNavigator.Screen
@@ -38,7 +39,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         component={OpenSource}
         options={() => ({
           ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:home:settingsSections:openSource:headerTitle'),
+          headerTitle: t(TRANSLATIONS.SETTINGS_OPEN_SOURCE_HEADER_TITLE),
         })}
       />
       <StackNavigator.Screen
@@ -46,7 +47,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         component={About}
         options={() => ({
           ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:home:settingsSections:about:headerTitle'),
+          headerTitle: t(TRANSLATIONS.SETTINGS_ABOUT_HEADER_TITLE),
         })}
       />
       <StackNavigator.Screen
@@ -54,7 +55,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         component={ImagesQuality}
         options={() => ({
           ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:home:settingsSections:imagesQuality:headerTitle'),
+          headerTitle: t(TRANSLATIONS.SETTINGS_IMAGES_QUALITY_HEADER_TITLE),
         })}
       />
       <StackNavigator.Screen
@@ -62,7 +63,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         component={ThemeSettings}
         options={() => ({
           ...getDefaultHeaderOptions(),
-          headerTitle: t('translations:home:settingsSections:theme:headerTitle'),
+          headerTitle: t(TRANSLATIONS.SETTINGS_THEME_HEADER_TITLE),
         })}
       />
     </>

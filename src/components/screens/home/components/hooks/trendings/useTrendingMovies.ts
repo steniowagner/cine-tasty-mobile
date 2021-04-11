@@ -7,21 +7,10 @@ import {
   TrendingMovies,
   TrendingMovie,
 } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 import { HomeSection } from 'types';
 
 import parseTrendingToSimplifiedMedia from './parseTrendingToSimplifiedMedia';
-
-export const NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingMovies:nowPlayingViewAllTitle';
-export const NOW_PLAYING_SECTION_TITLE_i18N_REF = 'translations:home:trendingMovies:nowPlaying';
-
-export const POPULAR_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingMovies:popularViewAllTitle';
-export const POPULAR_SECTION_TITLE_i18N_REF = 'translations:home:trendingMovies:popular';
-
-export const TOP_RATED_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingMovies:topRatedViewAllTitle';
-export const TOP_RATED_SECTION_TITLE_i18N_REF = 'translations:home:trendingMovies:topRated';
-
-export const UPCOMING_VIEW_ALL_TITLE_i18N_REF = 'translations:home:trendingMovies:upcomingViewAllTitle';
-export const UPCOMING_SECTION_TITLE_i18N_REF = 'translations:home:trendingMovies:upcoming';
 
 type Props = {
   rawTrendingMovies: TrendingMovies;
@@ -42,23 +31,23 @@ const useTrendingMovies = ({ rawTrendingMovies }: Props): State => {
     (trendingItemKey: TrendingItemKey, dataset: TrendingMovie[]): HomeSection => {
       const sectionMapping: Record<TrendingItemKey, Omit<HomeSection, 'data'>> = {
         nowPlaying: {
-          viewAllTitle: t(NOW_PLAYING_VIEW_ALL_TITLE_i18N_REF),
-          sectionTitle: t(NOW_PLAYING_SECTION_TITLE_i18N_REF),
+          viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING_VIEW_ALL),
+          sectionTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING),
           id: 'nowPlaying',
         },
         popular: {
-          viewAllTitle: t(POPULAR_VIEW_ALL_TITLE_i18N_REF),
-          sectionTitle: t(POPULAR_SECTION_TITLE_i18N_REF),
+          viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR_VIEW_ALL),
+          sectionTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR),
           id: 'popular',
         },
         topRated: {
-          viewAllTitle: t(TOP_RATED_VIEW_ALL_TITLE_i18N_REF),
-          sectionTitle: t(TOP_RATED_SECTION_TITLE_i18N_REF),
+          viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED_VIEW_ALL),
+          sectionTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED),
           id: 'topRated',
         },
         upcoming: {
-          viewAllTitle: t(UPCOMING_VIEW_ALL_TITLE_i18N_REF),
-          sectionTitle: t(UPCOMING_SECTION_TITLE_i18N_REF),
+          viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING_VIEW_ALL),
+          sectionTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING),
           id: 'upcoming',
         },
       };

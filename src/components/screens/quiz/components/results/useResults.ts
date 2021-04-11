@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
+import * as TRANSLATIONS from 'i18n/tags';
 import { QuizResult } from 'types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
@@ -43,15 +44,15 @@ const useResults = ({ navigation, route }: Props): State => {
 
   const onPressPlayAgain = useCallback((): void => {
     Alert.alert(
-      t('translations:quiz:playAgain'),
-      t('translations:quiz:playAgainDescription'),
+      t(TRANSLATIONS.QUIZ_PLAY_AGAIN),
+      t(TRANSLATIONS.QUIZ_PLAY_AGAIN_DESCRIPTION),
       [
         {
-          text: t('translations:quiz:no'),
+          text: t(TRANSLATIONS.QUIZ_NO),
           style: 'cancel',
           onPress: () => navigation.pop(3),
         },
-        { text: t('translations:quiz:yes'), onPress: () => navigation.pop(2) },
+        { text: t(TRANSLATIONS.QUIZ_YES), onPress: () => navigation.pop(2) },
       ],
       { cancelable: false },
     );

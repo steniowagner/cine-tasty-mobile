@@ -3,6 +3,7 @@ import { FlatList, Text } from 'react-native';
 import styled from 'styled-components';
 
 import { SearchType } from 'types/schema';
+import * as TRANSLATIONS from 'i18n/tags';
 import { RecentSearchItem } from 'types';
 import metrics from 'styles/metrics';
 
@@ -38,7 +39,7 @@ const RecentSearches = ({ onPressItem, searchType }: Props) => {
         paddingTop: metrics.largeSize,
       }}
       ListHeaderComponent={() => recentSearches.length > 0 && (
-      <RecentText>{t('translations:search:recent')}</RecentText>
+      <RecentText>{t(TRANSLATIONS.SEARCH_RECENT)}</RecentText>
       )}
       renderItem={({ item }) => (
         <RecentSearchListItem

@@ -3,19 +3,13 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import * as TRANSLATIONS from 'i18n/tags';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
-import {
-  NOW_PLAYING_SECTION_TITLE_i18N_REF as MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF,
-  TOP_RATED_SECTION_TITLE_i18N_REF as MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF,
-  UPCOMING_SECTION_TITLE_i18N_REF as MOVIES_UPCOMING_SECTION_TITLE_i18N_REF,
-} from './hooks/trendings/useTrendingMovies';
-
 import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
-import { I18N_MOVIES_KEY, I18N_TV_SHOWS_KEY } from './header/Header';
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
@@ -117,34 +111,34 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
 
     // now-playing-section
 
-    expect(getByText(MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`),
     ).not.toBeNull();
 
     // top-rated-section
 
-    expect(getByText(MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`),
     ).not.toBeNull();
 
     // upcoming-section
 
-    expect(getByText(MOVIES_UPCOMING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`),
     ).not.toBeNull();
 
     // popular-section
 
-    expect(getByText(MOVIES_UPCOMING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`),
     ).not.toBeNull();
 
     act(() => {
@@ -153,7 +147,7 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_TV_SHOWS_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION + SWITCH_ANIMATION_DURATION_MS);
@@ -167,34 +161,34 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
 
     // now-playing-section
 
-    expect(queryByTestId(MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF)).toBeNull();
+    expect(queryByTestId(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING)).toBeNull();
 
     expect(
-      queryByTestId(`home-section-${MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF}`),
+      queryByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`),
     ).toBeNull();
 
     // top-rated-section
 
-    expect(queryByText(MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED)).toBeNull();
 
     expect(
-      queryByTestId(`home-section-${MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF}`),
+      queryByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`),
     ).toBeNull();
 
     // upcoming-section
 
-    expect(queryByText(MOVIES_UPCOMING_SECTION_TITLE_i18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING)).toBeNull();
 
     expect(
-      queryByTestId(`home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      queryByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`),
     ).toBeNull();
 
     // popular-section
 
-    expect(queryByText(MOVIES_UPCOMING_SECTION_TITLE_i18N_REF)).toBeNull();
+    expect(queryByText(TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR)).toBeNull();
 
     expect(
-      queryByTestId(`home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      queryByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`),
     ).toBeNull();
 
     act(() => {
@@ -203,7 +197,7 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
       } catch (err) {}
     });
 
-    fireEvent.press(getByTestId(`${I18N_MOVIES_KEY}-button`));
+    fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_MOVIES}-button`));
 
     act(() => {
       timeTravel(TRANSITIONING_DURATION * 2);
@@ -217,34 +211,34 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
 
     // now-playing-section
 
-    expect(getByText(MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_NOW_PLAYING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`),
     ).not.toBeNull();
 
     // top-rated-section
 
-    expect(getByText(MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_TOP_RATED_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`),
     ).not.toBeNull();
 
     // upcoming-section
 
-    expect(getByText(MOVIES_UPCOMING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`),
     ).not.toBeNull();
 
     // popular-section
 
-    expect(getByText(MOVIES_UPCOMING_SECTION_TITLE_i18N_REF)).not.toBeNull();
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR)).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${MOVIES_UPCOMING_SECTION_TITLE_i18N_REF}`),
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`),
     ).not.toBeNull();
 
     act(() => {

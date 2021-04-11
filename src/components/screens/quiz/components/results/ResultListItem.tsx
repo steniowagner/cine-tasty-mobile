@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import SVGIcon from 'components/common/svg-icon/SVGIcon';
+import * as TRANSLATIONS from 'i18n/tags';
 import metrics from 'styles/metrics';
 import { QuizResult } from 'types';
 
@@ -85,10 +86,10 @@ const ResultListItem = ({ result }: Props) => {
       </IconWrapper>
       <TextContentWrapper>
         <QuestionText>{result.question}</QuestionText>
-        <AnswerText>{`${t('translations:quiz:answer')}: ${result.answer}`}</AnswerText>
+        <AnswerText>{`${t(TRANSLATIONS.QUIZ_ANSWER)}: ${result.answer}`}</AnswerText>
         <LineDivider />
         <AnswerText>
-          {`${t('translations:quiz:yourAnswer')}: ${result.userAnswer}`}
+          {`${t(TRANSLATIONS.QUIZ_YOUR_ANSWER)}: ${result.userAnswer}`}
         </AnswerText>
       </TextContentWrapper>
     </Wrapper>

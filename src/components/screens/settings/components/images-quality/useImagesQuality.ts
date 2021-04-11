@@ -6,10 +6,9 @@ import {
   persistItemInStorage,
   getItemFromStorage,
 } from 'utils/async-storage-adapter/AsyncStorageAdapter';
+import * as TRANSLATIONS from 'i18n/tags';
 import CONSTANTS from 'utils/constants';
 import { ImageQualities } from 'types';
-
-export const IMAGE_QUALITIES_I18N_REF = 'translations:imageQualities';
 
 export const qualities: ImageQualities[] = ['low', 'medium', 'high', 'veryHigh'];
 
@@ -52,7 +51,7 @@ const useImagesQuality = (): State => {
 
   return {
     qualities: qualities.map((imageQuality) => ({
-      title: t(`${IMAGE_QUALITIES_I18N_REF}:${imageQuality}`),
+      title: t(`${TRANSLATIONS.IMAGE_QUALITIES}:${imageQuality}`),
       quality: imageQuality,
     })),
     qualitySelected,

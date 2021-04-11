@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const READ_MORE_I18N_REF = 'translations:mediaDetail:tvShow:seasonEpisode:readMoreSeasonOverview';
+import * as TRANSLATIONS from 'i18n/tags';
+
 export const MAX_NUMBER_LINES = 5;
 
 const INITIAL_STATE: InternalState = {
@@ -53,7 +54,9 @@ const useSeasonOverviewText = (): State => {
     shouldShowReadMoreButton: state.shouldShowReadMoreButton,
     onPressReadMore: () => setIsModalOpen(true),
     onCloseModal: () => setIsModalOpen(false),
-    readMoreButtonText: t(READ_MORE_I18N_REF),
+    readMoreButtonText: t(
+      TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_READ_MORE_SEASON_OVERVIEW,
+    ),
     numberOfLines: state.numberOfLines,
     onGetTextLayout,
     isModalOpen,
