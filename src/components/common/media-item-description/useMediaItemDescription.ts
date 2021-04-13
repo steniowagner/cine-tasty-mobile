@@ -5,15 +5,7 @@ import * as TRANSLATIONS from '@i18n/tags';
 
 export const DEFAULT_NUMBER_OF_LINES = 5;
 
-type State = {
-  onGetTextLayout: (linesLength: number) => void;
-  isReadExpandableButtonVisible: boolean;
-  onPressReadExpandable: () => void;
-  expandableReadButtonText: string;
-  numberOfLines: number;
-};
-
-const useMediaItemDescription = (): State => {
+const useMediaItemDescription = () => {
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>(undefined);
   const [textNumberOfLines, setTextNumberOfLines] = useState<number>(0);
 

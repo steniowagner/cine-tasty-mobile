@@ -19,11 +19,7 @@ type Props = {
   type: 'cast' | 'crew' | 'creator';
 };
 
-type State = {
-  items: PeopleListItem[];
-};
-
-const usePeopleList = ({ dataset, type }: Props): State => {
+const usePeopleList = ({ dataset, type }: Props) => {
   const mergeCrewMemebersBySimilarJobs = useCallback(
     (crew: PeopleListItem[]): PeopleListItem[] => {
       const repeatedItemsMap = {};
@@ -47,21 +43,24 @@ const usePeopleList = ({ dataset, type }: Props): State => {
     [],
   );
 
-  const parseCrewToPeopleListItem = useCallback((crew: CrewDataset): PeopleListItem[] => {
-    const crewParsedToPeople = crew.map(({
-      job, profilePath, name, id,
-    }) => ({
-      subText: job || '-',
-      image: profilePath,
-      name,
-      id,
-    }));
+  const parseCrewToPeopleListItem = useCallback(
+    (crew: Types.CrewDataset): PeopleListItem[] => {
+      const crewParsedToPeople = crew.map(({
+        job, profilePath, name, id,
+      }) => ({
+        subText: job || '-',
+        image: profilePath,
+        name,
+        id,
+      }));
 
-    return mergeCrewMemebersBySimilarJobs(crewParsedToPeople);
-  }, []);
+      return mergeCrewMemebersBySimilarJobs(crewParsedToPeople);
+    },
+    [],
+  );
 
   const parseCastToPeopleListItem = useCallback(
-    (cast: CastDataset): PeopleListItem[] => cast.map(({
+    (cast: Types.CastDataset): PeopleListItem[] => cast.map(({
       character, profilePath, name, id,
     }) => ({
       subText: character || '-',
@@ -74,12 +73,12 @@ const usePeopleList = ({ dataset, type }: Props): State => {
 
   const parseDatasetToPeopleListItemDataset = useCallback(() => {
     if (type === 'cast') {
-      const cast = dataset as CastDataset;
+      const cast = dataset as Types.CastDataset;
 
       return parseCastToPeopleListItem(cast);
     }
 
-    const crew = dataset as CrewDataset;
+    const crew = dataset as Types.CrewDataset;
 
     return parseCrewToPeopleListItem(crew);
   }, [dataset, type]);

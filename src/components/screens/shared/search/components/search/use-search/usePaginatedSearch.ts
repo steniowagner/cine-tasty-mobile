@@ -14,12 +14,6 @@ const initialPagination: Pagination = {
   page: 1,
 };
 
-type State = {
-  restartPaginatedSearch: () => void;
-  onPaginateSearch: () => void;
-  isPaginating: boolean;
-};
-
 type DebouncedPaginationProps = {
   queryStringTyped: string;
   pageSelected: number;
@@ -48,7 +42,7 @@ const usePaginatedSearch = ({
   searchType,
   onError,
   search,
-}: Props): State => {
+}: Props) => {
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
 
   const onSearchByPagination = useCallback(

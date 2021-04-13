@@ -24,23 +24,9 @@ type ViewAllProps = {
   viewAllTitle: string;
 };
 
-type State = {
-  onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => void;
-  onPressTop3LearnMore: (mediaItem: Types.SimplifiedMedia) => void;
-  onPressTrendingItem: (mediaItem: Types.SimplifiedMedia) => void;
-  shouldDisableHeaderActions: boolean;
-  onSelectTVShows: () => void;
-  onSelectMovies: () => void;
-  onPressSearch: () => void;
-  trendings: Types.HomeSection[];
-  errorMessage: string;
-  top3: Types.HomeTop3Item[];
-  isLoading: boolean;
-};
-
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
-const useHome = (navigation: HomeScreenNavigationProp): State => {
+const useHome = (navigation: HomeScreenNavigationProp) => {
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
     true,
   );

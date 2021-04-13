@@ -2,13 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 const MAX_STARS = 5;
 
-type State = {
-  numberEmptyStars: number;
-  numberFullStars: number;
-  numberHalfStars: number;
-};
-
-const useStarsVotes = (votes: number): State => {
+const useStarsVotes = (votes: number) => {
   const getNumberFullStars = useCallback(
     (allVotes: number): number => Math.floor(allVotes / 2),
     [],
@@ -24,7 +18,7 @@ const useStarsVotes = (votes: number): State => {
     [],
   );
 
-  const getStars = useMemo((): State => {
+  const getStars = useMemo(() => {
     if (votes > 10) {
       return {
         numberFullStars: MAX_STARS,

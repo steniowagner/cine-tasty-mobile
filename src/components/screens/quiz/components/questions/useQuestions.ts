@@ -15,21 +15,10 @@ type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUEST
 
 type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'QUESTIONS'>;
 
-type State = {
-  onPressNext: (currentAnswer: string) => void;
-  currentQuestionIndex: number;
-  onRestartQuiz: () => void;
-  questionsFlatListRef: any;
-  questions: SchemaTypes.GetQuizQuestions_quiz[];
-  hasError: boolean;
-  answers: string[];
-  loading: boolean;
-};
-
 const useQuestions = (
   { params }: QuestionsScreenRouteProp,
   navigation: QuestionsScreenNavigationProp,
-): State => {
+) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const questionsFlatListRef = useRef(null);

@@ -3,11 +3,7 @@ import { useColorScheme } from 'react-native-appearance';
 
 import * as Types from '@local-types';
 
-type State = {
-  systemTheme: Types.ThemeId;
-};
-
-export const useSystemThemePreference = (): State => {
+export const useSystemThemePreference = () => {
   const systemColorScheme = useColorScheme();
 
   const systemTheme = useMemo(() => {

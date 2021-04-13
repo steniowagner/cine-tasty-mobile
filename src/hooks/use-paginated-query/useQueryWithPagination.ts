@@ -13,13 +13,6 @@ const initialPagination: Pagination = {
   page: 1,
 };
 
-type State = {
-  setHasMoreFromEntryQuery: (hasMore: boolean) => void;
-  restartPagination: () => void;
-  isPaginating: boolean;
-  exec: () => void;
-};
-
 type Pagination = {
   isPaginating: boolean;
   hasMore: boolean;
@@ -38,7 +31,7 @@ const useQueryWithPagination = <TData, TVariables>({
   onGetData,
   execQuery,
   onError,
-}: Props<TData, TVariables>): State => {
+}: Props<TData, TVariables>) => {
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
 
   const onPaginateQuery = useCallback(

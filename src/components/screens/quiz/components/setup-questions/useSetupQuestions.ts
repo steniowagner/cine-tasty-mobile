@@ -11,17 +11,6 @@ import { difficulties, categories, types } from './options';
 
 export const INITIAL_NUMBER_QUESTIONS = 10;
 
-type State = {
-  setNumberOfQuestions: (numberOfQuestions: number) => void;
-  questionDifficulty: Types.QuestionOption<SchemaTypes.QuestionDifficulty>;
-  onPressOptionDropdown: (option: Types.QuizOption) => void;
-  questionCategory: Types.QuestionOption<SchemaTypes.QuestionCategory>;
-  questionType: Types.QuestionOption<SchemaTypes.QuestionType>;
-  onPressStartQuiz: () => void;
-  t: (key: string) => string;
-  numberOfQuestions: number;
-};
-
 type OptionSelectedInfo = {
   currentOptionSelected: Types.QuizFilterOption;
   currentDataset: Types.QuizFilterOption[];
@@ -39,7 +28,7 @@ type Props = {
   navigation: StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
 };
 
-const useSetupQuestions = ({ navigation }: Props): State => {
+const useSetupQuestions = ({ navigation }: Props) => {
   const [questionDifficulty, setQuestionDifficulty] = useState<
     Types.QuestionOption<SchemaTypes.QuestionDifficulty>
   >(difficulties[0]);

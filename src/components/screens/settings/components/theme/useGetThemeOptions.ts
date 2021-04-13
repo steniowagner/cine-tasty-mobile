@@ -12,10 +12,6 @@ type ThemeOption = {
   id: Types.ThemeId;
 };
 
-type State = {
-  themeOptions: ThemeOption[];
-};
-
 type Props = {
   onPressSystemPreferencesOption: () => void;
   onPressLightOption: () => void;
@@ -26,7 +22,7 @@ const useGetThemeSettingsOption = ({
   onPressSystemPreferencesOption,
   onPressLightOption,
   onPressDarkOption,
-}: Props): State => {
+}: Props) => {
   const { hasThemeSupport } = useCheckHasThemeSupport();
   const { t } = useTranslation();
 

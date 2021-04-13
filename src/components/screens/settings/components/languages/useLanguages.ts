@@ -13,12 +13,7 @@ type LanguageItem = {
   id: Types.Languages;
 };
 
-type State = {
-  languages: LanguageItem[];
-  selectedLanguage: string;
-};
-
-const useLanguages = (): State => {
+const useLanguages = () => {
   const { i18n, t } = useTranslation();
 
   const languages = useMemo(() => {

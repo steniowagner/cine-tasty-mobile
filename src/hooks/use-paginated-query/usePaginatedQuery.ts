@@ -7,13 +7,6 @@ import useImperativeQuery from '@utils/useImperativeQuery';
 import useQueryWithPagination from './useQueryWithPagination';
 import useEntryQuery from './useEntryQuery';
 
-type State = {
-  onReloadData: () => Promise<void>;
-  onPaginateQuery: () => void;
-  isPaginating: boolean;
-  isLoading: boolean;
-};
-
 type Props<TData, TVariables> = {
   variables?: Omit<TVariables, 'page'>;
   fireEntryQueryWhenMounted?: boolean;
@@ -36,7 +29,7 @@ export const usePaginatedQuery = <TData, TVariables>({
   onGetData,
   variables,
   query,
-}: Props<TData, TVariables>): State => {
+}: Props<TData, TVariables>) => {
   const execQuery = useImperativeQuery<TData, TVariables & BaseVariables>(
     query,
     fetchPolicy,

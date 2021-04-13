@@ -4,11 +4,7 @@ import { Platform } from 'react-native';
 const MIN_SUPPORTED_ANDROID_API_VERSION = 29;
 const MIN_SUPPORTED_IOS_VERSION = 13;
 
-type State = {
-  hasThemeSupport: boolean;
-};
-
-const useCheckHasThemeSupport = (): State => {
+const useCheckHasThemeSupport = () => {
   const checkAndroidHasThemeSupport = useCallback(
     () => Platform.Version >= MIN_SUPPORTED_ANDROID_API_VERSION,
     [],

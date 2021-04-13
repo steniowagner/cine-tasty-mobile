@@ -7,13 +7,9 @@ type Props = {
   indexToDelayAnimation?: number;
 };
 
-type State = {
-  opacity: Animated.AnimatedInterpolation;
-};
-
 const ANIMATION_DURATION = 500;
 
-const useLoadingPlaceholder = ({ indexToDelayAnimation }: Props): State => {
+const useLoadingPlaceholder = ({ indexToDelayAnimation }: Props) => {
   const animatedOpacity = useRef(new Animated.Value(1)).current;
 
   const animationDuration = useMemo(

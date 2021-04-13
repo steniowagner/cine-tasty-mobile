@@ -17,21 +17,6 @@ const INITIAL_QUERY_RESULT = {
   items: [],
 };
 
-type State = {
-  onTypeSearchQuery: (value: string) => void;
-  onPressFooterReloadButton: () => void;
-  onPressHeaderReloadButton: () => void;
-  shouldShowEmptyListAdvise: boolean;
-  shouldShowRecentSearches: boolean;
-  hasPaginationError: boolean;
-  t: (text: string) => string;
-  onEndReached: () => void;
-  isPaginating: boolean;
-  errorMessage: string;
-  items: Types.SearchItem[];
-  isLoading: boolean;
-};
-
 type Props = {
   i18nQueryByPaginationErrorRef: string;
   searchType: SchemaTypes.SearchType;
@@ -44,7 +29,7 @@ const useSearch = ({
   i18nQueryByTextErrorRef,
   searchType,
   queryId,
-}: Props): State => {
+}: Props) => {
   const [queryResult, setQueryResult] = useState<Types.PaginatedQueryResult>(
     INITIAL_QUERY_RESULT,
   );

@@ -10,13 +10,9 @@ type Props = {
   image: string;
 };
 
-type State = {
-  uri: string;
-};
-
 const PROFILE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
 
-const useTMDBImage = ({ isThumbnail, imageType, image }: Props): State => {
+const useTMDBImage = ({ isThumbnail, imageType, image }: Props) => {
   const imagesQualities = useTMDBImageQuality();
 
   const uri = useMemo(() => {

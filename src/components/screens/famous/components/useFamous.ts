@@ -7,18 +7,7 @@ import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { usePaginatedQuery } from '@hooks';
 
-type State = {
-  onPressTopReloadButton: () => Promise<void>;
-  onPressBottomReloadButton: () => void;
-  hasPaginationError: boolean;
-  famous: SchemaTypes.GetFamous_people_items[];
-  onEndReached: () => void;
-  isPaginating: boolean;
-  isLoading: boolean;
-  error: string;
-};
-
-const useFamous = (): State => {
+const useFamous = () => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [famous, setFamous] = useState<SchemaTypes.GetFamous_people_items[]>([]);
   const [error, setError] = useState<string>('');

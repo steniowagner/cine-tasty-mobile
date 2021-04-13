@@ -13,11 +13,7 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
-type State = {
-  sections: SettingsSectionProps[];
-};
-
-const useSettings = ({ navigation }: Props): State => {
+const useSettings = ({ navigation }: Props) => {
   const { t } = useTranslation();
 
   const sections = useMemo(

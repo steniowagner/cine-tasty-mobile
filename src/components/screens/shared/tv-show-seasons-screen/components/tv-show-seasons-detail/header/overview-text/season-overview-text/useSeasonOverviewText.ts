@@ -15,19 +15,7 @@ type InternalState = {
   numberOfLines: number | undefined;
 };
 
-type ModalState = {
-  onPressReadMore: () => void;
-  onCloseModal: () => void;
-  isModalOpen: boolean;
-};
-
-type State = {
-  onGetTextLayout: (linesLength: number) => void;
-  readMoreButtonText: string;
-} & InternalState &
-  ModalState;
-
-const useSeasonOverviewText = (): State => {
+const useSeasonOverviewText = () => {
   const [state, setState] = useState<InternalState>(INITIAL_STATE);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 

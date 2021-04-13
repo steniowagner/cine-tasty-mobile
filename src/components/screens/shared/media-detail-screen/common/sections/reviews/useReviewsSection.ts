@@ -5,14 +5,7 @@ import { useTranslation } from 'react-i18next';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
-type State = {
-  onMomentumScrollEnd: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-  flatListRef: React.MutableRefObject<FlatList<any>>;
-  indexReviewSelected: number;
-  sectionTitle: string;
-};
-
-const useReviewsSection = (): State => {
+const useReviewsSection = () => {
   const [indexReviewSelected, setIndexReviewSelected] = useState<number>(0);
 
   const { t } = useTranslation();

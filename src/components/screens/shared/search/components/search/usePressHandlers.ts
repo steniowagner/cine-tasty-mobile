@@ -10,22 +10,12 @@ import { SearchStackParams } from '../../routes/route-params-types';
 
 type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH'>;
 
-type State = {
-  onPressListItem: (
-    item:
-      | SchemaTypes.SearchPerson_search_items_BasePerson
-      | SchemaTypes.SearchMovie_search_items_BaseMovie
-      | SchemaTypes.SearchTVShow_search_items_BaseTVShow,
-  ) => void;
-  onPressRecentSearchItem: (recentSearchItem: Types.RecentSearchItem) => void;
-};
-
 type Props = {
   navigation: SearchScreenNavigationProp;
   searchType: SchemaTypes.SearchType;
 };
 
-const usePressHandler = ({ navigation, searchType }: Props): State => {
+const usePressHandler = ({ navigation, searchType }: Props) => {
   const { persistItemToRecentSearches } = useRecentSearches({
     shouldSkipGetInitialRecentSearches: true,
     searchType,

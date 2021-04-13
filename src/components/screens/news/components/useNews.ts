@@ -7,21 +7,7 @@ import * as SchemaTypes from '@schema-types';
 import { usePaginatedQuery } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 
-type State = {
-  onSelectArticleLanguage: (language: SchemaTypes.ArticleLanguage) => void;
-  onPressTopReloadButton: () => Promise<void>;
-  onPressFooterReloadButton: () => void;
-  articleLanguage: SchemaTypes.ArticleLanguage;
-  hasPaginationError: boolean;
-  t: (key: string) => string;
-  onEndReached: () => void;
-  isPaginating: boolean;
-  articles: SchemaTypes.GetArticles_articles_items[];
-  isLoading: boolean;
-  error: string;
-};
-
-const useNews = (): State => {
+const useNews = () => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [articleLanguage, setArticleLanguage] = useState<SchemaTypes.ArticleLanguage>(
     SchemaTypes.ArticleLanguage.EN,
