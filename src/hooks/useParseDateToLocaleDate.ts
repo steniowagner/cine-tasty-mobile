@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import * as TRANSLATIONS from 'i18n/tags';
+import * as TRANSLATIONS from '@i18n/tags';
 
 type State = {
   dateText: string;

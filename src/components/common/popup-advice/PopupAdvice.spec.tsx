@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'styles/theme';
+import theme from '@styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import PopupAdvice, { HIDE_POPUP_DELAY } from './PopupAdvice';

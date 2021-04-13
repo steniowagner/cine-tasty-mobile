@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useParseDateToLocaleDate } from 'hooks';
+import { useParseDateToLocaleDate } from '@hooks';
 
 import InfoText from '../InfoText';
 

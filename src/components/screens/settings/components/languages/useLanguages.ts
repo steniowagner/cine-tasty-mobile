@@ -2,15 +2,15 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import RNRestart from 'react-native-restart';
 
-import { persistItemInStorage } from 'utils/async-storage-adapter/AsyncStorageAdapter';
-import * as TRANSLATIONS from 'i18n/tags';
-import CONSTANTS from 'utils/constants';
-import { Languages } from 'types';
+import { persistItemInStorage } from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import * as TRANSLATIONS from '@i18n/tags';
+import CONSTANTS from '@utils/constants';
+import * as Types from '@local-types';
 
 type LanguageItem = {
   onPress: () => void;
   title: string;
-  id: Languages;
+  id: Types.Languages;
 };
 
 type State = {
@@ -26,7 +26,9 @@ const useLanguages = (): State => {
       return [];
     }
 
-    const languageKeys = Object.keys(i18n.services.resourceStore.data) as Languages[];
+    const languageKeys = Object.keys(
+      i18n.services.resourceStore.data,
+    ) as Types.Languages[];
 
     return languageKeys.map((languageKey) => ({
       onPress: async () => {

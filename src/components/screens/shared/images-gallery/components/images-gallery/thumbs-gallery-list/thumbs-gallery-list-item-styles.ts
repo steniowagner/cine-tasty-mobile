@@ -1,7 +1,7 @@
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 export const BORDER_RADIUS = metrics.mediumSize;
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import styled from 'styled-components';
 
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
-import { ImageType } from 'types';
+import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import { ImageType } from '@local-types';
 
 import useProgressiveImage from './useProgressiveImage';
 

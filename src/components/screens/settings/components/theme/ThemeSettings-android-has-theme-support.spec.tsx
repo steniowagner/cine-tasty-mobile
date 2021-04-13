@@ -2,8 +2,8 @@ import React from 'react';
 import { Text } from 'react-native';
 import { cleanup, render, act } from '@testing-library/react-native';
 
-import { ThemeContextProvider } from 'providers';
-import * as TRANSLATIONS from 'i18n/tags';
+import { ThemeContextProvider } from '@providers';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import useThemeSettings from './useThemeSettings';
 

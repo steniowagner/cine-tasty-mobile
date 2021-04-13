@@ -2,8 +2,8 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
 
 import { MAX_NUMBER_LINES } from './useSeasonOverviewText';
 import SeasonOverviewText from './SeasonOverviewText';

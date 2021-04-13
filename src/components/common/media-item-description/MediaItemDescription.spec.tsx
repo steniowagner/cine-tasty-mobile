@@ -3,8 +3,8 @@ import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
 
 import { DEFAULT_NUMBER_OF_LINES } from './useMediaItemDescription';
 import MediaListItemDescription from './MediaItemDescription';

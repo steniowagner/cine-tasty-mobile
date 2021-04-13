@@ -3,8 +3,8 @@ import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import Section from 'components/common/Section';
-import * as TRANSLATIONS from 'i18n/tags';
+import Section from '@components/common/Section';
+import * as TRANSLATIONS from '@i18n/tags';
 
 const Wrapper = styled(View)`
   width: 100%;

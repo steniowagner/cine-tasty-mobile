@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, render, act } from '@testing-library/react-native';
 
-import theme from 'styles/theme';
+import theme from '@styles/theme';
 
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { QuizStackParams } from '../../routes/route-params-types';

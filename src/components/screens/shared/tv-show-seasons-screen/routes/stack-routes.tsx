@@ -6,8 +6,8 @@ import { withTheme, DefaultTheme } from 'styled-components';
 import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
 
 import TVShowSeasonsDetailScreen from '../components/tv-show-seasons-detail/TVShowSeasonsDetail';
 import { TVShowSeasonsStackParams } from './route-params-types';

@@ -4,15 +4,15 @@ import React, { useLayoutEffect } from 'react';
 import { FlatList, Platform, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
-import PaginatedListHeader from 'components/common/PaginatedListHeader';
-import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
-import HeaderIconButton from 'components/common/HeaderIconButton';
-import Advise from 'components/common/advise/Advise';
-import { CustomizedModalChildrenType } from 'types';
-import { ArticleLanguage } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
+import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
+import PaginatedListHeader from '@components/common/PaginatedListHeader';
+import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
+import HeaderIconButton from '@components/common/HeaderIconButton';
+import Advise from '@components/common/advise/Advise';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
+import * as Types from '@local-types';
 
 import { NewsStackParams } from '../routes/route-params-types';
 import { imageWrapper } from './list-item/common-styles';
@@ -50,7 +50,7 @@ const News = ({ navigation }: Props) => {
       headerRight: () => (
         <HeaderIconButton
           onPress={() => navigation.navigate('CUSTOM_MODAL', {
-            type: CustomizedModalChildrenType.LANGUAGE,
+            type: Types.CustomizedModalChildrenType.LANGUAGE,
             headerText: t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
             extraData: {
               onPressSelect: onSelectArticleLanguage,
@@ -106,7 +106,7 @@ const News = ({ navigation }: Props) => {
         )}
         renderItem={({ item }) => (
           <NewsListItem
-            withRTL={articleLanguage === ArticleLanguage.AR}
+            withRTL={articleLanguage === SchemaTypes.ArticleLanguage.AR}
             date={item.publishedAt}
             source={item.source}
             image={item.image}

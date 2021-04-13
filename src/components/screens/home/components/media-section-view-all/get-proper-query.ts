@@ -1,4 +1,4 @@
-import * as Types from 'types';
+import * as Types from '@local-types';
 
 export const getMovieProperQuery = (
   trendingMovieKey: Types.TrendingMediaItemKey,

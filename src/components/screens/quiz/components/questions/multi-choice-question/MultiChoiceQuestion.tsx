@@ -1,7 +1,7 @@
 import React, { useState, memo } from 'react';
 import { FlatList } from 'react-native';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 import MultiChoiceQuestionListItem from './MultiChoiceQuestionListItem';
 import NextButton from '../NextButton';

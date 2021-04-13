@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
-import metrics from 'styles/metrics';
+
+import metrics from '@styles/metrics';
 
 type State = {
   onGetTextWidth: (width: number) => void;

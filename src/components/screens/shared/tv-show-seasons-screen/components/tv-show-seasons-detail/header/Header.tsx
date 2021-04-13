@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
-import SeasonPosterImage from 'components/screens/shared/media-detail-screen/common/header-info/PosterImage';
+import SeasonPosterImage from '@components/screens/shared/media-detail-screen/common/header-info/PosterImage';
 import SeasonOverviewText from './overview-text/season-overview-text/SeasonOverviewText';
 
 const Wrapper = styled(View)`

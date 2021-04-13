@@ -1,10 +1,10 @@
-import { LocalStackRoute } from 'types';
+import * as Types from '@local-types';
 
 export type Routes = 'TV_SHOW_DETAIL' | 'FAMOUS_DETAIL' | 'REVIEWS' | 'TV_SHOW_SEASONS';
 
 export const SCREEN_ID = 'TV_SHOW_DETAIL';
 
-const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
+const LOCAL_ROUTES: Record<Routes, Types.LocalStackRoute<Routes>> = {
   TV_SHOW_DETAIL: {
     id: 'TV_SHOW_DETAIL',
   },

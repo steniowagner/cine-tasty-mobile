@@ -1,23 +1,24 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { FlatList, Linking } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useTranslation } from 'react-i18next';
 
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import Section from 'components/common/Section';
-import {
-  TVShowDetail_tvShow_videos as TVShowVideos,
-  MovieDetail_movie_videos as MovieVideos,
-} from 'types/schema';
-import metrics from 'styles/metrics';
-import * as TRANSLATIONS from 'i18n/tags';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import Section from '@components/common/Section';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
 
 import * as S from './videos-styles';
 
 const YOUTUBE_BASE_URL = 'https://www.youtube.com/watch?v=';
 
 type VideosProps = {
-  videos: (TVShowVideos | MovieVideos)[];
+  videos: (
+    | SchemaTypes.TVShowDetail_tvShow_videos
+    | SchemaTypes.MovieDetail_movie_videos
+  )[];
 };
 
 const Videos = ({ videos }: VideosProps) => {

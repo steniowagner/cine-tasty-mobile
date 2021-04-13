@@ -9,15 +9,17 @@
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "paths": {
-      "components": ["./components"],
-      "providers": ["./providers"],
+      "@providers": ["./providers/index.ts"],
+      "@schema-types": ["./types/schema.ts"],
+      "@local-types": ["./types/index.ts"],
+      "@components/*": ["./components/*"],
+      "@hooks": ["./hooks/index.ts"],
       "@graphql/*": ["./graphql/*"],
-      "routes": ["./routes"],
-      "config": ["./config"],
-      "styles": ["./styles"],
-      "utils": ["./utils"],
-      "types": ["./types"],
-      "i18n": ["./i18n"]
+      "@routes/*": ["./routes/*"],
+      "@styles/*": ["./styles/*"],
+      "@utils/*": ["./utils/*"],
+      "@i18n/*": ["./i18n/*"],
+      "@src/*": ["./*"]
     }
   },
   "include": ["src/**/*", "schema.json"],

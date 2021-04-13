@@ -4,11 +4,11 @@ import { DefaultTheme } from 'styled-components';
 import {
   getItemFromStorage,
   persistItemInStorage,
-} from 'utils/async-storage-adapter/AsyncStorageAdapter';
-import { useSystemThemePreference } from 'hooks';
-import { dark, light } from 'styles/themes';
-import CONSTANTS from 'utils/constants';
-import { ThemeId } from 'types';
+} from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import { useSystemThemePreference } from '@hooks';
+import { dark, light } from '@styles/themes';
+import CONSTANTS from '@utils/constants';
+import * as Types from '@local-types';
 
 const undefinedTheme = { ...dark, id: undefined };
 
@@ -21,43 +21,43 @@ type State = {
 };
 
 const useTheme = (): State => {
-  const [theme, setTheme] = useState<ThemeId>(null);
+  const [theme, setTheme] = useState<Types.ThemeId>(null);
 
   const { systemTheme } = useSystemThemePreference();
 
   const onSetLightTheme = useCallback(async () => {
-    setTheme(ThemeId.LIGHT);
+    setTheme(Types.ThemeId.LIGHT);
 
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, ThemeId.LIGHT);
+    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.LIGHT);
   }, []);
 
   const onSetDarkTheme = useCallback(async () => {
-    setTheme(ThemeId.DARK);
+    setTheme(Types.ThemeId.DARK);
 
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, ThemeId.DARK);
+    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.DARK);
   }, []);
 
   const onSetSystemTheme = useCallback(async () => {
-    setTheme(ThemeId.SYSTEM);
+    setTheme(Types.ThemeId.SYSTEM);
 
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, ThemeId.SYSTEM);
+    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.SYSTEM);
   }, []);
 
   const handleInitialThemeSelection = useCallback(async (): Promise<void> => {
-    const themeFromStorage = await getItemFromStorage<ThemeId, null>(
+    const themeFromStorage = await getItemFromStorage<Types.ThemeId, null>(
       CONSTANTS.KEYS.APP_THEME,
       null,
     );
 
-    if (themeFromStorage === ThemeId.SYSTEM) {
+    if (themeFromStorage === Types.ThemeId.SYSTEM) {
       // need to force an update
-      setTheme(ThemeId.SYSTEM);
+      setTheme(Types.ThemeId.SYSTEM);
 
       return;
     }
 
     if (!themeFromStorage) {
-      setTheme(ThemeId.DARK);
+      setTheme(Types.ThemeId.DARK);
 
       return;
     }
@@ -70,13 +70,13 @@ const useTheme = (): State => {
       return undefinedTheme;
     }
 
-    if (theme === ThemeId.SYSTEM) {
-      return systemTheme === ThemeId.DARK
-        ? { ...dark, id: ThemeId.SYSTEM }
-        : { ...light, id: ThemeId.SYSTEM };
+    if (theme === Types.ThemeId.SYSTEM) {
+      return systemTheme === Types.ThemeId.DARK
+        ? { ...dark, id: Types.ThemeId.SYSTEM }
+        : { ...light, id: Types.ThemeId.SYSTEM };
     }
 
-    return theme === ThemeId.DARK ? dark : light;
+    return theme === Types.ThemeId.DARK ? dark : light;
   }, [systemTheme, theme]);
 
   return {

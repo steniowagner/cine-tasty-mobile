@@ -5,10 +5,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { light as lightTheme } from 'styles/themes/light';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
+import { light as lightTheme } from '@styles/themes/light';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
 
 import socialNetworks from './socialNetworks';
 

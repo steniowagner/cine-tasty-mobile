@@ -3,10 +3,10 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import * as TRANSLATIONS from 'i18n/tags';
-import CONSTANTS from 'utils/constants';
-import metrics from 'styles/metrics';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import * as TRANSLATIONS from '@i18n/tags';
+import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
 
 export const Wrapper = styled(View)`
   width: 100%;

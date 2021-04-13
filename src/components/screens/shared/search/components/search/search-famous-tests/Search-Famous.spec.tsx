@@ -4,10 +4,10 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { SearchType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -52,7 +52,7 @@ const getMockResolvers = ({ hasMore = false, items = defaultItems }: Props) => (
 const params = {
   i18nQueryByPaginationErrorRef: I18N_FAMOUS_QUERY_BY_PAGINATION_ERROR_REF,
   i18nQueryByTextErrorRef: I18N_FAMOUS_QUERY_BY_TEXT_ERROR_REF,
-  searchType: SearchType.PERSON,
+  searchType: SchemaTypes.SearchType.PERSON,
   queryId: 'search_famous',
 };
 

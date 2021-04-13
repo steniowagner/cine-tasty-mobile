@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { StatusBarStyle } from 'react-native';
 import { DefaultTheme } from 'styled-components';
 
-import { ThemeId } from 'types';
+import * as Types from '@local-types';
 
 import { useGetCurrentTheme } from './useGetCurrentTheme';
 
@@ -18,7 +18,7 @@ export const useStatusBarStyle = ({ theme }: Props): State => {
   const { currentTheme } = useGetCurrentTheme({ theme });
 
   const barStyle = useMemo(() => {
-    if (currentTheme === ThemeId.LIGHT) {
+    if (currentTheme === Types.ThemeId.LIGHT) {
       return 'dark-content';
     }
 

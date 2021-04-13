@@ -1,17 +1,17 @@
-import { QuestionCategory } from 'types/schema';
-import { QuestionOption } from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
-const categories: QuestionOption<QuestionCategory>[] = [
+const categories: Types.QuestionOption<SchemaTypes.QuestionCategory>[] = [
   {
-    value: QuestionCategory.MIXED,
+    value: SchemaTypes.QuestionCategory.MIXED,
     id: 'categoryMixed',
   },
   {
-    value: QuestionCategory.MOVIE,
+    value: SchemaTypes.QuestionCategory.MOVIE,
     id: 'categoryMovie',
   },
   {
-    value: QuestionCategory.TV,
+    value: SchemaTypes.QuestionCategory.TV,
     id: 'categoryTv',
   },
 ];

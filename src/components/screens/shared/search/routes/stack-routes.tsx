@@ -3,16 +3,16 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { withTheme, DefaultTheme } from 'styled-components';
 import { RouteProp } from '@react-navigation/native';
 
-import MovieDetail from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
-import TVShowDetail from 'components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
+import MovieDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
+import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
 import Reviews, {
   Props as ReviewsExternalParams,
-} from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
+} from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import TVShowSeasonDetail, {
   Props as TVShowSeasonDetailExternalProps,
-} from 'components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
-import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
-import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
+} from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
+import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
+import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
 
 import { SearchStackParams } from './route-params-types';
 import Search from '../components/search/Search';

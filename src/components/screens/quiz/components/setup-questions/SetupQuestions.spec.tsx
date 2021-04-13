@@ -2,9 +2,9 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
-import { CustomizedModalChildrenType } from 'types';
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
+import * as Types from '@local-types';
 
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
@@ -67,7 +67,7 @@ describe('Testing <SetupQuestions />', () => {
     expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(difficulties);
     expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
     expect(navigate.mock.calls[0][1].type).toEqual(
-      CustomizedModalChildrenType.MEDIA_FILTER,
+      Types.CustomizedModalChildrenType.MEDIA_FILTER,
     );
     expect(navigate.mock.calls[0][1].headerText).toEqual(
       TRANSLATIONS.QUIZ_SET_DIFFICULTY,
@@ -90,7 +90,7 @@ describe('Testing <SetupQuestions />', () => {
     expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(categories);
     expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
     expect(navigate.mock.calls[0][1].type).toEqual(
-      CustomizedModalChildrenType.MEDIA_FILTER,
+      Types.CustomizedModalChildrenType.MEDIA_FILTER,
     );
     expect(navigate.mock.calls[0][1].headerText).toEqual(TRANSLATIONS.QUIZ_SET_CATEGORY);
     expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
@@ -111,7 +111,7 @@ describe('Testing <SetupQuestions />', () => {
     expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(types);
     expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
     expect(navigate.mock.calls[0][1].type).toEqual(
-      CustomizedModalChildrenType.MEDIA_FILTER,
+      Types.CustomizedModalChildrenType.MEDIA_FILTER,
     );
     expect(navigate.mock.calls[0][1].headerText).toEqual(TRANSLATIONS.QUIZ_SET_TYPE);
     expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');

@@ -7,12 +7,12 @@ import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import LoadingIndicator from 'components/common/LoadingIndicator';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import Advise from 'components/common/advise/Advise';
-import { QuestionType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
+import LoadingIndicator from '@components/common/LoadingIndicator';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import Advise from '@components/common/advise/Advise';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
 
 import ListItemWrapper from './list-item-wrapper-question/ListItemWrapperQuestion';
 import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
@@ -130,13 +130,15 @@ const Questions = ({ navigation, route }: Props) => {
           currentQuestionIndex={index + 1}
         >
           <>
-            {item.type.toLowerCase() === QuestionType.BOOLEAN.toLowerCase() && (
+            {item.type.toLowerCase()
+              === SchemaTypes.QuestionType.BOOLEAN.toLowerCase() && (
               <BooleanQuestion
                 isFocused={currentQuestionIndex === index}
                 onPressNext={onPressNext}
               />
             )}
-            {item.type.toLowerCase() === QuestionType.MULTIPLE.toLowerCase() && (
+            {item.type.toLowerCase()
+              === SchemaTypes.QuestionType.MULTIPLE.toLowerCase() && (
               <MultiChoiceQuestion
                 isFocused={currentQuestionIndex === index}
                 onPressNext={onPressNext}

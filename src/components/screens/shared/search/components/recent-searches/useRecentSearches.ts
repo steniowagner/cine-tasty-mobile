@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import {
   persistItemInStorage,
   getItemFromStorage,
-} from 'utils/async-storage-adapter/AsyncStorageAdapter';
-import { SearchType } from 'types/schema';
+} from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import * as SchemaTypes from '@schema-types';
 
 export const STORAGE_SEARCH_SECTION = 'RECENT-SEARCHES';
 
@@ -26,7 +26,7 @@ type State = {
 
 type Props = {
   shouldSkipGetInitialRecentSearches: boolean;
-  searchType: SearchType;
+  searchType: SchemaTypes;
 };
 
 const useRecentSearches = ({

@@ -1,6 +1,6 @@
-import { getItemFromStorage } from 'utils/async-storage-adapter/AsyncStorageAdapter';
-import { DeviceScreenClassification, ImageQualities, ImageType } from 'types';
-import CONSTANTS from 'utils/constants';
+import { getItemFromStorage } from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import CONSTANTS from '@utils/constants';
+import * as Types from '@local-types';
 
 import xsmall from './xsmall';
 import small from './small';
@@ -9,7 +9,7 @@ import large from './large';
 import xlarge from './xlarge';
 
 const getQualitiesBasedScreenClassification = (
-  screenClassification: DeviceScreenClassification,
+  screenClassification: Types.DeviceScreenClassification,
 ) => {
   const classifications = {
     xsmall,
@@ -22,18 +22,18 @@ const getQualitiesBasedScreenClassification = (
   return classifications[screenClassification];
 };
 
-const getImageQualityFromStore = async (): Promise<ImageQualities> => {
-  const imageQualityFromStore = await getItemFromStorage<ImageQualities, ImageQualities>(
-    CONSTANTS.KEYS.IMAGES_QUALITY,
-    'medium',
-  );
+const getImageQualityFromStore = async (): Promise<Types.ImageQualities> => {
+  const imageQualityFromStore = await getItemFromStorage<
+    Types.ImageQualities,
+    Types.ImageQualities
+  >(CONSTANTS.KEYS.IMAGES_QUALITY, 'medium');
 
   return imageQualityFromStore;
 };
 
 const getQualities = async (
-  screenClassification: DeviceScreenClassification,
-): Promise<Record<ImageType, string>> => {
+  screenClassification: Types.DeviceScreenClassification,
+): Promise<Record<Types.ImageType, string>> => {
   const qualitiesBasedScreenClassification = getQualitiesBasedScreenClassification(
     screenClassification,
   );

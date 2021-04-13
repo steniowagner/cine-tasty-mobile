@@ -4,8 +4,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import RoundedButton from 'components/common/RoundedButton';
-import * as TRANSLATIONS from 'i18n/tags';
+import RoundedButton from '@components/common/RoundedButton';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import { QuizStackParams } from '../routes/route-params-types';
 import LOCAL_ROUTES from '../routes/route-names';

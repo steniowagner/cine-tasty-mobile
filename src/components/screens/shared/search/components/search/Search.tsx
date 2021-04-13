@@ -1,18 +1,14 @@
+/* eslint-disable camelcase */
 import React, { useLayoutEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
+import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 // @ts-ignore
-import SearchBar from 'components/common/searchbar/SearchBar';
-import Advise from 'components/common/advise/Advise';
-import {
-  SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
-  SearchPerson_search_items_BasePerson as SearchPersonResult,
-  SearchMovie_search_items_BaseMovie as SearchMovieResult,
-  SearchType,
-} from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
+import SearchBar from '@components/common/searchbar/SearchBar';
+import Advise from '@components/common/advise/Advise';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import { SearchStackParams } from '../../routes/route-params-types';
 import RecentSearches from '../recent-searches/RecentSearches';
@@ -71,12 +67,12 @@ const Search = ({ navigation, route }: Props) => {
 
   return (
     <>
-      {route.params.searchType === SearchType.PERSON && (
+      {route.params.searchType === SchemaTypes.SearchType.PERSON && (
         <FamousSearch
           onPressHeaderReloadButton={onPressHeaderReloadButton}
           onPressFooterReloadButton={onPressFooterReloadButton}
           hasPaginationError={hasPaginationError}
-          items={items as SearchPersonResult[]}
+          items={items as SchemaTypes.SearchPersonResult[]}
           onPressListItem={onPressListItem}
           onEndReached={onEndReached}
           errorMessage={errorMessage}
@@ -84,12 +80,14 @@ const Search = ({ navigation, route }: Props) => {
           isLoading={isLoading}
         />
       )}
-      {route.params.searchType === SearchType.MOVIE && (
+      {route.params.searchType === SchemaTypes.SearchType.MOVIE && (
         <MediaSearch
           onPressHeaderReloadButton={onPressHeaderReloadButton}
           onPressFooterReloadButton={onPressFooterReloadButton}
           hasPaginationError={hasPaginationError}
-          items={items as SearchMovieResult[]}
+          items={
+            items as SchemaTypes.SearchMovie_search_items_BaseMovieSearchMovieResult[]
+          }
           onPressListItem={onPressListItem}
           onEndReached={onEndReached}
           errorMessage={errorMessage}
@@ -97,12 +95,12 @@ const Search = ({ navigation, route }: Props) => {
           isLoading={isLoading}
         />
       )}
-      {route.params.searchType === SearchType.TV && (
+      {route.params.searchType === SchemaTypes.SearchType.TV && (
         <MediaSearch
           onPressHeaderReloadButton={onPressHeaderReloadButton}
           onPressFooterReloadButton={onPressFooterReloadButton}
           hasPaginationError={hasPaginationError}
-          items={items as SearchTVShowResult[]}
+          items={items as SchemaTypes.SearchTVShow_search_items_BaseTVShow[]}
           onPressListItem={onPressListItem}
           onEndReached={onEndReached}
           errorMessage={errorMessage}

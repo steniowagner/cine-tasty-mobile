@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
+import TMDBImage from '@components/common/tmdb-image/TMDBImage';
 
 import * as S from './thumbs-gallery-list-item-styles';
 

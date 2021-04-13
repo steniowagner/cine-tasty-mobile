@@ -3,10 +3,10 @@ import { StyleSheet, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
-import { QuizResult } from 'types';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
+import * as Types from '@local-types';
 
 const Wrapper = styled(View)`
   width: 100%;
@@ -58,7 +58,7 @@ const LineDivider = styled(View)`
 `;
 
 type Props = {
-  result: QuizResult;
+  result: Types.QuizResult;
 };
 
 const ResultListItem = ({ result }: Props) => {

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import { CineTastyQuery } from 'types';
+import * as Types from '@local-types';
 
 const TrendingMovieFragment = gql`
   fragment TrendingMovieFragment on BaseMovie {
@@ -523,7 +523,7 @@ export const GET_MOVIE_DETAIL = gql`
   }
 `;
 
-export const getQuery = (queryId: CineTastyQuery) => {
+export const getQuery = (queryId: Types.CineTastyQuery) => {
   switch (queryId) {
     case 'search_tv':
       return SEARCH_TV_SHOWS;

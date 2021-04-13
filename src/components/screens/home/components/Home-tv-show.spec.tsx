@@ -2,9 +2,9 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { SearchType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
+import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
@@ -391,7 +391,7 @@ describe('Testing <Home /> - [TVShows]', () => {
       i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR,
       i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
       i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_PLACEHOLDER,
-      searchType: SearchType.TV,
+      searchType: SchemaTypes.SearchType.TV,
       queryId: 'search_tv',
     });
   });

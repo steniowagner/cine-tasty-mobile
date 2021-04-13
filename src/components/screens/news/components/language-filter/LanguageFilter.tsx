@@ -1,9 +1,9 @@
 import React from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 
-import ModalSelectButton from 'components/common/ModalSelectButton';
-import { ArticleLanguage } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
+import ModalSelectButton from '@components/common/ModalSelectButton';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import LanguageListItem, { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem';
 import useLanguageFilter from './useLanguageFilter';
@@ -12,8 +12,8 @@ import languages from './languages';
 export const ANIMATION_TIMING = 400;
 
 type Props = {
-  onSelectLanguage: (language: ArticleLanguage) => void;
-  lastLanguageSelected: ArticleLanguage;
+  onSelectLanguage: (language: SchemaTypes.ArticleLanguage) => void;
+  lastLanguageSelected: SchemaTypes.ArticleLanguage;
   closeModal: () => void;
 };
 

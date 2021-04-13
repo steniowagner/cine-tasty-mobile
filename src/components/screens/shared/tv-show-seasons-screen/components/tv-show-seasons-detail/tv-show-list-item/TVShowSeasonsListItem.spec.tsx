@@ -2,14 +2,14 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
 
 import TVShowSeasonsListItem from './TVShowSeasonsListItem';
 
-const episodeMock: Episode = {
+const episodeMock: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes = {
   __typename: 'TVShowSeasonEpisode',
   stillPath: 'stillPath',
   voteAverage: 1,
@@ -22,7 +22,7 @@ const episodeMock: Episode = {
 
 const renderTVShowSeasonsListItem = (
   index: number = 0,
-  episode: Episode = episodeMock,
+  episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes = episodeMock,
 ) => (
   <TMDBImageQualityProvider>
     <ThemeProvider theme={theme}>

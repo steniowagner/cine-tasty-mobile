@@ -2,9 +2,8 @@ import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'styles/theme';
-
-import { DEFAULT_ANIMATION_DURATION } from 'components/common/popup-advice/PopupAdvice';
+import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import theme from '@styles/theme';
 
 import { NUMBER_ITEMS } from './LoadingExpansibleTextSection';
 import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';

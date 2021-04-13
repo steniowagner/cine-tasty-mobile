@@ -3,15 +3,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import SearchStack, {
   StackID as SearchStackID,
-} from 'components/screens/shared/search/routes/stack-routes';
+} from '@components/screens/shared/search/routes/stack-routes';
 
 import ImagesGalleryModal, {
   MODAL_ID as IMAGES_GALLERY_MODAL_ID,
-} from 'components/screens/shared/images-gallery/routes/stack-routes';
+} from '@components/screens/shared/images-gallery/routes/stack-routes';
 
 import CustomModal, {
   MODAL_ID as CUSTOM_MODAL_ID,
-} from 'components/screens/shared/customized-modal/routes/stack-routes';
+} from '@components/screens/shared/customized-modal/routes/stack-routes';
 
 import Tabs from './Tabs';
 

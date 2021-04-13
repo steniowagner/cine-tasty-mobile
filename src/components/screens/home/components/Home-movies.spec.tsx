@@ -2,9 +2,9 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { SearchType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
+import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import { SCREEN_ID } from './media-section-view-all/MediaSectionViewAll';
@@ -368,7 +368,7 @@ describe('Testing <Home /> - [Movies]', () => {
       i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
       i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
       i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PLACEHOLDER,
-      searchType: SearchType.MOVIE,
+      searchType: SchemaTypes.SearchType.MOVIE,
       queryId: 'search_movie',
     });
   });

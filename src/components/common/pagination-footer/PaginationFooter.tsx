@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 import SVGIcon from '../svg-icon/SVGIcon';
 

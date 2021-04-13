@@ -4,15 +4,15 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import { QuizResult } from 'types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 
 type State = {
   onPressPlayAgain: () => void;
   t: (key: string) => string;
-  results: QuizResult[];
+  results: Types.QuizResult[];
 };
 
 type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'RESULTS'>;
@@ -25,7 +25,7 @@ type Props = {
 };
 
 const useResults = ({ navigation, route }: Props): State => {
-  const [results, setResults] = useState<QuizResult[]>([]);
+  const [results, setResults] = useState<Types.QuizResult[]>([]);
 
   const { t } = useTranslation();
 

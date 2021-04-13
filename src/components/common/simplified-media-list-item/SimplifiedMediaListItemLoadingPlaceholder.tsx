@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 import LoadingPlaceholder from '../loading-placeholder/LoadingPlaceholder';
 import {

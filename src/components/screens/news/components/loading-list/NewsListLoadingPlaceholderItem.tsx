@@ -1,7 +1,7 @@
 import React from 'react';
 
-import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
-import metrics from 'styles/metrics';
+import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import metrics from '@styles/metrics';
 
 import {
   TextWrapper as TextPlaceholderWrapper,

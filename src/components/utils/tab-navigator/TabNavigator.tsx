@@ -4,13 +4,13 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
-import { Routes as FamousRoutes } from 'components/screens/famous/routes/route-names';
-import { Routes as HomeRoutes } from 'components/screens/home/routes/route-names';
-import { Routes as QuizRoutes } from 'components/screens/quiz/routes/route-names';
-import { Routes as NewsRoutes } from 'components/screens/news/routes/route-names';
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
+import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
+import { Routes as FamousRoutes } from '@components/screens/famous/routes/route-names';
+import { Routes as HomeRoutes } from '@components/screens/home/routes/route-names';
+import { Routes as QuizRoutes } from '@components/screens/quiz/routes/route-names';
+import { Routes as NewsRoutes } from '@components/screens/news/routes/route-names';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
 
 import TabNavigatorItem from './TabNavigatorItem';
 import items from './items';

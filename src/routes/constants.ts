@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 export const getDefaultHeaderOptions = () => ({
   headerTitleStyle: {

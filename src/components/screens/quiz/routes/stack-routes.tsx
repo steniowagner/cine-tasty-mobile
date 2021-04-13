@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
-import { getDefaultHeaderOptions } from 'routes/constants';
-import * as TRANSLATIONS from 'i18n/tags';
+import { getDefaultHeaderOptions } from '@routes/constants';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import SetupQuestions from '../components/setup-questions/SetupQuestions';
 import Questions from '../components/questions/Questions';

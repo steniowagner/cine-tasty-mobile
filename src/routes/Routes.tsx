@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { DefaultTheme, withTheme } from 'styled-components';
 import { AppearanceProvider } from 'react-native-appearance';
 
-import { useStatusBarStyle } from 'hooks';
+import { useStatusBarStyle } from '@hooks';
 
 import SplashScreen from './components/splash-screen/SplashScreen';
 import RootNavigation from './components/RootNavigation';

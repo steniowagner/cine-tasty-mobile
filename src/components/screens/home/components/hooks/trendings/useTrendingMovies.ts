@@ -2,34 +2,36 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  TrendingMovies_trendingMovies as TrendingMovieSection,
-  TrendingMovies,
-  TrendingMovie,
-} from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import { HomeSection } from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import parseTrendingToSimplifiedMedia from './parseTrendingToSimplifiedMedia';
 
 type Props = {
-  rawTrendingMovies: TrendingMovies;
+  rawTrendingMovies: SchemaTypes.TrendingMovies;
 };
 
 type State = {
-  trendingMovies: HomeSection[];
+  trendingMovies: Types.HomeSection[];
 };
 
-type TrendingItemKey = keyof Omit<TrendingMovieSection, '__typename'>;
+type TrendingItemKey = keyof Omit<
+  SchemaTypes.TrendingMovies_trendingMovies,
+  '__typename'
+>;
 
 const useTrendingMovies = ({ rawTrendingMovies }: Props): State => {
-  const [trendingMovies, setTrendingMovies] = useState<HomeSection[]>([]);
+  const [trendingMovies, setTrendingMovies] = useState<Types.HomeSection[]>([]);
 
   const { t } = useTranslation();
 
   const parseSection = useCallback(
-    (trendingItemKey: TrendingItemKey, dataset: TrendingMovie[]): HomeSection => {
-      const sectionMapping: Record<TrendingItemKey, Omit<HomeSection, 'data'>> = {
+    (
+      trendingItemKey: TrendingItemKey,
+      dataset: SchemaTypes.TrendingMovie[],
+    ): Types.HomeSection => {
+      const sectionMapping: Record<TrendingItemKey, Omit<Types.HomeSection, 'data'>> = {
         nowPlaying: {
           viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING_VIEW_ALL),
           sectionTitle: t(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING),

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
-import { useTMDBImageQuality } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import CONSTANTS from 'utils/constants';
-import { ImageType } from 'types';
+import { useTMDBImageQuality } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import CONSTANTS from '@utils/constants';
+import * as Types from '@local-types';
 
 type Props = {
-  imageType: ImageType;
+  imageType: Types.ImageType;
   isThumbnail: boolean;
   image: string;
 };

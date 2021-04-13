@@ -3,7 +3,7 @@ import {
 } from 'react';
 import { ApolloQueryResult } from 'apollo-client';
 
-import debounce from 'utils/debounce';
+import debounce from '@utils/debounce';
 
 export const PAGINATION_DELAY = 1000;
 

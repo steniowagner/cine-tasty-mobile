@@ -1,13 +1,10 @@
+/* eslint-disable camelcase */
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { TV_SHOW_SEASONS_DETAIL } from '@graphql/queries';
-import useImperativeQuery from 'utils/useImperativeQuery';
-import {
-  TVShowSeasonsDetail_tvShowSeason as TVShowSeason,
-  TVShowSeasonsDetailVariables,
-  TVShowSeasonsDetail,
-} from 'types/schema';
+import useImperativeQuery from '@utils/useImperativeQuery';
+import * as SchemaTypes from '@schema-types';
 
 const INITIAL_QUERY_STATE: QueryState = {
   seasonDetail: undefined,
@@ -16,7 +13,7 @@ const INITIAL_QUERY_STATE: QueryState = {
 };
 
 type QueryState = {
-  seasonDetail: TVShowSeason | undefined;
+  seasonDetail: SchemaTypes.TVShowSeasonsDetail_tvShowSeason | undefined;
   isLoading: boolean;
   hasError: boolean;
 };
@@ -35,9 +32,10 @@ const useTVShowSeasonsDetail = ({ season, id }: Props): State => {
 
   const { t } = useTranslation();
 
-  const execQuery = useImperativeQuery<TVShowSeasonsDetail, TVShowSeasonsDetailVariables>(
-    TV_SHOW_SEASONS_DETAIL,
-  );
+  const execQuery = useImperativeQuery<
+    SchemaTypes.TVShowSeasonsDetail,
+    SchemaTypes.TVShowSeasonsDetailVariables
+  >(TV_SHOW_SEASONS_DETAIL);
 
   const onQueryTVShowSeason = useCallback(async () => {
     try {

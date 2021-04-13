@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import styled from 'styled-components';
 
-import { SupportedIcons } from 'components/common/svg-icon/getXML';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import metrics from 'styles/metrics';
+import { SupportedIcons } from '@components/common/svg-icon/getXML';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import metrics from '@styles/metrics';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('10%');
 

@@ -3,7 +3,7 @@ import { StatusBar, TextInput, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import HeaderIconButton from 'components/common/HeaderIconButton';
+import HeaderIconButton from '@components/common/HeaderIconButton';
 
 const HEADER_HEIGHT = 44;
 

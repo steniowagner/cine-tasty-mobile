@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
-import { getDefaultHeaderOptions } from 'routes/constants';
-import * as TRANSLATIONS from 'i18n/tags';
+import { getDefaultHeaderOptions } from '@routes/constants';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import ImagesQuality from '../components/images-quality/ImagesQuality';
 import OpenSource from '../components/open-source/OpenSource';

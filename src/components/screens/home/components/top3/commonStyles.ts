@@ -2,7 +2,7 @@ import { Animated, Platform, View } from 'react-native';
 import styled from 'styled-components';
 import LinearGradient from 'react-native-linear-gradient';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 export const ITEM_HEIGHT = metrics.getHeightFromDP('58%');
 export const ITEM_MARGING_HORIZONTAL = metrics.largeSize;

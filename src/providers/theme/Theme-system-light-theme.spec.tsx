@@ -3,7 +3,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
-import { ThemeId } from 'types';
+import * as Types from '@local-types';
 
 jest.mock('../../utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -18,7 +18,7 @@ const {
 import { ThemeContextProvider, useThemeProvider } from './Theme';
 
 describe('Testing <ThemeProvider /> [System Light Theme]', () => {
-  const renderThemeProvider = (theme?: ThemeId) => {
+  const renderThemeProvider = (theme?: Types.ThemeId) => {
     const ContextChildren = () => {
       const {
         onSetSystemTheme,
@@ -28,9 +28,9 @@ describe('Testing <ThemeProvider /> [System Light Theme]', () => {
       } = useThemeProvider();
 
       const pressMapping = {
-        [ThemeId.SYSTEM]: onSetSystemTheme,
-        [ThemeId.LIGHT]: onSetLightTheme,
-        [ThemeId.DARK]: onSetDarkTheme,
+        [Types.ThemeId.SYSTEM]: onSetSystemTheme,
+        [Types.ThemeId.LIGHT]: onSetLightTheme,
+        [Types.ThemeId.DARK]: onSetDarkTheme,
       };
 
       return (
@@ -56,21 +56,21 @@ describe('Testing <ThemeProvider /> [System Light Theme]', () => {
   afterEach(cleanup);
 
   it('should change the theme to light when the theme selected is system-option and the system-color-scheme is light', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.SYSTEM);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.SYSTEM);
 
-    const { getByTestId } = render(renderThemeProvider(ThemeId.SYSTEM));
+    const { getByTestId } = render(renderThemeProvider(Types.ThemeId.SYSTEM));
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.SYSTEM);
+    expect(getByTestId('themeId').children[0]).toEqual(Types.ThemeId.SYSTEM);
   });
 
   it('should change the theme correctly when the user presses the system-option and the current theme is dark and the system-theme is light', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.DARK);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
 
-    const { getByTestId } = render(renderThemeProvider(ThemeId.SYSTEM));
+    const { getByTestId } = render(renderThemeProvider(Types.ThemeId.SYSTEM));
 
     act(() => {
       jest.runAllTimers();
@@ -78,13 +78,13 @@ describe('Testing <ThemeProvider /> [System Light Theme]', () => {
 
     fireEvent.press(getByTestId('toggle-button'));
 
-    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.SYSTEM);
+    expect(getByTestId('themeId').children[0]).toEqual(Types.ThemeId.SYSTEM);
   });
 
   it('should change the theme correctly when the user presses the system-option and the current theme is light and the system-theme is light', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.LIGHT);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
-    const { getByTestId } = render(renderThemeProvider(ThemeId.SYSTEM));
+    const { getByTestId } = render(renderThemeProvider(Types.ThemeId.SYSTEM));
 
     act(() => {
       jest.runAllTimers();
@@ -92,6 +92,6 @@ describe('Testing <ThemeProvider /> [System Light Theme]', () => {
 
     fireEvent.press(getByTestId('toggle-button'));
 
-    expect(getByTestId('themeId').children[0]).toEqual(ThemeId.SYSTEM);
+    expect(getByTestId('themeId').children[0]).toEqual(Types.ThemeId.SYSTEM);
   });
 });

@@ -5,42 +5,42 @@ import RNRestart from 'react-native-restart';
 import {
   persistItemInStorage,
   getItemFromStorage,
-} from 'utils/async-storage-adapter/AsyncStorageAdapter';
-import * as TRANSLATIONS from 'i18n/tags';
-import CONSTANTS from 'utils/constants';
-import { ImageQualities } from 'types';
+} from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import * as TRANSLATIONS from '@i18n/tags';
+import CONSTANTS from '@utils/constants';
+import * as Types from '@local-types';
 
-export const qualities: ImageQualities[] = ['low', 'medium', 'high', 'veryHigh'];
+export const qualities: Types.ImageQualities[] = ['low', 'medium', 'high', 'veryHigh'];
 
 type Quality = {
-  quality: ImageQualities;
+  quality: Types.ImageQualities;
   title: string;
 };
 
 type State = {
-  onPress: (quality: ImageQualities) => void;
-  qualitySelected: ImageQualities;
+  onPress: (quality: Types.ImageQualities) => void;
+  qualitySelected: Types.ImageQualities;
   qualities: Quality[];
 };
 
 const useImagesQuality = (): State => {
-  const [qualitySelected, setQualitySelected] = useState<ImageQualities | undefined>(
-    undefined,
-  );
+  const [qualitySelected, setQualitySelected] = useState<
+    Types.ImageQualities | undefined
+  >(undefined);
 
   const { t } = useTranslation();
 
-  const onPress = useCallback((imageQuality: ImageQualities) => {
+  const onPress = useCallback((imageQuality: Types.ImageQualities) => {
     persistItemInStorage(CONSTANTS.KEYS.IMAGES_QUALITY, imageQuality);
 
     RNRestart.Restart();
   }, []);
 
   const setImageQualityFromStore = useCallback(async () => {
-    const imageQualityFromStore = await getItemFromStorage<undefined, ImageQualities>(
-      CONSTANTS.KEYS.IMAGES_QUALITY,
+    const imageQualityFromStore = await getItemFromStorage<
       undefined,
-    );
+      Types.ImageQualities
+    >(CONSTANTS.KEYS.IMAGES_QUALITY, undefined);
 
     setQualitySelected(imageQualityFromStore);
   }, []);

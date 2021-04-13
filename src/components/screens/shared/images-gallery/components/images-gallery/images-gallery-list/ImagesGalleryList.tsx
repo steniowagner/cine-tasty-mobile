@@ -1,7 +1,7 @@
 import React from 'react';
 import { NativeSyntheticEvent, NativeScrollEvent, FlatList } from 'react-native';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 // @ts-ignore
 // eslint-disable-next-line import/extensions

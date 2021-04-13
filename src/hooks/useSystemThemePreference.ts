@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useColorScheme } from 'react-native-appearance';
 
-import { ThemeId } from 'types';
+import * as Types from '@local-types';
 
 type State = {
-  systemTheme: ThemeId;
+  systemTheme: Types.ThemeId;
 };
 
 export const useSystemThemePreference = (): State => {
@@ -12,10 +12,10 @@ export const useSystemThemePreference = (): State => {
 
   const systemTheme = useMemo(() => {
     if (systemColorScheme === 'light') {
-      return ThemeId.LIGHT;
+      return Types.ThemeId.LIGHT;
     }
 
-    return ThemeId.DARK;
+    return Types.ThemeId.DARK;
   }, [systemColorScheme]);
 
   return {

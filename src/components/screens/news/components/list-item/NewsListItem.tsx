@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Linking, Text } from 'react-native';
 import styled from 'styled-components';
 
-import { ThemeId } from 'types';
+import * as Types from '@local-types';
 
 import { TextWrapper, Wrapper } from './common-styles';
 import NewsImage from './news-image/NewsListItemImage';
@@ -13,14 +13,14 @@ const SourceText = styled(Text).attrs({
 })`
   font-family: CircularStd-Bold;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => (theme.id === ThemeId.DARK ? theme.colors.primary : theme.colors.buttonText)};
+  color: ${({ theme }) => (theme.id === Types.ThemeId.DARK ? theme.colors.primary : theme.colors.buttonText)};
 `;
 
 const NewsText = styled(Text)<{ withRTL: boolean }>`
   margin-vertical: ${({ theme }) => theme.metrics.mediumSize}px;
   font-family: CircularStd-Medium;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => (theme.id === ThemeId.DARK ? theme.colors.text : theme.colors.subText)};
+  color: ${({ theme }) => (theme.id === Types.ThemeId.DARK ? theme.colors.text : theme.colors.subText)};
   text-align: ${({ withRTL }) => (withRTL ? 'right' : 'left')};
 `;
 

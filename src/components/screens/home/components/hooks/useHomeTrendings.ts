@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { DocumentNode } from 'graphql';
 
-import useImperativeQuery from 'utils/useImperativeQuery';
-import { ISO6391Language } from 'types/schema';
+import useImperativeQuery from '@utils/useImperativeQuery';
+import * as SchemaTypes from '@schema-types';
 
 const INITIAL_STATE = {
   isLoading: false,
@@ -21,7 +21,7 @@ type InternalState = {
 };
 
 type TVariables = {
-  language?: ISO6391Language;
+  language?: SchemaTypes.ISO6391Language;
   page: number;
 };
 

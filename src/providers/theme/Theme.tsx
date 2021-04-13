@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useContext } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { ThemeId } from 'types';
+import * as Types from '@local-types';
 
 import useTheme from './useTheme';
 
@@ -10,7 +10,7 @@ type ThemeContextProps = {
   onSetLightTheme: () => void;
   onSetSystemTheme: () => void;
   onSetDarkTheme: () => void;
-  themeId: ThemeId;
+  themeId: Types.ThemeId;
 };
 
 type Props = {

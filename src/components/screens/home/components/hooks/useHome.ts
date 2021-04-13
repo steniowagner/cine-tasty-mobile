@@ -4,11 +4,9 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
-import {
-  TrendingMediaItemKey, HomeTop3Item, HomeSection, SimplifiedMedia,
-} from 'types';
-import { TrendingTVShows, TrendingMovies } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '@graphql/queries';
 import { HomeStackParams } from '../../routes/route-params-types';
@@ -21,22 +19,22 @@ import useTop3 from './top3/useTop3';
 export const TRANSITIONING_DURATION = 500;
 
 type ViewAllProps = {
-  sectionItems: SimplifiedMedia[];
-  sectionID: TrendingMediaItemKey;
+  sectionItems: Types.SimplifiedMedia[];
+  sectionID: Types.TrendingMediaItemKey;
   viewAllTitle: string;
 };
 
 type State = {
   onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => void;
-  onPressTop3LearnMore: (mediaItem: SimplifiedMedia) => void;
-  onPressTrendingItem: (mediaItem: SimplifiedMedia) => void;
+  onPressTop3LearnMore: (mediaItem: Types.SimplifiedMedia) => void;
+  onPressTrendingItem: (mediaItem: Types.SimplifiedMedia) => void;
   shouldDisableHeaderActions: boolean;
   onSelectTVShows: () => void;
   onSelectMovies: () => void;
   onPressSearch: () => void;
-  trendings: HomeSection[];
+  trendings: Types.HomeSection[];
   errorMessage: string;
-  top3: HomeTop3Item[];
+  top3: Types.HomeTop3Item[];
   isLoading: boolean;
 };
 
@@ -47,8 +45,12 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
     true,
   );
   const [isMoviesSelected, setIsMovieSelected] = useState<boolean>(true);
-  const [trendingTVShows, setTrendingTVShows] = useState<TrendingTVShows>(undefined);
-  const [trendingMovies, setTrendingMovies] = useState<TrendingMovies>(undefined);
+  const [trendingTVShows, setTrendingTVShows] = useState<SchemaTypes.TrendingTVShows>(
+    undefined,
+  );
+  const [trendingMovies, setTrendingMovies] = useState<SchemaTypes.TrendingMovies>(
+    undefined,
+  );
   const [isTransitioningData, setIsTransitioningData] = useState<boolean>(false);
 
   const { t } = useTranslation();
@@ -75,7 +77,7 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
     hasError: hasTrendingMoviesError,
     getTrendings: getTrendingMovies,
     isLoading: isLoadingMovies,
-  } = useHomeTrendings<TrendingMovies>({
+  } = useHomeTrendings<SchemaTypes.TrendingMovies>({
     onGetData: setTrendingMovies,
     query: GET_TRENDING_MOVIES,
   });
@@ -84,7 +86,7 @@ const useHome = (navigation: HomeScreenNavigationProp): State => {
     hasError: hasTrendingTVShowsError,
     getTrendings: getTrendingTVShows,
     isLoading: isLoadingTVShows,
-  } = useHomeTrendings<TrendingTVShows>({
+  } = useHomeTrendings<SchemaTypes.TrendingTVShows>({
     onGetData: setTrendingTVShows,
     query: GET_TRENDING_TV_SHOWS,
   });

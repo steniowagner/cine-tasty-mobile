@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import { ThemeId } from 'types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import useCheckHasThemeSupport from './useCheckHasThemeSupport';
 
 type ThemeOption = {
   onPress: () => void;
   title: string;
-  id: ThemeId;
+  id: Types.ThemeId;
 };
 
 type State = {
@@ -34,7 +34,7 @@ const useGetThemeSettingsOption = ({
     (): ThemeOption => ({
       onPress: onPressSystemPreferencesOption,
       title: t(TRANSLATIONS.THEME_SYSTEM_PREFERENCES),
-      id: ThemeId.SYSTEM,
+      id: Types.ThemeId.SYSTEM,
     }),
     [],
   );
@@ -44,12 +44,12 @@ const useGetThemeSettingsOption = ({
       {
         onPress: onPressDarkOption,
         title: t(TRANSLATIONS.THEME_DARK),
-        id: ThemeId.DARK,
+        id: Types.ThemeId.DARK,
       },
       {
         onPress: onPressLightOption,
         title: t(TRANSLATIONS.THEME_LIGHT),
-        id: ThemeId.LIGHT,
+        id: Types.ThemeId.LIGHT,
       },
     ],
     [onPressLightOption, onPressDarkOption],

@@ -2,9 +2,9 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { CustomizedModalChildrenType } from 'types';
-import { ArticleLanguage } from 'types/schema';
-import theme from 'styles/theme';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
+import theme from '@styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import { ANIMATION_TIMING } from './useCustomizedModal';
@@ -14,10 +14,10 @@ const HEADER_TEXT = 'SETUP_QUESTIONS_OPTIONS_LIST_HEADER_TEXT';
 
 const getRouteParam = (onPressSelect = jest.fn) => ({
   params: {
-    type: CustomizedModalChildrenType.MEDIA_FILTER,
+    type: Types.CustomizedModalChildrenType.MEDIA_FILTER,
     headerText: HEADER_TEXT,
     extraData: {
-      lastItemSelected: ArticleLanguage.PT,
+      lastItemSelected: SchemaTypes.ArticleLanguage.PT,
       onPressSelect,
     },
   },

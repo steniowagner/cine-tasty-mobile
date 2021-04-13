@@ -3,8 +3,8 @@ import { SafeAreaView, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
-import RoundedButton from 'components/common/RoundedButton';
-import * as TRANSLATIONS from 'i18n/tags';
+import RoundedButton from '@components/common/RoundedButton';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import NumberOfQuestions from './NumberOfQuestionts';

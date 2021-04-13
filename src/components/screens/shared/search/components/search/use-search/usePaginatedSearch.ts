@@ -3,9 +3,9 @@ import {
 } from 'react';
 import { ApolloQueryResult } from 'apollo-client';
 
-import { SearchInput, SearchType } from 'types/schema';
-import debounce from 'utils/debounce';
-import { SearchResult } from 'types';
+import * as SchemaTypes from '@schema-types';
+import debounce from '@utils/debounce';
+import * as Types from '@local-types';
 
 export const PAGINATION_SEARCH_DELAY = 500;
 
@@ -31,13 +31,13 @@ type Pagination = {
 };
 
 type TVariables = {
-  input: SearchInput;
+  input: SchemaTypes.SearchInput;
 };
 
 type Props = {
-  search: (variables: TVariables) => Promise<ApolloQueryResult<SearchResult>>;
-  concatPaginatedItems: (data: SearchResult) => void;
-  searchType: SearchType;
+  search: (variables: TVariables) => Promise<ApolloQueryResult<Types.SearchResult>>;
+  concatPaginatedItems: (data: Types.SearchResult) => void;
+  searchType: SchemaTypes.SearchType;
   onError: () => void;
   queryString: string;
 };

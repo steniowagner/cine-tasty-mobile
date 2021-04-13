@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect, useCallback, useRef } from 'react';
 import {
@@ -8,20 +9,17 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import { RouteProp } from '@react-navigation/native';
 
-import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
-import ExpansibleTextSection from 'components/common/expansible-text-section/ExpansibleTextSection';
-import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
-import ImagesList from 'components/common/images-list/ImagesList';
-import Advise from 'components/common/advise/Advise';
-import Section from 'components/common/Section';
-import {
-  GetFamousDetail_person_moviesCast as MovieCast,
-  GetFamousDetail_person_tvCast as TVShowCast,
-} from 'types/schema';
-import { useGetCurrentTheme, useStatusBarStyle } from 'hooks';
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
-import { ThemeId } from 'types';
+import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
+import ExpansibleTextSection from '@components/common/expansible-text-section/ExpansibleTextSection';
+import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
+import ImagesList from '@components/common/images-list/ImagesList';
+import { useGetCurrentTheme, useStatusBarStyle } from '@hooks';
+import Advise from '@components/common/advise/Advise';
+import Section from '@components/common/Section';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
+import * as Types from '@local-types';
 
 import { FamousDetailParams } from '../routes/route-params-types';
 import HeaderBackButton from '../../HeaderBackButton';
@@ -30,7 +28,7 @@ import HeaderInfo from './header/HeaderInfo';
 import DeathDay from './death-day/DeathDay';
 
 type SmokeShadowStyleProps = {
-  currentTheme: ThemeId;
+  currentTheme: Types.ThemeId;
 };
 
 const BackgroundImageWrapper = styled(Animated.View)`
@@ -41,7 +39,7 @@ const BackgroundImageWrapper = styled(Animated.View)`
 
 const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
   ({ currentTheme, theme }) => {
-    const backgroundAlphax4Count = currentTheme === ThemeId.DARK ? 1 : 5;
+    const backgroundAlphax4Count = currentTheme === Types.ThemeId.DARK ? 1 : 5;
 
     return {
       colors: [
@@ -122,77 +120,83 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
     );
   }, []);
 
-  const renderMovieCastSection = useCallback((movieCast: MovieCast[]) => {
-    const sectionCastMoviesTitle = movieCast.length > 0
-      ? t(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)
-      : `${t(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)} (0)`;
+  const renderMovieCastSection = useCallback(
+    (movieCast: SchemaTypes.GetFamousDetail_person_moviesCast[]) => {
+      const sectionCastMoviesTitle = movieCast.length > 0
+        ? t(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)
+        : `${t(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)} (0)`;
 
-    return (
-      <Section
-        title={sectionCastMoviesTitle}
-      >
-        <FlatList
-          renderItem={({ item, index }) => (
-            <SimplifiedMediaListItem
-              onPress={() => navigation.push('MOVIE_DETAIL', {
-                voteAverage: item.voteAverage,
-                posterPath: item.posterPath,
-                voteCount: item.voteCount,
-                title: item.title,
-                id: item.id,
-              })}
-              voteAverage={item.voteAverage}
-              voteCount={item.voteCount}
-              image={item.posterPath}
-              isFirst={index === 0}
-              title={item.title}
-            />
-          )}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          showsHorizontalScrollIndicator={false}
-          testID="movies-cast"
-          data={movieCast}
-          horizontal
-        />
-      </Section>
-    );
-  }, []);
+      return (
+        <Section
+          title={sectionCastMoviesTitle}
+        >
+          <FlatList
+            renderItem={({ item, index }) => (
+              <SimplifiedMediaListItem
+                onPress={() => navigation.push('MOVIE_DETAIL', {
+                  voteAverage: item.voteAverage,
+                  posterPath: item.posterPath,
+                  voteCount: item.voteCount,
+                  title: item.title,
+                  id: item.id,
+                })}
+                voteAverage={item.voteAverage}
+                voteCount={item.voteCount}
+                image={item.posterPath}
+                isFirst={index === 0}
+                title={item.title}
+              />
+            )}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            showsHorizontalScrollIndicator={false}
+            testID="movies-cast"
+            data={movieCast}
+            horizontal
+          />
+        </Section>
+      );
+    },
+    [],
+  );
 
-  const renderTVShowCastSection = useCallback((tvShowCast: TVShowCast[]) => {
-    const sectionCastTVShowsTitle = tvShowCast.length > 0
-      ? t(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)
-      : `${t(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)} (0)`;
+  const renderTVShowCastSection = useCallback(
+    (tvShowCast: SchemaTypes.GetFamousDetail_person_tvCast[]) => {
+      const sectionCastTVShowsTitle = tvShowCast.length > 0
+        ? t(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)
+        : `${t(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)} (0)`;
 
-    return (
-      <Section
-        title={t(sectionCastTVShowsTitle)}
-      >
-        <FlatList
-          renderItem={({ item, index }) => (
-            <SimplifiedMediaListItem
-              voteAverage={item.voteAverage}
-              voteCount={item.voteCount}
-              isFirst={index === 0}
-              onPress={() => navigation.push('TV_SHOW_DETAIL', {
-                voteAverage: item.voteAverage,
-                posterPath: item.posterPath,
-                voteCount: item.voteCount,
-                title: item.name,
-                id: item.id,
-              })}
-              image={item.posterPath}
-              title={item.name}
-            />
-          )}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          data={tvShowCast}
-          testID="tv-cast"
-          horizontal
-        />
-      </Section>
-    );
-  }, []);
+      return (
+        <Section
+          title={t(sectionCastTVShowsTitle)}
+        >
+          <FlatList
+            renderItem={({ item, index }) => (
+              <SimplifiedMediaListItem
+                voteAverage={item.voteAverage}
+                voteCount={item.voteCount}
+                isFirst={index === 0}
+                onPress={() => navigation.push('TV_SHOW_DETAIL', {
+                  voteAverage: item.voteAverage,
+                  posterPath: item.posterPath,
+                  voteCount: item.voteCount,
+                  title: item.name,
+                  id: item.id,
+                })}
+                image={item.posterPath}
+                title={item.name}
+              />
+            )}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            data={tvShowCast}
+            testID="tv-cast"
+            horizontal
+          />
+        </Section>
+      );
+    },
+    [],
+  );
 
   if (hasError) {
     return (

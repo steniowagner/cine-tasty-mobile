@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import { formatDate } from 'utils/formatters';
-import CONSTANTS from 'utils/constants';
-import metrics from 'styles/metrics';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import { formatDate } from '@utils/formatters';
+import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
 
 const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('35%')}px;

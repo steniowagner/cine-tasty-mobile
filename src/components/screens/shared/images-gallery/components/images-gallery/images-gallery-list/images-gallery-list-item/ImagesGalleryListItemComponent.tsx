@@ -2,11 +2,11 @@ import React from 'react';
 import { Animated } from 'react-native';
 import { PinchGestureHandler } from 'react-native-gesture-handler';
 
-import useTMDBImage from 'components/common/tmdb-image/useTMDBImage';
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import { useImagePinch } from 'hooks';
-import metrics from 'styles/metrics';
+import useTMDBImage from '@components/common/tmdb-image/useTMDBImage';
+import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import { useImagePinch } from '@hooks';
+import metrics from '@styles/metrics';
 
 import useImagesGalleryListItem from './use-images-gallery-list-item';
 import * as S from './images-gallery-list-item-styles';

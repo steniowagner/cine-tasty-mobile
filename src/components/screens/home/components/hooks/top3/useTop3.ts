@@ -1,23 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { TrendingTVShows, TrendingMovies } from 'types/schema';
-import { HomeTop3Item } from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
 import getTop3Data from './parseTop3Data';
 
 type State = {
-  top3TVShows: HomeTop3Item[];
-  top3Movies: HomeTop3Item[];
+  top3TVShows: Types.HomeTop3Item[];
+  top3Movies: Types.HomeTop3Item[];
 };
 
 type Props = {
-  trendingTVShows: TrendingTVShows;
-  trendingMovies: TrendingMovies;
+  trendingTVShows: SchemaTypes.TrendingTVShows;
+  trendingMovies: SchemaTypes.TrendingMovies;
 };
 
 const useTop3 = ({ trendingTVShows, trendingMovies }: Props): State => {
-  const [top3TVShows, setTop3TVShows] = useState<HomeTop3Item[]>([]);
-  const [top3Movies, setTop3Movies] = useState<HomeTop3Item[]>([]);
+  const [top3TVShows, setTop3TVShows] = useState<Types.HomeTop3Item[]>([]);
+  const [top3Movies, setTop3Movies] = useState<Types.HomeTop3Item[]>([]);
 
   const onSetTop3Movies = useCallback(() => {
     if (top3Movies.length) {

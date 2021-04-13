@@ -4,12 +4,12 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
-import { CustomizedModalChildrenType } from 'types';
-import { ArticleLanguage } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
+import theme from '@styles/theme';
 
-import { PAGINATION_DELAY } from 'hooks/use-paginated-query/useQueryWithPagination';
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
@@ -76,12 +76,14 @@ describe('Testing <News />', () => {
       TRANSLATIONS.NEWS_FILTER_MESSAGE,
     );
 
-    expect(navigate.mock.calls[0][1].type).toEqual(CustomizedModalChildrenType.LANGUAGE);
+    expect(navigate.mock.calls[0][1].type).toEqual(
+      Types.CustomizedModalChildrenType.LANGUAGE,
+    );
 
     expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
 
     expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(
-      ArticleLanguage.EN,
+      SchemaTypes.ArticleLanguage.EN,
     );
   });
 

@@ -4,9 +4,9 @@ import { Platform, ScrollView, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 
-import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
-import { SimplifiedMedia } from 'types';
-import metrics from 'styles/metrics';
+import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
+import metrics from '@styles/metrics';
+import * as Types from '@local-types';
 
 import { HomeStackParams } from '../routes/route-params-types';
 import LoadingHome from './top3/LoadingTop3';
@@ -76,7 +76,7 @@ const Home = ({ navigation }: Props) => {
           />
           {trendings.map((trending) => (
             <HomeSection
-              onPressItem={(mediaItem: SimplifiedMedia) => onPressTrendingItem(mediaItem)}
+              onPressItem={(mediaItem: Types.SimplifiedMedia) => onPressTrendingItem(mediaItem)}
               onPressViewAll={() => onPressViewAll({
                 viewAllTitle: trending.viewAllTitle,
                 sectionItems: trending.data,

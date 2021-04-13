@@ -1,20 +1,17 @@
+/* eslint-disable camelcase */
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  GetFamous_people_items as GetFamousItems,
-  GetFamousVariables,
-  GetFamous,
-} from 'types/schema';
 import { GET_FAMOUS } from '@graphql/queries';
-import * as TRANSLATIONS from 'i18n/tags';
-import { usePaginatedQuery } from 'hooks';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import { usePaginatedQuery } from '@hooks';
 
 type State = {
   onPressTopReloadButton: () => Promise<void>;
   onPressBottomReloadButton: () => void;
   hasPaginationError: boolean;
-  famous: GetFamousItems[];
+  famous: SchemaTypes.GetFamous_people_items[];
   onEndReached: () => void;
   isPaginating: boolean;
   isLoading: boolean;
@@ -23,13 +20,13 @@ type State = {
 
 const useFamous = (): State => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [famous, setFamous] = useState<GetFamousItems[]>([]);
+  const [famous, setFamous] = useState<SchemaTypes.GetFamous_people_items[]>([]);
   const [error, setError] = useState<string>('');
 
   const { t } = useTranslation();
 
-  const handleOnGetData = useCallback((data: GetFamous): boolean => {
-    setFamous((previousFamous: GetFamousItems[]) => [
+  const handleOnGetData = useCallback((data: SchemaTypes.GetFamous): boolean => {
+    setFamous((previousFamous: SchemaTypes.GetFamous_people_items[]) => [
       ...previousFamous,
       ...data.people.items,
     ]);
@@ -40,8 +37,8 @@ const useFamous = (): State => {
   const {
     onPaginateQuery, onReloadData, isPaginating, isLoading,
   } = usePaginatedQuery<
-    GetFamous,
-    GetFamousVariables
+    SchemaTypes.GetFamous,
+    SchemaTypes.GetFamousVariables
   >({
     onPaginationQueryError: () => {
       setError(t(TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR));

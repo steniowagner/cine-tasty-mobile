@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'styles/theme';
+import theme from '@styles/theme';
 
 import Header from './Header';
 

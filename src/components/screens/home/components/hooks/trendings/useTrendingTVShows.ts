@@ -2,25 +2,24 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  TrendingTVShows_trendingTvShows as TrendingTVShowsSection,
-  TrendingTVShows,
-  TrendingTVShow,
-} from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import { HomeSection } from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import { HomeSection } from '@local-types';
 
 import parseTrendingToSimplifiedMedia from './parseTrendingToSimplifiedMedia';
 
 type Props = {
-  rawTrendingTVShows: TrendingTVShows;
+  rawTrendingTVShows: SchemaTypes.TrendingTVShows;
 };
 
 type State = {
   trendingTVShows: HomeSection[];
 };
 
-type TrendingItemKey = keyof Omit<TrendingTVShowsSection, '__typename'>;
+type TrendingItemKey = keyof Omit<
+  SchemaTypes.TrendingTVShows_trendingTvShows,
+  '__typename'
+>;
 
 const useTrendingMovies = ({ rawTrendingTVShows }: Props): State => {
   const [trendingTVShows, setTrendingTVShows] = useState<HomeSection[]>([]);
@@ -28,7 +27,10 @@ const useTrendingMovies = ({ rawTrendingTVShows }: Props): State => {
   const { t } = useTranslation();
 
   const parseSection = useCallback(
-    (trendingItemKey: TrendingItemKey, dataset: TrendingTVShow[]): HomeSection => {
+    (
+      trendingItemKey: TrendingItemKey,
+      dataset: SchemaTypes.TrendingTVShow[],
+    ): HomeSection => {
       const sectionMapping: Record<TrendingItemKey, Omit<HomeSection, 'data'>> = {
         onTheAir: {
           viewAllTitle: t(TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ON_THE_AIR_VIEW_ALL),

@@ -1,58 +1,50 @@
 import { useCallback } from 'react';
 
-import {
-  TrendingAiringTodayTVShows,
-  TrendingOnTheAirTVShows,
-  TrendingPopularTVShows,
-  TrendingTopRatedTVShows,
-  TrendingNowPlayingMovies,
-  TrendingPopularMovies,
-  TrendingTopRatedMovies,
-  TrendingUpcomingMovies,
-} from 'types/schema';
-import {
-  TrendingTVShowsKeys,
-  TrendingMoviesKeys,
-  TrendingMediaItemKey,
-  SimplifiedMedia,
-} from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
 export type Data = MovieData | TVShowData;
 
 type MovieData =
-  | TrendingNowPlayingMovies
-  | TrendingPopularMovies
-  | TrendingTopRatedMovies
-  | TrendingUpcomingMovies;
+  | SchemaTypes.TrendingNowPlayingMovies
+  | SchemaTypes.TrendingPopularMovies
+  | SchemaTypes.TrendingTopRatedMovies
+  | SchemaTypes.TrendingUpcomingMovies;
 
 type TVShowData =
-  | TrendingAiringTodayTVShows
-  | TrendingOnTheAirTVShows
-  | TrendingPopularTVShows
-  | TrendingTopRatedTVShows;
+  | SchemaTypes.TrendingAiringTodayTVShows
+  | SchemaTypes.TrendingOnTheAirTVShows
+  | SchemaTypes.TrendingPopularTVShows
+  | SchemaTypes.TrendingTopRatedTVShows;
 
-type TrendingMovieItem = Record<TrendingMoviesKeys, (data: MovieData) => DataResult>;
+type TrendingMovieItem = Record<
+  Types.TrendingMoviesKeys,
+  (data: MovieData) => DataResult
+>;
 
-type TrendingTVShowItem = Record<TrendingTVShowsKeys, (data: TVShowData) => DataResult>;
+type TrendingTVShowItem = Record<
+  Types.TrendingTVShowsKeys,
+  (data: TVShowData) => DataResult
+>;
 
 type DataResult = {
-  items: SimplifiedMedia[];
+  items: Types.SimplifiedMedia[];
   hasMore: boolean;
 };
 
 type State = (data: Data) => DataResult;
 
 type Props = {
-  trendingMediaItemKey: TrendingMediaItemKey;
+  trendingMediaItemKey: Types.TrendingMediaItemKey;
   isMovie: boolean;
 };
 
 const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
   const getMovieOnGetDataHandler = useCallback(
-    (trendingMovieKey: TrendingMediaItemKey) => {
+    (trendingMovieKey: Types.TrendingMediaItemKey) => {
       const movieOnGetDataMapping: TrendingMovieItem = {
         nowPlaying: (data: MovieData): DataResult => {
-          const nowPlayingMoviesData = data as TrendingNowPlayingMovies;
+          const nowPlayingMoviesData = data as SchemaTypes.TrendingNowPlayingMovies;
 
           return {
             hasMore: nowPlayingMoviesData.trendingMovies.nowPlaying.hasMore,
@@ -60,7 +52,7 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
           };
         },
         popular: (data: MovieData): DataResult => {
-          const popularMoviesData = data as TrendingPopularMovies;
+          const popularMoviesData = data as SchemaTypes.TrendingPopularMovies;
 
           return {
             hasMore: popularMoviesData.trendingMovies.popular.hasMore,
@@ -68,7 +60,7 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
           };
         },
         topRated: (data: MovieData): DataResult => {
-          const topRatedData = data as TrendingTopRatedMovies;
+          const topRatedData = data as SchemaTypes.TrendingTopRatedMovies;
 
           return {
             hasMore: topRatedData.trendingMovies.topRated.hasMore,
@@ -76,7 +68,7 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
           };
         },
         upcoming: (data: MovieData): DataResult => {
-          const upcomingData = data as TrendingUpcomingMovies;
+          const upcomingData = data as SchemaTypes.TrendingUpcomingMovies;
 
           return {
             hasMore: upcomingData.trendingMovies.upcoming.hasMore,
@@ -91,10 +83,10 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
   );
 
   const getTVSahowOnGetDataHandler = useCallback(
-    (trendingMovieKey: TrendingMediaItemKey): DataResult => {
+    (trendingMovieKey: Types.TrendingMediaItemKey): DataResult => {
       const tvShowOnGetDataMapping: TrendingTVShowItem = {
         onTheAir: (data: TVShowData): DataResult => {
-          const onTheAirTVShowsData = data as TrendingOnTheAirTVShows;
+          const onTheAirTVShowsData = data as SchemaTypes.TrendingOnTheAirTVShows;
 
           return {
             hasMore: onTheAirTVShowsData.trendingTvShows.onTheAir.hasMore,
@@ -102,7 +94,7 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
           };
         },
         popular: (data: TVShowData): DataResult => {
-          const popularTVShowsData = data as TrendingPopularTVShows;
+          const popularTVShowsData = data as SchemaTypes.TrendingPopularTVShows;
 
           return {
             hasMore: popularTVShowsData.trendingTvShows.popular.hasMore,
@@ -110,7 +102,7 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
           };
         },
         topRated: (data: TVShowData): DataResult => {
-          const topRatedTVShowsData = data as TrendingTopRatedTVShows;
+          const topRatedTVShowsData = data as SchemaTypes.TrendingTopRatedTVShows;
 
           return {
             hasMore: topRatedTVShowsData.trendingTvShows.topRated.hasMore,
@@ -118,7 +110,7 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props): State => {
           };
         },
         airingToday: (data: TVShowData): DataResult => {
-          const topRatedTVShowsData = data as TrendingAiringTodayTVShows;
+          const topRatedTVShowsData = data as SchemaTypes.TrendingAiringTodayTVShows;
 
           return {
             hasMore: topRatedTVShowsData.trendingTvShows.airingToday.hasMore,

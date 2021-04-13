@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
-import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
-import metrics from 'styles/metrics';
+import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import metrics from '@styles/metrics';
 
 import { DEFAULT_MARGIN_VERTICAL_PERCENTAGE } from './InfoText';
 

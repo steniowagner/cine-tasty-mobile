@@ -1,11 +1,11 @@
 import { DefaultTheme } from 'styled-components';
 
-import { ThemeId } from 'types';
+import * as Types from '@local-types';
 
 import metrics from '../metrics';
 
 export const dark: DefaultTheme = {
-  id: ThemeId.DARK,
+  id: Types.ThemeId.DARK,
   colors: {
     primary: '#FFD700',
     secondary: '#111111',

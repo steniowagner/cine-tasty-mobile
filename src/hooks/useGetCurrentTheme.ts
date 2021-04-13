@@ -1,22 +1,23 @@
 import { useMemo } from 'react';
 import { DefaultTheme } from 'styled-components';
 
-import { useSystemThemePreference } from 'hooks';
-import { ThemeId } from 'types';
+import * as Types from '@local-types';
+
+import { useSystemThemePreference } from './useSystemThemePreference';
 
 type Props = {
   theme: DefaultTheme;
 };
 
 type State = {
-  currentTheme: ThemeId;
+  currentTheme: Types.ThemeId;
 };
 
 export const useGetCurrentTheme = ({ theme }: Props): State => {
   const { systemTheme } = useSystemThemePreference();
 
   const currentTheme = useMemo(() => {
-    if (theme.id === ThemeId.SYSTEM) {
+    if (theme.id === Types.ThemeId.SYSTEM) {
       return systemTheme;
     }
 

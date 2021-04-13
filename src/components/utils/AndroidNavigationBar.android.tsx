@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { DefaultTheme, withTheme } from 'styled-components';
-import { ThemeId } from 'types';
+
+import * as Types from '@local-types';
 
 type Props = {
   theme: DefaultTheme;
@@ -10,7 +11,7 @@ type Props = {
 
 const AndroidNavigationBar = ({ theme }: Props) => {
   useEffect(() => {
-    const isLight = ThemeId.LIGHT === theme.id;
+    const isLight = Types.ThemeId.LIGHT === theme.id;
 
     changeNavigationBarColor(theme.colors.secondary, isLight, true);
   }, [theme]);
