@@ -3,13 +3,9 @@ import { Dimensions, Platform } from 'react-native';
 
 import * as Types from '@local-types';
 
-type State = {
-  screenClassification: Types.DeviceScreenClassification;
-};
-
 const { width, height } = Dimensions.get('window');
 
-const useClassifyDeviceScreen = (): State => {
+const useClassifyDeviceScreen = () => {
   const iOSScreenClassification = useMemo((): Types.DeviceScreenClassification => {
     if (width <= 320 && height <= 480) {
       return 'xsmall';

@@ -12,13 +12,6 @@ type Props = {
   id: number;
 };
 
-type State = {
-  t: (key: string) => string;
-  isLoading: boolean;
-  hasError: boolean;
-  tvShow?: SchemaTypes.TVShowDetail_tvShow;
-};
-
 type Directives = {
   withVoteAverage: boolean;
   withGenresIds: boolean;
@@ -28,11 +21,8 @@ type Directives = {
 type Variables = Directives & SchemaTypes.TVShowDetailVariables;
 
 const useTVShowDetail = ({
-  hasVoteAverage,
-  hasGenresIds,
-  hasVoteCount,
-  id,
-}: Props): State => {
+  hasVoteAverage, hasGenresIds, hasVoteCount, id,
+}: Props) => {
   const { t } = useTranslation();
 
   const { data, error, loading } = useQuery<SchemaTypes.TVShowDetail, Variables>(

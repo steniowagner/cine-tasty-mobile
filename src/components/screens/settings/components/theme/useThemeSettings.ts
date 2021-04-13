@@ -5,18 +5,7 @@ import * as Types from '@local-types';
 
 import useGetThemeOptions from './useGetThemeOptions';
 
-type ThemeOption = {
-  onPress: () => void;
-  title: string;
-  id: Types.ThemeId;
-};
-
-type State = {
-  themeOptions: ThemeOption[];
-  selectedTheme: Types.ThemeId;
-};
-
-const useThemeSettingsOption = (): State => {
+const useThemeSettingsOption = () => {
   const {
     onSetSystemTheme,
     onSetLightTheme,

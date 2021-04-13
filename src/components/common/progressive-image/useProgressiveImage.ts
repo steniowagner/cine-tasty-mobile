@@ -1,15 +1,7 @@
 import { useCallback, useState, useRef } from 'react';
 import { Animated } from 'react-native';
 
-type State = {
-  thumbnailOpacity: Animated.Value;
-  imageOpacity: Animated.Value;
-  onLoadThumbnail: () => void;
-  onLoadImage: () => void;
-  isImageLoaded: boolean;
-};
-
-const useProgressiveImage = (): State => {
+const useProgressiveImage = () => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
 
   const thumbnailOpacity = useRef(new Animated.Value(0)).current;

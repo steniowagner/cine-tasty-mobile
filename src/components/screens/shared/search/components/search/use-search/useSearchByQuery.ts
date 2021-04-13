@@ -7,12 +7,6 @@ import * as Types from '@local-types';
 
 export const SEARCH_BY_QUERY_DELAY = 1000;
 
-type State = {
-  onTypeSearchQuery: (queryStringTyped: string) => void;
-  onSearchByQuery: (query: string) => Promise<Types.SearchResult>;
-  isLoading: boolean;
-};
-
 type TVariables = {
   input: SchemaTypes.SearchInput;
 };
@@ -23,7 +17,7 @@ type Props = {
   searchType: SchemaTypes.SearchType;
 };
 
-const useSearchByQuery = ({ setQueryString, searchType, search }: Props): State => {
+const useSearchByQuery = ({ setQueryString, searchType, search }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const debouncedSetQueryString = useRef(

@@ -3,11 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import * as TRANSLATIONS from '@i18n/tags';
 
-type State = {
-  dateText: string;
-};
-
-export const useParseDateToLocaleDate = (rawDateString: string): State => {
+export const useParseDateToLocaleDate = (rawDateString: string) => {
   const [dateText, setDateText] = useState<string>('-');
 
   const { i18n, t } = useTranslation();

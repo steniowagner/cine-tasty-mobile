@@ -17,22 +17,12 @@ type ResentSearchItem = {
   id: number;
 };
 
-type State = {
-  persistItemToRecentSearches: (item: ResentSearchItem) => void;
-  onRemoveItem: (item: ResentSearchItem) => void;
-  recentSearches: ResentSearchItem[];
-  t: (key: string) => string;
-};
-
 type Props = {
   shouldSkipGetInitialRecentSearches: boolean;
-  searchType: SchemaTypes;
+  searchType: SchemaTypes.SearchType;
 };
 
-const useRecentSearches = ({
-  shouldSkipGetInitialRecentSearches,
-  searchType,
-}: Props): State => {
+const useRecentSearches = ({ shouldSkipGetInitialRecentSearches, searchType }: Props) => {
   const [recentSearches, setRecentSearches] = useState<ResentSearchItem[]>([]);
 
   const STORAGE_KEY = useMemo(

@@ -5,17 +5,9 @@ type Props = {
   image: string;
 };
 
-type State = {
-  isFallbackImageVisible: boolean;
-  opacity: Animated.Value;
-  onError: () => void;
-  onLoad: () => void;
-  hasError: boolean;
-};
-
 export const ANIMATION_DURATION = 400;
 
-export const useLoadListItemImage = ({ image }: Props): State => {
+export const useLoadListItemImage = ({ image }: Props) => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState<boolean>(true);
   const [hasError, setImageHasError] = useState<boolean>(false);
   const [isLoaded, setIsImageLoaded] = useState<boolean>(false);

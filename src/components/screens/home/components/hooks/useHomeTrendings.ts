@@ -9,12 +9,6 @@ const INITIAL_STATE = {
   hasError: false,
 };
 
-type State = {
-  getTrendings: () => void;
-  isLoading: boolean;
-  hasError: boolean;
-};
-
 type InternalState = {
   isLoading: boolean;
   hasError: boolean;
@@ -30,7 +24,7 @@ type Props<T> = {
   query: DocumentNode;
 };
 
-const useHomeTrendings = <TData = any>({ onGetData, query }: Props<TData>): State => {
+const useHomeTrendings = <TData = any>({ onGetData, query }: Props<TData>) => {
   const [state, setState] = useState<InternalState>(INITIAL_STATE);
 
   const execQuery = useImperativeQuery<TData, TVariables>(query);

@@ -1,5 +1,4 @@
 import { useCallback, useState, useMemo } from 'react';
-import { DefaultTheme } from 'styled-components';
 
 import {
   getItemFromStorage,
@@ -12,15 +11,7 @@ import * as Types from '@local-types';
 
 const undefinedTheme = { ...dark, id: undefined };
 
-type State = {
-  handleInitialThemeSelection: () => Promise<void>;
-  onSetSystemTheme: () => void;
-  onSetLightTheme: () => void;
-  onSetDarkTheme: () => void;
-  theme: DefaultTheme;
-};
-
-const useTheme = (): State => {
+const useTheme = () => {
   const [theme, setTheme] = useState<Types.ThemeId>(null);
 
   const { systemTheme } = useSystemThemePreference();

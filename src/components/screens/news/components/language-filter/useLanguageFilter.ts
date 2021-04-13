@@ -11,19 +11,11 @@ type Props = {
   closeModal: () => void;
 };
 
-type State = {
-  setLanguageSelected: (language: SchemaTypes.ArticleLanguage) => void;
-  onPressSelectButton: () => void;
-  initialFlatListIndex: number;
-  t: (key: string) => string;
-  languageSelected: string;
-};
-
 const useLanguageFilter = ({
   lastLanguageSelected,
   onSelectLanguage,
   closeModal,
-}: Props): State => {
+}: Props) => {
   const [languageSelected, setLanguageSelected] = useState<SchemaTypes.ArticleLanguage>(
     lastLanguageSelected,
   );

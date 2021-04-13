@@ -12,16 +12,12 @@ type Props = {
   rawTrendingTVShows: SchemaTypes.TrendingTVShows;
 };
 
-type State = {
-  trendingTVShows: HomeSection[];
-};
-
 type TrendingItemKey = keyof Omit<
   SchemaTypes.TrendingTVShows_trendingTvShows,
   '__typename'
 >;
 
-const useTrendingMovies = ({ rawTrendingTVShows }: Props): State => {
+const useTrendingMovies = ({ rawTrendingTVShows }: Props) => {
   const [trendingTVShows, setTrendingTVShows] = useState<HomeSection[]>([]);
 
   const { t } = useTranslation();

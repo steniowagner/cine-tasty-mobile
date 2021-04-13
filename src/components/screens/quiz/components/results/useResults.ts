@@ -9,12 +9,6 @@ import * as Types from '@local-types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 
-type State = {
-  onPressPlayAgain: () => void;
-  t: (key: string) => string;
-  results: Types.QuizResult[];
-};
-
 type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'RESULTS'>;
 
 type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'RESULTS'>;
@@ -24,7 +18,7 @@ type Props = {
   route: QuestionsScreenRouteProp;
 };
 
-const useResults = ({ navigation, route }: Props): State => {
+const useResults = ({ navigation, route }: Props) => {
   const [results, setResults] = useState<Types.QuizResult[]>([]);
 
   const { t } = useTranslation();

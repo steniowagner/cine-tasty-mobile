@@ -4,13 +4,7 @@ import GestureHandler, {
   State as GestureHandlerState,
 } from 'react-native-gesture-handler';
 
-type State = {
-  onPinchStateChange: (event: GestureHandler.PinchGestureHandlerStateChangeEvent) => void;
-  pinchScale: Animated.Value;
-  onPinchEvent: () => void;
-};
-
-export const useImagePinch = (): State => {
+export const useImagePinch = () => {
   const pinchScale = useRef(new Animated.Value(1)).current;
 
   const onPinchEvent = useMemo(

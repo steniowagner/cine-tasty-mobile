@@ -12,18 +12,7 @@ import * as Types from '@local-types';
 
 export const qualities: Types.ImageQualities[] = ['low', 'medium', 'high', 'veryHigh'];
 
-type Quality = {
-  quality: Types.ImageQualities;
-  title: string;
-};
-
-type State = {
-  onPress: (quality: Types.ImageQualities) => void;
-  qualitySelected: Types.ImageQualities;
-  qualities: Quality[];
-};
-
-const useImagesQuality = (): State => {
+const useImagesQuality = () => {
   const [qualitySelected, setQualitySelected] = useState<
     Types.ImageQualities | undefined
   >(undefined);

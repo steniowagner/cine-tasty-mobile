@@ -14,27 +14,12 @@ export type SwitchItem = {
   onPress: () => void;
 };
 
-type EnhancedSwitchItem = {
-  onLayout: (event: LayoutChangeEvent) => void;
-  onPress: () => void;
-  textColor: string;
-  title: string;
-};
-
-type State = {
-  switchItems: EnhancedSwitchItem[];
-  translateX: Animated.Value;
-  switchItemWidth: number;
-  wrapperOpacity: number;
-  isSwitching: boolean;
-};
-
 type Props = {
   theme: DefaultTheme;
   items: SwitchItem[];
 };
 
-const useMediaSwitcher = ({ theme, items }: Props): State => {
+const useMediaSwitcher = ({ theme, items }: Props) => {
   const [switchItemsWidths, setSwitchItemsWidth] = useState<number[]>([]);
   const [isSwitching, setIsSwitching] = useState<boolean>(false);
   const [indexSelected, setIndexSelected] = useState<number>(0);

@@ -1,12 +1,6 @@
 import { useState } from 'react';
 
-type State = {
-  onPressListItem: () => void;
-  onCloseModal: () => void;
-  isModalOpen: boolean;
-};
-
-const useTVShowSeasonsListItem = (): State => {
+const useTVShowSeasonsListItem = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return {

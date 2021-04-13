@@ -9,11 +9,7 @@ type Props = {
   theme: DefaultTheme;
 };
 
-type State = {
-  currentTheme: Types.ThemeId;
-};
-
-export const useGetCurrentTheme = ({ theme }: Props): State => {
+export const useGetCurrentTheme = ({ theme }: Props) => {
   const { systemTheme } = useSystemThemePreference();
 
   const currentTheme = useMemo(() => {
