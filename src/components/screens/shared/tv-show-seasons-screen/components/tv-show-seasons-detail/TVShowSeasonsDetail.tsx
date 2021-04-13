@@ -3,10 +3,10 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
-import LoadingIndicator from 'components/common/LoadingIndicator';
-import Advise from 'components/common/advise/Advise';
-import Section from 'components/common/Section';
-import * as TRANSLATIONS from 'i18n/tags';
+import LoadingIndicator from '@components/common/LoadingIndicator';
+import Advise from '@components/common/advise/Advise';
+import Section from '@components/common/Section';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import TVShowSeasonsListItem from './tv-show-list-item/TVShowSeasonsListItem';
 import { TVShowSeasonsStackParams } from '../../routes/route-params-types';

@@ -4,23 +4,23 @@ import {
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
 
-import TabNavigator from 'components/utils/tab-navigator/TabNavigator';
+import TabNavigator from '@components/utils/tab-navigator/TabNavigator';
 
 import HomeStack, {
   TabID as HomeTabID,
-} from 'components/screens/home/routes/stack-routes';
+} from '@components/screens/home/routes/stack-routes';
 
 import FamousStack, {
   TabID as FamousTabID,
-} from 'components/screens/famous/routes/stack-routes';
+} from '@components/screens/famous/routes/stack-routes';
 
 import QuizStack, {
   TabID as QuizTabID,
-} from 'components/screens/quiz/routes/stack-routes';
+} from '@components/screens/quiz/routes/stack-routes';
 
 import NewsStack, {
   TabID as NewsTabID,
-} from 'components/screens/news/routes/stack-routes';
+} from '@components/screens/news/routes/stack-routes';
 
 const Tab = createBottomTabNavigator();
 

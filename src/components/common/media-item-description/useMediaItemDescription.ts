@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import * as TRANSLATIONS from 'i18n/tags';
+import * as TRANSLATIONS from '@i18n/tags';
 
 export const DEFAULT_NUMBER_OF_LINES = 5;
 

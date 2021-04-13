@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { StatusBar, TextInput, View } from 'react-native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import HeaderIconButton from 'components/common/HeaderIconButton';
+import HeaderIconButton from '@components/common/HeaderIconButton';
 
 const Wrapper = styled(View)`
   width: 100%;

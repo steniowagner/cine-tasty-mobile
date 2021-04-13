@@ -1,7 +1,7 @@
-import { CustomizedModalChildrenType } from 'types';
+import * as Types from '@local-types';
 
 export type CustomModalParams = {
-  type: CustomizedModalChildrenType;
+  type: Types.CustomizedModalChildrenType;
   headerText: string;
   extraData: {
     onPressSelect: (value: any) => void;

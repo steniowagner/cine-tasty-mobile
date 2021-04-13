@@ -1,11 +1,11 @@
-import { TabID as HomeTabID } from 'components/screens/home/routes/stack-routes';
-import { TabID as FamousTabID } from 'components/screens/famous/routes/stack-routes';
-import { TabID as QuizTabID } from 'components/screens/quiz/routes/stack-routes';
-import { TabID as NewsTabID } from 'components/screens/news/routes/stack-routes';
+import { TabID as HomeTabID } from '@components/screens/home/routes/stack-routes';
+import { TabID as FamousTabID } from '@components/screens/famous/routes/stack-routes';
+import { TabID as QuizTabID } from '@components/screens/quiz/routes/stack-routes';
+import { TabID as NewsTabID } from '@components/screens/news/routes/stack-routes';
 
-import { TabNavigatorItem } from 'types';
+import * as Types from '@local-types';
 
-const items: TabNavigatorItem[] = [
+const items: Types.TabNavigatorItem[] = [
   {
     id: HomeTabID,
     activeIcon: 'home-active',

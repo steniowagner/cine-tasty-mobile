@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
-import { ThemeContextProvider } from 'providers';
-import * as TRANSLATIONS from 'i18n/tags';
-import CONSTANTS from 'utils/constants';
-import { ThemeId } from 'types';
+import { ThemeContextProvider } from '@providers';
+import * as TRANSLATIONS from '@i18n/tags';
+import CONSTANTS from '@utils/constants';
+import * as Types from '@local-types';
 
 import ThemeSettings from './ThemeSettings';
 
@@ -51,7 +51,7 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should render them dark-theme marked when the theme previsouly selected was the dark-theme', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.DARK);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
 
     const { getAllByTestId } = render(renderThemeSettings());
 
@@ -69,7 +69,7 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should render them light-theme marked when the theme previsouly selected was the light-theme', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.LIGHT);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
     const { getAllByTestId } = render(renderThemeSettings());
 
@@ -87,7 +87,7 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should change theme to dark when the user select the dark-theme-option and the light-theme is currently selected', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.LIGHT);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
     const { getAllByTestId } = render(renderThemeSettings());
 
@@ -111,11 +111,15 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
 
     expect(persistItemInStorage).toHaveBeenCalledTimes(1);
 
-    expect(persistItemInStorage).nthCalledWith(1, CONSTANTS.KEYS.APP_THEME, ThemeId.DARK);
+    expect(persistItemInStorage).nthCalledWith(
+      1,
+      CONSTANTS.KEYS.APP_THEME,
+      Types.ThemeId.DARK,
+    );
   });
 
   it('should change theme to light when the user select the dark-theme-option and the dark-theme is currently selected', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.DARK);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
 
     const { getAllByTestId } = render(renderThemeSettings());
 
@@ -142,12 +146,12 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
     expect(persistItemInStorage).nthCalledWith(
       1,
       CONSTANTS.KEYS.APP_THEME,
-      ThemeId.LIGHT,
+      Types.ThemeId.LIGHT,
     );
   });
 
   it('should not change the theme when the current theme is dark and the user press on the dark-option', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.DARK);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
 
     const { getAllByTestId } = render(renderThemeSettings());
 
@@ -163,7 +167,7 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should not change the theme when the current theme is light and the user press on the light-option', () => {
-    getItemFromStorage.mockImplementationOnce(() => ThemeId.LIGHT);
+    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
     const { getAllByTestId } = render(renderThemeSettings());
 

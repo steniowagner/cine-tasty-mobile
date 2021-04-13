@@ -1,5 +1,5 @@
 import React from 'react';
-import SVGIcon, { Props as SVGIconProps } from 'components/common/svg-icon/SVGIcon';
+import SVGIcon, { Props as SVGIconProps } from '@components/common/svg-icon/SVGIcon';
 
 type Props = {
   ifFalse: Omit<SVGIconProps, 'theme'>;

@@ -1,16 +1,20 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { FlatList } from 'react-native';
 
-import { TVShowDetail_tvShow_createdBy as TVShowCreatedBy } from 'types/schema';
-import { CrewDataset, CastDataset } from 'types';
-import Section from 'components/common/Section';
+import Section from '@components/common/Section';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
 import PeopleListItem from './PeopleListItem';
 import usePeopleList from './usePeopleList';
 
 type Props = {
   onPressItem: (id: string, name: string, image: string) => void;
-  dataset: CrewDataset | CastDataset | TVShowCreatedBy[];
+  dataset:
+    | Types.CrewDataset
+    | Types.CastDataset
+    | SchemaTypes.TVShowDetail_tvShow_createdBy[];
   type: 'cast' | 'crew' | 'creator';
   sectionTitle: string;
   noSubtext?: boolean;

@@ -2,14 +2,14 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { TabNavigatorItem as TabNavigatorItemType } from 'types';
-import { dark as theme } from 'styles/themes/dark';
+import { dark as theme } from '@styles/themes/dark';
+import * as Types from '@local-types';
 
 import TabNavigatorItem from './TabNavigatorItem';
 import items from './items';
 
 type Props = {
-  icon: TabNavigatorItemType;
+  icon: Types.TabNavigatorItem;
   onPress?: () => void;
   isSelected?: boolean;
 };

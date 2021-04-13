@@ -3,12 +3,12 @@ import { TouchableOpacity, Platform, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
 
-import isEqualsOrLargestThanIphoneX from 'utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
-import HeaderIconButton from 'components/common/HeaderIconButton';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import * as TRANSLATIONS from 'i18n/tags';
-import CONSTANTS from 'utils/constants';
-import metrics from 'styles/metrics';
+import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
+import HeaderIconButton from '@components/common/HeaderIconButton';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import * as TRANSLATIONS from '@i18n/tags';
+import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
 
 import MediaSwitcher from '../media-switcher/MediaSwitcher';
 

@@ -7,10 +7,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
-import SetupQuestionsOptionsList from 'components/screens/quiz/components/setup-questions/setup-options-list/SetupQuestionsOptionsList';
-import LanguageFilter from 'components/screens/news/components/language-filter/LanguageFilter';
-import { CustomizedModalChildrenType } from 'types';
-import metrics from 'styles/metrics';
+import SetupQuestionsOptionsList from '@components/screens/quiz/components/setup-questions/setup-options-list/SetupQuestionsOptionsList';
+import LanguageFilter from '@components/screens/news/components/language-filter/LanguageFilter';
+import metrics from '@styles/metrics';
+import * as Types from '@local-types';
 
 import { CustomModalStackParams } from '../routes/route-params-types';
 import useCustomizedModal from './useCustomizedModal';
@@ -129,14 +129,14 @@ const CustomizedModal = ({ navigation, route }: Props) => {
               <HeadLineText>{route.params.headerText}</HeadLineText>
               <LineDivider />
             </ListHeaderWrapper>
-            {route.params.type === CustomizedModalChildrenType.LANGUAGE && (
+            {route.params.type === Types.CustomizedModalChildrenType.LANGUAGE && (
               <LanguageFilter
                 lastLanguageSelected={route.params.extraData.lastItemSelected}
                 onSelectLanguage={route.params.extraData.onPressSelect}
                 closeModal={onCloseModal}
               />
             )}
-            {route.params.type === CustomizedModalChildrenType.MEDIA_FILTER && (
+            {route.params.type === Types.CustomizedModalChildrenType.MEDIA_FILTER && (
               <SetupQuestionsOptionsList
                 indexLastOptionSelected={route.params.extraData.lastItemSelected}
                 onPressSelect={route.params.extraData.onPressSelect}

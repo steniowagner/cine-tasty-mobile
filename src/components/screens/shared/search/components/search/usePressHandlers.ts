@@ -1,13 +1,9 @@
+/* eslint-disable camelcase */
 import { useMemo } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import {
-  SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
-  SearchPerson_search_items_BasePerson as SearchPersonResult,
-  SearchMovie_search_items_BaseMovie as SearchMovieResult,
-  SearchType,
-} from 'types/schema';
-import { RecentSearchItem } from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
 import useRecentSearches from '../recent-searches/useRecentSearches';
 import { SearchStackParams } from '../../routes/route-params-types';
@@ -16,14 +12,17 @@ type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH
 
 type State = {
   onPressListItem: (
-    item: SearchPersonResult | SearchMovieResult | SearchTVShowResult,
+    item:
+      | SchemaTypes.SearchPerson_search_items_BasePerson
+      | SchemaTypes.SearchMovie_search_items_BaseMovie
+      | SchemaTypes.SearchTVShow_search_items_BaseTVShow,
   ) => void;
-  onPressRecentSearchItem: (recentSearchItem: RecentSearchItem) => void;
+  onPressRecentSearchItem: (recentSearchItem: Types.RecentSearchItem) => void;
 };
 
 type Props = {
   navigation: SearchScreenNavigationProp;
-  searchType: SearchType;
+  searchType: SchemaTypes.SearchType;
 };
 
 const usePressHandler = ({ navigation, searchType }: Props): State => {
@@ -34,8 +33,8 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
 
   const { onPressRecentSearchItem, onPressListItem } = useMemo(() => {
     const pressesHandlersMapping = {
-      [SearchType.PERSON]: {
-        onPressListItem: (item: SearchPersonResult) => {
+      [SchemaTypes.SearchType.PERSON]: {
+        onPressListItem: (item: SchemaTypes.SearchPerson_search_items_BasePerson) => {
           persistItemToRecentSearches({
             image: item.image,
             title: item.title,
@@ -48,7 +47,7 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
             id: item.id,
           });
         },
-        onPressRecentSearchItem: (person: RecentSearchItem) => {
+        onPressRecentSearchItem: (person: Types.RecentSearchItem) => {
           navigation.navigate('FAMOUS_DETAIL', {
             profileImage: person.image,
             name: person.title,
@@ -56,8 +55,8 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
           });
         },
       },
-      [SearchType.MOVIE]: {
-        onPressListItem: (movie: SearchMovieResult) => {
+      [SchemaTypes.SearchType.MOVIE]: {
+        onPressListItem: (movie: SchemaTypes.SearchMovie_search_items_BaseMovie) => {
           persistItemToRecentSearches({
             image: movie.posterPath,
             title: movie.title,
@@ -73,7 +72,7 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
             id: movie.id,
           });
         },
-        onPressRecentSearchItem: (movie: RecentSearchItem) => {
+        onPressRecentSearchItem: (movie: Types.RecentSearchItem) => {
           navigation.navigate('MOVIE_DETAIL', {
             posterPath: movie.image,
             title: movie.title,
@@ -81,8 +80,8 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
           });
         },
       },
-      [SearchType.TV]: {
-        onPressListItem: (tvShow: SearchTVShowResult) => {
+      [SchemaTypes.SearchType.TV]: {
+        onPressListItem: (tvShow: SchemaTypes.SearchTVShow_search_items_BaseTVShow) => {
           persistItemToRecentSearches({
             image: tvShow.posterPath,
             title: tvShow.title,
@@ -98,7 +97,7 @@ const usePressHandler = ({ navigation, searchType }: Props): State => {
             id: tvShow.id,
           });
         },
-        onPressRecentSearchItem: (tvShow: RecentSearchItem) => {
+        onPressRecentSearchItem: (tvShow: Types.RecentSearchItem) => {
           navigation.navigate('TV_SHOW_DETAIL', {
             posterPath: tvShow.image,
             title: tvShow.title,

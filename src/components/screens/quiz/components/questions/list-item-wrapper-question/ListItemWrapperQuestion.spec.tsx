@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'styles/theme';
+import theme from '@styles/theme';
 
 import ListItemWrapperQuestion from './ListItemWrapperQuestion';
 

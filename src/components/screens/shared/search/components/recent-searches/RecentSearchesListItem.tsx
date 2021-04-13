@@ -4,12 +4,12 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
-import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import { useLoadListItemImage } from 'hooks';
-import { RecentSearchItem } from 'types';
-import metrics from 'styles/metrics';
+import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
+import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import { useLoadListItemImage } from '@hooks';
+import metrics from '@styles/metrics';
+import * as Types from '@local-types';
 
 const IMAGE_WIDTH_PERCENTAGE = '21%';
 const IMAGE_HEIGHT_PERCENTAGE = '21%';
@@ -62,7 +62,7 @@ const CloseButtonWrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
 type Props = {
   onPressRemove: () => void;
   onPressItem: () => void;
-  item: RecentSearchItem;
+  item: Types.RecentSearchItem;
 };
 
 const RecentSearchesListItem = ({ onPressRemove, onPressItem, item }: Props) => {

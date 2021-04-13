@@ -2,9 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
-import MediaItemDescription from 'components/common/media-item-description/MediaItemDescription';
-import Section from 'components/common/Section';
-import CONSTANTS from 'utils/constants';
+import MediaItemDescription from '@components/common/media-item-description/MediaItemDescription';
+import Section from '@components/common/Section';
+import CONSTANTS from '@utils/constants';
 
 import LoadingExpansibleTextSection from './LoadingExpansibleTextSection';
 

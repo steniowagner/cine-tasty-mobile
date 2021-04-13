@@ -4,9 +4,9 @@ import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
-import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
@@ -40,9 +40,9 @@ const routeParams: QuestionsScreenRouteProp = {
   key: '',
   params: {
     numberOfQuestions: quiz.length,
-    difficulty: QuestionDifficulty.MIXED,
-    category: QuestionCategory.MIXED,
-    type: QuestionType.MIXED,
+    difficulty: SchemaTypes.QuestionDifficulty.MIXED,
+    category: SchemaTypes.QuestionCategory.MIXED,
+    type: SchemaTypes.QuestionType.MIXED,
   },
 };
 

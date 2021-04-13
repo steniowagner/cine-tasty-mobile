@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { SvgCssUri } from 'react-native-svg';
 import styled from 'styled-components';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import CONSTANTS from 'utils/constants';
-import metrics from 'styles/metrics';
+import * as TRANSLATIONS from '@i18n/tags';
+import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
 
 import libraries from './libraries';
 

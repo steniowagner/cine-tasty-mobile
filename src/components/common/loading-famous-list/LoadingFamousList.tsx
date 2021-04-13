@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { FlatList } from 'react-native';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
-import FamousListItemLoadingPlaceholder from 'components/common/famous-list-item/FamousListItemLoadingPlaceholder';
-import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/getWrapperMeasures';
+import FamousListItemLoadingPlaceholder from '@components/common/famous-list-item/FamousListItemLoadingPlaceholder';
+import { DEFAULT_LIST_ITEM_HEIGHT } from '@components/common/famous-list-item/getWrapperMeasures';
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(
   metrics.height / DEFAULT_LIST_ITEM_HEIGHT,

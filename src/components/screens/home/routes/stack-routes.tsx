@@ -4,14 +4,14 @@ import { DefaultTheme, withTheme } from 'styled-components';
 
 import TVShowSeasonDetail, {
   Props as TVShowSeasonDetailExternalProps,
-} from 'components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
-import TVShowDetail from 'components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
-import MoviedDetail from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
-import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
+} from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
+import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
+import MoviedDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
+import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
 import Reviews, {
   Props as ReviewsExternalParams,
-} from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
-import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
+} from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
+import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
 
 import MediaSectionViewAll, {
   Props as MediaSectionViewAllScreenProps,

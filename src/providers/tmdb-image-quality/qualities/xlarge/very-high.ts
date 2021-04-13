@@ -1,6 +1,6 @@
-import { ImageType, ImageSize } from 'types';
+import * as Types from '@local-types';
 
-const veryHigh: Record<ImageType, ImageSize> = {
+const veryHigh: Record<Types.ImageType, Types.ImageSize> = {
   poster: 'w500',
   backdrop: 'w500',
   still: 'w500',

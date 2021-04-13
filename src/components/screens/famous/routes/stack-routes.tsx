@@ -3,17 +3,18 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { DefaultTheme, withTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import TVShowDetail from 'components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
+import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
 import TVShowSeasonDetail, {
   Props as TVShowSeasonDetailExternalProps,
-} from 'components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
-import MovieDetail from 'components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
+} from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
+import MovieDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import Reviews, {
   Props as ReviewsExternalParams,
-} from 'components/screens/shared/media-detail-screen/reviews/components/Reviews';
-import FamousDetail from 'components/screens/shared/famous-detail/components/FamousDetail';
-import { getTransparentHeaderOptions, getDefaultHeaderOptions } from 'routes/constants';
-import * as TRANSLATIONS from 'i18n/tags';
+} from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
+import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
+import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
+import * as TRANSLATIONS from '@i18n/tags';
+
 import Famous from '../components/Famous';
 import LOCAL_ROUTES from './route-names';
 

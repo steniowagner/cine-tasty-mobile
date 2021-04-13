@@ -5,7 +5,7 @@ import { LayoutChangeEvent, Animated } from 'react-native';
 import { DefaultTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 export const SWITCH_ANIMATION_DURATION_MS = 300;
 

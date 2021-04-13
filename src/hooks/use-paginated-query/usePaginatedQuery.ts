@@ -2,7 +2,7 @@ import { useEffect, useMemo, useCallback } from 'react';
 import { FetchPolicy } from 'apollo-client';
 import { DocumentNode } from 'graphql';
 
-import useImperativeQuery from 'utils/useImperativeQuery';
+import useImperativeQuery from '@utils/useImperativeQuery';
 
 import useQueryWithPagination from './useQueryWithPagination';
 import useEntryQuery from './useEntryQuery';

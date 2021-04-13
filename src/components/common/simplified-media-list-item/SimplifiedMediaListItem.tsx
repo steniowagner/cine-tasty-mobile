@@ -4,11 +4,11 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
-import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import { useLoadListItemImage } from 'hooks';
-import metrics from 'styles/metrics';
+import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
+import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import { useLoadListItemImage } from '@hooks';
+import metrics from '@styles/metrics';
 
 export const MEDIA_IMAGE_DEFAULT_BORDER_RADIUS = '2%';
 export const MEDIA_IMAGE_DEFAULT_MARGIN_BOTTOM = '2%';

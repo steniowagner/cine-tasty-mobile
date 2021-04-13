@@ -1,8 +1,8 @@
-import { ExternalFamousDetailParams } from 'components/screens/shared/famous-detail/routes/route-params-types';
-import { SCREEN_ID as FAMOUS_DETAIL } from 'components/screens/shared/famous-detail/routes/route-names';
+import { ExternalFamousDetailParams } from '@components/screens/shared/famous-detail/routes/route-params-types';
+import { SCREEN_ID as FAMOUS_DETAIL } from '@components/screens/shared/famous-detail/routes/route-names';
 
-import { ReviewsExternalParams } from 'components/screens/shared/media-detail-screen/reviews/routes/route-params-types';
-import { SCREEN_ID as REVIEWS } from 'components/screens/shared/media-detail-screen/reviews/routes/route-names';
+import { ReviewsExternalParams } from '@components/screens/shared/media-detail-screen/reviews/routes/route-params-types';
+import { SCREEN_ID as REVIEWS } from '@components/screens/shared/media-detail-screen/reviews/routes/route-names';
 
 export type MovieDetailExternalParams = {
   voteAverage?: number;

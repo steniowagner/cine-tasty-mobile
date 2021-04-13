@@ -1,19 +1,16 @@
+/* eslint-disable camelcase */
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
-import getRandomImageFromDataset from 'utils/getRandomImageFromDataset';
+import getRandomImageFromDataset from '@utils/getRandomImageFromDataset';
 import { GET_FAMOUS_DETAIL } from '@graphql/queries';
-import {
-  GetFamousDetail_person as FamousDetail,
-  GetFamousDetailVariables,
-  GetFamousDetail,
-} from 'types/schema';
+import * as SchemaTypes from '@schema-types';
 
 type State = {
   t: (key: string) => string;
   backgroundImage: string;
-  famous: FamousDetail;
+  famous: SchemaTypes.GetFamousDetail_person;
   isLoading: boolean;
   hasError: boolean;
 };
@@ -23,15 +20,15 @@ type Props = {
 };
 
 const useFamousDetail = ({ id }: Props): State => {
-  const { data, error, loading } = useQuery<GetFamousDetail, GetFamousDetailVariables>(
-    GET_FAMOUS_DETAIL,
-    {
-      variables: {
-        id,
-      },
-      fetchPolicy: 'cache-first',
+  const { data, error, loading } = useQuery<
+    SchemaTypes.GetFamousDetail,
+    SchemaTypes.GetFamousDetailVariables
+  >(GET_FAMOUS_DETAIL, {
+    variables: {
+      id,
     },
-  );
+    fetchPolicy: 'cache-first',
+  });
 
   const { t } = useTranslation();
 

@@ -1,4 +1,4 @@
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 const KEYS = {
   IMAGES_QUALITY: '@CINE_TASTY_IMAGES_QUALITY',

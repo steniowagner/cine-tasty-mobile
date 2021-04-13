@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 
-import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
+import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
 
 import {
   ITEM_MARGING_HORIZONTAL,

@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import * as TRANSLATIONS from 'i18n/tags';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import NextButton from '../NextButton';
 

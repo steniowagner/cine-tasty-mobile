@@ -2,8 +2,8 @@ import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
 
 import LOCAL_ROUTES from '../routes/route-names';
 import Quiz from './Quiz';

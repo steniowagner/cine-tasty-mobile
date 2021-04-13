@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'styles/theme';
+import theme from '@styles/theme';
 
 import LoadingFamousList, { INITIAL_ITEMS_TO_RENDER } from './LoadingFamousList';
 import { setupTimeTravel } from '../../../../__mocks__/timeTravel';

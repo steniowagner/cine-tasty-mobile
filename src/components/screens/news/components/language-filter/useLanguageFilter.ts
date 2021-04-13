@@ -1,18 +1,18 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ArticleLanguage } from 'types/schema';
+import * as SchemaTypes from '@schema-types';
 
 import languages from './languages';
 
 type Props = {
   onSelectLanguage: (language: string) => void;
-  lastLanguageSelected: ArticleLanguage;
+  lastLanguageSelected: SchemaTypes.ArticleLanguage;
   closeModal: () => void;
 };
 
 type State = {
-  setLanguageSelected: (language: ArticleLanguage) => void;
+  setLanguageSelected: (language: SchemaTypes.ArticleLanguage) => void;
   onPressSelectButton: () => void;
   initialFlatListIndex: number;
   t: (key: string) => string;
@@ -24,7 +24,7 @@ const useLanguageFilter = ({
   onSelectLanguage,
   closeModal,
 }: Props): State => {
-  const [languageSelected, setLanguageSelected] = useState<ArticleLanguage>(
+  const [languageSelected, setLanguageSelected] = useState<SchemaTypes.ArticleLanguage>(
     lastLanguageSelected,
   );
 

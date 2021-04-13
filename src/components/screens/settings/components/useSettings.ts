@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import * as TRANSLATIONS from 'i18n/tags';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import { HomeStackParams } from '../../home/routes/route-params-types';
 import { Props as SettingsSectionProps } from './SettingsSection';

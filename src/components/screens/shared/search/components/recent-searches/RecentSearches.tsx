@@ -2,10 +2,10 @@ import React from 'react';
 import { FlatList, Text } from 'react-native';
 import styled from 'styled-components';
 
-import { SearchType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import { RecentSearchItem } from 'types';
-import metrics from 'styles/metrics';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
+import metrics from '@styles/metrics';
 
 import RecentSearchListItem from './RecentSearchesListItem';
 import useRecentSearches from './useRecentSearches';
@@ -18,8 +18,8 @@ const RecentText = styled(Text)`
 `;
 
 type Props = {
-  onPressItem: (recentSearchItem: RecentSearchItem) => void;
-  searchType: SearchType;
+  onPressItem: (recentSearchItem: Types.RecentSearchItem) => void;
+  searchType: SchemaTypes.SearchType;
 };
 
 const RecentSearches = ({ onPressItem, searchType }: Props) => {

@@ -3,18 +3,18 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 import { DocumentNode } from 'graphql';
 
-import { ISO6391Language } from 'types/schema';
+import * as SchemaTypes from '@schema-types';
 import { getQuery } from '@graphql/queries';
-import { usePaginatedQuery } from 'hooks';
-import * as TRANSLATIONS from 'i18n/tags';
-import * as Types from 'types';
+import { usePaginatedQuery } from '@hooks';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import { getTVShowProperQuery, getMovieProperQuery } from './get-proper-query';
 import { HomeStackParams } from '../../routes/route-params-types';
 import useOnGetData, { Data } from './useOnGetData';
 
 type PaginationVariables = {
-  language?: ISO6391Language | null;
+  language?: SchemaTypes.ISO6391Language | null;
   page: number;
 };
 

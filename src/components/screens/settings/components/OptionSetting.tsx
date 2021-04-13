@@ -2,8 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components';
 
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import metrics from 'styles/metrics';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import metrics from '@styles/metrics';
 
 const Wrapper = styled(TouchableOpacity)`
   flex-direction: row;

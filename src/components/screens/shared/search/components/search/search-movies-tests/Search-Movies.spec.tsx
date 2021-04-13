@@ -4,10 +4,10 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { SearchType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -52,7 +52,7 @@ const getMockResolvers = (hasMore: boolean = false, items: any = defaultItems) =
 const params = {
   i18nQueryByPaginationErrorRef: I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF,
   i18nQueryByTextErrorRef: I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF,
-  searchType: SearchType.MOVIE,
+  searchType: SchemaTypes.SearchType.MOVIE,
   queryId: 'search_movie',
 };
 

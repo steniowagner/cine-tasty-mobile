@@ -3,13 +3,13 @@ import { Text } from 'react-native';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import { ThemeId } from 'types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 const DefaultText = styled(Text)`
   font-family: CircularStd-Medium;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => (theme.id === ThemeId.DARK ? 'white' : theme.colors.buttonText)};
+  color: ${({ theme }) => (theme.id === Types.ThemeId.DARK ? 'white' : theme.colors.buttonText)};
 `;
 
 const ONE_MINUTE_IN_SECONDS = 60;

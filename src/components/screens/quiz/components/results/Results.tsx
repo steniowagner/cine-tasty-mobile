@@ -4,9 +4,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import styled from 'styled-components';
 
-import RoundedButton from 'components/common/RoundedButton';
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
+import RoundedButton from '@components/common/RoundedButton';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import ResultListItem from './ResultListItem';

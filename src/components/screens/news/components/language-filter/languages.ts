@@ -1,79 +1,79 @@
-import { ArticleLanguage } from 'types/schema';
-import { NewsFilterLanguage } from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
-import { SupportedIcons } from 'components/common/svg-icon/getXML';
+import { SupportedIcons } from '@components/common/svg-icon/getXML';
 
 type Language = {
-  name: NewsFilterLanguage;
+  id: SchemaTypes.ArticleLanguage;
+  name: Types.NewsFilterLanguage;
   flag: SupportedIcons;
-  id: ArticleLanguage;
 };
 
 const langauges: Language[] = [
   {
     flag: 'uk',
     name: 'english',
-    id: ArticleLanguage.EN,
+    id: SchemaTypes.ArticleLanguage.EN,
   },
   {
     flag: 'saudi-arabia',
     name: 'arabic',
-    id: ArticleLanguage.AR,
+    id: SchemaTypes.ArticleLanguage.AR,
   },
   {
     flag: 'china',
     name: 'mandarim',
-    id: ArticleLanguage.ZH,
+    id: SchemaTypes.ArticleLanguage.ZH,
   },
   {
     flag: 'nederlands',
     name: 'dutch',
-    id: ArticleLanguage.NL,
+    id: SchemaTypes.ArticleLanguage.NL,
   },
   {
     flag: 'france',
     name: 'french',
-    id: ArticleLanguage.FR,
+    id: SchemaTypes.ArticleLanguage.FR,
   },
   {
     flag: 'germany',
     name: 'german',
-    id: ArticleLanguage.DE,
+    id: SchemaTypes.ArticleLanguage.DE,
   },
   {
     flag: 'israel',
     name: 'hebrew',
-    id: ArticleLanguage.HE,
+    id: SchemaTypes.ArticleLanguage.HE,
   },
   {
     flag: 'italy',
     name: 'italian',
-    id: ArticleLanguage.IT,
+    id: SchemaTypes.ArticleLanguage.IT,
   },
   {
     flag: 'norway',
     name: 'norwegian',
-    id: ArticleLanguage.NO,
+    id: SchemaTypes.ArticleLanguage.NO,
   },
   {
     flag: 'portugal',
     name: 'portuguese',
-    id: ArticleLanguage.PT,
+    id: SchemaTypes.ArticleLanguage.PT,
   },
   {
     flag: 'russia',
     name: 'russian',
-    id: ArticleLanguage.RU,
+    id: SchemaTypes.ArticleLanguage.RU,
   },
   {
     flag: 'finland',
     name: 'sami',
-    id: ArticleLanguage.SE,
+    id: SchemaTypes.ArticleLanguage.SE,
   },
   {
     flag: 'spain',
     name: 'spanish',
-    id: ArticleLanguage.ES,
+    id: SchemaTypes.ArticleLanguage.ES,
   },
 ];
 

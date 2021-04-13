@@ -1,17 +1,15 @@
+/* eslint-disable camelcase */
 import React, { useMemo } from 'react';
 
-import {
-  TVShowDetail_tvShow_productionCompanies as TVShowProductionCompanies,
-  MovieDetail_movie_productionCompanies as MovieProductionCompanies,
-  TVShowDetail_tvShow_networks as TVShowNetworks,
-} from 'types/schema';
+import * as SchemaTypes from '@schema-types';
+
 import * as S from './production-network-companies-styles';
 
 type ProductionsListProps = {
   productionsList: (
-    | TVShowProductionCompanies
-    | MovieProductionCompanies
-    | TVShowNetworks
+    | SchemaTypes.TVShowDetail_tvShow_productionCompanies
+    | SchemaTypes.MovieDetail_movie_productionCompanies
+    | SchemaTypes.TVShowDetail_tvShow_networks
   )[];
 };
 

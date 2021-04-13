@@ -1,7 +1,7 @@
 import { useCallback, useState, useMemo } from 'react';
 import { NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 type UseImageGalleryProps = {
   indexFirstItemSelected: number;

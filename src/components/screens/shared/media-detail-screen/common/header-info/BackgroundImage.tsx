@@ -3,13 +3,13 @@ import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
-import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
-import { useGetCurrentTheme } from 'hooks';
-import { ThemeId } from 'types';
+import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
+import { useGetCurrentTheme } from '@hooks';
+import * as Types from '@local-types';
 
 type SmokeShadowStyleProps = {
-  currentTheme: ThemeId;
+  currentTheme: Types.ThemeId;
 };
 
 const Wrapper = styled(View)`
@@ -19,7 +19,7 @@ const Wrapper = styled(View)`
 
 const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
   ({ currentTheme, theme }) => {
-    if (currentTheme === ThemeId.DARK) {
+    if (currentTheme === Types.ThemeId.DARK) {
       return {
         colors: [
           ...Array(5).fill('transparent'),

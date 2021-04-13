@@ -1,8 +1,8 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 
-import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
-import metrics from 'styles/metrics';
+import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import metrics from '@styles/metrics';
 
 import { Wrapper } from './FullMediaListItem';
 import { IMAGE_HEIGHT } from './MediaImage';

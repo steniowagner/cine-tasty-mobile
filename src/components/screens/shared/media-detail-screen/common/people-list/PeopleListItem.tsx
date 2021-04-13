@@ -5,11 +5,11 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
 
-import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
-import { useLoadListItemImage } from 'hooks';
-import CONSTANTS from 'utils/constants';
-import metrics from 'styles/metrics';
+import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
+import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import { useLoadListItemImage } from '@hooks';
+import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
 
 type WrapperStyleProps = {
   isFirst: boolean;

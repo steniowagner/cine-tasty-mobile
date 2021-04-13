@@ -3,10 +3,10 @@ import { Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import MediaSectionViewAllListItem from 'components/common/full-media-list-item/FullMediaListItem';
-import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
-import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
-import { TrendingMediaItemKey, SimplifiedMedia } from 'types';
+import MediaSectionViewAllListItem from '@components/common/full-media-list-item/FullMediaListItem';
+import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
+import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
+import * as Types from '@local-types';
 
 import { HomeStackParams } from '../../routes/route-params-types';
 import useMediaSectionViewAll from './useMediaSectionViewAll';
@@ -14,8 +14,8 @@ import useMediaSectionViewAll from './useMediaSectionViewAll';
 export const SCREEN_ID = 'MEDIA_DETAILS_VIEW_ALL';
 
 export type ExternalProps = {
-  initialDataset: SimplifiedMedia[];
-  sectionKey: TrendingMediaItemKey;
+  initialDataset: Types.SimplifiedMedia[];
+  sectionKey: Types.TrendingMediaItemKey;
   headerTitle: string;
   isMovie: boolean;
 };

@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
+import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 
 const mockUsePaginatedQuery = jest.fn();
 
@@ -17,7 +17,7 @@ jest.mock('hooks', () => ({
 }));
 
 import * as Queries from '@graphql/queries';
-import theme from 'styles/theme';
+import theme from '@styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';

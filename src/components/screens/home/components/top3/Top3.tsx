@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import { Platform, Animated } from 'react-native';
 
-import { SimplifiedMedia, HomeTop3Item } from 'types';
+import * as Types from '@local-types';
 
 import { GapFlatlist, ListWrapper, ITEM_WIDTH } from './commonStyles';
 import Top3ListItem from './Top3ListItem';
 
 type Props = {
-  onPressLearnMore: (mediaItem: Omit<SimplifiedMedia, '__typename'>) => void;
-  top3Items: HomeTop3Item[];
+  onPressLearnMore: (mediaItem: Omit<Types.SimplifiedMedia, '__typename'>) => void;
+  top3Items: Types.HomeTop3Item[];
 };
 
 const Top3 = ({ onPressLearnMore, top3Items }: Props) => {

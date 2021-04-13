@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {
   useCallback, useEffect, useState, useRef,
 } from 'react';
@@ -6,11 +7,7 @@ import { RouteProp } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_QUIZ_QUESTIONS } from '@graphql/queries';
-import {
-  GetQuizQuestions_quiz as Questions,
-  GetQuizQuestionsVariables,
-  GetQuizQuestions,
-} from 'types/schema';
+import * as SchemaTypes from '@schema-types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 
@@ -23,7 +20,7 @@ type State = {
   currentQuestionIndex: number;
   onRestartQuiz: () => void;
   questionsFlatListRef: any;
-  questions: Questions[];
+  questions: SchemaTypes.GetQuizQuestions_quiz[];
   hasError: boolean;
   answers: string[];
   loading: boolean;
@@ -37,20 +34,20 @@ const useQuestions = (
   const [answers, setAnswers] = useState<string[]>([]);
   const questionsFlatListRef = useRef(null);
 
-  const { data, error, loading } = useQuery<GetQuizQuestions, GetQuizQuestionsVariables>(
-    GET_QUIZ_QUESTIONS,
-    {
-      variables: {
-        input: {
-          numberOfQuestions: params.numberOfQuestions,
-          difficulty: params.difficulty,
-          category: params.category,
-          type: params.type,
-        },
+  const { data, error, loading } = useQuery<
+    SchemaTypes.GetQuizQuestions,
+    SchemaTypes.GetQuizQuestionsVariables
+  >(GET_QUIZ_QUESTIONS, {
+    variables: {
+      input: {
+        numberOfQuestions: params.numberOfQuestions,
+        difficulty: params.difficulty,
+        category: params.category,
+        type: params.type,
       },
-      fetchPolicy: 'no-cache',
     },
-  );
+    fetchPolicy: 'no-cache',
+  });
 
   useEffect(() => {
     if (questionsFlatListRef && questionsFlatListRef.current) {

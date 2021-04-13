@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import styled from 'styled-components';
 
-import CONSTANTS from 'utils/constants';
+import CONSTANTS from '@utils/constants';
 
 type WrapperPaddingStyleProps = {
   withHorizontalPadding?: boolean;

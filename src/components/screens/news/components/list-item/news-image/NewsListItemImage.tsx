@@ -3,8 +3,8 @@ import { Animated, View } from 'react-native';
 import styled from 'styled-components';
 import FastImage from 'react-native-fast-image';
 
-import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
-import metrics from 'styles/metrics';
+import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
+import metrics from '@styles/metrics';
 
 import { imageWrapper } from '../common-styles';
 

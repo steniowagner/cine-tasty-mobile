@@ -2,14 +2,12 @@ import {
   useCallback, useState, useEffect, useMemo,
 } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { getQuery } from '@graphql/queries';
 
-import {
-  PaginatedQueryResult, CineTastyQuery, SearchResult, SearchItem,
-} from 'types';
-import useImperativeQuery from 'utils/useImperativeQuery';
-import { useTranslation } from 'react-i18next';
-import { SearchType } from 'types/schema';
+import useImperativeQuery from '@utils/useImperativeQuery';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
 import usePaginatedSearch from './usePaginatedSearch';
 import useSearchByQuery from './useSearchByQuery';
@@ -30,15 +28,15 @@ type State = {
   onEndReached: () => void;
   isPaginating: boolean;
   errorMessage: string;
-  items: SearchItem[];
+  items: Types.SearchItem[];
   isLoading: boolean;
 };
 
 type Props = {
   i18nQueryByPaginationErrorRef: string;
+  searchType: SchemaTypes.SearchType;
   i18nQueryByTextErrorRef: string;
-  searchType: SearchType;
-  queryId: CineTastyQuery;
+  queryId: Types.CineTastyQuery;
 };
 
 const useSearch = ({
@@ -47,7 +45,7 @@ const useSearch = ({
   searchType,
   queryId,
 }: Props): State => {
-  const [queryResult, setQueryResult] = useState<PaginatedQueryResult>(
+  const [queryResult, setQueryResult] = useState<Types.PaginatedQueryResult>(
     INITIAL_QUERY_RESULT,
   );
   const [isSearchResultEmpty, setIsSearchResultEmpty] = useState<boolean>(false);
@@ -57,7 +55,7 @@ const useSearch = ({
 
   const query = useMemo(() => getQuery(queryId), [queryId]);
 
-  const search = useImperativeQuery<SearchResult>(query);
+  const search = useImperativeQuery<Types.SearchResult>(query);
 
   const { t } = useTranslation();
 
@@ -68,7 +66,7 @@ const useSearch = ({
   });
 
   const concatPaginatedItems = useCallback(
-    (data: SearchResult) => {
+    (data: Types.SearchResult) => {
       setQueryResult((previousQueryResult) => ({
         items: [...previousQueryResult.items, ...data.search.items],
         hasMore: data.search.hasMore,

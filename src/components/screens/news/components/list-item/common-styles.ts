@@ -1,7 +1,7 @@
 import { TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 export const Wrapper = styled(TouchableOpacity)`
   width: 100%;

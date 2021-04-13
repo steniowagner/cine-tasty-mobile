@@ -1,11 +1,12 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
 
-import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import CONSTANTS from 'utils/constants';
-import metrics from 'styles/metrics';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import * as SchemaTypes from '@schema-types';
+import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
 
 import useTVShowSeasonsListItem from './useTVShowSeasonsListItem';
 import EpisodeDetail from './episode-detail/EpisodeDetail';
@@ -50,7 +51,7 @@ const Row = styled(View)`
 `;
 
 type Props = {
-  episode: Episode;
+  episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
   index: number;
 };
 

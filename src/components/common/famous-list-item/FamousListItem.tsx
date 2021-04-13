@@ -2,10 +2,10 @@ import React, { useMemo, memo } from 'react';
 import { TouchableOpacity, Animated, Text } from 'react-native';
 import styled from 'styled-components';
 
-import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
-import { useLoadListItemImage } from 'hooks';
-import metrics from 'styles/metrics';
+import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
+import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import { useLoadListItemImage } from '@hooks';
+import metrics from '@styles/metrics';
 
 import getWrapperMeasures from './getWrapperMeasures';
 

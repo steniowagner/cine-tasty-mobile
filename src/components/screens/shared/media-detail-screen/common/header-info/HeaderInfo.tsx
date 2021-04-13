@@ -3,9 +3,9 @@ import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import StarsVotes from 'components/common/stars-votes/StarsVotes';
-import * as TRANSLATIONS from 'i18n/tags';
-import CONSTANTS from 'utils/constants';
+import StarsVotes from '@components/common/stars-votes/StarsVotes';
+import * as TRANSLATIONS from '@i18n/tags';
+import CONSTANTS from '@utils/constants';
 
 import BackgroundImage from './BackgroundImage';
 import PosterImage from './PosterImage';

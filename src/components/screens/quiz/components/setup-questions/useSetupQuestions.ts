@@ -2,15 +2,9 @@ import { useState, useCallback } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
-import { QuestionDifficulty, QuestionCategory, QuestionType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
-
-import {
-  CustomizedModalChildrenType,
-  QuizFilterOption,
-  QuestionOption,
-  QuizOption,
-} from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import { QuizStackParams } from '../../routes/route-params-types';
 import { difficulties, categories, types } from './options';
@@ -19,26 +13,26 @@ export const INITIAL_NUMBER_QUESTIONS = 10;
 
 type State = {
   setNumberOfQuestions: (numberOfQuestions: number) => void;
-  questionDifficulty: QuestionOption<QuestionDifficulty>;
-  onPressOptionDropdown: (option: QuizOption) => void;
-  questionCategory: QuestionOption<QuestionCategory>;
-  questionType: QuestionOption<QuestionType>;
+  questionDifficulty: Types.QuestionOption<SchemaTypes.QuestionDifficulty>;
+  onPressOptionDropdown: (option: Types.QuizOption) => void;
+  questionCategory: Types.QuestionOption<SchemaTypes.QuestionCategory>;
+  questionType: Types.QuestionOption<SchemaTypes.QuestionType>;
   onPressStartQuiz: () => void;
   t: (key: string) => string;
   numberOfQuestions: number;
 };
 
 type OptionSelectedInfo = {
-  currentOptionSelected: QuizFilterOption;
-  currentDataset: QuizFilterOption[];
+  currentOptionSelected: Types.QuizFilterOption;
+  currentDataset: Types.QuizFilterOption[];
   headerText: string;
 };
 
 type NavigateToCustomModalProps = {
-  currentOptionSelected: QuizFilterOption;
-  currentDataset: QuizFilterOption[];
+  currentOptionSelected: Types.QuizFilterOption;
+  currentDataset: Types.QuizFilterOption[];
   headerText: string;
-  option: QuizOption;
+  option: Types.QuizOption;
 };
 
 type Props = {
@@ -47,14 +41,14 @@ type Props = {
 
 const useSetupQuestions = ({ navigation }: Props): State => {
   const [questionDifficulty, setQuestionDifficulty] = useState<
-    QuestionOption<QuestionDifficulty>
+    Types.QuestionOption<SchemaTypes.QuestionDifficulty>
   >(difficulties[0]);
   const [questionCategory, setQuestionCategory] = useState<
-    QuestionOption<QuestionCategory>
+    Types.QuestionOption<SchemaTypes.QuestionCategory>
   >(categories[0]);
-  const [questionType, setQuestionType] = useState<QuestionOption<QuestionType>>(
-    types[0],
-  );
+  const [questionType, setQuestionType] = useState<
+    Types.QuestionOption<SchemaTypes.QuestionType>
+  >(types[0]);
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(
     INITIAL_NUMBER_QUESTIONS,
   );
@@ -62,9 +56,9 @@ const useSetupQuestions = ({ navigation }: Props): State => {
   const { t } = useTranslation();
 
   const getOptionSelectedInfo = useCallback(
-    (option: QuizOption): OptionSelectedInfo => {
-      let currentOptionSelected: QuizFilterOption;
-      let currentDataset: QuizFilterOption[] = [];
+    (option: Types.QuizOption): OptionSelectedInfo => {
+      let currentOptionSelected: Types.QuizFilterOption;
+      let currentDataset: Types.QuizFilterOption[] = [];
       let headerText: string = '';
 
       if (option === 'CATEGORY') {
@@ -95,7 +89,7 @@ const useSetupQuestions = ({ navigation }: Props): State => {
   );
 
   const onSelectOption = useCallback(
-    (indexOptionSelected: number, optionSelected: QuizOption): void => {
+    (indexOptionSelected: number, optionSelected: Types.QuizOption): void => {
       if (optionSelected === 'CATEGORY') {
         setQuestionCategory(categories[indexOptionSelected]);
       }
@@ -112,7 +106,10 @@ const useSetupQuestions = ({ navigation }: Props): State => {
   );
 
   const getLastIndexOptionSelected = useCallback(
-    (currentDataset: QuizFilterOption[], currentOptionSelected: QuizFilterOption) => {
+    (
+      currentDataset: Types.QuizFilterOption[],
+      currentOptionSelected: Types.QuizFilterOption,
+    ) => {
       const index = currentDataset.findIndex(
         (datasetItem) => datasetItem.id === currentOptionSelected.id,
       );
@@ -140,7 +137,7 @@ const useSetupQuestions = ({ navigation }: Props): State => {
           ),
           dataset: currentDataset,
         },
-        type: CustomizedModalChildrenType.MEDIA_FILTER,
+        type: Types.CustomizedModalChildrenType.MEDIA_FILTER,
         headerText,
       });
     },
@@ -148,7 +145,7 @@ const useSetupQuestions = ({ navigation }: Props): State => {
   );
 
   const onPressOptionDropdown = useCallback(
-    (option: QuizOption): void => {
+    (option: Types.QuizOption): void => {
       const { currentOptionSelected, currentDataset, headerText } = getOptionSelectedInfo(
         option,
       );

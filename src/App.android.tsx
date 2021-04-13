@@ -1,12 +1,12 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-import { TMDBImageQualityProvider, ThemeContextProvider } from 'providers';
+import { TMDBImageQualityProvider, ThemeContextProvider } from '@providers';
 
 import AndroidNavigationBar from './components/utils/AndroidNavigationBar.android';
 import RouteSuspenseWrapper from './components/common/RouteSuspenseWrapper';
 import Navigation from './routes/Routes';
-import makeClient from './config/client';
+import makeClient from './graphql/client';
 
 const client = makeClient();
 

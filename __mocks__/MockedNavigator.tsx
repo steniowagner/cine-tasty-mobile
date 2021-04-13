@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeProvider } from 'styled-components';
 
-import theme from 'styles/theme';
+import theme from '@styles/theme';
 
 const Stack = createStackNavigator();
 

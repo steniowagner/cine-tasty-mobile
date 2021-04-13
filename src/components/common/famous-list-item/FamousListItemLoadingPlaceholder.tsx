@@ -1,6 +1,6 @@
 import React from 'react';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 import LoadingPlaceholder from '../loading-placeholder/LoadingPlaceholder';
 import getWrapperMeasures from './getWrapperMeasures';

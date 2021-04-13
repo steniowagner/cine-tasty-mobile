@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
-import { ImagesGalleryParams } from 'components/screens/shared/images-gallery/routes/route-params-types';
+import { ImagesGalleryParams } from '@components/screens/shared/images-gallery/routes/route-params-types';
 
 import ImageListItem from './ImageListItem';
 

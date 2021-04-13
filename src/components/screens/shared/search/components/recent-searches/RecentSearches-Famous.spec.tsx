@@ -6,9 +6,9 @@ import { ThemeProvider } from 'styled-components';
 
 jest.mock('../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { SearchType } from 'types/schema';
-import theme from 'styles/theme';
+import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import * as SchemaTypes from '@schema-types';
+import theme from '@styles/theme';
 
 import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import { STORAGE_SEARCH_SECTION } from './useRecentSearches';
@@ -17,12 +17,15 @@ import RecentSearches from './RecentSearches';
 const renderRecentSearchFamous = (onPressItem: typeof jest.fn) => (
   <TMDBImageQualityProvider>
     <ThemeProvider theme={theme}>
-      <RecentSearches searchType={SearchType.PERSON} onPressItem={onPressItem} />
+      <RecentSearches
+        searchType={SchemaTypes.SearchType.PERSON}
+        onPressItem={onPressItem}
+      />
     </ThemeProvider>
   </TMDBImageQualityProvider>
 );
 
-const STORAGE_KEY = `${STORAGE_SEARCH_SECTION}:${SearchType.PERSON.toString()}`;
+const STORAGE_KEY = `${STORAGE_SEARCH_SECTION}:${SchemaTypes.SearchType.PERSON.toString()}`;
 const ITEMS_COUNT = 5;
 const {
   persistItemInStorage,

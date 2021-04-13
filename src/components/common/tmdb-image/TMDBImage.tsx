@@ -2,7 +2,7 @@ import React from 'react';
 import { Animated, StyleProp, ImageStyle } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { ImageType } from 'types';
+import * as Types from '@local-types';
 
 import useTMDBImage from './useTMDBImage';
 
@@ -10,7 +10,7 @@ type Style = StyleProp<ImageStyle> | { opacity: Animated.Value };
 
 type Props = {
   style: Style | Style[];
-  imageType: ImageType;
+  imageType: Types.ImageType;
   isThumbnail?: boolean;
   isAnimated?: boolean;
   onError?: () => void;

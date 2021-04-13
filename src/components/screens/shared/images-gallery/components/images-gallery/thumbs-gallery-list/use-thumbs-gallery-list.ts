@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
 
-import metrics from 'styles/metrics';
+import metrics from '@styles/metrics';
 
 export const THUMB_SIZE = metrics.getWidthFromDP('24%');
 export const THUMB_SPACING = metrics.mediumSize;

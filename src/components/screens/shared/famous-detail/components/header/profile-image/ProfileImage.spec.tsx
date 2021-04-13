@@ -3,9 +3,9 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
-import { TMDBImageQualityProvider } from 'providers/tmdb-image-quality/TMDBImageQuality';
-import { ANIMATION_DURATION } from 'hooks/useLoadListItemImage';
-import theme from 'styles/theme';
+import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { ANIMATION_DURATION } from '@src/hooks/useLoadListItemImage';
+import theme from '@styles/theme';
 
 import timeTravel, {
   setupTimeTravel,

@@ -1,12 +1,9 @@
+/* eslint-disable camelcase */
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_TV_SHOW_DETAIL } from '@graphql/queries';
-import {
-  TVShowDetail_tvShow as TVShow,
-  TVShowDetailVariables,
-  TVShowDetail,
-} from 'types/schema';
+import * as SchemaTypes from '@schema-types';
 
 type Props = {
   hasVoteAverage: boolean;
@@ -19,7 +16,7 @@ type State = {
   t: (key: string) => string;
   isLoading: boolean;
   hasError: boolean;
-  tvShow?: TVShow;
+  tvShow?: SchemaTypes.TVShowDetail_tvShow;
 };
 
 type Directives = {
@@ -28,7 +25,7 @@ type Directives = {
   withVoteCount: boolean;
 };
 
-type Variables = Directives & TVShowDetailVariables;
+type Variables = Directives & SchemaTypes.TVShowDetailVariables;
 
 const useTVShowDetail = ({
   hasVoteAverage,
@@ -38,15 +35,18 @@ const useTVShowDetail = ({
 }: Props): State => {
   const { t } = useTranslation();
 
-  const { data, error, loading } = useQuery<TVShowDetail, Variables>(GET_TV_SHOW_DETAIL, {
-    variables: {
-      withVoteAverage: !hasVoteAverage,
-      withGenresIds: !hasGenresIds,
-      withVoteCount: !hasVoteCount,
-      id: String(id),
+  const { data, error, loading } = useQuery<SchemaTypes.TVShowDetail, Variables>(
+    GET_TV_SHOW_DETAIL,
+    {
+      variables: {
+        withVoteAverage: !hasVoteAverage,
+        withGenresIds: !hasGenresIds,
+        withVoteCount: !hasVoteCount,
+        id: String(id),
+      },
+      fetchPolicy: 'cache-first',
     },
-    fetchPolicy: 'cache-first',
-  });
+  );
 
   return {
     tvShow: data?.tvShow,

@@ -2,12 +2,12 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
-import LoadingPlaceholder from 'components/common/loading-placeholder/LoadingPlaceholder';
+import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
 import {
   WRAPPER_DEFAULT_WIDTH,
   WRAPPER_DEFAULT_HEIGHT,
-} from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
-import metrics from 'styles/metrics';
+} from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
+import metrics from '@styles/metrics';
 
 const ListWrapper = styled(View)`
   flex-direction: row;

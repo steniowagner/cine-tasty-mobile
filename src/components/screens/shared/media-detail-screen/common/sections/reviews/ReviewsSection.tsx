@@ -1,12 +1,10 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';
 import styled from 'styled-components';
 
-import SectionViewAll from 'components/common/SectionViewAll';
-import {
-  TVShowDetail_tvShow_reviews as TVSahowReview,
-  MovieDetail_movie_reviews as MovieReview,
-} from 'types/schema';
+import SectionViewAll from '@components/common/SectionViewAll';
+import * as SchemaTypes from '@schema-types';
 
 import ReviewSectionListItem from './ReviewSectionListItem';
 import useReviewsSection from './useReviewsSection';
@@ -34,7 +32,10 @@ const PaginationWrapper = styled(View)`
 `;
 
 type Props = {
-  reviews: (TVSahowReview | MovieReview)[];
+  reviews: (
+    | SchemaTypes.TVShowDetail_tvShow_reviews
+    | SchemaTypes.MovieDetail_movie_reviews
+  )[];
   onPressViewAll: () => void;
 };
 

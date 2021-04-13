@@ -2,8 +2,8 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
-import * as TRANSLATIONS from 'i18n/tags';
-import theme from 'styles/theme';
+import * as TRANSLATIONS from '@i18n/tags';
+import theme from '@styles/theme';
 
 import BooleanQuestion from './BooleanQuestion';
 

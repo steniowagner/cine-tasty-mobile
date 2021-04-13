@@ -3,12 +3,12 @@ import { Animated, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import ProgressiveImage from 'components/common/progressive-image/ProgressiveImage';
-import StarsVotes from 'components/common/stars-votes/StarsVotes';
-import RoundedButton from 'components/common/RoundedButton';
-import * as TRANSLATIONS from 'i18n/tags';
-import { useGetCurrentTheme } from 'hooks';
-import { ThemeId } from 'types';
+import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
+import StarsVotes from '@components/common/stars-votes/StarsVotes';
+import RoundedButton from '@components/common/RoundedButton';
+import { useGetCurrentTheme } from '@hooks';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import {
   ITEM_MARGING_HORIZONTAL,
@@ -24,7 +24,7 @@ type ItemWrapperStyleProps = {
 };
 
 type StarsWrapperStyleProps = {
-  currentTheme: ThemeId;
+  currentTheme: Types.ThemeId;
 };
 
 const Wrapper = styled(Animated.View)<ItemWrapperStyleProps>`
@@ -45,8 +45,8 @@ const TextContentWrapper = styled(View)`
 const StarsWrapper = styled(View)<StarsWrapperStyleProps>`
   justify-content: center;
   align-items: center;
-  background-color: ${({ currentTheme, theme }) => (currentTheme === ThemeId.LIGHT ? theme.colors.buttonText : 'transparent')};
-  padding: ${({ currentTheme, theme }) => (currentTheme === ThemeId.LIGHT ? theme.metrics.mediumSize : 0)}px;
+  background-color: ${({ currentTheme, theme }) => (currentTheme === Types.ThemeId.LIGHT ? theme.colors.buttonText : 'transparent')};
+  padding: ${({ currentTheme, theme }) => (currentTheme === Types.ThemeId.LIGHT ? theme.metrics.mediumSize : 0)}px;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 

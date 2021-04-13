@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import * as TRANSLATIONS from 'i18n/tags';
+import * as TRANSLATIONS from '@i18n/tags';
 
 export const MAX_NUMBER_LINES = 5;
 

@@ -1,16 +1,17 @@
+/* eslint-disable camelcase */
 import React, { useCallback } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import { TVShowSeasonsDetail_tvShowSeason_episodes as Episode } from 'types/schema';
-import StarsVotes from 'components/common/stars-votes/StarsVotes';
-import TMDBImage from 'components/common/tmdb-image/TMDBImage';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import { formatDate } from 'utils/formatters';
-import * as TRANSLATIONS from 'i18n/tags';
-import CONSTANTS from 'utils/constants';
-import metrics from 'styles/metrics';
+import StarsVotes from '@components/common/stars-votes/StarsVotes';
+import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import { formatDate } from '@utils/formatters';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
 
 const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('90%')}px;
@@ -52,7 +53,7 @@ const EpisodeAiredText = styled(Text)`
 `;
 
 type Props = {
-  episode: Episode;
+  episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
 };
 
 const EpisodeDetail = ({ episode }: Props) => {

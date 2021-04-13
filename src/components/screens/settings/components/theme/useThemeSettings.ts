@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
 
-import { useThemeProvider } from 'providers/theme/Theme';
-import { ThemeId } from 'types';
+import { useThemeProvider } from '@src/providers/theme/Theme';
+import * as Types from '@local-types';
 
 import useGetThemeOptions from './useGetThemeOptions';
 
 type ThemeOption = {
   onPress: () => void;
   title: string;
-  id: ThemeId;
+  id: Types.ThemeId;
 };
 
 type State = {
   themeOptions: ThemeOption[];
-  selectedTheme: ThemeId;
+  selectedTheme: Types.ThemeId;
 };
 
 const useThemeSettingsOption = (): State => {
@@ -25,7 +25,7 @@ const useThemeSettingsOption = (): State => {
   } = useThemeProvider();
 
   const onPressDarkOption = useCallback(() => {
-    if (themeId === ThemeId.DARK) {
+    if (themeId === Types.ThemeId.DARK) {
       return;
     }
 
@@ -33,7 +33,7 @@ const useThemeSettingsOption = (): State => {
   }, [themeId]);
 
   const onPressLightOption = useCallback(() => {
-    if (themeId === ThemeId.LIGHT) {
+    if (themeId === Types.ThemeId.LIGHT) {
       return;
     }
 
@@ -41,7 +41,7 @@ const useThemeSettingsOption = (): State => {
   }, [themeId]);
 
   const onPressSystemPreferencesOption = useCallback(() => {
-    if (themeId === ThemeId.SYSTEM) {
+    if (themeId === Types.ThemeId.SYSTEM) {
       return;
     }
 

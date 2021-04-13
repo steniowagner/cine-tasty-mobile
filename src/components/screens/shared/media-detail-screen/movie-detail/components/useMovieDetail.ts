@@ -1,12 +1,9 @@
+/* eslint-disable camelcase */
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_MOVIE_DETAIL } from '@graphql/queries';
-import {
-  MovieDetail_movie as Movie,
-  MovieDetailVariables,
-  MovieDetail,
-} from 'types/schema';
+import * as SchemaTypes from '@schema-types';
 
 type Props = {
   hasVoteAverage: boolean;
@@ -19,7 +16,7 @@ type State = {
   t: (key: string) => string;
   isLoading: boolean;
   hasError: boolean;
-  movie?: Movie;
+  movie?: SchemaTypes.MovieDetail_movie;
 };
 
 type Directives = {
@@ -28,7 +25,7 @@ type Directives = {
   withVoteCount: boolean;
 };
 
-type Variables = Directives & MovieDetailVariables;
+type Variables = Directives & SchemaTypes.MovieDetailVariables;
 
 const useMovieDetail = ({
   hasVoteAverage,
@@ -38,15 +35,18 @@ const useMovieDetail = ({
 }: Props): State => {
   const { t } = useTranslation();
 
-  const { data, error, loading } = useQuery<MovieDetail, Variables>(GET_MOVIE_DETAIL, {
-    variables: {
-      withVoteAverage: !hasVoteAverage,
-      withGenresIds: !hasGenresIds,
-      withVoteCount: !hasVoteCount,
-      id: String(id),
+  const { data, error, loading } = useQuery<SchemaTypes.MovieDetail, Variables>(
+    GET_MOVIE_DETAIL,
+    {
+      variables: {
+        withVoteAverage: !hasVoteAverage,
+        withGenresIds: !hasGenresIds,
+        withVoteCount: !hasVoteCount,
+        id: String(id),
+      },
+      fetchPolicy: 'cache-first',
     },
-    fetchPolicy: 'cache-first',
-  });
+  );
 
   return {
     movie: data?.movie,

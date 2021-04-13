@@ -5,9 +5,9 @@ import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import MediaItemDescription from 'components/common/media-item-description/MediaItemDescription';
-import * as TRANSLATIONS from 'i18n/tags';
-import metrics from 'styles/metrics';
+import MediaItemDescription from '@components/common/media-item-description/MediaItemDescription';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 

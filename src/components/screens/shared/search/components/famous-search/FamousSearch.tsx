@@ -1,20 +1,21 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { Platform, FlatList } from 'react-native';
 
-import { DEFAULT_LIST_ITEM_HEIGHT } from 'components/common/famous-list-item/getWrapperMeasures';
-import { SearchPerson_search_items_BasePerson as SearchPersonResult } from 'types/schema';
-import LoadingFamousList from 'components/common/loading-famous-list/LoadingFamousList';
-import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
-import FamousListItem from 'components/common/famous-list-item/FamousListItem';
-import PaginatedListHeader from 'components/common/PaginatedListHeader';
-import { BaseSearchProps } from 'types';
-import metrics from 'styles/metrics';
+import { DEFAULT_LIST_ITEM_HEIGHT } from '@components/common/famous-list-item/getWrapperMeasures';
+import LoadingFamousList from '@components/common/loading-famous-list/LoadingFamousList';
+import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
+import FamousListItem from '@components/common/famous-list-item/FamousListItem';
+import PaginatedListHeader from '@components/common/PaginatedListHeader';
+import * as SchemaTypes from '@schema-types';
+import metrics from '@styles/metrics';
+import * as Types from '@local-types';
 
 const NUMBER_FLATLIST_COLUMNS = 3;
 
-type Props = BaseSearchProps & {
-  onPressListItem: (item: SearchPersonResult) => void;
-  items: SearchPersonResult[];
+type Props = Types.BaseSearchProps & {
+  onPressListItem: (item: SchemaTypes.SearchPerson_search_items_BasePerson) => void;
+  items: SchemaTypes.SearchPerson_search_items_BasePerson[];
 };
 
 const FamousSearch = ({

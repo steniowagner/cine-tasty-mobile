@@ -5,10 +5,10 @@ import { DefaultTheme } from 'styled-components';
 import {
   getItemFromStorage,
   persistItemInStorage,
-} from 'utils/async-storage-adapter/AsyncStorageAdapter';
-import CONSTANTS from 'utils/constants';
-import { ImageQualities } from 'types';
-import { useThemeProvider } from 'providers/theme/Theme';
+} from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import { useThemeProvider } from '@src/providers/theme/Theme';
+import CONSTANTS from '@utils/constants';
+import * as Types from '@local-types';
 
 type Props = {
   theme: DefaultTheme;
@@ -19,10 +19,10 @@ const useSplashScreen = ({ onLoad, theme }: Props) => {
   const { handleInitialThemeSelection } = useThemeProvider();
 
   const handleImageSizeOptionSelection = useCallback(async () => {
-    const selectedImageSizesOption = await getItemFromStorage<ImageQualities, undefined>(
-      CONSTANTS.KEYS.IMAGES_QUALITY,
-      undefined,
-    );
+    const selectedImageSizesOption = await getItemFromStorage<
+      Types.ImageQualities,
+      undefined
+    >(CONSTANTS.KEYS.IMAGES_QUALITY, undefined);
 
     if (!selectedImageSizesOption) {
       await persistItemInStorage(CONSTANTS.KEYS.IMAGES_QUALITY, 'medium');

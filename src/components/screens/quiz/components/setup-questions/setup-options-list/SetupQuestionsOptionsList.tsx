@@ -1,9 +1,9 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 
-import ModalSelectButton from 'components/common/ModalSelectButton';
-import * as TRANSLATIONS from 'i18n/tags';
-import { QuizFilterOption } from 'types';
+import ModalSelectButton from '@components/common/ModalSelectButton';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import useSetupOptionsList from './useSetupQuestionsOptionsList';
 import OptionListItem from './OptionListItem';
@@ -11,7 +11,7 @@ import OptionListItem from './OptionListItem';
 type Props = {
   onPressSelect: (indexOptionSelected: number) => void;
   indexLastOptionSelected: number;
-  options: QuizFilterOption[];
+  options: Types.QuizFilterOption[];
   closeModal: () => void;
 };
 

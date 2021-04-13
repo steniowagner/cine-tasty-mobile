@@ -2,8 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Modal, View } from 'react-native';
 import styled from 'styled-components';
 
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import metrics from 'styles/metrics';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import metrics from '@styles/metrics';
 
 const Wrapper = styled(View)`
   width: 100%;

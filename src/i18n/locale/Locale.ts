@@ -1,4 +1,4 @@
-import { NewsFilterLanguage, ImageQualities, Languages } from 'types';
+import * as Types from '@local-types';
 
 type Time =
   | 'year'
@@ -42,8 +42,8 @@ type OpenSourceSection = {
 
 export type Locale = {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
-  imageQualities: Record<ImageQualities, string>;
-  languages: Record<Languages, string>;
+  imageQualities: Record<Types.ImageQualities, string>;
+  languages: Record<Types.Languages, string>;
   softwareEngineer: string;
   about: string;
   openSource: {
@@ -104,7 +104,7 @@ export type Locale = {
     };
   };
   news: {
-    languages: Record<NewsFilterLanguage, string>;
+    languages: Record<Types.NewsFilterLanguage, string>;
     i18nQueryByPaginationErrorRef: string;
     i18EntryQueryErrorRef: string;
     selectFilterMessage: string;

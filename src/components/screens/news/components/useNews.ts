@@ -1,42 +1,38 @@
+/* eslint-disable camelcase */
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { GET_ARTICLES } from '@graphql/queries';
-import { usePaginatedQuery } from 'hooks';
-import * as TRANSLATIONS from 'i18n/tags';
-import {
-  GetArticles_articles_items as Article,
-  GetArticlesVariables,
-  ArticleLanguage,
-  GetArticles,
-} from 'types/schema';
+import * as SchemaTypes from '@schema-types';
+import { usePaginatedQuery } from '@hooks';
+import * as TRANSLATIONS from '@i18n/tags';
 
 type State = {
-  onSelectArticleLanguage: (language: ArticleLanguage) => void;
+  onSelectArticleLanguage: (language: SchemaTypes.ArticleLanguage) => void;
   onPressTopReloadButton: () => Promise<void>;
   onPressFooterReloadButton: () => void;
-  articleLanguage: ArticleLanguage;
+  articleLanguage: SchemaTypes.ArticleLanguage;
   hasPaginationError: boolean;
   t: (key: string) => string;
   onEndReached: () => void;
   isPaginating: boolean;
-  articles: Article[];
+  articles: SchemaTypes.GetArticles_articles_items[];
   isLoading: boolean;
   error: string;
 };
 
 const useNews = (): State => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [articleLanguage, setArticleLanguage] = useState<ArticleLanguage>(
-    ArticleLanguage.EN,
+  const [articleLanguage, setArticleLanguage] = useState<SchemaTypes.ArticleLanguage>(
+    SchemaTypes.ArticleLanguage.EN,
   );
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<SchemaTypes.GetArticles_articles_items[]>([]);
   const [error, setError] = useState<string>('');
 
   const { t } = useTranslation();
 
-  const handleOnGetData = useCallback((data: GetArticles): boolean => {
-    setArticles((previousPeople: Article[]) => [
+  const handleOnGetData = useCallback((data: SchemaTypes.GetArticles): boolean => {
+    setArticles((previousPeople: SchemaTypes.GetArticles_articles_items[]) => [
       ...previousPeople,
       ...data.articles.items,
     ]);
@@ -47,8 +43,8 @@ const useNews = (): State => {
   const {
     onPaginateQuery, onReloadData, isPaginating, isLoading,
   } = usePaginatedQuery<
-    GetArticles,
-    GetArticlesVariables
+    SchemaTypes.GetArticles,
+    SchemaTypes.GetArticlesVariables
   >({
     onPaginationQueryError: () => {
       setError(t(TRANSLATIONS.NEWS_QUERY_BY_PAGINATION_ERROR));
@@ -86,15 +82,18 @@ const useNews = (): State => {
     onReloadData();
   }, [articleLanguage]);
 
-  const onSelectArticleLanguage = useCallback((language: ArticleLanguage): void => {
-    if (error) {
-      setError('');
-    }
+  const onSelectArticleLanguage = useCallback(
+    (language: SchemaTypes.ArticleLanguage): void => {
+      if (error) {
+        setError('');
+      }
 
-    setArticles([]);
+      setArticles([]);
 
-    setArticleLanguage(language);
-  }, []);
+      setArticleLanguage(language);
+    },
+    [],
+  );
 
   const onPressTopReloadButton = useCallback(async (): Promise<void> => {
     setHasPaginationError(false);

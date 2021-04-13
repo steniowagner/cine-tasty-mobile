@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components';
 
-import StarsVotes from 'components/common/stars-votes/StarsVotes';
+import StarsVotes from '@components/common/stars-votes/StarsVotes';
 
 import MediaImage from './MediaImage';
 

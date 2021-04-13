@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
-import theme from 'styles/theme';
+import theme from '@styles/theme';
 
 import MultiChoiceQuestion from './MultiChoiceQuestion';
 

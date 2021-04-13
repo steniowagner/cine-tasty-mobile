@@ -3,14 +3,14 @@ import React, { useLayoutEffect } from 'react';
 import { Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
-import DefaultListItem from 'components/common/famous-list-item/FamousListItem';
-import PaginatedListHeader from 'components/common/PaginatedListHeader';
-import PopupAdvice from 'components/common/popup-advice/PopupAdvice';
-import HeaderIconButton from 'components/common/HeaderIconButton';
-import * as TRANSLATIONS from 'i18n/tags';
-import { SearchType } from 'types/schema';
-import metrics from 'styles/metrics';
+import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
+import DefaultListItem from '@components/common/famous-list-item/FamousListItem';
+import PaginatedListHeader from '@components/common/PaginatedListHeader';
+import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
+import HeaderIconButton from '@components/common/HeaderIconButton';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import metrics from '@styles/metrics';
 
 import LoadingFamousList from '../../../common/loading-famous-list/LoadingFamousList';
 import { FamousStackParams } from '../routes/route-params-types';
@@ -44,7 +44,7 @@ const Famous = ({ navigation }: Props) => {
                 TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR,
             i18nSearchBarPlaceholderRef: TRANSLATIONS.FAMOUS_SEARCHBAR_PLACEHOLDER,
             i18nQueryByTextErrorRef: TRANSLATIONS.FAMOUS_QUERY_BY_TEXT_ERROR,
-            searchType: SearchType.PERSON,
+            searchType: SchemaTypes.SearchType.PERSON,
             queryId: 'search_famous',
           })}
           iconName="magnify"

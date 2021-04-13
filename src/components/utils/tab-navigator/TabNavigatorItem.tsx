@@ -2,11 +2,11 @@ import React, { useMemo, memo } from 'react';
 import { TouchableOpacity, Platform, Text } from 'react-native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import renderSVGIconConditionally from 'components/common/svg-icon/renderSVGIconConditionally';
-import { SupportedIcons } from 'components/common/svg-icon/getXML';
-import { useGetCurrentTheme } from 'hooks';
-import metrics from 'styles/metrics';
-import { ThemeId } from 'types';
+import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
+import { SupportedIcons } from '@components/common/svg-icon/getXML';
+import { useGetCurrentTheme } from '@hooks';
+import metrics from '@styles/metrics';
+import * as Types from '@local-types';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
@@ -49,12 +49,12 @@ const NavigatorItem = withTheme(
     const { currentTheme } = useGetCurrentTheme({ theme });
 
     const selectedIconColor = useMemo(
-      () => (currentTheme === ThemeId.DARK ? 'primary' : 'text'),
+      () => (currentTheme === Types.ThemeId.DARK ? 'primary' : 'text'),
       [currentTheme],
     );
 
     const textColor = useMemo(() => {
-      const selectedColor = currentTheme === ThemeId.DARK ? theme.colors.primary : theme.colors.text;
+      const selectedColor = currentTheme === Types.ThemeId.DARK ? theme.colors.primary : theme.colors.text;
 
       return isSelected ? selectedColor : theme.colors.inactiveWhite;
     }, [isSelected, currentTheme]);

@@ -3,8 +3,8 @@ import { Platform, NativeModules } from 'react-native';
 import {
   getItemFromStorage,
   persistItemInStorage,
-} from 'utils/async-storage-adapter/AsyncStorageAdapter';
-import CONSTANTS from 'utils/constants';
+} from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import CONSTANTS from '@utils/constants';
 
 // Android format: x_Y
 // iOS format: x-Y

@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import { ImagesGalleryParams } from 'components/screens/shared/images-gallery/routes/route-params-types';
-import { getDefaultHeaderOptions } from 'routes/constants';
+import { ImagesGalleryParams } from '@components/screens/shared/images-gallery/routes/route-params-types';
+import { getDefaultHeaderOptions } from '@routes/constants';
 
 import ImagesGallery from '../components/images-gallery/ImagesGallery';
 import LOCAL_ROUTES from './route-names';

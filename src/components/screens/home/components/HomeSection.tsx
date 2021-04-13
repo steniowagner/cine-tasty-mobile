@@ -2,10 +2,10 @@ import React from 'react';
 import { FlatList, View } from 'react-native';
 import styled from 'styled-components';
 
-import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
-import SectionViewAll from 'components/common/SectionViewAll';
-import { SimplifiedMedia } from 'types';
-import CONSTANTS from 'utils/constants';
+import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
+import SectionViewAll from '@components/common/SectionViewAll';
+import CONSTANTS from '@utils/constants';
+import * as Types from '@local-types';
 
 export const Wrapper = styled(View)`
   width: 100%;
@@ -22,9 +22,9 @@ export const SectionTextContentWrapper = styled(View)`
 `;
 
 type Props = {
-  onPressItem: (mediaItem: SimplifiedMedia) => void;
+  onPressItem: (mediaItem: Types.SimplifiedMedia) => void;
   onPressViewAll: () => void;
-  items: SimplifiedMedia[];
+  items: Types.SimplifiedMedia[];
   sectionTitle: string;
 };
 

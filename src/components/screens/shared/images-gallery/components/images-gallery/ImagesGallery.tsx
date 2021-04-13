@@ -3,8 +3,8 @@ import React, { useLayoutEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-import { ImagesGalleryParams } from 'components/screens/shared/images-gallery/routes/route-params-types';
-import HeaderIconButton from 'components/common/HeaderIconButton';
+import { ImagesGalleryParams } from '@components/screens/shared/images-gallery/routes/route-params-types';
+import HeaderIconButton from '@components/common/HeaderIconButton';
 
 // @ts-ignore
 // eslint-disable-next-line import/extensions

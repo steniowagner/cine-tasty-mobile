@@ -1,8 +1,8 @@
-import { LocalStackRoute } from 'types';
+import * as Types from '@local-types';
 
 export type Routes = 'QUIZ' | 'SETUP_QUESTIONS' | 'QUESTIONS' | 'RESULTS';
 
-const LOCAL_ROUTES: Record<Routes, LocalStackRoute<Routes>> = {
+const LOCAL_ROUTES: Record<Routes, Types.LocalStackRoute<Routes>> = {
   QUIZ: {
     id: 'QUIZ',
   },

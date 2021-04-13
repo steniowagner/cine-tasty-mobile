@@ -1,7 +1,8 @@
+/* eslint-disable camelcase */
 import { useCallback } from 'react';
 
-import { TVShowDetail_tvShow_createdBy as TVShowCreatedBy } from 'types/schema';
-import { CrewDataset, CastDataset } from 'types';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
 type PeopleListItem = {
   subText: string;
@@ -11,7 +12,10 @@ type PeopleListItem = {
 };
 
 type Props = {
-  dataset: CrewDataset | CastDataset | TVShowCreatedBy[];
+  dataset:
+    | Types.CrewDataset
+    | Types.CastDataset
+    | SchemaTypes.TVShowDetail_tvShow_createdBy[];
   type: 'cast' | 'crew' | 'creator';
 };
 

@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
-import { SupportedIcons } from 'components/common/svg-icon/getXML';
-import SVGIcon from 'components/common/svg-icon/SVGIcon';
-import metrics from 'styles/metrics';
+import { SupportedIcons } from '@components/common/svg-icon/getXML';
+import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import metrics from '@styles/metrics';
 
 const Wrapper = styled(View)`
   width: 100%;

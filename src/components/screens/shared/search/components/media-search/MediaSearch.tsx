@@ -1,19 +1,19 @@
+/* eslint-disable camelcase */
 import React, { useMemo } from 'react';
 import { Platform, FlatList } from 'react-native';
 
-import LoadingMediaSearch from 'components/common/full-media-list-item/LoadingFullMediaList';
-import MediaSearchListItem from 'components/common/full-media-list-item/FullMediaListItem';
-import ListFooterComponent from 'components/common/pagination-footer/PaginationFooter';
-import {
-  SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
-  SearchMovie_search_items_BaseMovie as SearchMovieResult,
-} from 'types/schema';
-import PaginatedListHeader from 'components/common/PaginatedListHeader';
-import { BaseSearchProps } from 'types';
+import LoadingMediaSearch from '@components/common/full-media-list-item/LoadingFullMediaList';
+import MediaSearchListItem from '@components/common/full-media-list-item/FullMediaListItem';
+import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
+import PaginatedListHeader from '@components/common/PaginatedListHeader';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
-type MediaSearchItem = SearchTVShowResult | SearchMovieResult;
+type MediaSearchItem =
+  | SchemaTypes.SearchTVShow_search_items_BaseTVShow
+  | SchemaTypes.SearchMovie_search_items_BaseMovie;
 
-type Props = BaseSearchProps & {
+type Props = Types.BaseSearchProps & {
   onPressListItem: (item: MediaSearchItem) => void;
   items: MediaSearchItem[];
 };

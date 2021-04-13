@@ -1,16 +1,17 @@
-import {
-  TrendingMovies_trendingMovies_nowPlaying_items as NowPlayingMovie,
-  TrendingTVShows_trendingTvShows_onTheAir_items as OnTheAirTVShow,
-} from 'types/schema';
-import shuffleDataset from 'utils/shuffleDataset';
-import { HomeTop3Item } from 'types';
+/* eslint-disable camelcase */
+import shuffleDataset from '@utils/shuffleDataset';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
-type TrendingItems = (NowPlayingMovie | OnTheAirTVShow) & {
+type TrendingItems = (
+  | SchemaTypes.TrendingMovies_trendingMovies_nowPlaying_items
+  | SchemaTypes.TrendingTVShows_trendingTvShows_onTheAir_items
+) & {
   title?: string;
   name?: string;
 };
 
-const parseTop3Data = (trendingItems: TrendingItems[]): HomeTop3Item[] => {
+const parseTop3Data = (trendingItems: TrendingItems[]): Types.HomeTop3Item[] => {
   const top3Dataset = shuffleDataset<TrendingItems>(trendingItems);
 
   return top3Dataset.slice(0, 3).map((trendingItem: TrendingItems) => ({

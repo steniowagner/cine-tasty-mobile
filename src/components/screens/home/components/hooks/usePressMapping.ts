@@ -1,17 +1,17 @@
 import { useCallback, useMemo } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { TrendingMediaItemKey, SimplifiedMedia } from 'types';
-import { SearchType } from 'types/schema';
-import * as TRANSLATIONS from 'i18n/tags';
+import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import { HomeStackParams } from '../../routes/route-params-types';
 
 export const TRANSITIONING_DURATION = 1200;
 
 type ViewAllProps = {
-  sectionID: TrendingMediaItemKey;
-  sectionItems: SimplifiedMedia[];
+  sectionID: Types.TrendingMediaItemKey;
+  sectionItems: Types.SimplifiedMedia[];
   viewAllTitle: string;
 };
 
@@ -24,7 +24,7 @@ type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
 const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
   const onNavigateToMovieDetailAfterPress = useCallback(
-    (movie: SimplifiedMedia): void => {
+    (movie: Types.SimplifiedMedia): void => {
       navigation.navigate('MOVIE_DETAIL', {
         genreIds: movie.genreIds || [],
         voteAverage: movie.voteAverage,
@@ -38,7 +38,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
   );
 
   const onNavigateToTVShowDetailAfterPress = useCallback(
-    (tvShow: SimplifiedMedia): void => {
+    (tvShow: Types.SimplifiedMedia): void => {
       navigation.navigate('TV_SHOW_DETAIL', {
         genreIds: tvShow.genreIds || [],
         voteAverage: tvShow.voteAverage,
@@ -58,9 +58,9 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
     onPressSearch,
   } = useMemo(() => {
     const pressesHandlersMapping = {
-      [SearchType.MOVIE]: {
-        onPressTop3LearnMore: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
-        onPressTrendingItem: (movie: SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
+      [SchemaTypes.SearchType.MOVIE]: {
+        onPressTop3LearnMore: (movie: Types.SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
+        onPressTrendingItem: (movie: Types.SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
           navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
             initialDataset: sectionItems,
@@ -75,14 +75,14 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
               TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
             i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
             i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PLACEHOLDER,
-            searchType: SearchType.MOVIE,
+            searchType: SchemaTypes.SearchType.MOVIE,
             queryId: 'search_movie',
           });
         },
       },
-      [SearchType.TV]: {
-        onPressTop3LearnMore: (tvShow: SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
-        onPressTrendingItem: (tvShow: SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
+      [SchemaTypes.SearchType.TV]: {
+        onPressTop3LearnMore: (tvShow: Types.SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
+        onPressTrendingItem: (tvShow: Types.SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
           navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
             initialDataset: sectionItems,
@@ -96,14 +96,16 @@ const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
             i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR,
             i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
             i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_PLACEHOLDER,
-            searchType: SearchType.TV,
+            searchType: SchemaTypes.SearchType.TV,
             queryId: 'search_tv',
           });
         },
       },
     };
 
-    const mediaSelected = isMoviesSelected ? SearchType.MOVIE : SearchType.TV;
+    const mediaSelected = isMoviesSelected
+      ? SchemaTypes.SearchType.MOVIE
+      : SchemaTypes.SearchType.TV;
 
     return pressesHandlersMapping[mediaSelected];
   }, [isMoviesSelected]);

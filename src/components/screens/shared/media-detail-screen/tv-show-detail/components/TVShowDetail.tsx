@@ -7,14 +7,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
-import SimplifiedMediaListItem from 'components/common/simplified-media-list-item/SimplifiedMediaListItem';
-import ImagesList from 'components/common/images-list/ImagesList';
-import RoundedButton from 'components/common/RoundedButton';
-import Advise from 'components/common/advise/Advise';
-import Section from 'components/common/Section';
-import { formatDate } from 'utils/formatters';
-import { useStatusBarStyle } from 'hooks';
-import * as TRANSLATIONS from 'i18n/tags';
+import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
+import ImagesList from '@components/common/images-list/ImagesList';
+import RoundedButton from '@components/common/RoundedButton';
+import Advise from '@components/common/advise/Advise';
+import Section from '@components/common/Section';
+import { formatDate } from '@utils/formatters';
+import { useStatusBarStyle } from '@hooks';
+import * as TRANSLATIONS from '@i18n/tags';
 
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
