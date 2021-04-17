@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 
-import ModalSelectButton from '@components/common/ModalSelectButton';
+import ModalSelectButton from '@components/common/modal-select-button/ModalSelectButton';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 

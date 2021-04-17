@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
 import theme from '@styles/theme';
 
-import { NUMBER_ITEMS } from './LoadingExpansibleTextSection';
+import { NUMBER_ITEMS } from './loading-expansible-text-section/LoadingExpansibleTextSection';
 import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import ExpansibleTextSection from './ExpansibleTextSection';
 

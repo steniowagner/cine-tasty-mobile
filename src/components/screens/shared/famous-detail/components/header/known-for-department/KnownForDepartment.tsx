@@ -1,24 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
-import styled from 'styled-components';
 
 import useKnownForDepartment from './useKnownForDepartment';
+import * as Styles from './KnownForDepartment.styles';
 import InfoText from '../InfoText';
-
-type KnownForDepartmentWrapperStyleProps = {
-  opacity: number;
-  width: number;
-};
-
-const KnownForDepartmentWrapper = styled(View)<KnownForDepartmentWrapperStyleProps>`
-  width: ${({ theme, width }) => theme.metrics.largeSize + width}px;
-  justify-content: center;
-  align-items: center;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  padding-vertical: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  opacity: ${({ opacity }) => opacity};
-`;
 
 type Props = {
   knownForDepartment?: string;
@@ -32,7 +16,7 @@ const KnownForDepartment = ({ knownForDepartment }: Props) => {
   }
 
   return (
-    <KnownForDepartmentWrapper
+    <Styles.KnownForDepartmentWrapper
       opacity={opacity}
       width={width}
     >
@@ -43,7 +27,7 @@ const KnownForDepartment = ({ knownForDepartment }: Props) => {
       >
         {knownForDepartment}
       </InfoText>
-    </KnownForDepartmentWrapper>
+    </Styles.KnownForDepartmentWrapper>
   );
 };
 

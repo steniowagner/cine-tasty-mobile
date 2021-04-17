@@ -3,8 +3,8 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import { TMDBImageQualityProvider, ThemeContextProvider } from '@providers';
 
+import RouteSuspenseWrapper from './components/common/route-suspense-wrapper/RouteSuspenseWrapper';
 import AndroidNavigationBar from './components/utils/AndroidNavigationBar.android';
-import RouteSuspenseWrapper from './components/common/RouteSuspenseWrapper';
 import Navigation from './routes/Routes';
 import makeClient from './graphql/client';
 

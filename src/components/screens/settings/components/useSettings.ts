@@ -5,7 +5,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import * as TRANSLATIONS from '@i18n/tags';
 
 import { HomeStackParams } from '../../home/routes/route-params-types';
-import { Props as SettingsSectionProps } from './SettingsSection';
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'SETTINGS'>;
 
@@ -17,7 +16,7 @@ const useSettings = ({ navigation }: Props) => {
   const { t } = useTranslation();
 
   const sections = useMemo(
-    (): SettingsSectionProps[] => [
+    () => [
       {
         description: t(TRANSLATIONS.SETTINGS_IMAGES_QUALITY_DESCRIPTION),
         title: t(TRANSLATIONS.SETTINGS_IMAGES_QUALITY_SECTION_TITLE),

@@ -1,29 +1,18 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect } from 'react';
-import { Platform, ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
 
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
-import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
 import { HomeStackParams } from '../routes/route-params-types';
+import HomeSection from './home-section/HomeSection';
 import LoadingHome from './top3/LoadingTop3';
-import HomeSection from './HomeSection';
+import * as Styles from './Home.styles';
 import useHome from './hooks/useHome';
 import Header from './header/Header';
 import Top3 from './top3/Top3';
-
-const PopupAdviceWrapper = styled(View)`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding-top: ${Platform.select({
-    android: metrics.getWidthFromDP('18%'),
-    ios: metrics.getWidthFromDP('26%'),
-  })}px;
-`;
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
@@ -90,11 +79,11 @@ const Home = ({ navigation }: Props) => {
         </ScrollView>
       )}
       {!!errorMessage && (
-        <PopupAdviceWrapper>
+        <Styles.PopupAdviceWrapper>
           <PopupAdvice
             text={errorMessage}
           />
-        </PopupAdviceWrapper>
+        </Styles.PopupAdviceWrapper>
       )}
     </>
   );

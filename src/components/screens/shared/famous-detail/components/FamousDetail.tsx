@@ -1,12 +1,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect, useCallback, useRef } from 'react';
-import {
-  StatusBar, Animated, FlatList, View,
-} from 'react-native';
-import styled, { DefaultTheme, withTheme } from 'styled-components';
+import { StatusBar, Animated, FlatList } from 'react-native';
+import { DefaultTheme, withTheme } from 'styled-components';
 import { StackNavigationProp } from '@react-navigation/stack';
-import LinearGradient from 'react-native-linear-gradient';
 import { RouteProp } from '@react-navigation/native';
 
 import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
@@ -14,57 +11,18 @@ import ExpansibleTextSection from '@components/common/expansible-text-section/Ex
 import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
 import ImagesList from '@components/common/images-list/ImagesList';
 import { useGetCurrentTheme, useStatusBarStyle } from '@hooks';
+import Section from '@components/common/section/Section';
 import Advise from '@components/common/advise/Advise';
-import Section from '@components/common/Section';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
-import * as Types from '@local-types';
 
 import { FamousDetailParams } from '../routes/route-params-types';
-import HeaderBackButton from '../../HeaderBackButton';
+import HeaderBackButton from '../../header-back-button/HeaderBackButton';
 import useFamousDetail from './useFamousDetail';
-import HeaderInfo from './header/HeaderInfo';
+import HeaderInfo from './header/header-info/HeaderInfo';
+import * as Styles from './FamousDetail.styles';
 import DeathDay from './death-day/DeathDay';
-
-type SmokeShadowStyleProps = {
-  currentTheme: Types.ThemeId;
-};
-
-const BackgroundImageWrapper = styled(Animated.View)`
-  width: 100%;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('100%')}px;
-  position: absolute;
-`;
-
-const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
-  ({ currentTheme, theme }) => {
-    const backgroundAlphax4Count = currentTheme === Types.ThemeId.DARK ? 1 : 5;
-
-    return {
-      colors: [
-        ...Array(backgroundAlphax4Count).fill(theme.colors.backgroundAlphax4),
-        theme.colors.backgroundAlphax3,
-        theme.colors.backgroundAlphax2,
-        theme.colors.backgroundAlphax1,
-        theme.colors.background,
-      ],
-    };
-  },
-)`
-  width: 100%;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('100%')}px;
-  position: absolute;
-  bottom: 0;
-`;
-
-const BiographySectionWrapper = styled(View)`
-  margin-top: ${({ theme }) => theme.metrics.getWidthFromDP('5%')}px;
-`;
-
-const ImagesSectionWrapper = styled(View)`
-  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize}px;
-`;
 
 type QuestionsScreenNavigationProp = StackNavigationProp<
   FamousDetailParams,
@@ -107,7 +65,7 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
       : `${t(TRANSLATIONS.FAMOUS_DETAIL_IMAGES)} (0)`;
 
     return (
-      <ImagesSectionWrapper>
+      <Styles.ImagesSectionWrapper>
         <Section
           title={sectionImagesTitle}
           noMarginTop
@@ -116,7 +74,7 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
             images={images}
           />
         </Section>
-      </ImagesSectionWrapper>
+      </Styles.ImagesSectionWrapper>
     );
   }, []);
 
@@ -216,7 +174,7 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
         barStyle={barStyle}
         animated
       />
-      <BackgroundImageWrapper
+      <Styles.BackgroundImageWrapper
         testID="background-image-wrapper"
       >
         <Animated.View
@@ -233,10 +191,10 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
             imageType="backdrop"
           />
         </Animated.View>
-        <SmokeShadow
+        <Styles.SmokeShadow
           currentTheme={currentTheme}
         />
-      </BackgroundImageWrapper>
+      </Styles.BackgroundImageWrapper>
       <Animated.ScrollView
         scrollEventThrottle={16}
         onScroll={Animated.event(
@@ -266,7 +224,7 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
           deathDate={famous.deathday}
         />
         )}
-        <BiographySectionWrapper
+        <Styles.BiographySectionWrapper
           testID="biography-section"
         >
           <ExpansibleTextSection
@@ -274,7 +232,7 @@ const FamousDetail = ({ navigation, theme, route }: Props) => {
             text={famous?.biography}
             isLoading={isLoading}
           />
-        </BiographySectionWrapper>
+        </Styles.BiographySectionWrapper>
         {!!famous && (
           <>
             {!!famous.images && renderImagesSection(famous.images)}

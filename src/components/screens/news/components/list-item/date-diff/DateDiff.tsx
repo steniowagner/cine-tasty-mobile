@@ -1,16 +1,9 @@
 import React from 'react';
-import { Text } from 'react-native';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import * as TRANSLATIONS from '@i18n/tags';
-import * as Types from '@local-types';
 
-const DefaultText = styled(Text)`
-  font-family: CircularStd-Medium;
-  font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  color: ${({ theme }) => (theme.id === Types.ThemeId.DARK ? 'white' : theme.colors.buttonText)};
-`;
+import * as Styles from './DateDiff.styles';
 
 const ONE_MINUTE_IN_SECONDS = 60;
 const ONE_HOUR_IN_SECONDS = ONE_MINUTE_IN_SECONDS * 60;
@@ -80,7 +73,7 @@ const DateDiff = ({ now, date }: Props) => {
     return handleSecondsPassed(diffValue);
   };
 
-  return <DefaultText>{getDateDiffText()}</DefaultText>;
+  return <Styles.DefaultText>{getDateDiffText()}</Styles.DefaultText>;
 };
 
 export default DateDiff;

@@ -1,4 +1,12 @@
-const socialNetworks = [
+import { SupportedIcons } from '@components/common/svg-icon/getXML';
+
+type SocialNetwork = {
+  icon: SupportedIcons;
+  url: string;
+  color: string;
+};
+
+const socialNetworks: SocialNetwork[] = [
   {
     url: 'https://www.linkedin.com/in/steniowagner',
     icon: 'linkedin',

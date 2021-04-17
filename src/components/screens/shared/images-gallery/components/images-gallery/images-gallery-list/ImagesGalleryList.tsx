@@ -6,8 +6,8 @@ import metrics from '@styles/metrics';
 // @ts-ignore
 // eslint-disable-next-line import/extensions
 import ImagesGalleryListItem from './images-gallery-list-item/ImagesGalleryListItem';
-import useImagesGalleryList from './use-images-gallery-list';
-import * as S from './images-gallery-list-styles';
+import useImagesGalleryList from './useImagesGalleryList';
+import * as Styles from './ImagesGalleryList.styles';
 
 type ImagesGalleryListProps = {
   onFlatlistMomentumScrollEnd: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -38,7 +38,7 @@ const ImagesGalleryList = ({
         }
 
         return (
-          <S.PlaceholderListItem
+          <Styles.PlaceholderListItem
             testID="placeholder-list-item"
           />
         );

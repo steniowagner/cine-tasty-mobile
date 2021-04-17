@@ -8,8 +8,8 @@ import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import { useImagePinch } from '@hooks';
 import metrics from '@styles/metrics';
 
-import useImagesGalleryListItem from './use-images-gallery-list-item';
-import * as S from './images-gallery-list-item-styles';
+import useImagesGalleryListItem from './useImagesGalleryListItem';
+import * as Styles from './ImagesGalleryListItem.styles';
 
 type ImagesGalleryListItemComponentProps = {
   imageURL: string;
@@ -34,17 +34,17 @@ const ImagesGalleryListItemComponent = ({
 
   if (isLoading) {
     return (
-      <S.Wrapper
+      <Styles.Wrapper
         testID="images-gallery-list-item-loading"
       >
-        <S.CustomActivityIndicator />
-      </S.Wrapper>
+        <Styles.CustomActivityIndicator />
+      </Styles.Wrapper>
     );
   }
 
   if (hasError) {
     return (
-      <S.ImageOffWrapper
+      <Styles.ImageOffWrapper
         testID="image-error-wrapper"
       >
         <SVGIcon
@@ -52,7 +52,7 @@ const ImagesGalleryListItemComponent = ({
           colorThemeRef="white"
           id="image-off"
         />
-      </S.ImageOffWrapper>
+      </Styles.ImageOffWrapper>
     );
   }
 
@@ -68,7 +68,7 @@ const ImagesGalleryListItemComponent = ({
     }
 
     return (
-      <S.Wrapper
+      <Styles.Wrapper
         testID="images-gallery-list-item"
       >
         <PinchGestureHandler
@@ -90,7 +90,7 @@ const ImagesGalleryListItemComponent = ({
             />
           </Animated.View>
         </PinchGestureHandler>
-      </S.Wrapper>
+      </Styles.Wrapper>
     );
   }
 

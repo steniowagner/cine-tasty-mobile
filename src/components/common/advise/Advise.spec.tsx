@@ -2,12 +2,16 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import { SupportedIcons } from '@components/common/svg-icon/getXML';
 import theme from '@styles/theme';
 
-import Advise, { Props } from './Advise';
+import Advise from './Advise';
 
 type OptionalAdviseProps = {
-  [K in keyof Props]?: string;
+  icon: SupportedIcons;
+  description: string;
+  suggestion: string;
+  title: string;
 };
 
 const DEFAULT_DESCRIPTION = 'description';

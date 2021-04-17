@@ -1,29 +1,17 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
-import styled from 'styled-components';
 
-import LoadingIndicator from '@components/common/LoadingIndicator';
+import LoadingIndicator from '@components/common/loading-indicator/LoadingIndicator';
+import Section from '@components/common/section/Section';
 import Advise from '@components/common/advise/Advise';
-import Section from '@components/common/Section';
 import * as TRANSLATIONS from '@i18n/tags';
 
 import TVShowSeasonsListItem from './tv-show-list-item/TVShowSeasonsListItem';
 import { TVShowSeasonsStackParams } from '../../routes/route-params-types';
 import useTVShowSeasonsDetail from './useTVShowSeasonsDetail';
+import * as Styles from './TVShowSeasonsDetail.styles';
 import Header from './header/Header';
-
-const LineDivider = styled(View)`
-  width: 100%;
-  margin-vertical: ${({ theme }) => theme.metrics.mediumSize}px;
-  height: ${StyleSheet.hairlineWidth}px;
-  background-color: ${({ theme }) => theme.colors.subText};
-`;
-
-const ListFooterComponent = styled(View)`
-  width: 100%;
-  height: ${({ theme }) => theme.metrics.extraLargeSize}px;
-`;
 
 type Params = {
   route: RouteProp<TVShowSeasonsStackParams, 'SEASON_DETAIL'>;
@@ -55,8 +43,8 @@ const TVShowSeasonsDetail = ({ route }: Params) => {
   return (
     <>
       <FlatList
-        ListFooterComponent={() => <ListFooterComponent />}
-        ItemSeparatorComponent={() => <LineDivider />}
+        ListFooterComponent={() => <Styles.ListFooterComponent />}
+        ItemSeparatorComponent={() => <Styles.LineDivider />}
         ListHeaderComponent={() => (
           <>
             <Header

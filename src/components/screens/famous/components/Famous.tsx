@@ -3,11 +3,11 @@ import React, { useLayoutEffect } from 'react';
 import { Platform, FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
+import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 import DefaultListItem from '@components/common/famous-list-item/FamousListItem';
-import PaginatedListHeader from '@components/common/PaginatedListHeader';
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
-import HeaderIconButton from '@components/common/HeaderIconButton';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
@@ -92,11 +92,6 @@ const Famous = ({ navigation }: Props) => {
           android: 0.5,
           ios: 0.1,
         })}
-        /* getItemLayout={(_, index: number) => ({
-          length: DEFAULT_LIST_ITEM_HEIGHT,
-          offset: DEFAULT_LIST_ITEM_HEIGHT * Math.floor(index / NUMBER_FLATLIST_COLUMNS),
-          index,
-        })} */
         numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
           <DefaultListItem

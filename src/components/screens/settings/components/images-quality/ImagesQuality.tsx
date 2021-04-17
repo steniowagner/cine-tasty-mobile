@@ -1,7 +1,7 @@
 import React from 'react';
 
+import OptionSettings from '../option-settings/OptionSetting';
 import useImagesQuality from './useImagesQuality';
-import OptionSettings from '../OptionSetting';
 
 const ImagesQuality = () => {
   const { qualitySelected, onPress, qualities } = useImagesQuality();

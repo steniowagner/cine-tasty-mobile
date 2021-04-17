@@ -3,8 +3,8 @@ import { FlatList } from 'react-native';
 
 import metrics from '@styles/metrics';
 
-import MultiChoiceQuestionListItem from './MultiChoiceQuestionListItem';
-import NextButton from '../NextButton';
+import MultiChoiceQuestionListItem from './multi-choice-question-list-item/MultiChoiceQuestionListItem';
+import NextButton from '../next-button/NextButton';
 
 type Props = {
   onPressNext: (answerSelected: string) => void;

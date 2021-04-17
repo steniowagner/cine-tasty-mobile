@@ -3,8 +3,8 @@ import { Platform, Animated } from 'react-native';
 
 import * as Types from '@local-types';
 
-import { GapFlatlist, ListWrapper, ITEM_WIDTH } from './commonStyles';
-import Top3ListItem from './Top3ListItem';
+import { GapFlatlist, ListWrapper, ITEM_WIDTH } from './LoadingTop3.styles';
+import Top3ListItem from './top-3-list-item/Top3ListItem';
 
 type Props = {
   onPressLearnMore: (mediaItem: Omit<Types.SimplifiedMedia, '__typename'>) => void;

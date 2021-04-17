@@ -1,25 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
-import styled from 'styled-components';
 
 import useMediaItemDescription from './useMediaItemDescription';
-
-const DescriptionText = styled(Text)`
-  font-size: ${({ theme }) => theme.metrics.largeSize * 1.1}px;
-  color: ${({ theme }) => theme.colors.text};
-  font-family: CircularStd-Book;
-`;
-
-const ExpandableReadText = styled(Text)`
-  font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
-  color: ${({ theme }) => theme.colors.text};
-  font-family: CircularStd-Black;
-`;
-
-const ExpandableReadButton = styled(TouchableOpacity)`
-  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
-  align-self: flex-end;
-`;
+import * as Styles from './MediaItemDescription.styles';
 
 type Props = {
   description: string;
@@ -36,25 +18,25 @@ const MediaItemDescription = ({ description }: Props) => {
 
   return (
     <>
-      <DescriptionText
+      <Styles.DescriptionText
         // @ts-ignore onTextLayout does exist on Text component
         onTextLayout={({ nativeEvent: { lines } }) => onGetTextLayout(lines.length)}
         testID="description-text"
         numberOfLines={numberOfLines}
       >
         {description || '-'}
-      </DescriptionText>
+      </Styles.DescriptionText>
       {isReadExpandableButtonVisible && (
-        <ExpandableReadButton
+        <Styles.ExpandableReadButton
           onPress={onPressReadExpandable}
           testID="expandable-read-button"
         >
-          <ExpandableReadText
+          <Styles.ExpandableReadText
             testID="expandable-read-text"
           >
             {expandableReadButtonText}
-          </ExpandableReadText>
-        </ExpandableReadButton>
+          </Styles.ExpandableReadText>
+        </Styles.ExpandableReadButton>
       )}
     </>
   );

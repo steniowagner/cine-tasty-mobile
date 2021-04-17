@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 
 import * as SchemaTypes from '@schema-types';
 
-import * as S from './production-network-companies-styles';
+import * as Styles from './ProductionNetworkCompanies.styles';
 
 type ProductionsListProps = {
   productionsList: (
@@ -20,9 +20,9 @@ const ProductionsList = ({ productionsList }: ProductionsListProps) => {
   );
 
   return (
-    <S.Wrapper>
-      <S.ItemText>{productionCompanies}</S.ItemText>
-    </S.Wrapper>
+    <Styles.Wrapper>
+      <Styles.ItemText>{productionCompanies}</Styles.ItemText>
+    </Styles.Wrapper>
   );
 };
 

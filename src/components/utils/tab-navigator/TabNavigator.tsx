@@ -1,10 +1,7 @@
 import React, { useMemo } from 'react';
-import { View } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
-import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import { Routes as FamousRoutes } from '@components/screens/famous/routes/route-names';
 import { Routes as HomeRoutes } from '@components/screens/home/routes/route-names';
 import { Routes as QuizRoutes } from '@components/screens/quiz/routes/route-names';
@@ -12,16 +9,9 @@ import { Routes as NewsRoutes } from '@components/screens/news/routes/route-name
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
-import TabNavigatorItem from './TabNavigatorItem';
+import TabNavigatorItem from './tab-navigator-item/TabNavigatorItem';
+import * as Styles from './TabNavigator.styles';
 import items from './items';
-
-const Wrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.width}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('18%') + (isEqualsOrLargestThanIphoneX() ? 30 : 0)}px;
-  flex-direction: row;
-  background-color: ${({ theme }) => theme.colors.secondary};
-  padding-bottom: ${isEqualsOrLargestThanIphoneX() ? 30 : 0}px;
-`;
 
 const ITEM_WIDTH = metrics.width / items.length;
 
@@ -60,7 +50,7 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
   }
 
   return (
-    <Wrapper
+    <Styles.Wrapper
       testID="tab-wrapper"
       style={{
         shadowColor: '#000000',
@@ -84,7 +74,7 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
           key={item.id}
         />
       ))}
-    </Wrapper>
+    </Styles.Wrapper>
   );
 };
 

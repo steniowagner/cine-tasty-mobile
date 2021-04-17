@@ -1,12 +1,12 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 
-import ModalSelectButton from '@components/common/ModalSelectButton';
+import ModalSelectButton from '@components/common/modal-select-button/ModalSelectButton';
 import * as TRANSLATIONS from '@i18n/tags';
 import * as Types from '@local-types';
 
 import useSetupOptionsList from './useSetupQuestionsOptionsList';
-import OptionListItem from './OptionListItem';
+import OptionListItem from './option-lis-item/OptionListItem';
 
 type Props = {
   onPressSelect: (indexOptionSelected: number) => void;

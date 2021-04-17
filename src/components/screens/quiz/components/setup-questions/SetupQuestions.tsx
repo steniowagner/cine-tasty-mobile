@@ -1,35 +1,15 @@
 import React from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
 
-import RoundedButton from '@components/common/RoundedButton';
+import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import * as TRANSLATIONS from '@i18n/tags';
 
 import { QuizStackParams } from '../../routes/route-params-types';
-import NumberOfQuestions from './NumberOfQuestionts';
+import NumberOfQuestions from './number-of-questions/NumberOfQuestionts';
+import DropdownOption from './drop-down-option/DropdownOption';
 import useSetupQuestions from './useSetupQuestions';
-import DropdownOption from './DropdownOption';
-
-const Wrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
-  padding-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
-  padding-bottom: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
-`;
-
-const RoundedButtonWrapper = styled(View)`
-  align-items: center;
-`;
-
-const Label = styled(Text)`
-  margin-top: ${({ theme }) => theme.metrics.getWidthFromDP('6.5%')}px;
-  margin-bottom: ${({ theme }) => theme.metrics.mediumSize}px;
-  font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  font-family: CircularStd-Bold;
-  color: ${({ theme }) => theme.colors.text};
-`;
+import * as Styles from './SetupQuestions.styles';
 
 type Props = {
   navigation: StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
@@ -48,38 +28,38 @@ const SetupQuestions = ({ navigation }: Props) => {
   } = useSetupQuestions({ navigation });
 
   return (
-    <Wrapper>
+    <Styles.Wrapper>
       <View>
-        <Label>{t(TRANSLATIONS.QUIZ_DIFFICULTY)}</Label>
+        <Styles.Label>{t(TRANSLATIONS.QUIZ_DIFFICULTY)}</Styles.Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('DIFFICULTY')}
           selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionDifficulty.id}`)}
         />
-        <Label>{t(TRANSLATIONS.QUIZ_CATEGORY)}</Label>
+        <Styles.Label>{t(TRANSLATIONS.QUIZ_CATEGORY)}</Styles.Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('CATEGORY')}
           selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionCategory.id}`)}
         />
-        <Label>{t(TRANSLATIONS.QUIZ_TYPE)}</Label>
+        <Styles.Label>{t(TRANSLATIONS.QUIZ_TYPE)}</Styles.Label>
         <DropdownOption
           onPress={() => onPressOptionDropdown('TYPE')}
           selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionType.id}`)}
         />
-        <Label>{t(TRANSLATIONS.QUIZ_NUMBER_OF_QUESTIONS)}</Label>
+        <Styles.Label>{t(TRANSLATIONS.QUIZ_NUMBER_OF_QUESTIONS)}</Styles.Label>
         <NumberOfQuestions
           onSetNumberQuestions={setNumberOfQuestions}
           numberOfQuestions={numberOfQuestions}
         />
       </View>
       <SafeAreaView>
-        <RoundedButtonWrapper>
+        <Styles.RoundedButtonWrapper>
           <RoundedButton
             text={t(TRANSLATIONS.QUIZ_START_BUTTON)}
             onPress={onPressStartQuiz}
           />
-        </RoundedButtonWrapper>
+        </Styles.RoundedButtonWrapper>
       </SafeAreaView>
-    </Wrapper>
+    </Styles.Wrapper>
   );
 };
 

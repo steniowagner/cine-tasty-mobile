@@ -1,7 +1,7 @@
 import React from 'react';
 
+import OptionSettings from '../option-settings/OptionSetting';
 import useThemeSettings from './useThemeSettings';
-import OptionSettings from '../OptionSetting';
 
 const Languages = () => {
   const { selectedTheme, themeOptions } = useThemeSettings();

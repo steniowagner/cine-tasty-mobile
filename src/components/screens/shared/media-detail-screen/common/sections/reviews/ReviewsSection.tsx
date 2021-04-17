@@ -1,35 +1,13 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
-import styled from 'styled-components';
+import { FlatList } from 'react-native';
 
-import SectionViewAll from '@components/common/SectionViewAll';
+import SectionViewAll from '@components/common/section-view-all/SectionViewAll';
 import * as SchemaTypes from '@schema-types';
 
-import ReviewSectionListItem from './ReviewSectionListItem';
+import ReviewSectionListItem from './reviews-section-list-item/ReviewSectionListItem';
 import useReviewsSection from './useReviewsSection';
-
-type DotStyleProps = {
-  isSelected: boolean;
-};
-
-const ContentWrapper = styled(View)`
-  width: 100%;
-  margin-vertical: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  padding-vertical: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  []background-color: ${({ theme }) => theme.colors.secondary};
-`;
-
-const Dot = styled(Text)<DotStyleProps>`
-  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('8%')}px;
-  color: ${({ isSelected, theme }) => (isSelected ? theme.colors.primary : theme.colors.contrast)};
-`;
-
-const PaginationWrapper = styled(View)`
-  flex-direction: row;
-  align-items: center;
-  align-self: center;
-`;
+import * as Styles from './ReviewsSection.styles';
 
 type Props = {
   reviews: (
@@ -48,7 +26,7 @@ const ReviewsSection = ({ onPressViewAll, reviews }: Props) => {
   } = useReviewsSection();
 
   return (
-    <ContentWrapper
+    <Styles.ContentWrapper
       testID="reviews-content-wrapper"
     >
       <SectionViewAll
@@ -73,21 +51,21 @@ const ReviewsSection = ({ onPressViewAll, reviews }: Props) => {
         horizontal
       />
       {reviews.length > 1 && (
-        <PaginationWrapper>
+        <Styles.PaginationWrapper>
           {Array(Math.min(reviews.length, 3))
             .fill({})
             .map((_, index) => (
-              <Dot
+              <Styles.Dot
                 isSelected={index === indexReviewSelected}
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
               >
                 {'\u2022'}
-              </Dot>
+              </Styles.Dot>
             ))}
-        </PaginationWrapper>
+        </Styles.PaginationWrapper>
       )}
-    </ContentWrapper>
+    </Styles.ContentWrapper>
   );
 };
 

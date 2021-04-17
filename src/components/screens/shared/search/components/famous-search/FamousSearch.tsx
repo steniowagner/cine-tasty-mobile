@@ -3,10 +3,10 @@ import React from 'react';
 import { Platform, FlatList } from 'react-native';
 
 import { DEFAULT_LIST_ITEM_HEIGHT } from '@components/common/famous-list-item/getWrapperMeasures';
+import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import LoadingFamousList from '@components/common/loading-famous-list/LoadingFamousList';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
 import FamousListItem from '@components/common/famous-list-item/FamousListItem';
-import PaginatedListHeader from '@components/common/PaginatedListHeader';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';

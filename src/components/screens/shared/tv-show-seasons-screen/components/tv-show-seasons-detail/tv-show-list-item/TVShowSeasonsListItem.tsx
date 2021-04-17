@@ -1,54 +1,14 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
-import styled from 'styled-components';
 
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import * as SchemaTypes from '@schema-types';
-import CONSTANTS from '@utils/constants';
 import metrics from '@styles/metrics';
 
 import useTVShowSeasonsListItem from './useTVShowSeasonsListItem';
 import EpisodeDetail from './episode-detail/EpisodeDetail';
-import ModalDetail from '../ModalDetail';
-
-const ListItemWrapper = styled(TouchableOpacity)`
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-`;
-
-const EpisodeNameText = styled(Text).attrs({
-  numberOfLines: 2,
-})`
-  width: 75%;
-  margin-left: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  font-size: ${({ theme }) => theme.metrics.largeSize * 1.1}px;
-  color: ${({ theme }) => theme.colors.text};
-  font-family: CircularStd-Bold;
-`;
-
-const EpisodeIndexText = styled(Text)`
-  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
-  color: ${({ theme }) => theme.colors.buttonText};
-  font-family: CircularStd-Black;
-`;
-
-const EpisodeIndexWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('12%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('12%')}px;
-  justify-content: center;
-  align-items: center;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
-  background-color: ${({ theme }) => theme.colors.primary};
-`;
-
-const Row = styled(View)`
-  flex-direction: row;
-  align-items: center;
-`;
+import * as Styles from './TVShowSeasonsListItem.styles';
+import ModalDetail from '../modal-detail/ModalDetail';
 
 type Props = {
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
@@ -60,30 +20,30 @@ const TVShowSeasonsListItem = ({ episode, index }: Props) => {
 
   return (
     <>
-      <ListItemWrapper
+      <Styles.ListItemWrapper
         onPress={onPressListItem}
         testID="episode-list-item"
       >
-        <Row>
-          <EpisodeIndexWrapper>
-            <EpisodeIndexText
+        <Styles.Row>
+          <Styles.EpisodeIndexWrapper>
+            <Styles.EpisodeIndexText
               testID="episode-index-text"
             >
               {index + 1}
-            </EpisodeIndexText>
-          </EpisodeIndexWrapper>
-          <EpisodeNameText
+            </Styles.EpisodeIndexText>
+          </Styles.EpisodeIndexWrapper>
+          <Styles.EpisodeNameText
             testID="episode-name-text"
           >
             {episode.name}
-          </EpisodeNameText>
-        </Row>
+          </Styles.EpisodeNameText>
+        </Styles.Row>
         <SVGIcon
           size={metrics.getWidthFromDP('10%')}
           colorThemeRef="primary"
           id="chevron-right"
         />
-      </ListItemWrapper>
+      </Styles.ListItemWrapper>
       {isModalOpen && (
         <ModalDetail
           onCloseModal={onCloseModal}

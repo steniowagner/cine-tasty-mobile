@@ -1,6 +1,5 @@
 import React, { useMemo, memo } from 'react';
-import { TouchableOpacity, Animated, Text } from 'react-native';
-import styled from 'styled-components';
+import { TouchableOpacity } from 'react-native';
 
 import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
@@ -8,25 +7,7 @@ import { useLoadListItemImage } from '@hooks';
 import metrics from '@styles/metrics';
 
 import getWrapperMeasures from './getWrapperMeasures';
-
-const PersonName = styled(Text).attrs({
-  numberOfLines: 2,
-})`
-  margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
-  font-size: ${({ theme }) => theme.metrics.largeSize}px;
-  font-family: CircularStd-Medium;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const FallbackImageWrapper = styled(Animated.View)`
-  width: 100%;
-  height: 70%;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
-`;
+import * as Styles from './FamousListItem.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
@@ -76,7 +57,7 @@ const FamousListItem = ({
           }}
         />
         {isFallbackImageVisible && (
-          <FallbackImageWrapper
+          <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
             style={[
               {
@@ -97,10 +78,10 @@ const FamousListItem = ({
                 id: 'account',
               },
             })}
-          </FallbackImageWrapper>
+          </Styles.FallbackImageWrapper>
         )}
       </>
-      <PersonName>{title}</PersonName>
+      <Styles.PersonName>{title}</Styles.PersonName>
     </TouchableOpacity>
   );
 };

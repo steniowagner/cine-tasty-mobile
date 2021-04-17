@@ -1,19 +1,11 @@
 import React from 'react';
-import {
-  ActivityIndicator, TouchableOpacity, Platform, View,
-} from 'react-native';
+import { ActivityIndicator, TouchableOpacity, Platform } from 'react-native';
 import styled from 'styled-components';
 
 import metrics from '@styles/metrics';
 
+import * as Styles from './PaginationFooter.styles';
 import SVGIcon from '../svg-icon/SVGIcon';
-
-const Wrapper = styled(View)`
-  width: 100%;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('18%')}px;
-  justify-content: center;
-  align-items: center;
-`;
 
 const LoadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   hitSlop: {
@@ -35,7 +27,7 @@ type Props = {
 };
 
 const PaginationFooter = ({ onPressReloadButton, isPaginating, hasError }: Props) => (
-  <Wrapper
+  <Styles.Wrapper
     testID="pagination-footer-wrapper"
   >
     {isPaginating && (
@@ -58,7 +50,7 @@ const PaginationFooter = ({ onPressReloadButton, isPaginating, hasError }: Props
         />
       </LoadButton>
     )}
-  </Wrapper>
+  </Styles.Wrapper>
 );
 
 export default PaginationFooter;

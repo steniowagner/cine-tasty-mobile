@@ -3,10 +3,7 @@ import { Platform, FlatList } from 'react-native';
 
 import metrics from '@styles/metrics';
 
-import useThumbsGalleryList, {
-  THUMB_SPACING,
-  THUMB_SIZE,
-} from './use-thumbs-gallery-list';
+import useThumbsGalleryList, { THUMB_SPACING, THUMB_SIZE } from './useThumbsGalleryList';
 import ThumbsGalleryListItem from './ThumbsGalleryListItem';
 
 type ThumbsGalleryListProps = {

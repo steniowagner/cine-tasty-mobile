@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ImagesGalleryParams } from '@components/screens/shared/images-gallery/routes/route-params-types';
 
-import ImageListItem from './ImageListItem';
+import ImageListItem from './images-list-item/ImageListItem';
 
 type ImageGalleryNavigationProp = StackNavigationProp<
   ImagesGalleryParams,
