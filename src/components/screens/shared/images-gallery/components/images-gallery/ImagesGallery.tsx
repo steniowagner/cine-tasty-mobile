@@ -4,14 +4,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 import { ImagesGalleryParams } from '@components/screens/shared/images-gallery/routes/route-params-types';
-import HeaderIconButton from '@components/common/HeaderIconButton';
+import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 
 // @ts-ignore
 // eslint-disable-next-line import/extensions
 import ImagesGalleryList from './images-gallery-list/ImagesGalleryList';
 import ThumbsGalleryList from './thumbs-gallery-list/ThumbsGalleryList';
-import useImageGallery from './use-images-gallery';
-import * as S from './images-gallery-styles';
+import useImageGallery from './useImagesGallery';
+import * as Styles from './ImagesGallery.styles';
 
 type ImagesGalleryNavigationProp = StackNavigationProp<
   ImagesGalleryParams,
@@ -55,7 +55,7 @@ const ImagesGallery = ({ navigation, route }: Props) => {
   }, []);
 
   return (
-    <S.Wrapper>
+    <Styles.Wrapper>
       <ImagesGalleryList
         isIndexesAllowedToRenderImage={isIndexesAllowedToRenderImage}
         onFlatlistMomentumScrollEnd={onFlatlistMomentumScrollEnd}
@@ -67,7 +67,7 @@ const ImagesGallery = ({ navigation, route }: Props) => {
         indexImageSelected={indexImageSelected}
         thumbs={route.params.images}
       />
-    </S.Wrapper>
+    </Styles.Wrapper>
   );
 };
 

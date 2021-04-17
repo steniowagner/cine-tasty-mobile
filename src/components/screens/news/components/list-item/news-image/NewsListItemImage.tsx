@@ -1,28 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Animated, View } from 'react-native';
-import styled from 'styled-components';
-import FastImage from 'react-native-fast-image';
 
 import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
 import metrics from '@styles/metrics';
 
-import { imageWrapper } from '../common-styles';
-
-const ImageContent = styled(FastImage)`
-  width: ${imageWrapper.width}px;
-  height: ${imageWrapper.height}px;
-  border-radius: ${imageWrapper.borderRadius}px;
-`;
-
-const FallbackImageWrapper = styled(Animated.View)`
-  width: ${imageWrapper.width}px;
-  height: ${imageWrapper.height}px;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  border-radius: ${imageWrapper.borderRadius}px;
-  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
-`;
+import * as Styles from './NewsListItemImage.styles';
 
 export const ANIMATION_DURATION = 400;
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
@@ -56,14 +38,14 @@ const NewsListItemImage = ({ image }: Props) => {
 
   return (
     <View>
-      <ImageContent
+      <Styles.ImageContent
         onError={() => setIsImageWithError(true)}
         onLoad={() => setIsImageLoaded(true)}
         source={{ uri: image || undefined }}
         testID="news-image"
       />
       {isFallbackImageVisible && (
-        <FallbackImageWrapper
+        <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
@@ -84,7 +66,7 @@ const NewsListItemImage = ({ image }: Props) => {
               id: 'image',
             },
           })}
-        </FallbackImageWrapper>
+        </Styles.FallbackImageWrapper>
       )}
     </View>
   );

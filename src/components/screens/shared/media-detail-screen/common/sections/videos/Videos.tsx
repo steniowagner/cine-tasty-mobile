@@ -5,12 +5,12 @@ import FastImage from 'react-native-fast-image';
 import { useTranslation } from 'react-i18next';
 
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import Section from '@components/common/Section';
+import Section from '@components/common/section/Section';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
-import * as S from './videos-styles';
+import * as Styles from './Videos.styles';
 
 const YOUTUBE_BASE_URL = 'https://www.youtube.com/watch?v=';
 
@@ -35,7 +35,7 @@ const Videos = ({ videos }: VideosProps) => {
         }}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
-          <S.VideoListItemWrapper
+          <Styles.VideoListItemWrapper
             onPress={() => Linking.openURL(`${YOUTUBE_BASE_URL}${item.key}`)}
           >
             <FastImage
@@ -48,14 +48,14 @@ const Videos = ({ videos }: VideosProps) => {
                 borderRadius: metrics.smallSize,
               }}
             />
-            <S.IconWrapper>
+            <Styles.IconWrapper>
               <SVGIcon
                 size={metrics.getWidthFromDP('12%')}
                 id="play-circle"
                 colorThemeRef="white"
               />
-            </S.IconWrapper>
-          </S.VideoListItemWrapper>
+            </Styles.IconWrapper>
+          </Styles.VideoListItemWrapper>
         )}
         testID="videos-list"
         data={videos}

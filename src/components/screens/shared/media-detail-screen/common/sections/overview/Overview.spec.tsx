@@ -10,7 +10,7 @@ import timeTravel, {
   setupTimeTravel,
 } from '../../../../../../../../__mocks__/timeTravel';
 import Overview from './Overview';
-import { NUMBER_ITEMS } from './LoadingOverview';
+import { NUMBER_ITEMS } from './loading-overview/LoadingOverview';
 
 const renderOverview = (isLoading = false, overview = 'overview') => (
   <ThemeProvider theme={theme}>

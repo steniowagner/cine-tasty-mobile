@@ -1,13 +1,12 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/jsx-no-undef */
 import React, { useLayoutEffect } from 'react';
-import { TouchableOpacity, FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
-import LoadingIndicator from '@components/common/LoadingIndicator';
+import LoadingIndicator from '@components/common/loading-indicator/LoadingIndicator';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import Advise from '@components/common/advise/Advise';
 import * as SchemaTypes from '@schema-types';
@@ -18,24 +17,8 @@ import ListItemWrapper from './list-item-wrapper-question/ListItemWrapperQuestio
 import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
 import { QuizStackParams } from '../../routes/route-params-types';
 import BooleanQuestion from './boolean-question/BooleanQuestion';
+import * as Styles from './Questions.styles';
 import useQuestions from './useQuestions';
-
-const RestartQuizButton = styled(TouchableOpacity).attrs(({ theme }) => ({
-  hitSlop: {
-    top: theme.metrics.largeSize,
-    bottom: theme.metrics.largeSize,
-    left: theme.metrics.largeSize,
-    right: theme.metrics.largeSize,
-  },
-}))`
-  margin-right: ${({ theme }) => theme.metrics.smallSize}px;
-`;
-
-const ErrorWrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-`;
 
 type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUESTIONS'>;
 
@@ -74,7 +57,7 @@ const Questions = ({ navigation, route }: Props) => {
     navigation.setOptions({
       title: headerTitle,
       headerRight: () => currentQuestionIndex > 0 && (
-      <RestartQuizButton
+      <Styles.RestartQuizButton
         onPress={onRestartQuiz}
         testID="retart-quiz-button"
       >
@@ -82,7 +65,7 @@ const Questions = ({ navigation, route }: Props) => {
           size={metrics.getWidthFromDP('8%')}
           id="restart"
         />
-      </RestartQuizButton>
+      </Styles.RestartQuizButton>
       ),
     });
   }, [currentQuestionIndex, loading, hasError]);
@@ -93,7 +76,7 @@ const Questions = ({ navigation, route }: Props) => {
 
   if (hasError) {
     return (
-      <ErrorWrapper
+      <Styles.ErrorWrapper
         testID="network-error-wrapper"
       >
         <Advise
@@ -102,13 +85,13 @@ const Questions = ({ navigation, route }: Props) => {
           title={t(TRANSLATIONS.ERRORS_NETWORK_ERROR_TITLE)}
           icon="server-network-off"
         />
-      </ErrorWrapper>
+      </Styles.ErrorWrapper>
     );
   }
 
   if (!loading && !hasError && !questions.length) {
     return (
-      <ErrorWrapper
+      <Styles.ErrorWrapper
         testID="no-questions-error-wrapper"
       >
         <Advise
@@ -117,7 +100,7 @@ const Questions = ({ navigation, route }: Props) => {
           title={t(TRANSLATIONS.QUIZ_NO_QUESTIONS_ADVISE_TITLE)}
           icon="playlist-remove"
         />
-      </ErrorWrapper>
+      </Styles.ErrorWrapper>
     );
   }
 

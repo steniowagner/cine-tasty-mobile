@@ -8,10 +8,10 @@ import { RouteProp } from '@react-navigation/native';
 import styled, { DefaultTheme, withTheme } from 'styled-components';
 
 import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
+import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import ImagesList from '@components/common/images-list/ImagesList';
-import RoundedButton from '@components/common/RoundedButton';
+import Section from '@components/common/section/Section';
 import Advise from '@components/common/advise/Advise';
-import Section from '@components/common/Section';
 import { formatDate } from '@utils/formatters';
 import { useStatusBarStyle } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
@@ -21,9 +21,9 @@ import ProductionCompanies from '../../common/sections/production-network-compan
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
 import PeopleList from '../../common/people-list/PeopleList';
-import GeneralInfo from '../../common/sections/GeneralInfo';
-import HeaderBackButton from '../../../HeaderBackButton';
-import Header from '../../common/header-info/HeaderInfo';
+import GeneralInfo from '../../common/sections/general-info/GeneralInfo';
+import HeaderBackButton from '../../../header-back-button/HeaderBackButton';
+import Header from '../../common/header-info/header-info/HeaderInfo';
 import Videos from '../../common/sections/videos/Videos';
 import Tags from '../../common/sections/tags/Tags';
 import useTVShowDetail from './useTVShowDetail';

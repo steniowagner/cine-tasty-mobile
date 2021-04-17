@@ -4,10 +4,10 @@ import React, { useLayoutEffect } from 'react';
 import { FlatList, Platform, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
-import PaginatedListHeader from '@components/common/PaginatedListHeader';
+import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
-import HeaderIconButton from '@components/common/HeaderIconButton';
 import Advise from '@components/common/advise/Advise';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
@@ -15,7 +15,7 @@ import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
 import { NewsStackParams } from '../routes/route-params-types';
-import { imageWrapper } from './list-item/common-styles';
+import { imageWrapper } from './list-item/NewsListItem.styles';
 import NewsListItem from './list-item/NewsListItem';
 import NewsLoading from './loading-list/NewsLoading';
 import useNews from './useNews';

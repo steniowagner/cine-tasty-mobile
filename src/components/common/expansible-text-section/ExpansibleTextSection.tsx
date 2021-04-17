@@ -1,17 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
-import styled from 'styled-components';
 
 import MediaItemDescription from '@components/common/media-item-description/MediaItemDescription';
-import Section from '@components/common/Section';
-import CONSTANTS from '@utils/constants';
+import Section from '@components/common/section/Section';
 
-import LoadingExpansibleTextSection from './LoadingExpansibleTextSection';
-
-const MediaItemDescriptionWrapper = styled(View)`
-  padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize * 2}px;
-`;
+import LoadingExpansibleTextSection from './loading-expansible-text-section/LoadingExpansibleTextSection';
+import * as Styles from './ExpansibleTextSection.styles';
 
 type Props = {
   sectionTitle: string;
@@ -27,13 +20,13 @@ const ExpansibleTextSection = ({ sectionTitle, isLoading, text }: Props) => (
     {isLoading ? (
       <LoadingExpansibleTextSection />
     ) : (
-      <MediaItemDescriptionWrapper
+      <Styles.MediaItemDescriptionWrapper
         testID="media-item-description-wrapper"
       >
         <MediaItemDescription
           description={text}
         />
-      </MediaItemDescriptionWrapper>
+      </Styles.MediaItemDescriptionWrapper>
     )}
   </Section>
 );

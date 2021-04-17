@@ -2,11 +2,11 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 
-import Section from '@components/common/Section';
+import Section from '@components/common/section/Section';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
-import PeopleListItem from './PeopleListItem';
+import PeopleListItem from './people-list-item/PeopleListItem';
 import usePeopleList from './usePeopleList';
 
 type Props = {

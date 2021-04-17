@@ -1,21 +1,14 @@
 import React from 'react';
-import { FlatList, Text } from 'react-native';
-import styled from 'styled-components';
+import { FlatList } from 'react-native';
 
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import * as Types from '@local-types';
 import metrics from '@styles/metrics';
 
-import RecentSearchListItem from './RecentSearchesListItem';
+import RecentSearchListItem from './recent-searchers-list-item/RecentSearchesListItem';
 import useRecentSearches from './useRecentSearches';
-
-const RecentText = styled(Text)`
-  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  color: ${({ theme }) => theme.colors.text};
-  font-family: CircularStd-Bold;
-`;
+import * as Styles from './RecentSearches.styles';
 
 type Props = {
   onPressItem: (recentSearchItem: Types.RecentSearchItem) => void;
@@ -39,7 +32,7 @@ const RecentSearches = ({ onPressItem, searchType }: Props) => {
         paddingTop: metrics.largeSize,
       }}
       ListHeaderComponent={() => recentSearches.length > 0 && (
-      <RecentText>{t(TRANSLATIONS.SEARCH_RECENT)}</RecentText>
+      <Styles.RecentText>{t(TRANSLATIONS.SEARCH_RECENT)}</Styles.RecentText>
       )}
       renderItem={({ item }) => (
         <RecentSearchListItem

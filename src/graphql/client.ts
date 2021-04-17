@@ -9,8 +9,6 @@ import { ApolloLink } from 'apollo-link';
 
 import introspectionQueryResultData from '../../fragmentTypes.json';
 
-console.log(SERVER_URL);
-
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, path }) => {

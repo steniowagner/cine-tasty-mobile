@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
 
-import * as S from './thumbs-gallery-list-item-styles';
+import * as Styles from './ThumbsGalleryListItem.styles';
 
 type ThumbListItemProps = {
   onPress: () => void;
@@ -11,7 +11,7 @@ type ThumbListItemProps = {
 };
 
 const ThumbListItem = ({ isSelected, onPress, image }: ThumbListItemProps) => (
-  <S.Wrapper
+  <Styles.Wrapper
     isSelected={isSelected}
     onPress={onPress}
     testID="thumb-list-item"
@@ -24,10 +24,10 @@ const ThumbListItem = ({ isSelected, onPress, image }: ThumbListItemProps) => (
       style={{
         width: '100%',
         height: '100%',
-        borderRadius: S.BORDER_RADIUS,
+        borderRadius: Styles.BORDER_RADIUS,
       }}
     />
-  </S.Wrapper>
+  </Styles.Wrapper>
 );
 
 const shouldComponentUpdate = (

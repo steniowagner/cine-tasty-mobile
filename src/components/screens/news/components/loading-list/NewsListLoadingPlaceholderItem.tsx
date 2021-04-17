@@ -3,43 +3,34 @@ import React from 'react';
 import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
 import metrics from '@styles/metrics';
 
-import {
-  TextWrapper as TextPlaceholderWrapper,
-  LoadingWrapper,
-  imageWrapper,
-} from '../list-item/common-styles';
-
-const textPlaceholderStyle = {
-  width: '100%',
-  height: metrics.getWidthFromDP('8%'),
-  borderRadius: metrics.extraSmallSize,
-};
+import * as NewsListItemStyles from '../list-item/NewsListItem.styles';
+import * as Styles from './NewsListLoadingPlaceholderItem.styles';
 
 type Props = {
   index: number;
 };
 
 const NewsListItemPlaceholder = ({ index }: Props) => (
-  <LoadingWrapper
+  <NewsListItemStyles.LoadingWrapper
     testID="news-list-item"
   >
     <LoadingPlaceholder
-      style={imageWrapper}
+      style={NewsListItemStyles.imageWrapper}
       indexToDelayAnimation={index}
     />
-    <TextPlaceholderWrapper>
+    <NewsListItemStyles.TextWrapper>
       <LoadingPlaceholder
         style={{
           marginBottom: metrics.mediumSize,
-          ...textPlaceholderStyle,
+          ...Styles.textPlaceholderStyle,
         }}
         indexToDelayAnimation={index}
       />
       <LoadingPlaceholder
-        style={textPlaceholderStyle}
+        style={Styles.textPlaceholderStyle}
       />
-    </TextPlaceholderWrapper>
-  </LoadingWrapper>
+    </NewsListItemStyles.TextWrapper>
+  </NewsListItemStyles.LoadingWrapper>
 );
 
 export default NewsListItemPlaceholder;

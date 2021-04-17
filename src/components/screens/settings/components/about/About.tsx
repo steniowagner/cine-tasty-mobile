@@ -1,99 +1,13 @@
 import React from 'react';
-import {
-  TouchableOpacity, Linking, Image, Text, View,
-} from 'react-native';
+import { Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
-import { light as lightTheme } from '@styles/themes/light';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
 import socialNetworks from './socialNetworks';
-
-type SocialNetworkButtonStyleProps = {
-  isMiddle: boolean;
-  color: string;
-};
-
-const Wrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CardWrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('85%')}px;
-  align-items: center;
-  padding-vertical: ${({ theme }) => theme.metrics.getWidthFromDP('8%')}px;
-  background-color: white;
-  border-radius: ${({ theme }) => theme.metrics.smallSize}px;
-`;
-
-const NameText = styled(Text)`
-  font-family: CircularStd-Black;
-  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
-  color: ${lightTheme.colors.text};
-  text-align: center;
-`;
-
-const SoftwareEngineerText = styled(Text)`
-  margin-right: ${({ theme }) => theme.metrics.smallSize}px;
-  font-family: CircularStd-Medium;
-  font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
-  color: ${lightTheme.colors.subText};
-  text-align: center;
-`;
-
-const AboutText = styled(Text)`
-  margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
-  margin-bottom: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  font-family: CircularStd-Medium;
-  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('4.5%')}px;
-  padding-horizontal: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  color: ${lightTheme.colors.text};
-  text-align: center;
-`;
-
-const SocialNetworkButtonsWrapper = styled(View)`
-  width: 80%;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-`;
-
-const SocialNetworkButton = styled(TouchableOpacity)<SocialNetworkButtonStyleProps>`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('14%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('14%')}px;
-  justify-content: center;
-  align-items: center;
-  margin-top: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  margin-horizontal: ${({ isMiddle, theme }) => (isMiddle ? theme.metrics.extraLargeSize : 0)}px;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('7%')}px;
-  background-color: ${({ color }) => color};
-`;
-
-const BeautifulImage = styled(Image).attrs(() => ({
-  source: {
-    uri:
-      'https://s3-sa-east-1.amazonaws.com/bon-appetit-resources/user-profile/user-profile.jpg',
-  },
-}))`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('36%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('36%')}px;
-  align-self: center;
-  margin-bottom: ${({ theme }) => theme.metrics.getWidthFromDP('8%')}px;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('18%')}px;
-  border-width: ${({ theme }) => theme.metrics.smallSize}px;
-`;
-
-const SoftwareEngineerWrapper = styled(View)`
-  flex-direction: row;
-  align-items: center;
-  margin-top: ${({ theme }) => theme.metrics.extraSmallSize}px;
-`;
+import * as Styles from './About.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
@@ -101,8 +15,8 @@ const About = () => {
   const { t } = useTranslation();
 
   return (
-    <Wrapper>
-      <CardWrapper
+    <Styles.Wrapper>
+      <Styles.CardWrapper
         style={{
           shadowColor: '#000',
           shadowOffset: {
@@ -114,20 +28,22 @@ const About = () => {
           elevation: 2,
         }}
       >
-        <BeautifulImage />
-        <NameText>Stenio Wagner</NameText>
-        <SoftwareEngineerWrapper>
-          <SoftwareEngineerText>{t(TRANSLATIONS.SOFTWARE_ENGINEER)}</SoftwareEngineerText>
+        <Styles.BeautifulImage />
+        <Styles.NameText>Stenio Wagner</Styles.NameText>
+        <Styles.SoftwareEngineerWrapper>
+          <Styles.SoftwareEngineerText>
+            {t(TRANSLATIONS.SOFTWARE_ENGINEER)}
+          </Styles.SoftwareEngineerText>
           <SVGIcon
             size={DEFAULT_ICON_SIZE}
             id="heart"
             colorThemeRef="red"
           />
-        </SoftwareEngineerWrapper>
-        <AboutText>{t(TRANSLATIONS.ABOUT)}</AboutText>
-        <SocialNetworkButtonsWrapper>
+        </Styles.SoftwareEngineerWrapper>
+        <Styles.AboutText>{t(TRANSLATIONS.ABOUT)}</Styles.AboutText>
+        <Styles.SocialNetworkButtonsWrapper>
           {socialNetworks.map((socialNetwork, index) => (
-            <SocialNetworkButton
+            <Styles.SocialNetworkButton
               onPress={() => Linking.openURL(socialNetwork.url)}
               color={socialNetwork.color}
               key={socialNetwork.url}
@@ -138,11 +54,11 @@ const About = () => {
                 colorThemeRef="white"
                 id={socialNetwork.icon}
               />
-            </SocialNetworkButton>
+            </Styles.SocialNetworkButton>
           ))}
-        </SocialNetworkButtonsWrapper>
-      </CardWrapper>
-    </Wrapper>
+        </Styles.SocialNetworkButtonsWrapper>
+      </Styles.CardWrapper>
+    </Styles.Wrapper>
   );
 };
 

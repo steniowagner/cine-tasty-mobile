@@ -1,27 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { View, Text } from 'react-native';
-import styled from 'styled-components';
 
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import metrics from '@styles/metrics';
 
+import * as Styles from './StarsVotes.styles';
 import useStarsVotes from './useStarsVotes';
-
-type VotesTextStyleProps = {
-  textColor?: string;
-};
-
-const Wrapper = styled(View)`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const VotesText = styled(Text)<VotesTextStyleProps>`
-  font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
-  color: ${({ textColor, theme }) => textColor || theme.colors.text};
-  font-family: CircularStd-Medium;
-`;
 
 type Props = {
   textColor?: string;
@@ -39,19 +23,19 @@ const StarsVotes = ({
   const shouldShowVotes = withText && !!votes;
 
   return (
-    <Wrapper>
+    <Styles.Wrapper>
       {shouldShowVotes && (
-        <VotesText
+        <Styles.VotesText
           textColor={textColor}
         >
           {`${votes.toFixed(1)} `}
-        </VotesText>
+        </Styles.VotesText>
       )}
-      <Wrapper
+      <Styles.Wrapper
         testID="stars-wrapper"
       >
         {numberFullStars > 0 && (
-          <Wrapper
+          <Styles.Wrapper
             testID="full-stars-wrapper"
           >
             {Array(numberFullStars)
@@ -67,10 +51,10 @@ const StarsVotes = ({
                   }}
                 />
               ))}
-          </Wrapper>
+          </Styles.Wrapper>
         )}
         {numberHalfStars > 0 && (
-          <Wrapper
+          <Styles.Wrapper
             testID="half-stars-wrapper"
           >
             {Array(numberHalfStars)
@@ -86,10 +70,10 @@ const StarsVotes = ({
                   }}
                 />
               ))}
-          </Wrapper>
+          </Styles.Wrapper>
         )}
         {numberEmptyStars > 0 && (
-          <Wrapper
+          <Styles.Wrapper
             testID="empty-stars-wrapper"
           >
             {Array(numberEmptyStars)
@@ -105,17 +89,17 @@ const StarsVotes = ({
                   }}
                 />
               ))}
-          </Wrapper>
+          </Styles.Wrapper>
         )}
-      </Wrapper>
+      </Styles.Wrapper>
       {shouldShowVoteCount && (
-        <VotesText
+        <Styles.VotesText
           textColor={textColor}
         >
           {` (${voteCount})`}
-        </VotesText>
+        </Styles.VotesText>
       )}
-    </Wrapper>
+    </Styles.Wrapper>
   );
 };
 

@@ -1,27 +1,16 @@
 import React, { useLayoutEffect } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import styled from 'styled-components';
 
-import RoundedButton from '@components/common/RoundedButton';
+import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
 import { QuizStackParams } from '../../routes/route-params-types';
-import ResultListItem from './ResultListItem';
+import ResultListItem from './result-list-item/ResultListItem';
+import * as Styles from './Results.styles';
 import useResults from './useResults';
-
-const Wrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  align-items: center;
-`;
-
-const PlayAgainButtonWrapper = styled(View)`
-  position: absolute;
-  bottom: ${({ theme }) => theme.metrics.getWidthFromDP('8%')}px;
-`;
 
 type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'RESULTS'>;
 
@@ -47,7 +36,7 @@ const Results = ({ navigation, route }: Props) => {
   }, [results]);
 
   return (
-    <Wrapper>
+    <Styles.Wrapper>
       <FlatList
         renderItem={({ item }) => (
           <ResultListItem
@@ -62,13 +51,13 @@ const Results = ({ navigation, route }: Props) => {
         keyExtractor={(item) => item.question}
         data={results}
       />
-      <PlayAgainButtonWrapper>
+      <Styles.PlayAgainButtonWrapper>
         <RoundedButton
           text={t(TRANSLATIONS.QUIZ_PLAY_AGAIN)}
           onPress={onPressPlayAgain}
         />
-      </PlayAgainButtonWrapper>
-    </Wrapper>
+      </Styles.PlayAgainButtonWrapper>
+    </Styles.Wrapper>
   );
 };
 

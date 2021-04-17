@@ -1,10 +1,18 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider, DefaultTheme } from 'styled-components';
 
 import theme from '@styles/theme';
 
-import SearchBar, { Props } from './SearchBar.android';
+import SearchBar from './SearchBar.android';
+
+type Props = {
+  onTypeSearchQuery: (query: string) => void;
+  onPressSearch: () => void;
+  onPressClose: () => void;
+  placeholder: string;
+  theme: DefaultTheme;
+};
 
 const renderSearchBar = ({
   onTypeSearchQuery,

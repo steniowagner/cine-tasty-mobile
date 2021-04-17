@@ -1,19 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
-import styled from 'styled-components';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { HomeStackParams } from '../../home/routes/route-params-types';
-import SettingsSection from './SettingsSection';
+import SettingsSection from './settings-section/SettingsSection';
+import * as Styles from './Settings.styles';
 import useSettings from './useSettings';
-
-const Wrapper = styled(View)`
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  padding-horizontal: ${({ theme }) => theme.metrics.mediumSize}px;
-  padding-top: ${({ theme }) => theme.metrics.extraLargeSize}px;
-`;
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'SETTINGS'>;
 
@@ -25,7 +16,7 @@ const Settings = ({ navigation }: Props) => {
   const { sections } = useSettings({ navigation });
 
   return (
-    <Wrapper
+    <Styles.Wrapper
       testID="settings-wrapper"
     >
       {sections.map((section) => (
@@ -36,7 +27,7 @@ const Settings = ({ navigation }: Props) => {
           key={section.title}
         />
       ))}
-    </Wrapper>
+    </Styles.Wrapper>
   );
 };
 

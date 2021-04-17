@@ -1,23 +1,11 @@
 import React from 'react';
-import { Animated } from 'react-native';
-import styled from 'styled-components';
 
 import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
 import { useLoadListItemImage } from '@hooks';
 import metrics from '@styles/metrics';
 
-const IMAGE_SQUARE_PERCENTAGE = '28%';
-
-const FallbackImageWrapper = styled(Animated.View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP(IMAGE_SQUARE_PERCENTAGE)}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP(IMAGE_SQUARE_PERCENTAGE)}px;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  border-radius: ${({ theme }) => theme.metrics.getWidthFromDP('1%')}px;
-  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
-`;
+import * as Styles from './ProfileImage.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
@@ -45,13 +33,13 @@ const ProfileImage = ({ profileImage }: Props) => {
         image={profileImage}
         testID="profile-image"
         style={{
-          width: metrics.getWidthFromDP(IMAGE_SQUARE_PERCENTAGE),
-          height: metrics.getWidthFromDP(IMAGE_SQUARE_PERCENTAGE),
+          width: metrics.getWidthFromDP(Styles.IMAGE_SQUARE_PERCENTAGE),
+          height: metrics.getWidthFromDP(Styles.IMAGE_SQUARE_PERCENTAGE),
           borderRadius: metrics.extraSmallSize,
         }}
       />
       {isFallbackImageVisible && (
-        <FallbackImageWrapper
+        <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
@@ -72,7 +60,7 @@ const ProfileImage = ({ profileImage }: Props) => {
               id: 'account',
             },
           })}
-        </FallbackImageWrapper>
+        </Styles.FallbackImageWrapper>
       )}
     </>
   );
