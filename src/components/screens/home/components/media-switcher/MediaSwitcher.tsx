@@ -5,13 +5,13 @@ import { DefaultTheme, withTheme } from 'styled-components';
 import useMediaSwitcher, { SwitchItem } from './useMediaSwitcher';
 import * as Styles from './MediaSwitcher.styles';
 
-type Props = {
+type MediaSwitcherProps = {
   theme: DefaultTheme;
   items: SwitchItem[];
   isDisabled: boolean;
 };
 
-const MediaSwitcher = ({ isDisabled, items, theme }: Props) => {
+const MediaSwitcher = ({ isDisabled, items, theme }: MediaSwitcherProps) => {
   const {
     switchItemWidth,
     wrapperOpacity,

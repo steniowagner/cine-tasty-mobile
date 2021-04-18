@@ -28,7 +28,7 @@ type TVariables = {
   input: SchemaTypes.SearchInput;
 };
 
-type Props = {
+type UsePaginatedSearchProps = {
   search: (variables: TVariables) => Promise<ApolloQueryResult<Types.SearchResult>>;
   concatPaginatedItems: (data: Types.SearchResult) => void;
   searchType: SchemaTypes.SearchType;
@@ -42,7 +42,7 @@ const usePaginatedSearch = ({
   searchType,
   onError,
   search,
-}: Props) => {
+}: UsePaginatedSearchProps) => {
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
 
   const onSearchByPagination = useCallback(

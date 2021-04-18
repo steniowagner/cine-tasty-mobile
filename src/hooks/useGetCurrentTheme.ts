@@ -5,11 +5,11 @@ import * as Types from '@local-types';
 
 import { useSystemThemePreference } from './useSystemThemePreference';
 
-type Props = {
+type UseGetCurrentThemeProps = {
   theme: DefaultTheme;
 };
 
-export const useGetCurrentTheme = ({ theme }: Props) => {
+export const useGetCurrentTheme = ({ theme }: UseGetCurrentThemeProps) => {
   const { systemTheme } = useSystemThemePreference();
 
   const currentTheme = useMemo(() => {

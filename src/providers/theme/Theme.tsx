@@ -13,11 +13,11 @@ type ThemeContextProps = {
   themeId: Types.ThemeId;
 };
 
-type Props = {
+type ThemeContextProviderProps = {
   children: JSX.Element;
 };
 
-const ThemeContextProvider = ({ children }: Props) => {
+const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
   const {
     handleInitialThemeSelection,
     onSetSystemTheme,

@@ -20,12 +20,12 @@ type ImagesGalleryNavigationProp = StackNavigationProp<
 
 type ImagesGalleryRouteProp = RouteProp<ImagesGalleryParams, 'IMAGES_GALLERY'>;
 
-type Props = {
+type ImagesGalleryProps = {
   navigation: ImagesGalleryNavigationProp;
   route: ImagesGalleryRouteProp;
 };
 
-const ImagesGallery = ({ navigation, route }: Props) => {
+const ImagesGallery = ({ navigation, route }: ImagesGalleryProps) => {
   const {
     isIndexesAllowedToRenderImage,
     onFlatlistMomentumScrollEnd,

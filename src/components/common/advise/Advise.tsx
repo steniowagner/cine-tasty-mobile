@@ -6,7 +6,7 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './Advise.styles';
 
-type Props = {
+type AdviseProps = {
   icon: SupportedIcons;
   description: string;
   suggestion: string;
@@ -15,7 +15,7 @@ type Props = {
 
 const Advise = ({
   description, suggestion, title, icon,
-}: Props) => (
+}: AdviseProps) => (
   <Styles.Wrapper
     testID="advise-wrapper"
   >

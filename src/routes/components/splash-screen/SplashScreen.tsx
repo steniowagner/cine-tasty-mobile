@@ -3,12 +3,12 @@ import { DefaultTheme, withTheme } from 'styled-components';
 
 import useSplashScreen from './useSplashScreen';
 
-type Props = {
+type SplashScreenProps = {
   theme: DefaultTheme;
   onLoad: () => void;
 };
 
-const SplashScreen = ({ onLoad, theme }: Props) => {
+const SplashScreen = ({ onLoad, theme }: SplashScreenProps) => {
   useSplashScreen({ onLoad, theme });
 
   return <></>;

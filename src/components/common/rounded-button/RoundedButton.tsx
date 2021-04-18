@@ -2,13 +2,13 @@ import React from 'react';
 
 import * as Styles from './RoundedButton.styles';
 
-type Props = {
+type RoundedButtonProps = {
   isDisabled?: boolean;
   onPress: () => void;
   text: string;
 };
 
-const RoundedButton = ({ isDisabled, onPress, text }: Props) => (
+const RoundedButton = ({ isDisabled, onPress, text }: RoundedButtonProps) => (
   <Styles.Wrapper
     testID="rounded-button"
     disabled={isDisabled}

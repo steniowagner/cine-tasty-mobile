@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 
 import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
 import TVShowSeasonDetail, {
-  Props as TVShowSeasonDetailExternalProps,
+  TVShowSeasonsDetailProps,
 } from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
 import MovieDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import Reviews, {
-  Props as ReviewsExternalParams,
+  ReviewsExternalParams,
 } from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
@@ -20,11 +20,11 @@ import LOCAL_ROUTES from './route-names';
 
 const Stack = createStackNavigator();
 
-type Props = {
+type FamousStackProps = {
   theme: DefaultTheme;
 };
 
-const FamousStack = ({ theme }: Props) => {
+const FamousStack = ({ theme }: FamousStackProps) => {
   const { t } = useTranslation();
 
   return (
@@ -71,7 +71,7 @@ const FamousStack = ({ theme }: Props) => {
       />
       <Stack.Screen
         name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
-        options={({ route }: TVShowSeasonDetailExternalProps) => ({
+        options={({ route }: TVShowSeasonsDetailProps) => ({
           ...getDefaultHeaderOptions(),
           headerTintColor: theme.colors.buttonText,
           headerStyle: {

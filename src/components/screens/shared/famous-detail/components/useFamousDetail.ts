@@ -7,11 +7,11 @@ import getRandomImageFromDataset from '@utils/getRandomImageFromDataset';
 import { GET_FAMOUS_DETAIL } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 
-type Props = {
+type UseFamousDetailProps = {
   id: number;
 };
 
-const useFamousDetail = ({ id }: Props) => {
+const useFamousDetail = ({ id }: UseFamousDetailProps) => {
   const { data, error, loading } = useQuery<
     SchemaTypes.GetFamousDetail,
     SchemaTypes.GetFamousDetailVariables

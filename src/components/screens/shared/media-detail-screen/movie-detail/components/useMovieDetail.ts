@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_MOVIE_DETAIL } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 
-type Props = {
+type UseMovieDetailProps = {
   hasVoteAverage: boolean;
   hasGenresIds: boolean;
   hasVoteCount: boolean;
@@ -21,8 +21,11 @@ type Directives = {
 type Variables = Directives & SchemaTypes.MovieDetailVariables;
 
 const useMovieDetail = ({
-  hasVoteAverage, hasGenresIds, hasVoteCount, id,
-}: Props) => {
+  hasVoteAverage,
+  hasGenresIds,
+  hasVoteCount,
+  id,
+}: UseMovieDetailProps) => {
   const { t } = useTranslation();
 
   const { data, error, loading } = useQuery<SchemaTypes.MovieDetail, Variables>(

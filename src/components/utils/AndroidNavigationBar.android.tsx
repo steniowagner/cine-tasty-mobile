@@ -5,11 +5,11 @@ import { DefaultTheme, withTheme } from 'styled-components';
 
 import * as Types from '@local-types';
 
-type Props = {
+type AndroidNavigationBarProps = {
   theme: DefaultTheme;
 };
 
-const AndroidNavigationBar = ({ theme }: Props) => {
+const AndroidNavigationBar = ({ theme }: AndroidNavigationBarProps) => {
   useEffect(() => {
     const isLight = Types.ThemeId.LIGHT === theme.id;
 

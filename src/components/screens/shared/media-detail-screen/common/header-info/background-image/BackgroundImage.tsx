@@ -7,13 +7,13 @@ import { useGetCurrentTheme } from '@hooks';
 
 import * as Styles from './BackgroundImage.styles';
 
-type Props = {
+type BackgroundImageProps = {
   theme: DefaultTheme;
   isLoading: boolean;
   imageURL: string;
 };
 
-const BackgroundImage = ({ isLoading, imageURL, theme }: Props) => {
+const BackgroundImage = ({ isLoading, imageURL, theme }: BackgroundImageProps) => {
   const { currentTheme } = useGetCurrentTheme({ theme });
 
   return (

@@ -3,18 +3,18 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { DefaultTheme, withTheme } from 'styled-components';
 
 import TVShowSeasonDetail, {
-  Props as TVShowSeasonDetailExternalProps,
+  TVShowSeasonsDetailProps,
 } from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
 import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
 import MoviedDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
 import Reviews, {
-  Props as ReviewsExternalParams,
+  ReviewsExternalParams,
 } from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
 
 import MediaSectionViewAll, {
-  Props as MediaSectionViewAllScreenProps,
+  ExternalProps as MediaSectionViewAllScreenProps,
 } from '../components/media-section-view-all/MediaSectionViewAll';
 import SettingsScreen from '../../settings/routes/stack-routes';
 import LOCAL_ROUTES from './route-names';
@@ -22,11 +22,11 @@ import Home from '../components/Home';
 
 const Stack = createStackNavigator();
 
-type Props = {
+type HomeStackProps = {
   theme: DefaultTheme;
 };
 
-const HomeStack = ({ theme }: Props) => (
+const HomeStack = ({ theme }: HomeStackProps) => (
   <Stack.Navigator
     headerMode="screen"
   >
@@ -78,7 +78,7 @@ const HomeStack = ({ theme }: Props) => (
     />
     <Stack.Screen
       name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
-      options={({ route }: TVShowSeasonDetailExternalProps) => ({
+      options={({ route }: TVShowSeasonsDetailProps) => ({
         ...getDefaultHeaderOptions(),
         headerTintColor: theme.colors.buttonText,
         headerStyle: {

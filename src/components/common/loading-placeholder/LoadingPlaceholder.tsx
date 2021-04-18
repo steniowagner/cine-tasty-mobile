@@ -4,7 +4,7 @@ import { withTheme, DefaultTheme } from 'styled-components';
 
 import useLoadingPlaceholder from './useLoadingPlaceholder';
 
-type Props = {
+type LoadingPlaceholderProps = {
   indexToDelayAnimation?: number;
   theme: DefaultTheme;
   testID?: string;
@@ -16,7 +16,7 @@ const LoadingPlaceholder = ({
   testID,
   style,
   theme,
-}: Props) => {
+}: LoadingPlaceholderProps) => {
   const { opacity } = useLoadingPlaceholder({
     indexToDelayAnimation,
   });

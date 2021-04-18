@@ -14,7 +14,7 @@ const defaultProps = {
   hasError: false,
 };
 
-type Props = {
+type RenderPaginationFooterProps = {
   onPressReloadButton: CallableFunction;
   isPaginating: boolean;
   hasError: boolean;
@@ -24,7 +24,7 @@ const renderPaginationFooter = ({
   onPressReloadButton,
   isPaginating,
   hasError,
-}: Props = defaultProps) => (
+}: RenderPaginationFooterProps = defaultProps) => (
   <ThemeProvider theme={theme}>
     <PaginationFooter
       onPressReloadButton={onPressReloadButton}

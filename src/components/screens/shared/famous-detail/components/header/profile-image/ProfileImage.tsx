@@ -9,11 +9,11 @@ import * as Styles from './ProfileImage.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
-type Props = {
+type ProfileImageProps = {
   profileImage: string;
 };
 
-const ProfileImage = ({ profileImage }: Props) => {
+const ProfileImage = ({ profileImage }: ProfileImageProps) => {
   const {
     isFallbackImageVisible,
     hasError,

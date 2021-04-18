@@ -10,12 +10,12 @@ import EpisodeDetail from './episode-detail/EpisodeDetail';
 import * as Styles from './TVShowSeasonsListItem.styles';
 import ModalDetail from '../modal-detail/ModalDetail';
 
-type Props = {
+type TVShowSeasonsListItemProps = {
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
   index: number;
 };
 
-const TVShowSeasonsListItem = ({ episode, index }: Props) => {
+const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) => {
   const { onPressListItem, onCloseModal, isModalOpen } = useTVShowSeasonsListItem();
 
   return (

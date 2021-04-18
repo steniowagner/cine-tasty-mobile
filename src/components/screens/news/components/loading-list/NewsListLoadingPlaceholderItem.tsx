@@ -6,11 +6,11 @@ import metrics from '@styles/metrics';
 import * as NewsListItemStyles from '../list-item/NewsListItem.styles';
 import * as Styles from './NewsListLoadingPlaceholderItem.styles';
 
-type Props = {
+type NewsListItemPlaceholderProps = {
   index: number;
 };
 
-const NewsListItemPlaceholder = ({ index }: Props) => (
+const NewsListItemPlaceholder = ({ index }: NewsListItemPlaceholderProps) => (
   <NewsListItemStyles.LoadingWrapper
     testID="news-list-item"
   >

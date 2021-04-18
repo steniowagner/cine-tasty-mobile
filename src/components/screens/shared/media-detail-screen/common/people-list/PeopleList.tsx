@@ -9,7 +9,7 @@ import * as Types from '@local-types';
 import PeopleListItem from './people-list-item/PeopleListItem';
 import usePeopleList from './usePeopleList';
 
-type Props = {
+type PeopleListProps = {
   onPressItem: (id: string, name: string, image: string) => void;
   dataset:
     | Types.CrewDataset
@@ -21,8 +21,12 @@ type Props = {
 };
 
 const PeopleList = ({
-  sectionTitle, onPressItem, noSubtext, dataset, type,
-}: Props) => {
+  sectionTitle,
+  onPressItem,
+  noSubtext,
+  dataset,
+  type,
+}: PeopleListProps) => {
   const { items } = usePeopleList({ dataset, type });
 
   return (

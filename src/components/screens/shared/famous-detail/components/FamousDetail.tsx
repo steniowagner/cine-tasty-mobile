@@ -31,13 +31,13 @@ type QuestionsScreenNavigationProp = StackNavigationProp<
 
 type QuestionsScreenRouteProp = RouteProp<FamousDetailParams, 'FAMOUS_DETAIL'>;
 
-type Props = {
+type FamousDetailProps = {
   navigation: QuestionsScreenNavigationProp;
   route: QuestionsScreenRouteProp;
   theme: DefaultTheme;
 };
 
-const FamousDetail = ({ navigation, theme, route }: Props) => {
+const FamousDetail = ({ navigation, theme, route }: FamousDetailProps) => {
   const { currentTheme } = useGetCurrentTheme({ theme });
   const { barStyle } = useStatusBarStyle({ theme });
 

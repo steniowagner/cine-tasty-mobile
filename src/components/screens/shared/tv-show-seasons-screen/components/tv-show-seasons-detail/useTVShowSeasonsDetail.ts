@@ -18,12 +18,12 @@ type QueryState = {
   hasError: boolean;
 };
 
-type Props = {
+type UseTVShowSeasonsDetailProps = {
   season: number;
   id: string;
 };
 
-const useTVShowSeasonsDetail = ({ season, id }: Props) => {
+const useTVShowSeasonsDetail = ({ season, id }: UseTVShowSeasonsDetailProps) => {
   const [queryState, setQueryState] = useState<QueryState>(INITIAL_QUERY_STATE);
 
   const { t } = useTranslation();

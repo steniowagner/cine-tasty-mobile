@@ -11,12 +11,12 @@ import metrics from '@styles/metrics';
 import { MovieDetailInternalternalParams } from '../routes/route-params-types';
 import * as Styles from './Reviews.styles';
 
-export type Props = {
+export type ReviewsExternalParams = {
   navigation: StackNavigationProp<MovieDetailInternalternalParams, 'REVIEWS'>;
   route: RouteProp<MovieDetailInternalternalParams, 'REVIEWS'>;
 };
 
-const Reviews = ({ route }: Props) => {
+const Reviews = ({ route }: ReviewsExternalParams) => {
   const { t } = useTranslation();
 
   return (

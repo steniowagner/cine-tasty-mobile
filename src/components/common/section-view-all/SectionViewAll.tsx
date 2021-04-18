@@ -7,7 +7,7 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './SectionViewAll.styles';
 
-type Props = {
+type SectionViewAllProps = {
   onPressViewAll: () => void;
   withViewAll?: boolean;
   sectionTitle: string;
@@ -19,7 +19,7 @@ const SectionViewAll = ({
   sectionTitle,
   withViewAll = true,
   id,
-}: Props) => {
+}: SectionViewAllProps) => {
   const { t } = useTranslation();
 
   return (

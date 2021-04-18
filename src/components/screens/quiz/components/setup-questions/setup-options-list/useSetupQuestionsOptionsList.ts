@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-type Props = {
+type UseSetupQuestionsOptionsListProps = {
   indexLastOptionSelected: number;
 };
 
-const useSetupQuestionsOptionsList = ({ indexLastOptionSelected }: Props) => {
+const useSetupQuestionsOptionsList = ({
+  indexLastOptionSelected,
+}: UseSetupQuestionsOptionsListProps) => {
   const [indexOptionSelected, setIndexOptionSelected] = useState<number>(
     indexLastOptionSelected,
   );

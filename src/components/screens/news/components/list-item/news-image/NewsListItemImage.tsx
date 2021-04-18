@@ -9,11 +9,11 @@ import * as Styles from './NewsListItemImage.styles';
 export const ANIMATION_DURATION = 400;
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
-type Props = {
+type NewsListItemImageProps = {
   image: string;
 };
 
-const NewsListItemImage = ({ image }: Props) => {
+const NewsListItemImage = ({ image }: NewsListItemImageProps) => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState<boolean>(true);
   const [isImageWithError, setIsImageWithError] = useState<boolean>(false);
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);

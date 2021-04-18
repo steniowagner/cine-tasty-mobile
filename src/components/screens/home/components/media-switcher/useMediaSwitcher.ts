@@ -14,12 +14,12 @@ export type SwitchItem = {
   onPress: () => void;
 };
 
-type Props = {
+type UseMediaSwitcherProps = {
   theme: DefaultTheme;
   items: SwitchItem[];
 };
 
-const useMediaSwitcher = ({ theme, items }: Props) => {
+const useMediaSwitcher = ({ theme, items }: UseMediaSwitcherProps) => {
   const [switchItemsWidths, setSwitchItemsWidth] = useState<number[]>([]);
   const [isSwitching, setIsSwitching] = useState<boolean>(false);
   const [indexSelected, setIndexSelected] = useState<number>(0);

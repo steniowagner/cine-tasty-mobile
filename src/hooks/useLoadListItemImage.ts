@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 
-type Props = {
+type UseLoadListItemImageProps = {
   image: string;
 };
 
 export const ANIMATION_DURATION = 400;
 
-export const useLoadListItemImage = ({ image }: Props) => {
+export const useLoadListItemImage = ({ image }: UseLoadListItemImageProps) => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState<boolean>(true);
   const [hasError, setImageHasError] = useState<boolean>(false);
   const [isLoaded, setIsImageLoaded] = useState<boolean>(false);

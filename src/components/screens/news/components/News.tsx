@@ -26,11 +26,11 @@ const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
 type NewsScreenNavigationProp = StackNavigationProp<NewsStackParams, 'NEWS'>;
 
-type Props = {
+type NewsProps = {
   navigation: NewsScreenNavigationProp;
 };
 
-const News = ({ navigation }: Props) => {
+const News = ({ navigation }: NewsProps) => {
   const {
     onPressFooterReloadButton,
     onSelectArticleLanguage,

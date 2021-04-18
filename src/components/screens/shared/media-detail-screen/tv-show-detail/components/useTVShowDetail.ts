@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_TV_SHOW_DETAIL } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 
-type Props = {
+type UseTVShowDetailProps = {
   hasVoteAverage: boolean;
   hasGenresIds: boolean;
   hasVoteCount: boolean;
@@ -21,8 +21,11 @@ type Directives = {
 type Variables = Directives & SchemaTypes.TVShowDetailVariables;
 
 const useTVShowDetail = ({
-  hasVoteAverage, hasGenresIds, hasVoteCount, id,
-}: Props) => {
+  hasVoteAverage,
+  hasGenresIds,
+  hasVoteCount,
+  id,
+}: UseTVShowDetailProps) => {
   const { t } = useTranslation();
 
   const { data, error, loading } = useQuery<SchemaTypes.TVShowDetail, Variables>(

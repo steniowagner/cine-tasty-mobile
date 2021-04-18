@@ -6,7 +6,7 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './HeaderIconButton.styles';
 
-type Props = {
+type HeaderIconButtonProps = {
   withMarginRight?: boolean;
   withMarginLeft?: boolean;
   onPress: () => void;
@@ -20,7 +20,7 @@ const HeaderIconButton = ({
   disabled,
   iconName,
   onPress,
-}: Props) => (
+}: HeaderIconButtonProps) => (
   <Styles.Wrapper
     testID={`header-icon-button-wrapper-${iconName}`}
     withMarginRight={withMarginRight}

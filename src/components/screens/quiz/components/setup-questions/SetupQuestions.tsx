@@ -11,11 +11,11 @@ import DropdownOption from './drop-down-option/DropdownOption';
 import useSetupQuestions from './useSetupQuestions';
 import * as Styles from './SetupQuestions.styles';
 
-type Props = {
+type SetupQuestionsProps = {
   navigation: StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
 };
 
-const SetupQuestions = ({ navigation }: Props) => {
+const SetupQuestions = ({ navigation }: SetupQuestionsProps) => {
   const {
     onPressOptionDropdown,
     setNumberOfQuestions,

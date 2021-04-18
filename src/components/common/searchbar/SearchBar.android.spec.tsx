@@ -6,7 +6,7 @@ import theme from '@styles/theme';
 
 import SearchBar from './SearchBar.android';
 
-type Props = {
+type RenderSearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
   onPressSearch: () => void;
   onPressClose: () => void;
@@ -19,7 +19,7 @@ const renderSearchBar = ({
   onPressSearch,
   onPressClose,
   placeholder,
-}: Props) => (
+}: RenderSearchBarProps) => (
   <ThemeProvider theme={theme}>
     <SearchBar
       onTypeSearchQuery={onTypeSearchQuery}

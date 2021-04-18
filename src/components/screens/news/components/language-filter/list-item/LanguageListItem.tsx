@@ -5,7 +5,7 @@ import SVGIcon from '@components/common/svg-icon/SVGIcon';
 
 import * as Styles from './LanguageListItem.styles';
 
-type Props = {
+type LanguageListItemProps = {
   flag: SupportedIcons;
   onPress: () => void;
   isSelected: boolean;
@@ -14,7 +14,7 @@ type Props = {
 
 const LanguageListItem = ({
   isSelected, onPress, name, flag,
-}: Props) => (
+}: LanguageListItemProps) => (
   <Styles.Wrapper
     testID="language-filter-list-item"
     onPress={onPress}

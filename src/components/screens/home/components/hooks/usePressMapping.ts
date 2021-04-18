@@ -15,14 +15,14 @@ type ViewAllProps = {
   viewAllTitle: string;
 };
 
-type Props = {
+type UsePressMappingProps = {
   navigation: HomeScreenNavigationProp;
   isMoviesSelected: boolean;
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
-const usePressMapping = ({ isMoviesSelected, navigation }: Props) => {
+const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps) => {
   const onNavigateToMovieDetailAfterPress = useCallback(
     (movie: Types.SimplifiedMedia): void => {
       navigation.navigate('MOVIE_DETAIL', {

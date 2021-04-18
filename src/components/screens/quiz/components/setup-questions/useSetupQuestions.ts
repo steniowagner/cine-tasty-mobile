@@ -24,11 +24,11 @@ type NavigateToCustomModalProps = {
   option: Types.QuizOption;
 };
 
-type Props = {
+type UseSetupQuestionsProps = {
   navigation: StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
 };
 
-const useSetupQuestions = ({ navigation }: Props) => {
+const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
   const [questionDifficulty, setQuestionDifficulty] = useState<
     Types.QuestionOption<SchemaTypes.QuestionDifficulty>
   >(difficulties[0]);

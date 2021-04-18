@@ -9,13 +9,13 @@ import * as Styles from './ImageListItem.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
-type Props = {
+type ImageListItemProps = {
   onPress: () => void;
   isFirst: boolean;
   image: string;
 };
 
-const ImageListItem = ({ onPress, isFirst, image }: Props) => {
+const ImageListItem = ({ onPress, isFirst, image }: ImageListItemProps) => {
   const {
     isFallbackImageVisible,
     hasError,

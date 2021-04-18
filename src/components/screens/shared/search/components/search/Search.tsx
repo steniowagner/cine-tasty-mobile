@@ -21,12 +21,12 @@ type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH
 
 type SearchScreenRouteProp = RouteProp<SearchStackParams, 'SEARCH'>;
 
-type Props = {
+type SearchProps = {
   navigation: SearchScreenNavigationProp;
   route: SearchScreenRouteProp;
 };
 
-const Search = ({ navigation, route }: Props) => {
+const Search = ({ navigation, route }: SearchProps) => {
   const {
     onPressFooterReloadButton,
     shouldShowEmptyListAdvise,

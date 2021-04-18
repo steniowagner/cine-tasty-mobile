@@ -11,7 +11,7 @@ import languages from './languages';
 
 export const ANIMATION_TIMING = 400;
 
-type Props = {
+type LanguageFilterProps = {
   onSelectLanguage: (language: SchemaTypes.ArticleLanguage) => void;
   lastLanguageSelected: SchemaTypes.ArticleLanguage;
   closeModal: () => void;
@@ -21,7 +21,7 @@ const LanguageFilter = ({
   lastLanguageSelected,
   onSelectLanguage,
   closeModal,
-}: Props) => {
+}: LanguageFilterProps) => {
   const {
     initialFlatListIndex,
     onPressSelectButton,

@@ -7,7 +7,7 @@ import metrics from '@styles/metrics';
 import * as Styles from './StarsVotes.styles';
 import useStarsVotes from './useStarsVotes';
 
-type Props = {
+type StarsVotesProps = {
   textColor?: string;
   withText?: boolean;
   voteCount?: number;
@@ -16,7 +16,7 @@ type Props = {
 
 const StarsVotes = ({
   textColor, voteCount, withText, votes,
-}: Props) => {
+}: StarsVotesProps) => {
   const { numberEmptyStars, numberFullStars, numberHalfStars } = useStarsVotes(votes);
 
   const shouldShowVoteCount = withText && !!voteCount;

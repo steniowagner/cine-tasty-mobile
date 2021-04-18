@@ -8,11 +8,11 @@ import { HomeStackParams } from '../../home/routes/route-params-types';
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'SETTINGS'>;
 
-type Props = {
+type UseSettingsProps = {
   navigation: HomeScreenNavigationProp;
 };
 
-const useSettings = ({ navigation }: Props) => {
+const useSettings = ({ navigation }: UseSettingsProps) => {
   const { t } = useTranslation();
 
   const sections = useMemo(

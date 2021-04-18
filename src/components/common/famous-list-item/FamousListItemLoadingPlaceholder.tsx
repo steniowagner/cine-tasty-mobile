@@ -5,12 +5,15 @@ import metrics from '@styles/metrics';
 import LoadingPlaceholder from '../loading-placeholder/LoadingPlaceholder';
 import getWrapperMeasures from './getWrapperMeasures';
 
-type Props = {
+type FamousListItemLoadingPlaceholderProps = {
   numberOfColumns: number;
   index: number;
 };
 
-const FamousListItemLoadingPlaceholder = ({ numberOfColumns, index }: Props) => {
+const FamousListItemLoadingPlaceholder = ({
+  numberOfColumns,
+  index,
+}: FamousListItemLoadingPlaceholderProps) => {
   const withMargin = index % numberOfColumns === 1;
 
   const wrapperMeasures = getWrapperMeasures(withMargin);

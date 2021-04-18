@@ -8,7 +8,7 @@ import { HomeSection } from '@local-types';
 
 import parseTrendingToSimplifiedMedia from './parseTrendingToSimplifiedMedia';
 
-type Props = {
+type UseTrendingMoviesProps = {
   rawTrendingTVShows: SchemaTypes.TrendingTVShows;
 };
 
@@ -17,7 +17,7 @@ type TrendingItemKey = keyof Omit<
   '__typename'
 >;
 
-const useTrendingMovies = ({ rawTrendingTVShows }: Props) => {
+const useTrendingMovies = ({ rawTrendingTVShows }: UseTrendingMoviesProps) => {
   const [trendingTVShows, setTrendingTVShows] = useState<HomeSection[]>([]);
 
   const { t } = useTranslation();

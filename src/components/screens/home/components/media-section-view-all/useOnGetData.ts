@@ -32,12 +32,12 @@ type DataResult = {
   hasMore: boolean;
 };
 
-type Props = {
+type UseOnGetDataProps = {
   trendingMediaItemKey: Types.TrendingMediaItemKey;
   isMovie: boolean;
 };
 
-const useOnGetData = ({ trendingMediaItemKey, isMovie }: Props) => {
+const useOnGetData = ({ trendingMediaItemKey, isMovie }: UseOnGetDataProps) => {
   const getMovieOnGetDataHandler = useCallback(
     (trendingMovieKey: Types.TrendingMediaItemKey) => {
       const movieOnGetDataMapping: TrendingMovieItem = {

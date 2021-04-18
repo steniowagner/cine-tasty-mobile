@@ -8,7 +8,7 @@ import * as Types from '@local-types';
 
 import parseTrendingToSimplifiedMedia from './parseTrendingToSimplifiedMedia';
 
-type Props = {
+type UseTrendingMoviesProps = {
   rawTrendingMovies: SchemaTypes.TrendingMovies;
 };
 
@@ -17,7 +17,7 @@ type TrendingItemKey = keyof Omit<
   '__typename'
 >;
 
-const useTrendingMovies = ({ rawTrendingMovies }: Props) => {
+const useTrendingMovies = ({ rawTrendingMovies }: UseTrendingMoviesProps) => {
   const [trendingMovies, setTrendingMovies] = useState<Types.HomeSection[]>([]);
 
   const { t } = useTranslation();

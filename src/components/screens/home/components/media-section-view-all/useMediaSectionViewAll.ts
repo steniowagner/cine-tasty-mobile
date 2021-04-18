@@ -18,7 +18,7 @@ type PaginationVariables = {
   page: number;
 };
 
-type Props = {
+type UseMediaSectionViewAllProps = {
   navigation: StackNavigationProp<HomeStackParams, 'MEDIA_DETAILS_VIEW_ALL'>;
   trendingMediaItemKey: Types.TrendingMediaItemKey;
   initialMediaItems: Types.SimplifiedMedia[];
@@ -30,7 +30,7 @@ const useMediaSectionViewAll = ({
   initialMediaItems,
   navigation,
   isMovie,
-}: Props) => {
+}: UseMediaSectionViewAllProps) => {
   const [mediaItems, setMediaItems] = useState<Types.SimplifiedMedia[]>(
     initialMediaItems,
   );

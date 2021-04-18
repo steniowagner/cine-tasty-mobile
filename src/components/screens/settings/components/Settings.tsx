@@ -8,11 +8,11 @@ import useSettings from './useSettings';
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'SETTINGS'>;
 
-type Props = {
+type SettingsProps = {
   navigation: HomeScreenNavigationProp;
 };
 
-const Settings = ({ navigation }: Props) => {
+const Settings = ({ navigation }: SettingsProps) => {
   const { sections } = useSettings({ navigation });
 
   return (

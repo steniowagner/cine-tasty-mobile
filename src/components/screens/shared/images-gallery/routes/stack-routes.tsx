@@ -12,11 +12,11 @@ const Stack = createStackNavigator();
 
 type ImageGalleryRouteProp = RouteProp<ImagesGalleryParams, 'IMAGES_GALLERY'>;
 
-type Props = {
+type ImagesGalleryStackProps = {
   route: ImageGalleryRouteProp;
 };
 
-const ImagesGalleryStack = ({ route }: Props) => (
+const ImagesGalleryStack = ({ route }: ImagesGalleryStackProps) => (
   <Stack.Navigator>
     <Stack.Screen
       name={LOCAL_ROUTES.IMAGES_GALLERY.id}

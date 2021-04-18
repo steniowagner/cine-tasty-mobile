@@ -10,11 +10,11 @@ export const INITIAL_ITEMS_TO_RENDER = Math.floor(
   metrics.height / DEFAULT_LIST_ITEM_HEIGHT,
 );
 
-type Props = {
+type LoadingFamousListProps = {
   numberOfColumns: number;
 };
 
-const LoadingFamousList = ({ numberOfColumns }: Props) => {
+const LoadingFamousList = ({ numberOfColumns }: LoadingFamousListProps) => {
   const famousLoadingListItems = useMemo(
     () => Array(INITIAL_ITEMS_TO_RENDER * numberOfColumns)
       .fill(0)

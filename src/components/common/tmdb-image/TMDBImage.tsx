@@ -8,7 +8,7 @@ import useTMDBImage from './useTMDBImage';
 
 type Style = StyleProp<ImageStyle> | { opacity: Animated.Value };
 
-type Props = {
+type TMDBImageProps = {
   style: Style | Style[];
   imageType: Types.ImageType;
   isThumbnail?: boolean;
@@ -30,7 +30,7 @@ const TMDBImage = ({
   onLoad,
   style,
   image,
-}: Props) => {
+}: TMDBImageProps) => {
   const { uri } = useTMDBImage({ isThumbnail, imageType, image });
 
   if (isAnimated) {

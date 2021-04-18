@@ -6,12 +6,12 @@ import * as Styles from './PopupAdvice.styles';
 export const DEFAULT_ANIMATION_DURATION = 400;
 export const HIDE_POPUP_DELAY = 3000;
 
-type Props = {
+type PopupAdviceProps = {
   onFinishToShow?: () => void;
   text: string;
 };
 
-const PopupAdvice = ({ onFinishToShow = () => {}, text }: Props) => {
+const PopupAdvice = ({ onFinishToShow = () => {}, text }: PopupAdviceProps) => {
   const wrapperOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

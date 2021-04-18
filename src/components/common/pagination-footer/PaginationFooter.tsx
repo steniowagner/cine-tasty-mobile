@@ -20,13 +20,17 @@ const CustomActivityIndicator = styled(ActivityIndicator).attrs(({ theme }) => (
   color: theme.colors.text,
 }))``;
 
-type Props = {
+type PaginationFooterProps = {
   onPressReloadButton?: () => void;
   isPaginating: boolean;
   hasError: boolean;
 };
 
-const PaginationFooter = ({ onPressReloadButton, isPaginating, hasError }: Props) => (
+const PaginationFooter = ({
+  onPressReloadButton,
+  isPaginating,
+  hasError,
+}: PaginationFooterProps) => (
   <Styles.Wrapper
     testID="pagination-footer-wrapper"
   >

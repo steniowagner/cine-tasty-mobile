@@ -9,13 +9,17 @@ import * as Types from '@local-types';
 
 import * as Styles from './RecentSearchesListItem.styles';
 
-type Props = {
+type RecentSearchesListItemProps = {
   onPressRemove: () => void;
   onPressItem: () => void;
   item: Types.RecentSearchItem;
 };
 
-const RecentSearchesListItem = ({ onPressRemove, onPressItem, item }: Props) => {
+const RecentSearchesListItem = ({
+  onPressRemove,
+  onPressItem,
+  item,
+}: RecentSearchesListItemProps) => {
   const {
     isFallbackImageVisible,
     hasError,

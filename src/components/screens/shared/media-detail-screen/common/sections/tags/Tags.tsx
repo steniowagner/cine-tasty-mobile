@@ -8,13 +8,13 @@ import * as Styles from './Tags.styles';
 
 export const NUMBER_ITEMS = 4;
 
-type Props = {
+type TagsProps = {
   extraTags: string[];
   isLoading: boolean;
   tags: string[];
 };
 
-const Tags = ({ extraTags, isLoading, tags }: Props) => {
+const Tags = ({ extraTags, isLoading, tags }: TagsProps) => {
   if (isLoading) {
     return (
       <Styles.Wrapper

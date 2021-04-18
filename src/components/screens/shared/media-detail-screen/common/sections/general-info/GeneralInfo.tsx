@@ -11,11 +11,11 @@ type InfoItem = {
   value: string;
 };
 
-type Props = {
+type GeneralInfoProps = {
   infoItems: InfoItem[];
 };
 
-const GeneralInfo = ({ infoItems }: Props) => {
+const GeneralInfo = ({ infoItems }: GeneralInfoProps) => {
   const { t } = useTranslation();
 
   return (

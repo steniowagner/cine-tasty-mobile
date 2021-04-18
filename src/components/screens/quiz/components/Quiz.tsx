@@ -11,11 +11,11 @@ import * as Styles from './Quiz.styles';
 
 type QuizScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUIZ'>;
 
-type Props = {
+type QuizProps = {
   navigation: QuizScreenNavigationProp;
 };
 
-const Quiz = ({ navigation }: Props) => {
+const Quiz = ({ navigation }: QuizProps) => {
   const { t } = useTranslation();
 
   return (

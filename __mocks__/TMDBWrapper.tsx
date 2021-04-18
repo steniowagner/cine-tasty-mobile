@@ -4,11 +4,11 @@ import { ThemeProvider } from 'styled-components';
 import { TMDBImageQualityProvider } from '../src/providers/tmdb-image-quality/TMDBImageQuality';
 import theme from '../src/styles/theme';
 
-type Props = {
+type TMDBWrapperProps = {
   children: JSX.Element;
 };
 
-const TMDBWrapper = ({ children }: Props) => (
+const TMDBWrapper = ({ children }: TMDBWrapperProps) => (
   <TMDBImageQualityProvider>
     <ThemeProvider
       theme={theme}

@@ -6,13 +6,13 @@ import metrics from '@styles/metrics';
 import MultiChoiceQuestionListItem from './multi-choice-question-list-item/MultiChoiceQuestionListItem';
 import NextButton from '../next-button/NextButton';
 
-type Props = {
+type MultiChoiceQuestionProps = {
   onPressNext: (answerSelected: string) => void;
   isFocused: boolean;
   answers: string[];
 };
 
-const MultiChoiceQuestion = ({ onPressNext, answers }: Props) => {
+const MultiChoiceQuestion = ({ onPressNext, answers }: MultiChoiceQuestionProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
 
   return (

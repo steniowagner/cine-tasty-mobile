@@ -8,7 +8,7 @@ import theme from '@styles/theme';
 import SetupQuestionsOptionsList from './SetupQuestionsOptionsList';
 import { categories } from '../options';
 
-type Props = {
+type RenderSetupQuestionsCategoryOptionsListProps = {
   onPressSelect?: (indexOptionSelected: number) => void;
   indexLastOptionSelected?: number;
   closeModal?: () => void;
@@ -18,7 +18,7 @@ const renderSetupQuestionsCategoryOptionsList = ({
   indexLastOptionSelected = 0,
   onPressSelect = jest.fn,
   closeModal = jest.fn,
-}: Props) => (
+}: RenderSetupQuestionsCategoryOptionsListProps) => (
   <ThemeProvider theme={theme}>
     <SetupQuestionsOptionsList
       indexLastOptionSelected={indexLastOptionSelected}

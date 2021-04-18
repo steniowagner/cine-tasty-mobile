@@ -11,7 +11,7 @@ type PeopleListItem = {
   id: string;
 };
 
-type Props = {
+type UsePeopleListProps = {
   dataset:
     | Types.CrewDataset
     | Types.CastDataset
@@ -19,7 +19,7 @@ type Props = {
   type: 'cast' | 'crew' | 'creator';
 };
 
-const usePeopleList = ({ dataset, type }: Props) => {
+const usePeopleList = ({ dataset, type }: UsePeopleListProps) => {
   const mergeCrewMemebersBySimilarJobs = useCallback(
     (crew: PeopleListItem[]): PeopleListItem[] => {
       const repeatedItemsMap = {};

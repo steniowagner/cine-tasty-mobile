@@ -10,12 +10,12 @@ import { useThemeProvider } from '@src/providers/theme/Theme';
 import CONSTANTS from '@utils/constants';
 import * as Types from '@local-types';
 
-type Props = {
+type UseSplashScreenProps = {
   theme: DefaultTheme;
   onLoad: () => void;
 };
 
-const useSplashScreen = ({ onLoad, theme }: Props) => {
+const useSplashScreen = ({ onLoad, theme }: UseSplashScreenProps) => {
   const { handleInitialThemeSelection } = useThemeProvider();
 
   const handleImageSizeOptionSelection = useCallback(async () => {

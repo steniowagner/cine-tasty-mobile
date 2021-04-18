@@ -3,11 +3,11 @@ import { ScrollView } from 'react-native';
 
 import * as Styles from './EpisodeOverviewDetail.styles';
 
-type Props = {
+type EpisodeOverviewDetailProps = {
   overview: string;
 };
 
-const EpisodeOverviewDetail = ({ overview }: Props) => (
+const EpisodeOverviewDetail = ({ overview }: EpisodeOverviewDetailProps) => (
   <Styles.Wrapper>
     <ScrollView>
       <Styles.DescriptionText

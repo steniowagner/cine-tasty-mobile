@@ -8,12 +8,12 @@ import * as TRANSLATIONS from '@i18n/tags';
 import LoadingOverview from './loading-overview/LoadingOverview';
 import * as Styles from './Overview.styles';
 
-type Props = {
+type OverviewProps = {
   isLoading: boolean;
   overview: string;
 };
 
-const Overview = ({ isLoading, overview }: Props) => {
+const Overview = ({ isLoading, overview }: OverviewProps) => {
   const { t } = useTranslation();
 
   return (

@@ -22,13 +22,17 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = {
+type ProgressiveImageProps = {
   imageType: ImageType;
   borderRadius?: number;
   image: string;
 };
 
-const ProgressiveImage = ({ borderRadius = 0, imageType, image }: Props) => {
+const ProgressiveImage = ({
+  borderRadius = 0,
+  imageType,
+  image,
+}: ProgressiveImageProps) => {
   const {
     thumbnailOpacity,
     onLoadThumbnail,

@@ -5,13 +5,13 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './SettingsSection.styles';
 
-type Props = {
+type SettingsSectionProps = {
   onPress: () => void;
   description: string;
   title: string;
 };
 
-const SettingsSection = ({ description, onPress, title }: Props) => (
+const SettingsSection = ({ description, onPress, title }: SettingsSectionProps) => (
   <Styles.Wrapper
     onPress={onPress}
     testID="settings-section-button"

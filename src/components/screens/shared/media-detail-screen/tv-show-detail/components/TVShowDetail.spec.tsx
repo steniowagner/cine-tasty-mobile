@@ -121,7 +121,7 @@ const getNavigation = (push = () => {}, navigate = () => {}) => ({
   push,
 });
 
-type Props = {
+type RenderTVShowDetailProps = {
   mockResolvers?: IMocks;
   navigation?: {
     navigate: (route: string, params: any) => void;
@@ -138,7 +138,7 @@ const renderTVShowDetail = ({
   mockResolvers,
   navigation = getNavigation(),
   route,
-}: Props) => {
+}: RenderTVShowDetailProps) => {
   const TVShowDetailScreen = () => (
     <TMDBImageQualityProvider>
       <ThemeProvider theme={theme}>

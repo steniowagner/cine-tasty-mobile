@@ -25,13 +25,13 @@ import Videos from '../../common/sections/videos/Videos';
 import Tags from '../../common/sections/tags/Tags';
 import useMovieDetail from './useMovieDetail';
 
-type Props = {
+type MovieDetailProps = {
   navigation: StackNavigationProp<MovieDetailInternalternalParams, 'MOVIE_DETAIL'>;
   route: RouteProp<MovieDetailInternalternalParams, 'MOVIE_DETAIL'>;
   theme: DefaultTheme;
 };
 
-const MovieDetail = ({ navigation, theme, route }: Props) => {
+const MovieDetail = ({ navigation, theme, route }: MovieDetailProps) => {
   const { barStyle } = useStatusBarStyle({ theme });
 
   useLayoutEffect(() => {

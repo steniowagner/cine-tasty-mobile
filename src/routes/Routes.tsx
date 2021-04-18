@@ -9,11 +9,11 @@ import { useStatusBarStyle } from '@hooks';
 import SplashScreen from './components/splash-screen/SplashScreen';
 import RootNavigation from './components/RootNavigation';
 
-type Props = {
+type RoutesProps = {
   theme: DefaultTheme;
 };
 
-const Routes = ({ theme }: Props) => {
+const Routes = ({ theme }: RoutesProps) => {
   const [isSplashScreenLoaded, setIsSplashScreenLoaded] = useState<boolean>(false);
   const { barStyle } = useStatusBarStyle({ theme });
 

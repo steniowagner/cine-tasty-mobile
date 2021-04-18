@@ -13,7 +13,7 @@ type MediaSearchItem =
   | SchemaTypes.SearchTVShow_search_items_BaseTVShow
   | SchemaTypes.SearchMovie_search_items_BaseMovie;
 
-type Props = Types.BaseSearchProps & {
+type MediaSearchProps = Types.BaseSearchProps & {
   onPressListItem: (item: MediaSearchItem) => void;
   items: MediaSearchItem[];
 };
@@ -28,7 +28,7 @@ const MediaSearch = ({
   isPaginating,
   isLoading,
   items,
-}: Props) => {
+}: MediaSearchProps) => {
   if (isLoading) {
     return <LoadingMediaSearch />;
   }

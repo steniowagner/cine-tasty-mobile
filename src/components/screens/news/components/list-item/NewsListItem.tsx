@@ -5,7 +5,7 @@ import NewsImage from './news-image/NewsListItemImage';
 import * as Styles from './NewsListItem.styles';
 import DateDiff from './date-diff/DateDiff';
 
-export type Props = {
+type NewsListItemProps = {
   withRTL: boolean;
   source: string;
   image: string;
@@ -16,7 +16,7 @@ export type Props = {
 
 const NewsListItem = ({
   withRTL, source, image, text, date, url,
-}: Props) => (
+}: NewsListItemProps) => (
   <Styles.Wrapper
     onPress={() => Linking.openURL(url)}
     testID="news-list-item-wrapper"
