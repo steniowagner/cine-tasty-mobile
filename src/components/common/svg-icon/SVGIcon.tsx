@@ -5,7 +5,7 @@ import { SvgXml } from 'react-native-svg';
 
 import getXML, { SupportedIcons } from './getXML';
 
-export type Props = {
+export type SVGIconProps = {
   colorThemeRef?: keyof Colors;
   style?: StyleProp<any>;
   theme: DefaultTheme;
@@ -15,7 +15,7 @@ export type Props = {
 
 const SVGIcon = ({
   colorThemeRef, style, theme, size, id,
-}: Props) => {
+}: SVGIconProps) => {
   const xml = useMemo(() => {
     let color: string = theme.colors.text;
 

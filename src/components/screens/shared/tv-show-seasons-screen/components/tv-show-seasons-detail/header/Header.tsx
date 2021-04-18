@@ -5,12 +5,12 @@ import SeasonPosterImage from '@components/screens/shared/media-detail-screen/co
 import SeasonOverviewText from './overview-text/season-overview-text/SeasonOverviewText';
 import * as Styles from './Header.styles';
 
-type Props = {
+type HeaderProps = {
   overview: string;
   image: string;
 };
 
-const Header = ({ overview, image }: Props) => (
+const Header = ({ overview, image }: HeaderProps) => (
   <Styles.Wrapper
     testID="header-wrapper"
   >

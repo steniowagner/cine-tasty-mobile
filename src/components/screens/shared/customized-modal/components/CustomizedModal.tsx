@@ -19,12 +19,12 @@ type QuestionsScreenNavigationProp = StackNavigationProp<
 
 type QuestionsScreenRouteProp = RouteProp<CustomModalStackParams, 'CUSTOM_MODAL'>;
 
-type Props = {
+type CustomizedModalProps = {
   navigation: QuestionsScreenNavigationProp;
   route: QuestionsScreenRouteProp;
 };
 
-const CustomizedModal = ({ navigation, route }: Props) => {
+const CustomizedModal = ({ navigation, route }: CustomizedModalProps) => {
   const {
     onHandlerStateChange,
     shouldHideCard,

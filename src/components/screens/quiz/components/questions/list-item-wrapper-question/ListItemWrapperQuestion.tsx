@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as Styles from './ListItemWrapperQuestion.styles';
 
-type Props = {
+type ListItemWrapperProps = {
   currentQuestionIndex: number;
   numberOfQuestions: number;
   children: JSX.Element;
@@ -14,7 +14,7 @@ const ListItemWrapper = ({
   numberOfQuestions,
   children,
   question,
-}: Props) => (
+}: ListItemWrapperProps) => (
   <Styles.Wrapper>
     <Styles.CardWrapper
       style={{

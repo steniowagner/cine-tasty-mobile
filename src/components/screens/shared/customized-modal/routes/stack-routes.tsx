@@ -10,11 +10,11 @@ const Stack = createStackNavigator();
 
 type CustomModalRouteProp = RouteProp<CustomModalStackParams, 'CUSTOM_MODAL'>;
 
-type Props = {
+type CustomizedModalStackProps = {
   route: CustomModalRouteProp;
 };
 
-const CustomizedModalStack = ({ route }: Props) => (
+const CustomizedModalStack = ({ route }: CustomizedModalStackProps) => (
   <Stack.Navigator
     screenOptions={{
       cardStyle: { backgroundColor: 'transparent' },

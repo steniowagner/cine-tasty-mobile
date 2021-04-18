@@ -6,11 +6,11 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './DeathDay.styles';
 
-type Props = {
+type DeathInfoProps = {
   deathDate: string;
 };
 
-const DeathInfo = ({ deathDate }: Props) => {
+const DeathInfo = ({ deathDate }: DeathInfoProps) => {
   const dateText = formatDate(deathDate);
 
   return (

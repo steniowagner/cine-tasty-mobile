@@ -5,12 +5,12 @@ import * as Types from '@local-types';
 
 import getTop3Data from './parseTop3Data';
 
-type Props = {
+type UseTop3Props = {
   trendingTVShows: SchemaTypes.TrendingTVShows;
   trendingMovies: SchemaTypes.TrendingMovies;
 };
 
-const useTop3 = ({ trendingTVShows, trendingMovies }: Props) => {
+const useTop3 = ({ trendingTVShows, trendingMovies }: UseTop3Props) => {
   const [top3TVShows, setTop3TVShows] = useState<Types.HomeTop3Item[]>([]);
   const [top3Movies, setTop3Movies] = useState<Types.HomeTop3Item[]>([]);
 

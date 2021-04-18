@@ -5,11 +5,11 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './PagiantedListHeader.styles';
 
-type Props = {
+type PaginatedListHeaderProps = {
   onPress: () => void;
 };
 
-const PaginatedListHeader = ({ onPress }: Props) => (
+const PaginatedListHeader = ({ onPress }: PaginatedListHeaderProps) => (
   <Styles.ReloadButton
     testID="top-reload-button"
     onPress={onPress}

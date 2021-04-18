@@ -5,7 +5,7 @@ import StarsVotes from '@components/common/stars-votes/StarsVotes';
 import * as Styles from './FullMediaListItem.styles';
 import MediaImage from './media-image/MediaImage';
 
-type Props = {
+type FullMediaListItemProps = {
   onPressDetails: () => void;
   voteCount?: number;
   genres: string[];
@@ -21,7 +21,7 @@ const FullMediaListItem = ({
   image,
   title,
   votes,
-}: Props) => (
+}: FullMediaListItemProps) => (
   <Styles.Wrapper
     onPress={onPressDetails}
     testID="full-media-list-item"

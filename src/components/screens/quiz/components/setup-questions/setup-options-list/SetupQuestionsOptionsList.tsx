@@ -8,7 +8,7 @@ import * as Types from '@local-types';
 import useSetupOptionsList from './useSetupQuestionsOptionsList';
 import OptionListItem from './option-lis-item/OptionListItem';
 
-type Props = {
+type SetupQuestionsOptionsListProps = {
   onPressSelect: (indexOptionSelected: number) => void;
   indexLastOptionSelected: number;
   options: Types.QuizFilterOption[];
@@ -20,7 +20,7 @@ const SetupQuestionsOptionsList = ({
   onPressSelect,
   closeModal,
   options,
-}: Props) => {
+}: SetupQuestionsOptionsListProps) => {
   const { indexOptionSelected, onSelectOption, t } = useSetupOptionsList({
     indexLastOptionSelected,
   });

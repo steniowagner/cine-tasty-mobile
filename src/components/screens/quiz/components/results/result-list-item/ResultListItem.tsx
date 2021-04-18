@@ -8,11 +8,11 @@ import * as Types from '@local-types';
 
 import * as Styles from './ResultListItem.styles';
 
-type Props = {
+type ResultListItemProps = {
   result: Types.QuizResult;
 };
 
-const ResultListItem = ({ result }: Props) => {
+const ResultListItem = ({ result }: ResultListItemProps) => {
   const { t } = useTranslation();
 
   return (
@@ -38,9 +38,7 @@ const ResultListItem = ({ result }: Props) => {
       <Styles.TextContentWrapper>
         <Styles.QuestionText>{result.question}</Styles.QuestionText>
         <Styles.AnswerText>
-          {`${t(TRANSLATIONS.QUIZ_ANSWER)}: ${
-            result.answer
-          }`}
+          {`${t(TRANSLATIONS.QUIZ_ANSWER)}: ${result.answer}`}
         </Styles.AnswerText>
         <Styles.LineDivider />
         <Styles.AnswerText>

@@ -13,7 +13,7 @@ import * as Types from '@local-types';
 
 const NUMBER_FLATLIST_COLUMNS = 3;
 
-type Props = Types.BaseSearchProps & {
+type FamousSearchProps = Types.BaseSearchProps & {
   onPressListItem: (item: SchemaTypes.SearchPerson_search_items_BasePerson) => void;
   items: SchemaTypes.SearchPerson_search_items_BasePerson[];
 };
@@ -28,7 +28,7 @@ const FamousSearch = ({
   isPaginating,
   isLoading,
   items,
-}: Props) => {
+}: FamousSearchProps) => {
   if (isLoading) {
     return (
       <LoadingFamousList

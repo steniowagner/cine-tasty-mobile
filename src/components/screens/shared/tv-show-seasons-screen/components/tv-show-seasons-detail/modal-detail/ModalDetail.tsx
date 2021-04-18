@@ -6,12 +6,12 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './ModalDetail.styles';
 
-type Props = {
+type ModalDetailProps = {
   onCloseModal: () => void;
   children: JSX.Element;
 };
 
-const ModalDetail = ({ onCloseModal, children }: Props) => (
+const ModalDetail = ({ onCloseModal, children }: ModalDetailProps) => (
   <Modal
     onRequestClose={onCloseModal}
     animationType="fade"

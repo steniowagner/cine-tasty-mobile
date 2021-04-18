@@ -10,12 +10,12 @@ import RecentSearchListItem from './recent-searchers-list-item/RecentSearchesLis
 import useRecentSearches from './useRecentSearches';
 import * as Styles from './RecentSearches.styles';
 
-type Props = {
+type RecentSearchesProps = {
   onPressItem: (recentSearchItem: Types.RecentSearchItem) => void;
   searchType: SchemaTypes.SearchType;
 };
 
-const RecentSearches = ({ onPressItem, searchType }: Props) => {
+const RecentSearches = ({ onPressItem, searchType }: RecentSearchesProps) => {
   const { onRemoveItem, recentSearches, t } = useRecentSearches({
     shouldSkipGetInitialRecentSearches: false,
     searchType,

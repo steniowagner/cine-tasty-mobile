@@ -5,7 +5,7 @@ import * as SchemaTypes from '@schema-types';
 
 import languages from './languages';
 
-type Props = {
+type UseLanguageFilterProps = {
   onSelectLanguage: (language: string) => void;
   lastLanguageSelected: SchemaTypes.ArticleLanguage;
   closeModal: () => void;
@@ -15,7 +15,7 @@ const useLanguageFilter = ({
   lastLanguageSelected,
   onSelectLanguage,
   closeModal,
-}: Props) => {
+}: UseLanguageFilterProps) => {
   const [languageSelected, setLanguageSelected] = useState<SchemaTypes.ArticleLanguage>(
     lastLanguageSelected,
   );

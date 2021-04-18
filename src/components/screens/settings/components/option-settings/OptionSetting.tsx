@@ -5,7 +5,7 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './OptionSetting.styles';
 
-type Props = {
+type OptionSettingProps = {
   onPress: () => void;
   isSelected: boolean;
   title: string;
@@ -27,7 +27,7 @@ const RadioBoxUnmarkedIcon = () => (
   />
 );
 
-const OptionSetting = ({ isSelected, onPress, title }: Props) => (
+const OptionSetting = ({ isSelected, onPress, title }: OptionSettingProps) => (
   <Styles.Wrapper
     onPress={onPress}
     testID="option-settings"

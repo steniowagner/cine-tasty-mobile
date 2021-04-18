@@ -21,13 +21,17 @@ const EmptyCheckbox = () => (
   />
 );
 
-type Props = {
+type MultiChoiceListItemProps = {
   onSelectAnswer: (answer: string) => void;
   isSelected: boolean;
   answer: string;
 };
 
-const MultiChoiceListItem = ({ onSelectAnswer, isSelected, answer }: Props) => (
+const MultiChoiceListItem = ({
+  onSelectAnswer,
+  isSelected,
+  answer,
+}: MultiChoiceListItemProps) => (
   <Styles.ListItemWrapper
     onPress={() => onSelectAnswer(answer)}
     testID="multi-choice-answer"

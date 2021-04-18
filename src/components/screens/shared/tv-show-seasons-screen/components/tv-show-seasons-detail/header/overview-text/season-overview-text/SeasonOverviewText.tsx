@@ -5,11 +5,11 @@ import useSeasonOverviewText from './useSeasonOverviewText';
 import ModalDetail from '../../../modal-detail/ModalDetail';
 import * as Styles from './SeasonOverviewText.styles';
 
-type Props = {
+type SeasonOverviewTextProps = {
   overview: string;
 };
 
-const SeasonOverviewText = ({ overview }: Props) => {
+const SeasonOverviewText = ({ overview }: SeasonOverviewTextProps) => {
   const {
     shouldShowReadMoreButton,
     readMoreButtonText,

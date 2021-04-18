@@ -16,11 +16,11 @@ import Top3 from './top3/Top3';
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
-type Props = {
+type HomeProps = {
   navigation: HomeScreenNavigationProp;
 };
 
-const Home = ({ navigation }: Props) => {
+const Home = ({ navigation }: HomeProps) => {
   const {
     shouldDisableHeaderActions,
     onPressTop3LearnMore,

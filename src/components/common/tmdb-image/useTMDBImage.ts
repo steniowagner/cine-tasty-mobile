@@ -4,7 +4,7 @@ import { useTMDBImageQuality } from '@src/providers/tmdb-image-quality/TMDBImage
 import CONSTANTS from '@utils/constants';
 import * as Types from '@local-types';
 
-type Props = {
+type UseTMDBImageProps = {
   imageType: Types.ImageType;
   isThumbnail: boolean;
   image: string;
@@ -12,7 +12,7 @@ type Props = {
 
 const PROFILE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
 
-const useTMDBImage = ({ isThumbnail, imageType, image }: Props) => {
+const useTMDBImage = ({ isThumbnail, imageType, image }: UseTMDBImageProps) => {
   const imagesQualities = useTMDBImageQuality();
 
   const uri = useMemo(() => {

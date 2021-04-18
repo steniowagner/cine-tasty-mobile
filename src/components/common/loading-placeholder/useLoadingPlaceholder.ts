@@ -3,13 +3,13 @@ import {
 } from 'react';
 import { Animated } from 'react-native';
 
-type Props = {
+type UseLoadingPlaceholderProps = {
   indexToDelayAnimation?: number;
 };
 
 const ANIMATION_DURATION = 500;
 
-const useLoadingPlaceholder = ({ indexToDelayAnimation }: Props) => {
+const useLoadingPlaceholder = ({ indexToDelayAnimation }: UseLoadingPlaceholderProps) => {
   const animatedOpacity = useRef(new Animated.Value(1)).current;
 
   const animationDuration = useMemo(

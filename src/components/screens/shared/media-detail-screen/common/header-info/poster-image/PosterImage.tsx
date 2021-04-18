@@ -9,11 +9,11 @@ import * as Styles from './PosterImage.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
-type Props = {
+type PosterImageProps = {
   image: string;
 };
 
-const PosterImage = ({ image }: Props) => {
+const PosterImage = ({ image }: PosterImageProps) => {
   const {
     isFallbackImageVisible,
     hasError,

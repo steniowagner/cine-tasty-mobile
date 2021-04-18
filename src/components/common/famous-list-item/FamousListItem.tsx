@@ -11,7 +11,7 @@ import * as Styles from './FamousListItem.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
-type Props = {
+type FamousListItemProps = {
   numberOfColumns: number;
   image?: string;
   onPress: () => void;
@@ -20,8 +20,12 @@ type Props = {
 };
 
 const FamousListItem = ({
-  numberOfColumns, onPress, image, index, title,
-}: Props) => {
+  numberOfColumns,
+  onPress,
+  image,
+  index,
+  title,
+}: FamousListItemProps) => {
   const {
     isFallbackImageVisible,
     hasError,

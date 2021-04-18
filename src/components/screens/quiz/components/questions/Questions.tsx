@@ -24,12 +24,12 @@ type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUEST
 
 type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'QUESTIONS'>;
 
-type Props = {
+type QuestionsProps = {
   navigation: QuestionsScreenNavigationProp;
   route: QuestionsScreenRouteProp;
 };
 
-const Questions = ({ navigation, route }: Props) => {
+const Questions = ({ navigation, route }: QuestionsProps) => {
   const {
     currentQuestionIndex,
     questionsFlatListRef,

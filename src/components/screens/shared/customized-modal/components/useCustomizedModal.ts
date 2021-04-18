@@ -10,7 +10,7 @@ import {
 
 export const ANIMATION_TIMING = 400;
 
-type Props = {
+type UseCustomizedModalProps = {
   cardContainerHeight: number;
   onClose: () => void;
 };
@@ -23,7 +23,10 @@ type HookState = {
   shouldHideCard: boolean;
 };
 
-const useCustomizedModal = ({ cardContainerHeight, onClose }: Props): HookState => {
+const useCustomizedModal = ({
+  cardContainerHeight,
+  onClose,
+}: UseCustomizedModalProps): HookState => {
   let offset = 0;
 
   const translateY = useRef(new Animated.Value(cardContainerHeight)).current;

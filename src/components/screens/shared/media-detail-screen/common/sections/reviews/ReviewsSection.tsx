@@ -9,7 +9,7 @@ import ReviewSectionListItem from './reviews-section-list-item/ReviewSectionList
 import useReviewsSection from './useReviewsSection';
 import * as Styles from './ReviewsSection.styles';
 
-type Props = {
+type ReviewsSectionProps = {
   reviews: (
     | SchemaTypes.TVShowDetail_tvShow_reviews
     | SchemaTypes.MovieDetail_movie_reviews
@@ -17,7 +17,7 @@ type Props = {
   onPressViewAll: () => void;
 };
 
-const ReviewsSection = ({ onPressViewAll, reviews }: Props) => {
+const ReviewsSection = ({ onPressViewAll, reviews }: ReviewsSectionProps) => {
   const {
     indexReviewSelected,
     onMomentumScrollEnd,

@@ -6,11 +6,11 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './HeaderBackButton.styles';
 
-type Props = {
+type HeaderBackButtonProps = {
   onPress: () => void;
 };
 
-const HeaderBackButton = ({ onPress }: Props) => (
+const HeaderBackButton = ({ onPress }: HeaderBackButtonProps) => (
   <Styles.IconWrapper
     onPress={onPress}
   >

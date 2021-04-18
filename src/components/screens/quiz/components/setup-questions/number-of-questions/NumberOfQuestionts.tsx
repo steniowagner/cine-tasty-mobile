@@ -7,13 +7,17 @@ import * as Styles from './NumberOfQuestionts.styles';
 const MAX_VALUE = 50;
 const MIN_VALUE = 1;
 
-type Props = {
+type NumberOfQuestionsProps = {
   onSetNumberQuestions: (value: number) => void;
   numberOfQuestions: number;
   theme: DefaultTheme;
 };
 
-const NumberOfQuestions = ({ onSetNumberQuestions, numberOfQuestions, theme }: Props) => {
+const NumberOfQuestions = ({
+  onSetNumberQuestions,
+  numberOfQuestions,
+  theme,
+}: NumberOfQuestionsProps) => {
   const numberQuestionsSliderRef = useRef(null);
 
   return (

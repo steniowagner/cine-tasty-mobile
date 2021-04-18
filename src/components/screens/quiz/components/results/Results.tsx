@@ -16,12 +16,12 @@ type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'RESUL
 
 type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'RESULTS'>;
 
-type Props = {
+type ResultsProps = {
   navigation: QuestionsScreenNavigationProp;
   route: QuestionsScreenRouteProp;
 };
 
-const Results = ({ navigation, route }: Props) => {
+const Results = ({ navigation, route }: ResultsProps) => {
   const { onPressPlayAgain, results, t } = useResults({ navigation, route });
 
   useLayoutEffect(() => {

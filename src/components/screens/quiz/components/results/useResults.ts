@@ -13,12 +13,12 @@ type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'RESUL
 
 type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'RESULTS'>;
 
-type Props = {
+type UseResultsProps = {
   navigation: QuestionsScreenNavigationProp;
   route: QuestionsScreenRouteProp;
 };
 
-const useResults = ({ navigation, route }: Props) => {
+const useResults = ({ navigation, route }: UseResultsProps) => {
   const [results, setResults] = useState<Types.QuizResult[]>([]);
 
   const { t } = useTranslation();

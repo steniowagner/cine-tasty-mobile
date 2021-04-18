@@ -5,12 +5,12 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './DropdownOption.styles';
 
-type Props = {
+type DropdownOptionProps = {
   selectedOption: string;
   onPress: () => void;
 };
 
-const DropdownOption = ({ selectedOption, onPress }: Props) => (
+const DropdownOption = ({ selectedOption, onPress }: DropdownOptionProps) => (
   <Styles.InnerContentWrapper
     onPress={onPress}
     testID="dropdown-button"

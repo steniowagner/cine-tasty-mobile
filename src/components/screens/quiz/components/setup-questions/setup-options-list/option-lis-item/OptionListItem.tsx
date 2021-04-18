@@ -5,16 +5,19 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './OptionListItem.styles';
 
-type Props = {
+type OptionListItemProps = {
   onPress: () => void;
   isSelected: boolean;
   title: string;
 };
 
-const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isSelected || !nextState.isSelected)
+const shouldComponentUpdate = (
+  previousState: OptionListItemProps,
+  nextState: OptionListItemProps,
+): boolean => (previousState.isSelected || !nextState.isSelected)
   && (!previousState.isSelected || nextState.isSelected);
 
-const OptionListItem = ({ isSelected, onPress, title }: Props) => (
+const OptionListItem = ({ isSelected, onPress, title }: OptionListItemProps) => (
   <Styles.ListItemWrapper
     isSelected={isSelected}
     onPress={onPress}

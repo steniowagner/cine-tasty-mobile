@@ -20,11 +20,11 @@ export const NUMBER_FLATLIST_COLUMNS = 3;
 
 type FamousScreenNavigationProp = StackNavigationProp<FamousStackParams, 'FAMOUS'>;
 
-type Props = {
+type FamousProps = {
   navigation: FamousScreenNavigationProp;
 };
 
-const Famous = ({ navigation }: Props) => {
+const Famous = ({ navigation }: FamousProps) => {
   const {
     onPressBottomReloadButton,
     onPressTopReloadButton,

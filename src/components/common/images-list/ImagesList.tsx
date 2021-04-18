@@ -12,11 +12,11 @@ type ImageGalleryNavigationProp = StackNavigationProp<
   'IMAGES_GALLERY'
 >;
 
-type Props = {
+type ImagesListProps = {
   images: string[];
 };
 
-const ImagesList = ({ images }: Props) => {
+const ImagesList = ({ images }: ImagesListProps) => {
   const navigation = useNavigation<ImageGalleryNavigationProp>();
 
   return (

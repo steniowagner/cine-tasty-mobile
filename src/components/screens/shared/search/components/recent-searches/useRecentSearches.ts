@@ -17,12 +17,15 @@ type ResentSearchItem = {
   id: number;
 };
 
-type Props = {
+type UseRecentSearchesProps = {
   shouldSkipGetInitialRecentSearches: boolean;
   searchType: SchemaTypes.SearchType;
 };
 
-const useRecentSearches = ({ shouldSkipGetInitialRecentSearches, searchType }: Props) => {
+const useRecentSearches = ({
+  shouldSkipGetInitialRecentSearches,
+  searchType,
+}: UseRecentSearchesProps) => {
   const [recentSearches, setRecentSearches] = useState<ResentSearchItem[]>([]);
 
   const STORAGE_KEY = useMemo(

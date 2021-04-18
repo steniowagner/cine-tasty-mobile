@@ -8,7 +8,7 @@ import * as Types from '@local-types';
 import TabNavigatorItem from './TabNavigatorItem';
 import items from '../items';
 
-type Props = {
+type RenderTabNavigationItemProps = {
   icon: Types.TabNavigatorItem;
   onPress?: () => void;
   isSelected?: boolean;
@@ -18,7 +18,7 @@ const renderTabNavigationItem = ({
   icon,
   isSelected = true,
   onPress = jest.fn(),
-}: Props) => (
+}: RenderTabNavigationItemProps) => (
   <ThemeProvider theme={theme}>
     <TabNavigatorItem
       inactiveIcon={icon.inactiveIcon}

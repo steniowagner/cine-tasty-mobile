@@ -7,7 +7,7 @@ import * as Types from '@local-types';
 
 import * as Styles from './HomeSection.styles';
 
-type Props = {
+type HomeSectionProps = {
   onPressItem: (mediaItem: Types.SimplifiedMedia) => void;
   onPressViewAll: () => void;
   items: Types.SimplifiedMedia[];
@@ -15,8 +15,11 @@ type Props = {
 };
 
 const HomeSection = ({
-  onPressViewAll, sectionTitle, onPressItem, items,
-}: Props) => (
+  onPressViewAll,
+  sectionTitle,
+  onPressItem,
+  items,
+}: HomeSectionProps) => (
   <Styles.Wrapper
     testID="section-wrapper"
   >

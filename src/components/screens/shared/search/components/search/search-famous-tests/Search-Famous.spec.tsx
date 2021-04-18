@@ -37,12 +37,15 @@ const defaultItems = Array(10)
     id: index,
   }));
 
-type Props = {
+type GetMockResolversProps = {
   hasMore?: boolean;
   items?: any[];
 };
 
-const getMockResolvers = ({ hasMore = false, items = defaultItems }: Props) => ({
+const getMockResolvers = ({
+  hasMore = false,
+  items = defaultItems,
+}: GetMockResolversProps) => ({
   SearchQueryResult: () => ({
     items: () => items,
     hasMore,

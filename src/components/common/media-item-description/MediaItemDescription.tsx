@@ -3,11 +3,11 @@ import React from 'react';
 import useMediaItemDescription from './useMediaItemDescription';
 import * as Styles from './MediaItemDescription.styles';
 
-type Props = {
+type MediaItemDescriptionProps = {
   description: string;
 };
 
-const MediaItemDescription = ({ description }: Props) => {
+const MediaItemDescription = ({ description }: MediaItemDescriptionProps) => {
   const {
     isReadExpandableButtonVisible,
     expandableReadButtonText,

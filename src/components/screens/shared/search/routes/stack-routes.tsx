@@ -6,10 +6,10 @@ import { RouteProp } from '@react-navigation/native';
 import MovieDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
 import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
 import Reviews, {
-  Props as ReviewsExternalParams,
+  ReviewsExternalParams,
 } from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
 import TVShowSeasonDetail, {
-  Props as TVShowSeasonDetailExternalProps,
+  TVShowSeasonsDetailProps,
 } from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
@@ -22,12 +22,12 @@ const Stack = createStackNavigator();
 
 type SearchScreenRouteProp = RouteProp<SearchStackParams, 'SEARCH'>;
 
-type Props = {
+type SearchStackProps = {
   route: SearchScreenRouteProp;
   theme: DefaultTheme;
 };
 
-const SearchStack = ({ route, theme }: Props) => (
+const SearchStack = ({ route, theme }: SearchStackProps) => (
   <Stack.Navigator
     headerMode="screen"
   >
@@ -73,9 +73,7 @@ const SearchStack = ({ route, theme }: Props) => (
     />
     <Stack.Screen
       name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
-      options={({
-        route: tvShowSeasonDetailRouteProp,
-      }: TVShowSeasonDetailExternalProps) => ({
+      options={({ route: tvShowSeasonDetailRouteProp }: TVShowSeasonsDetailProps) => ({
         ...getDefaultHeaderOptions(),
         headerTintColor: theme.colors.buttonText,
         headerStyle: {

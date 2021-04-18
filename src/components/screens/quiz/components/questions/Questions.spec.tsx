@@ -46,13 +46,17 @@ const routeParams: QuestionsScreenRouteProp = {
   },
 };
 
-type Props = {
+type RenderQuestionsProps = {
   route?: QuestionsScreenRouteProp;
   navigate?: typeof jest.fn;
   mockResolvers?: IMocks;
 };
 
-const renderQuestions = ({ route = routeParams, mockResolvers, navigate }: Props) => {
+const renderQuestions = ({
+  route = routeParams,
+  mockResolvers,
+  navigate,
+}: RenderQuestionsProps) => {
   const QuestionsComponent = ({ navigation }) => (
     <ThemeProvider theme={theme}>
       <AutoMockProvider mockResolvers={mockResolvers}>

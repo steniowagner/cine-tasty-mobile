@@ -8,7 +8,7 @@ import metrics from '@styles/metrics';
 import MediaSwitcher from '../media-switcher/MediaSwitcher';
 import * as Styles from './Header.styles';
 
-type Props = {
+type HeaderProps = {
   shouldDisableActions: boolean;
   onPresSwitchTVShows: () => void;
   onPressSwitchMovies: () => void;
@@ -22,7 +22,7 @@ const Header = ({
   onPressSwitchMovies,
   onPressSettings,
   onPressSearch,
-}: Props) => {
+}: HeaderProps) => {
   const items = useMemo(
     () => [
       {

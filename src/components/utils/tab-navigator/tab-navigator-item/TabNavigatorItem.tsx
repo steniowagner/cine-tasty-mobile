@@ -11,7 +11,7 @@ import * as Styles from './TabNavigatorItem.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
-type Props = {
+type NavigatorItemProps = {
   inactiveIcon: SupportedIcons;
   activeIcon: SupportedIcons;
   onPress: () => void;
@@ -23,8 +23,14 @@ type Props = {
 
 const NavigatorItem = withTheme(
   ({
-    inactiveIcon, activeIcon, isSelected, onPress, theme, width, title,
-  }: Props) => {
+    inactiveIcon,
+    activeIcon,
+    isSelected,
+    onPress,
+    theme,
+    width,
+    title,
+  }: NavigatorItemProps) => {
     const { currentTheme } = useGetCurrentTheme({ theme });
 
     const selectedIconColor = useMemo(

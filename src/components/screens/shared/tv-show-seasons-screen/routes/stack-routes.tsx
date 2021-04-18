@@ -22,13 +22,13 @@ const getTabStyleWidth = (numberOfSeasons: number): number => {
   return metrics.width / 3;
 };
 
-export type Props = {
+export type TVShowSeasonsDetailProps = {
   navigation: StackNavigationProp<TVShowSeasonsStackParams, 'TV_SHOW_SEASONS'>;
   route: RouteProp<TVShowSeasonsStackParams, 'TV_SHOW_SEASONS'>;
   theme: DefaultTheme;
 };
 
-const TVShowSeasonsDetail = ({ route, theme }: Props) => {
+const TVShowSeasonsDetail = ({ route, theme }: TVShowSeasonsDetailProps) => {
   const { t } = useTranslation();
 
   const { numberOfSeasons } = route.params;

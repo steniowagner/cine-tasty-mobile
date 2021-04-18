@@ -12,7 +12,7 @@ import * as TRANSLATIONS from '@i18n/tags';
 import * as LoadingTop3Styles from '../LoadingTop3.styles';
 import * as Styles from './Top3ListItem.styles';
 
-type Props = {
+type Top3ListItemProps = {
   translateY: Animated.AnimatedInterpolation;
   isTheMiddle: boolean;
   onPress: () => void;
@@ -36,7 +36,7 @@ const Top3ListItem = ({
   image,
   theme,
   title,
-}: Props) => {
+}: Top3ListItemProps) => {
   const { currentTheme } = useGetCurrentTheme({ theme });
   const { t } = useTranslation();
 

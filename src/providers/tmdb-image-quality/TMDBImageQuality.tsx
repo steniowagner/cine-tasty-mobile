@@ -15,11 +15,11 @@ const TMDBImageQualityContext = createContext<
   Record<Types.ImageType, Types.ImageSize> | undefined
 >(undefined);
 
-type Props = {
+type TMDBImageQualityProviderProps = {
   children: JSX.Element;
 };
 
-export const TMDBImageQualityProvider = ({ children }: Props) => {
+export const TMDBImageQualityProvider = ({ children }: TMDBImageQualityProviderProps) => {
   const [imagesQualities, setImagesQualities] = useState<
     Record<Types.ImageType, string> | undefined
   >(undefined);

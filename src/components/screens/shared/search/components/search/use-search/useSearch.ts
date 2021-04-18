@@ -17,7 +17,7 @@ const INITIAL_QUERY_RESULT = {
   items: [],
 };
 
-type Props = {
+type UseSearchProps = {
   i18nQueryByPaginationErrorRef: string;
   searchType: SchemaTypes.SearchType;
   i18nQueryByTextErrorRef: string;
@@ -29,7 +29,7 @@ const useSearch = ({
   i18nQueryByTextErrorRef,
   searchType,
   queryId,
-}: Props) => {
+}: UseSearchProps) => {
   const [queryResult, setQueryResult] = useState<Types.PaginatedQueryResult>(
     INITIAL_QUERY_RESULT,
   );

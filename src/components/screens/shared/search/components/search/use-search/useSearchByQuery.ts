@@ -11,13 +11,17 @@ type TVariables = {
   input: SchemaTypes.SearchInput;
 };
 
-type Props = {
+type UseSearchByQueryProps = {
   search: (variables: TVariables) => Promise<ApolloQueryResult<Types.SearchResult>>;
   setQueryString: (queryString: string) => void;
   searchType: SchemaTypes.SearchType;
 };
 
-const useSearchByQuery = ({ setQueryString, searchType, search }: Props) => {
+const useSearchByQuery = ({
+  setQueryString,
+  searchType,
+  search,
+}: UseSearchByQueryProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const debouncedSetQueryString = useRef(

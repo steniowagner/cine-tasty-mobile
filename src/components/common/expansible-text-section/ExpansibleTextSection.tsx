@@ -6,13 +6,17 @@ import Section from '@components/common/section/Section';
 import LoadingExpansibleTextSection from './loading-expansible-text-section/LoadingExpansibleTextSection';
 import * as Styles from './ExpansibleTextSection.styles';
 
-type Props = {
+type ExpansibleTextSectionProps = {
   sectionTitle: string;
   isLoading: boolean;
   text: string;
 };
 
-const ExpansibleTextSection = ({ sectionTitle, isLoading, text }: Props) => (
+const ExpansibleTextSection = ({
+  sectionTitle,
+  isLoading,
+  text,
+}: ExpansibleTextSectionProps) => (
   <Section
     title={sectionTitle}
     noMarginBottom

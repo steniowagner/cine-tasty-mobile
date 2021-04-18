@@ -6,12 +6,12 @@ import * as Types from '@local-types';
 import { GapFlatlist, ListWrapper, ITEM_WIDTH } from './LoadingTop3.styles';
 import Top3ListItem from './top-3-list-item/Top3ListItem';
 
-type Props = {
+type Top3Props = {
   onPressLearnMore: (mediaItem: Omit<Types.SimplifiedMedia, '__typename'>) => void;
   top3Items: Types.HomeTop3Item[];
 };
 
-const Top3 = ({ onPressLearnMore, top3Items }: Props) => {
+const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   return (

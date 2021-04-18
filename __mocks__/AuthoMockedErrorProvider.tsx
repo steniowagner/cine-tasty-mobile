@@ -5,12 +5,12 @@ import { ApolloLink, Observable } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
 import { GraphQLError } from 'graphql';
 
-type Props = {
+type MockedErrorProviderProps = {
   errors: Readonly<GraphQLError[]>;
   children: JSX.Element;
 };
 
-const MockedErrorProvider = ({ errors, children }: Props) => {
+const MockedErrorProvider = ({ errors, children }: MockedErrorProviderProps) => {
   const link = new ApolloLink(
     () => new Observable((observer) => {
       observer.next({

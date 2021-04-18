@@ -34,13 +34,13 @@ const SeeSeasonsButtonWrapper = styled(View)`
   padding-horizontal: ${({ theme }) => theme.metrics.getWidthFromDP('14%')}px;
 `;
 
-type Props = {
+type TVShowDetailProps = {
   navigation: StackNavigationProp<MovieDetailInternalternalParams, 'TV_SHOW_DETAIL'>;
   route: RouteProp<MovieDetailInternalternalParams, 'TV_SHOW_DETAIL'>;
   theme: DefaultTheme;
 };
 
-const TVShowDetail = ({ navigation, theme, route }: Props) => {
+const TVShowDetail = ({ navigation, theme, route }: TVShowDetailProps) => {
   const { barStyle } = useStatusBarStyle({ theme });
 
   useLayoutEffect(() => {

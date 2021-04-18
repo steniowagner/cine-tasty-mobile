@@ -11,7 +11,7 @@ import { printSchema, buildClientSchema } from 'graphql/utilities';
 import introspectionQueryResultData from '../fragmentTypes.json';
 import introspectionResult from '../schema.json';
 
-type Props = {
+type AutoMockedProviderProps = {
   mockResolvers?: IMocks;
   children: JSX.Element;
 };
@@ -20,7 +20,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData,
 });
 
-const AutoMockedProvider = ({ children, mockResolvers }: Props) => {
+const AutoMockedProvider = ({ children, mockResolvers }: AutoMockedProviderProps) => {
   const schemaSDL = printSchema(
     buildClientSchema({ __schema: introspectionResult.__schema as any }),
   );

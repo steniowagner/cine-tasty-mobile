@@ -9,7 +9,7 @@ import BackgroundImage from '../background-image/BackgroundImage';
 import PosterImage from '../poster-image/PosterImage';
 import * as Styles from './HeaderInfo.styles';
 
-type Props = {
+type HeaderInfoProps = {
   votesAverage: number;
   isLoading: boolean;
   voteCount: number;
@@ -25,7 +25,7 @@ const HeaderInfo = ({
   posterURL,
   imageURL,
   title,
-}: Props) => {
+}: HeaderInfoProps) => {
   const { t } = useTranslation();
 
   return (

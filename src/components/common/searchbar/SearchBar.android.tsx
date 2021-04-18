@@ -6,7 +6,7 @@ import HeaderIconButton from '@components/common/header-icon-button/HeaderIconBu
 
 import * as Styles from './SearchBar.styles';
 
-type Props = {
+type SearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
   onPressSearch: () => void;
   onPressClose: () => void;
@@ -20,7 +20,7 @@ const SearchBar = ({
   onPressClose,
   placeholder,
   theme,
-}: Props) => {
+}: SearchBarProps) => {
   const inputRef = useRef<TextInput>();
   useEffect(() => {
     if (inputRef && inputRef.current) {

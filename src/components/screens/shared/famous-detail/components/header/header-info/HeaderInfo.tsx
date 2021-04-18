@@ -7,7 +7,7 @@ import ProfileImage from '../profile-image/ProfileImage';
 import * as Styles from './HeaderInfo.styles';
 import InfoText from '../InfoText';
 
-type Props = {
+type HeaderInfoProps = {
   knownForDepartment: string;
   profileImage: string;
   placeOfBirth: string;
@@ -23,7 +23,7 @@ const HeaderInfo = ({
   isLoading,
   birthDate,
   name,
-}: Props) => (
+}: HeaderInfoProps) => (
   <Styles.Wrapper>
     <Styles.NameText
       testID="name-text"

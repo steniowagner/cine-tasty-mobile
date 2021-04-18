@@ -6,12 +6,12 @@ import * as TRANSLATIONS from '@i18n/tags';
 import * as Styles from './BooleanQuestion.styles';
 import NextButton from '../next-button/NextButton';
 
-type Props = {
+type BooleanQuestionProps = {
   onPressNext: (answerSelected: string) => void;
   isFocused: boolean;
 };
 
-const BooleanQuestion = ({ onPressNext }: Props) => {
+const BooleanQuestion = ({ onPressNext }: BooleanQuestionProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<boolean | undefined>(undefined);
   const { t } = useTranslation();
 

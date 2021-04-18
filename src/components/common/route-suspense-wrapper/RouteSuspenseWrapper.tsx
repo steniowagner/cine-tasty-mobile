@@ -2,11 +2,11 @@ import React, { Suspense } from 'react';
 
 import * as Styles from './RouteSuspenseWrapper.styles';
 
-type Props = {
+type RouteSuspenseWrapperProps = {
   children: JSX.Element;
 };
 
-const RouteSuspenseWrapper = ({ children }: Props) => (
+const RouteSuspenseWrapper = ({ children }: RouteSuspenseWrapperProps) => (
   <Suspense
     fallback={(
       <Styles.LoadingWrapper>

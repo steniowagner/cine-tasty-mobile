@@ -4,11 +4,11 @@ import useKnownForDepartment from './useKnownForDepartment';
 import * as Styles from './KnownForDepartment.styles';
 import InfoText from '../InfoText';
 
-type Props = {
+type KnownForDepartmentProps = {
   knownForDepartment?: string;
 };
 
-const KnownForDepartment = ({ knownForDepartment }: Props) => {
+const KnownForDepartment = ({ knownForDepartment }: KnownForDepartmentProps) => {
   const { onGetTextWidth, opacity, width } = useKnownForDepartment();
 
   if (!knownForDepartment) {

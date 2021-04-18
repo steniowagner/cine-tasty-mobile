@@ -20,12 +20,12 @@ export type ExternalProps = {
   isMovie: boolean;
 };
 
-export type Props = {
+export type MediaSectionViewAllProps = {
   navigation: StackNavigationProp<HomeStackParams, 'MEDIA_DETAILS_VIEW_ALL'>;
   route: RouteProp<HomeStackParams, 'MEDIA_DETAILS_VIEW_ALL'>;
 };
 
-const MediaSectionViewAll = ({ navigation, route }: Props) => {
+const MediaSectionViewAll = ({ navigation, route }: MediaSectionViewAllProps) => {
   const {
     shouldShowListBottomReloadButton,
     onPressBottomReloadButton,

@@ -9,7 +9,7 @@ import * as Styles from './PeopleListItem.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
-type Props = {
+type PeopleListItemProps = {
   onPress: () => void;
   withSubtext?: boolean;
   isFirst: boolean;
@@ -27,7 +27,7 @@ const PeopleListItem = ({
   image,
   name,
   type,
-}: Props) => {
+}: PeopleListItemProps) => {
   const {
     isFallbackImageVisible,
     hasError,

@@ -11,11 +11,11 @@ export const IMAGE_HEIGHT = metrics.getWidthFromDP('40%');
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
-type Props = {
+type MediaImageProps = {
   image: string;
 };
 
-const MediaImage = ({ image }: Props) => {
+const MediaImage = ({ image }: MediaImageProps) => {
   const {
     isFallbackImageVisible,
     hasError,

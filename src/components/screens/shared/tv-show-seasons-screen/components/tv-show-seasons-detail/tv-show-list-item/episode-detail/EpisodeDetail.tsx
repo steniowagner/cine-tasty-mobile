@@ -14,11 +14,11 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './EpisodeDetail.styles';
 
-type Props = {
+type EpisodeDetailProps = {
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
 };
 
-const EpisodeDetail = ({ episode }: Props) => {
+const EpisodeDetail = ({ episode }: EpisodeDetailProps) => {
   const { t } = useTranslation();
 
   const renderImage = useCallback(() => {

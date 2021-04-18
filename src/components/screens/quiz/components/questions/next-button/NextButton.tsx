@@ -5,12 +5,12 @@ import * as TRANSLATIONS from '@i18n/tags';
 
 import * as Styles from './NextButtonStyles';
 
-type Props = {
+type NextButtonProps = {
   onPress: () => void;
   isDisabled: boolean;
 };
 
-const NextButton = ({ onPress, isDisabled }: Props) => {
+const NextButton = ({ onPress, isDisabled }: NextButtonProps) => {
   const { t } = useTranslation();
 
   return (

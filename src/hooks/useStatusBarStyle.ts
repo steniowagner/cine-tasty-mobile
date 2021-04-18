@@ -6,7 +6,7 @@ import * as Types from '@local-types';
 
 import { useGetCurrentTheme } from './useGetCurrentTheme';
 
-type Props = {
+type UseStatusBarStyleProps = {
   theme: DefaultTheme;
 };
 
@@ -14,7 +14,7 @@ type State = {
   barStyle: StatusBarStyle;
 };
 
-export const useStatusBarStyle = ({ theme }: Props): State => {
+export const useStatusBarStyle = ({ theme }: UseStatusBarStyleProps): State => {
   const { currentTheme } = useGetCurrentTheme({ theme });
 
   const barStyle = useMemo(() => {

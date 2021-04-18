@@ -10,7 +10,7 @@ import * as Styles from './SimplifiedMediaListItem.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
-type Props = {
+type SimplifiedMediaListItemProps = {
   onPress: () => void;
   voteAverage: number;
   voteCount: number;
@@ -26,7 +26,7 @@ const SimplifiedMediaListItem = ({
   onPress,
   image,
   title,
-}: Props) => {
+}: SimplifiedMediaListItemProps) => {
   const {
     isFallbackImageVisible,
     hasError,

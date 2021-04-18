@@ -7,7 +7,7 @@ import theme from '@styles/theme';
 import MockedNavigation from '../../../../__mocks__/MockedNavigator';
 import SearchBar from './SearchBar.ios';
 
-type Props = {
+type RenderSearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
   onPressSearch?: () => void;
   onPressClose: () => void;
@@ -20,7 +20,7 @@ const renderSearchBar = ({
   onPressSearch,
   onPressClose,
   placeholder,
-}: Props) => {
+}: RenderSearchBarProps) => {
   const SearchBarIOS = () => (
     <ThemeProvider theme={theme}>
       <SearchBar
