@@ -1,18 +1,16 @@
 /* eslint-disable camelcase */
 import { useMemo } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import * as SchemaTypes from '@schema-types';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
 import useRecentSearches from '../recent-searches/useRecentSearches';
-import { SearchStackParams } from '../../routes/route-params-types';
-
-type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH'>;
+import { SearchNavigationProp } from '../../routes/route-params-types';
 
 type UsePressHandlerProps = {
-  navigation: SearchScreenNavigationProp;
   searchType: SchemaTypes.SearchType;
+  navigation: SearchNavigationProp;
 };
 
 const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
@@ -31,14 +29,14 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
             id: item.id,
           });
 
-          navigation.navigate('FAMOUS_DETAIL', {
+          navigation.navigate(Routes.Famous.DETAILS, {
             profileImage: item.image,
             name: item.title,
             id: item.id,
           });
         },
         onPressRecentSearchItem: (person: Types.RecentSearchItem) => {
-          navigation.navigate('FAMOUS_DETAIL', {
+          navigation.navigate(Routes.Famous.DETAILS, {
             profileImage: person.image,
             name: person.title,
             id: person.id,
@@ -53,7 +51,7 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
             id: movie.id,
           });
 
-          navigation.navigate('MOVIE_DETAIL', {
+          navigation.navigate(Routes.Movie.DETAILS, {
             genreIds: movie.genreIds || [],
             voteAverage: movie.voteAverage,
             posterPath: movie.posterPath,
@@ -63,7 +61,7 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
           });
         },
         onPressRecentSearchItem: (movie: Types.RecentSearchItem) => {
-          navigation.navigate('MOVIE_DETAIL', {
+          navigation.navigate(Routes.Movie.DETAILS, {
             posterPath: movie.image,
             title: movie.title,
             id: movie.id,
@@ -78,7 +76,7 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
             id: tvShow.id,
           });
 
-          navigation.navigate('TV_SHOW_DETAIL', {
+          navigation.navigate(Routes.TVShow.DETAILS, {
             genreIds: tvShow.genreIds || [],
             voteAverage: tvShow.voteAverage,
             posterPath: tvShow.posterPath,
@@ -88,7 +86,7 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
           });
         },
         onPressRecentSearchItem: (tvShow: Types.RecentSearchItem) => {
-          navigation.navigate('TV_SHOW_DETAIL', {
+          navigation.navigate(Routes.TVShow.DETAILS, {
             posterPath: tvShow.image,
             title: tvShow.title,
             id: tvShow.id,

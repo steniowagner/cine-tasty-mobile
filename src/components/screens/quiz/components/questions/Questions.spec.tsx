@@ -1,17 +1,17 @@
 import React from 'react';
+import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { RouteProp } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
 import { QuizStackParams } from '../../routes/route-params-types';
-import LOCAL_ROUTES from '../../routes/route-names';
 import Questions from './Questions';
 
 const quiz = [
@@ -33,10 +33,10 @@ const quiz = [
   },
 ];
 
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'QUESTIONS'>;
+type QuestionsScreenRouteProp = RouteProp<QuizStackParams, Routes.Quiz.QUESTIONS>;
 
 const routeParams: QuestionsScreenRouteProp = {
-  name: 'QUESTIONS',
+  name: Routes.Quiz.QUESTIONS,
   key: '',
   params: {
     numberOfQuestions: quiz.length,
@@ -215,7 +215,7 @@ describe('Testing <Questions />', () => {
 
     expect(navigate).toBeCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith(LOCAL_ROUTES.RESULTS.id, {
+    expect(navigate).toHaveBeenCalledWith(Routes.Quiz.RESULTS, {
       questions: quiz,
       answers: [quiz[0].options[MULTI_CHOICE_OPTION_SELECTED], 'true'],
     });

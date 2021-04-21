@@ -1,16 +1,22 @@
-import { SCREEN_ID as MOVIE_DETAIL_SCREEN_ID } from '@components/screens/shared/media-detail-screen/movie-detail/routes/route-names';
-import { MovieDetailExternalParams } from '@components/screens/shared/media-detail-screen/movie-detail/routes/route-params-types';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { DefaultTheme } from 'styled-components';
 
-import { SCREEN_ID as TV_SHOW_DETAIL_SCREEN_ID } from '@components/screens/shared/media-detail-screen/tv-show-detail/routes/route-names';
-import { TVShowDetailExternalParams } from '@components/screens/shared/media-detail-screen/tv-show-detail/routes/route-params-types';
-
-import { SCREEN_ID as FAMOUS_DETAIL_ID } from '@components/screens/shared/famous-detail/routes/route-names';
-import { ExternalFamousDetailParams } from '@components/screens/shared/famous-detail/routes/route-params-types';
-
+import { TVShowDetailParams } from '@components/screens/shared/media-detail/tv-show-detail/routes/route-params-types';
+import { MovieDetailParams } from '@components/screens/shared/media-detail/movie-detail/routes/route-params-types';
+import { FamousDetailParams } from '@components/screens/shared/famous-detail/routes/route-params-types';
 import * as SchemaTypes from '@schema-types';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-export type SearchNavigationParams = {
+type SearchStackParams = {
+  [Routes.TVShow.DETAILS]: TVShowDetailParams;
+  [Routes.Famous.DETAILS]: FamousDetailParams;
+  [Routes.Movie.DETAILS]: MovieDetailParams;
+  [Routes.Search.SEARCH]: SearchParams;
+};
+
+export type SearchParams = {
   i18nQueryByPaginationErrorRef: string;
   i18nSearchBarPlaceholderRef: string;
   i18nQueryByTextErrorRef: string;
@@ -18,9 +24,13 @@ export type SearchNavigationParams = {
   queryId: Types.CineTastyQuery;
 };
 
-export type SearchStackParams = {
-  [TV_SHOW_DETAIL_SCREEN_ID]: TVShowDetailExternalParams;
-  [MOVIE_DETAIL_SCREEN_ID]: MovieDetailExternalParams;
-  [FAMOUS_DETAIL_ID]: ExternalFamousDetailParams;
-  SEARCH: SearchNavigationParams;
+export type SearchNavigationProp = StackNavigationProp<
+  SearchStackParams,
+  Routes.Search.SEARCH
+>;
+
+export type SearchStackProps = {
+  route: RouteProp<SearchStackParams, Routes.Search.SEARCH>;
+  navigation: SearchNavigationProp;
+  theme: DefaultTheme;
 };

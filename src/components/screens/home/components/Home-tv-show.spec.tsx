@@ -5,11 +5,11 @@ import { IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import { SCREEN_ID } from './media-section-view-all/MediaSectionViewAll';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
 import Home from './Home';
@@ -233,7 +233,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
 
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
@@ -283,7 +283,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
 
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
@@ -333,7 +333,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
 
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
@@ -387,7 +387,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('SEARCH', {
+    expect(navigate).toHaveBeenCalledWith(Routes.Search.SEARCH, {
       i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR,
       i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
       i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_PLACEHOLDER,

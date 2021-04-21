@@ -3,30 +3,19 @@ import {
   createBottomTabNavigator,
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
+import { Routes } from '@routes/routes';
 
+import FamousStack from '@components/screens/famous/routes/stack-routes';
 import TabNavigator from '@components/utils/tab-navigator/TabNavigator';
-
-import HomeStack, {
-  TabID as HomeTabID,
-} from '@components/screens/home/routes/stack-routes';
-
-import FamousStack, {
-  TabID as FamousTabID,
-} from '@components/screens/famous/routes/stack-routes';
-
-import QuizStack, {
-  TabID as QuizTabID,
-} from '@components/screens/quiz/routes/stack-routes';
-
-import NewsStack, {
-  TabID as NewsTabID,
-} from '@components/screens/news/routes/stack-routes';
+import HomeStack from '@components/screens/home/routes/stack-routes';
+import QuizStack from '@components/screens/quiz/routes/stack-routes';
+import NewsStack from '@components/screens/news/routes/stack-routes';
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
   <Tab.Navigator
-    initialRouteName={HomeTabID}
+    initialRouteName={Routes.Home.HOME}
     tabBar={(props: BottomTabBarProps) => (
       <TabNavigator
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -36,19 +25,19 @@ const Tabs = () => (
   >
     <Tab.Screen
       component={HomeStack}
-      name={HomeTabID}
+      name={Routes.Home.HOME}
     />
     <Tab.Screen
       component={FamousStack}
-      name={FamousTabID}
+      name={Routes.Famous.FAMOUS}
     />
     <Tab.Screen
       component={QuizStack}
-      name={QuizTabID}
+      name={Routes.Quiz.QUIZ}
     />
     <Tab.Screen
       component={NewsStack}
-      name={NewsTabID}
+      name={Routes.News.NEWS}
     />
   </Tab.Navigator>
 );

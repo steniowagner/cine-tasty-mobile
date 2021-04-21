@@ -7,6 +7,7 @@ import { IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
@@ -197,7 +198,7 @@ describe('Testing <Search /> - [Famous]', () => {
 
     expect(onPress).toHaveBeenCalledTimes(1);
 
-    expect(onPress).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+    expect(onPress).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
       profileImage: defaultItems[INDEX_ITEM_SELECTED].profilePath,
       name: defaultItems[INDEX_ITEM_SELECTED].name,
       id: defaultItems[INDEX_ITEM_SELECTED].id,
@@ -238,7 +239,7 @@ describe('Testing <Search /> - [Famous]', () => {
 
     expect(onPress).toHaveBeenCalledTimes(1);
 
-    expect(onPress).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+    expect(onPress).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
       profileImage: recentFamousSearched[INDEX_ITEM_SELECTED].image,
       name: recentFamousSearched[INDEX_ITEM_SELECTED].title,
       id: recentFamousSearched[INDEX_ITEM_SELECTED].id,

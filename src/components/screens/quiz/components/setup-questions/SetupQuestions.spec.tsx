@@ -3,13 +3,13 @@ import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
 import * as TRANSLATIONS from '@i18n/tags';
-import theme from '@styles/theme';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
+import theme from '@styles/theme';
 
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
 import { difficulties, categories, types } from './options';
-import LOCAL_ROUTES from '../../routes/route-names';
 import SetupQuestions from './SetupQuestions';
 
 const getNavigationParam = (navigate = jest.fn) => ({
@@ -72,7 +72,7 @@ describe('Testing <SetupQuestions />', () => {
     expect(navigate.mock.calls[0][1].headerText).toEqual(
       TRANSLATIONS.QUIZ_SET_DIFFICULTY,
     );
-    expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
   });
 
   it('should navigate to CustomModal correctly when the user press the category-dropdown', () => {
@@ -93,7 +93,7 @@ describe('Testing <SetupQuestions />', () => {
       Types.CustomizedModalChildrenType.MEDIA_FILTER,
     );
     expect(navigate.mock.calls[0][1].headerText).toEqual(TRANSLATIONS.QUIZ_SET_CATEGORY);
-    expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
   });
 
   it('should navigate to CustomModal correctly when the user press the type-dropdown', () => {
@@ -114,7 +114,7 @@ describe('Testing <SetupQuestions />', () => {
       Types.CustomizedModalChildrenType.MEDIA_FILTER,
     );
     expect(navigate.mock.calls[0][1].headerText).toEqual(TRANSLATIONS.QUIZ_SET_TYPE);
-    expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
   });
 
   it('should navigate to Questions with the selected params when the user press the "START QUIZ" button', () => {
@@ -126,7 +126,7 @@ describe('Testing <SetupQuestions />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toBeCalledWith(LOCAL_ROUTES.QUESTIONS.id, {
+    expect(navigate).toBeCalledWith(Routes.Quiz.QUESTIONS, {
       numberOfQuestions: INITIAL_NUMBER_QUESTIONS,
       difficulty: difficulties[0].value,
       category: categories[0].value,

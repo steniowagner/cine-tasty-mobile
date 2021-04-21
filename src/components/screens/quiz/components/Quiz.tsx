@@ -1,21 +1,14 @@
 import React from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
-import { QuizStackParams } from '../routes/route-params-types';
-import LOCAL_ROUTES from '../routes/route-names';
+import { QuizStackProps } from '../routes/route-params-types';
 import * as Styles from './Quiz.styles';
 
-type QuizScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUIZ'>;
-
-type QuizProps = {
-  navigation: QuizScreenNavigationProp;
-};
-
-const Quiz = ({ navigation }: QuizProps) => {
+const Quiz = ({ navigation }: QuizStackProps) => {
   const { t } = useTranslation();
 
   return (
@@ -24,7 +17,7 @@ const Quiz = ({ navigation }: QuizProps) => {
       <Styles.SubText>{t(TRANSLATIONS.QUIZ_DESCRIPTION)}</Styles.SubText>
       <Styles.LargeText>{t(TRANSLATIONS.QUIZ_CHALLENGE)}</Styles.LargeText>
       <RoundedButton
-        onPress={() => navigation.navigate(LOCAL_ROUTES.SETUP_QUESTIONS.id)}
+        onPress={() => navigation.navigate(Routes.Quiz.SETUP_QUESTIONS)}
         text={t(TRANSLATIONS.QUIZ_CHOOSE_QUESTIONS)}
       />
     </Styles.Wrapper>

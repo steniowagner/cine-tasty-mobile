@@ -4,6 +4,7 @@ import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
@@ -166,7 +167,7 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
 
     const { id } = navigate.mock.calls[0][1];
 
-    expect(navigate).toHaveBeenCalledWith('TV_SHOW_DETAIL', {
+    expect(navigate).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
       voteAverage: trendingTVShowsWithTitle.onTheAir.items[id].voteAverage,
       posterPath: trendingTVShowsWithTitle.onTheAir.items[id].posterPath,
       voteCount: trendingTVShowsWithTitle.onTheAir.items[id].voteCount,
@@ -224,7 +225,7 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('TV_SHOW_DETAIL', {
+    expect(navigate).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
       voteAverage: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].voteAverage,
       posterPath: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].posterPath,
       voteCount: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].voteCount,

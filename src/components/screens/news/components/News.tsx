@@ -2,7 +2,6 @@
 
 import React, { useLayoutEffect } from 'react';
 import { FlatList, Platform, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
@@ -11,26 +10,21 @@ import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 import Advise from '@components/common/advise/Advise';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
-import { NewsStackParams } from '../routes/route-params-types';
 import { imageWrapper } from './list-item/NewsListItem.styles';
-import NewsListItem from './list-item/NewsListItem';
+import { NewsStackProps } from '../routes/route-params-types';
 import NewsLoading from './loading-list/NewsLoading';
+import NewsListItem from './list-item/NewsListItem';
 import useNews from './useNews';
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
 
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
-type NewsScreenNavigationProp = StackNavigationProp<NewsStackParams, 'NEWS'>;
-
-type NewsProps = {
-  navigation: NewsScreenNavigationProp;
-};
-
-const News = ({ navigation }: NewsProps) => {
+const News = ({ navigation }: NewsStackProps) => {
   const {
     onPressFooterReloadButton,
     onSelectArticleLanguage,
@@ -49,7 +43,7 @@ const News = ({ navigation }: NewsProps) => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          onPress={() => navigation.navigate('CUSTOM_MODAL', {
+          onPress={() => navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
             type: Types.CustomizedModalChildrenType.LANGUAGE,
             headerText: t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
             extraData: {

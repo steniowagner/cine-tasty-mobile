@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 import { getDefaultHeaderOptions } from '@routes/constants';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
-import LOCAL_ROUTES from './route-names';
 import News from '../components/News';
 
 const Stack = createStackNavigator();
@@ -20,13 +20,11 @@ const NewsStack = () => {
           ...getDefaultHeaderOptions(),
           headerTitle: t(TRANSLATIONS.TABS_NEWS),
         }}
-        name={LOCAL_ROUTES.NEWS.id}
+        name={Routes.News.NEWS}
         component={News}
       />
     </Stack.Navigator>
   );
 };
-
-export const TabID = LOCAL_ROUTES.NEWS.id;
 
 export default NewsStack;

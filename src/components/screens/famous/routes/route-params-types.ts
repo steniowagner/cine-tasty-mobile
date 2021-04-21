@@ -1,21 +1,23 @@
-import { MODAL_ID as IMAGES_GALLERY_MODAL_ID } from '@components/screens/shared/images-gallery/routes/stack-routes';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+import { MovieDetailParams } from '@components/screens/shared/media-detail/movie-detail/routes/route-params-types';
 import { ImagesGalleryParams } from '@components/screens/shared/images-gallery/routes/route-params-types';
+import { FamousDetailParams } from '@components/screens/shared/famous-detail/routes/route-params-types';
+import { SearchParams } from '@components/screens/shared/search/routes/route-params-types';
+import { Routes } from '@routes/routes';
 
-import { SCREEN_ID as FAMOUS_DETAIL_ID } from '@components/screens/shared/famous-detail/routes/route-names';
-import { ExternalFamousDetailParams } from '@components/screens/shared/famous-detail/routes/route-params-types';
+type FamousStackParams = {
+  [Routes.ImagesGallery.IMAGES_GALLERY]: ImagesGalleryParams;
+  [Routes.Famous.DETAILS]: FamousDetailParams;
+  [Routes.Movie.DETAILS]: MovieDetailParams;
+  [Routes.Search.SEARCH]: SearchParams;
+  [Routes.Famous.FAMOUS]: FamousProps;
+};
 
-import { SearchNavigationParams } from '@components/screens/shared/search/routes/route-params-types';
-import { StackID as SEARCH_MODAL_ID } from '@components/screens/shared/search/routes/stack-routes';
+type FamousProps = {
+  headerTitle: string;
+};
 
-import { SCREEN_ID as MOVIE_DETAIL_STACK_ID } from '@components/screens/shared/media-detail-screen/movie-detail/routes/route-names';
-import { MovieDetailExternalParams } from '@components/screens/shared/media-detail-screen/movie-detail/routes/route-params-types';
-
-export type FamousStackParams = {
-  [MOVIE_DETAIL_STACK_ID]: MovieDetailExternalParams;
-  [IMAGES_GALLERY_MODAL_ID]: ImagesGalleryParams;
-  [FAMOUS_DETAIL_ID]: ExternalFamousDetailParams;
-  [SEARCH_MODAL_ID]: SearchNavigationParams;
-  FAMOUS: {
-    headerTitle: string;
-  };
+export type FamousStackProps = {
+  navigation: StackNavigationProp<FamousStackParams, Routes.Famous.FAMOUS>;
 };

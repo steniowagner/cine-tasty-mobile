@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 import React, { useLayoutEffect } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 // @ts-ignore
@@ -10,23 +8,14 @@ import Advise from '@components/common/advise/Advise';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import { SearchStackParams } from '../../routes/route-params-types';
+import { SearchStackProps } from '../../routes/route-params-types';
 import RecentSearches from '../recent-searches/RecentSearches';
 import FamousSearch from '../famous-search/FamousSearch';
 import MediaSearch from '../media-search/MediaSearch';
 import usePressHandlers from './usePressHandlers';
 import useSearch from './use-search/useSearch';
 
-type SearchScreenNavigationProp = StackNavigationProp<SearchStackParams, 'SEARCH'>;
-
-type SearchScreenRouteProp = RouteProp<SearchStackParams, 'SEARCH'>;
-
-type SearchProps = {
-  navigation: SearchScreenNavigationProp;
-  route: SearchScreenRouteProp;
-};
-
-const Search = ({ navigation, route }: SearchProps) => {
+const Search = ({ navigation, route }: SearchStackProps) => {
   const {
     onPressFooterReloadButton,
     shouldShowEmptyListAdvise,
@@ -72,7 +61,7 @@ const Search = ({ navigation, route }: SearchProps) => {
           onPressHeaderReloadButton={onPressHeaderReloadButton}
           onPressFooterReloadButton={onPressFooterReloadButton}
           hasPaginationError={hasPaginationError}
-          items={items as SchemaTypes.SearchPersonResult[]}
+          items={items as SchemaTypes.SearchPerson_search_items_BasePerson[]}
           onPressListItem={onPressListItem}
           onEndReached={onEndReached}
           errorMessage={errorMessage}
@@ -86,7 +75,10 @@ const Search = ({ navigation, route }: SearchProps) => {
           onPressFooterReloadButton={onPressFooterReloadButton}
           hasPaginationError={hasPaginationError}
           items={
-            items as SchemaTypes.SearchMovie_search_items_BaseMovieSearchMovieResult[]
+            items as (
+              | SchemaTypes.SearchTVShow_search_items_BaseTVShow
+              | SchemaTypes.SearchMovie_search_items_BaseMovie
+            )[]
           }
           onPressListItem={onPressListItem}
           onEndReached={onEndReached}

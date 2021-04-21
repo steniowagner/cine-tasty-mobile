@@ -1,18 +1,11 @@
 import React from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
 
-import { HomeStackParams } from '../../home/routes/route-params-types';
+import { SettingsStackProps } from '../routes/route-params-types';
 import SettingsSection from './settings-section/SettingsSection';
 import * as Styles from './Settings.styles';
 import useSettings from './useSettings';
 
-type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'SETTINGS'>;
-
-type SettingsProps = {
-  navigation: HomeScreenNavigationProp;
-};
-
-const Settings = ({ navigation }: SettingsProps) => {
+const Settings = ({ navigation }: SettingsStackProps) => {
   const { sections } = useSettings({ navigation });
 
   return (

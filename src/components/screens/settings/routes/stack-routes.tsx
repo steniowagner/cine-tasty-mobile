@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { getDefaultHeaderOptions } from '@routes/constants';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import ImagesQuality from '../components/images-quality/ImagesQuality';
 import OpenSource from '../components/open-source/OpenSource';
@@ -11,7 +12,6 @@ import ThemeSettings from '../components/theme/ThemeSettings';
 import Language from '../components/languages/Languages';
 import Settings from '../components/Settings';
 import About from '../components/about/About';
-import LOCAL_ROUTES from './route-names';
 
 const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) => {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
   return (
     <>
       <StackNavigator.Screen
-        name={LOCAL_ROUTES.SETTINGS.id}
+        name={Routes.Settings.SETTINGS}
         component={Settings}
         options={() => ({
           ...getDefaultHeaderOptions(),
@@ -27,7 +27,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         })}
       />
       <StackNavigator.Screen
-        name={LOCAL_ROUTES.LANGUAGE.id}
+        name={Routes.Settings.LANGUAGE}
         component={Language}
         options={() => ({
           ...getDefaultHeaderOptions(),
@@ -35,7 +35,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         })}
       />
       <StackNavigator.Screen
-        name={LOCAL_ROUTES.OPEN_SOURCE.id}
+        name={Routes.Settings.OPEN_SOURCE}
         component={OpenSource}
         options={() => ({
           ...getDefaultHeaderOptions(),
@@ -43,7 +43,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         })}
       />
       <StackNavigator.Screen
-        name={LOCAL_ROUTES.ABOUT.id}
+        name={Routes.Settings.ABOUT}
         component={About}
         options={() => ({
           ...getDefaultHeaderOptions(),
@@ -51,7 +51,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         })}
       />
       <StackNavigator.Screen
-        name={LOCAL_ROUTES.IMAGES_QUALITY.id}
+        name={Routes.Settings.IMAGES_QUALITY}
         component={ImagesQuality}
         options={() => ({
           ...getDefaultHeaderOptions(),
@@ -59,7 +59,7 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
         })}
       />
       <StackNavigator.Screen
-        name={LOCAL_ROUTES.THEME.id}
+        name={Routes.Settings.THEME}
         component={ThemeSettings}
         options={() => ({
           ...getDefaultHeaderOptions(),

@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 
 import { getDefaultHeaderOptions } from '@routes/constants';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import SetupQuestions from '../components/setup-questions/SetupQuestions';
 import Questions from '../components/questions/Questions';
 import Results from '../components/results/Results';
-import LOCAL_ROUTES from './route-names';
 import Quiz from '../components/Quiz';
 
 const Stack = createStackNavigator();
@@ -22,7 +22,7 @@ const QuizStack = () => {
         options={{
           headerShown: false,
         }}
-        name={LOCAL_ROUTES.QUIZ.id}
+        name={Routes.Quiz.QUIZ}
         component={Quiz}
       />
       <Stack.Screen
@@ -30,7 +30,7 @@ const QuizStack = () => {
           ...getDefaultHeaderOptions(),
           headerTitle: t(TRANSLATIONS.TABS_QUIZ),
         }}
-        name={LOCAL_ROUTES.SETUP_QUESTIONS.id}
+        name={Routes.Quiz.SETUP_QUESTIONS}
         component={SetupQuestions}
       />
       <Stack.Screen
@@ -38,7 +38,7 @@ const QuizStack = () => {
           ...getDefaultHeaderOptions(),
           headerTitleAlign: 'center',
         }}
-        name={LOCAL_ROUTES.QUESTIONS.id}
+        name={Routes.Quiz.QUESTIONS}
         component={Questions}
       />
 
@@ -48,13 +48,11 @@ const QuizStack = () => {
           headerTitleAlign: 'center',
           headerLeft: () => null,
         }}
-        name={LOCAL_ROUTES.RESULTS.id}
+        name={Routes.Quiz.RESULTS}
         component={Results}
       />
     </Stack.Navigator>
   );
 };
-
-export const TabID = LOCAL_ROUTES.QUIZ.id;
 
 export default QuizStack;

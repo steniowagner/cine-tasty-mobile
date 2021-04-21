@@ -1,12 +1,12 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect } from 'react';
 import { ScrollView } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { HomeStackParams } from '../routes/route-params-types';
+import { HomeStackProps } from '../routes/route-params-types';
 import HomeSection from './home-section/HomeSection';
 import LoadingHome from './top3/LoadingTop3';
 import * as Styles from './Home.styles';
@@ -14,13 +14,7 @@ import useHome from './hooks/useHome';
 import Header from './header/Header';
 import Top3 from './top3/Top3';
 
-type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
-
-type HomeProps = {
-  navigation: HomeScreenNavigationProp;
-};
-
-const Home = ({ navigation }: HomeProps) => {
+const Home = ({ navigation }: HomeStackProps) => {
   const {
     shouldDisableHeaderActions,
     onPressTop3LearnMore,
@@ -33,13 +27,13 @@ const Home = ({ navigation }: HomeProps) => {
     isLoading,
     trendings,
     top3,
-  } = useHome(navigation);
+  } = useHome({ navigation });
 
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <Header
-          onPressSettings={() => navigation.navigate('SETTINGS')}
+          onPressSettings={() => navigation.navigate(Routes.Settings.SETTINGS)}
           shouldDisableActions={shouldDisableHeaderActions}
           onPresSwitchTVShows={onSelectTVShows}
           onPressSwitchMovies={onSelectMovies}

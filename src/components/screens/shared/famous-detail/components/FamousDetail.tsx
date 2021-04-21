@@ -2,9 +2,7 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect, useCallback, useRef } from 'react';
 import { StatusBar, Animated, FlatList } from 'react-native';
-import { DefaultTheme, withTheme } from 'styled-components';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { withTheme } from 'styled-components';
 
 import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import ExpansibleTextSection from '@components/common/expansible-text-section/ExpansibleTextSection';
@@ -15,29 +13,17 @@ import Section from '@components/common/section/Section';
 import Advise from '@components/common/advise/Advise';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import metrics from '@styles/metrics';
 
-import { FamousDetailParams } from '../routes/route-params-types';
 import HeaderBackButton from '../../header-back-button/HeaderBackButton';
-import useFamousDetail from './useFamousDetail';
+import { FamousDetailStackProps } from '../routes/route-params-types';
 import HeaderInfo from './header/header-info/HeaderInfo';
+import useFamousDetail from './useFamousDetail';
 import * as Styles from './FamousDetail.styles';
 import DeathDay from './death-day/DeathDay';
 
-type QuestionsScreenNavigationProp = StackNavigationProp<
-  FamousDetailParams,
-  'FAMOUS_DETAIL'
->;
-
-type QuestionsScreenRouteProp = RouteProp<FamousDetailParams, 'FAMOUS_DETAIL'>;
-
-type FamousDetailProps = {
-  navigation: QuestionsScreenNavigationProp;
-  route: QuestionsScreenRouteProp;
-  theme: DefaultTheme;
-};
-
-const FamousDetail = ({ navigation, theme, route }: FamousDetailProps) => {
+const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
   const { currentTheme } = useGetCurrentTheme({ theme });
   const { barStyle } = useStatusBarStyle({ theme });
 
@@ -91,7 +77,7 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailProps) => {
           <FlatList
             renderItem={({ item, index }) => (
               <SimplifiedMediaListItem
-                onPress={() => navigation.push('MOVIE_DETAIL', {
+                onPress={() => navigation.push(Routes.Movie.DETAILS, {
                   voteAverage: item.voteAverage,
                   posterPath: item.posterPath,
                   voteCount: item.voteCount,
@@ -133,7 +119,7 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailProps) => {
                 voteAverage={item.voteAverage}
                 voteCount={item.voteCount}
                 isFirst={index === 0}
-                onPress={() => navigation.push('TV_SHOW_DETAIL', {
+                onPress={() => navigation.push(Routes.TVShow.DETAILS, {
                   voteAverage: item.voteAverage,
                   posterPath: item.posterPath,
                   voteCount: item.voteCount,

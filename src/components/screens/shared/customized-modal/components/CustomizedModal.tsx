@@ -1,30 +1,16 @@
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 
 import SetupQuestionsOptionsList from '@components/screens/quiz/components/setup-questions/setup-options-list/SetupQuestionsOptionsList';
 import LanguageFilter from '@components/screens/news/components/language-filter/LanguageFilter';
 import * as Types from '@local-types';
 
-import { CustomModalStackParams } from '../routes/route-params-types';
+import { CustomModalStackProps } from '../routes/route-params-types';
 import useCustomizedModal from './useCustomizedModal';
 import * as Styles from './CustomizedModal.styles';
 
-type QuestionsScreenNavigationProp = StackNavigationProp<
-  CustomModalStackParams,
-  'CUSTOM_MODAL'
->;
-
-type QuestionsScreenRouteProp = RouteProp<CustomModalStackParams, 'CUSTOM_MODAL'>;
-
-type CustomizedModalProps = {
-  navigation: QuestionsScreenNavigationProp;
-  route: QuestionsScreenRouteProp;
-};
-
-const CustomizedModal = ({ navigation, route }: CustomizedModalProps) => {
+const CustomizedModal = ({ navigation, route }: CustomModalStackProps) => {
   const {
     onHandlerStateChange,
     shouldHideCard,

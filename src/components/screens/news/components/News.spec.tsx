@@ -7,6 +7,7 @@ import { IMocks } from 'graphql-tools';
 import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 import theme from '@styles/theme';
 
@@ -70,7 +71,7 @@ describe('Testing <News />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual('CUSTOM_MODAL');
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
 
     expect(navigate.mock.calls[0][1].headerText).toEqual(
       TRANSLATIONS.NEWS_FILTER_MESSAGE,

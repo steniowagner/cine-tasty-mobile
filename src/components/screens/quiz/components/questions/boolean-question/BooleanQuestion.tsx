@@ -49,7 +49,10 @@ const BooleanQuestion = ({ onPressNext }: BooleanQuestionProps) => {
   );
 };
 
-const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isFocused || !nextState.isFocused)
+const shouldComponentUpdate = (
+  previousState: BooleanQuestionProps,
+  nextState: BooleanQuestionProps,
+): boolean => (previousState.isFocused || !nextState.isFocused)
   && (!previousState.isFocused || nextState.isFocused);
 
 export default memo(BooleanQuestion, shouldComponentUpdate);

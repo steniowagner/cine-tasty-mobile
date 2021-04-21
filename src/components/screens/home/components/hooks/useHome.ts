@@ -1,32 +1,22 @@
 import {
   useCallback, useEffect, useState, useMemo,
 } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
+import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
-import * as Types from '@local-types';
 
-import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '@graphql/queries';
-import { HomeStackParams } from '../../routes/route-params-types';
 import useTrendingTVShows from './trendings/useTrendingTVShows';
 import useTrendingMovies from './trendings/useTrendingMovies';
+import { HomeStackProps } from '../../routes/route-params-types';
 import useHomeTrendings from './useHomeTrendings';
 import usePressMapping from './usePressMapping';
 import useTop3 from './top3/useTop3';
 
 export const TRANSITIONING_DURATION = 500;
 
-type ViewAllProps = {
-  sectionItems: Types.SimplifiedMedia[];
-  sectionID: Types.TrendingMediaItemKey;
-  viewAllTitle: string;
-};
-
-type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
-
-const useHome = (navigation: HomeScreenNavigationProp) => {
+const useHome = ({ navigation }: HomeStackProps) => {
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
     true,
   );

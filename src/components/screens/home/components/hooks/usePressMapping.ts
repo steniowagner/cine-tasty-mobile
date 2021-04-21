@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { HomeStackParams } from '../../routes/route-params-types';
+import { HomeNavigationProp } from '../../routes/route-params-types';
 
 export const TRANSITIONING_DURATION = 1200;
 
@@ -16,16 +16,14 @@ type ViewAllProps = {
 };
 
 type UsePressMappingProps = {
-  navigation: HomeScreenNavigationProp;
+  navigation: HomeNavigationProp;
   isMoviesSelected: boolean;
 };
-
-type HomeScreenNavigationProp = StackNavigationProp<HomeStackParams, 'HOME'>;
 
 const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps) => {
   const onNavigateToMovieDetailAfterPress = useCallback(
     (movie: Types.SimplifiedMedia): void => {
-      navigation.navigate('MOVIE_DETAIL', {
+      navigation.navigate(Routes.Movie.DETAILS, {
         genreIds: movie.genreIds || [],
         voteAverage: movie.voteAverage,
         posterPath: movie.posterPath,
@@ -39,7 +37,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps)
 
   const onNavigateToTVShowDetailAfterPress = useCallback(
     (tvShow: Types.SimplifiedMedia): void => {
-      navigation.navigate('TV_SHOW_DETAIL', {
+      navigation.navigate(Routes.TVShow.DETAILS, {
         genreIds: tvShow.genreIds || [],
         voteAverage: tvShow.voteAverage,
         posterPath: tvShow.posterPath,
@@ -62,7 +60,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps)
         onPressTop3LearnMore: (movie: Types.SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
         onPressTrendingItem: (movie: Types.SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
-          navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
+          navigation.navigate(Routes.Home.MEDIA_DETAILS_VIEW_ALL, {
             initialDataset: sectionItems,
             headerTitle: viewAllTitle,
             sectionKey: sectionID,
@@ -70,7 +68,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps)
           });
         },
         onPressSearch: () => {
-          navigation.navigate('SEARCH', {
+          navigation.navigate(Routes.Search.SEARCH, {
             i18nQueryByPaginationErrorRef:
               TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
             i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
@@ -84,7 +82,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps)
         onPressTop3LearnMore: (tvShow: Types.SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
         onPressTrendingItem: (tvShow: Types.SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
         onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
-          navigation.navigate('MEDIA_DETAILS_VIEW_ALL', {
+          navigation.navigate(Routes.Home.MEDIA_DETAILS_VIEW_ALL, {
             initialDataset: sectionItems,
             headerTitle: viewAllTitle,
             sectionKey: sectionID,
@@ -92,7 +90,7 @@ const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps)
           });
         },
         onPressSearch: () => {
-          navigation.navigate('SEARCH', {
+          navigation.navigate(Routes.Search.SEARCH, {
             i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR,
             i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
             i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_PLACEHOLDER,

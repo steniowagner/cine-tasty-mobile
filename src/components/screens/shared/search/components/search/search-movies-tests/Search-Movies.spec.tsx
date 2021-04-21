@@ -7,6 +7,7 @@ import { MockList, IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
@@ -210,7 +211,7 @@ describe('Testing <Search /> - [Movies]', () => {
 
     expect(onPress).toHaveBeenCalledTimes(1);
 
-    expect(onPress).toHaveBeenCalledWith('MOVIE_DETAIL', {
+    expect(onPress).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
       voteAverage: defaultItems[INDEX_ITEM_SELECTED].voteAverage,
       posterPath: defaultItems[INDEX_ITEM_SELECTED].posterPath,
       voteCount: defaultItems[INDEX_ITEM_SELECTED].voteCount,
@@ -254,7 +255,7 @@ describe('Testing <Search /> - [Movies]', () => {
 
     expect(onPress).toHaveBeenCalledTimes(1);
 
-    expect(onPress).toHaveBeenCalledWith('MOVIE_DETAIL', {
+    expect(onPress).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
       posterPath: recentMoviesSearched[INDEX_ITEM_SELECTED].image,
       title: recentMoviesSearched[INDEX_ITEM_SELECTED].title,
       id: recentMoviesSearched[INDEX_ITEM_SELECTED].id,

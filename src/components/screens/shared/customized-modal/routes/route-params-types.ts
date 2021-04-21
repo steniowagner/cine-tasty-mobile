@@ -1,4 +1,12 @@
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
+
+export type CustomModalStackParams = {
+  [Routes.CustomModal.CUSTOM_MODAL]: CustomModalParams;
+};
 
 export type CustomModalParams = {
   type: Types.CustomizedModalChildrenType;
@@ -10,6 +18,10 @@ export type CustomModalParams = {
   };
 };
 
-export type CustomModalStackParams = {
-  CUSTOM_MODAL: CustomModalParams;
+export type CustomModalStackProps = {
+  navigation: StackNavigationProp<
+    CustomModalStackParams,
+    Routes.CustomModal.CUSTOM_MODAL
+  >;
+  route: RouteProp<CustomModalStackParams, Routes.CustomModal.CUSTOM_MODAL>;
 };

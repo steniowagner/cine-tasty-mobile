@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
 import TabNavigator from './TabNavigator';
@@ -24,7 +25,10 @@ const getState = (currentRouteName: string) => ({
   ],
 });
 
-const renderTabNavigator = (navigate = jest.fn(), currentRouteName = 'HOME') => (
+const renderTabNavigator = (
+  navigate = jest.fn(),
+  currentRouteName = Routes.Home.HOME as string,
+) => (
   <ThemeProvider theme={theme}>
     <TabNavigator navigation={{ navigate }} state={getState(currentRouteName)} />
   </ThemeProvider>
@@ -90,7 +94,7 @@ describe('Testing <TabNavigator />', () => {
 
       expect(navigate).toHaveBeenCalledTimes(1);
 
-      expect(navigate).toHaveBeenCalledWith('HOME');
+      expect(navigate).toHaveBeenCalledWith(Routes.Home.HOME);
     });
   });
 });

@@ -1,38 +1,28 @@
 import React from 'react';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { withTheme, DefaultTheme } from 'styled-components';
-import { RouteProp } from '@react-navigation/native';
+import { withTheme } from 'styled-components';
 
-import MovieDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
-import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
-import Reviews, {
-  ReviewsExternalParams,
-} from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
-import TVShowSeasonDetail, {
-  TVShowSeasonsDetailProps,
-} from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
+import { TVShowSeasonsStackProps } from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
+import { ReviewsStackProps } from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
+import TVShowDetail from '@components/screens/shared/media-detail/tv-show-detail/components/TVShowDetail';
+import MovieDetail from '@components/screens/shared/media-detail/movie-detail/components/MovieDetail';
+import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/routes/stack-routes';
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
+import Reviews from '@components/screens/shared/media-detail/reviews/components/Reviews';
+import { Routes } from '@routes/routes';
 
-import { SearchStackParams } from './route-params-types';
+import { SearchStackProps } from './route-params-types';
 import Search from '../components/search/Search';
-import LOCAL_ROUTES from './route-names';
 
 const Stack = createStackNavigator();
-
-type SearchScreenRouteProp = RouteProp<SearchStackParams, 'SEARCH'>;
-
-type SearchStackProps = {
-  route: SearchScreenRouteProp;
-  theme: DefaultTheme;
-};
 
 const SearchStack = ({ route, theme }: SearchStackProps) => (
   <Stack.Navigator
     headerMode="screen"
   >
     <Stack.Screen
-      name={LOCAL_ROUTES.SEARCH.id}
+      name={Routes.Search.SEARCH}
       options={{
         header: () => null,
       }}
@@ -42,7 +32,7 @@ const SearchStack = ({ route, theme }: SearchStackProps) => (
       component={Search}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
+      name={Routes.Famous.DETAILS}
       options={{
         ...getTransparentHeaderOptions(theme),
         ...TransitionPresets.SlideFromRightIOS,
@@ -50,30 +40,30 @@ const SearchStack = ({ route, theme }: SearchStackProps) => (
       component={FamousDetail}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.MOVIE_DETAIL.id}
+      name={Routes.Movie.DETAILS}
       options={() => ({
         ...getTransparentHeaderOptions(theme),
       })}
       component={MovieDetail}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.REVIEWS.id}
-      options={({ route: reviewsRoute }: ReviewsExternalParams) => ({
+      name={Routes.MediaDetail.REVIEWS}
+      options={({ route: reviewsRoute }: ReviewsStackProps) => ({
         ...getDefaultHeaderOptions(),
         headerTitle: reviewsRoute.params.mediaTitle,
       })}
       component={Reviews}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.TV_SHOW_DETAIL.id}
+      name={Routes.TVShow.DETAILS}
       options={() => ({
         ...getTransparentHeaderOptions(theme),
       })}
       component={TVShowDetail}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
-      options={({ route: tvShowSeasonDetailRouteProp }: TVShowSeasonsDetailProps) => ({
+      name={Routes.TVShow.SEASONS}
+      options={({ route: tvShowSeasonsStackProps }: TVShowSeasonsStackProps) => ({
         ...getDefaultHeaderOptions(),
         headerTintColor: theme.colors.buttonText,
         headerStyle: {
@@ -81,13 +71,11 @@ const SearchStack = ({ route, theme }: SearchStackProps) => (
           shadowColor: 'transparent',
           elevation: 0,
         },
-        headerTitle: tvShowSeasonDetailRouteProp.params.title,
+        headerTitle: tvShowSeasonsStackProps.params.title,
       })}
       component={TVShowSeasonDetail}
     />
   </Stack.Navigator>
 );
-
-export const StackID = 'SEARCH';
 
 export default withTheme(SearchStack);

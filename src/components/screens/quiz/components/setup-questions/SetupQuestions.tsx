@@ -1,21 +1,16 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import { QuizStackParams } from '../../routes/route-params-types';
 import NumberOfQuestions from './number-of-questions/NumberOfQuestionts';
+import { SetupQuestionsStackProps } from '../../routes/route-params-types';
 import DropdownOption from './drop-down-option/DropdownOption';
 import useSetupQuestions from './useSetupQuestions';
 import * as Styles from './SetupQuestions.styles';
 
-type SetupQuestionsProps = {
-  navigation: StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
-};
-
-const SetupQuestions = ({ navigation }: SetupQuestionsProps) => {
+const SetupQuestions = ({ navigation }: SetupQuestionsStackProps) => {
   const {
     onPressOptionDropdown,
     setNumberOfQuestions,

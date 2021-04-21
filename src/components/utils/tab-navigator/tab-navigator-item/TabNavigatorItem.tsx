@@ -74,7 +74,10 @@ const NavigatorItem = withTheme(
   },
 );
 
-const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isSelected || !nextState.isSelected)
+const shouldComponentUpdate = (
+  previousState: NavigatorItemProps,
+  nextState: NavigatorItemProps,
+): boolean => (previousState.isSelected || !nextState.isSelected)
   && (!previousState.isSelected || nextState.isSelected);
 
 export default memo(NavigatorItem, shouldComponentUpdate);

@@ -6,6 +6,7 @@ import { MockList, IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../../common/popup-advice/PopupAdvice';
@@ -123,7 +124,7 @@ describe('Testing <MediaSectionViewAll /> - [Movies]', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith(
-      'MOVIE_DETAIL',
+      Routes.Movie.DETAILS,
       mockedInitialDataset[INDEX_ITEM_PRESSED],
     );
   });

@@ -7,6 +7,7 @@ import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDB
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
@@ -68,7 +69,7 @@ describe('Testing <Famous />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('SEARCH', {
+    expect(navigate).toHaveBeenCalledWith(Routes.Search.SEARCH, {
       i18nQueryByPaginationErrorRef: TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR,
       i18nSearchBarPlaceholderRef: TRANSLATIONS.FAMOUS_SEARCHBAR_PLACEHOLDER,
       i18nQueryByTextErrorRef: TRANSLATIONS.FAMOUS_QUERY_BY_TEXT_ERROR,
@@ -101,7 +102,7 @@ describe('Testing <Famous />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('FAMOUS_DETAIL', {
+    expect(navigate).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
       profileImage: famouseItems[INDEX_ITEM_SELECTED].profilePath,
       name: famouseItems[INDEX_ITEM_SELECTED].name,
       id: famouseItems[INDEX_ITEM_SELECTED].id,
