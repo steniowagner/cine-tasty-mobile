@@ -1,31 +1,14 @@
 import React from 'react';
 import { Platform, FlatList } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 
 import MediaSectionViewAllListItem from '@components/common/full-media-list-item/FullMediaListItem';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
-import * as Types from '@local-types';
 
-import { HomeStackParams } from '../../routes/route-params-types';
+import { MediaSectionViewAllStackProps } from '../../routes/route-params-types';
 import useMediaSectionViewAll from './useMediaSectionViewAll';
 
-export const SCREEN_ID = 'MEDIA_DETAILS_VIEW_ALL';
-
-export type ExternalProps = {
-  initialDataset: Types.SimplifiedMedia[];
-  sectionKey: Types.TrendingMediaItemKey;
-  headerTitle: string;
-  isMovie: boolean;
-};
-
-export type MediaSectionViewAllProps = {
-  navigation: StackNavigationProp<HomeStackParams, 'MEDIA_DETAILS_VIEW_ALL'>;
-  route: RouteProp<HomeStackParams, 'MEDIA_DETAILS_VIEW_ALL'>;
-};
-
-const MediaSectionViewAll = ({ navigation, route }: MediaSectionViewAllProps) => {
+const MediaSectionViewAll = ({ navigation, route }: MediaSectionViewAllStackProps) => {
   const {
     shouldShowListBottomReloadButton,
     onPressBottomReloadButton,

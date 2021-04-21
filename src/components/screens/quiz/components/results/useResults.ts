@@ -1,22 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 import * as TRANSLATIONS from '@i18n/tags';
 import * as Types from '@local-types';
 
-import { QuizStackParams } from '../../routes/route-params-types';
-
-type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'RESULTS'>;
-
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'RESULTS'>;
-
-type UseResultsProps = {
-  navigation: QuestionsScreenNavigationProp;
-  route: QuestionsScreenRouteProp;
-};
+import { ResultsStackProps as UseResultsProps } from '../../routes/route-params-types';
 
 const useResults = ({ navigation, route }: UseResultsProps) => {
   const [results, setResults] = useState<Types.QuizResult[]>([]);

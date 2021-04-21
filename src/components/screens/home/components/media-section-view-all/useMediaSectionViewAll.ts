@@ -1,5 +1,4 @@
 import { useCallback, useState, useMemo } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 import { DocumentNode } from 'graphql';
 
@@ -7,10 +6,11 @@ import * as SchemaTypes from '@schema-types';
 import { getQuery } from '@graphql/queries';
 import { usePaginatedQuery } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { getTVShowProperQuery, getMovieProperQuery } from './get-proper-query';
-import { HomeStackParams } from '../../routes/route-params-types';
+import { MediaSectionViewAllNavigationProp } from '../../routes/route-params-types';
+import { getTVShowProperQuery, getMovieProperQuery } from './getProperQuery';
 import useOnGetData, { Data } from './useOnGetData';
 
 type PaginationVariables = {
@@ -19,8 +19,8 @@ type PaginationVariables = {
 };
 
 type UseMediaSectionViewAllProps = {
-  navigation: StackNavigationProp<HomeStackParams, 'MEDIA_DETAILS_VIEW_ALL'>;
   trendingMediaItemKey: Types.TrendingMediaItemKey;
+  navigation: MediaSectionViewAllNavigationProp;
   initialMediaItems: Types.SimplifiedMedia[];
   isMovie: boolean;
 };
@@ -91,7 +91,7 @@ const useMediaSectionViewAll = ({
 
   const onPressItem = useCallback(
     (item: Types.SimplifiedMedia) => {
-      const nextRoute = isMovie ? 'MOVIE_DETAIL' : 'TV_SHOW_DETAIL';
+      const nextRoute = isMovie ? Routes.Movie.DETAILS : Routes.TVShow.DETAILS;
 
       const params = {
         genreIds: item.genreIds || [],

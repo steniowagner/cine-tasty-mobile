@@ -41,7 +41,10 @@ const MultiChoiceQuestion = ({ onPressNext, answers }: MultiChoiceQuestionProps)
   );
 };
 
-const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isFocused || !nextState.isFocused)
+const shouldComponentUpdate = (
+  previousState: MultiChoiceQuestionProps,
+  nextState: MultiChoiceQuestionProps,
+): boolean => (previousState.isFocused || !nextState.isFocused)
   && (!previousState.isFocused || nextState.isFocused);
 
 export default memo(MultiChoiceQuestion, shouldComponentUpdate);

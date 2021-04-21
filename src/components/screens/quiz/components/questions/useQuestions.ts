@@ -2,23 +2,15 @@
 import {
   useCallback, useEffect, useState, useRef,
 } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_QUIZ_QUESTIONS } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
+import { Routes } from '@routes/routes';
 
-import { QuizStackParams } from '../../routes/route-params-types';
+import { QuestionsStackProps } from '../../routes/route-params-types';
 
-type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUESTIONS'>;
-
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'QUESTIONS'>;
-
-const useQuestions = (
-  { params }: QuestionsScreenRouteProp,
-  navigation: QuestionsScreenNavigationProp,
-) => {
+const useQuestions = ({ navigation, route }: QuestionsStackProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const questionsFlatListRef = useRef(null);
@@ -29,10 +21,10 @@ const useQuestions = (
   >(GET_QUIZ_QUESTIONS, {
     variables: {
       input: {
-        numberOfQuestions: params.numberOfQuestions,
-        difficulty: params.difficulty,
-        category: params.category,
-        type: params.type,
+        numberOfQuestions: route.params.numberOfQuestions,
+        difficulty: route.params.difficulty,
+        category: route.params.category,
+        type: route.params.type,
       },
     },
     fetchPolicy: 'no-cache',
@@ -56,7 +48,7 @@ const useQuestions = (
     const isLastQuestion = nextIndex === data.quiz.length;
 
     if (isLastQuestion) {
-      navigation.navigate('RESULTS', {
+      navigation.navigate(Routes.Quiz.RESULTS, {
         questions: data?.quiz,
         answers,
       });

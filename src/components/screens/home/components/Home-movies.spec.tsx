@@ -5,9 +5,9 @@ import { IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import { SCREEN_ID } from './media-section-view-all/MediaSectionViewAll';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import Home from './Home';
 
@@ -214,7 +214,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
 
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
@@ -252,7 +252,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
 
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
@@ -290,7 +290,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
 
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
@@ -328,7 +328,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(SCREEN_ID);
+    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
 
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
@@ -364,7 +364,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('SEARCH', {
+    expect(navigate).toHaveBeenCalledWith(Routes.Search.SEARCH, {
       i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
       i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
       i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PLACEHOLDER,
@@ -407,7 +407,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('MOVIE_DETAIL', {
+    expect(navigate).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
       voteAverage: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteAverage,
       posterPath: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].posterPath,
       voteCount: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteCount,
@@ -440,7 +440,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const { id } = navigate.mock.calls[0][1];
 
-    expect(navigate).toHaveBeenCalledWith('MOVIE_DETAIL', {
+    expect(navigate).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
       voteAverage: trendingMovies.nowPlaying.items[id].voteAverage,
       posterPath: trendingMovies.nowPlaying.items[id].posterPath,
       voteCount: trendingMovies.nowPlaying.items[id].voteCount,

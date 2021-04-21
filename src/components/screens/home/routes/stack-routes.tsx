@@ -2,22 +2,19 @@ import React from 'react';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { DefaultTheme, withTheme } from 'styled-components';
 
-import TVShowSeasonDetail, {
-  TVShowSeasonsDetailProps,
-} from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
-import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
-import MoviedDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
+import { TVShowSeasonsStackProps } from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
+import { ReviewsStackProps } from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
+import TVShowDetail from '@components/screens/shared/media-detail/tv-show-detail/components/TVShowDetail';
+import MoviedDetail from '@components/screens/shared/media-detail/movie-detail/components/MovieDetail';
+import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/routes/stack-routes';
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
-import Reviews, {
-  ReviewsExternalParams,
-} from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
+import Reviews from '@components/screens/shared/media-detail/reviews/components/Reviews';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
+import { Routes } from '@routes/routes';
 
-import MediaSectionViewAll, {
-  ExternalProps as MediaSectionViewAllScreenProps,
-} from '../components/media-section-view-all/MediaSectionViewAll';
+import MediaSectionViewAll from '../components/media-section-view-all/MediaSectionViewAll';
+import { MediaSectionViewAllStackProps } from './route-params-types';
 import SettingsScreen from '../../settings/routes/stack-routes';
-import LOCAL_ROUTES from './route-names';
 import Home from '../components/Home';
 
 const Stack = createStackNavigator();
@@ -35,7 +32,7 @@ const HomeStack = ({ theme }: HomeStackProps) => (
         ...getTransparentHeaderOptions(theme),
         headerTransparent: true,
       }}
-      name={LOCAL_ROUTES.HOME.id}
+      name={Routes.Home.HOME}
       component={Home}
     />
     <Stack.Screen
@@ -43,42 +40,42 @@ const HomeStack = ({ theme }: HomeStackProps) => (
         ...getTransparentHeaderOptions(theme),
         ...TransitionPresets.SlideFromRightIOS,
       }}
-      name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
+      name={Routes.Famous.DETAILS}
       component={FamousDetail}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.MEDIA_DETAILS_VIEW_ALL.id}
-      options={({ route }: MediaSectionViewAllScreenProps) => ({
+      name={Routes.Home.MEDIA_DETAILS_VIEW_ALL}
+      options={({ route }: MediaSectionViewAllStackProps) => ({
         ...getDefaultHeaderOptions(),
         headerTitle: route.params.headerTitle,
       })}
       component={MediaSectionViewAll}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.MOVIE_DETAIL.id}
+      name={Routes.Movie.DETAILS}
       options={() => ({
         ...getTransparentHeaderOptions(theme),
       })}
       component={MoviedDetail}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.TV_SHOW_DETAIL.id}
+      name={Routes.TVShow.DETAILS}
       options={() => ({
         ...getTransparentHeaderOptions(theme),
       })}
       component={TVShowDetail}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.REVIEWS.id}
-      options={({ route }: ReviewsExternalParams) => ({
+      name={Routes.MediaDetail.REVIEWS}
+      options={({ route }: ReviewsStackProps) => ({
         ...getDefaultHeaderOptions(),
         headerTitle: route.params.mediaTitle,
       })}
       component={Reviews}
     />
     <Stack.Screen
-      name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
-      options={({ route }: TVShowSeasonsDetailProps) => ({
+      name={Routes.TVShow.SEASONS}
+      options={({ route }: TVShowSeasonsStackProps) => ({
         ...getDefaultHeaderOptions(),
         headerTintColor: theme.colors.buttonText,
         headerStyle: {
@@ -93,7 +90,5 @@ const HomeStack = ({ theme }: HomeStackProps) => (
     {SettingsScreen(Stack)}
   </Stack.Navigator>
 );
-
-export const TabID = LOCAL_ROUTES.HOME.id;
 
 export default withTheme(HomeStack);

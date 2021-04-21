@@ -3,20 +3,18 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import { DefaultTheme, withTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import TVShowDetail from '@components/screens/shared/media-detail-screen/tv-show-detail/components/TVShowDetail';
-import TVShowSeasonDetail, {
-  TVShowSeasonsDetailProps,
-} from '@components/screens/shared/tv-show-seasons-screen/routes/stack-routes';
-import MovieDetail from '@components/screens/shared/media-detail-screen/movie-detail/components/MovieDetail';
-import Reviews, {
-  ReviewsExternalParams,
-} from '@components/screens/shared/media-detail-screen/reviews/components/Reviews';
+import { TVShowSeasonsStackProps } from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
+import TVShowDetail from '@components/screens/shared/media-detail/tv-show-detail/components/TVShowDetail';
+import { ReviewsStackProps } from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
+import MovieDetail from '@components/screens/shared/media-detail/movie-detail/components/MovieDetail';
+import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/routes/stack-routes';
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
+import Reviews from '@components/screens/shared/media-detail/reviews/components/Reviews';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import Famous from '../components/Famous';
-import LOCAL_ROUTES from './route-names';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +30,7 @@ const FamousStack = ({ theme }: FamousStackProps) => {
       headerMode="screen"
     >
       <Stack.Screen
-        name={LOCAL_ROUTES.FAMOUS.id}
+        name={Routes.Famous.FAMOUS}
         options={{
           ...getDefaultHeaderOptions(),
           headerTitle: t(TRANSLATIONS.TABS_FAMOUS),
@@ -40,7 +38,7 @@ const FamousStack = ({ theme }: FamousStackProps) => {
         component={Famous}
       />
       <Stack.Screen
-        name={LOCAL_ROUTES.FAMOUS_DETAIL.id}
+        name={Routes.Famous.DETAILS}
         options={{
           ...getTransparentHeaderOptions(theme),
           ...TransitionPresets.SlideFromRightIOS,
@@ -48,30 +46,30 @@ const FamousStack = ({ theme }: FamousStackProps) => {
         component={FamousDetail}
       />
       <Stack.Screen
-        name={LOCAL_ROUTES.MOVIE_DETAIL.id}
+        name={Routes.Movie.DETAILS}
         options={{
           ...getTransparentHeaderOptions(theme),
         }}
         component={MovieDetail}
       />
       <Stack.Screen
-        name={LOCAL_ROUTES.TV_SHOW_DETAIL.id}
+        name={Routes.TVShow.DETAILS}
         options={() => ({
           ...getTransparentHeaderOptions(theme),
         })}
         component={TVShowDetail}
       />
       <Stack.Screen
-        name={LOCAL_ROUTES.REVIEWS.id}
-        options={({ route }: ReviewsExternalParams) => ({
+        name={Routes.MediaDetail.REVIEWS}
+        options={({ route }: ReviewsStackProps) => ({
           ...getDefaultHeaderOptions(),
           headerTitle: route.params.mediaTitle,
         })}
         component={Reviews}
       />
       <Stack.Screen
-        name={LOCAL_ROUTES.TV_SHOW_SEASONS.id}
-        options={({ route }: TVShowSeasonsDetailProps) => ({
+        name={Routes.TVShow.SEASONS}
+        options={({ route }: TVShowSeasonsStackProps) => ({
           ...getDefaultHeaderOptions(),
           headerTintColor: theme.colors.buttonText,
           headerStyle: {
@@ -86,7 +84,5 @@ const FamousStack = ({ theme }: FamousStackProps) => {
     </Stack.Navigator>
   );
 };
-
-export const TabID = LOCAL_ROUTES.FAMOUS.id;
 
 export default withTheme(FamousStack);

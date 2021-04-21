@@ -3,6 +3,7 @@ import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
@@ -60,7 +61,7 @@ describe('Testing <Settings />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('IMAGES_QUALITY');
+    expect(navigate).toHaveBeenCalledWith(Routes.Settings.IMAGES_QUALITY);
 
     jest.clearAllMocks();
 
@@ -68,7 +69,7 @@ describe('Testing <Settings />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('LANGUAGE');
+    expect(navigate).toHaveBeenCalledWith(Routes.Settings.LANGUAGE);
 
     jest.clearAllMocks();
 
@@ -76,7 +77,7 @@ describe('Testing <Settings />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('THEME');
+    expect(navigate).toHaveBeenCalledWith(Routes.Settings.THEME);
 
     jest.clearAllMocks();
 
@@ -84,7 +85,7 @@ describe('Testing <Settings />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('ABOUT');
+    expect(navigate).toHaveBeenCalledWith(Routes.Settings.ABOUT);
 
     jest.clearAllMocks();
 
@@ -92,6 +93,6 @@ describe('Testing <Settings />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith('OPEN_SOURCE');
+    expect(navigate).toHaveBeenCalledWith(Routes.Settings.OPEN_SOURCE);
   });
 });

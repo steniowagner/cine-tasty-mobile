@@ -1,49 +1,18 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useTranslation } from 'react-i18next';
 
-import { Routes as FamousRoutes } from '@components/screens/famous/routes/route-names';
-import { Routes as HomeRoutes } from '@components/screens/home/routes/route-names';
-import { Routes as QuizRoutes } from '@components/screens/quiz/routes/route-names';
-import { Routes as NewsRoutes } from '@components/screens/news/routes/route-names';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
 import TabNavigatorItem from './tab-navigator-item/TabNavigatorItem';
 import * as Styles from './TabNavigator.styles';
+import useTabNavigator from './useTabNavigator';
 import items from './items';
 
 const ITEM_WIDTH = metrics.width / items.length;
 
-type ScreenAbleToShowTabNavigation = HomeRoutes | QuizRoutes | NewsRoutes | FamousRoutes;
-
-const screensAbleToShowTabNavigator: ScreenAbleToShowTabNavigation[] = [
-  'HOME',
-  'FAMOUS',
-  'QUIZ',
-  'NEWS',
-];
-
-const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
-  const { t } = useTranslation();
-
-  const shouldShowTabNavigator = useMemo((): boolean => {
-    const currentTabState = state.routes[state.index].state;
-
-    if (!currentTabState) {
-      return true;
-    }
-
-    const { routes, index } = currentTabState;
-
-    if (!index && typeof index !== 'number') {
-      return false;
-    }
-
-    const { name } = routes[index];
-
-    return screensAbleToShowTabNavigator.includes(name as ScreenAbleToShowTabNavigation);
-  }, [state]);
+const TabNavigator = (props: BottomTabBarProps) => {
+  const { shouldShowTabNavigator, tabTitles, t } = useTabNavigator(props);
 
   if (!shouldShowTabNavigator) {
     return null;
@@ -65,9 +34,9 @@ const TabNavigator = ({ navigation, state }: BottomTabBarProps) => {
     >
       {items.map((item, index) => (
         <TabNavigatorItem
-          onPress={() => navigation.navigate(state.routeNames[index])}
-          title={t(`${TRANSLATIONS.TABS}:${item.id.toLowerCase()}`)}
-          isSelected={index === state.index}
+          onPress={() => props.navigation.navigate(props.state.routeNames[index])}
+          title={t(`${TRANSLATIONS.TABS}:${tabTitles[index].toLowerCase()}`)}
+          isSelected={index === props.state.index}
           inactiveIcon={item.inactiveIcon}
           activeIcon={item.activeIcon}
           width={ITEM_WIDTH}

@@ -1,17 +1,25 @@
-import { MovieDetailExternalParams } from '@components/screens/shared/media-detail-screen/movie-detail/routes/route-params-types';
-import { SCREEN_ID as MOVIE_DETAIL } from '@components/screens/shared/media-detail-screen/movie-detail/routes/route-names';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { DefaultTheme } from 'styled-components';
 
-import { TVShowDetailExternalParams } from '@components/screens/shared/media-detail-screen/tv-show-detail/routes/route-params-types';
-import { SCREEN_ID as TV_SHOW_DETAIL } from '@components/screens/shared/media-detail-screen/tv-show-detail/routes/route-names';
+import { MovieDetailParams } from '@components/screens/shared/media-detail/movie-detail/routes/route-params-types';
+import { TVShowDetailParams } from '@components/screens/shared/media-detail/tv-show-detail/routes/route-params-types';
+import { Routes } from '@routes/routes';
 
-export type ExternalFamousDetailParams = {
+type FamousDetailStackParams = {
+  [Routes.TVShow.DETAILS]: TVShowDetailParams;
+  [Routes.Famous.DETAILS]: FamousDetailParams;
+  [Routes.Movie.DETAILS]: MovieDetailParams;
+};
+
+export type FamousDetailParams = {
   profileImage: string;
   name: string;
   id: number;
 };
 
-export type FamousDetailParams = {
-  [TV_SHOW_DETAIL]: TVShowDetailExternalParams;
-  [MOVIE_DETAIL]: MovieDetailExternalParams;
-  FAMOUS_DETAIL: ExternalFamousDetailParams;
+export type FamousDetailStackProps = {
+  navigation: StackNavigationProp<FamousDetailStackParams, Routes.Famous.DETAILS>;
+  route: RouteProp<FamousDetailStackParams, Routes.Famous.DETAILS>;
+  theme: DefaultTheme;
 };

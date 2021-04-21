@@ -3,9 +3,9 @@ import { fireEvent, cleanup, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
-import LOCAL_ROUTES from '../routes/route-names';
 import Quiz from './Quiz';
 
 const renderQuiz = (navigate = jest.fn()) => (
@@ -38,6 +38,6 @@ describe('Testing <Quiz />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith(LOCAL_ROUTES.SETUP_QUESTIONS.id);
+    expect(navigate).toHaveBeenCalledWith(Routes.Quiz.SETUP_QUESTIONS);
   });
 });

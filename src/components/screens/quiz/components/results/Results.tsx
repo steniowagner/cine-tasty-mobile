@@ -1,27 +1,16 @@
 import React, { useLayoutEffect } from 'react';
 import { FlatList } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 
 import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
-import { QuizStackParams } from '../../routes/route-params-types';
+import { ResultsStackProps } from '../../routes/route-params-types';
 import ResultListItem from './result-list-item/ResultListItem';
 import * as Styles from './Results.styles';
 import useResults from './useResults';
 
-type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'RESULTS'>;
-
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'RESULTS'>;
-
-type ResultsProps = {
-  navigation: QuestionsScreenNavigationProp;
-  route: QuestionsScreenRouteProp;
-};
-
-const Results = ({ navigation, route }: ResultsProps) => {
+const Results = ({ navigation, route }: ResultsStackProps) => {
   const { onPressPlayAgain, results, t } = useResults({ navigation, route });
 
   useLayoutEffect(() => {

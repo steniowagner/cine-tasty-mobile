@@ -49,7 +49,10 @@ const MultiChoiceListItem = ({
   </Styles.ListItemWrapper>
 );
 
-const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isSelected || !nextState.isSelected)
+const shouldComponentUpdate = (
+  previousState: MultiChoiceListItemProps,
+  nextState: MultiChoiceListItemProps,
+): boolean => (previousState.isSelected || !nextState.isSelected)
   && (!previousState.isSelected || nextState.isSelected);
 
 export default memo(MultiChoiceListItem, shouldComponentUpdate);

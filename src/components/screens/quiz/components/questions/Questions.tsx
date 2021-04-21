@@ -2,8 +2,7 @@
 /* eslint-disable react/jsx-no-undef */
 import React, { useLayoutEffect } from 'react';
 import { FlatList } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+
 import { useTranslation } from 'react-i18next';
 
 import LoadingIndicator from '@components/common/loading-indicator/LoadingIndicator';
@@ -15,21 +14,12 @@ import metrics from '@styles/metrics';
 
 import ListItemWrapper from './list-item-wrapper-question/ListItemWrapperQuestion';
 import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
-import { QuizStackParams } from '../../routes/route-params-types';
+import { QuestionsStackProps } from '../../routes/route-params-types';
 import BooleanQuestion from './boolean-question/BooleanQuestion';
 import * as Styles from './Questions.styles';
 import useQuestions from './useQuestions';
 
-type QuestionsScreenNavigationProp = StackNavigationProp<QuizStackParams, 'QUESTIONS'>;
-
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'QUESTIONS'>;
-
-type QuestionsProps = {
-  navigation: QuestionsScreenNavigationProp;
-  route: QuestionsScreenRouteProp;
-};
-
-const Questions = ({ navigation, route }: QuestionsProps) => {
+const Questions = ({ navigation, route }: QuestionsStackProps) => {
   const {
     currentQuestionIndex,
     questionsFlatListRef,
@@ -38,7 +28,7 @@ const Questions = ({ navigation, route }: QuestionsProps) => {
     questions,
     loading,
     hasError,
-  } = useQuestions(route, navigation);
+  } = useQuestions({ navigation, route });
 
   const { t } = useTranslation();
 
@@ -54,6 +44,7 @@ const Questions = ({ navigation, route }: QuestionsProps) => {
     if (questions[currentQuestionIndex]) {
       headerTitle = questions[currentQuestionIndex].category.split(':')[1].trim();
     }
+
     navigation.setOptions({
       title: headerTitle,
       headerRight: () => currentQuestionIndex > 0 && (

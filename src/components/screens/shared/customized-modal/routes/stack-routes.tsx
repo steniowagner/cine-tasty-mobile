@@ -1,27 +1,21 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 
-import { CustomModalStackParams } from './route-params-types';
+import { Routes } from '@routes/routes';
+
+import { CustomModalStackProps } from './route-params-types';
 import CustomModal from '../components/CustomizedModal';
-import LOCAL_ROUTES from './route-names';
 
 const Stack = createStackNavigator();
 
-type CustomModalRouteProp = RouteProp<CustomModalStackParams, 'CUSTOM_MODAL'>;
-
-type CustomizedModalStackProps = {
-  route: CustomModalRouteProp;
-};
-
-const CustomizedModalStack = ({ route }: CustomizedModalStackProps) => (
+const CustomModalStack = ({ route }: CustomModalStackProps) => (
   <Stack.Navigator
     screenOptions={{
       cardStyle: { backgroundColor: 'transparent' },
     }}
   >
     <Stack.Screen
-      name={LOCAL_ROUTES.CUSTOM_MODAL.id}
+      name={Routes.CustomModal.CUSTOM_MODAL}
       options={{
         header: () => null,
       }}
@@ -33,6 +27,4 @@ const CustomizedModalStack = ({ route }: CustomizedModalStackProps) => (
   </Stack.Navigator>
 );
 
-export const MODAL_ID = LOCAL_ROUTES.CUSTOM_MODAL.id;
-
-export default CustomizedModalStack;
+export default CustomModalStack;

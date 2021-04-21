@@ -1,17 +1,14 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import SearchStack, {
-  StackID as SearchStackID,
-} from '@components/screens/shared/search/routes/stack-routes';
+import { Routes } from '@routes/routes';
 
+import SearchStack from '@components/screens/shared/search/routes/stack-routes';
 import ImagesGalleryModal, {
   MODAL_ID as IMAGES_GALLERY_MODAL_ID,
 } from '@components/screens/shared/images-gallery/routes/stack-routes';
 
-import CustomModal, {
-  MODAL_ID as CUSTOM_MODAL_ID,
-} from '@components/screens/shared/customized-modal/routes/stack-routes';
+import CustomModal from '@components/screens/shared/customized-modal/routes/stack-routes';
 
 import Tabs from './Tabs';
 
@@ -50,7 +47,7 @@ const RouteNavigation = () => (
     <RootStack.Screen
       options={{ headerShown: false, animationEnabled: true }}
       component={SearchStack}
-      name={SearchStackID}
+      name={Routes.Search.SEARCH}
     />
     <RootStack.Screen
       options={{ headerShown: false, animationEnabled: true }}
@@ -60,7 +57,7 @@ const RouteNavigation = () => (
     <RootStack.Screen
       options={{ headerShown: false, animationEnabled: true }}
       component={CustomModal}
-      name={CUSTOM_MODAL_ID}
+      name={Routes.CustomModal.CUSTOM_MODAL}
     />
   </RootStack.Navigator>
 );

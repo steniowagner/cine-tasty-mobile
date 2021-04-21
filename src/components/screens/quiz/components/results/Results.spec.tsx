@@ -3,13 +3,14 @@ import { RouteProp } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components';
 import { cleanup, render, act } from '@testing-library/react-native';
 
+import { Routes } from '@routes/routes';
 import theme from '@styles/theme';
 
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { QuizStackParams } from '../../routes/route-params-types';
 import Results from './Results';
 
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, 'RESULTS'>;
+type QuestionsScreenRouteProp = RouteProp<QuizStackParams, Routes.Quiz.RESULTS>;
 
 const quiz = [
   {
@@ -33,7 +34,7 @@ const quiz = [
 ];
 
 const route: QuestionsScreenRouteProp = {
-  name: 'RESULTS',
+  name: Routes.Quiz.RESULTS,
   key: '',
   params: {
     questions: quiz,

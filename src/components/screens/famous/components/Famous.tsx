@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect } from 'react';
 import { Platform, FlatList } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
@@ -10,21 +9,16 @@ import DefaultListItem from '@components/common/famous-list-item/FamousListItem'
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import metrics from '@styles/metrics';
 
 import LoadingFamousList from '../../../common/loading-famous-list/LoadingFamousList';
-import { FamousStackParams } from '../routes/route-params-types';
+import { FamousStackProps } from '../routes/route-params-types';
 import useFamous from './useFamous';
 
 export const NUMBER_FLATLIST_COLUMNS = 3;
 
-type FamousScreenNavigationProp = StackNavigationProp<FamousStackParams, 'FAMOUS'>;
-
-type FamousProps = {
-  navigation: FamousScreenNavigationProp;
-};
-
-const Famous = ({ navigation }: FamousProps) => {
+const Famous = ({ navigation }: FamousStackProps) => {
   const {
     onPressBottomReloadButton,
     onPressTopReloadButton,
@@ -39,7 +33,7 @@ const Famous = ({ navigation }: FamousProps) => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          onPress={() => navigation.navigate('SEARCH', {
+          onPress={() => navigation.navigate(Routes.Search.SEARCH, {
             i18nQueryByPaginationErrorRef:
                 TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR,
             i18nSearchBarPlaceholderRef: TRANSLATIONS.FAMOUS_SEARCHBAR_PLACEHOLDER,
@@ -95,7 +89,7 @@ const Famous = ({ navigation }: FamousProps) => {
         numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
           <DefaultListItem
-            onPress={() => navigation.navigate('FAMOUS_DETAIL', {
+            onPress={() => navigation.navigate(Routes.Famous.DETAILS, {
               profileImage: item.profilePath,
               name: item.name,
               id: item.id,

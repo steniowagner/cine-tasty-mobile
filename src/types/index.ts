@@ -4,6 +4,7 @@ import {
   FetchMoreOptions,
 } from 'apollo-client';
 import { SupportedIcons } from '@components/common/svg-icon/getXML';
+import { Routes } from '@routes/routes';
 import {
   SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
   SearchPerson_search_items_BasePerson as SearchPersonResult,
@@ -39,9 +40,9 @@ export type LocalStackRoute<T> = {
 };
 
 export type TabNavigatorItem = {
+  id: Routes.Home.HOME | Routes.Famous.FAMOUS | Routes.Quiz.QUIZ | Routes.News.NEWS;
   inactiveIcon: SupportedIcons;
   activeIcon: SupportedIcons;
-  id: string;
 };
 
 export type NewsFilterLanguage =

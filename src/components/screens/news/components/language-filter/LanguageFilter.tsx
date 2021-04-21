@@ -5,7 +5,8 @@ import ModalSelectButton from '@components/common/modal-select-button/ModalSelec
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import LanguageListItem, { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem';
+import { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem.styles';
+import LanguageListItem from './list-item/LanguageListItem';
 import useLanguageFilter from './useLanguageFilter';
 import languages from './languages';
 

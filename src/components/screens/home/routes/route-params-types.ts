@@ -1,27 +1,45 @@
-import { SearchNavigationParams } from '@components/screens/shared/search/routes/route-params-types';
-import { StackID as SEARCH_MODAL_ID } from '@components/screens/shared/search/routes/stack-routes';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 
-import { SCREEN_ID as MOVIE_DETAIL_SCREEN_ID } from '@components/screens/shared/media-detail-screen/movie-detail/routes/route-names';
-import { MovieDetailExternalParams } from '@components/screens/shared/media-detail-screen/movie-detail/routes/route-params-types';
+import { TVShowDetailParams } from '@components/screens/shared/media-detail/tv-show-detail/routes/route-params-types';
+import { MovieDetailParams } from '@components/screens/shared/media-detail/movie-detail/routes/route-params-types';
+import { SearchParams } from '@components/screens/shared/search/routes/route-params-types';
+import { Routes } from '@routes/routes';
+import * as Types from '@local-types';
 
-import { SCREEN_ID as TV_SHOW_DETAIL_SCREEN_ID } from '@components/screens/shared/media-detail-screen/tv-show-detail/routes/route-names';
-import { TVShowDetailExternalParams } from '@components/screens/shared/media-detail-screen/tv-show-detail/routes/route-params-types';
+type HomeStackParams = {
+  [Routes.Home.HOME]: undefined;
+  [Routes.Home.MEDIA_DETAILS_VIEW_ALL]: MediaSectionViewAllProps;
+  [Routes.TVShow.DETAILS]: TVShowDetailParams;
+  [Routes.Movie.DETAILS]: MovieDetailParams;
+  [Routes.Search.SEARCH]: SearchParams;
+  [Routes.Settings.SETTINGS]: undefined;
+  [Routes.Settings.IMAGES_QUALITY]: undefined;
+  [Routes.Settings.OPEN_SOURCE]: undefined;
+  [Routes.Settings.LANGUAGE]: undefined;
+  [Routes.Settings.THEME]: undefined;
+  [Routes.Settings.ABOUT]: undefined;
+};
 
-import {
-  SCREEN_ID as MEDIA_SECTION_VIEW_ALL_SCREEN_ID,
-  ExternalProps as MediaSectionViewAllProps,
-} from '../components/media-section-view-all/MediaSectionViewAll';
+type MediaSectionViewAllProps = {
+  initialDataset: Types.SimplifiedMedia[];
+  sectionKey: Types.TrendingMediaItemKey;
+  headerTitle: string;
+  isMovie: boolean;
+};
 
-export type HomeStackParams = {
-  [MEDIA_SECTION_VIEW_ALL_SCREEN_ID]: MediaSectionViewAllProps;
-  [TV_SHOW_DETAIL_SCREEN_ID]: TVShowDetailExternalParams;
-  [MOVIE_DETAIL_SCREEN_ID]: MovieDetailExternalParams;
-  [SEARCH_MODAL_ID]: SearchNavigationParams;
-  IMAGES_QUALITY: undefined;
-  OPEN_SOURCE: undefined;
-  LANGUAGE: undefined;
-  SETTINGS: undefined;
-  THEME: undefined;
-  ABOUT: undefined;
-  HOME: undefined;
+export type MediaSectionViewAllNavigationProp = StackNavigationProp<
+  HomeStackParams,
+  Routes.Home.MEDIA_DETAILS_VIEW_ALL
+>;
+
+export type HomeNavigationProp = StackNavigationProp<HomeStackParams, Routes.Home.HOME>;
+
+export type HomeStackProps = {
+  navigation: HomeNavigationProp;
+};
+
+export type MediaSectionViewAllStackProps = {
+  navigation: MediaSectionViewAllNavigationProp;
+  route: RouteProp<HomeStackParams, Routes.Home.MEDIA_DETAILS_VIEW_ALL>;
 };

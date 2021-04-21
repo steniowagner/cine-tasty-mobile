@@ -47,7 +47,10 @@ const LanguageListItem = ({
   </Styles.Wrapper>
 );
 
-const shouldComponentUpdate = (previousState: Props, nextState: Props): boolean => (previousState.isSelected || !nextState.isSelected)
+const shouldComponentUpdate = (
+  previousState: LanguageListItemProps,
+  nextState: LanguageListItemProps,
+): boolean => (previousState.isSelected || !nextState.isSelected)
   && (!previousState.isSelected || nextState.isSelected);
 
 export default memo(LanguageListItem, shouldComponentUpdate);

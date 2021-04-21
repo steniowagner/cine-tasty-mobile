@@ -1,12 +1,12 @@
 import { useState, useCallback } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { QuizStackParams } from '../../routes/route-params-types';
+import { SetupQuestionsStackProps as UseSetupQuestionsProps } from '../../routes/route-params-types';
 import { difficulties, categories, types } from './options';
 
 export const INITIAL_NUMBER_QUESTIONS = 10;
@@ -20,12 +20,8 @@ type OptionSelectedInfo = {
 type NavigateToCustomModalProps = {
   currentOptionSelected: Types.QuizFilterOption;
   currentDataset: Types.QuizFilterOption[];
-  headerText: string;
   option: Types.QuizOption;
-};
-
-type UseSetupQuestionsProps = {
-  navigation: StackNavigationProp<QuizStackParams, 'SETUP_QUESTIONS'>;
+  headerText: string;
 };
 
 const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
@@ -115,7 +111,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
       headerText,
       option,
     }: NavigateToCustomModalProps): void => {
-      navigation.navigate('CUSTOM_MODAL', {
+      navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
         extraData: {
           onPressSelect: (indexOptionSelected: number) => {
             onSelectOption(indexOptionSelected, option);
@@ -150,7 +146,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
   );
 
   const navigateToQuestions = useCallback(() => {
-    navigation.navigate('QUESTIONS', {
+    navigation.navigate(Routes.Quiz.QUESTIONS, {
       difficulty: questionDifficulty.value,
       category: questionCategory.value,
       type: questionType.value,
