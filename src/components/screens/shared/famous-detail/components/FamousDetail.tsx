@@ -1,21 +1,17 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/display-name */
-import React, { useLayoutEffect, useCallback, useRef } from 'react';
-import { StatusBar, Animated, FlatList } from 'react-native';
+import React, { useLayoutEffect, useRef } from 'react';
+import { StatusBar, Animated } from 'react-native';
 import { withTheme } from 'styled-components';
 
-import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import ExpansibleTextSection from '@components/common/expansible-text-section/ExpansibleTextSection';
 import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
-import ImagesList from '@components/common/images-list/ImagesList';
 import { useGetCurrentTheme, useStatusBarStyle } from '@hooks';
-import Section from '@components/common/section/Section';
 import Advise from '@components/common/advise/Advise';
-import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
 import metrics from '@styles/metrics';
 
+import useRenderFamousDetailSections from './useRenderFamousDetailSections';
 import HeaderBackButton from '../../header-back-button/HeaderBackButton';
 import { FamousDetailStackProps } from '../routes/route-params-types';
 import HeaderInfo from './header/header-info/HeaderInfo';
@@ -25,6 +21,11 @@ import DeathDay from './death-day/DeathDay';
 
 const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
   const { currentTheme } = useGetCurrentTheme({ theme });
+  const {
+    renderTVShowCastSection,
+    renderMovieCastSection,
+    renderImagesSection,
+  } = useRenderFamousDetailSections({ navigation });
   const { barStyle } = useStatusBarStyle({ theme });
 
   useLayoutEffect(() => {
@@ -44,103 +45,6 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
   });
 
   const scrollViewOffset = useRef(new Animated.Value(0)).current;
-
-  const renderImagesSection = useCallback((images: string[]) => {
-    const sectionImagesTitle = images.length > 0
-      ? t(TRANSLATIONS.FAMOUS_DETAIL_IMAGES)
-      : `${t(TRANSLATIONS.FAMOUS_DETAIL_IMAGES)} (0)`;
-
-    return (
-      <Styles.ImagesSectionWrapper>
-        <Section
-          title={sectionImagesTitle}
-          noMarginTop
-        >
-          <ImagesList
-            images={images}
-          />
-        </Section>
-      </Styles.ImagesSectionWrapper>
-    );
-  }, []);
-
-  const renderMovieCastSection = useCallback(
-    (movieCast: SchemaTypes.GetFamousDetail_person_moviesCast[]) => {
-      const sectionCastMoviesTitle = movieCast.length > 0
-        ? t(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)
-        : `${t(TRANSLATIONS.FAMOUS_DETAIL_CAST_MOVIES)} (0)`;
-
-      return (
-        <Section
-          title={sectionCastMoviesTitle}
-        >
-          <FlatList
-            renderItem={({ item, index }) => (
-              <SimplifiedMediaListItem
-                onPress={() => navigation.push(Routes.Movie.DETAILS, {
-                  voteAverage: item.voteAverage,
-                  posterPath: item.posterPath,
-                  voteCount: item.voteCount,
-                  title: item.title,
-                  id: item.id,
-                })}
-                voteAverage={item.voteAverage}
-                voteCount={item.voteCount}
-                image={item.posterPath}
-                isFirst={index === 0}
-                title={item.title}
-              />
-            )}
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            showsHorizontalScrollIndicator={false}
-            testID="movies-cast"
-            data={movieCast}
-            horizontal
-          />
-        </Section>
-      );
-    },
-    [],
-  );
-
-  const renderTVShowCastSection = useCallback(
-    (tvShowCast: SchemaTypes.GetFamousDetail_person_tvCast[]) => {
-      const sectionCastTVShowsTitle = tvShowCast.length > 0
-        ? t(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)
-        : `${t(TRANSLATIONS.FAMOUS_DETAIL_CAST_TV)} (0)`;
-
-      return (
-        <Section
-          title={t(sectionCastTVShowsTitle)}
-        >
-          <FlatList
-            renderItem={({ item, index }) => (
-              <SimplifiedMediaListItem
-                voteAverage={item.voteAverage}
-                voteCount={item.voteCount}
-                isFirst={index === 0}
-                onPress={() => navigation.push(Routes.TVShow.DETAILS, {
-                  voteAverage: item.voteAverage,
-                  posterPath: item.posterPath,
-                  voteCount: item.voteCount,
-                  title: item.name,
-                  id: item.id,
-                })}
-                image={item.posterPath}
-                title={item.name}
-              />
-            )}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            data={tvShowCast}
-            testID="tv-cast"
-            horizontal
-          />
-        </Section>
-      );
-    },
-    [],
-  );
 
   if (hasError) {
     return (

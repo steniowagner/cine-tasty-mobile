@@ -7,13 +7,12 @@ import ListFooterComponent from '@components/common/pagination-footer/Pagination
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 import DefaultListItem from '@components/common/famous-list-item/FamousListItem';
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
-import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+
 import metrics from '@styles/metrics';
 
 import LoadingFamousList from '../../../common/loading-famous-list/LoadingFamousList';
 import { FamousStackProps } from '../routes/route-params-types';
+import useFamousPressHandlers from './useFamousPressHandlers';
 import useFamous from './useFamous';
 
 export const NUMBER_FLATLIST_COLUMNS = 3;
@@ -29,18 +28,16 @@ const Famous = ({ navigation }: FamousStackProps) => {
     famous,
     error,
   } = useFamous();
+
+  const { onPressHeaderIconButton, onPressFamousListItem } = useFamousPressHandlers({
+    navigation,
+  });
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          onPress={() => navigation.navigate(Routes.Search.SEARCH, {
-            i18nQueryByPaginationErrorRef:
-                TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-            i18nSearchBarPlaceholderRef: TRANSLATIONS.FAMOUS_SEARCHBAR_PLACEHOLDER,
-            i18nQueryByTextErrorRef: TRANSLATIONS.FAMOUS_QUERY_BY_TEXT_ERROR,
-            searchType: SchemaTypes.SearchType.PERSON,
-            queryId: 'search_famous',
-          })}
+          onPress={onPressHeaderIconButton}
           iconName="magnify"
           withMarginRight
         />
@@ -89,11 +86,7 @@ const Famous = ({ navigation }: FamousStackProps) => {
         numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
           <DefaultListItem
-            onPress={() => navigation.navigate(Routes.Famous.DETAILS, {
-              profileImage: item.profilePath,
-              name: item.name,
-              id: item.id,
-            })}
+            onPress={() => onPressFamousListItem(item)}
             numberOfColumns={NUMBER_FLATLIST_COLUMNS}
             image={item.profilePath}
             title={item.name}

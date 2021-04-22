@@ -18,6 +18,11 @@ type FamousProps = {
   headerTitle: string;
 };
 
+export type FamousNavigationProp = StackNavigationProp<
+  FamousStackParams,
+  Routes.Famous.FAMOUS
+>;
+
 export type FamousStackProps = {
-  navigation: StackNavigationProp<FamousStackParams, Routes.Famous.FAMOUS>;
+  navigation: FamousNavigationProp;
 };

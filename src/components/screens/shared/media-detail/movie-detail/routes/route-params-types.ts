@@ -21,8 +21,13 @@ export type MovieDetailParams = {
   id: number;
 };
 
+export type MovieDetailNavigationProp = StackNavigationProp<
+  MovieDetailStackParams,
+  Routes.Movie.DETAILS
+>;
+
 export type MovieDetailStackProps = {
-  navigation: StackNavigationProp<MovieDetailStackParams, Routes.Movie.DETAILS>;
+  navigation: MovieDetailNavigationProp;
   route: RouteProp<MovieDetailStackParams, Routes.Movie.DETAILS>;
   theme: DefaultTheme;
 };
