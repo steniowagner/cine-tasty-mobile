@@ -41,9 +41,9 @@ declare module 'styled-components' {
     width: number;
     height: number;
   };
-  export type DefaultTheme = {
+  export interface DefaultTheme {
     id: ThemeId;
     metrics: Metrics;
     colors: Colors;
-  };
+  }
 }
