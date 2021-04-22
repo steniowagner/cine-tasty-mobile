@@ -1,13 +1,12 @@
 /* eslint-disable react/display-name */
 
 import React, { useLayoutEffect } from 'react';
-import { FlatList, Platform, View } from 'react-native';
+import { FlatList, Platform } from 'react-native';
 
 import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
-import Advise from '@components/common/advise/Advise';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
@@ -18,6 +17,7 @@ import { imageWrapper } from './list-item/NewsListItem.styles';
 import { NewsStackProps } from '../routes/route-params-types';
 import NewsLoading from './loading-list/NewsLoading';
 import NewsListItem from './list-item/NewsListItem';
+import EmtpyListError from './EmtpyListError';
 import useNews from './useNews';
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
@@ -66,18 +66,7 @@ const News = ({ navigation }: NewsStackProps) => {
   const shouldShowEmptyListAdvice = !isLoading && !error && !articles.length;
 
   if (shouldShowEmptyListAdvice) {
-    return (
-      <View
-        testID="list-empty-component-wrapper"
-      >
-        <Advise
-          description={t(TRANSLATIONS.NEWS_EMPTY_LIST_DESCRIPTION)}
-          suggestion={t(TRANSLATIONS.NEWS_EMPTY_LIST_SUGGESTION)}
-          title={t(TRANSLATIONS.NEWS_EMPTY_LIST_TITLE)}
-          icon="alert-box"
-        />
-      </View>
-    );
+    return <EmtpyListError />;
   }
 
   const shouldShowListTopReloadButton = !articles.length && !!error && !isLoading;

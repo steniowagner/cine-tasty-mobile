@@ -1,32 +1,41 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect, useMemo } from 'react';
-import { ScrollView, StatusBar, FlatList } from 'react-native';
+import { ScrollView, StatusBar } from 'react-native';
 import { withTheme } from 'styled-components';
 
-import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
 import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import ImagesList from '@components/common/images-list/ImagesList';
 import Section from '@components/common/section/Section';
-import Advise from '@components/common/advise/Advise';
-import { formatDate } from '@utils/formatters';
 import { useStatusBarStyle } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
 
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
-import GeneralInfo from '../../common/sections/general-info/GeneralInfo';
 import HeaderBackButton from '../../../header-back-button/HeaderBackButton';
+import useTVShowDetailPressHandlers from './useTVShowDetailPressHandlers';
+import { TVShowDetailStackProps } from '../routes/route-params-types';
 import Header from '../../common/header-info/header-info/HeaderInfo';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
-import { TVShowDetailStackProps } from '../routes/route-params-types';
 import Overview from '../../common/sections/overview/Overview';
 import PeopleList from '../../common/people-list/PeopleList';
+import MediaDetailError from '../../common/MediaDetailError';
+import TVShowDetailsSection from './TVShowDetailsSection';
 import Videos from '../../common/sections/videos/Videos';
 import Tags from '../../common/sections/tags/Tags';
 import useTVShowDetail from './useTVShowDetail';
 import * as Styles from './TVShowDetail.styles';
+import SimilarSection from './SimilarSection';
 
 const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
+  const {
+    onPressSimilarItem,
+    onPressSeeSeasons,
+    onPressCreatedBy,
+    onPressReviews,
+    onPressCrew,
+    onPressCast,
+  } = useTVShowDetailPressHandlers({
+    navigation,
+  });
   const { barStyle } = useStatusBarStyle({ theme });
 
   useLayoutEffect(() => {
@@ -55,19 +64,10 @@ const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
 
   if (hasError) {
     return (
-      <>
-        <StatusBar
-          backgroundColor={theme.colors.secondary}
-          barStyle={barStyle}
-          animated
-        />
-        <Advise
-          description={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_DESCRIPTION)}
-          suggestion={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_SUGGESTION)}
-          title={t(TRANSLATIONS.MEDIA_DETAIL_ERROR_TITLE)}
-          icon="alert-box"
-        />
-      </>
+      <MediaDetailError
+        barStyle={barStyle}
+        theme={theme}
+      />
     );
   }
 
@@ -100,63 +100,20 @@ const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
         />
         {!!tvShow && (
           <>
-            <GeneralInfo
-              infoItems={[
-                {
-                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE),
-                  value: tvShow.name || '-',
-                },
-                {
-                  value: tvShow.originalLanguage,
-                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_LANGUAGE),
-                },
-                {
-                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_EPISODES),
-                  value: tvShow.numberOfEpisodes ? String(tvShow.numberOfEpisodes) : '-',
-                },
-                {
-                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_SEASONS),
-                  value: tvShow.numberOfSeasons ? String(tvShow.numberOfSeasons) : '-',
-                },
-                {
-                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_EPISODE_RUNTIME),
-                  value: tvShow.episodeRunTime.length
-                    ? tvShow.episodeRunTime.join(', ')
-                    : '-',
-                },
-                {
-                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_COUNTRY),
-                  value: tvShow.originCountry ? tvShow.originCountry.join(', ') : '-',
-                },
-                {
-                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_FIRST_AIR_DATE),
-                  value: formatDate(tvShow.firstAirDate),
-                },
-                {
-                  title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_LAST_AIR_DATE),
-                  value: formatDate(tvShow.lastAirDate),
-                },
-              ]}
+            <TVShowDetailsSection
+              tvShow={tvShow}
             />
             {tvShow?.numberOfSeasons > 0 && (
               <Styles.SeeSeasonsButtonWrapper>
                 <RoundedButton
                   text={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SEASONS)}
-                  onPress={() => navigation.navigate(Routes.TVShow.SEASONS, {
-                    numberOfSeasons: tvShow.numberOfSeasons,
-                    title: tvShow.name,
-                    id: tvShow.id,
-                  })}
+                  onPress={() => onPressSeeSeasons(tvShow)}
                 />
               </Styles.SeeSeasonsButtonWrapper>
             )}
             {!!tvShow?.createdBy.length && (
               <PeopleList
-                onPressItem={(id: string, name: string, image: string) => navigation.push(Routes.Famous.DETAILS, {
-                  profileImage: image,
-                  id: Number(id),
-                  name,
-                })}
+                onPressItem={onPressCreatedBy}
                 sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREATED_BY)}
                 dataset={tvShow.createdBy}
                 noSubtext={false}
@@ -165,11 +122,7 @@ const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
             )}
             {!!tvShow?.cast.length && (
               <PeopleList
-                onPressItem={(id: string, name: string, image: string) => navigation.push(Routes.Famous.DETAILS, {
-                  profileImage: image,
-                  id: Number(id),
-                  name,
-                })}
+                onPressItem={onPressCast}
                 sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
                 dataset={tvShow.cast}
                 type="cast"
@@ -177,12 +130,8 @@ const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
             )}
             {!!tvShow?.crew.length && (
               <PeopleList
-                onPressItem={(id: string, name: string, image: string) => navigation.push(Routes.Famous.DETAILS, {
-                  profileImage: image,
-                  id: Number(id),
-                  name,
-                })}
                 sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)}
+                onPressItem={onPressCrew}
                 dataset={tvShow.crew}
                 type="crew"
               />
@@ -220,42 +169,13 @@ const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
               </Section>
             )}
             <Reviews
-              onPressViewAll={() => navigation.navigate(Routes.MediaDetail.REVIEWS, {
-                mediaTitle: tvShow.name,
-                reviews: tvShow.reviews,
-              })}
+              onPressViewAll={() => onPressReviews(tvShow)}
               reviews={tvShow.reviews}
             />
-            <Section
-              title={
-                tvShow?.similar.length
-                  ? t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)
-                  : `${t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)} (0)`
-              }
-            >
-              <FlatList
-                keyExtractor={(item, index) => `${item.id}-${index}`}
-                renderItem={({ item, index }) => (
-                  <SimplifiedMediaListItem
-                    onPress={() => navigation.push(Routes.TVShow.DETAILS, {
-                      voteAverage: item.voteAverage,
-                      posterPath: item.posterPath,
-                      voteCount: item.voteCount,
-                      title: item.name,
-                      id: item.id,
-                    })}
-                    voteAverage={item.voteAverage}
-                    voteCount={item.voteCount}
-                    image={item.posterPath}
-                    isFirst={index === 0}
-                    title={item.name}
-                  />
-                )}
-                showsHorizontalScrollIndicator={false}
-                data={tvShow.similar}
-                horizontal
-              />
-            </Section>
+            <SimilarSection
+              onPressItem={onPressSimilarItem}
+              tvShow={tvShow}
+            />
           </>
         )}
       </ScrollView>
