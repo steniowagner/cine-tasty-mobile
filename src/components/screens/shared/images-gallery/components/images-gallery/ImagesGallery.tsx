@@ -1,9 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { useLayoutEffect } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 
-import { ImagesGalleryParams } from '@components/screens/shared/images-gallery/routes/route-params-types';
+import { ImagesGalleryStackProps } from '@components/screens/shared/images-gallery/routes/route-params-types';
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 
 // @ts-ignore
@@ -13,19 +11,7 @@ import ThumbsGalleryList from './thumbs-gallery-list/ThumbsGalleryList';
 import useImageGallery from './useImagesGallery';
 import * as Styles from './ImagesGallery.styles';
 
-type ImagesGalleryNavigationProp = StackNavigationProp<
-  ImagesGalleryParams,
-  'IMAGES_GALLERY'
->;
-
-type ImagesGalleryRouteProp = RouteProp<ImagesGalleryParams, 'IMAGES_GALLERY'>;
-
-type ImagesGalleryProps = {
-  navigation: ImagesGalleryNavigationProp;
-  route: ImagesGalleryRouteProp;
-};
-
-const ImagesGallery = ({ navigation, route }: ImagesGalleryProps) => {
+const ImagesGallery = ({ navigation, route }: ImagesGalleryStackProps) => {
   const {
     isIndexesAllowedToRenderImage,
     onFlatlistMomentumScrollEnd,

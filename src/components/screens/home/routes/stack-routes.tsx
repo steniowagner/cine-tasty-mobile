@@ -4,6 +4,7 @@ import { DefaultTheme, withTheme } from 'styled-components';
 
 import { TVShowSeasonsStackProps } from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
 import { ReviewsStackProps } from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
+import ImagesGallery from '@components/screens/shared/images-gallery/components/images-gallery/ImagesGallery';
 import TVShowDetail from '@components/screens/shared/media-detail/tv-show-detail/components/TVShowDetail';
 import MoviedDetail from '@components/screens/shared/media-detail/movie-detail/components/MovieDetail';
 import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/routes/stack-routes';
@@ -72,6 +73,14 @@ const HomeStack = ({ theme }: HomeStackProps) => (
         headerTitle: route.params.mediaTitle,
       })}
       component={Reviews}
+    />
+    <Stack.Screen
+      name={Routes.ImagesGallery.IMAGES_GALLERY}
+      component={ImagesGallery}
+      options={() => ({
+        ...getDefaultHeaderOptions(),
+        headerTitleAlign: 'center',
+      })}
     />
     <Stack.Screen
       name={Routes.TVShow.SEASONS}

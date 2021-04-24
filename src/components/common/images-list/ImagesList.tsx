@@ -1,29 +1,24 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
-import { ImagesGalleryParams } from '@components/screens/shared/images-gallery/routes/route-params-types';
+import { ImagesGalleryNavigationProp } from '@components/screens/shared/images-gallery/routes/route-params-types';
+import { Routes } from '@routes/routes';
 
 import ImageListItem from './images-list-item/ImageListItem';
-
-type ImageGalleryNavigationProp = StackNavigationProp<
-  ImagesGalleryParams,
-  'IMAGES_GALLERY'
->;
 
 type ImagesListProps = {
   images: string[];
 };
 
 const ImagesList = ({ images }: ImagesListProps) => {
-  const navigation = useNavigation<ImageGalleryNavigationProp>();
+  const navigation = useNavigation<ImagesGalleryNavigationProp>();
 
   return (
     <FlatList
       renderItem={({ item, index }) => (
         <ImageListItem
-          onPress={() => navigation.navigate('IMAGES_GALLERY', {
+          onPress={() => navigation.navigate(Routes.ImagesGallery.IMAGES_GALLERY, {
             gallerySize: images.length,
             indexSelected: index,
             images,
