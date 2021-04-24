@@ -4,8 +4,9 @@ import { DefaultTheme, withTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import { TVShowSeasonsStackProps } from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
-import TVShowDetail from '@components/screens/shared/media-detail/tv-show-detail/components/TVShowDetail';
+import ImagesGallery from '@components/screens/shared/images-gallery/components/images-gallery/ImagesGallery';
 import { ReviewsStackProps } from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
+import TVShowDetail from '@components/screens/shared/media-detail/tv-show-detail/components/TVShowDetail';
 import MovieDetail from '@components/screens/shared/media-detail/movie-detail/components/MovieDetail';
 import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/routes/stack-routes';
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
@@ -66,6 +67,14 @@ const FamousStack = ({ theme }: FamousStackProps) => {
           headerTitle: route.params.mediaTitle,
         })}
         component={Reviews}
+      />
+      <Stack.Screen
+        name={Routes.ImagesGallery.IMAGES_GALLERY}
+        component={ImagesGallery}
+        options={() => ({
+          ...getDefaultHeaderOptions(),
+          headerTitleAlign: 'center',
+        })}
       />
       <Stack.Screen
         name={Routes.TVShow.SEASONS}

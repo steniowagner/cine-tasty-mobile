@@ -3,12 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { Routes } from '@routes/routes';
 
-import SearchStack from '@components/screens/shared/search/routes/stack-routes';
-import ImagesGalleryModal, {
-  MODAL_ID as IMAGES_GALLERY_MODAL_ID,
-} from '@components/screens/shared/images-gallery/routes/stack-routes';
-
 import CustomModal from '@components/screens/shared/customized-modal/routes/stack-routes';
+import SearchStack from '@components/screens/shared/search/routes/stack-routes';
 
 import Tabs from './Tabs';
 
@@ -48,11 +44,6 @@ const RouteNavigation = () => (
       options={{ headerShown: false, animationEnabled: true }}
       component={SearchStack}
       name={Routes.Search.SEARCH}
-    />
-    <RootStack.Screen
-      options={{ headerShown: false, animationEnabled: true }}
-      component={ImagesGalleryModal}
-      name={IMAGES_GALLERY_MODAL_ID}
     />
     <RootStack.Screen
       options={{ headerShown: false, animationEnabled: true }}
