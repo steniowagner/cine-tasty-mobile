@@ -1,9 +1,8 @@
 import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import PersonList from './PeopleList';
 
@@ -28,14 +27,14 @@ const crew = Array(3)
 
 const renderPersonList = ({ sectionTitle, onPressItem, dataset, type }) => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <PersonList
         sectionTitle={sectionTitle}
         onPressItem={onPressItem}
         dataset={dataset}
         type={type}
       />
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 

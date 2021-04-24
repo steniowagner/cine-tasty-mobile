@@ -1,16 +1,15 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import NewsLoading, { INITIAL_ITEMS_TO_RENDER } from './NewsLoading';
 
 const renderNewsLoading = () => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <NewsLoading />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <NewsLoading />', () => {

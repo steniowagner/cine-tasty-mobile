@@ -1,7 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
@@ -9,7 +8,6 @@ import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
-import theme from '@styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
@@ -33,11 +31,9 @@ const news = Array(10)
 
 const renderNews = (mockResolvers?: IMocks, navigate = jest.fn()) => {
   const NewsComponent = ({ navigation }) => (
-    <ThemeProvider theme={theme}>
-      <AutoMockProvider mockResolvers={mockResolvers}>
-        <News navigation={{ ...navigation, navigate }} />
-      </AutoMockProvider>
-    </ThemeProvider>
+    <AutoMockProvider mockResolvers={mockResolvers}>
+      <News navigation={{ ...navigation, navigate }} />
+    </AutoMockProvider>
   );
 
   return <MockedNavigation component={NewsComponent} />;

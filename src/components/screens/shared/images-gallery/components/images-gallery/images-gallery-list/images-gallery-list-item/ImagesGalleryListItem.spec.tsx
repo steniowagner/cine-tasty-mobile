@@ -2,10 +2,9 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import ImagesGalleryListItem from './ImagesGalleryListItemComponent';
 
@@ -13,9 +12,9 @@ const IMAGE_URL = 'SOME_IMAGE_URL';
 
 const renderImagesGalleryListItem = () => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <ImagesGalleryListItem imageURL={IMAGE_URL} />
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 

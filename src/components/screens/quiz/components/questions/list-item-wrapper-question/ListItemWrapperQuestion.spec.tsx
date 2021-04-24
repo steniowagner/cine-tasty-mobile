@@ -1,9 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import ListItemWrapperQuestion from './ListItemWrapperQuestion';
 
@@ -14,14 +13,14 @@ const defaultProps = {
 };
 
 const renderQuestions = () => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <ListItemWrapperQuestion
       currentQuestionIndex={defaultProps.currentQuestionIndex}
       numberOfQuestions={defaultProps.numberOfQuestions}
       question={defaultProps.question}>
       <View />
     </ListItemWrapperQuestion>
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <ListItemWrapperQuestion />', () => {

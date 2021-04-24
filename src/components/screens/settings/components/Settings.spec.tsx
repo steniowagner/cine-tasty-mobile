@@ -1,10 +1,9 @@
 import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-import theme from '@styles/theme';
 
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import Settings from './Settings';
@@ -14,9 +13,9 @@ const NUMBER_SECTIONS = 5;
 const renderSettings = (navigate = jest.fn()) => {
   const SettingsScreen = ({ navigation }) => {
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeContextProvider>
         <Settings navigation={{ ...navigation, navigate }} />
-      </ThemeProvider>
+      </ThemeContextProvider>
     );
   };
 

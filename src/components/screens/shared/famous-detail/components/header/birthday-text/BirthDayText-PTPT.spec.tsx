@@ -1,8 +1,7 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import BirthDayText from './BirthDayText';
 
@@ -18,9 +17,9 @@ jest.mock('react-i18next', () => ({
 }));
 
 const renderBirthDayText = (birthDate: string) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <BirthDayText rawBirthDate={birthDate} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <BirthDatText /> [PT-PT]', () => {

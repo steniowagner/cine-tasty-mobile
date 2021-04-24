@@ -1,16 +1,13 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 const Stack = createStackNavigator();
 
 const MockedNavigator = ({ component, params = {} }) => (
-  <ThemeProvider
-    theme={theme}
-  >
+  <ThemeContextProvider>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -20,7 +17,7 @@ const MockedNavigator = ({ component, params = {} }) => (
         />
       </Stack.Navigator>
     </NavigationContainer>
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 export default MockedNavigator;

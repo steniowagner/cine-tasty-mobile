@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
-import { ThemeProvider, DefaultTheme } from 'styled-components';
+import { DefaultTheme } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import SearchBar from './SearchBar.android';
 
@@ -20,14 +20,14 @@ const renderSearchBar = ({
   onPressClose,
   placeholder,
 }: RenderSearchBarProps) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <SearchBar
       onTypeSearchQuery={onTypeSearchQuery}
       onPressSearch={onPressSearch}
       onPressClose={onPressClose}
       placeholder={placeholder}
     />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <SearchBar />', () => {

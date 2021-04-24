@@ -1,17 +1,16 @@
 import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-import theme from '@styles/theme';
 
 import Quiz from './Quiz';
 
 const renderQuiz = (navigate = jest.fn()) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <Quiz navigation={{ navigate }} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <Quiz />', () => {

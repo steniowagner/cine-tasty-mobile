@@ -1,9 +1,8 @@
 import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import { NUMBER_ITEMS } from './loading-expansible-text-section/LoadingExpansibleTextSection';
 import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
@@ -16,13 +15,13 @@ const renderExpansibleTextSection = ({
   isLoading = false,
   text = 'text',
 }) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <ExpansibleTextSection
       sectionTitle={sectionTitle}
       isLoading={isLoading}
       text={text}
     />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <ExpansibleTextSection />', () => {

@@ -1,17 +1,16 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import theme from '@styles/theme';
 
 import { MAX_NUMBER_LINES } from './useSeasonOverviewText';
 import SeasonOverviewText from './SeasonOverviewText';
 
 const renderSeasonOverviewText = (overview?: string) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <SeasonOverviewText overview={overview} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <SeasonOverviewText />', () => {

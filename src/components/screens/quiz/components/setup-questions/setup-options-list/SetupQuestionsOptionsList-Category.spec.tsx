@@ -1,9 +1,8 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import theme from '@styles/theme';
 
 import SetupQuestionsOptionsList from './SetupQuestionsOptionsList';
 import { categories } from '../options';
@@ -19,14 +18,14 @@ const renderSetupQuestionsCategoryOptionsList = ({
   onPressSelect = jest.fn,
   closeModal = jest.fn,
 }: RenderSetupQuestionsCategoryOptionsListProps) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <SetupQuestionsOptionsList
       indexLastOptionSelected={indexLastOptionSelected}
       onPressSelect={onPressSelect}
       closeModal={closeModal}
       options={categories}
     />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <SetupQuestionsOptionsList /> - [Category]', () => {

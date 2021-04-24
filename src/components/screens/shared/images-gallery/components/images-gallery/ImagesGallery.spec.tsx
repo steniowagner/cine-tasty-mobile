@@ -1,10 +1,9 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 jest.mock('../../../../../../styles/metrics', () => ({
   getHeightFromDP: jest.fn(),
@@ -34,9 +33,9 @@ const params = {
 
 const renderImagesGallery = () => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <MockedNavigation component={ImagesGallery} params={params} />
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 

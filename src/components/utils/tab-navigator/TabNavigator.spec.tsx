@@ -1,9 +1,8 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import { Routes } from '@routes/routes';
-import theme from '@styles/theme';
 
 import TabNavigator from './TabNavigator';
 import items from './items';
@@ -29,9 +28,9 @@ const renderTabNavigator = (
   navigate = jest.fn(),
   currentRouteName = Routes.Home.HOME as string,
 ) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <TabNavigator navigation={{ navigate }} state={getState(currentRouteName)} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <TabNavigator />', () => {

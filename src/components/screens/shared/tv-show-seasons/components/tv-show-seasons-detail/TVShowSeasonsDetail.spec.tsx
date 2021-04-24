@@ -1,11 +1,10 @@
 import React from 'react';
 import { cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import theme from '@styles/theme';
 
 import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
@@ -41,11 +40,11 @@ const getMockedTVShowSeason = (numberOfEpisodes: number) => ({
 const renderTVShowSeasonsDetail = (mockResolvers?: IMocks) => {
   const FamousScreen = () => (
     <TMDBImageQualityProvider>
-      <ThemeProvider theme={theme}>
+      <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
           <TVShowSeasonsDetail route={{ params }} />
         </AutoMockProvider>
-      </ThemeProvider>
+      </ThemeContextProvider>
     </TMDBImageQualityProvider>
   );
 

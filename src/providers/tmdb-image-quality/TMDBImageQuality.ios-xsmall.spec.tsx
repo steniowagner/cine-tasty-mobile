@@ -2,9 +2,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import xsmall from './qualities/xsmall';
 
@@ -39,19 +38,21 @@ describe('Testing <TMDBImageQuality /> - [iOS/XSmall-screen]', () => {
       const { backdrop, poster, still, profile } = useTMDBImageQuality();
 
       return (
-        <ThemeProvider theme={theme}>
+        <>
           <Text testID="backdrop">{backdrop}</Text>
           <Text testID="poster">{poster}</Text>
           <Text testID="still">{still}</Text>
           <Text testID="profile">{profile}</Text>
-        </ThemeProvider>
+        </>
       );
     };
 
     return (
-      <TMDBImageQualityProvider>
-        <ContextChildren />
-      </TMDBImageQualityProvider>
+      <ThemeContextProvider>
+        <TMDBImageQualityProvider>
+          <ContextChildren />
+        </TMDBImageQualityProvider>
+      </ThemeContextProvider>
     );
   };
 

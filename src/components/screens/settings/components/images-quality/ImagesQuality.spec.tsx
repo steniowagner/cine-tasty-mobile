@@ -1,10 +1,9 @@
 import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import CONSTANTS from '@utils/constants';
-import theme from '@styles/theme';
 
 jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -20,9 +19,9 @@ import { qualities } from './useImagesQuality';
 import ImagesQuality from './ImagesQuality';
 
 const renderImagesQualitySettings = () => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <ImagesQuality />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <ImagesQuality />', () => {

@@ -1,8 +1,7 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import PopupAdvice, { HIDE_POPUP_DELAY } from './PopupAdvice';
@@ -10,9 +9,9 @@ import PopupAdvice, { HIDE_POPUP_DELAY } from './PopupAdvice';
 const DEFAULT_TEXT = 'DEFAULT_TEXT';
 
 const renderPopupAdvice = (onFinishToShow = jest.fn, text = DEFAULT_TEXT) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <PopupAdvice onFinishToShow={onFinishToShow} text={text} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <PopupAdvice />', () => {
