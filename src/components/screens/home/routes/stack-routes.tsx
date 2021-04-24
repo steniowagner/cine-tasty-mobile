@@ -11,6 +11,7 @@ import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/route
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
 import Reviews from '@components/screens/shared/media-detail/reviews/components/Reviews';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
+import SearchStack from '@components/screens/shared/search/routes/stack-routes';
 import { Routes } from '@routes/routes';
 
 import MediaSectionViewAll from '../components/media-section-view-all/MediaSectionViewAll';
@@ -95,6 +96,11 @@ const HomeStack = ({ theme }: HomeStackProps) => (
         headerTitle: route.params.title,
       })}
       component={TVShowSeasonDetail}
+    />
+    <Stack.Screen
+      options={{ headerShown: false }}
+      component={SearchStack}
+      name={Routes.Search.SEARCH}
     />
     {SettingsScreen(Stack)}
   </Stack.Navigator>

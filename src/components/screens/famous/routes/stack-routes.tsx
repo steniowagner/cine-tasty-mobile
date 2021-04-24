@@ -12,6 +12,7 @@ import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/route
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
 import Reviews from '@components/screens/shared/media-detail/reviews/components/Reviews';
 import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
+import SearchStack from '@components/screens/shared/search/routes/stack-routes';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
@@ -89,6 +90,11 @@ const FamousStack = ({ theme }: FamousStackProps) => {
           headerTitle: route.params.title,
         })}
         component={TVShowSeasonDetail}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        component={SearchStack}
+        name={Routes.Search.SEARCH}
       />
     </Stack.Navigator>
   );

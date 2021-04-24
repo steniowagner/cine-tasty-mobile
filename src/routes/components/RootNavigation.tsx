@@ -1,10 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { Routes } from '@routes/routes';
-
 import CustomModal from '@components/screens/shared/customized-modal/routes/stack-routes';
-import SearchStack from '@components/screens/shared/search/routes/stack-routes';
+import { Routes } from '@routes/routes';
 
 import Tabs from './Tabs';
 
@@ -39,11 +37,6 @@ const RouteNavigation = () => (
       options={{ headerShown: false }}
       component={Tabs}
       name="Tabs"
-    />
-    <RootStack.Screen
-      options={{ headerShown: false, animationEnabled: true }}
-      component={SearchStack}
-      name={Routes.Search.SEARCH}
     />
     <RootStack.Screen
       options={{ headerShown: false, animationEnabled: true }}
