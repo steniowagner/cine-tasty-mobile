@@ -1,10 +1,9 @@
 import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import CONSTANTS from '@utils/constants';
-import theme from '@styles/theme';
 
 jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -35,9 +34,9 @@ jest.mock('react-i18next', () => ({
 import Language from './Languages';
 
 const renderLanguageSettings = () => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <Language />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <Languages />', () => {

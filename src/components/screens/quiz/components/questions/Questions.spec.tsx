@@ -1,13 +1,12 @@
 import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { RouteProp } from '@react-navigation/native';
-import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
+import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-import theme from '@styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
@@ -58,11 +57,11 @@ const renderQuestions = ({
   navigate,
 }: RenderQuestionsProps) => {
   const QuestionsComponent = ({ navigation }) => (
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <AutoMockProvider mockResolvers={mockResolvers}>
         <Questions navigation={{ ...navigation, navigate }} route={route} />
       </AutoMockProvider>
-    </ThemeProvider>
+    </ThemeContextProvider>
   );
 
   return <MockedNavigation component={QuestionsComponent} />;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { ThemeContextProvider } from '@providers';
 
 const mockUsePaginatedQuery = jest.fn();
 
@@ -14,10 +14,10 @@ mockUsePaginatedQuery.mockImplementation(() => ({
 
 jest.mock('hooks', () => ({
   usePaginatedQuery: params => mockUsePaginatedQuery(params),
+  useSystemThemePreference: jest.fn(() => ({ systemTheme: 'DARK' })),
 }));
 
 import * as Queries from '@graphql/queries';
-import theme from '@styles/theme';
 
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';
@@ -33,7 +33,7 @@ const renderMediaSectionViewAll = (
   resolvers?: IMocks,
 ) => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
         <MediaSectionViewAll
           route={{
@@ -47,7 +47,7 @@ const renderMediaSectionViewAll = (
           }}
         />
       </AutoMockProvider>
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 

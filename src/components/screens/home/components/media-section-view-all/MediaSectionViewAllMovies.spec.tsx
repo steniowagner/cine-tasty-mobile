@@ -1,13 +1,12 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-import theme from '@styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../../common/popup-advice/PopupAdvice';
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
@@ -37,7 +36,7 @@ const renderMediaSectionViewAll = (
   resolvers?: IMocks,
 ) => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
         <MediaSectionViewAll
           navigation={{ navigate }}
@@ -51,7 +50,7 @@ const renderMediaSectionViewAll = (
           }}
         />
       </AutoMockProvider>
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 

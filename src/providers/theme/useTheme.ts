@@ -1,4 +1,6 @@
-import { useCallback, useState, useMemo } from 'react';
+import {
+  useCallback, useEffect, useState, useMemo,
+} from 'react';
 
 import {
   getItemFromStorage,
@@ -15,24 +17,6 @@ const useTheme = () => {
   const [theme, setTheme] = useState<Types.ThemeId>(null);
 
   const { systemTheme } = useSystemThemePreference();
-
-  const onSetLightTheme = useCallback(async () => {
-    setTheme(Types.ThemeId.LIGHT);
-
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.LIGHT);
-  }, []);
-
-  const onSetDarkTheme = useCallback(async () => {
-    setTheme(Types.ThemeId.DARK);
-
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.DARK);
-  }, []);
-
-  const onSetSystemTheme = useCallback(async () => {
-    setTheme(Types.ThemeId.SYSTEM);
-
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.SYSTEM);
-  }, []);
 
   const handleInitialThemeSelection = useCallback(async (): Promise<void> => {
     const themeFromStorage = await getItemFromStorage<Types.ThemeId, null>(
@@ -55,6 +39,28 @@ const useTheme = () => {
 
     setTheme(themeFromStorage);
   }, [theme]);
+
+  useEffect(() => {
+    handleInitialThemeSelection();
+  }, []);
+
+  const onSetLightTheme = useCallback(async () => {
+    setTheme(Types.ThemeId.LIGHT);
+
+    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.LIGHT);
+  }, []);
+
+  const onSetDarkTheme = useCallback(async () => {
+    setTheme(Types.ThemeId.DARK);
+
+    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.DARK);
+  }, []);
+
+  const onSetSystemTheme = useCallback(async () => {
+    setTheme(Types.ThemeId.SYSTEM);
+
+    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.SYSTEM);
+  }, []);
 
   const themeSelected = useMemo(() => {
     if (!theme) {

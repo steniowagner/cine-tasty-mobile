@@ -1,17 +1,16 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import LoadingFamousList, { INITIAL_ITEMS_TO_RENDER } from './LoadingFamousList';
 import { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import { NUMBER_FLATLIST_COLUMNS } from '../../screens/famous/components/Famous';
 
 const renderLoadingFamousList = () => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <LoadingFamousList numberOfColumns={NUMBER_FLATLIST_COLUMNS} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <LoadingFamousList />', () => {

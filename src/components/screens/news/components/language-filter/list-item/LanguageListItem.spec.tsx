@@ -1,21 +1,20 @@
 import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import LanguageListItem from './LanguageListItem';
 import languages from '../languages';
 
 const renderLanguageFilter = (isSelected: boolean, onPress = jest.fn()) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <LanguageListItem
       name={languages[0].name}
       flag={languages[0].flag}
       isSelected={isSelected}
       onPress={onPress}
     />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <LangugeListItem />', () => {

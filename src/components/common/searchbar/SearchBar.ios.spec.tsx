@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
-import { ThemeProvider, DefaultTheme } from 'styled-components';
+import { DefaultTheme } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import MockedNavigation from '../../../../__mocks__/MockedNavigator';
 import SearchBar from './SearchBar.ios';
@@ -22,14 +22,14 @@ const renderSearchBar = ({
   placeholder,
 }: RenderSearchBarProps) => {
   const SearchBarIOS = () => (
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <SearchBar
         onTypeSearchQuery={onTypeSearchQuery}
         onPressSearch={onPressSearch}
         onPressClose={onPressClose}
         placeholder={placeholder}
       />
-    </ThemeProvider>
+    </ThemeContextProvider>
   );
 
   return <MockedNavigation component={SearchBarIOS} />;

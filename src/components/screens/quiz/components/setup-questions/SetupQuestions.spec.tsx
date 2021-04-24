@@ -1,11 +1,10 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
-import theme from '@styles/theme';
 
 import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
@@ -18,9 +17,9 @@ const getNavigationParam = (navigate = jest.fn) => ({
 });
 
 const renderSetupQuestions = (navigate = jest.fn) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <SetupQuestions navigation={getNavigationParam(navigate)} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <SetupQuestions />', () => {

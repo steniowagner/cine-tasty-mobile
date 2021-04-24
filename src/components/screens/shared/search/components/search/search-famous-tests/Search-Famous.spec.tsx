@@ -1,14 +1,13 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-import theme from '@styles/theme';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -63,11 +62,11 @@ const params = {
 const renderSearchFamous = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {
   const SearchFamousScreen = ({ navigation, route }) => (
     <TMDBImageQualityProvider>
-      <ThemeProvider theme={theme}>
+      <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
           <Search navigation={{ ...navigation, navigate }} route={route} />
         </AutoMockProvider>
-      </ThemeProvider>
+      </ThemeContextProvider>
     </TMDBImageQualityProvider>
   );
 

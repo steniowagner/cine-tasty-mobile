@@ -1,11 +1,10 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { ANIMATION_DURATION } from '@src/hooks/useLoadListItemImage';
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import timeTravel, {
   setupTimeTravel,
@@ -14,9 +13,9 @@ import ProfileImage from './ProfileImage';
 
 const renderProfileImage = (profileImage = 'profileImage') => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <ProfileImage profileImage={profileImage} />
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 

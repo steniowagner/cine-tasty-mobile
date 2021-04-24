@@ -1,13 +1,12 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-import theme from '@styles/theme';
 
 import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
@@ -125,11 +124,11 @@ const renderMovieDetail = ({
 }: RenderMovieDetailProps) => {
   const MovieDetailScreen = () => (
     <TMDBImageQualityProvider>
-      <ThemeProvider theme={theme}>
+      <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
           <MovieDetail navigation={navigation} route={route} />
         </AutoMockProvider>
-      </ThemeProvider>
+      </ThemeContextProvider>
     </TMDBImageQualityProvider>
   );
 

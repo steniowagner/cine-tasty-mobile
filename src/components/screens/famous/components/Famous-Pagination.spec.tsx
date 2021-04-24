@@ -2,11 +2,10 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
@@ -32,11 +31,11 @@ const navigation = {
 const renderFamousScreen = (resolvers?: IMocks) => {
   const FamousScreen = () => (
     <TMDBImageQualityProvider>
-      <ThemeProvider theme={theme}>
+      <ThemeContextProvider>
         <AutoMockProvider mockResolvers={resolvers}>
           <Famous navigation={navigation} />
         </AutoMockProvider>
-      </ThemeProvider>
+      </ThemeContextProvider>
     </TMDBImageQualityProvider>
   );
 

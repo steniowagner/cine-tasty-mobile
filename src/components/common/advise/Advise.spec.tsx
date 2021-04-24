@@ -1,17 +1,16 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 import { SupportedIcons } from '@components/common/svg-icon/getXML';
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import Advise from './Advise';
 
 type OptionalAdviseProps = {
-  icon: SupportedIcons;
-  description: string;
-  suggestion: string;
-  title: string;
+  icon?: SupportedIcons;
+  description?: string;
+  suggestion?: string;
+  title?: string;
 };
 
 const DEFAULT_DESCRIPTION = 'description';
@@ -31,14 +30,14 @@ const getParam = (
 };
 
 const renderAdvise = (optionalAdviseProps: OptionalAdviseProps = {}) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <Advise
       description={getParam(optionalAdviseProps, DEFAULT_DESCRIPTION, 'description')}
       suggestion={getParam(optionalAdviseProps, DEFAULT_SUGGESTION, 'suggestion')}
       title={getParam(optionalAdviseProps, DEFAULT_TITLE, 'title')}
       icon={'account'}
     />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <Advise />', () => {

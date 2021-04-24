@@ -1,10 +1,9 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
-import theme from '@styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import { ANIMATION_TIMING } from './useCustomizedModal';
@@ -28,12 +27,12 @@ const getNavigationParam = (goBack = jest.fn) => ({
 });
 
 const renderCustomizedModal = (onPressSelect = jest.fn, goBack = jest.fn) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <CustomizedModal
       navigation={getNavigationParam(goBack)}
       route={getRouteParam(onPressSelect)}
     />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <CustomizedModal />', () => {

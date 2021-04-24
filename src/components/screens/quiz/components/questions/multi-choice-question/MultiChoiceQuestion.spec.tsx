@@ -1,17 +1,16 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import MultiChoiceQuestion from './MultiChoiceQuestion';
 
 const mockedAnswers = ['A', 'B', 'C', 'D'];
 
 const renderMultiChoice = (onPressNext = jest.fn()) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <MultiChoiceQuestion onPressNext={onPressNext} answers={mockedAnswers} isFocused />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <MultiChoiceQuestion />', () => {

@@ -1,16 +1,15 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import theme from '@styles/theme';
 
 import BooleanQuestion from './BooleanQuestion';
 
 const renderBooleanQuestion = (onPressNext = jest.fn()) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <BooleanQuestion onPressNext={onPressNext} isFocused />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <BooleanQuestion />', () => {

@@ -2,12 +2,11 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import theme from '@styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../common/popup-advice/PopupAdvice';
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
@@ -36,11 +35,11 @@ const navigation = {
 
 const renderFamousScreen = (resolvers?: IMocks) => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
         <Famous navigation={navigation} />
       </AutoMockProvider>
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import Header from './Header';
 
@@ -13,7 +12,7 @@ const renderHeader = ({
   onPressSettings = jest.fn,
   onPressSearch = jest.fn,
 }) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <Header
       shouldDisableActions={shouldDisableActions}
       onPresSwitchTVShows={onPresSwitchTVShows}
@@ -21,7 +20,7 @@ const renderHeader = ({
       onPressSettings={onPressSettings}
       onPressSearch={onPressSearch}
     />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <Header />', () => {

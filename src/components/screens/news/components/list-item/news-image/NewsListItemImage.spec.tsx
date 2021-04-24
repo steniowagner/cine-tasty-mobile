@@ -1,17 +1,16 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import NewsListItemImage, { ANIMATION_DURATION } from './NewsListItemImage';
 
 const renderNewsListItemImage = (imageURL = 'image') => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <NewsListItemImage image={imageURL} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <NewsListItemImage />', () => {

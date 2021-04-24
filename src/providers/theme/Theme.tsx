@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import * as Types from '@local-types';
@@ -25,10 +25,6 @@ const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
     onSetDarkTheme,
     theme,
   } = useTheme();
-
-  useEffect(() => {
-    handleInitialThemeSelection();
-  }, []);
 
   return (
     <ThemeContext.Provider

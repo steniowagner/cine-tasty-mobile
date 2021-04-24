@@ -1,10 +1,9 @@
 import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import theme from '@styles/theme';
 
 import timeTravel, {
   setupTimeTravel,
@@ -13,9 +12,9 @@ import Overview from './Overview';
 import { NUMBER_ITEMS } from './loading-overview/LoadingOverview';
 
 const renderOverview = (isLoading = false, overview = 'overview') => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <Overview isLoading={isLoading} overview={overview} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <Overview />', () => {

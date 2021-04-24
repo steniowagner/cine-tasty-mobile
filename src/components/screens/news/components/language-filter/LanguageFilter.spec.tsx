@@ -1,9 +1,8 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
+import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
-import theme from '@styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import LanguageFilter, { ANIMATION_TIMING } from './LanguageFilter';
@@ -13,13 +12,13 @@ const renderLanguageFilter = (
   lastFilterSelected: SchemaTypes.ArticleLanguage,
   onSelect = jest.fn(),
 ) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <LanguageFilter
       lastLanguageSelected={lastFilterSelected}
       onSelectLanguage={onSelect}
       closeModal={jest.fn()}
     />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <LanguageFilter />', () => {

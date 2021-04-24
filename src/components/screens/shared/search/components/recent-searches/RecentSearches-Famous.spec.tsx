@@ -2,13 +2,12 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 jest.mock('../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
-import theme from '@styles/theme';
 
 import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import { STORAGE_SEARCH_SECTION } from './useRecentSearches';
@@ -16,12 +15,12 @@ import RecentSearches from './RecentSearches';
 
 const renderRecentSearchFamous = (onPressItem: typeof jest.fn) => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <RecentSearches
         searchType={SchemaTypes.SearchType.PERSON}
         onPressItem={onPressItem}
       />
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 
@@ -62,7 +61,7 @@ describe('Testing <RecentSearches /> - [Famous]', () => {
 
     expect(queryAllByTestId('recent-searches-list-item').length).toEqual(ITEMS_COUNT);
 
-    expect(getItemFromStorage).toHaveBeenCalledTimes(2);
+    expect(getItemFromStorage).toHaveBeenCalledTimes(3);
 
     expect(getItemFromStorage).toHaveBeenCalledWith(STORAGE_KEY, []);
   });
@@ -80,7 +79,7 @@ describe('Testing <RecentSearches /> - [Famous]', () => {
 
     expect(queryAllByTestId('recent-searches-list-item').length).toEqual(0);
 
-    expect(getItemFromStorage).toHaveBeenCalledTimes(2);
+    expect(getItemFromStorage).toHaveBeenCalledTimes(3);
 
     expect(getItemFromStorage).toHaveBeenCalledWith(STORAGE_KEY, []);
   });

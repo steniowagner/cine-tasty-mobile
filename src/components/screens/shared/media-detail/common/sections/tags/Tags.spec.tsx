@@ -1,10 +1,8 @@
 import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
-
-import theme from '@styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import { ThemeContextProvider } from '@providers';
 
 import timeTravel, {
   setupTimeTravel,
@@ -24,9 +22,9 @@ const extraTags = [RELEASE_YEAR, 'MEDIA_TYPE'];
 const tagsWithReleaseYear = [...extraTags, ...tags];
 
 const renderTags = (isLoading = false) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <Tags extraTags={extraTags} isLoading={isLoading} tags={tags} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <Tags />', () => {

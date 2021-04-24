@@ -1,14 +1,13 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-import theme from '@styles/theme';
 
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
@@ -32,11 +31,11 @@ const famouseItems = Array(5)
 const renderFamousScreen = ({ mockResolvers, navigate }: FamousScreenProps) => {
   const FamousScreen = ({ navigation }) => (
     <TMDBImageQualityProvider>
-      <ThemeProvider theme={theme}>
+      <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
           <Famous navigation={{ ...navigation, navigate }} />
         </AutoMockProvider>
-      </ThemeProvider>
+      </ThemeContextProvider>
     </TMDBImageQualityProvider>
   );
 

@@ -1,12 +1,10 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as SchemaTypes from '@schema-types';
-import theme from '@styles/theme';
 
 import { DEFAULT_ANIMATION_DURATION } from '../../../../../../common/popup-advice/PopupAdvice';
 import timeTravel, {
@@ -43,11 +41,9 @@ const params = {
 
 const renderSearchMovies = (mockResolvers: IMocks = {}) => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
-      <AutoMockProvider mockResolvers={mockResolvers}>
-        <MockedNavigation component={Search} params={params} />
-      </AutoMockProvider>
-    </ThemeProvider>
+    <AutoMockProvider mockResolvers={mockResolvers}>
+      <MockedNavigation component={Search} params={params} />
+    </AutoMockProvider>
   </TMDBImageQualityProvider>
 );
 

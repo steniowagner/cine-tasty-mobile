@@ -1,10 +1,9 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
-import theme from '@styles/theme';
 
 import EpisodeDetail from './EpisodeDetail';
 
@@ -23,9 +22,9 @@ const renderEpisodeDetail = (
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes = episodeMock,
 ) => (
   <TMDBImageQualityProvider>
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <EpisodeDetail episode={episode} />
-    </ThemeProvider>
+    </ThemeContextProvider>
   </TMDBImageQualityProvider>
 );
 

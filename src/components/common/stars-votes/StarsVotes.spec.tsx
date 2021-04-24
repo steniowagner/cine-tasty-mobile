@@ -1,15 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
 
-import theme from '@styles/theme';
+import { ThemeContextProvider } from '@providers';
 
 import StarsVotes from './StarsVotes';
 
 const renderStarsVotes = (withText: boolean, votes: number, voteCount?: number) => (
-  <ThemeProvider theme={theme}>
+  <ThemeContextProvider>
     <StarsVotes withText={withText} votes={votes} voteCount={voteCount} />
-  </ThemeProvider>
+  </ThemeContextProvider>
 );
 
 describe('Testing <StarsVotes />', () => {
