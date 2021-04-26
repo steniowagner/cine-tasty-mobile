@@ -39,7 +39,9 @@ const Header = ({
 
   return (
     <>
-      <Styles.Wrapper>
+      <Styles.Wrapper
+        opacity={shouldDisableActions ? 0.5 : 1}
+      >
         <Styles.SettingsButton
           disabled={shouldDisableActions}
           onPress={onPressSettings}

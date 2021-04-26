@@ -2,6 +2,7 @@
 import React, { useLayoutEffect } from 'react';
 import { ScrollView } from 'react-native';
 
+import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
@@ -22,6 +23,7 @@ const Home = ({ navigation }: HomeStackProps) => {
     onSelectTVShows,
     onSelectMovies,
     onPressViewAll,
+    onPressReload,
     onPressSearch,
     errorMessage,
     isLoading,
@@ -32,54 +34,62 @@ const Home = ({ navigation }: HomeStackProps) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
-        <Header
-          onPressSettings={() => navigation.navigate(Routes.Settings.SETTINGS)}
-          shouldDisableActions={shouldDisableHeaderActions}
-          onPresSwitchTVShows={onSelectTVShows}
-          onPressSwitchMovies={onSelectMovies}
-          onPressSearch={onPressSearch}
-        />
+        <>
+          <Header
+            onPressSettings={() => navigation.navigate(Routes.Settings.SETTINGS)}
+            shouldDisableActions={shouldDisableHeaderActions}
+            onPresSwitchTVShows={onSelectTVShows}
+            onPressSwitchMovies={onSelectMovies}
+            onPressSearch={onPressSearch}
+          />
+          {!!errorMessage && (
+          <PaginatedListHeader
+            onPress={onPressReload}
+          />
+          )}
+        </>
       ),
     });
-  }, [shouldDisableHeaderActions, onPressSearch, isLoading]);
+  }, [shouldDisableHeaderActions, onPressSearch, isLoading, errorMessage]);
 
   if (isLoading) {
     return <LoadingHome />;
   }
 
-  return (
-    <>
-      {!errorMessage && (
-        <ScrollView
-          testID="scrollview-content"
-        >
-          <Top3
-            onPressLearnMore={onPressTop3LearnMore}
-            top3Items={top3}
-          />
-          {trendings.map((trending) => (
-            <HomeSection
-              onPressItem={(mediaItem: Types.SimplifiedMedia) => onPressTrendingItem(mediaItem)}
-              onPressViewAll={() => onPressViewAll({
-                viewAllTitle: trending.viewAllTitle,
-                sectionItems: trending.data,
-                sectionID: trending.id,
-              })}
-              sectionTitle={trending.sectionTitle}
-              key={trending.sectionTitle}
-              items={trending.data}
-            />
-          ))}
-        </ScrollView>
-      )}
-      {!!errorMessage && (
+  if (errorMessage) {
+    return (
+      <>
         <Styles.PopupAdviceWrapper>
           <PopupAdvice
             text={errorMessage}
           />
         </Styles.PopupAdviceWrapper>
-      )}
-    </>
+      </>
+    );
+  }
+
+  return (
+    <ScrollView
+      testID="scrollview-content"
+    >
+      <Top3
+        onPressLearnMore={onPressTop3LearnMore}
+        top3Items={top3}
+      />
+      {trendings.map((trending) => (
+        <HomeSection
+          onPressItem={(mediaItem: Types.SimplifiedMedia) => onPressTrendingItem(mediaItem)}
+          onPressViewAll={() => onPressViewAll({
+            viewAllTitle: trending.viewAllTitle,
+            sectionItems: trending.data,
+            sectionID: trending.id,
+          })}
+          sectionTitle={trending.sectionTitle}
+          key={trending.sectionTitle}
+          items={trending.data}
+        />
+      ))}
+    </ScrollView>
   );
 };
 

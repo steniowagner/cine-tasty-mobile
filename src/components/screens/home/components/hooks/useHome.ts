@@ -139,6 +139,20 @@ const useHome = ({ navigation }: HomeStackProps) => {
     setIsMovieSelected(false);
   }, [trendingTVShows]);
 
+  const onPressReload = useCallback(async () => {
+    if (!errorMessage) {
+      return;
+    }
+
+    setShouldDisableHeaderActions(true);
+
+    const getSelectedTrends = isMoviesSelected ? getTrendingMovies : getTrendingTVShows;
+
+    await getSelectedTrends();
+
+    setShouldDisableHeaderActions(false);
+  }, [errorMessage, isMoviesSelected, getTrendingMovies, getTrendingTVShows]);
+
   return {
     trendings: isMoviesSelected ? homeTrendingMovies : homeTrendingTVShows,
     isLoading: isLoadingMovies || isLoadingTVShows || isTransitioningData,
@@ -149,6 +163,7 @@ const useHome = ({ navigation }: HomeStackProps) => {
     onPressViewAll,
     onSelectTVShows,
     onSelectMovies,
+    onPressReload,
     onPressSearch,
     errorMessage,
   };

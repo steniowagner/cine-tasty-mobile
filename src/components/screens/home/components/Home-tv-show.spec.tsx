@@ -416,7 +416,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
 
     act(() => {
-      timeTravel(TRANSITIONING_DURATION);
+      timeTravel(TRANSITIONING_DURATION + SWITCH_ANIMATION_DURATION_MS);
     });
 
     act(() => {
@@ -426,6 +426,8 @@ describe('Testing <Home /> - [TVShows]', () => {
     });
 
     expect(getByTestId('popup-advice-wrapper')).not.toBeNull();
+
+    expect(getByTestId('top-reload-button')).not.toBeNull();
 
     expect(getByTestId('popup-advice-message').children[0]).toEqual(
       TRANSLATIONS.HOME_TRENDING_TV_SHOWS_ERROR,
