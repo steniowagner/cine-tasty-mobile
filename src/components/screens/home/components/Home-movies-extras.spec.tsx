@@ -247,4 +247,78 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
       } catch (err) {}
     });
   });
+
+  it('should show the trendings correctly after an error and the user press the reload-button', () => {
+    const mockResolversError = {
+      TrendingMovies: () => new Error(),
+    };
+
+    const mockResolversSuccess = {
+      TrendingMovies: () => trendingMovies,
+    };
+
+    const { getAllByTestId, queryByTestId, getByTestId, getByText, rerender } = render(
+      renderHome({ mockResolvers: mockResolversError }),
+    );
+
+    act(() => {
+      try {
+        jest.runAllTimers();
+      } catch (err) {}
+    });
+
+    expect(getByTestId('top-reload-button')).not.toBeNull();
+
+    fireEvent.press(getByTestId('top-reload-button'));
+
+    rerender(renderHome({ mockResolvers: mockResolversSuccess }));
+
+    expect(queryByTestId('loading-home')).not.toBeNull();
+
+    expect(queryByTestId('top-reload-button')).toBeNull();
+
+    act(() => {
+      try {
+        jest.runAllTimers();
+      } catch (err) {}
+    });
+
+    expect(queryByTestId('loading-home')).toBeNull();
+
+    expect(getByTestId('top3-list')).not.toBeNull();
+
+    expect(getAllByTestId('section-wrapper').length).toEqual(NUMBER_OF_SECTIONS);
+
+    // now-playing-section
+
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING)).not.toBeNull();
+
+    expect(
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`),
+    ).not.toBeNull();
+
+    // top-rated-section
+
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED)).not.toBeNull();
+
+    expect(
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`),
+    ).not.toBeNull();
+
+    // upcoming-section
+
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING)).not.toBeNull();
+
+    expect(
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`),
+    ).not.toBeNull();
+
+    // popular-section
+
+    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR)).not.toBeNull();
+
+    expect(
+      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`),
+    ).not.toBeNull();
+  });
 });

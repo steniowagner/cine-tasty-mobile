@@ -5,6 +5,10 @@ import styled from 'styled-components';
 import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import CONSTANTS from '@utils/constants';
 
+type WrapperStyleProps = {
+  opacity: number;
+};
+
 export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
   colors: [
     theme.colors.background,
@@ -19,11 +23,12 @@ export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
   height: 15%;
 `;
 
-export const Wrapper = styled(View)`
+export const Wrapper = styled(View)<WrapperStyleProps>`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  opacity: ${({ opacity }) => opacity};
   padding-top: ${({ theme }) => Platform.select({
     ios: isEqualsOrLargestThanIphoneX()
       ? theme.metrics.getWidthFromDP('12%')
@@ -40,5 +45,4 @@ export const Wrapper = styled(View)`
 export const SettingsButton = styled(TouchableOpacity)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
   margin-left: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;

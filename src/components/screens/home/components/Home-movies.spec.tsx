@@ -184,6 +184,8 @@ describe('Testing <Home /> - [Movies]', () => {
       TRANSLATIONS.HOME_TRENDING_MOVIES_ERROR,
     );
 
+    expect(getByTestId('top-reload-button')).not.toBeNull();
+
     expect(queryByTestId('loading-home')).toBeNull();
 
     expect(queryByTestId('top3-list')).toBeNull();
