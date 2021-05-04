@@ -13,17 +13,15 @@ type MediaSwitcherProps = {
 
 const MediaSwitcher = ({ isDisabled, items, theme }: MediaSwitcherProps) => {
   const {
-    switchItemWidth,
-    wrapperOpacity,
-    translateX,
-    switchItems,
-    isSwitching,
-  } = useMediaSwitcher({ theme, items });
+    switchItemWidth, translateX, switchItems, isSwitching,
+  } = useMediaSwitcher({
+    theme,
+    items,
+  });
 
   return (
     <Styles.Wrapper
       width={items.length * switchItemWidth}
-      opacity={wrapperOpacity}
       style={{
         shadowColor: '#000000',
         shadowOffset: {

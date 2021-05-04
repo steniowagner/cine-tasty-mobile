@@ -148,7 +148,6 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
     });
 
     fireEvent.press(getByTestId(`${TRANSLATIONS.HOME_TV_SHOWS}-button`));
-
     act(() => {
       timeTravel(TRANSITIONING_DURATION + SWITCH_ANIMATION_DURATION_MS);
     });

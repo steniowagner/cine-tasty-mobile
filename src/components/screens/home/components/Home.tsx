@@ -32,6 +32,8 @@ const Home = ({ navigation }: HomeStackProps) => {
   } = useHome({ navigation });
 
   useLayoutEffect(() => {
+    const shouldShowReload = !!errorMessage && !isLoading;
+
     navigation.setOptions({
       header: () => (
         <>
@@ -42,7 +44,7 @@ const Home = ({ navigation }: HomeStackProps) => {
             onPressSwitchMovies={onSelectMovies}
             onPressSearch={onPressSearch}
           />
-          {!!errorMessage && (
+          {shouldShowReload && (
           <PaginatedListHeader
             onPress={onPressReload}
           />

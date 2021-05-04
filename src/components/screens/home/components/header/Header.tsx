@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
 import MediaSwitcher from '../media-switcher/MediaSwitcher';
 import * as Styles from './Header.styles';
+import useHeader from './hooks/useHeader';
 
 type HeaderProps = {
   shouldDisableActions: boolean;
@@ -23,24 +23,16 @@ const Header = ({
   onPressSettings,
   onPressSearch,
 }: HeaderProps) => {
-  const items = useMemo(
-    () => [
-      {
-        onPress: onPressSwitchMovies,
-        titlei18nRef: TRANSLATIONS.HOME_MOVIES,
-      },
-      {
-        onPress: onPresSwitchTVShows,
-        titlei18nRef: TRANSLATIONS.HOME_TV_SHOWS,
-      },
-    ],
-    [onPressSwitchMovies, onPresSwitchTVShows],
-  );
+  const { items, opacity } = useHeader({
+    shouldDisableActions,
+    onPresSwitchTVShows,
+    onPressSwitchMovies,
+  });
 
   return (
     <>
       <Styles.Wrapper
-        opacity={shouldDisableActions ? 0.5 : 1}
+        style={{ opacity }}
       >
         <Styles.SettingsButton
           disabled={shouldDisableActions}
