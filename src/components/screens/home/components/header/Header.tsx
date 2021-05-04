@@ -1,8 +1,6 @@
 import React from 'react';
 
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import metrics from '@styles/metrics';
 
 import MediaSwitcher from '../media-switcher/MediaSwitcher';
 import * as Styles from './Header.styles';
@@ -34,16 +32,12 @@ const Header = ({
       <Styles.Wrapper
         style={{ opacity }}
       >
-        <Styles.SettingsButton
+        <HeaderIconButton
           disabled={shouldDisableActions}
           onPress={onPressSettings}
-          testID="header-icon-button-wrapper-settings"
-        >
-          <SVGIcon
-            size={metrics.getWidthFromDP('6%')}
-            id="settings"
-          />
-        </Styles.SettingsButton>
+          iconName="settings"
+          withMarginLeft
+        />
         <MediaSwitcher
           isDisabled={shouldDisableActions}
           items={items}
