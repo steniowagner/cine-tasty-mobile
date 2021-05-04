@@ -4,7 +4,6 @@ import {
 import styled from 'styled-components';
 
 type WrapperStyleProps = {
-  opacity: number;
   width: number;
 };
 
@@ -17,7 +16,6 @@ export const Wrapper = styled(View)<WrapperStyleProps>`
   border-radius: ${({ theme }) => theme.metrics.height}px;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.secondary};
-  opacity: ${({ opacity }) => opacity};
 `;
 
 export const SwitcherIndicator = styled(Animated.View)<DynamicWidthStyleProps>`

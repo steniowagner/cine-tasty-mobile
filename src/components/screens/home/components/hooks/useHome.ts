@@ -7,9 +7,9 @@ import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
+import { HomeStackProps } from '../../routes/route-params-types';
 import useTrendingTVShows from './trendings/useTrendingTVShows';
 import useTrendingMovies from './trendings/useTrendingMovies';
-import { HomeStackProps } from '../../routes/route-params-types';
 import useHomeTrendings from './useHomeTrendings';
 import usePressMapping from './usePressMapping';
 import useTop3 from './top3/useTop3';
@@ -20,7 +20,6 @@ const useHome = ({ navigation }: HomeStackProps) => {
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
     true,
   );
-  const [isMoviesSelected, setIsMovieSelected] = useState<boolean>(true);
   const [trendingTVShows, setTrendingTVShows] = useState<SchemaTypes.TrendingTVShows>(
     undefined,
   );
@@ -28,6 +27,7 @@ const useHome = ({ navigation }: HomeStackProps) => {
     undefined,
   );
   const [isTransitioningData, setIsTransitioningData] = useState<boolean>(false);
+  const [isMoviesSelected, setIsMovieSelected] = useState<boolean>(true);
 
   const { t } = useTranslation();
 
@@ -72,42 +72,6 @@ const useHome = ({ navigation }: HomeStackProps) => {
     trendingMovies,
   });
 
-  useEffect(() => {
-    if (!isMoviesSelected && !trendingTVShows) {
-      getTrendingTVShows();
-    }
-
-    if (isMoviesSelected && !trendingMovies) {
-      getTrendingMovies();
-    }
-  }, [isMoviesSelected, trendingTVShows, trendingMovies]);
-
-  useEffect(() => {
-    if (!isMoviesSelected && hasTrendingTVShowsError) {
-      getTrendingTVShows();
-    }
-
-    if (isMoviesSelected && hasTrendingMoviesError) {
-      getTrendingMovies();
-    }
-  }, [isMoviesSelected]);
-
-  useEffect(() => {
-    if (!isTransitioningData) {
-      setTimeout(() => {
-        setShouldDisableHeaderActions(false);
-      }, TRANSITIONING_DURATION * 2);
-    }
-  }, [isTransitioningData, isLoadingTVShows]);
-
-  useEffect(() => {
-    if (isTransitioningData) {
-      setTimeout(() => {
-        setIsTransitioningData(false);
-      }, TRANSITIONING_DURATION);
-    }
-  }, [isTransitioningData]);
-
   const errorMessage = useMemo((): string => {
     if (isMoviesSelected && hasTrendingMoviesError) {
       return t(TRANSLATIONS.HOME_TRENDING_MOVIES_ERROR);
@@ -120,49 +84,58 @@ const useHome = ({ navigation }: HomeStackProps) => {
     return '';
   }, [isMoviesSelected, hasTrendingMoviesError, hasTrendingTVShowsError]);
 
-  const onSelectMovies = useCallback(() => {
-    if (trendingMovies) {
-      setShouldDisableHeaderActions(true);
-      setIsTransitioningData(true);
-    }
+  const getSelectedMediaTrendings = useCallback(async () => {
+    const isLoading = isLoadingMovies || isLoadingTVShows;
 
-    setIsMovieSelected(true);
-  }, [trendingMovies]);
-
-  const onSelectTVShows = useCallback(() => {
-    setShouldDisableHeaderActions(true);
-
-    if (trendingTVShows) {
-      setIsTransitioningData(true);
-    }
-
-    setIsMovieSelected(false);
-  }, [trendingTVShows]);
-
-  const onPressReload = useCallback(async () => {
-    if (!errorMessage) {
+    if (isLoading) {
       return;
     }
 
     setShouldDisableHeaderActions(true);
 
-    const getSelectedTrends = isMoviesSelected ? getTrendingMovies : getTrendingTVShows;
+    const getTrendings = isMoviesSelected ? getTrendingMovies : getTrendingTVShows;
 
-    await getSelectedTrends();
+    await getTrendings();
 
     setShouldDisableHeaderActions(false);
-  }, [errorMessage, isMoviesSelected, getTrendingMovies, getTrendingTVShows]);
+
+    setIsTransitioningData(false);
+  }, [isMoviesSelected, isLoadingMovies, isLoadingTVShows]);
+
+  useEffect(() => {
+    getSelectedMediaTrendings();
+  }, [isMoviesSelected]);
+
+  const onSelectSwitchItem = useCallback((isSelectingMovie: boolean) => {
+    setShouldDisableHeaderActions(true);
+
+    setIsTransitioningData(true);
+
+    setIsMovieSelected(isSelectingMovie);
+  }, []);
+
+  const onPressReload = useCallback(() => {
+    if (!errorMessage) {
+      return;
+    }
+
+    getSelectedMediaTrendings();
+  }, [errorMessage, getSelectedMediaTrendings]);
+
+  const onSelectTVShows = useCallback(() => onSelectSwitchItem(false), []);
+
+  const onSelectMovies = useCallback(() => onSelectSwitchItem(true), []);
 
   return {
     trendings: isMoviesSelected ? homeTrendingMovies : homeTrendingTVShows,
     isLoading: isLoadingMovies || isLoadingTVShows || isTransitioningData,
     top3: isMoviesSelected ? top3Movies : top3TVShows,
+    onSelectTVShows,
+    onSelectMovies,
     shouldDisableHeaderActions,
     onPressTop3LearnMore,
     onPressTrendingItem,
     onPressViewAll,
-    onSelectTVShows,
-    onSelectMovies,
     onPressReload,
     onPressSearch,
     errorMessage,

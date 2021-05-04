@@ -1,13 +1,9 @@
-import { TouchableOpacity, Platform, View } from 'react-native';
+import { TouchableOpacity, Platform, Animated } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components';
 
 import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 import CONSTANTS from '@utils/constants';
-
-type WrapperStyleProps = {
-  opacity: number;
-};
 
 export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
   colors: [
@@ -23,12 +19,11 @@ export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
   height: 15%;
 `;
 
-export const Wrapper = styled(View)<WrapperStyleProps>`
+export const Wrapper = styled(Animated.View)`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  opacity: ${({ opacity }) => opacity};
   padding-top: ${({ theme }) => Platform.select({
     ios: isEqualsOrLargestThanIphoneX()
       ? theme.metrics.getWidthFromDP('12%')

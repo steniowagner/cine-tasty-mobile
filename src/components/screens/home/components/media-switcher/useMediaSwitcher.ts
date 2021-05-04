@@ -99,14 +99,8 @@ const useMediaSwitcher = ({ theme, items }: UseMediaSwitcherProps) => {
     [onSwitchItemLayout, switchItemWidth, indexSelected, theme, items],
   );
 
-  const wrapperOpacity = useMemo(
-    () => (switchItemsWidths.length === switchItems.length ? 1 : 0),
-    [switchItemsWidths],
-  );
-
   return {
     switchItemWidth,
-    wrapperOpacity,
     isSwitching,
     switchItems,
     translateX,

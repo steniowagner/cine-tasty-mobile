@@ -14,6 +14,7 @@ const VALUES = {
   },
   FALLBACK_LANGUAGE: 'en',
   DEFAULT_SPACING: metrics.mediumSize,
+  DEFAULT_ANIMATION_DURATION: 400,
 };
 
 export default {
