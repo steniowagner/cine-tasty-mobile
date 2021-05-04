@@ -37,7 +37,6 @@ const useEntryQuery = <TData, TVariables>({
         setPaginationHasMore(hasMore);
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.log('usePaginatedQuery/useEntryQuery: ', err);
         setIsLoading(false);
 
         onError();
