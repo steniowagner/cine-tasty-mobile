@@ -1,13 +1,11 @@
-import {
-  useCallback, useState, useMemo, useRef,
-} from 'react';
-import { LayoutChangeEvent, Animated } from 'react-native';
+import { useCallback, useState, useMemo } from 'react';
+import { LayoutChangeEvent } from 'react-native';
 import { DefaultTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import metrics from '@styles/metrics';
 
-export const SWITCH_ANIMATION_DURATION_MS = 300;
+import useMediaSwitcherAnimation from './useMediaSwitcherAnimation';
 
 export type SwitchItem = {
   titlei18nRef: string;
@@ -26,29 +24,11 @@ const useMediaSwitcher = ({ theme, items }: UseMediaSwitcherProps) => {
 
   const { t } = useTranslation();
 
-  const translateX = useRef(new Animated.Value(0)).current;
-
-  const onAniamateSwitch = useCallback(
-    (index: number, onFinishAnimation: () => void) => {
-      if (indexSelected === index) {
-        return;
-      }
-
-      setIndexSelected(index);
-
-      setIsSwitching(true);
-
-      Animated.timing(translateX, {
-        duration: SWITCH_ANIMATION_DURATION_MS,
-        useNativeDriver: true,
-        toValue: index,
-      }).start(() => {
-        setIsSwitching(false);
-        onFinishAnimation();
-      });
-    },
-    [indexSelected],
-  );
+  const { onAniamateSwitch, translateX } = useMediaSwitcherAnimation({
+    setIndexSelected,
+    setIsSwitching,
+    indexSelected,
+  });
 
   const onSwitchItemLayout = useCallback(
     (event: LayoutChangeEvent, switchItemindex: number) => {
