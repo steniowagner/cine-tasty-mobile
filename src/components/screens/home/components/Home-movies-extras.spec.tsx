@@ -5,10 +5,10 @@ import { IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as TRANSLATIONS from '@i18n/tags';
 
+import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcherAnimation';
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
-import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcher';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
 import Home from './Home';
 
