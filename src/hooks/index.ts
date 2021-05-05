@@ -4,4 +4,3 @@ export { useParseDateToLocaleDate } from './useParseDateToLocaleDate';
 export { useLoadListItemImage } from './useLoadListItemImage';
 export { useGetCurrentTheme } from './useGetCurrentTheme';
 export { useStatusBarStyle } from './useStatusBarStyle';
-export { useImagePinch } from './useImagePinch';
