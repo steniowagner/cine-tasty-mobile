@@ -1,11 +1,8 @@
 import React from 'react';
-import { Animated } from 'react-native';
-import { PinchGestureHandler } from 'react-native-gesture-handler';
 
 import useTMDBImage from '@components/common/tmdb-image/useTMDBImage';
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import { useImagePinch } from '@hooks';
 import metrics from '@styles/metrics';
 
 import useImagesGalleryListItem from './useImagesGalleryListItem';
@@ -29,8 +26,6 @@ const ImagesGalleryListItemComponent = ({
   } = useImagesGalleryListItem({
     imageURL: uri,
   });
-
-  const { onPinchStateChange, onPinchEvent, pinchScale } = useImagePinch();
 
   if (isLoading) {
     return (
@@ -71,25 +66,11 @@ const ImagesGalleryListItemComponent = ({
       <Styles.Wrapper
         testID="images-gallery-list-item"
       >
-        <PinchGestureHandler
-          onHandlerStateChange={onPinchStateChange}
-          onGestureEvent={onPinchEvent}
-        >
-          <Animated.View
-            style={[
-              { width: '100%', height },
-              {
-                transform: [{ scale: pinchScale }],
-              },
-            ]}
-          >
-            <TMDBImage
-              image={imageURL}
-              style={{ width: '100%', height: '100%' }}
-              imageType="backdrop"
-            />
-          </Animated.View>
-        </PinchGestureHandler>
+        <TMDBImage
+          image={imageURL}
+          style={{ width: '100%', height }}
+          imageType="backdrop"
+        />
       </Styles.Wrapper>
     );
   }
