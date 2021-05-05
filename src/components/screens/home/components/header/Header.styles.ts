@@ -16,7 +16,7 @@ export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
   ],
 }))`
   width: 100%;
-  height: 15%;
+  height: ${({ theme }) => theme.metrics.smallSize}px;
 `;
 
 export const Wrapper = styled(Animated.View)`
