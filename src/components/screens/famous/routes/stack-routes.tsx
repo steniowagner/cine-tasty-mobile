@@ -11,7 +11,7 @@ import MovieDetail from '@components/screens/shared/media-detail/movie-detail/co
 import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/routes/stack-routes';
 import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
 import Reviews from '@components/screens/shared/media-detail/reviews/components/Reviews';
-import { getTransparentHeaderOptions, getDefaultHeaderOptions } from '@routes/constants';
+import { getTransparentHeaderOptions, DEFAULT_HEADER_OPTIONS } from '@routes/constants';
 import SearchStack from '@components/screens/shared/search/routes/stack-routes';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
@@ -27,6 +27,8 @@ type FamousStackProps = {
 const FamousStack = ({ theme }: FamousStackProps) => {
   const { t } = useTranslation();
 
+  const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
+
   return (
     <Stack.Navigator
       headerMode="screen"
@@ -34,15 +36,16 @@ const FamousStack = ({ theme }: FamousStackProps) => {
       <Stack.Screen
         name={Routes.Famous.FAMOUS}
         options={{
-          ...getDefaultHeaderOptions(),
+          ...DEFAULT_HEADER_OPTIONS,
           headerTitle: t(TRANSLATIONS.TABS_FAMOUS),
+          headerTitleAlign: 'center',
         }}
         component={Famous}
       />
       <Stack.Screen
         name={Routes.Famous.DETAILS}
         options={{
-          ...getTransparentHeaderOptions(theme),
+          ...TRANSPARENT_HEADER_OPTIONS,
           ...TransitionPresets.SlideFromRightIOS,
         }}
         component={FamousDetail}
@@ -50,22 +53,23 @@ const FamousStack = ({ theme }: FamousStackProps) => {
       <Stack.Screen
         name={Routes.Movie.DETAILS}
         options={{
-          ...getTransparentHeaderOptions(theme),
+          ...TRANSPARENT_HEADER_OPTIONS,
         }}
         component={MovieDetail}
       />
       <Stack.Screen
         name={Routes.TVShow.DETAILS}
         options={() => ({
-          ...getTransparentHeaderOptions(theme),
+          ...TRANSPARENT_HEADER_OPTIONS,
         })}
         component={TVShowDetail}
       />
       <Stack.Screen
         name={Routes.MediaDetail.REVIEWS}
         options={({ route }: ReviewsStackProps) => ({
-          ...getDefaultHeaderOptions(),
+          ...DEFAULT_HEADER_OPTIONS,
           headerTitle: route.params.mediaTitle,
+          headerTitleAlign: 'center',
         })}
         component={Reviews}
       />
@@ -73,14 +77,14 @@ const FamousStack = ({ theme }: FamousStackProps) => {
         name={Routes.ImagesGallery.IMAGES_GALLERY}
         component={ImagesGallery}
         options={() => ({
-          ...getDefaultHeaderOptions(),
+          ...DEFAULT_HEADER_OPTIONS,
           headerTitleAlign: 'center',
         })}
       />
       <Stack.Screen
         name={Routes.TVShow.SEASONS}
         options={({ route }: TVShowSeasonsStackProps) => ({
-          ...getDefaultHeaderOptions(),
+          ...DEFAULT_HEADER_OPTIONS,
           headerTintColor: theme.colors.buttonText,
           headerStyle: {
             backgroundColor: theme.colors.primary,
@@ -88,6 +92,7 @@ const FamousStack = ({ theme }: FamousStackProps) => {
             elevation: 0,
           },
           headerTitle: route.params.title,
+          headerTitleAlign: 'center',
         })}
         component={TVShowSeasonDetail}
       />
