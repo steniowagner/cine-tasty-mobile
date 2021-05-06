@@ -6,15 +6,22 @@ import useMediaSwitcher, { SwitchItem } from './useMediaSwitcher';
 import * as Styles from './MediaSwitcher.styles';
 
 type MediaSwitcherProps = {
+  onCalcuateSwitchWidth: () => void;
   theme: DefaultTheme;
   items: SwitchItem[];
   isDisabled: boolean;
 };
 
-const MediaSwitcher = ({ isDisabled, items, theme }: MediaSwitcherProps) => {
+const MediaSwitcher = ({
+  onCalcuateSwitchWidth,
+  isDisabled,
+  items,
+  theme,
+}: MediaSwitcherProps) => {
   const {
     switchItemWidth, translateX, switchItems, isSwitching,
   } = useMediaSwitcher({
+    onCalcuateSwitchWidth,
     theme,
     items,
   });

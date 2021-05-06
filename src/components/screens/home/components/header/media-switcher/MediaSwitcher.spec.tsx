@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { dark as theme } from '@styles/themes/dark';
 
-import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
+import timeTravel, { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import { SWITCH_ANIMATION_DURATION_MS } from './useMediaSwitcherAnimation';
 import MediaSwitcher from './MediaSwitcher';
 

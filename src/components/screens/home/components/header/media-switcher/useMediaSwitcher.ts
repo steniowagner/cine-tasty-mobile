@@ -1,4 +1,6 @@
-import { useCallback, useState, useMemo } from 'react';
+import {
+  useCallback, useState, useMemo, useEffect,
+} from 'react';
 import { LayoutChangeEvent } from 'react-native';
 import { DefaultTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -13,11 +15,16 @@ export type SwitchItem = {
 };
 
 type UseMediaSwitcherProps = {
+  onCalcuateSwitchWidth: () => void;
   theme: DefaultTheme;
   items: SwitchItem[];
 };
 
-const useMediaSwitcher = ({ theme, items }: UseMediaSwitcherProps) => {
+const useMediaSwitcher = ({
+  onCalcuateSwitchWidth,
+  theme,
+  items,
+}: UseMediaSwitcherProps) => {
   const [switchItemsWidths, setSwitchItemsWidth] = useState<number[]>([]);
   const [isSwitching, setIsSwitching] = useState<boolean>(false);
   const [indexSelected, setIndexSelected] = useState<number>(0);
@@ -78,6 +85,12 @@ const useMediaSwitcher = ({ theme, items }: UseMediaSwitcherProps) => {
     ],
     [onSwitchItemLayout, switchItemWidth, indexSelected, theme, items],
   );
+
+  useEffect(() => {
+    if (switchItemWidth !== metrics.width) {
+      onCalcuateSwitchWidth();
+    }
+  }, [switchItemWidth]);
 
   return {
     switchItemWidth,

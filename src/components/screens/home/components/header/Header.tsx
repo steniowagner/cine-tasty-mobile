@@ -2,7 +2,7 @@ import React from 'react';
 
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 
-import MediaSwitcher from '../media-switcher/MediaSwitcher';
+import MediaSwitcher from './media-switcher/MediaSwitcher';
 import * as Styles from './Header.styles';
 import useHeader from './hooks/useHeader';
 
@@ -21,7 +21,7 @@ const Header = ({
   onPressSettings,
   onPressSearch,
 }: HeaderProps) => {
-  const { items, opacity } = useHeader({
+  const { onCalcuateSwitchWidth, items, opacity } = useHeader({
     shouldDisableActions,
     onPresSwitchTVShows,
     onPressSwitchMovies,
@@ -39,6 +39,7 @@ const Header = ({
           withMarginLeft
         />
         <MediaSwitcher
+          onCalcuateSwitchWidth={onCalcuateSwitchWidth}
           isDisabled={shouldDisableActions}
           items={items}
         />

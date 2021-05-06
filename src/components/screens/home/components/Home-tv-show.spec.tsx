@@ -7,7 +7,7 @@ import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
-import { SWITCH_ANIMATION_DURATION_MS } from './media-switcher/useMediaSwitcherAnimation';
+import { SWITCH_ANIMATION_DURATION_MS } from './header/media-switcher/useMediaSwitcherAnimation';
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
