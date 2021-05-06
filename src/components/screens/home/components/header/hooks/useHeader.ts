@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 
 import * as TRANSLATIONS from '@i18n/tags';
 
@@ -15,6 +15,8 @@ const useHeader = ({
   onPresSwitchTVShows,
   onPressSwitchMovies,
 }: UseHeaderProps) => {
+  const [isSwitchWidthCalculated, setIsSwitchWidthCalculated] = useState<boolean>(false);
+
   const { opacity } = useHeaderAnimatedOpacity({ shouldDisableActions });
 
   const items = useMemo(
@@ -31,8 +33,16 @@ const useHeader = ({
     [onPressSwitchMovies, onPresSwitchTVShows],
   );
 
-  return {
+  const onCalcuateSwitchWidth = useCallback(() => setIsSwitchWidthCalculated(true), []);
+
+  const headerOpacity = useMemo(() => (isSwitchWidthCalculated ? opacity : 0), [
+    isSwitchWidthCalculated,
     opacity,
+  ]);
+
+  return {
+    opacity: headerOpacity,
+    onCalcuateSwitchWidth,
     items,
   };
 };
