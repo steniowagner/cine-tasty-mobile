@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import metrics from '@styles/metrics';
 
@@ -9,10 +9,12 @@ const useKnownForDepartment = () => {
     setTextWidth(width);
   }, []);
 
+  const opacity = useMemo(() => (textWidth === metrics.width ? 0 : 1), [textWidth]);
+
   return {
-    opacity: !textWidth ? 0 : 1,
     width: textWidth,
     onGetTextWidth,
+    opacity,
   };
 };
 

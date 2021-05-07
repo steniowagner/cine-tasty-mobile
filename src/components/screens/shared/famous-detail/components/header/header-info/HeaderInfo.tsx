@@ -2,10 +2,10 @@ import React from 'react';
 
 import KnownForDepartment from '../known-for-department/KnownForDepartment';
 import HeaderLoadingPlaceholder from '../header-loading-placeholder/HeaderLoadingPlaceholder';
+import InfoText, { DEFAULT_MARGIN_VERTICAL } from '../InfoText';
 import BirthDayText from '../birthday-text/BirthDayText';
 import ProfileImage from '../profile-image/ProfileImage';
 import * as Styles from './HeaderInfo.styles';
-import InfoText from '../InfoText';
 
 type HeaderInfoProps = {
   knownForDepartment: string;
@@ -46,8 +46,7 @@ const HeaderInfo = ({
             )}
             {!!placeOfBirth && (
               <InfoText
-                // @ts-ignore
-                withVerticalMargin
+                marginBottom={DEFAULT_MARGIN_VERTICAL}
               >
                 {placeOfBirth}
               </InfoText>
