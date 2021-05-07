@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
 import metrics from '@styles/metrics';
 
-import { DEFAULT_MARGIN_VERTICAL_PERCENTAGE } from '../InfoText';
+import { DEFAULT_MARGIN_VERTICAL } from '../InfoText';
 import * as Styles from './HeaderLoadingPlaceholder.styles';
 
 const HeaderLoadingPlaceholder = () => {
@@ -11,9 +11,7 @@ const HeaderLoadingPlaceholder = () => {
     (withMarginVertical: boolean = false) => (
       <LoadingPlaceholder
         style={{
-          marginVertical: withMarginVertical
-            ? metrics.getWidthFromDP(DEFAULT_MARGIN_VERTICAL_PERCENTAGE)
-            : 0,
+          marginVertical: withMarginVertical ? DEFAULT_MARGIN_VERTICAL : 0,
           width: metrics.getWidthFromDP('60%'),
           borderRadius: metrics.height,
           height: metrics.largeSize,
