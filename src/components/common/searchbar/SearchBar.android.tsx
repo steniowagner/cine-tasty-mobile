@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { StatusBar, TextInput } from 'react-native';
-import { DefaultTheme, withTheme } from 'styled-components';
 
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
+import CONSTANTS from '@utils/constants';
 
 import * as Styles from './SearchBar.styles';
 
@@ -11,7 +11,6 @@ type SearchBarProps = {
   onPressSearch: () => void;
   onPressClose: () => void;
   placeholder: string;
-  theme: DefaultTheme;
 };
 
 const SearchBar = ({
@@ -19,9 +18,9 @@ const SearchBar = ({
   onPressSearch,
   onPressClose,
   placeholder,
-  theme,
 }: SearchBarProps) => {
   const inputRef = useRef<TextInput>();
+
   useEffect(() => {
     if (inputRef && inputRef.current) {
       inputRef.current.focus();
@@ -31,7 +30,7 @@ const SearchBar = ({
   return (
     <>
       <StatusBar
-        backgroundColor={theme.colors.secondary}
+        backgroundColor={CONSTANTS.VALUES.DEFAULT_SEARCH_COLOR}
         barStyle="light-content"
         animated
       />
@@ -39,9 +38,10 @@ const SearchBar = ({
         testID="searchbar-wrapper"
       >
         <HeaderIconButton
-          iconName="close"
           onPress={onPressClose}
+          iconName="close"
           withMarginLeft
+          color="white"
         />
         <Styles.Input
           testID="search-input"
@@ -55,4 +55,4 @@ const SearchBar = ({
   );
 };
 
-export default withTheme(SearchBar);
+export default SearchBar;

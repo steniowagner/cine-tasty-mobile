@@ -15,6 +15,15 @@ import MediaSearch from '../media-search/MediaSearch';
 import usePressHandlers from './usePressHandlers';
 import useSearch from './use-search/useSearch';
 
+type FamousSearchPress = (item: SchemaTypes.SearchPerson_search_items_BasePerson) => void;
+type FamousSearchItems = SchemaTypes.SearchPerson_search_items_BasePerson[];
+
+type TVShowSearchPress = (item: SchemaTypes.SearchTVShow_search_items_BaseTVShow) => void;
+type TVShowSearchItems = SchemaTypes.SearchTVShow_search_items_BaseTVShow[];
+
+type MovieSearchPress = (item: SchemaTypes.SearchMovie_search_items_BaseMovie) => void;
+type MovieSearchItems = SchemaTypes.SearchMovie_search_items_BaseMovie[];
+
 const Search = ({ navigation, route }: SearchStackProps) => {
   const {
     onPressFooterReloadButton,
@@ -58,11 +67,11 @@ const Search = ({ navigation, route }: SearchStackProps) => {
     <>
       {route.params.searchType === SchemaTypes.SearchType.PERSON && (
         <FamousSearch
+          onPressListItem={onPressListItem as FamousSearchPress}
           onPressHeaderReloadButton={onPressHeaderReloadButton}
           onPressFooterReloadButton={onPressFooterReloadButton}
           hasPaginationError={hasPaginationError}
-          items={items as SchemaTypes.SearchPerson_search_items_BasePerson[]}
-          onPressListItem={onPressListItem}
+          items={items as FamousSearchItems}
           onEndReached={onEndReached}
           errorMessage={errorMessage}
           isPaginating={isPaginating}
@@ -73,14 +82,9 @@ const Search = ({ navigation, route }: SearchStackProps) => {
         <MediaSearch
           onPressHeaderReloadButton={onPressHeaderReloadButton}
           onPressFooterReloadButton={onPressFooterReloadButton}
+          onPressListItem={onPressListItem as MovieSearchPress}
           hasPaginationError={hasPaginationError}
-          items={
-            items as (
-              | SchemaTypes.SearchTVShow_search_items_BaseTVShow
-              | SchemaTypes.SearchMovie_search_items_BaseMovie
-            )[]
-          }
-          onPressListItem={onPressListItem}
+          items={items as MovieSearchItems}
           onEndReached={onEndReached}
           errorMessage={errorMessage}
           isPaginating={isPaginating}
@@ -89,11 +93,11 @@ const Search = ({ navigation, route }: SearchStackProps) => {
       )}
       {route.params.searchType === SchemaTypes.SearchType.TV && (
         <MediaSearch
+          items={items as TVShowSearchItems}
+          onPressListItem={onPressListItem as TVShowSearchPress}
           onPressHeaderReloadButton={onPressHeaderReloadButton}
           onPressFooterReloadButton={onPressFooterReloadButton}
           hasPaginationError={hasPaginationError}
-          items={items as SchemaTypes.SearchTVShow_search_items_BaseTVShow[]}
-          onPressListItem={onPressListItem}
           onEndReached={onEndReached}
           errorMessage={errorMessage}
           isPaginating={isPaginating}

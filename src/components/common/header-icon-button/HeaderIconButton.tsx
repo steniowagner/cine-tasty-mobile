@@ -1,4 +1,5 @@
 import React from 'react';
+import { Colors } from 'styled-components';
 
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import { Icons } from '@components/common/svg-icon/icons';
@@ -9,6 +10,7 @@ import * as Styles from './HeaderIconButton.styles';
 type HeaderIconButtonProps = {
   withMarginRight?: boolean;
   withMarginLeft?: boolean;
+  color?: keyof Colors;
   onPress: () => void;
   disabled?: boolean;
   iconName: Icons;
@@ -20,6 +22,7 @@ const HeaderIconButton = ({
   disabled,
   iconName,
   onPress,
+  color,
 }: HeaderIconButtonProps) => (
   <Styles.Wrapper
     testID={`header-icon-button-wrapper-${iconName}`}
@@ -30,6 +33,7 @@ const HeaderIconButton = ({
   >
     <SVGIcon
       size={metrics.getWidthFromDP('7%')}
+      colorThemeRef={color}
       id={iconName}
     />
   </Styles.Wrapper>
