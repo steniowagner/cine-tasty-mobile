@@ -1,10 +1,10 @@
 import * as Types from '@local-types';
 
-const veryHigh: Record<Types.ImageType, string> = {
+const veryHigh: Types.ImageQuailties = {
   poster: 'w780',
-  backdrop: 'w780',
-  still: 'w780',
-  profile: 'w300',
+  backdrop: 'w1280',
+  still: 'original',
+  profile: 'w780',
 };
 
 export default veryHigh;

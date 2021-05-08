@@ -8,19 +8,17 @@ import medium from './medium';
 import large from './large';
 import xlarge from './xlarge';
 
+const classifications = {
+  xsmall,
+  small,
+  medium,
+  large,
+  xlarge,
+};
+
 const getQualitiesBasedScreenClassification = (
   screenClassification: Types.DeviceScreenClassification,
-) => {
-  const classifications = {
-    xsmall,
-    small,
-    medium,
-    large,
-    xlarge,
-  };
-
-  return classifications[screenClassification];
-};
+) => classifications[screenClassification];
 
 const getImageQualityFromStore = async (): Promise<Types.ImageQualities> => {
   const imageQualityFromStore = await getItemFromStorage<
@@ -31,9 +29,7 @@ const getImageQualityFromStore = async (): Promise<Types.ImageQualities> => {
   return imageQualityFromStore;
 };
 
-const getQualities = async (
-  screenClassification: Types.DeviceScreenClassification,
-): Promise<Record<Types.ImageType, string>> => {
+const getQualities = async (screenClassification: Types.DeviceScreenClassification) => {
   const qualitiesBasedScreenClassification = getQualitiesBasedScreenClassification(
     screenClassification,
   );

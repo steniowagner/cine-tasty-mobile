@@ -11,18 +11,16 @@ import * as Types from '@local-types';
 import getQualitiesBasedScreenClassification from './qualities/getQualities';
 import useClassifyDeviceScreen from './useClassifyDeviceScreen';
 
-const TMDBImageQualityContext = createContext<
-  Record<Types.ImageType, Types.ImageSize> | undefined
->(undefined);
+const TMDBImageQualityContext = createContext<Types.ImageQuailties | undefined>(
+  undefined,
+);
 
 type TMDBImageQualityProviderProps = {
   children: JSX.Element;
 };
 
 export const TMDBImageQualityProvider = ({ children }: TMDBImageQualityProviderProps) => {
-  const [imagesQualities, setImagesQualities] = useState<
-    Record<Types.ImageType, string> | undefined
-  >(undefined);
+  const [imagesQualities, setImagesQualities] = useState<Types.ImageType | {}>({});
 
   const { screenClassification } = useClassifyDeviceScreen();
 

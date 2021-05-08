@@ -1,8 +1,8 @@
 import * as Types from '@local-types';
 
-const medium: Record<Types.ImageType, Types.ImageSize> = {
-  poster: 'w92',
-  backdrop: 'w92',
+const medium: Types.ImageQuailties = {
+  poster: 'w154',
+  backdrop: 'w300',
   still: 'w92',
   profile: 'w92',
 };
