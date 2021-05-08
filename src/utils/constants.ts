@@ -15,6 +15,7 @@ const VALUES = {
   FALLBACK_LANGUAGE: 'en',
   DEFAULT_SPACING: metrics.mediumSize,
   DEFAULT_ANIMATION_DURATION: 400,
+  DEFAULT_SEARCH_COLOR: '#4d4d4d',
 };
 
 export default {
