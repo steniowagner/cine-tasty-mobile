@@ -32,7 +32,7 @@ const ImageListItem = ({ onPress, isFirst, image }: ImageListItemProps) => {
       isFirst={isFirst}
     >
       <TMDBImage
-        imageType="backdrop"
+        imageType="profile"
         onError={onError}
         onLoad={onLoad}
         image={image}

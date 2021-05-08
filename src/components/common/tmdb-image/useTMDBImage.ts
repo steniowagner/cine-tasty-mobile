@@ -10,14 +10,14 @@ type UseTMDBImageProps = {
   image: string;
 };
 
-const PROFILE_THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
+const THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
 
 const useTMDBImage = ({ isThumbnail, imageType, image }: UseTMDBImageProps) => {
   const imagesQualities = useTMDBImageQuality();
 
   const uri = useMemo(() => {
     if (isThumbnail) {
-      return `${PROFILE_THUMBNAIL_URL}${image}`;
+      return `${THUMBNAIL_URL}${image}`;
     }
 
     return `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${imagesQualities[imageType]}${image}`;

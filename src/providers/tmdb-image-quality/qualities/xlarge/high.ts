@@ -1,10 +1,10 @@
 import * as Types from '@local-types';
 
-const high: Record<Types.ImageType, Types.ImageSize> = {
-  poster: 'w342',
-  backdrop: 'w342',
-  still: 'w342',
-  profile: 'w300',
+const high: Types.ImageQuailties = {
+  poster: 'w500',
+  backdrop: 'w780',
+  still: 'w300',
+  profile: 'w342',
 };
 
 export default high;
