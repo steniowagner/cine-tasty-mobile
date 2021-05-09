@@ -1,4 +1,4 @@
-import { Animated, Platform, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import styled from 'styled-components';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -17,10 +17,38 @@ type ItemWrapperStyleProps = {
   width: number;
 };
 
-export const ItemWrapper = styled(Animated.View)<ItemWrapperStyleProps>`
+export const Wrapper = styled(View)`
+  width: 100%;
+  height: ${ITEM_HEIGHT + ITEM_MARGING_TOP}px;
+  margin-top: ${({ theme }) => Platform.select({
+    android: theme.metrics.getWidthFromDP('22%'),
+    ios: theme.metrics.getWidthFromDP('30%'),
+  })}px;
+`;
+
+export const RightItemWrapper = styled(View)`
+  margin-left: ${({ theme }) => -theme.metrics.getWidthFromDP('67%')}px;
+  margin-top: ${ITEM_MARGING_TOP}px;
+  position: absolute;
+`;
+
+export const CenterItemWrapper = styled(View)`
+  margin-left: ${({ theme }) => theme.metrics.getWidthFromDP('12.5%')}px;
+`;
+
+export const LeftItemWrapper = styled(View)`
+  margin-left: ${({ theme }) => theme.metrics.getWidthFromDP('92%')}px;
+  margin-top: ${ITEM_MARGING_TOP}px;
+  position: absolute;
+`;
+
+export const LoadingSmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
+  colors: ['transparent', theme.colors.background],
+}))`
   width: ${ITEM_WIDTH}px;
-  margin-horizontal: ${({ isTheMiddle, theme }) => (isTheMiddle ? theme.metrics.largeSize : 0)}px;
   height: ${ITEM_HEIGHT}px;
+  border-radius: ${ITEM_BORDER_RADIUS}px;
+  position: absolute;
 `;
 
 export const GapFlatlist = styled(View)`
@@ -35,17 +63,6 @@ export const ListWrapper = styled(View)`
     android: theme.metrics.getWidthFromDP('22%'),
     ios: theme.metrics.getWidthFromDP('30%'),
   })}px;
-`;
-
-export const LoadingSmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
-  colors: ['transparent', theme.colors.background],
-}))<Pick<ItemWrapperStyleProps, 'isTheMiddle'>>`
-  width: ${ITEM_WIDTH}px;
-  height: ${ITEM_HEIGHT}px;
-  margin-horizontal: ${({ isTheMiddle, theme }) => (isTheMiddle ? theme.metrics.largeSize : 0)}px;
-  margin-top: ${({ isTheMiddle }) => (!isTheMiddle ? ITEM_MARGING_TOP : 0)}px;
-  border-radius: ${ITEM_BORDER_RADIUS}px;
-  position: absolute;
 `;
 
 export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
