@@ -8,8 +8,8 @@ import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
 import { HomeStackProps } from '../routes/route-params-types';
+import LoadingHome from './top3/loading-top3/LoadingTop3';
 import HomeSection from './home-section/HomeSection';
-import LoadingHome from './top3/LoadingTop3';
 import * as Styles from './Home.styles';
 import useHome from './hooks/useHome';
 import Header from './header/Header';

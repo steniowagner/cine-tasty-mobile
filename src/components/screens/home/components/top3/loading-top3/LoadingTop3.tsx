@@ -2,16 +2,18 @@ import React from 'react';
 
 import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
 
+import * as Top3ListItemStyles from '../top-3-list-item/Top3ListItem.styles';
 import * as Styles from './LoadingTop3.styles';
+import * as Top3Styles from '../Top3.styles';
 
 const DEFAULT_STYLE = {
-  borderRadius: Styles.ITEM_BORDER_RADIUS,
-  height: Styles.ITEM_HEIGHT,
-  width: Styles.ITEM_WIDTH,
+  borderRadius: Top3ListItemStyles.ITEM_BORDER_RADIUS,
+  height: Top3ListItemStyles.ITEM_HEIGHT,
+  width: Top3ListItemStyles.ITEM_WIDTH,
 };
 
 const LoadingTop3 = () => (
-  <Styles.Wrapper
+  <Top3Styles.ListWrapper
     testID="loading-home"
   >
     <Styles.RightItemWrapper>
@@ -35,7 +37,7 @@ const LoadingTop3 = () => (
       />
       <Styles.LoadingSmokeShadow />
     </Styles.LeftItemWrapper>
-  </Styles.Wrapper>
+  </Top3Styles.ListWrapper>
 );
 
 export default LoadingTop3;
