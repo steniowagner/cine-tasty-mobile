@@ -1,12 +1,17 @@
 import { Animated, View, Text } from 'react-native';
 import styled from 'styled-components';
-import * as Types from '@local-types';
 
-import * as LoadingTop3Styles from '../LoadingTop3.styles';
+import * as Types from '@local-types';
+import metrics from '@styles/metrics';
+
+export const ITEM_HEIGHT = metrics.getHeightFromDP('58%');
+export const ITEM_MARGING = metrics.getWidthFromDP('12.5%');
+export const ITEM_WIDTH = metrics.getWidthFromDP('75%');
+export const ITEM_BORDER_RADIUS = metrics.mediumSize;
+export const ITEM_MARGING_TOP = metrics.getWidthFromDP('15%');
 
 type ItemWrapperStyleProps = {
-  isTheMiddle: boolean;
-  width: number;
+  index: number;
 };
 
 type StarsWrapperStyleProps = {
@@ -14,9 +19,9 @@ type StarsWrapperStyleProps = {
 };
 
 export const Wrapper = styled(Animated.View)<ItemWrapperStyleProps>`
-  width: ${LoadingTop3Styles.ITEM_WIDTH}px;
-  margin-horizontal: ${({ isTheMiddle }) => (isTheMiddle ? LoadingTop3Styles.ITEM_MARGING_HORIZONTAL : 0)}px;
-  height: ${LoadingTop3Styles.ITEM_HEIGHT}px;
+  width: ${ITEM_WIDTH}px;
+  height: ${ITEM_HEIGHT}px;
+  margin-horizontal: ${({ index }) => (index === 1 ? metrics.extraLargeSize : 0)}px;
 `;
 
 export const TextContentWrapper = styled(View)`

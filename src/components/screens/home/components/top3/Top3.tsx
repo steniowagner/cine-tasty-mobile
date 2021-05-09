@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
-import { Platform, Animated } from 'react-native';
+import React, { Fragment, useRef } from 'react';
+import { Animated } from 'react-native';
 
 import * as Types from '@local-types';
 
-import { GapFlatlist, ListWrapper, ITEM_WIDTH } from './LoadingTop3.styles';
+import * as Top3ListItemStyles from './top-3-list-item/Top3ListItem.styles';
 import Top3ListItem from './top-3-list-item/Top3ListItem';
+import * as Styles from './Top3.styles';
 
 type Top3Props = {
   onPressLearnMore: (mediaItem: Omit<Types.SimplifiedMedia, '__typename'>) => void;
@@ -12,52 +13,13 @@ type Top3Props = {
 };
 
 const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
-  const scrollX = useRef(new Animated.Value(0)).current;
+  const scrollX = useRef(new Animated.Value(Styles.INITIAL_SCROLL_POSITION)).current;
 
   return (
-    <ListWrapper>
-      <Animated.FlatList
-        decelerationRate={Platform.OS === 'ios' ? 0 : 0.98}
-        ListHeaderComponent={() => <GapFlatlist />}
-        ListFooterComponent={() => <GapFlatlist />}
-        renderItem={({ item, index }) => {
-          const translateY = scrollX.interpolate({
-            inputRange: [
-              (index - 1) * ITEM_WIDTH,
-              index * ITEM_WIDTH,
-              (index + 1) * ITEM_WIDTH,
-            ],
-            outputRange: [50, 0, 50],
-            extrapolate: 'clamp',
-          });
-
-          return (
-            <Top3ListItem
-              onPress={() => onPressLearnMore({
-                voteAverage: item.voteAverage,
-                voteCount: item.voteCount,
-                posterPath: item.image,
-                genreIds: item.genres,
-                title: item.title,
-                id: item.id,
-              })}
-              voteAverage={item.voteAverage}
-              voteCount={item.voteCount}
-              isTheMiddle={index === 1}
-              translateY={translateY}
-              genres={item.genres}
-              width={ITEM_WIDTH}
-              image={item.image}
-              title={item.title}
-            />
-          );
-        }}
+    <Styles.ListWrapper>
+      <Animated.ScrollView
         showsHorizontalScrollIndicator={false}
-        getItemLayout={(_data, index) => ({
-          offset: ITEM_WIDTH * index,
-          length: ITEM_WIDTH,
-          index,
-        })}
+        decelerationRate="fast"
         onScroll={Animated.event(
           [
             {
@@ -70,19 +32,59 @@ const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
             useNativeDriver: true,
           },
         )}
-        keyExtractor={({ id }) => `${id}`}
-        renderToHardwareTextureAndroid
+        contentOffset={{ x: Styles.SCROLL_CONTENT_OFFSET, y: 0 }}
+        snapToInterval={Styles.SNAP_INTERVAL}
         removeClippedSubviews={false}
-        snapToInterval={ITEM_WIDTH}
         scrollEventThrottle={16}
         snapToAlignment="start"
-        initialScrollIndex={1}
         testID="top3-list"
-        data={top3Items}
         bounces={false}
+        pagingEnabled
         horizontal
-      />
-    </ListWrapper>
+      >
+        {top3Items.map((item, index) => {
+          const translateY = scrollX.interpolate({
+            inputRange: [
+              (index - 1) * Top3ListItemStyles.ITEM_WIDTH,
+              index * Top3ListItemStyles.ITEM_WIDTH,
+              (index + 1) * Top3ListItemStyles.ITEM_WIDTH,
+            ],
+            outputRange: [
+              Top3ListItemStyles.ITEM_MARGING_TOP,
+              0,
+              Top3ListItemStyles.ITEM_MARGING_TOP,
+            ],
+            extrapolate: 'clamp',
+          });
+
+          return (
+            <Fragment
+              key={item.id}
+            >
+              {index === 0 && <Styles.ListGap />}
+              <Top3ListItem
+                onPress={() => onPressLearnMore({
+                  voteAverage: item.voteAverage,
+                  voteCount: item.voteCount,
+                  posterPath: item.image,
+                  genreIds: item.genres,
+                  title: item.title,
+                  id: item.id,
+                })}
+                voteAverage={item.voteAverage}
+                voteCount={item.voteCount}
+                translateY={translateY}
+                genres={item.genres}
+                image={item.image}
+                title={item.title}
+                index={index}
+              />
+              {index === 2 && <Styles.ListGap />}
+            </Fragment>
+          );
+        })}
+      </Animated.ScrollView>
+    </Styles.ListWrapper>
   );
 };
 

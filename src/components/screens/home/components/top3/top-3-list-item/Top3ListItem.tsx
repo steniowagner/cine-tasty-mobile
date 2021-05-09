@@ -9,30 +9,28 @@ import StarsVotes from '@components/common/stars-votes/StarsVotes';
 import { useGetCurrentTheme } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import * as LoadingTop3Styles from '../LoadingTop3.styles';
+import * as LoadingTop3Styles from '../loading-top3/LoadingTop3.styles';
 import * as Styles from './Top3ListItem.styles';
 
 type Top3ListItemProps = {
   translateY: Animated.AnimatedInterpolation;
-  isTheMiddle: boolean;
   onPress: () => void;
   voteAverage: number;
   theme: DefaultTheme;
   voteCount: number;
   genres: string[];
-  width: number;
   image: string;
   title: string;
+  index: number;
 };
 
 const Top3ListItem = ({
-  isTheMiddle,
   voteAverage,
   translateY,
   voteCount,
   onPress,
   genres,
-  width,
+  index,
   image,
   theme,
   title,
@@ -42,15 +40,14 @@ const Top3ListItem = ({
 
   return (
     <Styles.Wrapper
-      isTheMiddle={isTheMiddle}
       style={{
         transform: [{ translateY }],
       }}
-      width={width}
+      index={index}
       testID="wrapper"
     >
       <ProgressiveImage
-        borderRadius={LoadingTop3Styles.ITEM_BORDER_RADIUS}
+        borderRadius={Styles.ITEM_BORDER_RADIUS}
         imageType="backdrop"
         image={image}
       />
