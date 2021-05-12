@@ -1,26 +1,19 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 
+import FamousListItemLoadingPlaceholder from '@components/common/famous-list-item/FamousListItemLoadingPlaceholder';
 import metrics from '@styles/metrics';
 
-import FamousListItemLoadingPlaceholder from '@components/common/famous-list-item/FamousListItemLoadingPlaceholder';
-import { DEFAULT_LIST_ITEM_HEIGHT } from '@components/common/famous-list-item/getWrapperMeasures';
-
-export const INITIAL_ITEMS_TO_RENDER = Math.floor(
-  metrics.height / DEFAULT_LIST_ITEM_HEIGHT,
-);
+import useLoadingFamousList from './useLoadingFamousList';
 
 type LoadingFamousListProps = {
   numberOfColumns: number;
 };
 
-const LoadingFamousList = ({ numberOfColumns }: LoadingFamousListProps) => {
-  const famousLoadingListItems = useMemo(
-    () => Array(INITIAL_ITEMS_TO_RENDER * numberOfColumns)
-      .fill(0)
-      .map((item, index) => `${index}`),
-    [numberOfColumns],
-  );
+const LoadingFamousList = (props: LoadingFamousListProps) => {
+  const loadingFamousList = useLoadingFamousList({
+    numberOfColumns: props.numberOfColumns,
+  });
 
   return (
     <FlatList
@@ -30,14 +23,14 @@ const LoadingFamousList = ({ numberOfColumns }: LoadingFamousListProps) => {
       }}
       renderItem={({ index }) => (
         <FamousListItemLoadingPlaceholder
-          numberOfColumns={numberOfColumns}
+          numberOfColumns={props.numberOfColumns}
           index={index}
         />
       )}
-      data={famousLoadingListItems}
-      keyExtractor={(item) => item}
-      numColumns={numberOfColumns}
+      data={loadingFamousList.famousLoadingListItems}
+      numColumns={props.numberOfColumns}
       testID="famous-loading-list"
+      keyExtractor={(item) => item}
       scrollEnabled={false}
     />
   );

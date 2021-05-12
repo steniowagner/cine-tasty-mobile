@@ -7,28 +7,24 @@ type RenderSVGIconConditionallyProps = {
   condition: boolean;
 };
 
-const renderSVGIconConditionally = ({
-  condition,
-  ifFalse,
-  ifTrue,
-}: RenderSVGIconConditionallyProps) => {
-  if (condition) {
+const renderSVGIconConditionally = (props: RenderSVGIconConditionallyProps) => {
+  if (props.condition) {
     return (
       <SVGIcon
-        colorThemeRef={ifTrue.colorThemeRef}
-        style={ifTrue.style}
-        size={ifTrue.size}
-        id={ifTrue.id}
+        colorThemeRef={props.ifTrue.colorThemeRef}
+        style={props.ifTrue.style}
+        size={props.ifTrue.size}
+        id={props.ifTrue.id}
       />
     );
   }
 
   return (
     <SVGIcon
-      colorThemeRef={ifFalse.colorThemeRef}
-      style={ifFalse.style}
-      size={ifFalse.size}
-      id={ifFalse.id}
+      colorThemeRef={props.ifFalse.colorThemeRef}
+      style={props.ifFalse.style}
+      size={props.ifFalse.size}
+      id={props.ifFalse.id}
     />
   );
 };

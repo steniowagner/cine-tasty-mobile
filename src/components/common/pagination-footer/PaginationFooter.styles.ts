@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 
 export const Wrapper = styled(View)`
@@ -7,3 +7,16 @@ export const Wrapper = styled(View)`
   justify-content: center;
   align-items: center;
 `;
+
+export const LoadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
+  hitSlop: {
+    top: theme.metrics.largeSize,
+    bottom: theme.metrics.largeSize,
+    left: theme.metrics.largeSize,
+    right: theme.metrics.largeSize,
+  },
+}))``;
+
+export const CustomActivityIndicator = styled(ActivityIndicator).attrs(({ theme }) => ({
+  color: theme.colors.text,
+}))``;

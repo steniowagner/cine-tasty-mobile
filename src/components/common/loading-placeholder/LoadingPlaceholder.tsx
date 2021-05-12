@@ -11,20 +11,19 @@ type LoadingPlaceholderProps = {
   style: object;
 };
 
-const LoadingPlaceholder = ({
-  indexToDelayAnimation = 0,
-  testID,
-  style,
-  theme,
-}: LoadingPlaceholderProps) => {
-  const { opacity } = useLoadingPlaceholder({
-    indexToDelayAnimation,
+const LoadingPlaceholder = (props: LoadingPlaceholderProps) => {
+  const loadingPlaceholder = useLoadingPlaceholder({
+    indexToDelayAnimation: props.indexToDelayAnimation || 0,
   });
 
   return (
     <Animated.View
-      style={{ ...style, backgroundColor: theme.colors.loadingColor, opacity }}
-      testID={testID || 'loading-placeholder'}
+      style={{
+        ...props.style,
+        backgroundColor: props.theme.colors.loadingColor,
+        opacity: loadingPlaceholder.opacity,
+      }}
+      testID={props.testID || 'loading-placeholder'}
     />
   );
 };

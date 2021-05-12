@@ -9,10 +9,10 @@ type PaginatedListHeaderProps = {
   onPress: () => void;
 };
 
-const PaginatedListHeader = ({ onPress }: PaginatedListHeaderProps) => (
+const PaginatedListHeader = (props: PaginatedListHeaderProps) => (
   <Styles.ReloadButton
     testID="top-reload-button"
-    onPress={onPress}
+    onPress={props.onPress}
   >
     <SVGIcon
       size={metrics.getWidthFromDP('10%')}

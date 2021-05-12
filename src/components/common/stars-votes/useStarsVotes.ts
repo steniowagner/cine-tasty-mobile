@@ -2,7 +2,11 @@ import { useCallback, useMemo } from 'react';
 
 const MAX_STARS = 5;
 
-const useStarsVotes = (votes: number) => {
+type UseStarsVotesProps = {
+  votes: number;
+};
+
+const useStarsVotes = (props: UseStarsVotesProps) => {
   const getNumberFullStars = useCallback(
     (allVotes: number): number => Math.floor(allVotes / 2),
     [],
@@ -19,7 +23,7 @@ const useStarsVotes = (votes: number) => {
   );
 
   const getStars = useMemo(() => {
-    if (votes > 10) {
+    if (props.votes > 10) {
       return {
         numberFullStars: MAX_STARS,
         numberEmptyStars: 0,
@@ -27,7 +31,7 @@ const useStarsVotes = (votes: number) => {
       };
     }
 
-    if (votes <= 0) {
+    if (props.votes <= 0) {
       return {
         numberEmptyStars: MAX_STARS,
         numberFullStars: 0,
@@ -35,8 +39,8 @@ const useStarsVotes = (votes: number) => {
       };
     }
 
-    const numberFullStars = getNumberFullStars(votes);
-    const numberHalfStars = getNumberHalfStars(votes, numberFullStars);
+    const numberFullStars = getNumberFullStars(props.votes);
+    const numberHalfStars = getNumberHalfStars(props.votes, numberFullStars);
     const numberEmptyStars = getNumberEmtpyStars(numberFullStars, numberHalfStars);
 
     return {
@@ -44,7 +48,7 @@ const useStarsVotes = (votes: number) => {
       numberFullStars,
       numberHalfStars,
     };
-  }, [votes]);
+  }, [props.votes]);
 
   return {
     ...getStars,

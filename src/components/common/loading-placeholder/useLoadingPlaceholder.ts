@@ -9,12 +9,12 @@ type UseLoadingPlaceholderProps = {
 
 const ANIMATION_DURATION = 500;
 
-const useLoadingPlaceholder = ({ indexToDelayAnimation }: UseLoadingPlaceholderProps) => {
+const useLoadingPlaceholder = (props: UseLoadingPlaceholderProps) => {
   const animatedOpacity = useRef(new Animated.Value(1)).current;
 
   const animationDuration = useMemo(
-    () => ANIMATION_DURATION + indexToDelayAnimation * 150,
-    [indexToDelayAnimation],
+    () => ANIMATION_DURATION + props.indexToDelayAnimation * 150,
+    [props.indexToDelayAnimation],
   );
 
   const animateOpacity = useCallback(() => {

@@ -10,24 +10,18 @@ type SectionProps = {
   title: string;
 };
 
-const Section = ({
-  withHorizontalPadding,
-  noMarginBottom,
-  noMarginTop,
-  children,
-  title,
-}: SectionProps) => (
+const Section = (props: SectionProps) => (
   <Styles.Wrapper
-    withHorizontalPadding={withHorizontalPadding}
-    noMarginBottom={noMarginBottom}
-    noMarginTop={noMarginTop}
+    withHorizontalPadding={props.withHorizontalPadding}
+    noMarginBottom={props.noMarginBottom}
+    noMarginTop={props.noMarginTop}
   >
     <Styles.Title
-      withMarginLeft={!withHorizontalPadding}
+      withMarginLeft={!props.withHorizontalPadding}
     >
-      {title}
+      {props.title}
     </Styles.Title>
-    {children}
+    {props.children}
   </Styles.Wrapper>
 );
 

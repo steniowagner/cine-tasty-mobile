@@ -9,8 +9,8 @@ import * as Styles from './HomeSection.styles';
 
 type HomeSectionProps = {
   onPressItem: (mediaItem: Types.SimplifiedMedia) => void;
-  onPressViewAll: () => void;
   items: Types.SimplifiedMedia[];
+  onPressViewAll: () => void;
   sectionTitle: string;
 };
 
@@ -27,6 +27,7 @@ const HomeSection = ({
       onPressViewAll={onPressViewAll}
       sectionTitle={sectionTitle}
       id={sectionTitle}
+      withViewAll
     />
     <FlatList
       renderItem={({ item, index }) => (

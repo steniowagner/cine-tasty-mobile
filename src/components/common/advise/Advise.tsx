@@ -13,9 +13,7 @@ type AdviseProps = {
   title: string;
 };
 
-const Advise = ({
-  description, suggestion, title, icon,
-}: AdviseProps) => (
+const Advise = (props: AdviseProps) => (
   <Styles.Wrapper
     testID="advise-wrapper"
   >
@@ -25,12 +23,12 @@ const Advise = ({
       <SVGIcon
         size={metrics.getWidthFromDP('20%')}
         colorThemeRef="buttonText"
-        id={icon}
+        id={props.icon}
       />
     </Styles.IconWrapper>
-    {!!title && <Styles.Title>{title}</Styles.Title>}
-    {!!description && <Styles.Description>{description}</Styles.Description>}
-    {!!suggestion && <Styles.Suggestion>{suggestion}</Styles.Suggestion>}
+    {!!props.title && <Styles.Title>{props.title}</Styles.Title>}
+    {!!props.description && <Styles.Description>{props.description}</Styles.Description>}
+    {!!props.suggestion && <Styles.Suggestion>{props.suggestion}</Styles.Suggestion>}
   </Styles.Wrapper>
 );
 

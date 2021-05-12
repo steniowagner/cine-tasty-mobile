@@ -13,12 +13,7 @@ type SearchBarProps = {
   placeholder: string;
 };
 
-const SearchBar = ({
-  onTypeSearchQuery,
-  onPressSearch,
-  onPressClose,
-  placeholder,
-}: SearchBarProps) => {
+const SearchBar = (props: SearchBarProps) => {
   const inputRef = useRef<TextInput>();
 
   return (
@@ -33,16 +28,16 @@ const SearchBar = ({
       >
         <Styles.ContentWrapper>
           <HeaderIconButton
-            onPress={onPressClose}
+            onPress={props.onPressClose}
             iconName="close"
             withMarginLeft
             color="white"
           />
           <Styles.Input
             testID="search-input"
-            onChangeText={(text: string) => onTypeSearchQuery(text)}
-            onSubmitEditing={onPressSearch}
-            placeholder={placeholder}
+            onChangeText={(text: string) => props.onTypeSearchQuery(text)}
+            onSubmitEditing={props.onPressSearch}
+            placeholder={props.placeholder}
             ref={inputRef}
           />
         </Styles.ContentWrapper>

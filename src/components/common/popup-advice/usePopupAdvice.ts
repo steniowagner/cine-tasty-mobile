@@ -8,7 +8,7 @@ type UsePopupAdviceProps = {
   onFinishToShow?: () => void;
 };
 
-const usePopupAdvice = ({ onFinishToShow = () => {} }: UsePopupAdviceProps) => {
+const usePopupAdvice = (props: UsePopupAdviceProps) => {
   const wrapperOpacity = useRef(new Animated.Value(0)).current;
 
   const onHidePopup = useCallback(() => {
@@ -16,7 +16,7 @@ const usePopupAdvice = ({ onFinishToShow = () => {} }: UsePopupAdviceProps) => {
       duration: DEFAULT_ANIMATION_DURATION,
       useNativeDriver: true,
       toValue: 0,
-    }).start(onFinishToShow);
+    }).start(() => props.onFinishToShow && props.onFinishToShow());
   }, []);
 
   const onShowPopup = useCallback(() => {

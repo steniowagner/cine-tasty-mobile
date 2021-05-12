@@ -11,7 +11,7 @@ type ImagesListProps = {
   images: string[];
 };
 
-const ImagesList = ({ images }: ImagesListProps) => {
+const ImagesList = (props: ImagesListProps) => {
   const navigation = useNavigation<ImagesGalleryNavigationProp>();
 
   return (
@@ -19,9 +19,9 @@ const ImagesList = ({ images }: ImagesListProps) => {
       renderItem={({ item, index }) => (
         <ImageListItem
           onPress={() => navigation.navigate(Routes.ImagesGallery.IMAGES_GALLERY, {
-            gallerySize: images.length,
+            gallerySize: props.images.length,
             indexSelected: index,
-            images,
+            images: props.images,
           })}
           isFirst={index === 0}
           image={item}
@@ -30,7 +30,7 @@ const ImagesList = ({ images }: ImagesListProps) => {
       keyExtractor={(image) => image}
       showsHorizontalScrollIndicator={false}
       testID="images-list"
-      data={images}
+      data={props.images}
       horizontal
     />
   );

@@ -7,12 +7,12 @@ type ModalSelectButtonProps = {
   title: string;
 };
 
-const ModalSelectButton = ({ onPress, title }: ModalSelectButtonProps) => (
+const ModalSelectButton = (props: ModalSelectButtonProps) => (
   <Styles.SelectButton
-    onPress={onPress}
+    onPress={props.onPress}
     testID="select-button"
   >
-    <Styles.SelectButtonText>{title}</Styles.SelectButtonText>
+    <Styles.SelectButtonText>{props.title}</Styles.SelectButtonText>
   </Styles.SelectButton>
 );
 

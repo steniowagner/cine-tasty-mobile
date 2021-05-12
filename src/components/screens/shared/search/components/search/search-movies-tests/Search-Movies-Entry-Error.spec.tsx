@@ -6,7 +6,7 @@ import { IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as SchemaTypes from '@schema-types';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../../../../common/popup-advice/PopupAdvice';
+import { DEFAULT_ANIMATION_DURATION } from '../../../../../../common/popup-advice/usePopupAdvice';
 import timeTravel, {
   setupTimeTravel,
 } from '../../../../../../../../__mocks__/timeTravel';

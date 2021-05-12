@@ -9,17 +9,12 @@ import * as Styles from './SectionViewAll.styles';
 
 type SectionViewAllProps = {
   onPressViewAll: () => void;
-  withViewAll?: boolean;
+  withViewAll: boolean;
   sectionTitle: string;
   id: string;
 };
 
-const SectionViewAll = ({
-  onPressViewAll,
-  sectionTitle,
-  withViewAll = true,
-  id,
-}: SectionViewAllProps) => {
+const SectionViewAll = (props: SectionViewAllProps) => {
   const { t } = useTranslation();
 
   return (
@@ -27,12 +22,12 @@ const SectionViewAll = ({
       <Styles.SectionTitle
         testID="section-title"
       >
-        {sectionTitle}
+        {props.sectionTitle}
       </Styles.SectionTitle>
-      {withViewAll && (
+      {props.withViewAll && (
         <Styles.ViewAllWrapper
-          testID={`view-all-button-${id}`}
-          onPress={onPressViewAll}
+          testID={`view-all-button-${props.id}`}
+          onPress={props.onPressViewAll}
         >
           <Styles.ViewAllText>{t(TRANSLATIONS.HOME_VIEW_ALL)}</Styles.ViewAllText>
           <SVGIcon

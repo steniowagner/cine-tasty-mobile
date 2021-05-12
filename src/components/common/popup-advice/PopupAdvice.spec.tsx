@@ -4,7 +4,8 @@ import { cleanup, render } from '@testing-library/react-native';
 import { ThemeContextProvider } from '@providers';
 
 import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
-import PopupAdvice, { HIDE_POPUP_DELAY } from './PopupAdvice';
+import { HIDE_POPUP_DELAY } from './usePopupAdvice';
+import PopupAdvice from './PopupAdvice';
 
 const DEFAULT_TEXT = 'DEFAULT_TEXT';
 

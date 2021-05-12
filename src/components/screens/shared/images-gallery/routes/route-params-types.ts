@@ -8,7 +8,7 @@ type ImagesGalleryStackParams = {
   [Routes.ImagesGallery.IMAGES_GALLERY]: ImagesGalleryParams;
 };
 
-type ImagesGalleryParams = {
+export type ImagesGalleryParams = {
   indexSelected: number;
   gallerySize: number;
   images: string[];

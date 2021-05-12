@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
 
-import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/usePopupAdvice';
 import { ThemeContextProvider } from '@providers';
 
 import { NUMBER_ITEMS } from './loading-expansible-text-section/LoadingExpansibleTextSection';

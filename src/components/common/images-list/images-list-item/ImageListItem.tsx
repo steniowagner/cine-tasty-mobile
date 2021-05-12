@@ -15,44 +15,38 @@ type ImageListItemProps = {
   image: string;
 };
 
-const ImageListItem = ({ onPress, isFirst, image }: ImageListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
+const ImageListItem = (props: ImageListItemProps) => {
+  const loadListItemImage = useLoadListItemImage({
+    image: props.image,
   });
 
   return (
     <Styles.Wrapper
-      onPress={onPress}
-      isFirst={isFirst}
+      onPress={props.onPress}
+      isFirst={props.isFirst}
     >
       <TMDBImage
         imageType="profile"
-        onError={onError}
-        onLoad={onLoad}
-        image={image}
+        onError={loadListItemImage.onError}
+        onLoad={loadListItemImage.onLoad}
+        image={props.image}
         style={{
           width: '100%',
           height: '100%',
           borderRadius: metrics.extraSmallSize,
         }}
       />
-      {isFallbackImageVisible && (
+      {loadListItemImage.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity,
+              opacity: loadListItemImage.opacity,
             },
           ]}
         >
           {renderSVGIconConditionally({
-            condition: hasError,
+            condition: loadListItemImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,

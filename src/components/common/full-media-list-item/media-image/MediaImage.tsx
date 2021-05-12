@@ -7,31 +7,21 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './MediaImage.styles';
 
-export const IMAGE_HEIGHT = metrics.getWidthFromDP('40%');
-
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
-
 type MediaImageProps = {
   image: string;
 };
 
-const MediaImage = ({ image }: MediaImageProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
+const MediaImage = (props: MediaImageProps) => {
+  const loadListItemImage = useLoadListItemImage({
+    image: props.image,
   });
 
   return (
     <>
       <TMDBImage
-        onError={onError}
-        onLoad={onLoad}
-        image={image}
+        onError={loadListItemImage.onError}
+        onLoad={loadListItemImage.onLoad}
+        image={props.image}
         imageType="poster"
         style={{
           width: '30%',
@@ -40,25 +30,25 @@ const MediaImage = ({ image }: MediaImageProps) => {
           borderRadius: metrics.extraSmallSize,
         }}
       />
-      {isFallbackImageVisible && (
+      {loadListItemImage.isFallbackImageVisible && (
         <Styles.FallbackMediaPosterImage
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity,
+              opacity: loadListItemImage.opacity,
             },
           ]}
         >
           {renderSVGIconConditionally({
-            condition: hasError,
+            condition: loadListItemImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
-              size: DEFAULT_ICON_SIZE,
+              size: Styles.DEFAULT_ICON_SIZE,
               id: 'image-off',
             },
             ifFalse: {
               colorThemeRef: 'fallbackImageIcon',
-              size: DEFAULT_ICON_SIZE,
+              size: Styles.DEFAULT_ICON_SIZE,
               id: 'video-vintage',
             },
           })}

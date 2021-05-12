@@ -19,36 +19,23 @@ type SimplifiedMediaListItemProps = {
   title: string;
 };
 
-const SimplifiedMediaListItem = ({
-  voteAverage,
-  voteCount,
-  isFirst,
-  onPress,
-  image,
-  title,
-}: SimplifiedMediaListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
+const SimplifiedMediaListItem = (props: SimplifiedMediaListItemProps) => {
+  const loadListImteImage = useLoadListItemImage({
+    image: props.image,
   });
 
   return (
     <Styles.Wrapper
       testID="simplified-media-list-button"
-      onPress={onPress}
-      isFirst={isFirst}
+      onPress={props.onPress}
+      isFirst={props.isFirst}
     >
       <>
         <TMDBImage
           imageType="poster"
-          onError={onError}
-          onLoad={onLoad}
-          image={image}
+          onError={loadListImteImage.onError}
+          onLoad={loadListImteImage.onLoad}
+          image={props.image}
           style={{
             width: Styles.MEDIA_IMAGE_DEFAULT_WIDTH,
             height: Styles.MEDIA_IMAGE_DEFAULT_HEIGHT,
@@ -60,17 +47,17 @@ const SimplifiedMediaListItem = ({
             ),
           }}
         />
-        {isFallbackImageVisible && (
+        {loadListImteImage.isFallbackImageVisible && (
           <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
             style={[
               {
-                opacity,
+                opacity: loadListImteImage.opacity,
               },
             ]}
           >
             {renderSVGIconConditionally({
-              condition: hasError,
+              condition: loadListImteImage.hasError,
               ifTrue: {
                 colorThemeRef: 'fallbackImageIcon',
                 size: DEFAULT_ICON_SIZE,
@@ -85,7 +72,7 @@ const SimplifiedMediaListItem = ({
           </Styles.FallbackImageWrapper>
         )}
       </>
-      <Styles.DefaultText>{title}</Styles.DefaultText>
+      <Styles.DefaultText>{props.title}</Styles.DefaultText>
       <Styles.StarsContentWrapper>
         <SVGIcon
           id="star-full"
@@ -95,7 +82,7 @@ const SimplifiedMediaListItem = ({
         <Styles.DefaultText
           withMarginLeft
         >
-          {`${voteAverage.toFixed(1)} (${voteCount})`}
+          {`${props.voteAverage.toFixed(1)} (${props.voteCount})`}
         </Styles.DefaultText>
       </Styles.StarsContentWrapper>
     </Styles.Wrapper>

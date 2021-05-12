@@ -4,14 +4,14 @@ import { FlatList, View } from 'react-native';
 import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
 import metrics from '@styles/metrics';
 
-import { IMAGE_HEIGHT } from './media-image/MediaImage';
+import { IMAGE_HEIGHT } from './media-image/MediaImage.styles';
 import { Wrapper } from './FullMediaListItem.styles';
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / IMAGE_HEIGHT);
 
 const mediaLoadingItems = Array(INITIAL_ITEMS_TO_RENDER)
   .fill(0)
-  .map((item, index) => `${index}`);
+  .map((_, index) => `${index}`);
 
 const getLoadingBaseStyle = (width: string, height: string) => ({
   height: metrics.getWidthFromDP(height),

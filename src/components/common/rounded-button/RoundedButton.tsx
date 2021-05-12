@@ -8,13 +8,13 @@ type RoundedButtonProps = {
   text: string;
 };
 
-const RoundedButton = ({ isDisabled, onPress, text }: RoundedButtonProps) => (
+const RoundedButton = (props: RoundedButtonProps) => (
   <Styles.Wrapper
     testID="rounded-button"
-    disabled={isDisabled}
-    onPress={onPress}
+    disabled={props.isDisabled}
+    onPress={props.onPress}
   >
-    <Styles.ButtonText>{text}</Styles.ButtonText>
+    <Styles.ButtonText>{props.text}</Styles.ButtonText>
   </Styles.Wrapper>
 );
 

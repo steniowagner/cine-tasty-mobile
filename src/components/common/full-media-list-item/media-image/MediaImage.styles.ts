@@ -4,6 +4,8 @@ import metrics from '@styles/metrics';
 
 export const IMAGE_HEIGHT = metrics.getWidthFromDP('40%');
 
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
+
 export const FallbackMediaPosterImage = styled(Animated.View)`
   width: 30%;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('40%')}px;

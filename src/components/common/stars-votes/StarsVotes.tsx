@@ -14,21 +14,21 @@ type StarsVotesProps = {
   votes: number;
 };
 
-const StarsVotes = ({
-  textColor, voteCount, withText, votes,
-}: StarsVotesProps) => {
-  const { numberEmptyStars, numberFullStars, numberHalfStars } = useStarsVotes(votes);
+const StarsVotes = (props: StarsVotesProps) => {
+  const { numberEmptyStars, numberFullStars, numberHalfStars } = useStarsVotes({
+    votes: props.votes,
+  });
 
-  const shouldShowVoteCount = withText && !!voteCount;
-  const shouldShowVotes = withText && !!votes;
+  const shouldShowVoteCount = props.withText && !!props.voteCount;
+  const shouldShowVotes = props.withText && !!props.votes;
 
   return (
     <Styles.Wrapper>
       {shouldShowVotes && (
         <Styles.VotesText
-          textColor={textColor}
+          textColor={props.textColor}
         >
-          {`${votes.toFixed(1)} `}
+          {`${props.votes.toFixed(1)} `}
         </Styles.VotesText>
       )}
       <Styles.Wrapper
@@ -94,9 +94,9 @@ const StarsVotes = ({
       </Styles.Wrapper>
       {shouldShowVoteCount && (
         <Styles.VotesText
-          textColor={textColor}
+          textColor={props.textColor}
         >
-          {` (${voteCount})`}
+          {` (${props.voteCount})`}
         </Styles.VotesText>
       )}
     </Styles.Wrapper>

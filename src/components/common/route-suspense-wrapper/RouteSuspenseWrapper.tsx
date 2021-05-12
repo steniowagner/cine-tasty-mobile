@@ -6,7 +6,7 @@ type RouteSuspenseWrapperProps = {
   children: JSX.Element;
 };
 
-const RouteSuspenseWrapper = ({ children }: RouteSuspenseWrapperProps) => (
+const RouteSuspenseWrapper = (props: RouteSuspenseWrapperProps) => (
   <Suspense
     fallback={(
       <Styles.LoadingWrapper>
@@ -14,7 +14,7 @@ const RouteSuspenseWrapper = ({ children }: RouteSuspenseWrapperProps) => (
       </Styles.LoadingWrapper>
     )}
   >
-    {children}
+    {props.children}
   </Suspense>
 );
 

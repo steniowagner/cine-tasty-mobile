@@ -20,31 +20,25 @@ type TMDBImageProps = {
   image: string;
 };
 
-const TMDBImage = ({
-  isThumbnail = false,
-  isAnimated = false,
-  blurRadius = 0,
-  imageType,
-  onError,
-  testID,
-  onLoad,
-  style,
-  image,
-}: TMDBImageProps) => {
-  const { uri } = useTMDBImage({ isThumbnail, imageType, image });
+const TMDBImage = (props: TMDBImageProps) => {
+  const tmdbImage = useTMDBImage({
+    isThumbnail: props.isThumbnail || false,
+    imageType: props.imageType,
+    image: props.image,
+  });
 
-  if (isAnimated) {
+  if (props.isAnimated) {
     return (
       <Animated.Image
-        blurRadius={blurRadius}
-        resizeMode="cover"
-        onError={onError}
-        onLoad={onLoad}
-        testID={testID}
-        style={style}
+        blurRadius={props.blurRadius || 0}
+        onError={props.onError}
+        onLoad={props.onLoad}
+        testID={props.testID}
         source={{
-          uri,
+          uri: tmdbImage.uri,
         }}
+        style={props.style}
+        resizeMode="cover"
       />
     );
   }
@@ -52,14 +46,14 @@ const TMDBImage = ({
   return (
     <FastImage
       // @ts-ignore
-      style={style as StyleProp<ImageStyle> | StyleProp<ImageStyle>[]}
+      style={props.style as StyleProp<ImageStyle> | StyleProp<ImageStyle>[]}
       source={{
-        uri,
+        uri: tmdbImage.uri,
       }}
       resizeMode={FastImage.resizeMode.cover}
-      onError={onError}
-      onLoad={onLoad}
-      testID={testID}
+      onError={props.onError}
+      onLoad={props.onLoad}
+      testID={props.testID}
     />
   );
 };

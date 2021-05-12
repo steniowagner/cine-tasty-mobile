@@ -14,29 +14,22 @@ type FullMediaListItemProps = {
   votes: number;
 };
 
-const FullMediaListItem = ({
-  onPressDetails,
-  genres = [],
-  voteCount,
-  image,
-  title,
-  votes,
-}: FullMediaListItemProps) => (
+const FullMediaListItem = (props: FullMediaListItemProps) => (
   <Styles.Wrapper
-    onPress={onPressDetails}
+    onPress={props.onPressDetails}
     testID="full-media-list-item"
   >
     <MediaImage
-      image={image}
+      image={props.image}
     />
     <Styles.TextContentWrapper>
-      <Styles.TitleText>{title}</Styles.TitleText>
+      <Styles.TitleText>{props.title}</Styles.TitleText>
       <StarsVotes
-        votes={votes}
+        votes={props.votes}
         withText
-        voteCount={voteCount}
+        voteCount={props.voteCount}
       />
-      <Styles.GenresText>{genres.join('  \u2022  ')}</Styles.GenresText>
+      <Styles.GenresText>{props.genres?.join('  \u2022  ')}</Styles.GenresText>
     </Styles.TextContentWrapper>
   </Styles.Wrapper>
 );

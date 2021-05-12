@@ -7,7 +7,7 @@ type MediaItemDescriptionProps = {
   description: string;
 };
 
-const MediaItemDescription = ({ description }: MediaItemDescriptionProps) => {
+const MediaItemDescription = (props: MediaItemDescriptionProps) => {
   const {
     isReadExpandableButtonVisible,
     expandableReadButtonText,
@@ -24,7 +24,7 @@ const MediaItemDescription = ({ description }: MediaItemDescriptionProps) => {
         testID="description-text"
         numberOfLines={numberOfLines}
       >
-        {description || '-'}
+        {props.description || '-'}
       </Styles.DescriptionText>
       {isReadExpandableButtonVisible && (
         <Styles.ExpandableReadButton

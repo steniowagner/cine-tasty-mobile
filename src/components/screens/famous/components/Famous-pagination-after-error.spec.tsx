@@ -7,7 +7,7 @@ import { MockList, IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { ThemeContextProvider } from '@providers';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../common/popup-advice/PopupAdvice';
+import { DEFAULT_ANIMATION_DURATION } from '../../../common/popup-advice/usePopupAdvice';
 import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import Famous from './Famous';

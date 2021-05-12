@@ -8,7 +8,7 @@ import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../../common/popup-advice/PopupAdvice';
+import { DEFAULT_ANIMATION_DURATION } from '../../../../common/popup-advice/usePopupAdvice';
 import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';

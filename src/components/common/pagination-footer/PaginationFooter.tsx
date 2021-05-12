@@ -1,24 +1,10 @@
 import React from 'react';
-import { ActivityIndicator, TouchableOpacity, Platform } from 'react-native';
-import styled from 'styled-components';
+import { Platform } from 'react-native';
 
 import metrics from '@styles/metrics';
 
 import * as Styles from './PaginationFooter.styles';
 import SVGIcon from '../svg-icon/SVGIcon';
-
-const LoadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
-  hitSlop: {
-    top: theme.metrics.largeSize,
-    bottom: theme.metrics.largeSize,
-    left: theme.metrics.largeSize,
-    right: theme.metrics.largeSize,
-  },
-}))``;
-
-const CustomActivityIndicator = styled(ActivityIndicator).attrs(({ theme }) => ({
-  color: theme.colors.text,
-}))``;
 
 type PaginationFooterProps = {
   onPressReloadButton?: () => void;
@@ -26,16 +12,12 @@ type PaginationFooterProps = {
   hasError: boolean;
 };
 
-const PaginationFooter = ({
-  onPressReloadButton,
-  isPaginating,
-  hasError,
-}: PaginationFooterProps) => (
+const PaginationFooter = (props: PaginationFooterProps) => (
   <Styles.Wrapper
     testID="pagination-footer-wrapper"
   >
-    {isPaginating && (
-      <CustomActivityIndicator
+    {props.isPaginating && (
+      <Styles.CustomActivityIndicator
         testID="loading-footer-wrapper"
         size={Platform.select({
           android: 'large',
@@ -43,16 +25,16 @@ const PaginationFooter = ({
         })}
       />
     )}
-    {hasError && (
-      <LoadButton
+    {props.hasError && (
+      <Styles.LoadButton
         testID="pagination-footer-reload-button"
-        onPress={onPressReloadButton}
+        onPress={props.onPressReloadButton}
       >
         <SVGIcon
           size={metrics.getWidthFromDP('10%')}
           id="restart"
         />
-      </LoadButton>
+      </Styles.LoadButton>
     )}
   </Styles.Wrapper>
 );

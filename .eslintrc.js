@@ -19,6 +19,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     'react/jsx-max-props-per-line': [1, { maximum: 1, when: 'always' }],
+    'react/destructuring-assignment': [0],
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react/prop-types': 'off',

@@ -3,9 +3,10 @@ import { cleanup, render } from '@testing-library/react-native';
 
 import { ThemeContextProvider } from '@providers';
 
-import LoadingFamousList, { INITIAL_ITEMS_TO_RENDER } from './LoadingFamousList';
-import { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import { NUMBER_FLATLIST_COLUMNS } from '../../screens/famous/components/Famous';
+import { setupTimeTravel } from '../../../../__mocks__/timeTravel';
+import { INITIAL_ITEMS_TO_RENDER } from './useLoadingFamousList';
+import LoadingFamousList from './LoadingFamousList';
 
 const renderLoadingFamousList = () => (
   <ThemeContextProvider>
