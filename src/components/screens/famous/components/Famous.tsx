@@ -17,27 +17,18 @@ import useFamous from './useFamous';
 
 export const NUMBER_FLATLIST_COLUMNS = 3;
 
-const Famous = ({ navigation }: FamousStackProps) => {
-  const {
-    onPressBottomReloadButton,
-    onPressTopReloadButton,
-    hasPaginationError,
-    isPaginating,
-    onEndReached,
-    isLoading,
-    famous,
-    error,
-  } = useFamous();
+const Famous = (props: FamousStackProps) => {
+  const famous = useFamous();
 
-  const { onPressHeaderIconButton, onPressFamousListItem } = useFamousPressHandlers({
-    navigation,
+  const famousPressHandlers = useFamousPressHandlers({
+    navigation: props.navigation,
   });
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          onPress={onPressHeaderIconButton}
+          onPress={famousPressHandlers.onPressHeaderIconButton}
           iconName="magnify"
           withMarginRight
         />
@@ -45,7 +36,7 @@ const Famous = ({ navigation }: FamousStackProps) => {
     });
   }, []);
 
-  if (isLoading) {
+  if (famous.isLoading) {
     return (
       <LoadingFamousList
         numberOfColumns={NUMBER_FLATLIST_COLUMNS}
@@ -53,8 +44,8 @@ const Famous = ({ navigation }: FamousStackProps) => {
     );
   }
 
-  const shouldShowListTopReloadButton = !famous.length && !!error && !isLoading;
-  const shouldShowListBottomReloadButton = !!famous.length && (hasPaginationError || isPaginating);
+  const shouldShowListTopReloadButton = !famous.famous.length && !!famous.error && !famous.isLoading;
+  const shouldShowListBottomReloadButton = !!famous.famous.length && (famous.hasPaginationError || famous.isPaginating);
 
   return (
     <>
@@ -62,14 +53,14 @@ const Famous = ({ navigation }: FamousStackProps) => {
         testID="famous-list"
         ListHeaderComponent={() => shouldShowListTopReloadButton && (
         <PaginatedListHeader
-          onPress={onPressTopReloadButton}
+          onPress={famous.onPressTopReloadButton}
         />
         )}
         ListFooterComponent={() => shouldShowListBottomReloadButton && (
         <ListFooterComponent
-          onPressReloadButton={onPressBottomReloadButton}
-          hasError={hasPaginationError}
-          isPaginating={isPaginating}
+          onPressReloadButton={famous.onPressBottomReloadButton}
+          hasError={famous.hasPaginationError}
+          isPaginating={famous.isPaginating}
         />
         )}
         columnWrapperStyle={{
@@ -86,7 +77,7 @@ const Famous = ({ navigation }: FamousStackProps) => {
         numColumns={NUMBER_FLATLIST_COLUMNS}
         renderItem={({ item, index }) => (
           <DefaultListItem
-            onPress={() => onPressFamousListItem(item)}
+            onPress={() => famousPressHandlers.onPressFamousListItem(item)}
             numberOfColumns={NUMBER_FLATLIST_COLUMNS}
             image={item.profilePath}
             title={item.name}
@@ -94,12 +85,12 @@ const Famous = ({ navigation }: FamousStackProps) => {
           />
         )}
         keyExtractor={({ id }, index) => `${id}-${index}`}
-        onEndReached={onEndReached}
-        data={famous}
+        onEndReached={famous.onEndReached}
+        data={famous.famous}
       />
-      {!!error && (
+      {!!famous.error && (
       <PopupAdvice
-        text={error}
+        text={famous.error}
       />
       )}
     </>

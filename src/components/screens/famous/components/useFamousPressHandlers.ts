@@ -11,9 +11,9 @@ type UseFamousPressHandlersProps = {
   navigation: FamousNavigationProp;
 };
 
-const useFamousPressHandlers = ({ navigation }: UseFamousPressHandlersProps) => {
+const useFamousPressHandlers = (props: UseFamousPressHandlersProps) => {
   const onPressHeaderIconButton = useCallback(() => {
-    navigation.navigate(Routes.Search.SEARCH, {
+    props.navigation.navigate(Routes.Search.SEARCH, {
       i18nQueryByPaginationErrorRef: TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR,
       i18nSearchBarPlaceholderRef: TRANSLATIONS.FAMOUS_SEARCHBAR_PLACEHOLDER,
       i18nQueryByTextErrorRef: TRANSLATIONS.FAMOUS_QUERY_BY_TEXT_ERROR,
@@ -24,7 +24,7 @@ const useFamousPressHandlers = ({ navigation }: UseFamousPressHandlersProps) => 
 
   const onPressFamousListItem = useCallback(
     (famous: SchemaTypes.GetFamous_people_items) => {
-      navigation.navigate(Routes.Famous.DETAILS, {
+      props.navigation.navigate(Routes.Famous.DETAILS, {
         profileImage: famous.profilePath,
         name: famous.name,
         id: famous.id,

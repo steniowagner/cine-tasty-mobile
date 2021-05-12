@@ -23,9 +23,7 @@ const useFamous = () => {
     return data.people.hasMore;
   }, []);
 
-  const {
-    onPaginateQuery, onReloadData, isPaginating, isLoading,
-  } = usePaginatedQuery<
+  const paginatedQuery = usePaginatedQuery<
     SchemaTypes.GetFamous,
     SchemaTypes.GetFamousVariables
   >({
@@ -50,7 +48,7 @@ const useFamous = () => {
 
     setError('');
 
-    await onReloadData();
+    await paginatedQuery.onReloadData();
   }, []);
 
   const onPressBottomReloadButton = useCallback(() => {
@@ -58,16 +56,16 @@ const useFamous = () => {
 
     setError('');
 
-    onPaginateQuery();
+    paginatedQuery.onPaginateQuery();
   }, []);
 
   return {
-    onEndReached: onPaginateQuery,
+    onEndReached: paginatedQuery.onPaginateQuery,
+    isPaginating: paginatedQuery.isPaginating,
+    isLoading: paginatedQuery.isLoading,
     onPressBottomReloadButton,
     onPressTopReloadButton,
     hasPaginationError,
-    isPaginating,
-    isLoading,
     famous,
     error,
   };
