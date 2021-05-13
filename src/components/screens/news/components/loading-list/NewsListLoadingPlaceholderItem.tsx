@@ -10,13 +10,13 @@ type NewsListItemPlaceholderProps = {
   index: number;
 };
 
-const NewsListItemPlaceholder = ({ index }: NewsListItemPlaceholderProps) => (
+const NewsListItemPlaceholder = (props: NewsListItemPlaceholderProps) => (
   <NewsListItemStyles.LoadingWrapper
     testID="news-list-item"
   >
     <LoadingPlaceholder
       style={NewsListItemStyles.imageWrapper}
-      indexToDelayAnimation={index}
+      indexToDelayAnimation={props.index}
     />
     <NewsListItemStyles.TextWrapper>
       <LoadingPlaceholder
@@ -24,7 +24,7 @@ const NewsListItemPlaceholder = ({ index }: NewsListItemPlaceholderProps) => (
           marginBottom: metrics.mediumSize,
           ...Styles.textPlaceholderStyle,
         }}
-        indexToDelayAnimation={index}
+        indexToDelayAnimation={props.index}
       />
       <LoadingPlaceholder
         style={Styles.textPlaceholderStyle}

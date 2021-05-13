@@ -14,28 +14,26 @@ type NewsListItemProps = {
   url: string;
 };
 
-const NewsListItem = ({
-  withRTL, source, image, text, date, url,
-}: NewsListItemProps) => (
+const NewsListItem = (props: NewsListItemProps) => (
   <Styles.Wrapper
-    onPress={() => Linking.openURL(url)}
+    onPress={() => Linking.openURL(props.url)}
     testID="news-list-item-wrapper"
   >
     <NewsImage
-      image={image}
+      image={props.image}
     />
     <Styles.TextWrapper>
-      <Styles.SourceText>{source}</Styles.SourceText>
+      <Styles.SourceText>{props.source}</Styles.SourceText>
       <Styles.NewsText
         testID="news-text"
-        withRTL={withRTL}
+        withRTL={props.withRTL}
         numberOfLines={3}
       >
-        {text}
+        {props.text}
       </Styles.NewsText>
       <DateDiff
         now={new Date()}
-        date={date}
+        date={props.date}
       />
     </Styles.TextWrapper>
   </Styles.Wrapper>

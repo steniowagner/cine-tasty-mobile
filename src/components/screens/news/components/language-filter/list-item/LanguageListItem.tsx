@@ -12,32 +12,30 @@ type LanguageListItemProps = {
   name: string;
 };
 
-const LanguageListItem = ({
-  isSelected, onPress, name, flag,
-}: LanguageListItemProps) => (
+const LanguageListItem = (props: LanguageListItemProps) => (
   <Styles.Wrapper
     testID="language-filter-list-item"
-    onPress={onPress}
+    onPress={props.onPress}
   >
     <Styles.ContentWrapper>
       <Styles.OutterFlagWrapper
         testID="outter-flag-wrapper"
-        isSelected={isSelected}
+        isSelected={props.isSelected}
       >
         <Styles.InnerFlagWrapper>
           <SVGIcon
             size={Styles.DEFAULT_ICON_SIZE}
-            id={flag}
+            id={props.flag}
           />
         </Styles.InnerFlagWrapper>
       </Styles.OutterFlagWrapper>
       <Styles.LanguageText
         testID="language-text"
       >
-        {name}
+        {props.name}
       </Styles.LanguageText>
     </Styles.ContentWrapper>
-    {isSelected && (
+    {props.isSelected && (
       <SVGIcon
         size={Styles.DEFAULT_ICON_SIZE}
         colorThemeRef="primary"

@@ -16,7 +16,7 @@ type DateDiffProps = {
   now: Date;
 };
 
-const DateDiff = ({ now, date }: DateDiffProps) => {
+const DateDiff = (props: DateDiffProps) => {
   const { t } = useTranslation();
 
   const handleYearsPassed = (value: number): string => t(TRANSLATIONS.TIME_YEAR, { value });
@@ -32,9 +32,9 @@ const DateDiff = ({ now, date }: DateDiffProps) => {
   const handleSecondsPassed = (value: number): string => t(TRANSLATIONS.TIME_SECOND, { value });
 
   const getDateDiffInSeconds = (): number => {
-    const peaceNewsDate = new Date(date);
+    const peaceNewsDate = new Date(props.date);
 
-    return Math.abs(now.getTime() - peaceNewsDate.getTime()) / 1000;
+    return Math.abs(props.now.getTime() - peaceNewsDate.getTime()) / 1000;
   };
 
   const getDateDiffText = (): string => {

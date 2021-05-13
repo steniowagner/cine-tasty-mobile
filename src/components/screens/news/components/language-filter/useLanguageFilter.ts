@@ -11,29 +11,25 @@ type UseLanguageFilterProps = {
   closeModal: () => void;
 };
 
-const useLanguageFilter = ({
-  lastLanguageSelected,
-  onSelectLanguage,
-  closeModal,
-}: UseLanguageFilterProps) => {
+const useLanguageFilter = (props: UseLanguageFilterProps) => {
   const [languageSelected, setLanguageSelected] = useState<SchemaTypes.ArticleLanguage>(
-    lastLanguageSelected,
+    props.lastLanguageSelected,
   );
 
   const { t } = useTranslation();
 
   const initialFlatListIndex = useMemo(
-    () => languages.findIndex((language) => language.id === lastLanguageSelected),
-    [lastLanguageSelected],
+    () => languages.findIndex((language) => language.id === props.lastLanguageSelected),
+    [props.lastLanguageSelected],
   );
 
   const onPressSelectButton = useCallback((): void => {
-    if (lastLanguageSelected !== languageSelected) {
-      onSelectLanguage(languageSelected);
+    if (props.lastLanguageSelected !== languageSelected) {
+      props.onSelectLanguage(languageSelected);
     }
 
-    closeModal();
-  }, [lastLanguageSelected, languageSelected]);
+    props.closeModal();
+  }, [props.lastLanguageSelected, languageSelected]);
 
   return {
     initialFlatListIndex,

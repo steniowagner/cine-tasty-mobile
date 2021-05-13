@@ -24,72 +24,60 @@ export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.
 
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
-const News = ({ navigation }: NewsStackProps) => {
-  const {
-    onPressFooterReloadButton,
-    onSelectArticleLanguage,
-    onPressTopReloadButton,
-    hasPaginationError,
-    articleLanguage,
-    onEndReached,
-    isPaginating,
-    articles,
-    isLoading,
-    error,
-    t,
-  } = useNews();
+const News = (props: NewsStackProps) => {
+  const news = useNews();
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          onPress={() => navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
+          onPress={() => props.navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
             type: Types.CustomizedModalChildrenType.LANGUAGE,
-            headerText: t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
+            headerText: news.t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
             extraData: {
-              onPressSelect: onSelectArticleLanguage,
-              lastItemSelected: articleLanguage,
+              onPressSelect: news.onSelectArticleLanguage,
+              lastItemSelected: news.articleLanguage,
             },
           })}
-          disabled={isLoading}
+          disabled={news.isLoading}
           withMarginRight
           iconName="tune"
         />
       ),
     });
-  }, [isLoading]);
+  }, [news.isLoading]);
 
-  if (isLoading) {
+  if (news.isLoading) {
     return <NewsLoading />;
   }
 
-  const shouldShowEmptyListAdvice = !isLoading && !error && !articles.length;
+  const shouldShowEmptyListAdvice = !news.isLoading && !news.error && !news.articles.length;
 
   if (shouldShowEmptyListAdvice) {
     return <EmtpyListError />;
   }
 
-  const shouldShowListTopReloadButton = !articles.length && !!error && !isLoading;
-  const shouldShowListBottomReloadButton = !!articles.length && (hasPaginationError || isPaginating);
+  const shouldShowListTopReloadButton = !news.articles.length && !!news.error && !news.isLoading;
+  const shouldShowListBottomReloadButton = !!news.articles.length && (news.hasPaginationError || news.isPaginating);
 
   return (
     <>
       <FlatList
         ListHeaderComponent={() => shouldShowListTopReloadButton && (
         <PaginatedListHeader
-          onPress={onPressTopReloadButton}
+          onPress={news.onPressTopReloadButton}
         />
         )}
         ListFooterComponent={() => shouldShowListBottomReloadButton && (
         <ListFooterComponent
-          onPressReloadButton={onPressFooterReloadButton}
-          hasError={hasPaginationError}
-          isPaginating={isPaginating}
+          onPressReloadButton={news.onPressFooterReloadButton}
+          hasError={news.hasPaginationError}
+          isPaginating={news.isPaginating}
         />
         )}
         renderItem={({ item }) => (
           <NewsListItem
-            withRTL={articleLanguage === SchemaTypes.ArticleLanguage.AR}
+            withRTL={news.articleLanguage === SchemaTypes.ArticleLanguage.AR}
             date={item.publishedAt}
             source={item.source}
             image={item.image}
@@ -108,14 +96,14 @@ const News = ({ navigation }: NewsStackProps) => {
           length: ITEM_HEIGHT,
           index,
         })}
-        bounces={!!articles.length}
-        onEndReached={onEndReached}
+        bounces={!!news.articles.length}
+        onEndReached={news.onEndReached}
         testID="news-list"
-        data={articles}
+        data={news.articles}
       />
-      {!!error && (
+      {!!news.error && (
       <PopupAdvice
-        text={error}
+        text={news.error}
       />
       )}
     </>

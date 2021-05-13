@@ -13,7 +13,7 @@ type NewsListItemImageProps = {
   image: string;
 };
 
-const NewsListItemImage = ({ image }: NewsListItemImageProps) => {
+const NewsListItemImage = (props: NewsListItemImageProps) => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState<boolean>(true);
   const [isImageWithError, setIsImageWithError] = useState<boolean>(false);
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
@@ -31,7 +31,7 @@ const NewsListItemImage = ({ image }: NewsListItemImageProps) => {
   }, [isImageLoaded]);
 
   useEffect(() => {
-    if (!image) {
+    if (!props.image) {
       setIsImageWithError(true);
     }
   }, []);
@@ -41,7 +41,7 @@ const NewsListItemImage = ({ image }: NewsListItemImageProps) => {
       <Styles.ImageContent
         onError={() => setIsImageWithError(true)}
         onLoad={() => setIsImageLoaded(true)}
-        source={{ uri: image || undefined }}
+        source={{ uri: props.image || undefined }}
         testID="news-image"
       />
       {isFallbackImageVisible && (

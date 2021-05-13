@@ -26,9 +26,7 @@ const useNews = () => {
     return data.articles.hasMore;
   }, []);
 
-  const {
-    onPaginateQuery, onReloadData, isPaginating, isLoading,
-  } = usePaginatedQuery<
+  const paginatedQuery = usePaginatedQuery<
     SchemaTypes.GetArticles,
     SchemaTypes.GetArticlesVariables
   >({
@@ -57,7 +55,7 @@ const useNews = () => {
 
     setError('');
 
-    onPaginateQuery();
+    paginatedQuery.onPaginateQuery();
   }, []);
 
   useEffect(() => {
@@ -65,7 +63,7 @@ const useNews = () => {
       setError('');
     }
 
-    onReloadData();
+    paginatedQuery.onReloadData();
   }, [articleLanguage]);
 
   const onSelectArticleLanguage = useCallback(
@@ -86,19 +84,19 @@ const useNews = () => {
 
     setError('');
 
-    await onReloadData();
+    await paginatedQuery.onReloadData();
   }, []);
 
   return {
-    onEndReached: onPaginateQuery,
+    onEndReached: paginatedQuery.onPaginateQuery,
+    isPaginating: paginatedQuery.isPaginating,
+    isLoading: paginatedQuery.isLoading,
     onPressFooterReloadButton,
     onPressTopReloadButton,
     onSelectArticleLanguage,
     hasPaginationError,
     articleLanguage,
-    isPaginating,
     articles,
-    isLoading,
     error,
     t,
   };

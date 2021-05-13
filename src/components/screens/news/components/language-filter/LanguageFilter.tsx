@@ -18,21 +18,11 @@ type LanguageFilterProps = {
   closeModal: () => void;
 };
 
-const LanguageFilter = ({
-  lastLanguageSelected,
-  onSelectLanguage,
-  closeModal,
-}: LanguageFilterProps) => {
-  const {
-    initialFlatListIndex,
-    onPressSelectButton,
-    setLanguageSelected,
-    languageSelected,
-    t,
-  } = useLanguageFilter({
-    lastLanguageSelected,
-    onSelectLanguage,
-    closeModal,
+const LanguageFilter = (props: LanguageFilterProps) => {
+  const languageFilter = useLanguageFilter({
+    lastLanguageSelected: props.lastLanguageSelected,
+    onSelectLanguage: props.onSelectLanguage,
+    closeModal: props.closeModal,
   });
 
   return (
@@ -40,15 +30,13 @@ const LanguageFilter = ({
       <FlatList
         renderItem={({ item }) => (
           <LanguageListItem
-            name={t(`${TRANSLATIONS.NEWS_LANGUAGES}:${item.name}`)}
-            isSelected={languageSelected === item.id}
-            onPress={() => {
-              setLanguageSelected(item.id);
-            }}
+            name={languageFilter.t(`${TRANSLATIONS.NEWS_LANGUAGES}:${item.name}`)}
+            onPress={() => languageFilter.setLanguageSelected(item.id)}
+            isSelected={languageFilter.languageSelected === item.id}
             flag={item.flag}
           />
         )}
-        initialScrollIndex={initialFlatListIndex}
+        initialScrollIndex={languageFilter.initialFlatListIndex}
         getItemLayout={(_, index) => ({
           offset: ITEM_LIST_HEIGHT * index,
           length: ITEM_LIST_HEIGHT,
@@ -59,8 +47,8 @@ const LanguageFilter = ({
         data={languages}
       />
       <ModalSelectButton
-        title={t(TRANSLATIONS.SELECT)}
-        onPress={onPressSelectButton}
+        title={languageFilter.t(TRANSLATIONS.SELECT)}
+        onPress={languageFilter.onPressSelectButton}
       />
     </>
   );
