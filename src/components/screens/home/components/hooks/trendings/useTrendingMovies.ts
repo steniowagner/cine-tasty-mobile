@@ -17,7 +17,7 @@ type TrendingItemKey = keyof Omit<
   '__typename'
 >;
 
-const useTrendingMovies = ({ rawTrendingMovies }: UseTrendingMoviesProps) => {
+const useTrendingMovies = (props: UseTrendingMoviesProps) => {
   const [trendingMovies, setTrendingMovies] = useState<Types.HomeSection[]>([]);
 
   const { t } = useTranslation();
@@ -68,20 +68,20 @@ const useTrendingMovies = ({ rawTrendingMovies }: UseTrendingMoviesProps) => {
   );
 
   const handleMovieSections = useCallback(() => {
-    const trendingEntries = Object.entries(rawTrendingMovies.trendingMovies).filter(
+    const trendingEntries = Object.entries(props.rawTrendingMovies.trendingMovies).filter(
       ([, entryValue]) => typeof entryValue !== 'string',
     );
 
     const movieSections = trendingEntries.map(([trendingKey, trendingItems]) => parseSection(trendingKey as TrendingItemKey, trendingItems.items));
 
     setTrendingMovies(movieSections);
-  }, [rawTrendingMovies]);
+  }, [props.rawTrendingMovies]);
 
   useEffect(() => {
-    if (rawTrendingMovies) {
+    if (props.rawTrendingMovies) {
       handleMovieSections();
     }
-  }, [rawTrendingMovies]);
+  }, [props.rawTrendingMovies]);
 
   return {
     trendingMovies,

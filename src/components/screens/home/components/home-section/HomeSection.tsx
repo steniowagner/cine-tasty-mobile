@@ -14,25 +14,20 @@ type HomeSectionProps = {
   sectionTitle: string;
 };
 
-const HomeSection = ({
-  onPressViewAll,
-  sectionTitle,
-  onPressItem,
-  items,
-}: HomeSectionProps) => (
+const HomeSection = (props: HomeSectionProps) => (
   <Styles.Wrapper
     testID="section-wrapper"
   >
     <SectionViewAll
-      onPressViewAll={onPressViewAll}
-      sectionTitle={sectionTitle}
-      id={sectionTitle}
+      onPressViewAll={props.onPressViewAll}
+      sectionTitle={props.sectionTitle}
+      id={props.sectionTitle}
       withViewAll
     />
     <FlatList
       renderItem={({ item, index }) => (
         <SimplifiedMediaListItem
-          onPress={() => onPressItem(item)}
+          onPress={() => props.onPressItem(item)}
           voteAverage={item.voteAverage}
           voteCount={item.voteCount}
           image={item.posterPath}
@@ -41,9 +36,9 @@ const HomeSection = ({
         />
       )}
       keyExtractor={(item, index) => `${item.id}-${index}`}
-      testID={`home-section-${sectionTitle}`}
+      testID={`home-section-${props.sectionTitle}`}
       showsHorizontalScrollIndicator={false}
-      data={items}
+      data={props.items}
       horizontal
     />
   </Styles.Wrapper>

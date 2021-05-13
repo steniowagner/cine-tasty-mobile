@@ -25,28 +25,27 @@ type UseMediaSectionViewAllProps = {
   isMovie: boolean;
 };
 
-const useMediaSectionViewAll = ({
-  trendingMediaItemKey,
-  initialMediaItems,
-  navigation,
-  isMovie,
-}: UseMediaSectionViewAllProps) => {
+const useMediaSectionViewAll = (props: UseMediaSectionViewAllProps) => {
   const [mediaItems, setMediaItems] = useState<Types.SimplifiedMedia[]>(
-    initialMediaItems,
+    props.initialMediaItems,
   );
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const onGetData = useOnGetData({ trendingMediaItemKey, isMovie });
+  const onGetData = useOnGetData({
+    trendingMediaItemKey: props.trendingMediaItemKey,
+    isMovie: props.isMovie,
+  });
+
   const { t } = useTranslation();
 
   const properQuery = useMemo((): DocumentNode => {
-    const queryId = isMovie
-      ? getMovieProperQuery(trendingMediaItemKey)
-      : getTVShowProperQuery(trendingMediaItemKey);
+    const queryId = props.isMovie
+      ? getMovieProperQuery(props.trendingMediaItemKey)
+      : getTVShowProperQuery(props.trendingMediaItemKey);
 
     return getQuery(queryId);
-  }, [trendingMediaItemKey, isMovie]);
+  }, [props.trendingMediaItemKey, props.isMovie]);
 
   const handleOnGetData = useCallback((data: Data): boolean => {
     const { hasMore, items } = onGetData(data);
@@ -61,7 +60,7 @@ const useMediaSectionViewAll = ({
 
   const { onPaginateQuery, isPaginating } = usePaginatedQuery<Data, PaginationVariables>({
     onPaginationQueryError: () => {
-      const i18nErrorRef = isMovie
+      const i18nErrorRef = props.isMovie
         ? TRANSLATIONS.HOME_MOVIES_PAGINATION_ERROR
         : TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR;
 
@@ -91,7 +90,7 @@ const useMediaSectionViewAll = ({
 
   const onPressItem = useCallback(
     (item: Types.SimplifiedMedia) => {
-      const nextRoute = isMovie ? Routes.Movie.DETAILS : Routes.TVShow.DETAILS;
+      const nextRoute = props.isMovie ? Routes.Movie.DETAILS : Routes.TVShow.DETAILS;
 
       const params = {
         genreIds: item.genreIds || [],
@@ -102,9 +101,9 @@ const useMediaSectionViewAll = ({
         id: item.id,
       };
 
-      navigation.navigate(nextRoute, params);
+      props.navigation.navigate(nextRoute, params);
     },
-    [isMovie],
+    [props.isMovie],
   );
 
   return {

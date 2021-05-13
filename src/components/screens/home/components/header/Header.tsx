@@ -7,45 +7,39 @@ import * as Styles from './Header.styles';
 import useHeader from './hooks/useHeader';
 
 type HeaderProps = {
-  shouldDisableActions: boolean;
   onPresSwitchTVShows: () => void;
   onPressSwitchMovies: () => void;
+  shouldDisableActions: boolean;
   onPressSettings: () => void;
   onPressSearch: () => void;
 };
 
-const Header = ({
-  shouldDisableActions,
-  onPresSwitchTVShows,
-  onPressSwitchMovies,
-  onPressSettings,
-  onPressSearch,
-}: HeaderProps) => {
-  const { onCalcuateSwitchWidth, items, opacity } = useHeader({
-    shouldDisableActions,
-    onPresSwitchTVShows,
-    onPressSwitchMovies,
+const Header = (props: HeaderProps) => {
+  const header = useHeader({
+    shouldDisableActions: props.shouldDisableActions,
+    onPresSwitchTVShows: props.onPresSwitchTVShows,
+    onPressSwitchMovies: props.onPressSwitchMovies,
   });
 
   return (
     <>
       <Styles.Wrapper
-        style={{ opacity }}
+        style={{ opacity: header.opacity }}
       >
         <HeaderIconButton
-          disabled={shouldDisableActions}
-          onPress={onPressSettings}
+          disabled={props.shouldDisableActions}
+          onPress={props.onPressSettings}
           iconName="settings"
           withMarginLeft
         />
         <MediaSwitcher
-          onCalcuateSwitchWidth={onCalcuateSwitchWidth}
-          isDisabled={shouldDisableActions}
-          items={items}
+          onCalcuateSwitchWidth={header.onCalcuateSwitchWidth}
+          isDisabled={props.shouldDisableActions}
+          items={header.items}
         />
         <HeaderIconButton
-          disabled={shouldDisableActions}
-          onPress={onPressSearch}
+          disabled={props.shouldDisableActions}
+          onPress={props.onPressSearch}
           iconName="magnify"
           withMarginRight
         />

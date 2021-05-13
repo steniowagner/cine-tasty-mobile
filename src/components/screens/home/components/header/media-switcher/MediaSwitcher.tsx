@@ -12,23 +12,16 @@ type MediaSwitcherProps = {
   isDisabled: boolean;
 };
 
-const MediaSwitcher = ({
-  onCalcuateSwitchWidth,
-  isDisabled,
-  items,
-  theme,
-}: MediaSwitcherProps) => {
-  const {
-    switchItemWidth, translateX, switchItems, isSwitching,
-  } = useMediaSwitcher({
-    onCalcuateSwitchWidth,
-    theme,
-    items,
+const MediaSwitcher = (props: MediaSwitcherProps) => {
+  const mediaSwitcher = useMediaSwitcher({
+    onCalcuateSwitchWidth: props.onCalcuateSwitchWidth,
+    theme: props.theme,
+    items: props.items,
   });
 
   return (
     <Styles.Wrapper
-      width={items.length * switchItemWidth}
+      width={props.items.length * mediaSwitcher.switchItemWidth}
       style={{
         shadowColor: '#000000',
         shadowOffset: {
@@ -42,15 +35,15 @@ const MediaSwitcher = ({
       testID="media-switcher-wrapper"
     >
       <Styles.SwitcherIndicator
-        width={switchItemWidth}
+        width={mediaSwitcher.switchItemWidth}
         testID="switcher-indicator"
         style={{
-          opacity: isDisabled ? 0.5 : 1,
+          opacity: props.isDisabled ? 0.5 : 1,
           transform: [
             {
-              translateX: translateX.interpolate({
+              translateX: mediaSwitcher.translateX.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, switchItemWidth],
+                outputRange: [0, mediaSwitcher.switchItemWidth],
                 extrapolate: 'clamp',
               }),
             },
@@ -58,12 +51,12 @@ const MediaSwitcher = ({
         }}
       />
       <Styles.Row>
-        {switchItems.map((switchItem) => (
+        {mediaSwitcher.switchItems.map((switchItem) => (
           <Styles.OptionButton
-            disabled={isSwitching || isDisabled}
-            onPress={switchItem.onPress}
+            disabled={mediaSwitcher.isSwitching || props.isDisabled}
+            width={mediaSwitcher.switchItemWidth}
             testID={`${switchItem.title}-button`}
-            width={switchItemWidth}
+            onPress={switchItem.onPress}
             key={switchItem.title}
           >
             <Styles.OptionText

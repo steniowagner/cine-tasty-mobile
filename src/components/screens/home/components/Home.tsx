@@ -15,55 +15,47 @@ import useHome from './hooks/useHome';
 import Header from './header/Header';
 import Top3 from './top3/Top3';
 
-const Home = ({ navigation }: HomeStackProps) => {
-  const {
-    shouldDisableHeaderActions,
-    onPressTop3LearnMore,
-    onPressTrendingItem,
-    onSelectTVShows,
-    onSelectMovies,
-    onPressViewAll,
-    onPressReload,
-    onPressSearch,
-    errorMessage,
-    isLoading,
-    trendings,
-    top3,
-  } = useHome({ navigation });
+const Home = (props: HomeStackProps) => {
+  const home = useHome({ navigation: props.navigation });
 
   useLayoutEffect(() => {
-    const shouldShowReload = !!errorMessage && !isLoading;
+    const shouldShowReload = !!home.errorMessage && !home.isLoading;
 
-    navigation.setOptions({
+    props.navigation.setOptions({
       header: () => (
         <>
           <Header
-            onPressSettings={() => navigation.navigate(Routes.Settings.SETTINGS)}
-            shouldDisableActions={shouldDisableHeaderActions}
-            onPresSwitchTVShows={onSelectTVShows}
-            onPressSwitchMovies={onSelectMovies}
-            onPressSearch={onPressSearch}
+            onPressSettings={() => props.navigation.navigate(Routes.Settings.SETTINGS)}
+            shouldDisableActions={home.shouldDisableHeaderActions}
+            onPresSwitchTVShows={home.onSelectTVShows}
+            onPressSwitchMovies={home.onSelectMovies}
+            onPressSearch={home.onPressSearch}
           />
           {shouldShowReload && (
           <PaginatedListHeader
-            onPress={onPressReload}
+            onPress={home.onPressReload}
           />
           )}
         </>
       ),
     });
-  }, [shouldDisableHeaderActions, onPressSearch, isLoading, errorMessage]);
+  }, [
+    home.shouldDisableHeaderActions,
+    home.onPressSearch,
+    home.isLoading,
+    home.errorMessage,
+  ]);
 
-  if (isLoading) {
+  if (home.isLoading) {
     return <LoadingHome />;
   }
 
-  if (errorMessage) {
+  if (home.errorMessage) {
     return (
       <>
         <Styles.PopupAdviceWrapper>
           <PopupAdvice
-            text={errorMessage}
+            text={home.errorMessage}
           />
         </Styles.PopupAdviceWrapper>
       </>
@@ -75,13 +67,13 @@ const Home = ({ navigation }: HomeStackProps) => {
       testID="scrollview-content"
     >
       <Top3
-        onPressLearnMore={onPressTop3LearnMore}
-        top3Items={top3}
+        onPressLearnMore={home.onPressTop3LearnMore}
+        top3Items={home.top3}
       />
-      {trendings.map((trending) => (
+      {home.trendings.map((trending) => (
         <HomeSection
-          onPressItem={(mediaItem: Types.SimplifiedMedia) => onPressTrendingItem(mediaItem)}
-          onPressViewAll={() => onPressViewAll({
+          onPressItem={(mediaItem: Types.SimplifiedMedia) => home.onPressTrendingItem(mediaItem)}
+          onPressViewAll={() => home.onPressViewAll({
             viewAllTitle: trending.viewAllTitle,
             sectionItems: trending.data,
             sectionID: trending.id,

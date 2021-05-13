@@ -16,7 +16,7 @@ import useTop3 from './top3/useTop3';
 
 export const TRANSITIONING_DURATION = 500;
 
-const useHome = ({ navigation }: HomeStackProps) => {
+const useHome = (props: HomeStackProps) => {
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
     true,
   );
@@ -31,14 +31,9 @@ const useHome = ({ navigation }: HomeStackProps) => {
 
   const { t } = useTranslation();
 
-  const {
-    onPressTop3LearnMore,
-    onPressTrendingItem,
-    onPressViewAll,
-    onPressSearch,
-  } = usePressMapping({
+  const pressMapping = usePressMapping({
+    navigation: props.navigation,
     isMoviesSelected,
-    navigation,
   });
 
   const { trendingMovies: homeTrendingMovies } = useTrendingMovies({
@@ -67,7 +62,7 @@ const useHome = ({ navigation }: HomeStackProps) => {
     query: GET_TRENDING_TV_SHOWS,
   });
 
-  const { top3TVShows, top3Movies } = useTop3({
+  const top3 = useTop3({
     trendingTVShows,
     trendingMovies,
   });
@@ -129,15 +124,15 @@ const useHome = ({ navigation }: HomeStackProps) => {
   return {
     trendings: isMoviesSelected ? homeTrendingMovies : homeTrendingTVShows,
     isLoading: isLoadingMovies || isLoadingTVShows || isTransitioningData,
-    top3: isMoviesSelected ? top3Movies : top3TVShows,
+    top3: isMoviesSelected ? top3.top3Movies : top3.top3TVShows,
+    onPressTop3LearnMore: pressMapping.onPressTop3LearnMore,
+    onPressTrendingItem: pressMapping.onPressTrendingItem,
+    onPressViewAll: pressMapping.onPressViewAll,
+    onPressSearch: pressMapping.onPressSearch,
+    shouldDisableHeaderActions,
     onSelectTVShows,
     onSelectMovies,
-    shouldDisableHeaderActions,
-    onPressTop3LearnMore,
-    onPressTrendingItem,
-    onPressViewAll,
     onPressReload,
-    onPressSearch,
     errorMessage,
   };
 };

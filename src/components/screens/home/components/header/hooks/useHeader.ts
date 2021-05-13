@@ -10,35 +10,33 @@ type UseHeaderProps = {
   shouldDisableActions: boolean;
 };
 
-const useHeader = ({
-  shouldDisableActions,
-  onPresSwitchTVShows,
-  onPressSwitchMovies,
-}: UseHeaderProps) => {
+const useHeader = (props: UseHeaderProps) => {
   const [isSwitchWidthCalculated, setIsSwitchWidthCalculated] = useState<boolean>(false);
 
-  const { opacity } = useHeaderAnimatedOpacity({ shouldDisableActions });
+  const headerAnimatedOpacity = useHeaderAnimatedOpacity({
+    shouldDisableActions: props.shouldDisableActions,
+  });
 
   const items = useMemo(
     () => [
       {
-        onPress: onPressSwitchMovies,
+        onPress: props.onPressSwitchMovies,
         titlei18nRef: TRANSLATIONS.HOME_MOVIES,
       },
       {
-        onPress: onPresSwitchTVShows,
+        onPress: props.onPresSwitchTVShows,
         titlei18nRef: TRANSLATIONS.HOME_TV_SHOWS,
       },
     ],
-    [onPressSwitchMovies, onPresSwitchTVShows],
+    [props.onPressSwitchMovies, props.onPresSwitchTVShows],
   );
 
   const onCalcuateSwitchWidth = useCallback(() => setIsSwitchWidthCalculated(true), []);
 
-  const headerOpacity = useMemo(() => (isSwitchWidthCalculated ? opacity : 0), [
-    isSwitchWidthCalculated,
-    opacity,
-  ]);
+  const headerOpacity = useMemo(
+    () => (isSwitchWidthCalculated ? headerAnimatedOpacity.opacity : 0),
+    [isSwitchWidthCalculated, headerAnimatedOpacity.opacity],
+  );
 
   return {
     opacity: headerOpacity,

@@ -12,7 +12,7 @@ type Top3Props = {
   top3Items: Types.HomeTop3Item[];
 };
 
-const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
+const Top3 = (props: Top3Props) => {
   const scrollX = useRef(new Animated.Value(Styles.INITIAL_SCROLL_POSITION)).current;
 
   return (
@@ -42,7 +42,7 @@ const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
         pagingEnabled
         horizontal
       >
-        {top3Items.map((item, index) => {
+        {props.top3Items.map((item, index) => {
           const translateY = scrollX.interpolate({
             inputRange: [
               (index - 1) * Top3ListItemStyles.ITEM_WIDTH,
@@ -63,7 +63,7 @@ const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
             >
               {index === 0 && <Styles.ListGap />}
               <Top3ListItem
-                onPress={() => onPressLearnMore({
+                onPress={() => props.onPressLearnMore({
                   voteAverage: item.voteAverage,
                   voteCount: item.voteCount,
                   posterPath: item.image,

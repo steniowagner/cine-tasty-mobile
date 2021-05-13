@@ -24,10 +24,10 @@ type Props<T> = {
   query: DocumentNode;
 };
 
-const useHomeTrendings = <TData = any>({ onGetData, query }: Props<TData>) => {
+const useHomeTrendings = <TData = any>(props: Props<TData>) => {
   const [state, setState] = useState<InternalState>(INITIAL_STATE);
 
-  const execQuery = useImperativeQuery<TData, TVariables>(query);
+  const execQuery = useImperativeQuery<TData, TVariables>(props.query);
 
   const getTrendings = useCallback(async () => {
     try {
@@ -40,7 +40,7 @@ const useHomeTrendings = <TData = any>({ onGetData, query }: Props<TData>) => {
         page: 1,
       });
 
-      onGetData(data);
+      props.onGetData(data);
 
       setState({
         isLoading: false,

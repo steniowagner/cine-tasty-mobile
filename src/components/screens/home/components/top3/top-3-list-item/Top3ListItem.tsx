@@ -24,54 +24,44 @@ type Top3ListItemProps = {
   index: number;
 };
 
-const Top3ListItem = ({
-  voteAverage,
-  translateY,
-  voteCount,
-  onPress,
-  genres,
-  index,
-  image,
-  theme,
-  title,
-}: Top3ListItemProps) => {
-  const { currentTheme } = useGetCurrentTheme({ theme });
+const Top3ListItem = (props: Top3ListItemProps) => {
+  const { currentTheme } = useGetCurrentTheme({ theme: props.theme });
   const { t } = useTranslation();
 
   return (
     <Styles.Wrapper
       style={{
-        transform: [{ translateY }],
+        transform: [{ translateY: props.translateY }],
       }}
-      index={index}
+      index={props.index}
       testID="wrapper"
     >
       <ProgressiveImage
         borderRadius={Styles.ITEM_BORDER_RADIUS}
         imageType="backdrop"
-        image={image}
+        image={props.image}
       />
       <LoadingTop3Styles.SmokeShadow
         isTheMiddle={false}
       />
       <Styles.TextContentWrapper>
-        <Styles.TitleText>{title}</Styles.TitleText>
+        <Styles.TitleText>{props.title}</Styles.TitleText>
         <Styles.StarsWrapper
           currentTheme={currentTheme}
         >
           <StarsVotes
-            voteCount={voteCount}
-            votes={voteAverage}
+            voteCount={props.voteCount}
+            votes={props.voteAverage}
             textColor="white"
             withText
           />
         </Styles.StarsWrapper>
-        <Styles.GenreText>{genres.join('  \u2022  ')}</Styles.GenreText>
+        <Styles.GenreText>{props.genres.join('  \u2022  ')}</Styles.GenreText>
         <Styles.LearnMoreButtonWrapper
           testID="test"
         >
           <RoundedButton
-            onPress={onPress}
+            onPress={props.onPress}
             text={t(TRANSLATIONS.HOME_LEARN_MORE)}
           />
         </Styles.LearnMoreButtonWrapper>

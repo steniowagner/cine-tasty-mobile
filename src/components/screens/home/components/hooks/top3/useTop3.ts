@@ -10,7 +10,7 @@ type UseTop3Props = {
   trendingMovies: SchemaTypes.TrendingMovies;
 };
 
-const useTop3 = ({ trendingTVShows, trendingMovies }: UseTop3Props) => {
+const useTop3 = (props: UseTop3Props) => {
   const [top3TVShows, setTop3TVShows] = useState<Types.HomeTop3Item[]>([]);
   const [top3Movies, setTop3Movies] = useState<Types.HomeTop3Item[]>([]);
 
@@ -19,36 +19,36 @@ const useTop3 = ({ trendingTVShows, trendingMovies }: UseTop3Props) => {
       return;
     }
 
-    const { nowPlaying } = trendingMovies.trendingMovies;
+    const { nowPlaying } = props.trendingMovies.trendingMovies;
 
     const top3Result = getTop3Data(nowPlaying.items);
 
     setTop3Movies(top3Result);
-  }, [trendingMovies]);
+  }, [props.trendingMovies]);
 
   useEffect(() => {
-    if (trendingMovies) {
+    if (props.trendingMovies) {
       onSetTop3Movies();
     }
-  }, [trendingMovies]);
+  }, [props.trendingMovies]);
 
   const onSetTop3TVShows = useCallback(() => {
     if (top3TVShows.length) {
       return;
     }
 
-    const { onTheAir } = trendingTVShows.trendingTvShows;
+    const { onTheAir } = props.trendingTVShows.trendingTvShows;
 
     const top3Result = getTop3Data(onTheAir.items);
 
     setTop3TVShows(top3Result);
-  }, [trendingTVShows]);
+  }, [props.trendingTVShows]);
 
   useEffect(() => {
-    if (trendingTVShows) {
+    if (props.trendingTVShows) {
       onSetTop3TVShows();
     }
-  }, [trendingTVShows]);
+  }, [props.trendingTVShows]);
 
   return {
     top3TVShows,

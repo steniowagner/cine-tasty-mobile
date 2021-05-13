@@ -17,7 +17,7 @@ type TrendingItemKey = keyof Omit<
   '__typename'
 >;
 
-const useTrendingMovies = ({ rawTrendingTVShows }: UseTrendingMoviesProps) => {
+const useTrendingMovies = (props: UseTrendingMoviesProps) => {
   const [trendingTVShows, setTrendingTVShows] = useState<HomeSection[]>([]);
 
   const { t } = useTranslation();
@@ -68,20 +68,20 @@ const useTrendingMovies = ({ rawTrendingTVShows }: UseTrendingMoviesProps) => {
   );
 
   const handleTVShowsSections = useCallback(() => {
-    const trendingEntries = Object.entries(rawTrendingTVShows.trendingTvShows).filter(
-      ([, entryValue]) => typeof entryValue !== 'string',
-    );
+    const trendingEntries = Object.entries(
+      props.rawTrendingTVShows.trendingTvShows,
+    ).filter(([, entryValue]) => typeof entryValue !== 'string');
 
     const tvShowsSections = trendingEntries.map(([trendingKey, trendingItems]) => parseSection(trendingKey as TrendingItemKey, trendingItems.items));
 
     setTrendingTVShows(tvShowsSections);
-  }, [rawTrendingTVShows]);
+  }, [props.rawTrendingTVShows]);
 
   useEffect(() => {
-    if (rawTrendingTVShows) {
+    if (props.rawTrendingTVShows) {
       handleTVShowsSections();
     }
-  }, [rawTrendingTVShows]);
+  }, [props.rawTrendingTVShows]);
 
   return {
     trendingTVShows,

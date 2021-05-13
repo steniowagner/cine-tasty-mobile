@@ -9,33 +9,29 @@ type UseMediaSwitcherAnimation = {
   indexSelected: number;
 };
 
-const useMediaSwitcherAnimation = ({
-  setIndexSelected,
-  setIsSwitching,
-  indexSelected,
-}: UseMediaSwitcherAnimation) => {
+const useMediaSwitcherAnimation = (props: UseMediaSwitcherAnimation) => {
   const translateX = useRef(new Animated.Value(0)).current;
 
   const onAniamateSwitch = useCallback(
     (index: number, onFinishAnimation: () => void) => {
-      if (indexSelected === index) {
+      if (props.indexSelected === index) {
         return;
       }
 
-      setIndexSelected(index);
+      props.setIndexSelected(index);
 
-      setIsSwitching(true);
+      props.setIsSwitching(true);
 
       Animated.timing(translateX, {
         duration: SWITCH_ANIMATION_DURATION_MS,
         useNativeDriver: true,
         toValue: index,
       }).start(() => {
-        setIsSwitching(false);
+        props.setIsSwitching(false);
         onFinishAnimation();
       });
     },
-    [indexSelected],
+    [props.indexSelected],
   );
 
   return {

@@ -37,7 +37,7 @@ type UseOnGetDataProps = {
   isMovie: boolean;
 };
 
-const useOnGetData = ({ trendingMediaItemKey, isMovie }: UseOnGetDataProps) => {
+const useOnGetData = (props: UseOnGetDataProps) => {
   const getMovieOnGetDataHandler = useCallback(
     (trendingMovieKey: Types.TrendingMediaItemKey) => {
       const movieOnGetDataMapping: TrendingMovieItem = {
@@ -122,9 +122,9 @@ const useOnGetData = ({ trendingMediaItemKey, isMovie }: UseOnGetDataProps) => {
     [],
   );
 
-  return isMovie
-    ? getMovieOnGetDataHandler(trendingMediaItemKey)
-    : getTVSahowOnGetDataHandler(trendingMediaItemKey);
+  return props.isMovie
+    ? getMovieOnGetDataHandler(props.trendingMediaItemKey)
+    : getTVSahowOnGetDataHandler(props.trendingMediaItemKey);
 };
 
 export default useOnGetData;

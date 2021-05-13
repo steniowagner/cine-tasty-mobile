@@ -8,31 +8,22 @@ import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 import { MediaSectionViewAllStackProps } from '../../routes/route-params-types';
 import useMediaSectionViewAll from './useMediaSectionViewAll';
 
-const MediaSectionViewAll = ({ navigation, route }: MediaSectionViewAllStackProps) => {
-  const {
-    shouldShowListBottomReloadButton,
-    onPressBottomReloadButton,
-    hasPaginationError,
-    onEndReached,
-    isPaginating,
-    onPressItem,
-    dataset,
-    error,
-  } = useMediaSectionViewAll({
-    initialMediaItems: route.params.initialDataset,
-    trendingMediaItemKey: route.params.sectionKey,
-    isMovie: route.params.isMovie,
-    navigation,
+const MediaSectionViewAll = (props: MediaSectionViewAllStackProps) => {
+  const mediaSectionViewAll = useMediaSectionViewAll({
+    initialMediaItems: props.route.params.initialDataset,
+    trendingMediaItemKey: props.route.params.sectionKey,
+    isMovie: props.route.params.isMovie,
+    navigation: props.navigation,
   });
 
   return (
     <>
       <FlatList
-        ListFooterComponent={() => shouldShowListBottomReloadButton && (
+        ListFooterComponent={() => mediaSectionViewAll.shouldShowListBottomReloadButton && (
         <ListFooterComponent
-          onPressReloadButton={onPressBottomReloadButton}
-          hasError={hasPaginationError}
-          isPaginating={isPaginating}
+          onPressReloadButton={mediaSectionViewAll.onPressBottomReloadButton}
+          hasError={mediaSectionViewAll.hasPaginationError}
+          isPaginating={mediaSectionViewAll.isPaginating}
         />
         )}
         onEndReachedThreshold={Platform.select({
@@ -41,7 +32,7 @@ const MediaSectionViewAll = ({ navigation, route }: MediaSectionViewAllStackProp
         })}
         renderItem={({ item }) => (
           <MediaSectionViewAllListItem
-            onPressDetails={() => onPressItem(item)}
+            onPressDetails={() => mediaSectionViewAll.onPressItem(item)}
             voteCount={item.voteCount}
             votes={item.voteAverage}
             image={item.posterPath}
@@ -51,12 +42,12 @@ const MediaSectionViewAll = ({ navigation, route }: MediaSectionViewAllStackProp
         )}
         keyExtractor={({ id }, index) => `${id}-${index}`}
         testID="media-view-all-list"
-        onEndReached={onEndReached}
-        data={dataset}
+        onEndReached={mediaSectionViewAll.onEndReached}
+        data={mediaSectionViewAll.dataset}
       />
-      {!!error && (
+      {!!mediaSectionViewAll.error && (
       <PopupAdvice
-        text={error}
+        text={mediaSectionViewAll.error}
       />
       )}
     </>

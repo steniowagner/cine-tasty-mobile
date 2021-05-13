@@ -25,8 +25,8 @@ type HomeStackProps = {
   theme: DefaultTheme;
 };
 
-const HomeStack = ({ theme }: HomeStackProps) => {
-  const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
+const HomeStack = (props: HomeStackProps) => {
+  const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(props.theme);
 
   return (
     <Stack.Navigator
@@ -92,9 +92,9 @@ const HomeStack = ({ theme }: HomeStackProps) => {
         name={Routes.TVShow.SEASONS}
         options={({ route }: TVShowSeasonsStackProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
-          headerTintColor: theme.colors.buttonText,
+          headerTintColor: props.theme.colors.buttonText,
           headerStyle: {
-            backgroundColor: theme.colors.primary,
+            backgroundColor: props.theme.colors.primary,
             shadowColor: 'transparent',
             elevation: 0,
           },
