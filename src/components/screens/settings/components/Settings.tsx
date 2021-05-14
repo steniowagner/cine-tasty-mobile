@@ -5,14 +5,14 @@ import SettingsSection from './settings-section/SettingsSection';
 import * as Styles from './Settings.styles';
 import useSettings from './useSettings';
 
-const Settings = ({ navigation }: SettingsStackProps) => {
-  const { sections } = useSettings({ navigation });
+const Settings = (props: SettingsStackProps) => {
+  const settings = useSettings({ navigation: props.navigation });
 
   return (
     <Styles.Wrapper
       testID="settings-wrapper"
     >
-      {sections.map((section) => (
+      {settings.sections.map((section) => (
         <SettingsSection
           description={section.description}
           onPress={section.onPress}

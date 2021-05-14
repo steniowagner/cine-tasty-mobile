@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import RNRestart from 'react-native-restart';
 
@@ -38,11 +40,16 @@ const useImagesQuality = () => {
     setImageQualityFromStore();
   }, []);
 
-  return {
-    qualities: qualities.map((imageQuality) => ({
+  const imagesQuality = useMemo(
+    () => qualities.map((imageQuality) => ({
       title: t(`${TRANSLATIONS.IMAGE_QUALITIES}:${imageQuality}`),
       quality: imageQuality,
     })),
+    [],
+  );
+
+  return {
+    qualities: imagesQuality,
     qualitySelected,
     onPress,
   };

@@ -6,46 +6,41 @@ import * as Types from '@local-types';
 import useGetThemeOptions from './useGetThemeOptions';
 
 const useThemeSettingsOption = () => {
-  const {
-    onSetSystemTheme,
-    onSetLightTheme,
-    onSetDarkTheme,
-    themeId,
-  } = useThemeProvider();
+  const themeProvider = useThemeProvider();
 
   const onPressDarkOption = useCallback(() => {
-    if (themeId === Types.ThemeId.DARK) {
+    if (themeProvider.themeId === Types.ThemeId.DARK) {
       return;
     }
 
-    onSetDarkTheme();
-  }, [themeId]);
+    themeProvider.onSetDarkTheme();
+  }, [themeProvider.themeId]);
 
   const onPressLightOption = useCallback(() => {
-    if (themeId === Types.ThemeId.LIGHT) {
+    if (themeProvider.themeId === Types.ThemeId.LIGHT) {
       return;
     }
 
-    onSetLightTheme();
-  }, [themeId]);
+    themeProvider.onSetLightTheme();
+  }, [themeProvider.themeId]);
 
   const onPressSystemPreferencesOption = useCallback(() => {
-    if (themeId === Types.ThemeId.SYSTEM) {
+    if (themeProvider.themeId === Types.ThemeId.SYSTEM) {
       return;
     }
 
-    onSetSystemTheme();
-  }, [themeId]);
+    themeProvider.onSetSystemTheme();
+  }, [themeProvider.themeId]);
 
-  const { themeOptions } = useGetThemeOptions({
+  const getThemeOptions = useGetThemeOptions({
     onPressSystemPreferencesOption,
     onPressLightOption,
     onPressDarkOption,
   });
 
   return {
-    selectedTheme: themeId,
-    themeOptions,
+    themeOptions: getThemeOptions.themeOptions,
+    selectedTheme: themeProvider.themeId,
   };
 };
 

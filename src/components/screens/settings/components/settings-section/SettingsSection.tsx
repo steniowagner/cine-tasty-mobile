@@ -11,14 +11,14 @@ type SettingsSectionProps = {
   title: string;
 };
 
-const SettingsSection = ({ description, onPress, title }: SettingsSectionProps) => (
+const SettingsSection = (props: SettingsSectionProps) => (
   <Styles.Wrapper
-    onPress={onPress}
+    onPress={props.onPress}
     testID="settings-section-button"
   >
     <Styles.TextWrapper>
-      <Styles.SectionTitle>{title}</Styles.SectionTitle>
-      <Styles.SectionDescription>{description}</Styles.SectionDescription>
+      <Styles.SectionTitle>{props.title}</Styles.SectionTitle>
+      <Styles.SectionDescription>{props.description}</Styles.SectionDescription>
     </Styles.TextWrapper>
     <SVGIcon
       id="chevron-right"

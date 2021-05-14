@@ -8,11 +8,11 @@ type LinkButtonProps = {
   url: string;
 };
 
-const LinkButton = ({ url }: LinkButtonProps) => (
+const LinkButton = (props: LinkButtonProps) => (
   <Styles.LinkButtonWrapper
-    onPress={() => Linking.openURL(url)}
+    onPress={() => Linking.openURL(props.url)}
   >
-    <DefaultItemText>{url}</DefaultItemText>
+    <DefaultItemText>{props.url}</DefaultItemText>
   </Styles.LinkButtonWrapper>
 );
 

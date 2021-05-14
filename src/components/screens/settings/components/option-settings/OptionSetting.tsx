@@ -27,16 +27,16 @@ const RadioBoxUnmarkedIcon = () => (
   />
 );
 
-const OptionSetting = ({ isSelected, onPress, title }: OptionSettingProps) => (
+const OptionSetting = (props: OptionSettingProps) => (
   <Styles.Wrapper
-    onPress={onPress}
+    onPress={props.onPress}
     testID="option-settings"
   >
-    {isSelected ? <RadioBoxMarkedIcon /> : <RadioBoxUnmarkedIcon />}
+    {props.isSelected ? <RadioBoxMarkedIcon /> : <RadioBoxUnmarkedIcon />}
     <Styles.OptionTitle
       testID="option-title"
     >
-      {title}
+      {props.title}
     </Styles.OptionTitle>
   </Styles.Wrapper>
 );

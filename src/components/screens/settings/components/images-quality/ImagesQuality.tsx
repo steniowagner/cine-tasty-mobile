@@ -4,14 +4,14 @@ import OptionSettings from '../option-settings/OptionSetting';
 import useImagesQuality from './useImagesQuality';
 
 const ImagesQuality = () => {
-  const { qualitySelected, onPress, qualities } = useImagesQuality();
+  const imagesQuality = useImagesQuality();
 
   return (
     <>
-      {qualities.map(({ quality, title }) => (
+      {imagesQuality.qualities.map(({ quality, title }) => (
         <OptionSettings
-          isSelected={qualitySelected === quality}
-          onPress={() => onPress(quality)}
+          isSelected={imagesQuality.qualitySelected === quality}
+          onPress={() => imagesQuality.onPress(quality)}
           title={title}
           key={quality}
         />

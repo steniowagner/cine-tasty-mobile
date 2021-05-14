@@ -18,17 +18,13 @@ type UseGetThemeSettingsOptionProps = {
   onPressDarkOption: () => void;
 };
 
-const useGetThemeSettingsOption = ({
-  onPressSystemPreferencesOption,
-  onPressLightOption,
-  onPressDarkOption,
-}: UseGetThemeSettingsOptionProps) => {
-  const { hasThemeSupport } = useCheckHasThemeSupport();
+const useGetThemeSettingsOption = (props: UseGetThemeSettingsOptionProps) => {
+  const checkHasThemeSupport = useCheckHasThemeSupport();
   const { t } = useTranslation();
 
   const systemPreferenceOption = useMemo(
     (): ThemeOption => ({
-      onPress: onPressSystemPreferencesOption,
+      onPress: props.onPressSystemPreferencesOption,
       title: t(TRANSLATIONS.THEME_SYSTEM_PREFERENCES),
       id: Types.ThemeId.SYSTEM,
     }),
@@ -38,26 +34,30 @@ const useGetThemeSettingsOption = ({
   const defaultOptions = useMemo(
     () => [
       {
-        onPress: onPressDarkOption,
+        onPress: props.onPressDarkOption,
         title: t(TRANSLATIONS.THEME_DARK),
         id: Types.ThemeId.DARK,
       },
       {
-        onPress: onPressLightOption,
+        onPress: props.onPressLightOption,
         title: t(TRANSLATIONS.THEME_LIGHT),
         id: Types.ThemeId.LIGHT,
       },
     ],
-    [onPressLightOption, onPressDarkOption],
+    [props.onPressLightOption, props.onPressDarkOption],
   );
 
   const themeOptions = useMemo(() => {
-    if (hasThemeSupport) {
+    if (checkHasThemeSupport.hasThemeSupport) {
       return [...defaultOptions, systemPreferenceOption];
     }
 
     return defaultOptions;
-  }, [onPressLightOption, onPressDarkOption, hasThemeSupport]);
+  }, [
+    checkHasThemeSupport.hasThemeSupport,
+    props.onPressLightOption,
+    props.onPressDarkOption,
+  ]);
 
   return {
     themeOptions,
