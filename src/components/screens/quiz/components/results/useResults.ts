@@ -7,20 +7,23 @@ import * as Types from '@local-types';
 
 import { ResultsStackProps as UseResultsProps } from '../../routes/route-params-types';
 
-const useResults = ({ navigation, route }: UseResultsProps) => {
+const useResults = (props: UseResultsProps) => {
   const [results, setResults] = useState<Types.QuizResult[]>([]);
 
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const { questions, answers } = route.params;
-
-    const result = questions.map((dataItem, index) => ({
+  const getResults = useCallback(
+    ({ questions, answers }: typeof props.route.params) => questions.map((dataItem, index) => ({
       isCorrect: dataItem.correctAnswer?.toLowerCase() === answers[index].toLowerCase(),
       answer: dataItem.correctAnswer,
       userAnswer: answers[index],
       question: dataItem.question,
-    }));
+    })),
+    [],
+  );
+
+  useEffect(() => {
+    const result = getResults(props.route.params);
 
     setResults(result);
   }, []);
@@ -33,9 +36,9 @@ const useResults = ({ navigation, route }: UseResultsProps) => {
         {
           text: t(TRANSLATIONS.QUIZ_NO),
           style: 'cancel',
-          onPress: () => navigation.pop(3),
+          onPress: () => props.navigation.pop(3),
         },
-        { text: t(TRANSLATIONS.QUIZ_YES), onPress: () => navigation.pop(2) },
+        { text: t(TRANSLATIONS.QUIZ_YES), onPress: () => props.navigation.pop(2) },
       ],
       { cancelable: false },
     );

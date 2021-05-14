@@ -73,9 +73,9 @@ const useQuestions = ({ navigation, route }: QuestionsStackProps) => {
     questions: data ? data.quiz : [],
     currentQuestionIndex,
     questionsFlatListRef,
+    isLoading: loading,
     hasError: !!error,
     onRestartQuiz,
-    loading,
     answers,
   };
 };

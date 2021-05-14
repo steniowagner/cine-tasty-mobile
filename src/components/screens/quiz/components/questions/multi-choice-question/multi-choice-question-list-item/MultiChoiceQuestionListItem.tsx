@@ -27,23 +27,19 @@ type MultiChoiceListItemProps = {
   answer: string;
 };
 
-const MultiChoiceListItem = ({
-  onSelectAnswer,
-  isSelected,
-  answer,
-}: MultiChoiceListItemProps) => (
+const MultiChoiceListItem = (props: MultiChoiceListItemProps) => (
   <Styles.ListItemWrapper
-    onPress={() => onSelectAnswer(answer)}
+    onPress={() => props.onSelectAnswer(props.answer)}
     testID="multi-choice-answer"
-    isSelected={isSelected}
-    key={answer}
+    isSelected={props.isSelected}
+    key={props.answer}
   >
-    {isSelected ? <CloseIcon /> : <EmptyCheckbox />}
+    {props.isSelected ? <CloseIcon /> : <EmptyCheckbox />}
     <Styles.AnswerTextWrapper>
       <Styles.QuestionsIndicatorText
-        isSelected={isSelected}
+        isSelected={props.isSelected}
       >
-        {answer}
+        {props.answer}
       </Styles.QuestionsIndicatorText>
     </Styles.AnswerTextWrapper>
   </Styles.ListItemWrapper>

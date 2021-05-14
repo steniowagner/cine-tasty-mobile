@@ -13,11 +13,7 @@ type NumberOfQuestionsProps = {
   theme: DefaultTheme;
 };
 
-const NumberOfQuestions = ({
-  onSetNumberQuestions,
-  numberOfQuestions,
-  theme,
-}: NumberOfQuestionsProps) => {
+const NumberOfQuestions = (props: NumberOfQuestionsProps) => {
   const numberQuestionsSliderRef = useRef(null);
 
   return (
@@ -28,16 +24,16 @@ const NumberOfQuestions = ({
         }}
         testID="default-text"
       >
-        {numberOfQuestions}
+        {props.numberOfQuestions}
       </Styles.DefaultText>
       <Slider
         onLayout={() => numberQuestionsSliderRef.current.setNativeProps({
-          value: numberOfQuestions,
+          value: props.numberOfQuestions,
         })}
-        onValueChange={(distance) => onSetNumberQuestions(distance)}
-        maximumTrackTintColor={theme.colors.contrast}
-        minimumTrackTintColor={theme.colors.text}
-        thumbTintColor={theme.colors.text}
+        onValueChange={(distance) => props.onSetNumberQuestions(distance)}
+        maximumTrackTintColor={props.theme.colors.contrast}
+        minimumTrackTintColor={props.theme.colors.text}
+        thumbTintColor={props.theme.colors.text}
         ref={numberQuestionsSliderRef}
         maximumValue={MAX_VALUE}
         minimumValue={MIN_VALUE}

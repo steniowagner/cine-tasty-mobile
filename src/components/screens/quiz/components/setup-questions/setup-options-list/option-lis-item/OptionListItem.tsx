@@ -11,24 +11,18 @@ type OptionListItemProps = {
   title: string;
 };
 
-const shouldComponentUpdate = (
-  previousState: OptionListItemProps,
-  nextState: OptionListItemProps,
-): boolean => (previousState.isSelected || !nextState.isSelected)
-  && (!previousState.isSelected || nextState.isSelected);
-
-const OptionListItem = ({ isSelected, onPress, title }: OptionListItemProps) => (
+const OptionListItem = (props: OptionListItemProps) => (
   <Styles.ListItemWrapper
-    isSelected={isSelected}
-    onPress={onPress}
+    isSelected={props.isSelected}
+    onPress={props.onPress}
     testID="option-list-item"
   >
     <Styles.ListItemText
       testID="list-item-text"
     >
-      {title}
+      {props.title}
     </Styles.ListItemText>
-    {isSelected && (
+    {props.isSelected && (
       <SVGIcon
         size={metrics.getWidthFromDP('8%')}
         id="checkbox-circle"
@@ -37,5 +31,11 @@ const OptionListItem = ({ isSelected, onPress, title }: OptionListItemProps) => 
     )}
   </Styles.ListItemWrapper>
 );
+
+const shouldComponentUpdate = (
+  previousState: OptionListItemProps,
+  nextState: OptionListItemProps,
+): boolean => (previousState.isSelected || !nextState.isSelected)
+  && (!previousState.isSelected || nextState.isSelected);
 
 export default memo(OptionListItem, shouldComponentUpdate);

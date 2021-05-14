@@ -1,8 +1,8 @@
-import React, { useState, memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { memo } from 'react';
 
 import * as TRANSLATIONS from '@i18n/tags';
 
+import useBooleanQuestion from './useBooleanQuestion';
 import * as Styles from './BooleanQuestion.styles';
 import NextButton from '../next-button/NextButton';
 
@@ -11,9 +11,8 @@ type BooleanQuestionProps = {
   isFocused: boolean;
 };
 
-const BooleanQuestion = ({ onPressNext }: BooleanQuestionProps) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<boolean | undefined>(undefined);
-  const { t } = useTranslation();
+const BooleanQuestion = (props: BooleanQuestionProps) => {
+  const { setSelectedAnswer, selectedAnswer, t } = useBooleanQuestion();
 
   return (
     <>
@@ -42,7 +41,7 @@ const BooleanQuestion = ({ onPressNext }: BooleanQuestionProps) => {
         </Styles.OptionButton>
       </Styles.Wrapper>
       <NextButton
-        onPress={() => onPressNext(String(selectedAnswer))}
+        onPress={() => props.onPressNext(String(selectedAnswer))}
         isDisabled={selectedAnswer === undefined}
       />
     </>

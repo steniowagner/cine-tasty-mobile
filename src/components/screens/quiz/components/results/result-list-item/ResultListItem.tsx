@@ -12,7 +12,7 @@ type ResultListItemProps = {
   result: Types.QuizResult;
 };
 
-const ResultListItem = ({ result }: ResultListItemProps) => {
+const ResultListItem = (props: ResultListItemProps) => {
   const { t } = useTranslation();
 
   return (
@@ -30,19 +30,19 @@ const ResultListItem = ({ result }: ResultListItemProps) => {
     >
       <Styles.IconWrapper>
         <SVGIcon
-          id={result.isCorrect ? 'checkbox-circle' : 'close-circle'}
-          colorThemeRef={result.isCorrect ? 'green' : 'red'}
+          id={props.result.isCorrect ? 'checkbox-circle' : 'close-circle'}
+          colorThemeRef={props.result.isCorrect ? 'green' : 'red'}
           size={metrics.getWidthFromDP('14%')}
         />
       </Styles.IconWrapper>
       <Styles.TextContentWrapper>
-        <Styles.QuestionText>{result.question}</Styles.QuestionText>
+        <Styles.QuestionText>{props.result.question}</Styles.QuestionText>
         <Styles.AnswerText>
-          {`${t(TRANSLATIONS.QUIZ_ANSWER)}: ${result.answer}`}
+          {`${t(TRANSLATIONS.QUIZ_ANSWER)}: ${props.result.answer}`}
         </Styles.AnswerText>
         <Styles.LineDivider />
         <Styles.AnswerText>
-          {`${t(TRANSLATIONS.QUIZ_YOUR_ANSWER)}: ${result.userAnswer}`}
+          {`${t(TRANSLATIONS.QUIZ_YOUR_ANSWER)}: ${props.result.userAnswer}`}
         </Styles.AnswerText>
       </Styles.TextContentWrapper>
     </Styles.Wrapper>

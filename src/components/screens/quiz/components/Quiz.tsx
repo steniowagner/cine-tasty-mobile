@@ -8,7 +8,7 @@ import { Routes } from '@routes/routes';
 import { QuizStackProps } from '../routes/route-params-types';
 import * as Styles from './Quiz.styles';
 
-const Quiz = ({ navigation }: QuizStackProps) => {
+const Quiz = (props: QuizStackProps) => {
   const { t } = useTranslation();
 
   return (
@@ -17,7 +17,7 @@ const Quiz = ({ navigation }: QuizStackProps) => {
       <Styles.SubText>{t(TRANSLATIONS.QUIZ_DESCRIPTION)}</Styles.SubText>
       <Styles.LargeText>{t(TRANSLATIONS.QUIZ_CHALLENGE)}</Styles.LargeText>
       <RoundedButton
-        onPress={() => navigation.navigate(Routes.Quiz.SETUP_QUESTIONS)}
+        onPress={() => props.navigation.navigate(Routes.Quiz.SETUP_QUESTIONS)}
         text={t(TRANSLATIONS.QUIZ_CHOOSE_QUESTIONS)}
       />
     </Styles.Wrapper>

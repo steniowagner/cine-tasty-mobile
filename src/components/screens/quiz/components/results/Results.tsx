@@ -10,19 +10,24 @@ import ResultListItem from './result-list-item/ResultListItem';
 import * as Styles from './Results.styles';
 import useResults from './useResults';
 
-const Results = ({ navigation, route }: ResultsStackProps) => {
-  const { onPressPlayAgain, results, t } = useResults({ navigation, route });
+const Results = (props: ResultsStackProps) => {
+  const results = useResults({
+    navigation: props.navigation,
+    route: props.route,
+  });
 
   useLayoutEffect(() => {
-    const scores = results.reduce(
+    const scores = results.results.reduce(
       (total, current) => total + Number(current.isCorrect),
       0,
     );
 
-    navigation.setOptions({
-      title: `${t(TRANSLATIONS.QUIZ_SCORES)} ${scores}/${results.length}!`,
+    props.navigation.setOptions({
+      title: `${results.t(TRANSLATIONS.QUIZ_SCORES)} ${scores}/${
+        results.results.length
+      }!`,
     });
-  }, [results]);
+  }, [results.results]);
 
   return (
     <Styles.Wrapper>
@@ -38,12 +43,12 @@ const Results = ({ navigation, route }: ResultsStackProps) => {
           paddingTop: metrics.largeSize,
         }}
         keyExtractor={(item) => item.question}
-        data={results}
+        data={results.results}
       />
       <Styles.PlayAgainButtonWrapper>
         <RoundedButton
-          text={t(TRANSLATIONS.QUIZ_PLAY_AGAIN)}
-          onPress={onPressPlayAgain}
+          text={results.t(TRANSLATIONS.QUIZ_PLAY_AGAIN)}
+          onPress={results.onPressPlayAgain}
         />
       </Styles.PlayAgainButtonWrapper>
     </Styles.Wrapper>

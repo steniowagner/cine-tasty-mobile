@@ -9,12 +9,7 @@ type ListItemWrapperProps = {
   question: string;
 };
 
-const ListItemWrapper = ({
-  currentQuestionIndex,
-  numberOfQuestions,
-  children,
-  question,
-}: ListItemWrapperProps) => (
+const ListItemWrapper = (props: ListItemWrapperProps) => (
   <Styles.Wrapper>
     <Styles.CardWrapper
       style={{
@@ -33,17 +28,17 @@ const ListItemWrapper = ({
         <Styles.QuestionsIndicatorText
           testID="question-indicator-text"
         >
-          {currentQuestionIndex}
+          {props.currentQuestionIndex}
           /
-          {numberOfQuestions}
+          {props.numberOfQuestions}
         </Styles.QuestionsIndicatorText>
         <Styles.QuestionText
           testID="question-text"
         >
-          {question}
+          {props.question}
         </Styles.QuestionText>
       </Styles.TextWrapper>
-      {children}
+      {props.children}
     </Styles.CardWrapper>
   </Styles.Wrapper>
 );

@@ -1,9 +1,10 @@
-import React, { useState, memo } from 'react';
+import React, { memo } from 'react';
 import { FlatList } from 'react-native';
 
 import metrics from '@styles/metrics';
 
 import MultiChoiceQuestionListItem from './multi-choice-question-list-item/MultiChoiceQuestionListItem';
+import useMultiChoiceQuestion from './useMultiChoiceQuestion';
 import NextButton from '../next-button/NextButton';
 
 type MultiChoiceQuestionProps = {
@@ -12,8 +13,8 @@ type MultiChoiceQuestionProps = {
   answers: string[];
 };
 
-const MultiChoiceQuestion = ({ onPressNext, answers }: MultiChoiceQuestionProps) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('');
+const MultiChoiceQuestion = (props: MultiChoiceQuestionProps) => {
+  const { setSelectedAnswer, selectedAnswer } = useMultiChoiceQuestion();
 
   return (
     <>
@@ -31,10 +32,10 @@ const MultiChoiceQuestion = ({ onPressNext, answers }: MultiChoiceQuestionProps)
           />
         )}
         keyExtractor={(item) => item}
-        data={answers}
+        data={props.answers}
       />
       <NextButton
-        onPress={() => onPressNext(selectedAnswer)}
+        onPress={() => props.onPressNext(selectedAnswer)}
         isDisabled={!selectedAnswer}
       />
     </>

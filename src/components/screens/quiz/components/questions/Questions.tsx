@@ -17,35 +17,29 @@ import * as Styles from './Questions.styles';
 import QuestionError from './QuestionError';
 import useQuestions from './useQuestions';
 
-const Questions = ({ navigation, route }: QuestionsStackProps) => {
-  const {
-    currentQuestionIndex,
-    questionsFlatListRef,
-    onRestartQuiz,
-    onPressNext,
-    questions,
-    loading,
-    hasError,
-  } = useQuestions({ navigation, route });
+const Questions = (props: QuestionsStackProps) => {
+  const questions = useQuestions({ navigation: props.navigation, route: props.route });
 
   useLayoutEffect(() => {
-    const hasErrorOrIsLoading = loading || hasError;
+    const hasErrorOrIsLoading = questions.isLoading || questions.hasError;
 
-    if (hasErrorOrIsLoading && !!questions.length) {
+    if (hasErrorOrIsLoading && !!questions.questions.length) {
       return;
     }
 
     let headerTitle = '';
 
-    if (questions[currentQuestionIndex]) {
-      headerTitle = questions[currentQuestionIndex].category.split(':')[1].trim();
+    if (questions[questions.currentQuestionIndex]) {
+      headerTitle = questions[questions.currentQuestionIndex].category
+        .split(':')[1]
+        .trim();
     }
 
-    navigation.setOptions({
+    props.navigation.setOptions({
       title: headerTitle,
-      headerRight: () => currentQuestionIndex > 0 && (
+      headerRight: () => questions.currentQuestionIndex > 0 && (
       <Styles.RestartQuizButton
-        onPress={onRestartQuiz}
+        onPress={questions.onRestartQuiz}
         testID="retart-quiz-button"
       >
         <SVGIcon
@@ -55,17 +49,17 @@ const Questions = ({ navigation, route }: QuestionsStackProps) => {
       </Styles.RestartQuizButton>
       ),
     });
-  }, [currentQuestionIndex, loading, hasError]);
+  }, [questions.currentQuestionIndex, questions.isLoading, questions.hasError]);
 
-  if (loading) {
+  if (questions.isLoading) {
     return <LoadingIndicator />;
   }
 
-  if (hasError) {
+  if (questions.hasError) {
     return <QuestionError />;
   }
 
-  if (!loading && !hasError && !questions.length) {
+  if (!questions.isLoading && !questions.hasError && !questions.questions.length) {
     return <NoQuestionsError />;
   }
 
@@ -73,23 +67,23 @@ const Questions = ({ navigation, route }: QuestionsStackProps) => {
     <FlatList
       renderItem={({ item, index }) => (
         <ListItemWrapper
-          numberOfQuestions={route.params.numberOfQuestions}
-          question={questions[index].question}
+          numberOfQuestions={props.route.params.numberOfQuestions}
+          question={questions.questions[index].question}
           currentQuestionIndex={index + 1}
         >
           <>
             {item.type.toLowerCase()
               === SchemaTypes.QuestionType.BOOLEAN.toLowerCase() && (
               <BooleanQuestion
-                isFocused={currentQuestionIndex === index}
-                onPressNext={onPressNext}
+                isFocused={questions.currentQuestionIndex === index}
+                onPressNext={questions.onPressNext}
               />
             )}
             {item.type.toLowerCase()
               === SchemaTypes.QuestionType.MULTIPLE.toLowerCase() && (
               <MultiChoiceQuestion
-                isFocused={currentQuestionIndex === index}
-                onPressNext={onPressNext}
+                isFocused={questions.currentQuestionIndex === index}
+                onPressNext={questions.onPressNext}
                 answers={item.options}
               />
             )}
@@ -103,10 +97,10 @@ const Questions = ({ navigation, route }: QuestionsStackProps) => {
         length: metrics.width,
         index,
       })}
-      ref={questionsFlatListRef}
+      ref={questions.questionsFlatListRef}
+      data={questions.questions}
       testID="questions-list"
       scrollEnabled={false}
-      data={questions}
       pagingEnabled
       horizontal
     />

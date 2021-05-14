@@ -5,11 +5,9 @@ type UseSetupQuestionsOptionsListProps = {
   indexLastOptionSelected: number;
 };
 
-const useSetupQuestionsOptionsList = ({
-  indexLastOptionSelected,
-}: UseSetupQuestionsOptionsListProps) => {
+const useSetupQuestionsOptionsList = (props: UseSetupQuestionsOptionsListProps) => {
   const [indexOptionSelected, setIndexOptionSelected] = useState<number>(
-    indexLastOptionSelected,
+    props.indexLastOptionSelected,
   );
 
   const { t } = useTranslation();

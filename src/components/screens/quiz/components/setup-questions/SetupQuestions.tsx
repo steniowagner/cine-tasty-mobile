@@ -4,53 +4,52 @@ import { SafeAreaView, View } from 'react-native';
 import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import NumberOfQuestions from './number-of-questions/NumberOfQuestionts';
 import { SetupQuestionsStackProps } from '../../routes/route-params-types';
+import NumberOfQuestions from './number-of-questions/NumberOfQuestionts';
 import DropdownOption from './drop-down-option/DropdownOption';
 import useSetupQuestions from './useSetupQuestions';
 import * as Styles from './SetupQuestions.styles';
 
-const SetupQuestions = ({ navigation }: SetupQuestionsStackProps) => {
-  const {
-    onPressOptionDropdown,
-    setNumberOfQuestions,
-    questionDifficulty,
-    numberOfQuestions,
-    questionCategory,
-    onPressStartQuiz,
-    questionType,
-    t,
-  } = useSetupQuestions({ navigation });
+const SetupQuestions = (props: SetupQuestionsStackProps) => {
+  const setupQuestions = useSetupQuestions({ navigation: props.navigation });
 
   return (
     <Styles.Wrapper>
       <View>
-        <Styles.Label>{t(TRANSLATIONS.QUIZ_DIFFICULTY)}</Styles.Label>
+        <Styles.Label>{setupQuestions.t(TRANSLATIONS.QUIZ_DIFFICULTY)}</Styles.Label>
         <DropdownOption
-          onPress={() => onPressOptionDropdown('DIFFICULTY')}
-          selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionDifficulty.id}`)}
+          onPress={() => setupQuestions.onPressOptionDropdown('DIFFICULTY')}
+          selectedOption={setupQuestions.t(
+            `${TRANSLATIONS.QUIZ}:${setupQuestions.questionDifficulty.id}`,
+          )}
         />
-        <Styles.Label>{t(TRANSLATIONS.QUIZ_CATEGORY)}</Styles.Label>
+        <Styles.Label>{setupQuestions.t(TRANSLATIONS.QUIZ_CATEGORY)}</Styles.Label>
         <DropdownOption
-          onPress={() => onPressOptionDropdown('CATEGORY')}
-          selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionCategory.id}`)}
+          onPress={() => setupQuestions.onPressOptionDropdown('CATEGORY')}
+          selectedOption={setupQuestions.t(
+            `${TRANSLATIONS.QUIZ}:${setupQuestions.questionCategory.id}`,
+          )}
         />
-        <Styles.Label>{t(TRANSLATIONS.QUIZ_TYPE)}</Styles.Label>
+        <Styles.Label>{setupQuestions.t(TRANSLATIONS.QUIZ_TYPE)}</Styles.Label>
         <DropdownOption
-          onPress={() => onPressOptionDropdown('TYPE')}
-          selectedOption={t(`${TRANSLATIONS.QUIZ}:${questionType.id}`)}
+          onPress={() => setupQuestions.onPressOptionDropdown('TYPE')}
+          selectedOption={setupQuestions.t(
+            `${TRANSLATIONS.QUIZ}:${setupQuestions.questionType.id}`,
+          )}
         />
-        <Styles.Label>{t(TRANSLATIONS.QUIZ_NUMBER_OF_QUESTIONS)}</Styles.Label>
+        <Styles.Label>
+          {setupQuestions.t(TRANSLATIONS.QUIZ_NUMBER_OF_QUESTIONS)}
+        </Styles.Label>
         <NumberOfQuestions
-          onSetNumberQuestions={setNumberOfQuestions}
-          numberOfQuestions={numberOfQuestions}
+          onSetNumberQuestions={setupQuestions.setNumberOfQuestions}
+          numberOfQuestions={setupQuestions.numberOfQuestions}
         />
       </View>
       <SafeAreaView>
         <Styles.RoundedButtonWrapper>
           <RoundedButton
-            text={t(TRANSLATIONS.QUIZ_START_BUTTON)}
-            onPress={onPressStartQuiz}
+            text={setupQuestions.t(TRANSLATIONS.QUIZ_START_BUTTON)}
+            onPress={setupQuestions.onPressStartQuiz}
           />
         </Styles.RoundedButtonWrapper>
       </SafeAreaView>

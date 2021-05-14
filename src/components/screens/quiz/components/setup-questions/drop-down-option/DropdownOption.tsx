@@ -10,15 +10,15 @@ type DropdownOptionProps = {
   onPress: () => void;
 };
 
-const DropdownOption = ({ selectedOption, onPress }: DropdownOptionProps) => (
+const DropdownOption = (props: DropdownOptionProps) => (
   <Styles.InnerContentWrapper
-    onPress={onPress}
+    onPress={props.onPress}
     testID="dropdown-button"
   >
     <Styles.OptionText
       testID="option-value"
     >
-      {selectedOption}
+      {props.selectedOption}
     </Styles.OptionText>
     <SVGIcon
       size={metrics.getWidthFromDP('7%')}

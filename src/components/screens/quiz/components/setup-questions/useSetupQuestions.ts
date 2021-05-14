@@ -24,7 +24,7 @@ type NavigateToCustomModalProps = {
   headerText: string;
 };
 
-const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
+const useSetupQuestions = (props: UseSetupQuestionsProps) => {
   const [questionDifficulty, setQuestionDifficulty] = useState<
     Types.QuestionOption<SchemaTypes.QuestionDifficulty>
   >(difficulties[0]);
@@ -111,7 +111,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
       headerText,
       option,
     }: NavigateToCustomModalProps): void => {
-      navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
+      props.navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
         extraData: {
           onPressSelect: (indexOptionSelected: number) => {
             onSelectOption(indexOptionSelected, option);
@@ -146,7 +146,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
   );
 
   const navigateToQuestions = useCallback(() => {
-    navigation.navigate(Routes.Quiz.QUESTIONS, {
+    props.navigation.navigate(Routes.Quiz.QUESTIONS, {
       difficulty: questionDifficulty.value,
       category: questionCategory.value,
       type: questionType.value,

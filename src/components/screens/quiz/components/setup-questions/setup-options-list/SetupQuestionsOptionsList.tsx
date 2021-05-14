@@ -15,14 +15,9 @@ type SetupQuestionsOptionsListProps = {
   closeModal: () => void;
 };
 
-const SetupQuestionsOptionsList = ({
-  indexLastOptionSelected,
-  onPressSelect,
-  closeModal,
-  options,
-}: SetupQuestionsOptionsListProps) => {
-  const { indexOptionSelected, onSelectOption, t } = useSetupOptionsList({
-    indexLastOptionSelected,
+const SetupQuestionsOptionsList = (props: SetupQuestionsOptionsListProps) => {
+  const setupOptionsList = useSetupOptionsList({
+    indexLastOptionSelected: props.indexLastOptionSelected,
   });
 
   return (
@@ -30,20 +25,20 @@ const SetupQuestionsOptionsList = ({
       <FlatList
         renderItem={({ item, index }) => (
           <OptionListItem
-            isSelected={indexOptionSelected === index}
-            title={t(`${TRANSLATIONS.QUIZ}:${item.id}`)}
-            onPress={() => onSelectOption(index)}
+            title={setupOptionsList.t(`${TRANSLATIONS.QUIZ}:${item.id}`)}
+            isSelected={setupOptionsList.indexOptionSelected === index}
+            onPress={() => setupOptionsList.onSelectOption(index)}
           />
         )}
         keyExtractor={(item) => item.id}
         testID="options-list"
-        data={options}
+        data={props.options}
       />
       <ModalSelectButton
-        title={t(TRANSLATIONS.SELECT)}
+        title={setupOptionsList.t(TRANSLATIONS.SELECT)}
         onPress={() => {
-          onPressSelect(indexOptionSelected);
-          closeModal();
+          props.onPressSelect(setupOptionsList.indexOptionSelected);
+          props.closeModal();
         }}
       />
     </>

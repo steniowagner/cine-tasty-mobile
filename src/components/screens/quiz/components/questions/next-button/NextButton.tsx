@@ -10,14 +10,14 @@ type NextButtonProps = {
   isDisabled: boolean;
 };
 
-const NextButton = ({ onPress, isDisabled }: NextButtonProps) => {
+const NextButton = (props: NextButtonProps) => {
   const { t } = useTranslation();
 
   return (
     <Styles.NextTouchable
-      disabled={isDisabled}
+      disabled={props.isDisabled}
       testID="next-button"
-      onPress={onPress}
+      onPress={props.onPress}
     >
       <Styles.NextText>{t(TRANSLATIONS.QUIZ_NEXT)}</Styles.NextText>
     </Styles.NextTouchable>
