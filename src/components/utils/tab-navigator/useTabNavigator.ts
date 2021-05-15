@@ -13,11 +13,11 @@ const screensAbleToShowTabNavigator: string[] = [
   Routes.News.NEWS,
 ];
 
-const useTabNavigator = ({ state }: BottomTabBarProps) => {
+const useTabNavigator = (props: BottomTabBarProps) => {
   const { t } = useTranslation();
 
   const shouldShowTabNavigator = useMemo(() => {
-    const currentTabState = state.routes[state.index].state;
+    const currentTabState = props.state.routes[props.state.index].state;
 
     if (!currentTabState) {
       return true;
@@ -32,7 +32,7 @@ const useTabNavigator = ({ state }: BottomTabBarProps) => {
     const { name } = routes[index];
 
     return screensAbleToShowTabNavigator.includes(name);
-  }, [state]);
+  }, [props.state]);
 
   const tabTitles = useMemo(
     () => items.map((item) => {

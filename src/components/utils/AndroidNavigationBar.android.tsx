@@ -9,12 +9,12 @@ type AndroidNavigationBarProps = {
   theme: DefaultTheme;
 };
 
-const AndroidNavigationBar = ({ theme }: AndroidNavigationBarProps) => {
+const AndroidNavigationBar = (props: AndroidNavigationBarProps) => {
   useEffect(() => {
-    const isLight = Types.ThemeId.LIGHT === theme.id;
+    const isLight = Types.ThemeId.LIGHT === props.theme.id;
 
-    changeNavigationBarColor(theme.colors.secondary, isLight, true);
-  }, [theme]);
+    changeNavigationBarColor(props.theme.colors.secondary, isLight, true);
+  }, [props.theme]);
 
   return <View />;
 };

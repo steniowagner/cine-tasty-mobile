@@ -12,9 +12,9 @@ import items from './items';
 const ITEM_WIDTH = metrics.width / items.length;
 
 const TabNavigator = (props: BottomTabBarProps) => {
-  const { shouldShowTabNavigator, tabTitles, t } = useTabNavigator(props);
+  const tabNavigator = useTabNavigator(props);
 
-  if (!shouldShowTabNavigator) {
+  if (!tabNavigator.shouldShowTabNavigator) {
     return null;
   }
 
@@ -34,8 +34,10 @@ const TabNavigator = (props: BottomTabBarProps) => {
     >
       {items.map((item, index) => (
         <TabNavigatorItem
+          title={tabNavigator.t(
+            `${TRANSLATIONS.TABS}:${tabNavigator.tabTitles[index].toLowerCase()}`,
+          )}
           onPress={() => props.navigation.navigate(props.state.routeNames[index])}
-          title={t(`${TRANSLATIONS.TABS}:${tabTitles[index].toLowerCase()}`)}
           isSelected={index === props.state.index}
           inactiveIcon={item.inactiveIcon}
           activeIcon={item.activeIcon}

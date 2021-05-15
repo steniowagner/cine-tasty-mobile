@@ -21,58 +21,50 @@ type NavigatorItemProps = {
   width: number;
 };
 
-const NavigatorItem = withTheme(
-  ({
-    inactiveIcon,
-    activeIcon,
-    isSelected,
-    onPress,
-    theme,
-    width,
-    title,
-  }: NavigatorItemProps) => {
-    const { currentTheme } = useGetCurrentTheme({ theme });
+const NavigatorItem = withTheme((props: NavigatorItemProps) => {
+  const { currentTheme } = useGetCurrentTheme({ theme: props.theme });
 
-    const selectedIconColor = useMemo(
-      () => (currentTheme === Types.ThemeId.DARK ? 'primary' : 'text'),
-      [currentTheme],
-    );
+  const selectedIconColor = useMemo(
+    () => (currentTheme === Types.ThemeId.DARK ? 'primary' : 'text'),
+    [currentTheme],
+  );
 
-    const textColor = useMemo(() => {
-      const selectedColor = currentTheme === Types.ThemeId.DARK ? theme.colors.primary : theme.colors.text;
+  const textColor = useMemo(() => {
+    const selectedColor = currentTheme === Types.ThemeId.DARK
+      ? props.theme.colors.primary
+      : props.theme.colors.text;
 
-      return isSelected ? selectedColor : theme.colors.inactiveWhite;
-    }, [isSelected, currentTheme]);
+    return props.isSelected ? selectedColor : props.theme.colors.inactiveWhite;
+  }, [props.isSelected, currentTheme]);
 
-    return (
-      <Styles.Wrapper
-        testID="button-wrapper"
-        onPress={onPress}
-        width={width}
+  return (
+    <Styles.Wrapper
+      testID="button-wrapper"
+      onPress={props.onPress}
+      width={props.width}
+    >
+      {renderSVGIconConditionally({
+        condition: props.isSelected,
+        ifTrue: {
+          colorThemeRef: selectedIconColor,
+          size: DEFAULT_ICON_SIZE,
+          id: props.activeIcon,
+        },
+        ifFalse: {
+          colorThemeRef: 'inactiveWhite',
+          size: DEFAULT_ICON_SIZE,
+          id: props.inactiveIcon,
+        },
+      })}
+      <Styles.ItemText
+        testID="item-title"
+        color={textColor}
       >
-        {renderSVGIconConditionally({
-          condition: isSelected,
-          ifTrue: {
-            colorThemeRef: selectedIconColor,
-            size: DEFAULT_ICON_SIZE,
-            id: activeIcon,
-          },
-          ifFalse: {
-            colorThemeRef: 'inactiveWhite',
-            size: DEFAULT_ICON_SIZE,
-            id: inactiveIcon,
-          },
-        })}
-        <Styles.ItemText
-          testID="item-title"
-          color={textColor}
-        >
-          {title}
-        </Styles.ItemText>
-      </Styles.Wrapper>
-    );
-  },
-);
+        {props.title}
+      </Styles.ItemText>
+    </Styles.Wrapper>
+  );
+});
 
 const shouldComponentUpdate = (
   previousState: NavigatorItemProps,
