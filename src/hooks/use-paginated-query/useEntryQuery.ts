@@ -14,35 +14,31 @@ type Props<TData, TVariables> = {
   onError: () => void;
 };
 
-const useEntryQuery = <TData, TVariables>({
-  variables = {} as TVariables,
-  setPaginationHasMore,
-  onGetData,
-  execQuery,
-  onError,
-}: Props<TData, TVariables>): State<TVariables> => {
+const useEntryQuery = <TData, TVariables>(
+  props: Props<TData, TVariables>,
+): State<TVariables> => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const exec = useCallback(
-    async (updatedVariables: TVariables = variables) => {
+    async (updatedVariables: TVariables = props.variables || ({} as TVariables)) => {
       try {
         setIsLoading(true);
 
-        const { data } = await execQuery({ ...updatedVariables, page: 1 });
+        const { data } = await props.execQuery({ ...updatedVariables, page: 1 });
 
         setIsLoading(false);
 
-        const hasMore = onGetData(data);
+        const hasMore = props.onGetData(data);
 
-        setPaginationHasMore(hasMore);
+        props.setPaginationHasMore(hasMore);
       } catch (err) {
         // eslint-disable-next-line no-console
         setIsLoading(false);
 
-        onError();
+        props.onError();
       }
     },
-    [onGetData, onError],
+    [props.onGetData, props.onError],
   );
 
   return {

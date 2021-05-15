@@ -14,8 +14,8 @@ type State = {
   barStyle: StatusBarStyle;
 };
 
-export const useStatusBarStyle = ({ theme }: UseStatusBarStyleProps): State => {
-  const { currentTheme } = useGetCurrentTheme({ theme });
+export const useStatusBarStyle = (props: UseStatusBarStyleProps): State => {
+  const { currentTheme } = useGetCurrentTheme({ theme: props.theme });
 
   const barStyle = useMemo(() => {
     if (currentTheme === Types.ThemeId.LIGHT) {

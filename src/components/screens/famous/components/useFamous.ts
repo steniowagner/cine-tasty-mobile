@@ -38,6 +38,7 @@ const useFamous = () => {
         setHasPaginationError(false);
       }
     },
+    fireEntryQueryWhenMounted: true,
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
     query: GET_FAMOUS,

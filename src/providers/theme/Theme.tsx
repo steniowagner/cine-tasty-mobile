@@ -17,7 +17,7 @@ type ThemeContextProviderProps = {
   children: JSX.Element;
 };
 
-const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
+const ThemeContextProvider = (props: ThemeContextProviderProps) => {
   const {
     handleInitialThemeSelection,
     onSetSystemTheme,
@@ -39,7 +39,7 @@ const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
       <ThemeProvider
         theme={theme}
       >
-        {children}
+        {props.children}
       </ThemeProvider>
     </ThemeContext.Provider>
   );

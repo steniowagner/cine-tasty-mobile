@@ -21,27 +21,19 @@ type BaseVariables = {
   page: number;
 };
 
-export const usePaginatedQuery = <TData, TVariables>({
-  fireEntryQueryWhenMounted = true,
-  onPaginationQueryError,
-  onEntryQueryError,
-  fetchPolicy,
-  onGetData,
-  variables,
-  query,
-}: Props<TData, TVariables>) => {
+export const usePaginatedQuery = <TData, TVariables>(props: Props<TData, TVariables>) => {
   const execQuery = useImperativeQuery<TData, TVariables & BaseVariables>(
-    query,
-    fetchPolicy,
+    props.query,
+    props.fetchPolicy,
   );
 
   const baseParams = useMemo(
     () => ({
-      onGetData: (data: TData): boolean => onGetData(data),
-      variables,
+      onGetData: (data: TData): boolean => props.onGetData(data),
+      variables: props.variables,
       execQuery,
     }),
-    [onGetData, variables, execQuery],
+    [props.onGetData, props.variables, execQuery],
   );
 
   const {
@@ -51,7 +43,7 @@ export const usePaginatedQuery = <TData, TVariables>({
     isPaginating,
   } = useQueryWithPagination<TData, Omit<TVariables, 'page'>>({
     ...baseParams,
-    onError: () => onPaginationQueryError(),
+    onError: () => props.onPaginationQueryError(),
   });
 
   const { exec: execEntryQuery, isLoading } = useEntryQuery<
@@ -60,11 +52,11 @@ export const usePaginatedQuery = <TData, TVariables>({
   >({
     ...baseParams,
     setPaginationHasMore: setHasMoreFromEntryQuery,
-    onError: () => onEntryQueryError(),
+    onError: () => props.onEntryQueryError(),
   });
 
   useEffect(() => {
-    if (fireEntryQueryWhenMounted) {
+    if (props.fireEntryQueryWhenMounted) {
       execEntryQuery();
     }
   }, []);
@@ -72,8 +64,8 @@ export const usePaginatedQuery = <TData, TVariables>({
   const onReloadData = useCallback(async () => {
     restartPagination();
 
-    await execEntryQuery(variables);
-  }, [variables]);
+    await execEntryQuery(props.variables);
+  }, [props.variables]);
 
   return {
     onPaginateQuery: execPaginateQuery,

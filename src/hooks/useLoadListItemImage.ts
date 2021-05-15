@@ -7,7 +7,7 @@ type UseLoadListItemImageProps = {
 
 export const ANIMATION_DURATION = 400;
 
-export const useLoadListItemImage = ({ image }: UseLoadListItemImageProps) => {
+export const useLoadListItemImage = (props: UseLoadListItemImageProps) => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState<boolean>(true);
   const [hasError, setImageHasError] = useState<boolean>(false);
   const [isLoaded, setIsImageLoaded] = useState<boolean>(false);
@@ -25,7 +25,7 @@ export const useLoadListItemImage = ({ image }: UseLoadListItemImageProps) => {
   }, [isLoaded]);
 
   useEffect(() => {
-    if (!image) {
+    if (!props.image) {
       setImageHasError(true);
     }
   }, []);

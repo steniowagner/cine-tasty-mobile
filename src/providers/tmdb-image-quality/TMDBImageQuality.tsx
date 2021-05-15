@@ -19,7 +19,7 @@ type TMDBImageQualityProviderProps = {
   children: JSX.Element;
 };
 
-export const TMDBImageQualityProvider = ({ children }: TMDBImageQualityProviderProps) => {
+export const TMDBImageQualityProvider = (props: TMDBImageQualityProviderProps) => {
   const [imagesQualities, setImagesQualities] = useState<Types.ImageType | {}>({});
 
   const { screenClassification } = useClassifyDeviceScreen();
@@ -38,7 +38,7 @@ export const TMDBImageQualityProvider = ({ children }: TMDBImageQualityProviderP
     <TMDBImageQualityContext.Provider
       value={{ ...imagesQualities }}
     >
-      {children}
+      {props.children}
     </TMDBImageQualityContext.Provider>
   );
 };

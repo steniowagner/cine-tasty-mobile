@@ -26,12 +26,7 @@ type Props<TData, TVariables> = {
   onError: () => void;
 };
 
-const useQueryWithPagination = <TData, TVariables>({
-  variables = {} as TVariables,
-  onGetData,
-  execQuery,
-  onError,
-}: Props<TData, TVariables>) => {
+const useQueryWithPagination = <TData, TVariables>(props: Props<TData, TVariables>) => {
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
 
   const onPaginateQuery = useCallback(
@@ -42,9 +37,9 @@ const useQueryWithPagination = <TData, TVariables>({
           page: pageSelected,
         };
 
-        const { data } = await execQuery(queryVariables);
+        const { data } = await props.execQuery(queryVariables);
 
-        const hasMore = onGetData(data);
+        const hasMore = props.onGetData(data);
 
         setPagination((previousPagination: Pagination) => ({
           ...previousPagination,
@@ -53,9 +48,7 @@ const useQueryWithPagination = <TData, TVariables>({
         }));
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.log('useQueryWithPagination/onPaginateQuery: ', err);
-
-        onError();
+        props.onError();
 
         setPagination((previousPagination: Pagination) => ({
           page: previousPagination.page - 1,
@@ -75,6 +68,7 @@ const useQueryWithPagination = <TData, TVariables>({
 
   useEffect(() => {
     if (pagination.isPaginating) {
+      const variables = props.variables || ({} as TVariables);
       debouncedPaginateSearch(pagination.page, variables);
     }
   }, [pagination]);
