@@ -12,7 +12,7 @@ type TVShowDetailsSectionProps = {
   tvShow: SchemaTypes.TVShowDetail_tvShow;
 };
 
-const TVShowDetailsSection = ({ tvShow }: TVShowDetailsSectionProps) => {
+const TVShowDetailsSection = (props: TVShowDetailsSectionProps) => {
   const { t } = useTranslation();
 
   return (
@@ -20,35 +20,41 @@ const TVShowDetailsSection = ({ tvShow }: TVShowDetailsSectionProps) => {
       infoItems={[
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE),
-          value: tvShow.name || '-',
+          value: props.tvShow.name || '-',
         },
         {
-          value: tvShow.originalLanguage,
+          value: props.tvShow.originalLanguage,
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_LANGUAGE),
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_EPISODES),
-          value: tvShow.numberOfEpisodes ? String(tvShow.numberOfEpisodes) : '-',
+          value: props.tvShow.numberOfEpisodes
+            ? String(props.tvShow.numberOfEpisodes)
+            : '-',
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_SEASONS),
-          value: tvShow.numberOfSeasons ? String(tvShow.numberOfSeasons) : '-',
+          value: props.tvShow.numberOfSeasons
+            ? String(props.tvShow.numberOfSeasons)
+            : '-',
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_EPISODE_RUNTIME),
-          value: tvShow.episodeRunTime.length ? tvShow.episodeRunTime.join(', ') : '-',
+          value: props.tvShow.episodeRunTime.length
+            ? props.tvShow.episodeRunTime.join(', ')
+            : '-',
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_COUNTRY),
-          value: tvShow.originCountry ? tvShow.originCountry.join(', ') : '-',
+          value: props.tvShow.originCountry ? props.tvShow.originCountry.join(', ') : '-',
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_FIRST_AIR_DATE),
-          value: formatDate(tvShow.firstAirDate),
+          value: formatDate(props.tvShow.firstAirDate),
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_LAST_AIR_DATE),
-          value: formatDate(tvShow.lastAirDate),
+          value: formatDate(props.tvShow.lastAirDate),
         },
       ]}
     />

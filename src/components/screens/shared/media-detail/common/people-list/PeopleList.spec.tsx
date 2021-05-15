@@ -32,6 +32,7 @@ const renderPersonList = ({ sectionTitle, onPressItem, dataset, type }) => (
         sectionTitle={sectionTitle}
         onPressItem={onPressItem}
         dataset={dataset}
+        withSubtext
         type={type}
       />
     </ThemeContextProvider>

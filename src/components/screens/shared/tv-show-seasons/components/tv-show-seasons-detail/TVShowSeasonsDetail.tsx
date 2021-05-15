@@ -12,12 +12,12 @@ import useTVShowSeasonsDetail from './useTVShowSeasonsDetail';
 import * as Styles from './TVShowSeasonsDetail.styles';
 import Header from './header/Header';
 
-const TVShowSeasonsDetail = ({ route }: TVShowSeasonsTabsStackProps) => {
+const TVShowSeasonsDetail = (props: TVShowSeasonsTabsStackProps) => {
   const {
     seasonDetail, isLoading, hasError, t,
   } = useTVShowSeasonsDetail({
-    season: route.params.season,
-    id: route.params.id,
+    season: props.route.params.season,
+    id: props.route.params.id,
   });
 
   if (isLoading) {

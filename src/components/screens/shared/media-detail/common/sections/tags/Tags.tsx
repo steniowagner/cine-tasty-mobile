@@ -14,8 +14,8 @@ type TagsProps = {
   tags: string[];
 };
 
-const Tags = ({ extraTags, isLoading, tags }: TagsProps) => {
-  if (isLoading) {
+const Tags = (props: TagsProps) => {
+  if (props.isLoading) {
     return (
       <Styles.Wrapper
         testID="tags-loading"
@@ -43,15 +43,15 @@ const Tags = ({ extraTags, isLoading, tags }: TagsProps) => {
     <Styles.Wrapper
       testID="tags"
     >
-      {[...extraTags, ...tags].map(
+      {[...props.extraTags, ...props.tags].map(
         (tag, index) => !!tag && (
         <Styles.TagWrapper
-          isExtra={index < extraTags.length}
+          isExtra={index < props.extraTags.length}
           testID="tag-wrapper"
           key={tag}
         >
           <Styles.TagText
-            isExtra={index < extraTags.length}
+            isExtra={index < props.extraTags.length}
             testID="tag-text"
           >
             {tag}

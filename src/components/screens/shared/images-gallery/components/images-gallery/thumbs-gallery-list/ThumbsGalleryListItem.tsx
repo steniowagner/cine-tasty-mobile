@@ -10,17 +10,17 @@ type ThumbListItemProps = {
   image: string;
 };
 
-const ThumbListItem = ({ isSelected, onPress, image }: ThumbListItemProps) => (
+const ThumbListItem = (props: ThumbListItemProps) => (
   <Styles.Wrapper
-    isSelected={isSelected}
-    onPress={onPress}
+    isSelected={props.isSelected}
+    onPress={props.onPress}
     testID="thumb-list-item"
   >
     <TMDBImage
       imageType="profile"
       onError={() => {}}
       onLoad={() => {}}
-      image={image}
+      image={props.image}
       style={{
         width: '100%',
         height: '100%',

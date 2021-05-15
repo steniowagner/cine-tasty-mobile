@@ -17,26 +17,21 @@ type ReviewsSectionProps = {
   onPressViewAll: () => void;
 };
 
-const ReviewsSection = ({ onPressViewAll, reviews }: ReviewsSectionProps) => {
-  const {
-    indexReviewSelected,
-    onMomentumScrollEnd,
-    sectionTitle,
-    flatListRef,
-  } = useReviewsSection();
+const ReviewsSection = (props: ReviewsSectionProps) => {
+  const reviewsSection = useReviewsSection();
 
   return (
     <Styles.ContentWrapper
       testID="reviews-content-wrapper"
     >
       <SectionViewAll
-        sectionTitle={`${sectionTitle} (${reviews.length})`}
-        onPressViewAll={onPressViewAll}
-        withViewAll={!!reviews.length}
+        sectionTitle={`${reviewsSection.sectionTitle} (${props.reviews.length})`}
+        onPressViewAll={props.onPressViewAll}
+        withViewAll={!!props.reviews.length}
         id="reviews"
       />
       <FlatList
-        onMomentumScrollEnd={onMomentumScrollEnd}
+        onMomentumScrollEnd={reviewsSection.onMomentumScrollEnd}
         showsHorizontalScrollIndicator={false}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
@@ -45,18 +40,18 @@ const ReviewsSection = ({ onPressViewAll, reviews }: ReviewsSectionProps) => {
             author={item.author}
           />
         )}
-        data={reviews.slice(0, 3)}
-        ref={flatListRef}
+        data={props.reviews.slice(0, 3)}
+        ref={reviewsSection.flatListRef}
         pagingEnabled
         horizontal
       />
-      {reviews.length > 1 && (
+      {props.reviews.length > 1 && (
         <Styles.PaginationWrapper>
-          {Array(Math.min(reviews.length, 3))
+          {Array(Math.min(props.reviews.length, 3))
             .fill({})
             .map((_, index) => (
               <Styles.Dot
-                isSelected={index === indexReviewSelected}
+                isSelected={index === reviewsSection.indexReviewSelected}
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
               >

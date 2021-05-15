@@ -15,10 +15,10 @@ type RecentSearchesProps = {
   searchType: SchemaTypes.SearchType;
 };
 
-const RecentSearches = ({ onPressItem, searchType }: RecentSearchesProps) => {
-  const { onRemoveItem, recentSearches, t } = useRecentSearches({
+const RecentSearches = (props: RecentSearchesProps) => {
+  const recentSearches = useRecentSearches({
     shouldSkipGetInitialRecentSearches: false,
-    searchType,
+    searchType: props.searchType,
   });
 
   return (
@@ -31,19 +31,21 @@ const RecentSearches = ({ onPressItem, searchType }: RecentSearchesProps) => {
         paddingHorizontal: metrics.mediumSize,
         paddingTop: metrics.largeSize,
       }}
-      ListHeaderComponent={() => recentSearches.length > 0 && (
-      <Styles.RecentText>{t(TRANSLATIONS.SEARCH_RECENT)}</Styles.RecentText>
+      ListHeaderComponent={() => recentSearches.data.length > 0 && (
+      <Styles.RecentText>
+        {recentSearches.t(TRANSLATIONS.SEARCH_RECENT)}
+      </Styles.RecentText>
       )}
       renderItem={({ item }) => (
         <RecentSearchListItem
-          onPressRemove={() => onRemoveItem(item)}
-          onPressItem={() => onPressItem(item)}
+          onPressRemove={() => recentSearches.onRemoveItem(item)}
+          onPressItem={() => props.onPressItem(item)}
           item={item}
         />
       )}
       keyExtractor={({ id }) => `${id}`}
       testID="recent-searches-list"
-      data={recentSearches}
+      data={recentSearches.data}
     />
   );
 };

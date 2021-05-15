@@ -18,18 +18,8 @@ type FamousSearchProps = Types.BaseSearchProps & {
   items: SchemaTypes.SearchPerson_search_items_BasePerson[];
 };
 
-const FamousSearch = ({
-  onPressHeaderReloadButton,
-  onPressFooterReloadButton,
-  hasPaginationError,
-  onPressListItem,
-  onEndReached,
-  errorMessage,
-  isPaginating,
-  isLoading,
-  items,
-}: FamousSearchProps) => {
-  if (isLoading) {
+const FamousSearch = (props: FamousSearchProps) => {
+  if (props.isLoading) {
     return (
       <LoadingFamousList
         numberOfColumns={NUMBER_FLATLIST_COLUMNS}
@@ -37,20 +27,20 @@ const FamousSearch = ({
     );
   }
 
-  const shouldShowHeaderReloadButton = !items.length && !!errorMessage && !isLoading;
+  const shouldShowHeaderReloadButton = !props.items.length && !!props.errorMessage && !props.isLoading;
 
   return (
     <FlatList
       ListHeaderComponent={() => shouldShowHeaderReloadButton && (
       <PaginatedListHeader
-        onPress={onPressHeaderReloadButton}
+        onPress={props.onPressHeaderReloadButton}
       />
       )}
-      ListFooterComponent={() => !!items.length && (
+      ListFooterComponent={() => !!props.items.length && (
       <ListFooterComponent
-        onPressReloadButton={onPressFooterReloadButton}
-        hasError={hasPaginationError}
-        isPaginating={isPaginating}
+        onPressReloadButton={props.onPressFooterReloadButton}
+        hasError={props.hasPaginationError}
+        isPaginating={props.isPaginating}
       />
       )}
       columnWrapperStyle={{
@@ -73,16 +63,16 @@ const FamousSearch = ({
       renderItem={({ item, index }) => (
         <FamousListItem
           numberOfColumns={NUMBER_FLATLIST_COLUMNS}
-          onPress={() => onPressListItem(item)}
+          onPress={() => props.onPressListItem(item)}
           image={item.image}
           title={item.title}
           index={index}
         />
       )}
       keyExtractor={({ id }) => `${id}`}
-      onEndReached={onEndReached}
+      onEndReached={props.onEndReached}
       testID="search-famous-list"
-      data={items}
+      data={props.items}
     />
   );
 };

@@ -17,8 +17,8 @@ import Search from '../components/search/Search';
 
 const Stack = createStackNavigator();
 
-const SearchStack = ({ route, theme }: SearchStackProps) => {
-  const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
+const SearchStack = (props: SearchStackProps) => {
+  const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(props.theme);
 
   return (
     <Stack.Navigator
@@ -30,7 +30,7 @@ const SearchStack = ({ route, theme }: SearchStackProps) => {
           header: () => null,
         }}
         initialParams={{
-          ...route.params,
+          ...props.route.params,
         }}
         component={Search}
       />
@@ -69,9 +69,9 @@ const SearchStack = ({ route, theme }: SearchStackProps) => {
         name={Routes.TVShow.SEASONS}
         options={({ route: tvShowSeasonsStackProps }: TVShowSeasonsStackProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
-          headerTintColor: theme.colors.buttonText,
+          headerTintColor: props.theme.colors.buttonText,
           headerStyle: {
-            backgroundColor: theme.colors.primary,
+            backgroundColor: props.theme.colors.primary,
             shadowColor: 'transparent',
             elevation: 0,
           },

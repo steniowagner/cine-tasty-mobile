@@ -10,16 +10,10 @@ import { CustomModalStackProps } from '../routes/route-params-types';
 import useCustomizedModal from './useCustomizedModal';
 import * as Styles from './CustomizedModal.styles';
 
-const CustomizedModal = ({ navigation, route }: CustomModalStackProps) => {
-  const {
-    onHandlerStateChange,
-    shouldHideCard,
-    animatedEvent,
-    onCloseModal,
-    translateY,
-  } = useCustomizedModal({
+const CustomizedModal = (props: CustomModalStackProps) => {
+  const customizedModal = useCustomizedModal({
     cardContainerHeight: Styles.CARD_CONTAINER_HEIGHT,
-    onClose: () => navigation.goBack(),
+    onClose: () => props.navigation.goBack(),
   });
 
   return (
@@ -27,22 +21,22 @@ const CustomizedModal = ({ navigation, route }: CustomModalStackProps) => {
       testID="customized-modal"
     >
       <TouchableWithoutFeedback
-        onPress={onCloseModal}
+        onPress={customizedModal.onCloseModal}
         testID="closeable-area"
       >
         <Styles.PressAreaClose />
       </TouchableWithoutFeedback>
-      {!shouldHideCard && (
+      {!customizedModal.shouldHideCard && (
         <PanGestureHandler
-          onHandlerStateChange={onHandlerStateChange}
-          onGestureEvent={animatedEvent}
+          onHandlerStateChange={customizedModal.onHandlerStateChange}
+          onGestureEvent={customizedModal.animatedEvent}
         >
           <Styles.CardWrapper
             testID="card-wrapper"
             style={{
               transform: [
                 {
-                  translateY: translateY.interpolate({
+                  translateY: customizedModal.translateY.interpolate({
                     inputRange: [0, Styles.CARD_CONTAINER_HEIGHT],
                     outputRange: [0, Styles.CARD_CONTAINER_HEIGHT],
                     extrapolate: 'clamp',
@@ -55,22 +49,23 @@ const CustomizedModal = ({ navigation, route }: CustomModalStackProps) => {
               <Styles.Grip />
             </Styles.GripWrapper>
             <Styles.ListHeaderWrapper>
-              <Styles.HeadLineText>{route.params.headerText}</Styles.HeadLineText>
+              <Styles.HeadLineText>{props.route.params.headerText}</Styles.HeadLineText>
               <Styles.LineDivider />
             </Styles.ListHeaderWrapper>
-            {route.params.type === Types.CustomizedModalChildrenType.LANGUAGE && (
+            {props.route.params.type === Types.CustomizedModalChildrenType.LANGUAGE && (
               <LanguageFilter
-                lastLanguageSelected={route.params.extraData.lastItemSelected}
-                onSelectLanguage={route.params.extraData.onPressSelect}
-                closeModal={onCloseModal}
+                lastLanguageSelected={props.route.params.extraData.lastItemSelected}
+                onSelectLanguage={props.route.params.extraData.onPressSelect}
+                closeModal={customizedModal.onCloseModal}
               />
             )}
-            {route.params.type === Types.CustomizedModalChildrenType.MEDIA_FILTER && (
+            {props.route.params.type
+              === Types.CustomizedModalChildrenType.MEDIA_FILTER && (
               <SetupQuestionsOptionsList
-                indexLastOptionSelected={route.params.extraData.lastItemSelected}
-                onPressSelect={route.params.extraData.onPressSelect}
-                options={route.params.extraData.dataset}
-                closeModal={onCloseModal}
+                indexLastOptionSelected={props.route.params.extraData.lastItemSelected}
+                onPressSelect={props.route.params.extraData.onPressSelect}
+                options={props.route.params.extraData.dataset}
+                closeModal={customizedModal.onCloseModal}
               />
             )}
           </Styles.CardWrapper>

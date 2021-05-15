@@ -23,45 +23,39 @@ import useMovieDetail from './useMovieDetail';
 import DetailsSection from './MovieDetailsSection';
 import SimilarSection from './SimilarSection';
 
-const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
-  const {
-    onPressSimilarItem,
-    onPressCrew,
-    onPressReviews,
-    onPressCast,
-  } = useMovieDetailPressHandlers({
-    navigation,
+const MovieDetail = (props: MovieDetailStackProps) => {
+  const movieDetailPressHandlers = useMovieDetailPressHandlers({
+    navigation: props.navigation,
   });
-  const { barStyle } = useStatusBarStyle({ theme });
+  const statusBarStyle = useStatusBarStyle({ theme: props.theme });
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       headerLeft: () => (
         <HeaderBackButton
-          onPress={() => navigation.goBack()}
+          onPress={() => props.navigation.goBack()}
         />
       ),
     });
   }, []);
 
-  const {
-    isLoading, hasError, movie, t,
-  } = useMovieDetail({
-    hasVoteAverage: !!route.params.voteAverage,
-    hasVoteCount: !!route.params.voteCount,
-    hasGenresIds: !!route.params.genreIds,
-    id: route.params.id,
+  const movieDetail = useMovieDetail({
+    hasVoteAverage: !!props.route.params.voteAverage,
+    hasVoteCount: !!props.route.params.voteCount,
+    hasGenresIds: !!props.route.params.genreIds,
+    id: props.route.params.id,
   });
 
-  const releaseDate = useMemo((): string => (movie?.releaseDate || '-').split('-')[0], [
-    movie,
-  ]);
+  const releaseDate = useMemo(
+    (): string => (movieDetail.movie?.releaseDate || '-').split('-')[0],
+    [movieDetail.movie],
+  );
 
-  if (hasError) {
+  if (movieDetail.hasError) {
     return (
       <MediaDetailError
-        barStyle={barStyle}
-        theme={theme}
+        barStyle={statusBarStyle.barStyle}
+        theme={props.theme}
       />
     );
   }
@@ -69,81 +63,85 @@ const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
   return (
     <>
       <StatusBar
-        backgroundColor={theme.colors.secondary}
-        barStyle={barStyle}
+        backgroundColor={props.theme.colors.secondary}
+        barStyle={statusBarStyle.barStyle}
         animated
       />
       <ScrollView
         bounces={false}
       >
         <Header
-          votesAverage={route.params.voteAverage || movie?.voteAverage}
-          voteCount={route.params.voteCount || movie?.voteCount}
-          imageURL={movie?.backdropPath || ''}
-          posterURL={route.params.posterPath}
-          title={route.params.title}
-          isLoading={isLoading}
+          votesAverage={props.route.params.voteAverage || movieDetail.movie?.voteAverage}
+          voteCount={props.route.params.voteCount || movieDetail.movie?.voteCount}
+          imageURL={movieDetail.movie?.backdropPath || ''}
+          posterURL={props.route.params.posterPath}
+          title={props.route.params.title}
+          isLoading={movieDetail.isLoading}
         />
         <Tags
-          extraTags={[releaseDate, t(TRANSLATIONS.MEDIA_DETAIL_MOVIE_TITLE)]}
-          tags={route.params.genreIds || movie?.genres || []}
-          isLoading={!route.params.genreIds && isLoading}
+          extraTags={[releaseDate, movieDetail.t(TRANSLATIONS.MEDIA_DETAIL_MOVIE_TITLE)]}
+          tags={props.route.params.genreIds || movieDetail.movie?.genres || []}
+          isLoading={!props.route.params.genreIds && movieDetail.isLoading}
         />
         <Overview
-          overview={movie?.overview}
-          isLoading={isLoading}
+          overview={movieDetail.movie?.overview}
+          isLoading={movieDetail.isLoading}
         />
-        {!!movie && (
+        {!!movieDetail.movie && (
           <>
             <DetailsSection
-              movie={movie}
+              movie={movieDetail.movie}
             />
-            {!!movie.cast.length && (
+            {!!movieDetail.movie.cast.length && (
               <PeopleList
-                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
-                onPressItem={onPressCast}
-                dataset={movie.cast}
+                sectionTitle={movieDetail.t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
+                onPressItem={movieDetailPressHandlers.onPressCast}
+                dataset={movieDetail.movie.cast}
+                withSubtext
                 type="cast"
               />
             )}
-            {!!movie.crew.length && (
+            {!!movieDetail.movie.crew.length && (
               <PeopleList
-                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)}
-                onPressItem={onPressCrew}
-                dataset={movie.crew}
+                sectionTitle={movieDetail.t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)}
+                onPressItem={movieDetailPressHandlers.onPressCrew}
+                dataset={movieDetail.movie.crew}
+                withSubtext
                 type="crew"
               />
             )}
-            {!!movie.images.length && (
+            {!!movieDetail.movie.images.length && (
               <Section
-                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}
+                title={movieDetail.t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}
               >
                 <ImagesList
-                  images={movie.images}
+                  images={movieDetail.movie.images}
                 />
               </Section>
             )}
-            {!!movie.videos.length && (
-            <Videos
-              videos={movie.videos}
-            />
+            {!!movieDetail.movie.videos.length && (
+              <Videos
+                videos={movieDetail.movie.videos}
+              />
             )}
-            {!!movie.productionCompanies.length && (
+            {!!movieDetail.movie.productionCompanies.length && (
               <Section
-                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES)}
+                title={movieDetail.t(
+                  TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
+                )}
               >
                 <ProductionCompanies
-                  productionsList={movie.productionCompanies}
+                  productionsList={movieDetail.movie.productionCompanies}
                 />
               </Section>
             )}
             <Reviews
-              onPressViewAll={() => onPressReviews(movie)}
-              reviews={movie.reviews}
+              onPressViewAll={() => movieDetailPressHandlers.onPressReviews(movieDetail.movie)}
+              reviews={movieDetail.movie.reviews}
             />
             <SimilarSection
-              movie={movie}
-              onPressItem={onPressSimilarItem}
+              movie={movieDetail.movie}
+              onPressItem={movieDetailPressHandlers.onPressSimilarItem}
             />
           </>
         )}

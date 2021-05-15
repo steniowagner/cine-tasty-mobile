@@ -10,24 +10,14 @@ import * as Types from '@local-types';
 import * as Styles from './RecentSearchesListItem.styles';
 
 type RecentSearchesListItemProps = {
+  item: Types.RecentSearchItem;
   onPressRemove: () => void;
   onPressItem: () => void;
-  item: Types.RecentSearchItem;
 };
 
-const RecentSearchesListItem = ({
-  onPressRemove,
-  onPressItem,
-  item,
-}: RecentSearchesListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image: item.image,
+const RecentSearchesListItem = (props: RecentSearchesListItemProps) => {
+  const loadListItemImage = useLoadListItemImage({
+    image: props.item.image,
   });
 
   return (
@@ -35,14 +25,14 @@ const RecentSearchesListItem = ({
       testID="recent-searches-list-item"
     >
       <Styles.PressableContent
-        onPress={onPressItem}
+        onPress={props.onPressItem}
         testID="recent-searches-list-item-button"
       >
         <>
           <TMDBImage
-            onError={onError}
-            onLoad={onLoad}
-            image={item.image}
+            onError={loadListItemImage.onError}
+            onLoad={loadListItemImage.onLoad}
+            image={props.item.image}
             imageType="profile"
             style={{
               width: metrics.getWidthFromDP(Styles.IMAGE_WIDTH_PERCENTAGE),
@@ -50,17 +40,17 @@ const RecentSearchesListItem = ({
               borderRadius: metrics.smallSize,
             }}
           />
-          {isFallbackImageVisible && (
+          {loadListItemImage.isFallbackImageVisible && (
             <Styles.FallbackImageWrapper
               testID="fallback-image-wrapper"
               style={[
                 {
-                  opacity,
+                  opacity: loadListItemImage.opacity,
                 },
               ]}
             >
               {renderSVGIconConditionally({
-                condition: hasError,
+                condition: loadListItemImage.hasError,
                 ifTrue: {
                   colorThemeRef: 'fallbackImageIcon',
                   size: Styles.DEFAULT_ICON_SIZE,
@@ -75,11 +65,11 @@ const RecentSearchesListItem = ({
             </Styles.FallbackImageWrapper>
           )}
         </>
-        <Styles.ItemText>{item.title}</Styles.ItemText>
+        <Styles.ItemText>{props.item.title}</Styles.ItemText>
       </Styles.PressableContent>
       <Styles.CloseButtonWrapper
         testID="recent-searches-list-item-close-button"
-        onPress={onPressRemove}
+        onPress={props.onPressRemove}
       >
         <SVGIcon
           size={metrics.extraLargeSize}

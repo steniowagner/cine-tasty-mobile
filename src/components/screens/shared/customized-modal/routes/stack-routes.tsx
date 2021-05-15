@@ -8,7 +8,7 @@ import CustomModal from '../components/CustomizedModal';
 
 const Stack = createStackNavigator();
 
-const CustomModalStack = ({ route }: CustomModalStackProps) => (
+const CustomModalStack = (props: CustomModalStackProps) => (
   <Stack.Navigator
     screenOptions={{
       cardStyle: { backgroundColor: 'transparent' },
@@ -21,7 +21,7 @@ const CustomModalStack = ({ route }: CustomModalStackProps) => (
       }}
       component={CustomModal}
       initialParams={{
-        ...route.params,
+        ...props.route.params,
       }}
     />
   </Stack.Navigator>

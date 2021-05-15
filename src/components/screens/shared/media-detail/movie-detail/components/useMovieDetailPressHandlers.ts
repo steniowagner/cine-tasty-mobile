@@ -10,12 +10,10 @@ type UseMovieDetailPressHandlersProps = {
   navigation: MovieDetailNavigationProp;
 };
 
-const useMovieDetailPressHandlers = ({
-  navigation,
-}: UseMovieDetailPressHandlersProps) => {
+const useMovieDetailPressHandlers = (props: UseMovieDetailPressHandlersProps) => {
   const onPressSimilarItem = useCallback(
     (similar: SchemaTypes.MovieDetail_movie_similar) => {
-      navigation.push(Routes.Movie.DETAILS, {
+      props.navigation.push(Routes.Movie.DETAILS, {
         voteAverage: similar.voteAverage,
         posterPath: similar.posterPath,
         voteCount: similar.voteCount,
@@ -23,39 +21,39 @@ const useMovieDetailPressHandlers = ({
         id: similar.id,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   const onPressCast = useCallback(
     (id: string, name: string, image: string) => {
-      navigation.push(Routes.Famous.DETAILS, {
+      props.navigation.push(Routes.Famous.DETAILS, {
         profileImage: image,
         id: Number(id),
         name,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   const onPressCrew = useCallback(
     (id: string, name: string, image: string) => {
-      navigation.push(Routes.Famous.DETAILS, {
+      props.navigation.push(Routes.Famous.DETAILS, {
         profileImage: image,
         id: Number(id),
         name,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   const onPressReviews = useCallback(
     (movie: SchemaTypes.MovieDetail_movie) => {
-      navigation.navigate(Routes.MediaDetail.REVIEWS, {
+      props.navigation.navigate(Routes.MediaDetail.REVIEWS, {
         mediaTitle: movie.title,
         reviews: movie.reviews,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   return {

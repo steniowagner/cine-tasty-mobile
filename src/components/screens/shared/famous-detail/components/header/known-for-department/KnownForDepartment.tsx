@@ -8,24 +8,24 @@ type KnownForDepartmentProps = {
   knownForDepartment?: string;
 };
 
-const KnownForDepartment = ({ knownForDepartment }: KnownForDepartmentProps) => {
-  const { onGetTextWidth, opacity, width } = useKnownForDepartment();
+const KnownForDepartment = (props: KnownForDepartmentProps) => {
+  const knownForDepartment = useKnownForDepartment();
 
-  if (!knownForDepartment) {
+  if (!props.knownForDepartment) {
     return null;
   }
 
   return (
     <Styles.KnownForDepartmentWrapper
-      opacity={opacity}
-      width={width}
+      opacity={knownForDepartment.opacity}
+      width={knownForDepartment.width}
     >
       <InfoText
-        onTextLayout={({ nativeEvent: { lines } }) => onGetTextWidth(lines[0].width)}
+        onTextLayout={({ nativeEvent: { lines } }) => knownForDepartment.onGetTextWidth(lines[0].width)}
         // @ts-ignore
         withCustomColor
       >
-        {knownForDepartment}
+        {props.knownForDepartment}
       </InfoText>
     </Styles.KnownForDepartmentWrapper>
   );

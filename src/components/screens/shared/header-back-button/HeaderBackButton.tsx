@@ -10,9 +10,9 @@ type HeaderBackButtonProps = {
   onPress: () => void;
 };
 
-const HeaderBackButton = ({ onPress }: HeaderBackButtonProps) => (
+const HeaderBackButton = (props: HeaderBackButtonProps) => (
   <Styles.IconWrapper
-    onPress={onPress}
+    onPress={props.onPress}
   >
     <SVGIcon
       size={Platform.select({

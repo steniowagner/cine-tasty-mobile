@@ -17,16 +17,12 @@ type UseSearchByQueryProps = {
   searchType: SchemaTypes.SearchType;
 };
 
-const useSearchByQuery = ({
-  setQueryString,
-  searchType,
-  search,
-}: UseSearchByQueryProps) => {
+const useSearchByQuery = (props: UseSearchByQueryProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const debouncedSetQueryString = useRef(
     debounce((queryStringTyped: string) => {
-      setQueryString(queryStringTyped);
+      props.setQueryString(queryStringTyped);
     }, SEARCH_BY_QUERY_DELAY),
   ).current;
 
@@ -41,10 +37,10 @@ const useSearchByQuery = ({
       setIsLoading(true);
 
       const variables = {
-        input: { page: 1, query: query.trim(), type: searchType },
+        input: { page: 1, query: query.trim(), type: props.searchType },
       };
 
-      const { data } = await search(variables);
+      const { data } = await props.search(variables);
 
       setIsLoading(false);
 

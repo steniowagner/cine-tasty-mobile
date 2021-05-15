@@ -24,103 +24,90 @@ type TVShowSearchItems = SchemaTypes.SearchTVShow_search_items_BaseTVShow[];
 type MovieSearchPress = (item: SchemaTypes.SearchMovie_search_items_BaseMovie) => void;
 type MovieSearchItems = SchemaTypes.SearchMovie_search_items_BaseMovie[];
 
-const Search = ({ navigation, route }: SearchStackProps) => {
-  const {
-    onPressFooterReloadButton,
-    shouldShowEmptyListAdvise,
-    onPressHeaderReloadButton,
-    shouldShowRecentSearches,
-    hasPaginationError,
-    onTypeSearchQuery,
-    onEndReached,
-    isPaginating,
-    errorMessage,
-    isLoading,
-    items,
-    t,
-  } = useSearch({
-    i18nQueryByPaginationErrorRef: route.params.i18nQueryByPaginationErrorRef,
-    i18nQueryByTextErrorRef: route.params.i18nQueryByTextErrorRef,
-    searchType: route.params.searchType,
-    queryId: route.params.queryId,
+const Search = (props: SearchStackProps) => {
+  const search = useSearch({
+    i18nQueryByPaginationErrorRef: props.route.params.i18nQueryByPaginationErrorRef,
+    i18nQueryByTextErrorRef: props.route.params.i18nQueryByTextErrorRef,
+    searchType: props.route.params.searchType,
+    queryId: props.route.params.queryId,
   });
 
-  const { onPressRecentSearchItem, onPressListItem } = usePressHandlers({
-    searchType: route.params.searchType,
-    navigation,
+  const pressHandlers = usePressHandlers({
+    searchType: props.route.params.searchType,
+    navigation: props.navigation,
   });
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       // eslint-disable-next-line react/display-name
       header: () => (
         <SearchBar
-          placeholder={t(route.params.i18nSearchBarPlaceholderRef)}
-          onPressClose={() => navigation.goBack()}
-          onTypeSearchQuery={onTypeSearchQuery}
+          placeholder={search.t(props.route.params.i18nSearchBarPlaceholderRef)}
+          onPressClose={() => props.navigation.goBack()}
+          onTypeSearchQuery={search.onTypeSearchQuery}
         />
       ),
     });
-  }, [onTypeSearchQuery]);
+  }, [search.onTypeSearchQuery]);
 
   return (
     <>
-      {route.params.searchType === SchemaTypes.SearchType.PERSON && (
+      {props.route.params.searchType === SchemaTypes.SearchType.PERSON && (
         <FamousSearch
-          onPressListItem={onPressListItem as FamousSearchPress}
-          onPressHeaderReloadButton={onPressHeaderReloadButton}
-          onPressFooterReloadButton={onPressFooterReloadButton}
-          hasPaginationError={hasPaginationError}
-          items={items as FamousSearchItems}
-          onEndReached={onEndReached}
-          errorMessage={errorMessage}
-          isPaginating={isPaginating}
-          isLoading={isLoading}
+          onPressListItem={pressHandlers.onPressListItem as FamousSearchPress}
+          onPressHeaderReloadButton={search.onPressHeaderReloadButton}
+          onPressFooterReloadButton={search.onPressFooterReloadButton}
+          hasPaginationError={search.hasPaginationError}
+          items={search.items as FamousSearchItems}
+          onEndReached={search.onEndReached}
+          errorMessage={search.errorMessage}
+          isPaginating={search.isPaginating}
+          isLoading={search.isLoading}
         />
       )}
-      {route.params.searchType === SchemaTypes.SearchType.MOVIE && (
+      {props.route.params.searchType === SchemaTypes.SearchType.MOVIE && (
         <MediaSearch
-          onPressHeaderReloadButton={onPressHeaderReloadButton}
-          onPressFooterReloadButton={onPressFooterReloadButton}
-          onPressListItem={onPressListItem as MovieSearchPress}
-          hasPaginationError={hasPaginationError}
-          items={items as MovieSearchItems}
-          onEndReached={onEndReached}
-          errorMessage={errorMessage}
-          isPaginating={isPaginating}
-          isLoading={isLoading}
+          onPressHeaderReloadButton={search.onPressHeaderReloadButton}
+          onPressFooterReloadButton={search.onPressFooterReloadButton}
+          onPressListItem={pressHandlers.onPressListItem as MovieSearchPress}
+          hasPaginationError={search.hasPaginationError}
+          items={search.items as MovieSearchItems}
+          onEndReached={search.onEndReached}
+          errorMessage={search.errorMessage}
+          isPaginating={search.isPaginating}
+          isLoading={search.isLoading}
         />
       )}
-      {route.params.searchType === SchemaTypes.SearchType.TV && (
+      {props.route.params.searchType === SchemaTypes.SearchType.TV && (
         <MediaSearch
-          items={items as TVShowSearchItems}
-          onPressListItem={onPressListItem as TVShowSearchPress}
-          onPressHeaderReloadButton={onPressHeaderReloadButton}
-          onPressFooterReloadButton={onPressFooterReloadButton}
-          hasPaginationError={hasPaginationError}
-          onEndReached={onEndReached}
-          errorMessage={errorMessage}
-          isPaginating={isPaginating}
-          isLoading={isLoading}
+          items={search.items as TVShowSearchItems}
+          onPressListItem={pressHandlers.onPressListItem as TVShowSearchPress}
+          onPressHeaderReloadButton={search.onPressHeaderReloadButton}
+          onPressFooterReloadButton={search.onPressFooterReloadButton}
+          hasPaginationError={search.hasPaginationError}
+          onEndReached={search.onEndReached}
+          errorMessage={search.errorMessage}
+          isPaginating={search.isPaginating}
+          isLoading={search.isLoading}
         />
       )}
-      {shouldShowEmptyListAdvise && (
+      {search.shouldShowEmptyListAdvise && (
         <Advise
-          description={t(TRANSLATIONS.SEARCH_EMPTY_LIST_DESCRIPTION)}
-          suggestion={t(TRANSLATIONS.SEARCH_EMPTY_LIST_SUGGESTION)}
-          title={t(TRANSLATIONS.SEARCH_EMPTY_LIST_TITLE)}
+          description={search.t(TRANSLATIONS.SEARCH_EMPTY_LIST_DESCRIPTION)}
+          suggestion={search.t(TRANSLATIONS.SEARCH_EMPTY_LIST_SUGGESTION)}
+          title={search.t(TRANSLATIONS.SEARCH_EMPTY_LIST_TITLE)}
           icon="alert-box"
         />
       )}
-      {shouldShowRecentSearches && (
+      {search.shouldShowRecentSearches && (
         <RecentSearches
-          onPressItem={onPressRecentSearchItem}
-          searchType={route.params.searchType}
+          onPressItem={pressHandlers.onPressRecentSearchItem}
+          searchType={props.route.params.searchType}
         />
       )}
-      {!!errorMessage && (
+      {!!search.errorMessage && (
       <PopupAdvice
-        text={errorMessage}
+        text={search.errorMessage}
       />
       )}
     </>

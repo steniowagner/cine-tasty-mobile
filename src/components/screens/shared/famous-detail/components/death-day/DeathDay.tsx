@@ -10,8 +10,8 @@ type DeathInfoProps = {
   deathDate: string;
 };
 
-const DeathInfo = ({ deathDate }: DeathInfoProps) => {
-  const dateText = formatDate(deathDate);
+const DeathInfo = (props: DeathInfoProps) => {
+  const dateText = formatDate(props.deathDate);
 
   return (
     <Styles.Wrapper

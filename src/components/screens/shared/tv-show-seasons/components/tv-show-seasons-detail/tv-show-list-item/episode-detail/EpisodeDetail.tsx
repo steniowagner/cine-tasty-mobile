@@ -18,14 +18,14 @@ type EpisodeDetailProps = {
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
 };
 
-const EpisodeDetail = ({ episode }: EpisodeDetailProps) => {
+const EpisodeDetail = (props: EpisodeDetailProps) => {
   const { t } = useTranslation();
 
   const renderImage = useCallback(() => {
-    if (episode.stillPath) {
+    if (props.episode.stillPath) {
       return (
         <TMDBImage
-          image={episode.stillPath}
+          image={props.episode.stillPath}
           testID="episode-image"
           imageType="still"
           style={{
@@ -49,7 +49,7 @@ const EpisodeDetail = ({ episode }: EpisodeDetailProps) => {
         />
       </Styles.EpisodeImageFallback>
     );
-  }, [episode]);
+  }, [props.episode]);
 
   return (
     <Styles.Wrapper>
@@ -60,25 +60,25 @@ const EpisodeDetail = ({ episode }: EpisodeDetailProps) => {
         <Styles.EpisodeTitleText
           testID="episode-title-text"
         >
-          {episode.name}
+          {props.episode.name}
         </Styles.EpisodeTitleText>
         <StarsVotes
           textColor="rgba(0, 0, 0, 0.8)"
-          voteCount={episode.voteCount}
-          votes={episode.voteAverage}
+          voteCount={props.episode.voteCount}
+          votes={props.episode.voteAverage}
           withText
         />
         <Styles.EpisodeAiredText
           testID="air-date-text"
         >
           {`${t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE)} ${formatDate(
-            episode.airDate,
+            props.episode.airDate,
           )}`}
         </Styles.EpisodeAiredText>
         <Styles.EpisodeOverviewText
           testID="overview-text"
         >
-          {episode.overview}
+          {props.episode.overview}
         </Styles.EpisodeOverviewText>
       </ScrollView>
     </Styles.Wrapper>

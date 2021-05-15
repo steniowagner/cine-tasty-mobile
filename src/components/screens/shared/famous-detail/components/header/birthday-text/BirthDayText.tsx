@@ -8,14 +8,14 @@ type BirthdayTextProps = {
   rawBirthDate: string;
 };
 
-const BirthDayText = ({ rawBirthDate }: BirthdayTextProps) => {
-  const { dateText } = useParseDateToLocaleDate(rawBirthDate);
+const BirthDayText = (props: BirthdayTextProps) => {
+  const parseDateToLocaleDate = useParseDateToLocaleDate(props.rawBirthDate);
 
   return (
     <InfoText
       marginBottom={DEFAULT_MARGIN_VERTICAL - 3}
     >
-      {dateText}
+      {parseDateToLocaleDate.dateText}
     </InfoText>
   );
 };

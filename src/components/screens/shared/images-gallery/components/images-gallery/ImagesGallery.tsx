@@ -11,28 +11,23 @@ import ThumbsGalleryList from './thumbs-gallery-list/ThumbsGalleryList';
 import useImageGallery from './useImagesGallery';
 import * as Styles from './ImagesGallery.styles';
 
-const ImagesGallery = ({ navigation, route }: ImagesGalleryStackProps) => {
-  const {
-    isIndexesAllowedToRenderImage,
-    onFlatlistMomentumScrollEnd,
-    onPressBottomListItem,
-    indexImageSelected,
-  } = useImageGallery({
-    indexFirstItemSelected: route.params.indexSelected,
-    gallerySize: route.params.gallerySize,
+const ImagesGallery = (props: ImagesGalleryStackProps) => {
+  const imageGallery = useImageGallery({
+    indexFirstItemSelected: props.route.params.indexSelected,
+    gallerySize: props.route.params.gallerySize,
   });
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      title: `${indexImageSelected + 1}/${route.params.gallerySize}`,
+    props.navigation.setOptions({
+      title: `${imageGallery.indexImageSelected + 1}/${props.route.params.gallerySize}`,
     });
-  }, [indexImageSelected]);
+  }, [imageGallery.indexImageSelected]);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       headerLeft: () => (
         <HeaderIconButton
-          onPress={() => navigation.goBack()}
+          onPress={() => props.navigation.goBack()}
           iconName="close"
           withMarginLeft
         />
@@ -43,15 +38,15 @@ const ImagesGallery = ({ navigation, route }: ImagesGalleryStackProps) => {
   return (
     <Styles.Wrapper>
       <ImagesGalleryList
-        isIndexesAllowedToRenderImage={isIndexesAllowedToRenderImage}
-        onFlatlistMomentumScrollEnd={onFlatlistMomentumScrollEnd}
-        indexImageSelected={indexImageSelected}
-        images={route.params.images}
+        isIndexesAllowedToRenderImage={imageGallery.isIndexesAllowedToRenderImage}
+        onFlatlistMomentumScrollEnd={imageGallery.onFlatlistMomentumScrollEnd}
+        indexImageSelected={imageGallery.indexImageSelected}
+        images={props.route.params.images}
       />
       <ThumbsGalleryList
-        onPressBottomListItem={onPressBottomListItem}
-        indexImageSelected={indexImageSelected}
-        thumbs={route.params.images}
+        onPressBottomListItem={imageGallery.onPressBottomListItem}
+        indexImageSelected={imageGallery.indexImageSelected}
+        thumbs={props.route.params.images}
       />
     </Styles.Wrapper>
   );

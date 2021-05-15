@@ -14,14 +14,14 @@ type UseImagesGalleryListItemProps = {
   imageURL: string;
 };
 
-const useImagesGalleryListItem = ({ imageURL }: UseImagesGalleryListItemProps) => {
+const useImagesGalleryListItem = (props: UseImagesGalleryListItemProps) => {
   const [imageStatus, setImageStatus] = useState<ImageStatus>('LOADING');
   const [dimensions, setDimensions] = useState<Dimensions>(null);
   const [imageMode, setImageMode] = useState<ImageMode>('NONE');
 
   const getImageSize = useCallback(() => {
     Image.getSize(
-      imageURL,
+      props.imageURL,
       (width, height) => {
         setDimensions({
           width,
@@ -34,7 +34,7 @@ const useImagesGalleryListItem = ({ imageURL }: UseImagesGalleryListItemProps) =
         setImageStatus('ERROR');
       },
     );
-  }, [imageURL]);
+  }, [props.imageURL]);
 
   useEffect(() => {
     getImageSize();

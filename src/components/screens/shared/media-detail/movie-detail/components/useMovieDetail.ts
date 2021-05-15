@@ -20,31 +20,23 @@ type Directives = {
 
 type Variables = Directives & SchemaTypes.MovieDetailVariables;
 
-const useMovieDetail = ({
-  hasVoteAverage,
-  hasGenresIds,
-  hasVoteCount,
-  id,
-}: UseMovieDetailProps) => {
+const useMovieDetail = (props: UseMovieDetailProps) => {
   const { t } = useTranslation();
 
-  const { data, error, loading } = useQuery<SchemaTypes.MovieDetail, Variables>(
-    GET_MOVIE_DETAIL,
-    {
-      variables: {
-        withVoteAverage: !hasVoteAverage,
-        withGenresIds: !hasGenresIds,
-        withVoteCount: !hasVoteCount,
-        id: String(id),
-      },
-      fetchPolicy: 'cache-first',
+  const query = useQuery<SchemaTypes.MovieDetail, Variables>(GET_MOVIE_DETAIL, {
+    variables: {
+      withVoteAverage: !props.hasVoteAverage,
+      withGenresIds: !props.hasGenresIds,
+      withVoteCount: !props.hasVoteCount,
+      id: String(props.id),
     },
-  );
+    fetchPolicy: 'cache-first',
+  });
 
   return {
-    movie: data?.movie,
-    isLoading: loading,
-    hasError: !!error,
+    movie: query.data?.movie,
+    isLoading: query.loading,
+    hasError: !!query.error,
     t,
   };
 };

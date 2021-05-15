@@ -18,38 +18,28 @@ type MediaSearchProps = Types.BaseSearchProps & {
   items: MediaSearchItem[];
 };
 
-const MediaSearch = ({
-  onPressHeaderReloadButton,
-  onPressFooterReloadButton,
-  hasPaginationError,
-  onPressListItem,
-  onEndReached,
-  errorMessage,
-  isPaginating,
-  isLoading,
-  items,
-}: MediaSearchProps) => {
-  if (isLoading) {
+const MediaSearch = (props: MediaSearchProps) => {
+  if (props.isLoading) {
     return <LoadingMediaSearch />;
   }
 
   const shouldShowHeaderReloadButton = useMemo(
-    (): boolean => !items.length && !!errorMessage && !isLoading,
-    [items.length, errorMessage, isLoading],
+    (): boolean => !props.items.length && !!props.errorMessage && !props.isLoading,
+    [props.items.length, props.errorMessage, props.isLoading],
   );
 
   return (
     <FlatList
       ListHeaderComponent={() => shouldShowHeaderReloadButton && (
       <PaginatedListHeader
-        onPress={onPressHeaderReloadButton}
+        onPress={props.onPressHeaderReloadButton}
       />
       )}
-      ListFooterComponent={() => !!items.length && (
+      ListFooterComponent={() => !!props.items.length && (
       <ListFooterComponent
-        onPressReloadButton={onPressFooterReloadButton}
-        hasError={hasPaginationError}
-        isPaginating={isPaginating}
+        onPressReloadButton={props.onPressFooterReloadButton}
+        hasError={props.hasPaginationError}
+        isPaginating={props.isPaginating}
       />
       )}
       onEndReachedThreshold={Platform.select({
@@ -58,7 +48,7 @@ const MediaSearch = ({
       })}
       renderItem={({ item }) => (
         <MediaSearchListItem
-          onPressDetails={() => onPressListItem(item)}
+          onPressDetails={() => props.onPressListItem(item)}
           voteCount={item.voteCount}
           votes={item.voteAverage}
           image={item.posterPath}
@@ -67,9 +57,9 @@ const MediaSearch = ({
         />
       )}
       keyExtractor={({ id }) => `${id}`}
-      onEndReached={onEndReached}
+      onEndReached={props.onEndReached}
       testID="search-media-list"
-      data={items}
+      data={props.items}
     />
   );
 };

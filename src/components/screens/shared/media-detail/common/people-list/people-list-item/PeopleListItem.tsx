@@ -11,7 +11,7 @@ const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type PeopleListItemProps = {
   onPress: () => void;
-  withSubtext?: boolean;
+  withSubtext: boolean;
   isFirst: boolean;
   subText: string;
   image: string;
@@ -19,54 +19,39 @@ type PeopleListItemProps = {
   type: string;
 };
 
-const PeopleListItem = ({
-  withSubtext = true,
-  onPress,
-  isFirst,
-  subText,
-  image,
-  name,
-  type,
-}: PeopleListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
+const PeopleListItem = (props: PeopleListItemProps) => {
+  const loadListItemImage = useLoadListItemImage({
+    image: props.image,
   });
 
   return (
     <Styles.Wrapper
-      testID={`button-wrapper-${type}`}
-      isFirst={isFirst}
-      onPress={onPress}
+      testID={`button-wrapper-${props.type}`}
+      onPress={props.onPress}
     >
       <TMDBImage
         testID="person-image"
         imageType="poster"
-        onError={onError}
-        onLoad={onLoad}
-        image={image}
+        onError={loadListItemImage.onError}
+        onLoad={loadListItemImage.onLoad}
+        image={props.image}
         style={{
           width: '100%',
           height: '100%',
           borderRadius: metrics.extraSmallSize,
         }}
       />
-      {isFallbackImageVisible && (
+      {loadListItemImage.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity,
+              opacity: loadListItemImage.opacity,
             },
           ]}
         >
           {renderSVGIconConditionally({
-            condition: hasError,
+            condition: loadListItemImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,
@@ -86,13 +71,13 @@ const PeopleListItem = ({
           <Styles.PersonNameText
             testID="person-name"
           >
-            {name}
+            {props.name}
           </Styles.PersonNameText>
-          {withSubtext && (
+          {props.withSubtext && (
             <Styles.PersonSubText
               testID="person-subtext"
             >
-              {subText}
+              {props.subText}
             </Styles.PersonSubText>
           )}
         </Styles.TextContentWrapper>

@@ -20,31 +20,23 @@ type Directives = {
 
 type Variables = Directives & SchemaTypes.TVShowDetailVariables;
 
-const useTVShowDetail = ({
-  hasVoteAverage,
-  hasGenresIds,
-  hasVoteCount,
-  id,
-}: UseTVShowDetailProps) => {
+const useTVShowDetail = (props: UseTVShowDetailProps) => {
   const { t } = useTranslation();
 
-  const { data, error, loading } = useQuery<SchemaTypes.TVShowDetail, Variables>(
-    GET_TV_SHOW_DETAIL,
-    {
-      variables: {
-        withVoteAverage: !hasVoteAverage,
-        withGenresIds: !hasGenresIds,
-        withVoteCount: !hasVoteCount,
-        id: String(id),
-      },
-      fetchPolicy: 'cache-first',
+  const query = useQuery<SchemaTypes.TVShowDetail, Variables>(GET_TV_SHOW_DETAIL, {
+    variables: {
+      withVoteAverage: !props.hasVoteAverage,
+      withGenresIds: !props.hasGenresIds,
+      withVoteCount: !props.hasVoteCount,
+      id: String(props.id),
     },
-  );
+    fetchPolicy: 'cache-first',
+  });
 
   return {
-    tvShow: data?.tvShow,
-    isLoading: loading,
-    hasError: !!error,
+    tvShow: query.data?.tvShow,
+    isLoading: query.loading,
+    hasError: !!query.error,
     t,
   };
 };

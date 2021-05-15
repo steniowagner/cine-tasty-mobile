@@ -92,7 +92,7 @@ const useRecentSearches = ({
 
   return {
     persistItemToRecentSearches,
-    recentSearches,
+    data: recentSearches,
     onRemoveItem,
     t,
   };

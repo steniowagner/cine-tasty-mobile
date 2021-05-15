@@ -18,45 +18,40 @@ type HeaderInfoProps = {
   title: string;
 };
 
-const HeaderInfo = ({
-  votesAverage,
-  isLoading,
-  voteCount,
-  posterURL,
-  imageURL,
-  title,
-}: HeaderInfoProps) => {
+const HeaderInfo = (props: HeaderInfoProps) => {
   const { t } = useTranslation();
 
   return (
     <Styles.Wrapper>
       <BackgroundImage
-        isLoading={isLoading}
-        imageURL={imageURL}
+        isLoading={props.isLoading}
+        imageURL={props.imageURL}
       />
       <Styles.MediaInfoWrapper
         testID="media-info-wrapper"
       >
         <PosterImage
-          image={posterURL}
+          image={props.posterURL}
         />
         <Styles.TextContentWrapper>
-          <Styles.MediaTitleText>{title}</Styles.MediaTitleText>
-          {!!votesAverage && !!voteCount && (
+          <Styles.MediaTitleText>{props.title}</Styles.MediaTitleText>
+          {!!props.votesAverage && !!props.voteCount && (
             <Styles.VotesWrapper>
               <View>
                 <StarsVotes
-                  voteCount={voteCount}
-                  votes={votesAverage}
+                  voteCount={props.voteCount}
+                  votes={props.votesAverage}
                 />
                 <Styles.Row>
-                  <Styles.NumberOfVotesText>{voteCount}</Styles.NumberOfVotesText>
+                  <Styles.NumberOfVotesText>{props.voteCount}</Styles.NumberOfVotesText>
                   <Styles.VotesText>
                     {t(TRANSLATIONS.MEDIA_DETAIL_VOTES)}
                   </Styles.VotesText>
                 </Styles.Row>
               </View>
-              <Styles.VotesValueText>{votesAverage.toFixed(1)}</Styles.VotesValueText>
+              <Styles.VotesValueText>
+                {props.votesAverage.toFixed(1)}
+              </Styles.VotesValueText>
             </Styles.VotesWrapper>
           )}
         </Styles.TextContentWrapper>

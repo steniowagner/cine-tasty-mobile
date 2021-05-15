@@ -7,10 +7,10 @@ type ReviewSectionListItemProps = {
   author: string;
 };
 
-const ReviewSectionListItem = ({ review, author }: ReviewSectionListItemProps) => (
+const ReviewSectionListItem = (props: ReviewSectionListItemProps) => (
   <Styles.Wrapper>
-    <Styles.AuthorText>{author}</Styles.AuthorText>
-    <Styles.ReviewText>{review}</Styles.ReviewText>
+    <Styles.AuthorText>{props.author}</Styles.AuthorText>
+    <Styles.ReviewText>{props.review}</Styles.ReviewText>
   </Styles.Wrapper>
 );
 

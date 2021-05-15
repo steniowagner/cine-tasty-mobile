@@ -19,7 +19,7 @@ type UsePeopleListProps = {
   type: 'cast' | 'crew' | 'creator';
 };
 
-const usePeopleList = ({ dataset, type }: UsePeopleListProps) => {
+const usePeopleList = (props: UsePeopleListProps) => {
   const mergeCrewMemebersBySimilarJobs = useCallback(
     (crew: PeopleListItem[]): PeopleListItem[] => {
       const repeatedItemsMap = {};
@@ -72,16 +72,16 @@ const usePeopleList = ({ dataset, type }: UsePeopleListProps) => {
   );
 
   const parseDatasetToPeopleListItemDataset = useCallback(() => {
-    if (type === 'cast') {
-      const cast = dataset as Types.CastDataset;
+    if (props.type === 'cast') {
+      const cast = props.dataset as Types.CastDataset;
 
       return parseCastToPeopleListItem(cast);
     }
 
-    const crew = dataset as Types.CrewDataset;
+    const crew = props.dataset as Types.CrewDataset;
 
     return parseCrewToPeopleListItem(crew);
-  }, [dataset, type]);
+  }, [props.dataset, props.type]);
 
   return {
     items: parseDatasetToPeopleListItemDataset(),

@@ -13,21 +13,21 @@ type OverviewProps = {
   overview: string;
 };
 
-const Overview = ({ isLoading, overview }: OverviewProps) => {
+const Overview = (props: OverviewProps) => {
   const { t } = useTranslation();
 
   return (
     <Section
       title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)}
     >
-      {isLoading ? (
+      {props.isLoading ? (
         <LoadingOverview />
       ) : (
         <Styles.MediaItemDescriptionWrapper
           testID="media-item-description-wrapper"
         >
           <MediaItemDescription
-            description={overview}
+            description={props.overview}
           />
         </Styles.MediaItemDescriptionWrapper>
       )}

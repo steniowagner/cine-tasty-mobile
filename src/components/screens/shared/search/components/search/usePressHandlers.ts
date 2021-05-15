@@ -13,30 +13,30 @@ type UsePressHandlerProps = {
   navigation: SearchNavigationProp;
 };
 
-const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
-  const { persistItemToRecentSearches } = useRecentSearches({
+const usePressHandler = (props: UsePressHandlerProps) => {
+  const recentSearches = useRecentSearches({
     shouldSkipGetInitialRecentSearches: true,
-    searchType,
+    searchType: props.searchType,
   });
 
   const { onPressRecentSearchItem, onPressListItem } = useMemo(() => {
     const pressesHandlersMapping = {
       [SchemaTypes.SearchType.PERSON]: {
         onPressListItem: (item: SchemaTypes.SearchPerson_search_items_BasePerson) => {
-          persistItemToRecentSearches({
+          recentSearches.persistItemToRecentSearches({
             image: item.image,
             title: item.title,
             id: item.id,
           });
 
-          navigation.navigate(Routes.Famous.DETAILS, {
+          props.navigation.navigate(Routes.Famous.DETAILS, {
             profileImage: item.image,
             name: item.title,
             id: item.id,
           });
         },
         onPressRecentSearchItem: (person: Types.RecentSearchItem) => {
-          navigation.navigate(Routes.Famous.DETAILS, {
+          props.navigation.navigate(Routes.Famous.DETAILS, {
             profileImage: person.image,
             name: person.title,
             id: person.id,
@@ -45,13 +45,13 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
       },
       [SchemaTypes.SearchType.MOVIE]: {
         onPressListItem: (movie: SchemaTypes.SearchMovie_search_items_BaseMovie) => {
-          persistItemToRecentSearches({
+          recentSearches.persistItemToRecentSearches({
             image: movie.posterPath,
             title: movie.title,
             id: movie.id,
           });
 
-          navigation.navigate(Routes.Movie.DETAILS, {
+          props.navigation.navigate(Routes.Movie.DETAILS, {
             genreIds: movie.genreIds || [],
             voteAverage: movie.voteAverage,
             posterPath: movie.posterPath,
@@ -61,7 +61,7 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
           });
         },
         onPressRecentSearchItem: (movie: Types.RecentSearchItem) => {
-          navigation.navigate(Routes.Movie.DETAILS, {
+          props.navigation.navigate(Routes.Movie.DETAILS, {
             posterPath: movie.image,
             title: movie.title,
             id: movie.id,
@@ -70,13 +70,13 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
       },
       [SchemaTypes.SearchType.TV]: {
         onPressListItem: (tvShow: SchemaTypes.SearchTVShow_search_items_BaseTVShow) => {
-          persistItemToRecentSearches({
+          recentSearches.persistItemToRecentSearches({
             image: tvShow.posterPath,
             title: tvShow.title,
             id: tvShow.id,
           });
 
-          navigation.navigate(Routes.TVShow.DETAILS, {
+          props.navigation.navigate(Routes.TVShow.DETAILS, {
             genreIds: tvShow.genreIds || [],
             voteAverage: tvShow.voteAverage,
             posterPath: tvShow.posterPath,
@@ -86,7 +86,7 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
           });
         },
         onPressRecentSearchItem: (tvShow: Types.RecentSearchItem) => {
-          navigation.navigate(Routes.TVShow.DETAILS, {
+          props.navigation.navigate(Routes.TVShow.DETAILS, {
             posterPath: tvShow.image,
             title: tvShow.title,
             id: tvShow.id,
@@ -95,8 +95,8 @@ const usePressHandler = ({ navigation, searchType }: UsePressHandlerProps) => {
       },
     };
 
-    return pressesHandlersMapping[searchType];
-  }, [searchType]);
+    return pressesHandlersMapping[props.searchType];
+  }, [props.searchType]);
 
   return {
     onPressRecentSearchItem,

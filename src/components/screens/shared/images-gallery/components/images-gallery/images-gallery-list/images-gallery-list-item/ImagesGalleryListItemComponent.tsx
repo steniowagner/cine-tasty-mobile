@@ -12,22 +12,18 @@ type ImagesGalleryListItemComponentProps = {
   imageURL: string;
 };
 
-const ImagesGalleryListItemComponent = ({
-  imageURL,
-}: ImagesGalleryListItemComponentProps) => {
-  const { uri } = useTMDBImage({
+const ImagesGalleryListItemComponent = (props: ImagesGalleryListItemComponentProps) => {
+  const tmdbImage = useTMDBImage({
+    image: props.imageURL,
     imageType: 'backdrop',
     isThumbnail: false,
-    image: imageURL,
   });
 
-  const {
-    isLandscape, isPortrait, isLoading, hasError,
-  } = useImagesGalleryListItem({
-    imageURL: uri,
+  const imagesGalleryListItem = useImagesGalleryListItem({
+    imageURL: tmdbImage.uri,
   });
 
-  if (isLoading) {
+  if (imagesGalleryListItem.isLoading) {
     return (
       <Styles.Wrapper
         testID="images-gallery-list-item-loading"
@@ -37,7 +33,7 @@ const ImagesGalleryListItemComponent = ({
     );
   }
 
-  if (hasError) {
+  if (imagesGalleryListItem.hasError) {
     return (
       <Styles.ImageOffWrapper
         testID="image-error-wrapper"
@@ -51,14 +47,14 @@ const ImagesGalleryListItemComponent = ({
     );
   }
 
-  if (isLandscape || isPortrait) {
+  if (imagesGalleryListItem.isLandscape || imagesGalleryListItem.isPortrait) {
     let height = '0%';
 
-    if (isLandscape) {
+    if (imagesGalleryListItem.isLandscape) {
       height = '50%';
     }
 
-    if (isPortrait) {
+    if (imagesGalleryListItem.isPortrait) {
       height = '65%';
     }
 
@@ -67,8 +63,8 @@ const ImagesGalleryListItemComponent = ({
         testID="images-gallery-list-item"
       >
         <TMDBImage
-          image={imageURL}
           style={{ width: '100%', height }}
+          image={props.imageURL}
           imageType="backdrop"
         />
       </Styles.Wrapper>

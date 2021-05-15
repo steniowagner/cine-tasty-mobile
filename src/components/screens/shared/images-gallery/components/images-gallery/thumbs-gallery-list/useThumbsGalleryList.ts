@@ -10,16 +10,16 @@ type UseThumbsGalleryListProps = {
   indexImageSelected: number;
 };
 
-const useThumbsGalleryList = ({ indexImageSelected }: UseThumbsGalleryListProps) => {
+const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
   const thumbsListRef = useRef<FlatList>();
 
   const handleMoveThumbsGalleryList = useCallback(() => {
-    const isThumbBeyondHalfScreen = indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
+    const isThumbBeyondHalfScreen = props.indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
         - THUMB_SIZE / 2
         - metrics.extraLargeSize
       > metrics.width / 2;
 
-    const middleScreenOffset = indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
+    const middleScreenOffset = props.indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
       + metrics.extraLargeSize
       - (metrics.width / 2 - THUMB_SIZE / 2);
 
@@ -29,13 +29,13 @@ const useThumbsGalleryList = ({ indexImageSelected }: UseThumbsGalleryListProps)
       animated: true,
       offset,
     });
-  }, [indexImageSelected]);
+  }, [props.indexImageSelected]);
 
   useEffect(() => {
     if (thumbsListRef && thumbsListRef.current) {
       handleMoveThumbsGalleryList();
     }
-  }, [indexImageSelected]);
+  }, [props.indexImageSelected]);
 
   return {
     thumbsListRef,

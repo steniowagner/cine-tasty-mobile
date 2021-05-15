@@ -13,24 +13,18 @@ type ProfileImageProps = {
   profileImage: string;
 };
 
-const ProfileImage = ({ profileImage }: ProfileImageProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image: profileImage,
+const ProfileImage = (props: ProfileImageProps) => {
+  const loadListItemImage = useLoadListItemImage({
+    image: props.profileImage,
   });
 
   return (
     <>
       <TMDBImage
         imageType="profile"
-        onError={onError}
-        onLoad={onLoad}
-        image={profileImage}
+        onError={loadListItemImage.onError}
+        onLoad={loadListItemImage.onLoad}
+        image={props.profileImage}
         testID="profile-image"
         style={{
           width: metrics.getWidthFromDP(Styles.IMAGE_SQUARE_PERCENTAGE),
@@ -38,17 +32,17 @@ const ProfileImage = ({ profileImage }: ProfileImageProps) => {
           borderRadius: metrics.extraSmallSize,
         }}
       />
-      {isFallbackImageVisible && (
+      {loadListItemImage.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity,
+              opacity: loadListItemImage.opacity,
             },
           ]}
         >
           {renderSVGIconConditionally({
-            condition: hasError,
+            condition: loadListItemImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,

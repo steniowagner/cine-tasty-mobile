@@ -36,22 +36,16 @@ type UsePaginatedSearchProps = {
   queryString: string;
 };
 
-const usePaginatedSearch = ({
-  concatPaginatedItems,
-  queryString,
-  searchType,
-  onError,
-  search,
-}: UsePaginatedSearchProps) => {
+const usePaginatedSearch = (props: UsePaginatedSearchProps) => {
   const [pagination, setPagination] = useState<Pagination>(initialPagination);
 
   const onSearchByPagination = useCallback(
     async ({ queryStringTyped, pageSelected }: DebouncedPaginationProps) => {
       try {
         const variables = {
-          input: { page: pageSelected, query: queryStringTyped, type: searchType },
+          input: { page: pageSelected, query: queryStringTyped, type: props.searchType },
         };
-        const { data } = await search(variables);
+        const { data } = await props.search(variables);
 
         setPagination((previousPagination: Pagination) => ({
           ...previousPagination,
@@ -62,14 +56,14 @@ const usePaginatedSearch = ({
           return;
         }
 
-        concatPaginatedItems(data);
+        props.concatPaginatedItems(data);
       } catch (err) {
         setPagination((previousPagination: Pagination) => ({
           page: previousPagination.page - 1,
           isPaginating: false,
         }));
 
-        onError();
+        props.onError();
       }
     },
     [],
@@ -84,7 +78,7 @@ const usePaginatedSearch = ({
   useEffect(() => {
     if (pagination.isPaginating) {
       debouncedPaginateSearch({
-        queryStringTyped: queryString,
+        queryStringTyped: props.queryString,
         pageSelected: pagination.page,
       });
     }

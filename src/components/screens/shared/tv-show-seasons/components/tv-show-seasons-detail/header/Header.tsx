@@ -10,7 +10,7 @@ type HeaderProps = {
   image: string;
 };
 
-const Header = ({ overview, image }: HeaderProps) => (
+const Header = (props: HeaderProps) => (
   <Styles.Wrapper
     testID="header-wrapper"
   >
@@ -18,11 +18,11 @@ const Header = ({ overview, image }: HeaderProps) => (
       testID="poster-image-wrapper"
     >
       <SeasonPosterImage
-        image={image}
+        image={props.image}
       />
     </Styles.SeasonPosterImageWrapper>
     <SeasonOverviewText
-      overview={overview}
+      overview={props.overview}
     />
   </Styles.Wrapper>
 );

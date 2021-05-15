@@ -11,9 +11,9 @@ type ModalDetailProps = {
   children: JSX.Element;
 };
 
-const ModalDetail = ({ onCloseModal, children }: ModalDetailProps) => (
+const ModalDetail = (props: ModalDetailProps) => (
   <Modal
-    onRequestClose={onCloseModal}
+    onRequestClose={props.onCloseModal}
     animationType="fade"
     hardwareAccelerated
     transparent
@@ -22,10 +22,10 @@ const ModalDetail = ({ onCloseModal, children }: ModalDetailProps) => (
       testID="modal-wrapper"
     >
       <View>
-        {children}
+        {props.children}
         <Styles.CloseButtonWrapper
           testID="close-modal-button"
-          onPress={onCloseModal}
+          onPress={props.onCloseModal}
         >
           <SVGIcon
             size={metrics.getWidthFromDP('9%')}

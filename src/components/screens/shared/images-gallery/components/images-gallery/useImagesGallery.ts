@@ -8,14 +8,11 @@ type UseImageGalleryProps = {
   gallerySize: number;
 };
 
-const useImageGallery = ({
-  indexFirstItemSelected,
-  gallerySize,
-}: UseImageGalleryProps) => {
+const useImageGallery = (props: UseImageGalleryProps) => {
   const initialIndexesAllowedToRenderImage = useMemo(
-    (): boolean[] => Array(gallerySize)
+    (): boolean[] => Array(props.gallerySize)
       .fill(false)
-      .map((_, index) => index === indexFirstItemSelected),
+      .map((_, index) => index === props.indexFirstItemSelected),
     [],
   );
 
@@ -24,7 +21,7 @@ const useImageGallery = ({
   >(initialIndexesAllowedToRenderImage);
 
   const [indexImageSelected, setIndexImageSelected] = useState<number>(
-    indexFirstItemSelected,
+    props.indexFirstItemSelected,
   );
 
   const permitImageAtIndexToRender = useCallback(

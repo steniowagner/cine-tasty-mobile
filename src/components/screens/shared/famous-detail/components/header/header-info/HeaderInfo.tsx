@@ -16,44 +16,37 @@ type HeaderInfoProps = {
   name: string;
 };
 
-const HeaderInfo = ({
-  knownForDepartment,
-  placeOfBirth,
-  profileImage,
-  isLoading,
-  birthDate,
-  name,
-}: HeaderInfoProps) => (
+const HeaderInfo = (props: HeaderInfoProps) => (
   <Styles.Wrapper>
     <Styles.NameText
       testID="name-text"
     >
-      {name}
+      {props.name}
     </Styles.NameText>
     <Styles.InfoWrapper>
       <ProfileImage
-        profileImage={profileImage}
+        profileImage={props.profileImage}
       />
-      {isLoading ? (
+      {props.isLoading ? (
         <HeaderLoadingPlaceholder />
       ) : (
         <Styles.TextContentWrapper>
           <Styles.InfoTextWrapper>
-            {!!birthDate && (
+            {!!props.birthDate && (
             <BirthDayText
-              rawBirthDate={birthDate}
+              rawBirthDate={props.birthDate}
             />
             )}
-            {!!placeOfBirth && (
+            {!!props.placeOfBirth && (
               <InfoText
                 marginBottom={DEFAULT_MARGIN_VERTICAL}
               >
-                {placeOfBirth}
+                {props.placeOfBirth}
               </InfoText>
             )}
           </Styles.InfoTextWrapper>
           <KnownForDepartment
-            knownForDepartment={knownForDepartment}
+            knownForDepartment={props.knownForDepartment}
           />
         </Styles.TextContentWrapper>
       )}

@@ -15,18 +15,18 @@ type GeneralInfoProps = {
   infoItems: InfoItem[];
 };
 
-const GeneralInfo = ({ infoItems }: GeneralInfoProps) => {
+const GeneralInfo = (props: GeneralInfoProps) => {
   const { t } = useTranslation();
 
   return (
-    !!infoItems.length && (
+    !!props.infoItems.length && (
       <Section
         title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_DETAILS)}
       >
         <Styles.Wrapper
           testID="general-info-wrapper"
         >
-          {infoItems.map((infoItem) => (
+          {props.infoItems.map((infoItem) => (
             <Styles.InfoCellWrapper
               key={infoItem.title}
             >

@@ -16,22 +16,19 @@ type ImagesGalleryListProps = {
   images: string[];
 };
 
-const ImagesGalleryList = ({
-  isIndexesAllowedToRenderImage,
-  onFlatlistMomentumScrollEnd,
-  indexImageSelected,
-  images,
-}: ImagesGalleryListProps) => {
-  const { galleryListRef } = useImagesGalleryList({ indexImageSelected });
+const ImagesGalleryList = (props: ImagesGalleryListProps) => {
+  const imagesGalleryList = useImagesGalleryList({
+    indexImageSelected: props.indexImageSelected,
+  });
 
   return (
     <FlatList
-      onMomentumScrollEnd={onFlatlistMomentumScrollEnd}
+      onMomentumScrollEnd={props.onFlatlistMomentumScrollEnd}
       renderItem={({ item, index }) => {
-        if (isIndexesAllowedToRenderImage[index]) {
+        if (props.isIndexesAllowedToRenderImage[index]) {
           return (
             <ImagesGalleryListItem
-              isFocused={indexImageSelected === index}
+              isFocused={props.indexImageSelected === index}
               imageURL={item}
             />
           );
@@ -43,17 +40,17 @@ const ImagesGalleryList = ({
           />
         );
       }}
-      initialScrollIndex={indexImageSelected}
+      initialScrollIndex={props.indexImageSelected}
       showsHorizontalScrollIndicator={false}
       getItemLayout={(_, index) => ({
         offset: metrics.width * index,
         length: metrics.width,
         index,
       })}
+      ref={imagesGalleryList.galleryListRef}
       keyExtractor={(item) => item}
-      data={images}
+      data={props.images}
       testID="images-list"
-      ref={galleryListRef}
       bounces={false}
       pagingEnabled
       horizontal

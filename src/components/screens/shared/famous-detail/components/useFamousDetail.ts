@@ -11,13 +11,13 @@ type UseFamousDetailProps = {
   id: number;
 };
 
-const useFamousDetail = ({ id }: UseFamousDetailProps) => {
-  const { data, error, loading } = useQuery<
+const useFamousDetail = (props: UseFamousDetailProps) => {
+  const query = useQuery<
     SchemaTypes.GetFamousDetail,
     SchemaTypes.GetFamousDetailVariables
   >(GET_FAMOUS_DETAIL, {
     variables: {
-      id,
+      id: props.id,
     },
     fetchPolicy: 'cache-first',
   });
@@ -25,19 +25,19 @@ const useFamousDetail = ({ id }: UseFamousDetailProps) => {
   const { t } = useTranslation();
 
   const backgroundImage = useMemo((): string => {
-    if (data && data.person) {
-      const imageSelected = getRandomImageFromDataset(data.person.images, '');
+    if (query.data && query.data.person) {
+      const imageSelected = getRandomImageFromDataset(query.data.person.images, '');
 
       return imageSelected;
     }
 
     return '';
-  }, [data]);
+  }, [query.data]);
 
   return {
-    famous: data?.person,
-    isLoading: loading,
-    hasError: !!error,
+    famous: query.data?.person,
+    isLoading: query.loading,
+    hasError: !!query.error,
     backgroundImage,
     t,
   };

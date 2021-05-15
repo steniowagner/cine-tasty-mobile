@@ -21,7 +21,7 @@ type VideosProps = {
   )[];
 };
 
-const Videos = ({ videos }: VideosProps) => {
+const Videos = (props: VideosProps) => {
   const { t } = useTranslation();
 
   return (
@@ -58,7 +58,7 @@ const Videos = ({ videos }: VideosProps) => {
           </Styles.VideoListItemWrapper>
         )}
         testID="videos-list"
-        data={videos}
+        data={props.videos}
         horizontal
       />
     </Section>

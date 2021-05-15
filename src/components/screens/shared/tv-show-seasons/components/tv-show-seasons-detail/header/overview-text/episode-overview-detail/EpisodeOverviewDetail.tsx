@@ -7,13 +7,13 @@ type EpisodeOverviewDetailProps = {
   overview: string;
 };
 
-const EpisodeOverviewDetail = ({ overview }: EpisodeOverviewDetailProps) => (
+const EpisodeOverviewDetail = (props: EpisodeOverviewDetailProps) => (
   <Styles.Wrapper>
     <ScrollView>
       <Styles.DescriptionText
         testID="overview-description-text"
       >
-        {overview}
+        {props.overview}
       </Styles.DescriptionText>
     </ScrollView>
   </Styles.Wrapper>

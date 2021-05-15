@@ -9,7 +9,7 @@ import metrics from '@styles/metrics';
 import { ReviewsStackProps } from '../routes/route-params-types';
 import * as Styles from './Reviews.styles';
 
-const Reviews = ({ route }: ReviewsStackProps) => {
+const Reviews = (props: ReviewsStackProps) => {
   const { t } = useTranslation();
 
   return (
@@ -31,7 +31,7 @@ const Reviews = ({ route }: ReviewsStackProps) => {
         </Styles.ReviewsText>
       )}
       ItemSeparatorComponent={() => <Styles.Separator />}
-      data={route.params.reviews}
+      data={props.route.params.reviews}
     />
   );
 };

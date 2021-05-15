@@ -20,16 +20,14 @@ const getTabStyleWidth = (numberOfSeasons: number): number => {
   return metrics.width / 3;
 };
 
-const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => {
+const TVShowSeasonsDetailStack = (props: TVShowSeasonsStackProps) => {
   const { t } = useTranslation();
 
-  const { numberOfSeasons } = route.params;
-
-  if (numberOfSeasons === 1) {
+  if (props.route.params.numberOfSeasons === 1) {
     return (
       <>
         <StatusBar
-          backgroundColor={theme.colors.primary}
+          backgroundColor={props.theme.colors.primary}
           barStyle="dark-content"
           animated
         />
@@ -37,7 +35,7 @@ const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => 
           // @ts-ignore
           route={{
             params: {
-              id: route.params.id,
+              id: props.route.params.id,
               season: 1,
             },
           }}
@@ -49,34 +47,34 @@ const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => 
   return (
     <>
       <StatusBar
-        backgroundColor={theme.colors.primary}
+        backgroundColor={props.theme.colors.primary}
         barStyle="dark-content"
         animated
       />
       <Tab.Navigator
         initialLayout={{ width: metrics.width, height: metrics.height }}
         tabBarOptions={{
-          activeTintColor: theme.colors.buttonText,
+          activeTintColor: props.theme.colors.buttonText,
           style: {
-            backgroundColor: theme.colors.primary,
+            backgroundColor: props.theme.colors.primary,
           },
           indicatorStyle: {
-            backgroundColor: theme.colors.buttonText,
-            height: theme.metrics.extraSmallSize,
+            backgroundColor: props.theme.colors.buttonText,
+            height: props.theme.metrics.extraSmallSize,
           },
           labelStyle: {
-            fontSize: theme.metrics.mediumSize * 1.2,
+            fontSize: props.theme.metrics.mediumSize * 1.2,
             fontFamily: 'CircularStd-Bold',
           },
           tabStyle: {
-            width: getTabStyleWidth(numberOfSeasons),
+            width: getTabStyleWidth(props.route.params.numberOfSeasons),
           },
           scrollEnabled: true,
         }}
         lazyPreloadDistance={0}
         lazy
       >
-        {Array(numberOfSeasons)
+        {Array(props.route.params.numberOfSeasons)
           .fill({})
           .map((_, index) => (
             <Tab.Screen
@@ -87,7 +85,7 @@ const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => 
                 TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON,
               )} ${index + 1}`}
               initialParams={{
-                id: route.params.id,
+                id: props.route.params.id,
                 season: index + 1,
               }}
             />

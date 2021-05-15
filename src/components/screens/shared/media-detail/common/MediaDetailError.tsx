@@ -11,14 +11,14 @@ type MediaDetailErrorProps = {
   theme: DefaultTheme;
 };
 
-const MediaDetailError = ({ barStyle, theme }: MediaDetailErrorProps) => {
+const MediaDetailError = (props: MediaDetailErrorProps) => {
   const { t } = useTranslation();
 
   return (
     <>
       <StatusBar
-        backgroundColor={theme.colors.secondary}
-        barStyle={barStyle}
+        backgroundColor={props.theme.colors.secondary}
+        barStyle={props.barStyle}
         animated
       />
       <Advise

@@ -18,9 +18,7 @@ type UseRenderFamousDetailSectionsProps = {
   navigation: FamousDetailNavigationProp;
 };
 
-const useRenderFamousDetailSections = ({
-  navigation,
-}: UseRenderFamousDetailSectionsProps) => {
+const useRenderFamousDetailSections = (props: UseRenderFamousDetailSectionsProps) => {
   const { t } = useTranslation();
 
   const renderImagesSection = useCallback((images: string[]) => {
@@ -55,7 +53,7 @@ const useRenderFamousDetailSections = ({
           <FlatList
             renderItem={({ item, index }) => (
               <SimplifiedMediaListItem
-                onPress={() => navigation.push(Routes.Movie.DETAILS, {
+                onPress={() => props.navigation.push(Routes.Movie.DETAILS, {
                   voteAverage: item.voteAverage,
                   posterPath: item.posterPath,
                   voteCount: item.voteCount,
@@ -97,7 +95,7 @@ const useRenderFamousDetailSections = ({
                 voteAverage={item.voteAverage}
                 voteCount={item.voteCount}
                 isFirst={index === 0}
-                onPress={() => navigation.push(Routes.TVShow.DETAILS, {
+                onPress={() => props.navigation.push(Routes.TVShow.DETAILS, {
                   voteAverage: item.voteAverage,
                   posterPath: item.posterPath,
                   voteCount: item.voteCount,

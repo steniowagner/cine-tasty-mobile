@@ -9,18 +9,10 @@ type SeasonOverviewTextProps = {
   overview: string;
 };
 
-const SeasonOverviewText = ({ overview }: SeasonOverviewTextProps) => {
-  const {
-    shouldShowReadMoreButton,
-    readMoreButtonText,
-    onGetTextLayout,
-    onPressReadMore,
-    numberOfLines,
-    onCloseModal,
-    isModalOpen,
-  } = useSeasonOverviewText();
+const SeasonOverviewText = (props: SeasonOverviewTextProps) => {
+  const seasonOverviewText = useSeasonOverviewText();
 
-  if (!overview) {
+  if (!props.overview) {
     return (
       <Styles.OverviewText
         testID="overview-text"
@@ -33,36 +25,36 @@ const SeasonOverviewText = ({ overview }: SeasonOverviewTextProps) => {
   return (
     <>
       <Styles.Wrapper
-        shouldShowReadMoreButton={shouldShowReadMoreButton}
+        shouldShowReadMoreButton={seasonOverviewText.shouldShowReadMoreButton}
         testID="season-overview-wrapper"
       >
         <Styles.OverviewText
           // @ts-ignore onTextLayout does exist on Text component
-          onTextLayout={({ nativeEvent: { lines } }) => onGetTextLayout(lines.length)}
-          numberOfLines={numberOfLines}
+          onTextLayout={({ nativeEvent: { lines } }) => seasonOverviewText.onGetTextLayout(lines.length)}
+          numberOfLines={seasonOverviewText.numberOfLines}
           testID="overview-text"
         >
-          {overview}
+          {props.overview}
         </Styles.OverviewText>
-        {shouldShowReadMoreButton && (
+        {seasonOverviewText.shouldShowReadMoreButton && (
           <Styles.ReadMoreButton
-            onPress={onPressReadMore}
+            onPress={seasonOverviewText.onPressReadMore}
             testID="read-more-button"
           >
             <Styles.ReadMoreText
               testID="read-more-text"
             >
-              {readMoreButtonText}
+              {seasonOverviewText.readMoreButtonText}
             </Styles.ReadMoreText>
           </Styles.ReadMoreButton>
         )}
       </Styles.Wrapper>
-      {isModalOpen && (
+      {seasonOverviewText.isModalOpen && (
         <ModalDetail
-          onCloseModal={onCloseModal}
+          onCloseModal={seasonOverviewText.onCloseModal}
         >
           <EpisodeOverviewDetail
-            overview={overview}
+            overview={props.overview}
           />
         </ModalDetail>
       )}

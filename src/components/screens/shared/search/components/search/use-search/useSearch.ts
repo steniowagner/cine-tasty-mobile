@@ -24,12 +24,7 @@ type UseSearchProps = {
   queryId: Types.CineTastyQuery;
 };
 
-const useSearch = ({
-  i18nQueryByPaginationErrorRef,
-  i18nQueryByTextErrorRef,
-  searchType,
-  queryId,
-}: UseSearchProps) => {
+const useSearch = (props: UseSearchProps) => {
   const [queryResult, setQueryResult] = useState<Types.PaginatedQueryResult>(
     INITIAL_QUERY_RESULT,
   );
@@ -38,15 +33,15 @@ const useSearch = ({
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [queryString, setQueryString] = useState<string>('');
 
-  const query = useMemo(() => getQuery(queryId), [queryId]);
+  const query = useMemo(() => getQuery(props.queryId), [props.queryId]);
 
   const search = useImperativeQuery<Types.SearchResult>(query);
 
   const { t } = useTranslation();
 
-  const { onTypeSearchQuery, onSearchByQuery, isLoading } = useSearchByQuery({
+  const searchByQuery = useSearchByQuery({
+    searchType: props.searchType,
     setQueryString,
-    searchType,
     search,
   });
 
@@ -61,15 +56,15 @@ const useSearch = ({
   );
 
   const onPaginationError = useCallback(() => {
-    setErrorMessage(i18nQueryByPaginationErrorRef);
+    setErrorMessage(props.i18nQueryByPaginationErrorRef);
     setHasPaginationError(true);
   }, []);
 
-  const { restartPaginatedSearch, onPaginateSearch, isPaginating } = usePaginatedSearch({
+  const paginatedSearch = usePaginatedSearch({
+    searchType: props.searchType,
     onError: onPaginationError,
     concatPaginatedItems,
     queryString,
-    searchType,
     search,
   });
 
@@ -77,9 +72,9 @@ const useSearch = ({
     try {
       setIsSearchResultEmpty(false);
 
-      const { search: data } = await onSearchByQuery(queryString);
+      const { search: data } = await searchByQuery.onSearchByQuery(queryString);
 
-      restartPaginatedSearch();
+      paginatedSearch.restartPaginatedSearch();
 
       if (!data.items.length) {
         setIsSearchResultEmpty(true);
@@ -90,7 +85,7 @@ const useSearch = ({
         items: data.items,
       });
     } catch (error) {
-      setErrorMessage(i18nQueryByTextErrorRef);
+      setErrorMessage(props.i18nQueryByTextErrorRef);
     }
   }, [queryString]);
 
@@ -106,7 +101,7 @@ const useSearch = ({
     setErrorMessage('');
 
     if (queryResult.hasMore && queryResult.items.length > 0) {
-      onPaginateSearch();
+      paginatedSearch.onPaginateSearch();
     }
   }, [hasPaginationError, queryResult]);
 
@@ -126,20 +121,31 @@ const useSearch = ({
     }
   }, [queryString]);
 
+  const shouldShowRecentSearches = useMemo(
+    () => !queryString
+      && !searchByQuery.isLoading
+      && !errorMessage
+      && !queryResult.items.length,
+    [queryString, searchByQuery.isLoading, errorMessage, queryResult.items],
+  );
+
+  const shouldShowEmptyListAdvise = useMemo(
+    () => isSearchResultEmpty && !searchByQuery.isLoading && !errorMessage && !!queryString,
+    [isSearchResultEmpty, searchByQuery.isLoading, errorMessage, queryString],
+  );
+
   return {
-    shouldShowRecentSearches:
-      !queryString && !isLoading && !errorMessage && !queryResult.items.length,
-    shouldShowEmptyListAdvise:
-      isSearchResultEmpty && !isLoading && !errorMessage && !!queryString,
+    onTypeSearchQuery: searchByQuery.onTypeSearchQuery,
+    isPaginating: paginatedSearch.isPaginating,
     onEndReached: handleOnPaginatedSearch,
+    isLoading: searchByQuery.isLoading,
+    shouldShowEmptyListAdvise,
+    shouldShowRecentSearches,
     onPressFooterReloadButton,
     onPressHeaderReloadButton,
     items: queryResult.items,
     hasPaginationError,
-    onTypeSearchQuery,
     errorMessage,
-    isPaginating,
-    isLoading,
     t,
   };
 };

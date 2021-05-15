@@ -12,19 +12,17 @@ type ThumbsGalleryListProps = {
   thumbs: string[];
 };
 
-const ThumbsGalleryList = ({
-  onPressBottomListItem,
-  indexImageSelected,
-  thumbs,
-}: ThumbsGalleryListProps) => {
-  const { thumbsListRef } = useThumbsGalleryList({ indexImageSelected });
+const ThumbsGalleryList = (props: ThumbsGalleryListProps) => {
+  const thumbsGalleryList = useThumbsGalleryList({
+    indexImageSelected: props.indexImageSelected,
+  });
 
   return (
     <FlatList
       renderItem={({ item, index }) => (
         <ThumbsGalleryListItem
-          onPress={() => onPressBottomListItem(index)}
-          isSelected={indexImageSelected === index}
+          onPress={() => props.onPressBottomListItem(index)}
+          isSelected={props.indexImageSelected === index}
           image={item}
         />
       )}
@@ -42,12 +40,12 @@ const ThumbsGalleryList = ({
         length: THUMB_SPACING + THUMB_SIZE,
         index,
       })}
-      initialScrollIndex={indexImageSelected}
+      initialScrollIndex={props.indexImageSelected}
       showsHorizontalScrollIndicator={false}
+      ref={thumbsGalleryList.thumbsListRef}
       keyExtractor={(item) => item}
+      data={props.thumbs}
       testID="thumb-list"
-      ref={thumbsListRef}
-      data={thumbs}
       horizontal
     />
   );

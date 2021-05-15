@@ -6,15 +6,10 @@ import styled from 'styled-components';
 
 import CONSTANTS from '@utils/constants';
 
-type WrapperStyleProps = {
-  isFirst: boolean;
-};
-
-export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
+export const Wrapper = styled(TouchableOpacity)`
   width: ${({ theme }) => theme.metrics.getWidthFromDP('40%')}px;
   height: ${({ theme }) => theme.metrics.getWidthFromDP('55%')}px;
   margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  margin-left: ${({ isFirst }) => (isFirst ? CONSTANTS.VALUES.DEFAULT_SPACING : 0)}px;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
 `;
 

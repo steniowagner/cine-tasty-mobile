@@ -23,13 +23,10 @@ type HookState = {
   shouldHideCard: boolean;
 };
 
-const useCustomizedModal = ({
-  cardContainerHeight,
-  onClose,
-}: UseCustomizedModalProps): HookState => {
+const useCustomizedModal = (props: UseCustomizedModalProps): HookState => {
   let offset = 0;
 
-  const translateY = useRef(new Animated.Value(cardContainerHeight)).current;
+  const translateY = useRef(new Animated.Value(props.cardContainerHeight)).current;
 
   const [shouldHideCard, setShouldHideCard] = useState<boolean>(false);
 
@@ -78,34 +75,34 @@ const useCustomizedModal = ({
 
         offset += translationY;
 
-        if (translationY >= cardContainerHeight / 2) {
+        if (translationY >= props.cardContainerHeight / 2) {
           isFilterOpen = true;
         } else {
           setTranslationValues(0, offset, 0);
         }
 
-        const nextCardPosition = isFilterOpen ? cardContainerHeight : 0;
+        const nextCardPosition = isFilterOpen ? props.cardContainerHeight : 0;
 
         onAnimateCard(nextCardPosition, () => {
           setTranslationValues(nextCardPosition, 0, nextCardPosition);
 
           if (isFilterOpen) {
             setShouldHideCard(true);
-            onClose();
+            props.onClose();
           }
         });
       }
     },
-    [onClose],
+    [props.onClose],
   );
 
   const onCloseModal = useCallback(() => {
-    onAnimateCard(cardContainerHeight, () => {
+    onAnimateCard(props.cardContainerHeight, () => {
       setShouldHideCard(true);
 
-      onClose();
+      props.onClose();
     });
-  }, [onClose]);
+  }, [props.onClose]);
 
   return {
     onHandlerStateChange,

@@ -25,48 +25,40 @@ import useTVShowDetail from './useTVShowDetail';
 import * as Styles from './TVShowDetail.styles';
 import SimilarSection from './SimilarSection';
 
-const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
-  const {
-    onPressSimilarItem,
-    onPressSeeSeasons,
-    onPressCreatedBy,
-    onPressReviews,
-    onPressCrew,
-    onPressCast,
-  } = useTVShowDetailPressHandlers({
-    navigation,
+const TVShowDetail = (props: TVShowDetailStackProps) => {
+  const tvShowDetailPressHandlers = useTVShowDetailPressHandlers({
+    navigation: props.navigation,
   });
-  const { barStyle } = useStatusBarStyle({ theme });
+
+  const statusBarStyle = useStatusBarStyle({ theme: props.theme });
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       headerLeft: () => (
         <HeaderBackButton
-          onPress={() => navigation.goBack()}
+          onPress={() => props.navigation.goBack()}
         />
       ),
     });
   }, []);
 
-  const {
-    isLoading, hasError, tvShow, t,
-  } = useTVShowDetail({
-    hasVoteAverage: !!route.params.voteAverage,
-    hasVoteCount: !!route.params.voteCount,
-    hasGenresIds: !!route.params.genreIds,
-    id: route.params.id,
+  const tvShowDetail = useTVShowDetail({
+    hasVoteAverage: !!props.route.params.voteAverage,
+    hasVoteCount: !!props.route.params.voteCount,
+    hasGenresIds: !!props.route.params.genreIds,
+    id: props.route.params.id,
   });
 
   const firstAirDate = useMemo(
-    (): string => (tvShow?.firstAirDate || '-').split('-')[0],
-    [tvShow],
+    (): string => (tvShowDetail.tvShow?.firstAirDate || '-').split('-')[0],
+    [tvShowDetail.tvShow],
   );
 
-  if (hasError) {
+  if (tvShowDetail.hasError) {
     return (
       <MediaDetailError
-        barStyle={barStyle}
-        theme={theme}
+        barStyle={statusBarStyle.barStyle}
+        theme={props.theme}
       />
     );
   }
@@ -74,107 +66,118 @@ const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
   return (
     <>
       <StatusBar
-        backgroundColor={theme.colors.secondary}
-        barStyle={barStyle}
+        backgroundColor={props.theme.colors.secondary}
+        barStyle={statusBarStyle.barStyle}
         animated
       />
       <ScrollView
         bounces={false}
       >
         <Header
-          votesAverage={route.params.voteAverage || tvShow?.voteAverage}
-          voteCount={route.params.voteCount || tvShow?.voteCount}
-          imageURL={tvShow?.backdropPath || ''}
-          posterURL={route.params.posterPath}
-          title={route.params.title}
-          isLoading={isLoading}
+          votesAverage={
+            props.route.params.voteAverage || tvShowDetail.tvShow?.voteAverage
+          }
+          voteCount={props.route.params.voteCount || tvShowDetail.tvShow?.voteCount}
+          imageURL={tvShowDetail.tvShow?.backdropPath || ''}
+          posterURL={props.route.params.posterPath}
+          title={props.route.params.title}
+          isLoading={tvShowDetail.isLoading}
         />
         <Tags
-          extraTags={[firstAirDate, t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_TITLE)]}
-          tags={route.params.genreIds || tvShow?.genres || []}
-          isLoading={!route.params.genreIds && isLoading}
+          extraTags={[
+            firstAirDate,
+            tvShowDetail.t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_TITLE),
+          ]}
+          tags={props.route.params.genreIds || tvShowDetail.tvShow?.genres || []}
+          isLoading={!props.route.params.genreIds && tvShowDetail.isLoading}
         />
         <Overview
-          overview={tvShow?.overview}
-          isLoading={isLoading}
+          overview={tvShowDetail.tvShow?.overview}
+          isLoading={tvShowDetail.isLoading}
         />
-        {!!tvShow && (
+        {!!tvShowDetail.tvShow && (
           <>
             <TVShowDetailsSection
-              tvShow={tvShow}
+              tvShow={tvShowDetail.tvShow}
             />
-            {tvShow?.numberOfSeasons > 0 && (
+            {tvShowDetail.tvShow?.numberOfSeasons > 0 && (
               <Styles.SeeSeasonsButtonWrapper>
                 <RoundedButton
-                  text={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SEASONS)}
-                  onPress={() => onPressSeeSeasons(tvShow)}
+                  text={tvShowDetail.t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SEASONS)}
+                  onPress={() => tvShowDetailPressHandlers.onPressSeeSeasons(tvShowDetail.tvShow)}
                 />
               </Styles.SeeSeasonsButtonWrapper>
             )}
-            {!!tvShow?.createdBy.length && (
+            {!!tvShowDetail.tvShow?.createdBy.length && (
               <PeopleList
-                onPressItem={onPressCreatedBy}
-                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREATED_BY)}
-                dataset={tvShow.createdBy}
-                noSubtext={false}
+                onPressItem={tvShowDetailPressHandlers.onPressCreatedBy}
+                sectionTitle={tvShowDetail.t(
+                  TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREATED_BY,
+                )}
+                dataset={tvShowDetail.tvShow.createdBy}
+                withSubtext={false}
                 type="creator"
               />
             )}
-            {!!tvShow?.cast.length && (
+            {!!tvShowDetail.tvShow?.cast.length && (
               <PeopleList
-                onPressItem={onPressCast}
-                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
-                dataset={tvShow.cast}
+                onPressItem={tvShowDetailPressHandlers.onPressCast}
+                sectionTitle={tvShowDetail.t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
+                dataset={tvShowDetail.tvShow.cast}
+                withSubtext
                 type="cast"
               />
             )}
-            {!!tvShow?.crew.length && (
+            {!!tvShowDetail.tvShow?.crew.length && (
               <PeopleList
-                sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)}
-                onPressItem={onPressCrew}
-                dataset={tvShow.crew}
+                sectionTitle={tvShowDetail.t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)}
+                onPressItem={tvShowDetailPressHandlers.onPressCrew}
+                dataset={tvShowDetail.tvShow.crew}
+                withSubtext
                 type="crew"
               />
             )}
-            {!!tvShow?.images.length && (
+            {!!tvShowDetail.tvShow?.images.length && (
               <Section
-                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}
+                title={tvShowDetail.t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}
               >
                 <ImagesList
-                  images={tvShow.images}
+                  images={tvShowDetail.tvShow.images}
                 />
               </Section>
             )}
-            {!!tvShow?.videos.length && (
-            <Videos
-              videos={tvShow.videos}
-            />
+            {!!tvShowDetail.tvShow?.videos.length && (
+              <Videos
+                videos={tvShowDetail.tvShow.videos}
+              />
             )}
-            {!!tvShow?.networks.length && (
+            {!!tvShowDetail.tvShow?.networks.length && (
               <Section
-                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NETWORKS)}
+                title={tvShowDetail.t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NETWORKS)}
               >
                 <ProductionCompanies
-                  productionsList={tvShow.networks}
+                  productionsList={tvShowDetail.tvShow.networks}
                 />
               </Section>
             )}
-            {!!tvShow?.productionCompanies.length && (
+            {!!tvShowDetail.tvShow?.productionCompanies.length && (
               <Section
-                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES)}
+                title={tvShowDetail.t(
+                  TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
+                )}
               >
                 <ProductionCompanies
-                  productionsList={tvShow.productionCompanies}
+                  productionsList={tvShowDetail.tvShow.productionCompanies}
                 />
               </Section>
             )}
             <Reviews
-              onPressViewAll={() => onPressReviews(tvShow)}
-              reviews={tvShow.reviews}
+              onPressViewAll={() => tvShowDetailPressHandlers.onPressReviews(tvShowDetail.tvShow)}
+              reviews={tvShowDetail.tvShow.reviews}
             />
             <SimilarSection
-              onPressItem={onPressSimilarItem}
-              tvShow={tvShow}
+              onPressItem={tvShowDetailPressHandlers.onPressSimilarItem}
+              tvShow={tvShowDetail.tvShow}
             />
           </>
         )}

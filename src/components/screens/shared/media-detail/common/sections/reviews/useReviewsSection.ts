@@ -7,10 +7,9 @@ import metrics from '@styles/metrics';
 
 const useReviewsSection = () => {
   const [indexReviewSelected, setIndexReviewSelected] = useState<number>(0);
+  const flatListRef = useRef<FlatList<any>>();
 
   const { t } = useTranslation();
-
-  const flatListRef = useRef<FlatList<any>>();
 
   const onMomentumScrollEnd = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>): void => {

@@ -23,7 +23,7 @@ type UseTVShowSeasonsDetailProps = {
   id: string;
 };
 
-const useTVShowSeasonsDetail = ({ season, id }: UseTVShowSeasonsDetailProps) => {
+const useTVShowSeasonsDetail = (props: UseTVShowSeasonsDetailProps) => {
   const [queryState, setQueryState] = useState<QueryState>(INITIAL_QUERY_STATE);
 
   const { t } = useTranslation();
@@ -36,8 +36,8 @@ const useTVShowSeasonsDetail = ({ season, id }: UseTVShowSeasonsDetailProps) => 
   const onQueryTVShowSeason = useCallback(async () => {
     try {
       const { data } = await execQuery({
-        season,
-        id,
+        season: props.season,
+        id: props.id,
       });
 
       setQueryState(() => ({

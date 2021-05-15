@@ -10,12 +10,10 @@ type UseTVShowDetailPressHandlersProps = {
   navigation: TVShowDetailNavigationProp;
 };
 
-const useTVShowDetailPressHandlers = ({
-  navigation,
-}: UseTVShowDetailPressHandlersProps) => {
+const useTVShowDetailPressHandlers = (props: UseTVShowDetailPressHandlersProps) => {
   const onPressSimilarItem = useCallback(
     (similar: SchemaTypes.TVShowDetail_tvShow_similar) => {
-      navigation.push(Routes.TVShow.DETAILS, {
+      props.navigation.push(Routes.TVShow.DETAILS, {
         voteAverage: similar.voteAverage,
         posterPath: similar.posterPath,
         voteCount: similar.voteCount,
@@ -23,43 +21,43 @@ const useTVShowDetailPressHandlers = ({
         id: similar.id,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   const onPressReviews = useCallback(
     (tvShow: SchemaTypes.TVShowDetail_tvShow) => {
-      navigation.navigate(Routes.MediaDetail.REVIEWS, {
+      props.navigation.navigate(Routes.MediaDetail.REVIEWS, {
         mediaTitle: tvShow.name,
         reviews: tvShow.reviews,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   const onPressCrew = useCallback(
     (id: string, name: string, image: string) => {
-      navigation.push(Routes.Famous.DETAILS, {
+      props.navigation.push(Routes.Famous.DETAILS, {
         profileImage: image,
         id: Number(id),
         name,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   const onPressCast = useCallback(
     (id: string, name: string, image: string) => {
-      navigation.push(Routes.Famous.DETAILS, {
+      props.navigation.push(Routes.Famous.DETAILS, {
         profileImage: image,
         id: Number(id),
         name,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   const onPressCreatedBy = useCallback((id: string, name: string, image: string) => {
-    navigation.push(Routes.Famous.DETAILS, {
+    props.navigation.push(Routes.Famous.DETAILS, {
       profileImage: image,
       id: Number(id),
       name,
@@ -67,7 +65,7 @@ const useTVShowDetailPressHandlers = ({
   }, []);
 
   const onPressSeeSeasons = useCallback((tvShow: SchemaTypes.TVShowDetail_tvShow) => {
-    navigation.navigate(Routes.TVShow.SEASONS, {
+    props.navigation.navigate(Routes.TVShow.SEASONS, {
       numberOfSeasons: tvShow.numberOfSeasons,
       title: tvShow.name,
       id: tvShow.id,

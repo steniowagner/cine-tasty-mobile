@@ -13,14 +13,14 @@ type BackgroundImageProps = {
   imageURL: string;
 };
 
-const BackgroundImage = ({ isLoading, imageURL, theme }: BackgroundImageProps) => {
-  const { currentTheme } = useGetCurrentTheme({ theme });
+const BackgroundImage = (props: BackgroundImageProps) => {
+  const getCurrentTheme = useGetCurrentTheme({ theme: props.theme });
 
   return (
     <Styles.Wrapper
       testID="background-image-wrapper"
     >
-      {isLoading ? (
+      {props.isLoading ? (
         <LoadingPlaceholder
           testID="background-image-loading"
           indexToDelayAnimation={2}
@@ -32,12 +32,12 @@ const BackgroundImage = ({ isLoading, imageURL, theme }: BackgroundImageProps) =
       ) : (
         <ProgressiveImage
           imageType="backdrop"
-          image={imageURL}
+          image={props.imageURL}
           borderRadius={0}
         />
       )}
       <Styles.SmokeShadow
-        currentTheme={currentTheme}
+        currentTheme={getCurrentTheme.currentTheme}
       />
     </Styles.Wrapper>
   );

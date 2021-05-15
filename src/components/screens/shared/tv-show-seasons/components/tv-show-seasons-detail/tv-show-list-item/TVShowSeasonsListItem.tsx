@@ -15,13 +15,13 @@ type TVShowSeasonsListItemProps = {
   index: number;
 };
 
-const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) => {
-  const { onPressListItem, onCloseModal, isModalOpen } = useTVShowSeasonsListItem();
+const TVShowSeasonsListItem = (props: TVShowSeasonsListItemProps) => {
+  const tvShowSeasonsListItem = useTVShowSeasonsListItem();
 
   return (
     <>
       <Styles.ListItemWrapper
-        onPress={onPressListItem}
+        onPress={tvShowSeasonsListItem.onPressListItem}
         testID="episode-list-item"
       >
         <Styles.Row>
@@ -29,13 +29,13 @@ const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) =
             <Styles.EpisodeIndexText
               testID="episode-index-text"
             >
-              {index + 1}
+              {props.index + 1}
             </Styles.EpisodeIndexText>
           </Styles.EpisodeIndexWrapper>
           <Styles.EpisodeNameText
             testID="episode-name-text"
           >
-            {episode.name}
+            {props.episode.name}
           </Styles.EpisodeNameText>
         </Styles.Row>
         <SVGIcon
@@ -44,12 +44,12 @@ const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) =
           id="chevron-right"
         />
       </Styles.ListItemWrapper>
-      {isModalOpen && (
+      {tvShowSeasonsListItem.isModalOpen && (
         <ModalDetail
-          onCloseModal={onCloseModal}
+          onCloseModal={tvShowSeasonsListItem.onCloseModal}
         >
           <EpisodeDetail
-            episode={episode}
+            episode={props.episode}
           />
         </ModalDetail>
       )}

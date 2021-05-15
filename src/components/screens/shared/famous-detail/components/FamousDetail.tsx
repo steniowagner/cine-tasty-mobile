@@ -19,39 +19,35 @@ import useFamousDetail from './useFamousDetail';
 import * as Styles from './FamousDetail.styles';
 import DeathDay from './death-day/DeathDay';
 
-const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
-  const { currentTheme } = useGetCurrentTheme({ theme });
-  const {
-    renderTVShowCastSection,
-    renderMovieCastSection,
-    renderImagesSection,
-  } = useRenderFamousDetailSections({ navigation });
-  const { barStyle } = useStatusBarStyle({ theme });
+const FamousDetail = (props: FamousDetailStackProps) => {
+  const renderFamousDetailSections = useRenderFamousDetailSections({
+    navigation: props.navigation,
+  });
+  const getCurrentTheme = useGetCurrentTheme({ theme: props.theme });
+  const statusBarStyle = useStatusBarStyle({ theme: props.theme });
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       headerLeft: () => (
         <HeaderBackButton
-          onPress={() => navigation.goBack()}
+          onPress={() => props.navigation.goBack()}
         />
       ),
     });
   }, []);
 
-  const {
-    backgroundImage, isLoading, famous, hasError, t,
-  } = useFamousDetail({
-    id: route.params.id,
+  const famousDetail = useFamousDetail({
+    id: props.route.params.id,
   });
 
   const scrollViewOffset = useRef(new Animated.Value(0)).current;
 
-  if (hasError) {
+  if (famousDetail.hasError) {
     return (
       <Advise
-        description={t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_DESCRIPTION)}
-        suggestion={t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_SUGGESTION)}
-        title={t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_TITLE)}
+        description={famousDetail.t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_DESCRIPTION)}
+        suggestion={famousDetail.t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_SUGGESTION)}
+        title={famousDetail.t(TRANSLATIONS.FAMOUS_DETAIL_ERROR_TITLE)}
         icon="alert-box"
       />
     );
@@ -60,8 +56,8 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
   return (
     <>
       <StatusBar
-        backgroundColor={theme.colors.secondary}
-        barStyle={barStyle}
+        backgroundColor={props.theme.colors.secondary}
+        barStyle={statusBarStyle.barStyle}
         animated
       />
       <Styles.BackgroundImageWrapper
@@ -77,12 +73,12 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
           }}
         >
           <ProgressiveImage
-            image={backgroundImage}
+            image={famousDetail.backgroundImage}
             imageType="backdrop"
           />
         </Animated.View>
         <Styles.SmokeShadow
-          currentTheme={currentTheme}
+          currentTheme={getCurrentTheme.currentTheme}
         />
       </Styles.BackgroundImageWrapper>
       <Animated.ScrollView
@@ -102,32 +98,39 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
         testID="scroll-content"
       >
         <HeaderInfo
-          knownForDepartment={famous?.knownForDepartment}
-          profileImage={route.params.profileImage}
-          placeOfBirth={famous?.placeOfBirth}
-          birthDate={famous?.birthday}
-          name={route.params.name}
-          isLoading={isLoading}
+          knownForDepartment={famousDetail.famous?.knownForDepartment}
+          profileImage={props.route.params.profileImage}
+          placeOfBirth={famousDetail.famous?.placeOfBirth}
+          birthDate={famousDetail.famous?.birthday}
+          name={props.route.params.name}
+          isLoading={famousDetail.isLoading}
         />
-        {!!famous?.deathday && (
-        <DeathDay
-          deathDate={famous.deathday}
-        />
+        {!!famousDetail.famous?.deathday && (
+          <DeathDay
+            deathDate={famousDetail.famous.deathday}
+          />
         )}
         <Styles.BiographySectionWrapper
           testID="biography-section"
         >
           <ExpansibleTextSection
-            sectionTitle={t(TRANSLATIONS.FAMOUS_DETAIL_BIOGRAPGY)}
-            text={famous?.biography}
-            isLoading={isLoading}
+            sectionTitle={famousDetail.t(TRANSLATIONS.FAMOUS_DETAIL_BIOGRAPGY)}
+            text={famousDetail.famous?.biography}
+            isLoading={famousDetail.isLoading}
           />
         </Styles.BiographySectionWrapper>
-        {!!famous && (
+        {!!famousDetail.famous && (
           <>
-            {!!famous.images && renderImagesSection(famous.images)}
-            {!!famous.moviesCast && renderMovieCastSection(famous.moviesCast)}
-            {!!famous.tvCast && renderTVShowCastSection(famous.tvCast)}
+            {!!famousDetail.famous.images
+              && renderFamousDetailSections.renderImagesSection(famousDetail.famous.images)}
+            {!!famousDetail.famous.moviesCast
+              && renderFamousDetailSections.renderMovieCastSection(
+                famousDetail.famous.moviesCast,
+              )}
+            {!!famousDetail.famous.tvCast
+              && renderFamousDetailSections.renderTVShowCastSection(
+                famousDetail.famous.tvCast,
+              )}
           </>
         )}
       </Animated.ScrollView>

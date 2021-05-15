@@ -12,7 +12,7 @@ type DetailsSection = {
   movie: SchemaTypes.MovieDetail_movie;
 };
 
-const DetailsSection = ({ movie }: DetailsSection) => {
+const DetailsSection = (props: DetailsSection) => {
   const { t } = useTranslation();
 
   return (
@@ -20,29 +20,31 @@ const DetailsSection = ({ movie }: DetailsSection) => {
       infoItems={[
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE),
-          value: movie.originalTitle || '-',
+          value: props.movie.originalTitle || '-',
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_RELEASE_DATE),
-          value: formatDate(movie.releaseDate),
+          value: formatDate(props.movie.releaseDate),
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_BUDGET),
-          value: formatCurrency(movie.budget),
+          value: formatCurrency(props.movie.budget),
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_REVENUE),
-          value: formatCurrency(movie.revenue),
+          value: formatCurrency(props.movie.revenue),
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COUNTRIES),
-          value: movie.productionCountries.length
-            ? movie.productionCountries.join(', ')
+          value: props.movie.productionCountries.length
+            ? props.movie.productionCountries.join(', ')
             : '-',
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES),
-          value: movie.spokenLanguages.length ? movie.spokenLanguages.join(', ') : '-',
+          value: props.movie.spokenLanguages.length
+            ? props.movie.spokenLanguages.join(', ')
+            : '-',
         },
       ]}
     />

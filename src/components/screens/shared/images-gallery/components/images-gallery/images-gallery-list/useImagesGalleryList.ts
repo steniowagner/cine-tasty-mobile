@@ -5,21 +5,21 @@ type UseImagesGalleryListProps = {
   indexImageSelected: number;
 };
 
-const useImagesGalleryList = ({ indexImageSelected }: UseImagesGalleryListProps) => {
+const useImagesGalleryList = (props: UseImagesGalleryListProps) => {
   const galleryListRef = useRef<FlatList>();
 
   const handleMoveTopList = useCallback(() => {
     galleryListRef.current.scrollToIndex({
-      index: indexImageSelected,
+      index: props.indexImageSelected,
       animated: true,
     });
-  }, [indexImageSelected]);
+  }, [props.indexImageSelected]);
 
   useEffect(() => {
     if (galleryListRef && galleryListRef.current) {
       handleMoveTopList();
     }
-  }, [indexImageSelected]);
+  }, [props.indexImageSelected]);
 
   return {
     handleMoveTopList,

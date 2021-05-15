@@ -13,13 +13,13 @@ type SimilarSectionProps = {
   tvShow: SchemaTypes.TVShowDetail_tvShow;
 };
 
-const SimilarSection = ({ onPressItem, tvShow }: SimilarSectionProps) => {
+const SimilarSection = (props: SimilarSectionProps) => {
   const { t } = useTranslation();
 
   return (
     <Section
       title={
-        tvShow?.similar.length
+        props.tvShow?.similar.length
           ? t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)
           : `${t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)} (0)`
       }
@@ -28,7 +28,7 @@ const SimilarSection = ({ onPressItem, tvShow }: SimilarSectionProps) => {
         keyExtractor={(item, index) => `${item.id}-${index}`}
         renderItem={({ item, index }) => (
           <SimplifiedMediaListItem
-            onPress={() => onPressItem(item)}
+            onPress={() => props.onPressItem(item)}
             voteAverage={item.voteAverage}
             voteCount={item.voteCount}
             image={item.posterPath}
@@ -37,7 +37,7 @@ const SimilarSection = ({ onPressItem, tvShow }: SimilarSectionProps) => {
           />
         )}
         showsHorizontalScrollIndicator={false}
-        data={tvShow.similar}
+        data={props.tvShow.similar}
         horizontal
       />
     </Section>

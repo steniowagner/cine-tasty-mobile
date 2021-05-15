@@ -13,10 +13,10 @@ type ProductionsListProps = {
   )[];
 };
 
-const ProductionsList = ({ productionsList }: ProductionsListProps) => {
+const ProductionsList = (props: ProductionsListProps) => {
   const productionCompanies = useMemo(
-    () => productionsList.map((productionCompany) => productionCompany.name).join(', '),
-    [productionsList],
+    () => props.productionsList.map((productionCompany) => productionCompany.name).join(', '),
+    [props.productionsList],
   );
 
   return (
