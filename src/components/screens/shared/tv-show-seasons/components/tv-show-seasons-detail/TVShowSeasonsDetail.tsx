@@ -30,7 +30,7 @@ const TVShowSeasonsDetail = ({ route }: TVShowSeasonsTabsStackProps) => {
         description={t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION)}
         suggestion={t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION)}
         title={t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE)}
-        icon="server-network-off"
+        icon="alert-box"
       />
     );
   }

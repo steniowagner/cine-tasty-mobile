@@ -26,10 +26,6 @@ export const IMAGE_QUALITIES = 'translations:imageQualities';
 export const LANGUAGES = 'translations:languages';
 
 // ERRORS
-// export const ERRORS_PAGINATION_FAMOUS_ERROR = 'translations:errors:paginateFamousError';
-// export const ERRORS_SEARCH_FAMOUS_ERROR = 'translations:errors:searchFamousError';
-// export const ERRORS_RELOAD_NEWS_ERROR = 'translations:errors:reloadNewsError';
-// export const ERRORS_LOAD_MORE_NEWS_ERROR = 'translations:errors:loadMoreNewsError';
 export const ERRORS_NETWORK_ERROR_DESCRIPTION = 'translations:errors:network:description';
 export const ERRORS_NETWORK_ERROR_SUGGESTION = 'translations:errors:network:suggestion';
 export const ERRORS_NETWORK_ERROR_TITLE = 'translations:errors:network:title';
@@ -143,7 +139,7 @@ export const HOME_TRENDING_MOVIES_UPCOMING_VIEW_ALL = 'translations:home:trendin
 export const HOME_TRENDING_MOVIES_UPCOMING = 'translations:home:trendingMovies:upcoming';
 export const HOME_TRENDING_TV_SHOWS_ERROR = 'translations:home:trendingTvShows:error';
 export const HOME_TRENDING_TV_SHOWS_ON_THE_AIR_VIEW_ALL = 'translations:home:trendingTvShows:onTheAirViewAllTitle';
-export const HOME_TRENDING_TV_SHOWS_ON_THE_AIR = 'translations:home:trendingTvShows:onTheAir:';
+export const HOME_TRENDING_TV_SHOWS_ON_THE_AIR = 'translations:home:trendingTvShows:onTheAir';
 export const HOME_TRENDING_TV_SHOWS_POPULAR_VIEW_ALL = 'translations:home:trendingTvShows:popularViewAllTitle';
 export const HOME_TRENDING_TV_SHOWS_POPULAR = 'translations:home:trendingTvShows:popular';
 export const HOME_TRENDING_TV_SHOWS_TOP_RATED_VIEW_ALL = 'translations:home:trendingTvShows:topRatedViewAllTitle';
@@ -160,21 +156,21 @@ export const HOME_SEARCH_TV_SHOW_PAGINATION_ERROR = 'translations:home:search:tv
 export const HOME_SEARCH_TV_SHOW_PLACEHOLDER = 'translations:home:search:tvShows:placeholder';
 
 // SETTINGS
-export const SETTINGS_OPEN_SOURCE_DESCRIPTION = 'translations:home:settingsSection:openSource:sectionDescription';
-export const SETTINGS_OPEN_SOURCE_SECTION_TITLE = 'translations:home:settingsSection:openSource:sectionTitle';
-export const SETTINGS_OPEN_SOURCE_HEADER_TITLE = 'translations:home:settingsSection:openSource:headerTitle';
-export const SETTINGS_LANGUAGE_DESCRIPTION = 'translations:home:settingsSection:language:sectionDescription';
-export const SETTINGS_LANGUAGE_SECTION_TITLE = 'translations:home:settingsSection:language:sectionTitle';
-export const SETTINGS_LANGUAGE_HEADER_TITLE = 'translations:home:settingsSection:language:headerTitle';
-export const SETTINGS_ABOUT_DESCRIPTION = 'translations:home:settingsSection:about:sectionDescription';
-export const SETTINGS_ABOUT_SECTION_TITLE = 'translations:home:settingsSection:about:sectionTitle';
-export const SETTINGS_ABOUT_HEADER_TITLE = 'translations:home:settingsSection:about:headerTitle';
-export const SETTINGS_IMAGES_QUALITY_DESCRIPTION = 'translations:home:settingsSection:imagesQuality:sectionDescription';
-export const SETTINGS_IMAGES_QUALITY_SECTION_TITLE = 'translations:home:settingsSection:imagesQuality:sectionTitle';
-export const SETTINGS_IMAGES_QUALITY_HEADER_TITLE = 'translations:home:settingsSection:imagesQuality:headerTitle';
-export const SETTINGS_THEME_DESCRIPTION = 'translations:home:settingsSection:theme:sectionDescription';
-export const SETTINGS_THEME_SECTION_TITLE = 'translations:home:settingsSection:theme:sectionTitle';
-export const SETTINGS_THEME_HEADER_TITLE = 'translations:home:settingsSection:theme:headerTitle';
+export const SETTINGS_OPEN_SOURCE_DESCRIPTION = 'translations:home:settingsSections:openSource:sectionDescription';
+export const SETTINGS_OPEN_SOURCE_SECTION_TITLE = 'translations:home:settingsSections:openSource:sectionTitle';
+export const SETTINGS_OPEN_SOURCE_HEADER_TITLE = 'translations:home:settingsSections:openSource:headerTitle';
+export const SETTINGS_LANGUAGE_DESCRIPTION = 'translations:home:settingsSections:language:sectionDescription';
+export const SETTINGS_LANGUAGE_SECTION_TITLE = 'translations:home:settingsSections:language:sectionTitle';
+export const SETTINGS_LANGUAGE_HEADER_TITLE = 'translations:home:settingsSections:language:headerTitle';
+export const SETTINGS_ABOUT_DESCRIPTION = 'translations:home:settingsSections:about:sectionDescription';
+export const SETTINGS_ABOUT_SECTION_TITLE = 'translations:home:settingsSections:about:sectionTitle';
+export const SETTINGS_ABOUT_HEADER_TITLE = 'translations:home:settingsSections:about:headerTitle';
+export const SETTINGS_IMAGES_QUALITY_DESCRIPTION = 'translations:home:settingsSections:imagesQuality:sectionDescription';
+export const SETTINGS_IMAGES_QUALITY_SECTION_TITLE = 'translations:home:settingsSections:imagesQuality:sectionTitle';
+export const SETTINGS_IMAGES_QUALITY_HEADER_TITLE = 'translations:home:settingsSections:imagesQuality:headerTitle';
+export const SETTINGS_THEME_DESCRIPTION = 'translations:home:settingsSections:theme:sectionDescription';
+export const SETTINGS_THEME_SECTION_TITLE = 'translations:home:settingsSections:theme:sectionTitle';
+export const SETTINGS_THEME_HEADER_TITLE = 'translations:home:settingsSections:theme:headerTitle';
 
 // MEDIA-DETAIL
 
