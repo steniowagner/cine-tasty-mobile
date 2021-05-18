@@ -45,6 +45,7 @@ const en: Locale = {
       title: 'English News Title',
     },
   },
+  select: 'SELECT',
   theme: {
     dark: 'Dark',
     light: 'Light',
@@ -54,9 +55,8 @@ const en: Locale = {
     "Hey!\n\nI'm Full-Stack Software Engineer that loves apply his knowledge to solve problems, create amazing products and impact lives!",
   openSource: {
     libraries: {
-      description:
-        'List of all libraries that was used by this project (development + production environment)',
-      title: 'Support-libraries',
+      description: 'List of all libraries that was used by this project',
+      title: 'Support libraries',
     },
     github: {
       description: "Public repository with the project's source-code",
@@ -126,10 +126,10 @@ const en: Locale = {
       norwegian: 'Norwegian',
       portuguese: 'Portuguese',
       russian: 'Russian',
-      sami: 'Sami',
+      sami: 'Finnish',
       spanish: 'Spanish',
     },
-    filterMessage: 'Choose a language to filter the News',
+    filterMessage: 'Choose a language to filter the news',
     selectFilterMessage: 'SELECT',
     emptyList: {
       description: 'We could not find any news for this language',
@@ -160,19 +160,19 @@ const en: Locale = {
     difficultyHard: 'Hard',
     difficultyMixed: 'Mixed',
     typeMultiple: 'Multiple',
-    typeBoolean: 'Boolean',
+    typeBoolean: 'True/False',
     typeMixed: 'Mixed',
     playAgain: 'Play Again',
     playAgainDescription: 'Do you want to play the Quiz again?',
     answer: 'Answer',
-    yourAnswer: 'Your Answer',
+    yourAnswer: 'Your answer',
     scores: 'You scored',
     no: 'No',
     yes: 'Yes',
     noQuestionsAdviseTitle: 'Wow!',
     noQuestionsAdviseDescription:
-      "Seems like we don't have enough questions for your taste today.",
-    noQuestionsAdviseSuggestion: 'Try to change the search parameters.',
+      "Seems like we don't have enough questions for your taste today",
+    noQuestionsAdviseSuggestion: 'Try to change the search parameters',
     next: 'NEXT',
     true: 'True',
     false: 'False',
