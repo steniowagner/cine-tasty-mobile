@@ -14,8 +14,8 @@ const defaultLanguagesMapping = {
   pt_BR: 'ptBR',
 
   // Portuguese (Portugal)
-  'pt-PT': 'ptPT',
-  pt_PT: 'ptPT',
+  'pt-PT': 'ptBR',
+  pt_PT: 'ptBR',
 
   // English (USA)
   'en-US': 'en',

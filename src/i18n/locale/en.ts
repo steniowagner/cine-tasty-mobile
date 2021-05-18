@@ -76,8 +76,7 @@ const en: Locale = {
   languages: {
     en: 'English',
     es: 'Spanish',
-    ptBR: 'Brazilian Portuguese',
-    ptPT: 'Portuguese',
+    ptBR: 'Portuguese',
     sv: 'Swendish',
   },
   errors: {

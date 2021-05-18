@@ -10,7 +10,7 @@ export const Wrapper = styled(TouchableOpacity)`
 `;
 
 export const SectionTitle = styled(Text)`
-  margin-bottom: ${({ theme }) => theme.metrics.smallSize}px;
+  margin-bottom: ${({ theme }) => theme.metrics.extraSmallSize}px;
   font-family: CircularStd-Bold;
   font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
   color: ${({ theme }) => theme.colors.text};

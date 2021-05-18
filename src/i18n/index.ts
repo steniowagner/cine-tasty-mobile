@@ -5,7 +5,6 @@ import handleLanguageDetection from './handleLanguageDetection';
 import CONSTANTS from '../utils/constants';
 
 import ptBR from './locale/ptBR';
-import ptPT from './locale/ptPT';
 import es from './locale/es';
 import en from './locale/en';
 import sv from './locale/sv';
@@ -32,17 +31,14 @@ i18next
       en: {
         translations: en,
       },
-      sv: {
-        translations: sv,
-      },
       es: {
         translations: es,
       },
       ptBR: {
         translations: ptBR,
       },
-      ptPT: {
-        translations: ptPT,
+      sv: {
+        translations: sv,
       },
     },
   });

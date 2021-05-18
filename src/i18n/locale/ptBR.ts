@@ -77,8 +77,7 @@ const ptBR: Locale = {
   languages: {
     en: 'Inglês',
     es: 'Espanhol',
-    ptBR: 'Português Brasileiro',
-    ptPT: 'Português',
+    ptBR: 'Português',
     sv: 'Sueco',
   },
   errors: {
@@ -241,9 +240,9 @@ const ptBR: Locale = {
         headerTitle: 'Código-Aberto',
       },
       language: {
-        sectionDescription: 'Escolha a linguagem que o app irá usar',
-        sectionTitle: 'Linguagem',
-        headerTitle: 'Linguagem',
+        sectionDescription: 'Escolha o idioma que o app irá usar',
+        sectionTitle: 'Idioma',
+        headerTitle: 'Idioma',
       },
       about: {
         sectionDescription: 'Veja mais sobre o criador deste aplciativo',
