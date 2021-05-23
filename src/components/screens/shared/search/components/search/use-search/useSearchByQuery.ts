@@ -1,6 +1,7 @@
 import { useCallback, useState, useRef } from 'react';
 import { ApolloQueryResult } from 'apollo-client';
 
+import { useGetCurrentISO6391Language } from '@hooks';
 import * as SchemaTypes from '@schema-types';
 import debounce from '@utils/debounce';
 import * as Types from '@local-types';
@@ -24,6 +25,8 @@ const useSearchByQuery = ({
 }: UseSearchByQueryProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const { currentISO6391Language } = useGetCurrentISO6391Language();
+
   const debouncedSetQueryString = useRef(
     debounce((queryStringTyped: string) => {
       setQueryString(queryStringTyped);
@@ -41,7 +44,12 @@ const useSearchByQuery = ({
       setIsLoading(true);
 
       const variables = {
-        input: { page: 1, query: query.trim(), type: searchType },
+        input: {
+          language: currentISO6391Language,
+          query: query.trim(),
+          type: searchType,
+          page: 1,
+        },
       };
 
       const { data } = await search(variables);
