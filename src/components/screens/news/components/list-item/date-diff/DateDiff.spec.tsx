@@ -11,6 +11,7 @@ type I18NextProps = {
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
+    i18n: { language: 'en' },
     t: (key: string, { value }: I18NextProps) => {
       const [, , keySelected] = key.split(':');
 

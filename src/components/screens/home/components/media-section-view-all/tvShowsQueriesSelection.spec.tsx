@@ -12,7 +12,8 @@ mockUsePaginatedQuery.mockImplementation(() => ({
   isPaginating: true,
 }));
 
-jest.mock('hooks', () => ({
+jest.mock('@hooks', () => ({
+  ...jest.requireActual('@hooks'),
   usePaginatedQuery: params => mockUsePaginatedQuery(params),
   useSystemThemePreference: jest.fn(() => ({ systemTheme: 'DARK' })),
 }));

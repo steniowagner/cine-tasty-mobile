@@ -5,7 +5,6 @@ import { DocumentNode } from 'graphql';
 import { useGetCurrentISO6391Language, usePaginatedQuery } from '@hooks';
 import * as SchemaTypes from '@schema-types';
 import { getQuery } from '@graphql/queries';
-
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
