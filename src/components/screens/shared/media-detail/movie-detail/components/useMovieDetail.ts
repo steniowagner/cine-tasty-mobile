@@ -2,6 +2,7 @@
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
+import { useGetCurrentISO6391Language } from '@hooks';
 import { GET_MOVIE_DETAIL } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 
@@ -26,12 +27,14 @@ const useMovieDetail = ({
   hasVoteCount,
   id,
 }: UseMovieDetailProps) => {
+  const { currentISO6391Language } = useGetCurrentISO6391Language();
   const { t } = useTranslation();
 
   const { data, error, loading } = useQuery<SchemaTypes.MovieDetail, Variables>(
     GET_MOVIE_DETAIL,
     {
       variables: {
+        language: currentISO6391Language,
         withVoteAverage: !hasVoteAverage,
         withGenresIds: !hasGenresIds,
         withVoteCount: !hasVoteCount,
