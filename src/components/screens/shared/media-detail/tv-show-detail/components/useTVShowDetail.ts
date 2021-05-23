@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_TV_SHOW_DETAIL } from '@graphql/queries';
+import { useGetCurrentISO6391Language } from '@hooks';
 import * as SchemaTypes from '@schema-types';
 
 type UseTVShowDetailProps = {
@@ -26,12 +27,14 @@ const useTVShowDetail = ({
   hasVoteCount,
   id,
 }: UseTVShowDetailProps) => {
+  const { currentISO6391Language } = useGetCurrentISO6391Language();
   const { t } = useTranslation();
 
   const { data, error, loading } = useQuery<SchemaTypes.TVShowDetail, Variables>(
     GET_TV_SHOW_DETAIL,
     {
       variables: {
+        language: currentISO6391Language,
         withVoteAverage: !hasVoteAverage,
         withGenresIds: !hasGenresIds,
         withVoteCount: !hasVoteCount,

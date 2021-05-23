@@ -2,9 +2,9 @@ import { useCallback, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DocumentNode } from 'graphql';
 
+import { useGetCurrentISO6391Language, usePaginatedQuery } from '@hooks';
 import * as SchemaTypes from '@schema-types';
 import { getQuery } from '@graphql/queries';
-import { usePaginatedQuery } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
@@ -37,6 +37,7 @@ const useMediaSectionViewAll = ({
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
+  const { currentISO6391Language } = useGetCurrentISO6391Language();
   const onGetData = useOnGetData({ trendingMediaItemKey, isMovie });
   const { t } = useTranslation();
 
@@ -68,6 +69,9 @@ const useMediaSectionViewAll = ({
       setError(t(i18nErrorRef));
 
       setHasPaginationError(true);
+    },
+    variables: {
+      language: currentISO6391Language,
     },
     fireEntryQueryWhenMounted: false,
     onEntryQueryError: () => {},

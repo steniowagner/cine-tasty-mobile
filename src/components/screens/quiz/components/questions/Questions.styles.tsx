@@ -14,6 +14,6 @@ export const RestartQuizButton = styled(TouchableOpacity).attrs(({ theme }) => (
 
 export const ErrorWrapper = styled(View)`
   width: 100%;
-  height: 100%;
+  height: 90%;
   justify-content: center;
 `;

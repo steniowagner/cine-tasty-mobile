@@ -7,12 +7,6 @@ import * as TRANSLATIONS from '@i18n/tags';
 import CONSTANTS from '@utils/constants';
 import * as Types from '@local-types';
 
-type LanguageItem = {
-  onPress: () => void;
-  title: string;
-  id: Types.Languages;
-};
-
 const useLanguages = () => {
   const { i18n, t } = useTranslation();
 

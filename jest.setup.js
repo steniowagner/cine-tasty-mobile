@@ -11,7 +11,7 @@ jest.mock('react-native-appearance', () => ({
 }));
 
 jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key) => key }),
+  useTranslation: () => ({ t: key => key, i18n: { language: 'en' } }),
   getI18n: () => ({ language: 'en' }),
 }));
 
@@ -87,7 +87,7 @@ jest.mock('react-native-gesture-handler', () => {
     BaseButton: View,
     RectButton: View,
     BorderlessButton: View,
-    gestureHandlerRootHOC: (c) => c,
+    gestureHandlerRootHOC: c => c,
     Directions: {},
     FlatList,
   };
@@ -95,6 +95,6 @@ jest.mock('react-native-gesture-handler', () => {
 
 const FRAME_TIME = 10;
 
-global.requestAnimationFrame = (callback) => {
+global.requestAnimationFrame = callback => {
   setTimeout(callback, FRAME_TIME);
 };

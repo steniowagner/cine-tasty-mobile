@@ -25,6 +25,17 @@ const OpenSource = () => {
       }}
     >
       <Styles.SectionWrapper>
+        <Styles.SectionWrapper>
+          <Styles.SectionTitle>
+            {t(TRANSLATIONS.OPEN_SOURCE_GITHUB_TITLE)}
+          </Styles.SectionTitle>
+          <Styles.SectionDescrpition>
+            {t(TRANSLATIONS.OPEN_SOURCE_GITHUB_DESCRIPTION)}
+          </Styles.SectionDescrpition>
+          <LinkTextButton
+            url={GITHUB_URL}
+          />
+        </Styles.SectionWrapper>
         <Styles.SectionTitle>
           {t(TRANSLATIONS.OPEN_SOURCE_TMDB_TITLE)}
         </Styles.SectionTitle>
@@ -38,17 +49,6 @@ const OpenSource = () => {
         />
         <LinkTextButton
           url={TMDB_API_URL}
-        />
-      </Styles.SectionWrapper>
-      <Styles.SectionWrapper>
-        <Styles.SectionTitle>
-          {t(TRANSLATIONS.OPEN_SOURCE_GITHUB_TITLE)}
-        </Styles.SectionTitle>
-        <Styles.SectionDescrpition>
-          {t(TRANSLATIONS.OPEN_SOURCE_GITHUB_DESCRIPTION)}
-        </Styles.SectionDescrpition>
-        <LinkTextButton
-          url={GITHUB_URL}
         />
       </Styles.SectionWrapper>
       <Styles.SectionWrapper>

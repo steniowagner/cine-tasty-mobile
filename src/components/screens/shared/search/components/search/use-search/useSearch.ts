@@ -90,7 +90,7 @@ const useSearch = ({
         items: data.items,
       });
     } catch (error) {
-      setErrorMessage(i18nQueryByTextErrorRef);
+      setErrorMessage(t(i18nQueryByTextErrorRef));
     }
   }, [queryString]);
 

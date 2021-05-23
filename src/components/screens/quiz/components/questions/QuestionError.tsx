@@ -17,7 +17,7 @@ const QuestionError = () => {
         description={t(TRANSLATIONS.ERRORS_NETWORK_ERROR_DESCRIPTION)}
         suggestion={t(TRANSLATIONS.ERRORS_NETWORK_ERROR_SUGGESTION)}
         title={t(TRANSLATIONS.ERRORS_NETWORK_ERROR_TITLE)}
-        icon="server-network-off"
+        icon="alert-box"
       />
     </Styles.ErrorWrapper>
   );
