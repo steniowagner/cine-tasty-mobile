@@ -2,8 +2,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { TV_SHOW_SEASONS_DETAIL } from '@graphql/queries';
 import useImperativeQuery from '@utils/useImperativeQuery';
+import { TV_SHOW_SEASONS_DETAIL } from '@graphql/queries';
+import { useGetCurrentISO6391Language } from '@hooks';
 import * as SchemaTypes from '@schema-types';
 
 const INITIAL_QUERY_STATE: QueryState = {
@@ -26,6 +27,7 @@ type UseTVShowSeasonsDetailProps = {
 const useTVShowSeasonsDetail = ({ season, id }: UseTVShowSeasonsDetailProps) => {
   const [queryState, setQueryState] = useState<QueryState>(INITIAL_QUERY_STATE);
 
+  const { currentISO6391Language } = useGetCurrentISO6391Language();
   const { t } = useTranslation();
 
   const execQuery = useImperativeQuery<
@@ -36,6 +38,7 @@ const useTVShowSeasonsDetail = ({ season, id }: UseTVShowSeasonsDetailProps) => 
   const onQueryTVShowSeason = useCallback(async () => {
     try {
       const { data } = await execQuery({
+        language: currentISO6391Language,
         season,
         id,
       });
