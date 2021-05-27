@@ -2,9 +2,10 @@ import {
   useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import { NativeSyntheticEvent, NativeScrollEvent, FlatList } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { Icons } from '@components/common/svg-icon/icons';
-
+import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
 type OnboardingItem = {
@@ -18,6 +19,8 @@ type OnboardingItem = {
 const useOnboarding = () => {
   const [indexSelected, setIndexSelected] = useState<number>(0);
   const flatlistRef = useRef<FlatList>(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!flatlistRef) {
@@ -48,24 +51,31 @@ const useOnboarding = () => {
   const items: OnboardingItem[] = useMemo(
     () => [
       {
-        title: 'Item 01',
-        description: 'Description 01',
+        buttonTitle: t(TRANSLATIONS.ONBOARDING_CINEMA_BUTTON_TITLE),
+        description: t(TRANSLATIONS.ONBOARDING_CINEMA_DESCRIPTION),
+        title: t(TRANSLATIONS.ONBOARDING_CINEMA_TITLE),
         onPress: () => setIndexSelected(1),
-        buttonTitle: 'Next',
         icon: 'video-vintage',
       },
       {
-        title: 'Item 02',
-        description: 'Description 02',
+        buttonTitle: t(TRANSLATIONS.ONBOARDING_FAMOUS_BUTTON_TITLE),
+        description: t(TRANSLATIONS.ONBOARDING_FAMOUS_DESCRIPTION),
+        title: t(TRANSLATIONS.ONBOARDING_FAMOUS_TITLE),
         onPress: () => setIndexSelected(2),
-        buttonTitle: 'Next',
         icon: 'famous-active',
       },
       {
-        title: 'Item 03',
-        description: 'Description 03',
+        buttonTitle: t(TRANSLATIONS.ONBOARDING_QUIZ_BUTTON_TITLE),
+        description: t(TRANSLATIONS.ONBOARDING_QUIZ_DESCRIPTION),
+        title: t(TRANSLATIONS.ONBOARDING_QUIZ_TITLE),
+        onPress: () => setIndexSelected(3),
+        icon: 'quiz-active',
+      },
+      {
+        buttonTitle: t(TRANSLATIONS.ONBOARDING_NEWS_BUTTON_TITLE),
+        description: t(TRANSLATIONS.ONBOARDING_NEWS_DESCRIPTION),
+        title: t(TRANSLATIONS.ONBOARDING_NEWS_TITLE),
         onPress: () => console.warn('navigate'),
-        buttonTitle: "Let's go!",
         icon: 'news-active',
       },
     ],

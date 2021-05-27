@@ -3,7 +3,7 @@ import { Animated } from 'react-native';
 
 import metrics from '@styles/metrics';
 
-const MAX_DOT_WIDTH = metrics.getWidthFromDP('10%');
+const MAX_DOT_WIDTH = metrics.getWidthFromDP('7%');
 const MIN_DOT_WIDTH = metrics.smallSize;
 const ANIMATION_DURATION = 200;
 
@@ -15,6 +15,7 @@ const useNavigationDots = ({ indexSelected }: UseNavigationDotsProps) => {
   const firstDotWidth = useRef(new Animated.Value(MIN_DOT_WIDTH)).current;
   const secondDotWidth = useRef(new Animated.Value(MIN_DOT_WIDTH)).current;
   const thirdDotWidth = useRef(new Animated.Value(MIN_DOT_WIDTH)).current;
+  const fourthDotWidth = useRef(new Animated.Value(MIN_DOT_WIDTH)).current;
 
   const handleAnimateDot = useCallback(
     (dot: Animated.Value, dotIndex: number) => {
@@ -35,12 +36,15 @@ const useNavigationDots = ({ indexSelected }: UseNavigationDotsProps) => {
     handleAnimateDot(secondDotWidth, 1);
 
     handleAnimateDot(thirdDotWidth, 2);
+
+    handleAnimateDot(fourthDotWidth, 3);
   }, [indexSelected]);
 
   return {
     firstDotWidth,
     secondDotWidth,
     thirdDotWidth,
+    fourthDotWidth,
   };
 };
 

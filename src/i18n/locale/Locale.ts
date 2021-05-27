@@ -40,12 +40,24 @@ type OpenSourceSection = {
   title: string;
 };
 
+type Onboarding = {
+  description: string;
+  buttonTitle: string;
+  title: string;
+};
+
 export type Locale = {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
   imageQualities: Record<Types.ImageQualities, string>;
   languages: Record<Types.Languages, string>;
   softwareEngineer: string;
   about: string;
+  onboarding: {
+    cinema: Onboarding;
+    famous: Onboarding;
+    quiz: Onboarding;
+    news: Onboarding;
+  };
   openSource: {
     libraries: OpenSourceSection;
     github: OpenSourceSection;

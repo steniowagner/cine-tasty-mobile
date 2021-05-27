@@ -58,7 +58,7 @@ const Onboarding = ({ theme }: OnboardingStackProps & OnboardingProps) => {
         data={items}
       />
       <BottomNavigation
-        buttonTitle={items[indexSelected].title}
+        buttonTitle={items[indexSelected].buttonTitle}
         onPress={items[indexSelected].onPress}
         indexSelected={indexSelected}
       />

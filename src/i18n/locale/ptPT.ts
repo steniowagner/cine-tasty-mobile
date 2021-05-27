@@ -8,6 +8,28 @@ const en: Locale = {
     ptPT: 'ptPT-Portuguese',
     sv: 'ptPT-Swendish',
   },
+  onboarding: {
+    cinema: {
+      description: 'PtPT Cinema Description',
+      buttonTitle: 'PtPT Cinema',
+      title: 'PtPT Cinema Title',
+    },
+    famous: {
+      description: 'PtPT Famous Description',
+      buttonTitle: 'PtPT Famous',
+      title: 'PtPT Famous Title',
+    },
+    quiz: {
+      description: 'PtPT Quiz Quiz',
+      buttonTitle: 'PtPT Quiz',
+      title: 'PtPT Quiz Title',
+    },
+    news: {
+      description: 'PtPT News Description',
+      buttonTitle: 'PtPT News',
+      title: 'PtPT News Title',
+    },
+  },
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",

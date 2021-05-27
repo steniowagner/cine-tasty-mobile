@@ -8,7 +8,12 @@ type NavigationProps = {
 };
 
 const Navigation = ({ indexSelected }: NavigationProps) => {
-  const { firstDotWidth, secondDotWidth, thirdDotWidth } = useNavigationDots({
+  const {
+    firstDotWidth,
+    secondDotWidth,
+    thirdDotWidth,
+    fourthDotWidth,
+  } = useNavigationDots({
     indexSelected,
   });
 
@@ -22,6 +27,9 @@ const Navigation = ({ indexSelected }: NavigationProps) => {
       />
       <Styles.Dot
         style={{ width: thirdDotWidth }}
+      />
+      <Styles.Dot
+        style={{ width: fourthDotWidth }}
       />
     </Styles.Wrapper>
   );
