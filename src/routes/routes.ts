@@ -1,7 +1,10 @@
 export namespace Routes {
+  export enum InitialScreenChecking {
+    INITIAL_SCREEN = 'APP/INITIAL_SCREEN',
+  }
+
   export enum Onboarding {
     ONBOARDING = 'APP/ONBOARDING',
-    TABS = 'APP/TABS',
   }
 
   export enum Tabs {

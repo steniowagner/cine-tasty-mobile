@@ -5,7 +5,7 @@ import { Routes } from '@routes/routes';
 
 type OnboardingStackParams = {
   [Routes.Onboarding.ONBOARDING]: {
-    onFinishShowOnboarding: () => void;
+    onFinishShowOnboarding: () => Promise<void>;
   };
 };
 

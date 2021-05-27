@@ -5,13 +5,14 @@ import CustomModal from '@components/screens/shared/customized-modal/routes/stac
 import Onboarding from '@components/screens/onboarding/routes/stack-routes';
 import { Routes } from '@routes/routes';
 
+import CheckingInitialScreen from './checking-initial-screen/CheckingInitialScreen';
 import useRouteNavigation from './useRouteNavigation';
 import Tabs from '../Tabs';
 
 const RootStack = createStackNavigator();
 
 const RouteNavigation = () => {
-  const { onFinishShowOnboarding, shoudlShowOnboarding } = useRouteNavigation();
+  const { onFinishShowOnboarding, currentStack } = useRouteNavigation();
 
   return (
     <RootStack.Navigator
@@ -38,19 +39,27 @@ const RouteNavigation = () => {
       }}
       mode="modal"
     >
-      {shoudlShowOnboarding ? (
+      {currentStack === 'checking-initial-screen' && (
         <RootStack.Screen
           options={{ headerShown: false }}
-          initialParams={{ onFinishShowOnboarding }}
-          component={Onboarding}
-          name={Routes.Onboarding.ONBOARDING}
+          component={CheckingInitialScreen}
+          name={Routes.InitialScreenChecking.INITIAL_SCREEN}
         />
-      ) : (
+      )}
+      {currentStack === 'onboarding' && (
+        <RootStack.Screen
+          initialParams={{ onFinishShowOnboarding }}
+          name={Routes.Onboarding.ONBOARDING}
+          options={{ headerShown: false }}
+          component={Onboarding}
+        />
+      )}
+      {currentStack === 'tabs' && (
         <>
           <RootStack.Screen
             options={{ headerShown: false }}
-            component={Tabs}
             name={Routes.Tabs.TABS}
+            component={Tabs}
           />
           <RootStack.Screen
             options={{ headerShown: false, animationEnabled: true }}
