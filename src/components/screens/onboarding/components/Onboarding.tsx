@@ -14,10 +14,15 @@ type OnboardingProps = {
   theme: DefaultTheme;
 };
 
-const Onboarding = ({ theme }: OnboardingStackProps & OnboardingProps) => {
+const Onboarding = ({
+  route,
+  theme,
+}: Pick<OnboardingStackProps, 'route'> & OnboardingProps) => {
   const {
     onMomentumScrollEnd, indexSelected, flatlistRef, items,
-  } = useOnboarding();
+  } = useOnboarding({
+    route,
+  });
 
   return (
     <Styles.Wrapper>

@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const useRouteNavigation = () => {
-  const [shoudlShowOnboarding] = useState<boolean>(true);
+  const [shoudlShowOnboarding, setShoudlShowOnboarding] = useState<boolean>(true);
+
+  const onFinishShowOnboarding = useCallback(() => {
+    setShoudlShowOnboarding(false);
+  }, []);
 
   return {
+    onFinishShowOnboarding,
     shoudlShowOnboarding,
   };
 };

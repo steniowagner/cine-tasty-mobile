@@ -1,6 +1,11 @@
 export namespace Routes {
   export enum Onboarding {
     ONBOARDING = 'APP/ONBOARDING',
+    TABS = 'APP/TABS',
+  }
+
+  export enum Tabs {
+    TABS = 'APP/TABS',
   }
 
   export enum ImagesGallery {

@@ -11,7 +11,7 @@ import Tabs from '../Tabs';
 const RootStack = createStackNavigator();
 
 const RouteNavigation = () => {
-  const { shoudlShowOnboarding } = useRouteNavigation();
+  const { onFinishShowOnboarding, shoudlShowOnboarding } = useRouteNavigation();
 
   return (
     <RootStack.Navigator
@@ -41,15 +41,16 @@ const RouteNavigation = () => {
       {shoudlShowOnboarding ? (
         <RootStack.Screen
           options={{ headerShown: false }}
+          initialParams={{ onFinishShowOnboarding }}
           component={Onboarding}
-          name="Onboarding"
+          name={Routes.Onboarding.ONBOARDING}
         />
       ) : (
         <>
           <RootStack.Screen
             options={{ headerShown: false }}
             component={Tabs}
-            name="Tabs"
+            name={Routes.Tabs.TABS}
           />
           <RootStack.Screen
             options={{ headerShown: false, animationEnabled: true }}

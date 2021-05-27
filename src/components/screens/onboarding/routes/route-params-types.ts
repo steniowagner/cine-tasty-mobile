@@ -4,7 +4,9 @@ import { RouteProp } from '@react-navigation/native';
 import { Routes } from '@routes/routes';
 
 type OnboardingStackParams = {
-  [Routes.Onboarding.ONBOARDING]: undefined;
+  [Routes.Onboarding.ONBOARDING]: {
+    onFinishShowOnboarding: () => void;
+  };
 };
 
 export type OnboardingStackProps = {

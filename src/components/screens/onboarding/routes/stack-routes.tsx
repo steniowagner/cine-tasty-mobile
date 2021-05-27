@@ -3,11 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { Routes } from '@routes/routes';
 
+import { OnboardingStackProps } from './route-params-types';
 import Onboarding from '../components/Onboarding';
 
 const Stack = createStackNavigator();
 
-const OnboardingStack = () => (
+const OnboardingStack = ({ route }: Pick<OnboardingStackProps, 'route'>) => (
   <Stack.Navigator>
     <Stack.Screen
       options={{
@@ -15,6 +16,9 @@ const OnboardingStack = () => (
       }}
       name={Routes.Onboarding.ONBOARDING}
       component={Onboarding}
+      initialParams={{
+        ...route.params,
+      }}
     />
   </Stack.Navigator>
 );

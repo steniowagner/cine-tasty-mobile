@@ -1,12 +1,20 @@
 import {
   useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
-import { NativeSyntheticEvent, NativeScrollEvent, FlatList } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  Platform,
+  FlatList,
+} from 'react-native';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { useTranslation } from 'react-i18next';
 
 import { Icons } from '@components/common/svg-icon/icons';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
+
+import { OnboardingStackProps } from '../routes/route-params-types';
 
 type OnboardingItem = {
   description: string;
@@ -16,11 +24,17 @@ type OnboardingItem = {
   icon: Icons;
 };
 
-const useOnboarding = () => {
+const useOnboarding = ({ route }: Pick<OnboardingStackProps, 'route'>) => {
   const [indexSelected, setIndexSelected] = useState<number>(0);
   const flatlistRef = useRef<FlatList>(null);
 
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      changeNavigationBarColor('#ffffff', true, true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!flatlistRef) {
@@ -75,7 +89,7 @@ const useOnboarding = () => {
         buttonTitle: t(TRANSLATIONS.ONBOARDING_NEWS_BUTTON_TITLE),
         description: t(TRANSLATIONS.ONBOARDING_NEWS_DESCRIPTION),
         title: t(TRANSLATIONS.ONBOARDING_NEWS_TITLE),
-        onPress: () => console.warn('navigate'),
+        onPress: () => route.params.onFinishShowOnboarding(),
         icon: 'news-active',
       },
     ],
