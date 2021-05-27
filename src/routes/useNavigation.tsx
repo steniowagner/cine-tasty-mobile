@@ -3,8 +3,8 @@ import { DefaultTheme } from 'styled-components';
 
 import { useStatusBarStyle } from '@hooks';
 
+import RootNavigation from './components/root-navigation/RootNavigation';
 import SplashScreen from './components/splash-screen/SplashScreen';
-import RootNavigation from './components/RootNavigation';
 
 type UseNavigationProps = {
   theme: DefaultTheme;

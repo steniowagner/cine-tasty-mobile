@@ -1,4 +1,8 @@
 export namespace Routes {
+  export enum Onboarding {
+    ONBOARDING = 'APP/ONBOARDING',
+  }
+
   export enum ImagesGallery {
     IMAGES_GALLERY = 'APP/IMAGES_GALLERY',
   }
