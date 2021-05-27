@@ -1,6 +1,28 @@
 import { Locale } from './Locale';
 
 const en: Locale = {
+  onboarding: {
+    cinema: {
+      description: 'PtBR Cinema Description',
+      buttonTitle: 'PtBR Cinema',
+      title: 'PtBR Cinema Title',
+    },
+    famous: {
+      description: 'PtBR Famous Description',
+      buttonTitle: 'PtBR Famous',
+      title: 'PtBR Famous Title',
+    },
+    quiz: {
+      description: 'PtBR Quiz Quiz',
+      buttonTitle: 'PtBR Quiz',
+      title: 'PtBR Quiz Title',
+    },
+    news: {
+      description: 'PtBR News Description',
+      buttonTitle: 'PtBR News',
+      title: 'PtBR News Title',
+    },
+  },
   languages: {
     en: 'ptBR-English',
     es: 'ptBR-Spanish',

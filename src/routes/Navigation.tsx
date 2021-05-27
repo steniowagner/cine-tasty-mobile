@@ -1,33 +1,17 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { DefaultTheme, withTheme } from 'styled-components';
 import { AppearanceProvider } from 'react-native-appearance';
 
-import { useStatusBarStyle } from '@hooks';
-
-import SplashScreen from './components/splash-screen/SplashScreen';
-import RootNavigation from './components/RootNavigation';
+import useNavigation from './useNavigation';
 
 type RoutesProps = {
   theme: DefaultTheme;
 };
 
 const Routes = ({ theme }: RoutesProps) => {
-  const [isSplashScreenLoaded, setIsSplashScreenLoaded] = useState<boolean>(false);
-  const { barStyle } = useStatusBarStyle({ theme });
-
-  const renderContent = useCallback(() => {
-    if (isSplashScreenLoaded) {
-      return <RootNavigation />;
-    }
-
-    return (
-      <SplashScreen
-        onLoad={() => setIsSplashScreenLoaded(true)}
-      />
-    );
-  }, [isSplashScreenLoaded]);
+  const { renderContent, barStyle } = useNavigation({ theme });
 
   return (
     <AppearanceProvider>

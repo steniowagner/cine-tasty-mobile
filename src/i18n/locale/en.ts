@@ -2,6 +2,28 @@ import { Locale } from './Locale';
 
 const en: Locale = {
   softwareEngineer: 'Software Engineer',
+  onboarding: {
+    cinema: {
+      description: 'English Cinema Description',
+      buttonTitle: 'English Cinema',
+      title: 'English Cinema Title',
+    },
+    famous: {
+      description: 'English Famous Description',
+      buttonTitle: 'English Famous',
+      title: 'English Famous Title',
+    },
+    quiz: {
+      description: 'English Quiz Quiz',
+      buttonTitle: 'English Quiz',
+      title: 'English Quiz Title',
+    },
+    news: {
+      description: 'English News Description',
+      buttonTitle: 'English News',
+      title: 'English News Title',
+    },
+  },
   theme: {
     dark: 'Dark',
     light: 'Light',

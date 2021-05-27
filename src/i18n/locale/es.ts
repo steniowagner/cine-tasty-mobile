@@ -8,6 +8,28 @@ const en: Locale = {
     ptPT: 'Sp-Portuguese',
     sv: 'Sp-Swendish',
   },
+  onboarding: {
+    cinema: {
+      description: 'Spanish Cinema Description',
+      buttonTitle: 'Spanish Cinema',
+      title: 'Spanish Cinema Title',
+    },
+    famous: {
+      description: 'Spanish Famous Description',
+      buttonTitle: 'Spanish Famous',
+      title: 'Spanish Famous Title',
+    },
+    quiz: {
+      description: 'Spanish Quiz Quiz',
+      buttonTitle: 'Spanish Quiz',
+      title: 'Spanish Quiz Title',
+    },
+    news: {
+      description: 'Spanish News Description',
+      buttonTitle: 'Spanish News',
+      title: 'Spanish News Title',
+    },
+  },
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
