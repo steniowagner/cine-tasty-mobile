@@ -44,7 +44,6 @@ const ptBR: Locale = {
       title: 'PtBR News Title',
     },
   },
-const ptBR: Locale = {
   softwareEngineer: 'Engenheiro de Software',
   select: 'SELECIONAR',
   theme: {
