@@ -232,3 +232,17 @@ export const MEDIA_DETAIL_SECTIONS_ORIGINAL_COUNTRY = 'translations:mediaDetail:
 export const MEDIA_DETAIL_SECTIONS_CREATED_BY = 'translations:mediaDetail:sections:createdBy';
 export const MEDIA_DETAIL_SECTIONS_SEASONS = 'translations:mediaDetail:sections:seasons';
 export const MEDIA_DETAIL_SECTIONS_NETWORKS = 'translations:mediaDetail:sections:networks';
+
+// LANGUAGE WARNING
+export const LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION = 'translations:languageWarning:quiz:positiveAction';
+export const LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION = 'translations:languageWarning:quiz:negativeAction';
+export const LANGUAGE_WARNING_QUIZ_TITLE = 'translations:languageWarning:quiz:title';
+export const LANGUAGE_WARNING_QUIZ_DESCRIPTION = 'translations:languageWarning:quiz:description';
+
+export const LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION = 'translations:languageWarning:media:positiveAction';
+export const LANGUAGE_WARNING_MEDIA_TITLE = 'translations:languageWarning:media:title';
+export const LANGUAGE_WARNING_MEDIA_DESCRIPTION = 'translations:languageWarning:media:description';
+
+export const LANGUAGE_WARNING_FAMOUS_POSITIVE_ACTION = 'translations:languageWarning:famous:positiveAction';
+export const LANGUAGE_WARNING_FAMOUS_TITLE = 'translations:languageWarning:famous:title';
+export const LANGUAGE_WARNING_FAMOUS_DESCRIPTION = 'translations:languageWarning:famous:description';

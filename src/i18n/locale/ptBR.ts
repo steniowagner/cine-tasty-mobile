@@ -1,6 +1,27 @@
 import { Locale } from './Locale';
 
-const en: Locale = {
+const ptBR: Locale = {
+  languageWarning: {
+    quiz: {
+      positiveAction: 'Sim',
+      negativeAction: 'Não',
+      title: 'Oops, só uma coisa...',
+      description:
+        'Todas as perguntas deste quiz estão em inglês, quer jogar mesmo assim?',
+    },
+    media: {
+      positiveAction: 'OK',
+      title: 'Só uma coisa...',
+      description:
+        'Este aplicativo não é responsável pelas traduções do texto da visão geral, e é possível que não esteja disponível para o seu idioma.',
+    },
+    famous: {
+      positiveAction: 'OK',
+      title: 'Só uma coisa...',
+      description:
+        'Este aplicativo não é responsável pelas traduções do texto da biografia, e é possível que não esteja disponível para o seu idioma.',
+    },
+  },
   onboarding: {
     cinema: {
       description: 'PtBR Cinema Description',
@@ -274,4 +295,4 @@ const en: Locale = {
   },
 };
 
-export default en;
+export default ptBR;

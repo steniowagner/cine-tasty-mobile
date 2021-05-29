@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useShowLanguageAlert } from '@hooks';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
@@ -38,6 +39,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
     INITIAL_NUMBER_QUESTIONS,
   );
 
+  const { handleShowLanguageAlert } = useShowLanguageAlert();
   const { t } = useTranslation();
 
   const getOptionSelectedInfo = useCallback(
@@ -154,12 +156,23 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
     });
   }, [numberOfQuestions, questionDifficulty, questionCategory, questionType]);
 
+  const onPressStartQuiz = useCallback(() => {
+    handleShowLanguageAlert({
+      descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_DESCRIPTION,
+      negativei18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION,
+      positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION,
+      titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_TITLE,
+      onPressPositiveAction: navigateToQuestions,
+      singleAction: false,
+    });
+  }, [navigateToQuestions]);
+
   return {
-    onPressStartQuiz: navigateToQuestions,
     onPressOptionDropdown,
     setNumberOfQuestions,
     questionDifficulty,
     numberOfQuestions,
+    onPressStartQuiz,
     questionCategory,
     questionType,
     t,

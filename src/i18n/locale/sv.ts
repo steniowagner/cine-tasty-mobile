@@ -1,6 +1,15 @@
 import { Locale } from './Locale';
 
 const en: Locale = {
+  languageWarning: {
+    quiz: {
+      positiveAction: 'Yes',
+      negativeAction: 'No',
+      title: 'Oops, hold on...',
+      description:
+        'All the quiz questions are in english, do you want to play the game anyway?',
+    },
+  },
   languages: {
     en: 'sv-English',
     es: 'sv-Spanish',

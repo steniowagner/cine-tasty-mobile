@@ -1,11 +1,11 @@
 /* eslint-disable react/display-name */
-import React, { useLayoutEffect, useMemo } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo } from 'react';
 import { ScrollView, StatusBar } from 'react-native';
 import { withTheme } from 'styled-components';
 
 import ImagesList from '@components/common/images-list/ImagesList';
+import { useShowLanguageAlert, useStatusBarStyle } from '@hooks';
 import Section from '@components/common/section/Section';
-import { useStatusBarStyle } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
@@ -24,6 +24,7 @@ import DetailsSection from './MovieDetailsSection';
 import SimilarSection from './SimilarSection';
 
 const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
+  const { handleShowLanguageAlert } = useShowLanguageAlert();
   const {
     onPressSimilarItem,
     onPressCrew,
@@ -52,6 +53,18 @@ const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
     hasGenresIds: !!route.params.genreIds,
     id: route.params.id,
   });
+
+  useEffect(() => {
+    if (!isLoading && movie && !movie.overview) {
+      handleShowLanguageAlert({
+        descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_DESCRIPTION,
+        positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION,
+        titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_TITLE,
+        onPressPositiveAction: () => {},
+        singleAction: true,
+      });
+    }
+  }, [isLoading, movie]);
 
   const releaseDate = useMemo((): string => (movie?.releaseDate || '-').split('-')[0], [
     movie,

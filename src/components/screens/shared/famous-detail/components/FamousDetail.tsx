@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/display-name */
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { StatusBar, Animated } from 'react-native';
 import { withTheme } from 'styled-components';
 
 import ExpansibleTextSection from '@components/common/expansible-text-section/ExpansibleTextSection';
 import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
-import { useGetCurrentTheme, useStatusBarStyle } from '@hooks';
+import { useGetCurrentTheme, useShowLanguageAlert, useStatusBarStyle } from '@hooks';
 import Advise from '@components/common/advise/Advise';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
@@ -20,6 +20,9 @@ import * as Styles from './FamousDetail.styles';
 import DeathDay from './death-day/DeathDay';
 
 const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
+  const scrollViewOffset = useRef(new Animated.Value(0)).current;
+
+  const { handleShowLanguageAlert } = useShowLanguageAlert();
   const { currentTheme } = useGetCurrentTheme({ theme });
   const {
     renderTVShowCastSection,
@@ -44,7 +47,17 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
     id: route.params.id,
   });
 
-  const scrollViewOffset = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (!isLoading && famous && !famous.biography) {
+      handleShowLanguageAlert({
+        descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_FAMOUS_DESCRIPTION,
+        positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_FAMOUS_POSITIVE_ACTION,
+        titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_FAMOUS_TITLE,
+        onPressPositiveAction: () => {},
+        singleAction: true,
+      });
+    }
+  }, [isLoading, famous]);
 
   if (hasError) {
     return (

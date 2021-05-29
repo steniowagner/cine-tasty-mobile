@@ -12,8 +12,9 @@ mockUsePaginatedQuery.mockImplementation(() => ({
 }));
 
 jest.mock('@hooks', () => ({
-  ...jest.requireActual('@hooks'),
   usePaginatedQuery: params => mockUsePaginatedQuery(params),
+  useGetCurrentISO6391Language: () => jest.fn(),
+  useShowLanguageAlert: () => jest.fn(),
 }));
 
 import * as Queries from '@graphql/queries';
