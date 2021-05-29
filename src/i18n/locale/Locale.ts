@@ -46,12 +46,22 @@ type Onboarding = {
   title: string;
 };
 
+type LanguageWarning = {
+  positiveAction: string;
+  negativeAction: string;
+  title: string;
+  description: string;
+};
+
 export type Locale = {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
   imageQualities: Record<Types.ImageQualities, string>;
   languages: Record<Types.Languages, string>;
   softwareEngineer: string;
   about: string;
+  languageWarning: {
+    quiz: LanguageWarning;
+  };
   onboarding: {
     cinema: Onboarding;
     famous: Onboarding;

@@ -2,6 +2,15 @@ import { Locale } from './Locale';
 
 const en: Locale = {
   softwareEngineer: 'Software Engineer',
+  languageWarning: {
+    quiz: {
+      positiveAction: 'Yes',
+      negativeAction: 'No',
+      title: 'Oops, hold on...',
+      description:
+        'All the quiz questions are in english, do you want to play the game anyway?',
+    },
+  },
   onboarding: {
     cinema: {
       description: 'English Cinema Description',

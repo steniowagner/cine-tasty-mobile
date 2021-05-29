@@ -1,6 +1,15 @@
 import { Locale } from './Locale';
 
-const en: Locale = {
+const ptBR: Locale = {
+  languageWarning: {
+    quiz: {
+      positiveAction: 'Yes',
+      negativeAction: 'No',
+      title: 'Oops, hold on...',
+      description:
+        'All the quiz questions are in english, do you want to play the game anyway?',
+    },
+  },
   onboarding: {
     cinema: {
       description: 'PtBR Cinema Description',
@@ -274,4 +283,4 @@ const en: Locale = {
   },
 };
 
-export default en;
+export default ptBR;

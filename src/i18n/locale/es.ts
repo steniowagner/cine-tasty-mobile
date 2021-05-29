@@ -8,6 +8,15 @@ const en: Locale = {
     ptPT: 'Sp-Portuguese',
     sv: 'Sp-Swendish',
   },
+  languageWarning: {
+    quiz: {
+      positiveAction: 'Yes',
+      negativeAction: 'No',
+      title: 'Oops, hold on...',
+      description:
+        'All the quiz questions are in english, do you want to play the game anyway?',
+    },
+  },
   onboarding: {
     cinema: {
       description: 'Spanish Cinema Description',
