@@ -1,8 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert } from 'react-native';
 
-import { useGetCurrentISO6391Language } from '@hooks';
+import { useShowLanguageAlert } from '@hooks';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
@@ -40,7 +39,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
     INITIAL_NUMBER_QUESTIONS,
   );
 
-  const { currentISO6391Language } = useGetCurrentISO6391Language();
+  const { handleShowLanguageAlert } = useShowLanguageAlert();
   const { t } = useTranslation();
 
   const getOptionSelectedInfo = useCallback(
@@ -157,33 +156,16 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
     });
   }, [numberOfQuestions, questionDifficulty, questionCategory, questionType]);
 
-  const handleShowLanguageNonEnglishAlert = useCallback(() => {
-    Alert.alert(
-      t(TRANSLATIONS.LANGUAGE_WARNING_QUIZ_TITLE),
-      t(TRANSLATIONS.LANGUAGE_WARNING_QUIZ_DESCRIPTION),
-      [
-        {
-          text: t(TRANSLATIONS.LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION),
-          style: 'cancel',
-          onPress: () => {},
-        },
-        {
-          text: t(TRANSLATIONS.LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION),
-          onPress: () => navigateToQuestions(),
-        },
-      ],
-      { cancelable: false },
-    );
-  }, [navigateToQuestions]);
-
   const onPressStartQuiz = useCallback(() => {
-    if (currentISO6391Language === SchemaTypes.ISO6391Language.EN) {
-      navigateToQuestions();
-      return;
-    }
-
-    handleShowLanguageNonEnglishAlert();
-  }, [currentISO6391Language, navigateToQuestions]);
+    handleShowLanguageAlert({
+      descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_DESCRIPTION,
+      negativei18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION,
+      positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION,
+      titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_TITLE,
+      onPressPositiveAction: navigateToQuestions,
+      singleAction: false,
+    });
+  }, [navigateToQuestions]);
 
   return {
     onPressOptionDropdown,
