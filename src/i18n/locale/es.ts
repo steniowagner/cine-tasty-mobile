@@ -22,6 +22,12 @@ const en: Locale = {
       description:
         'Esta aplicación no es responsable de las traducciones de este texto de descripción general y es posible que no esté disponible para su idioma.',
     },
+    famous: {
+      positiveAction: 'OK',
+      title: 'Solo una cosa...',
+      description:
+        'Esta aplicación no es responsable de las traducciones de este texto de biografía y es posible que no esté disponible para su idioma.',
+    },
   },
   onboarding: {
     cinema: {

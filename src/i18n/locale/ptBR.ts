@@ -15,6 +15,12 @@ const ptBR: Locale = {
       description:
         'Este aplicativo não é responsável pelas traduções do texto da visão geral, e é possível que não esteja disponível para o seu idioma.',
     },
+    famous: {
+      positiveAction: 'OK',
+      title: 'Só uma coisa...',
+      description:
+        'Este aplicativo não é responsável pelas traduções do texto da biografia, e é possível que não esteja disponível para o seu idioma.',
+    },
   },
   onboarding: {
     cinema: {

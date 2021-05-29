@@ -20,6 +20,8 @@ import * as Styles from './FamousDetail.styles';
 import DeathDay from './death-day/DeathDay';
 
 const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
+  const scrollViewOffset = useRef(new Animated.Value(0)).current;
+
   const { handleShowLanguageAlert } = useShowLanguageAlert();
   const { currentTheme } = useGetCurrentTheme({ theme });
   const {
@@ -28,17 +30,6 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
     renderImagesSection,
   } = useRenderFamousDetailSections({ navigation });
   const { barStyle } = useStatusBarStyle({ theme });
-
-  useEffect(() => {
-    handleShowLanguageAlert({
-      descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_DESCRIPTION,
-      negativei18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION,
-      positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION,
-      titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_TITLE,
-      onPressPositiveAction: () => {},
-      singleAction: true,
-    });
-  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -56,7 +47,17 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
     id: route.params.id,
   });
 
-  const scrollViewOffset = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (!isLoading && famous && !famous.biography) {
+      handleShowLanguageAlert({
+        descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_FAMOUS_DESCRIPTION,
+        positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_FAMOUS_POSITIVE_ACTION,
+        titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_FAMOUS_TITLE,
+        onPressPositiveAction: () => {},
+        singleAction: true,
+      });
+    }
+  }, [isLoading, famous]);
 
   if (hasError) {
     return (

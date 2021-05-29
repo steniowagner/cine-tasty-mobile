@@ -16,6 +16,12 @@ const en: Locale = {
       description:
         "This app is not responsible for the translations of this overview text, and it's maybe not available for your language.",
     },
+    famous: {
+      positiveAction: 'OK',
+      title: 'Just one thing...',
+      description:
+        "This app is not responsible for the translations of this biography text, and it's maybe not available for your language.",
+    },
   },
   onboarding: {
     cinema: {

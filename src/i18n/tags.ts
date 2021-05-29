@@ -242,3 +242,7 @@ export const LANGUAGE_WARNING_QUIZ_DESCRIPTION = 'translations:languageWarning:q
 export const LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION = 'translations:languageWarning:media:positiveAction';
 export const LANGUAGE_WARNING_MEDIA_TITLE = 'translations:languageWarning:media:title';
 export const LANGUAGE_WARNING_MEDIA_DESCRIPTION = 'translations:languageWarning:media:description';
+
+export const LANGUAGE_WARNING_FAMOUS_POSITIVE_ACTION = 'translations:languageWarning:famous:positiveAction';
+export const LANGUAGE_WARNING_FAMOUS_TITLE = 'translations:languageWarning:famous:title';
+export const LANGUAGE_WARNING_FAMOUS_DESCRIPTION = 'translations:languageWarning:famous:description';
