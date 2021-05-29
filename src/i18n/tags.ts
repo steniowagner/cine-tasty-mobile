@@ -238,3 +238,7 @@ export const LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION = 'translations:languageWarni
 export const LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION = 'translations:languageWarning:quiz:negativeAction';
 export const LANGUAGE_WARNING_QUIZ_TITLE = 'translations:languageWarning:quiz:title';
 export const LANGUAGE_WARNING_QUIZ_DESCRIPTION = 'translations:languageWarning:quiz:description';
+
+export const LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION = 'translations:languageWarning:media:positiveAction';
+export const LANGUAGE_WARNING_MEDIA_TITLE = 'translations:languageWarning:media:title';
+export const LANGUAGE_WARNING_MEDIA_DESCRIPTION = 'translations:languageWarning:media:description';

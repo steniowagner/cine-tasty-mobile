@@ -60,6 +60,7 @@ export type Locale = {
   softwareEngineer: string;
   about: string;
   languageWarning: {
+    media: Omit<LanguageWarning, 'negativeAction'>;
     quiz: LanguageWarning;
   };
   onboarding: {

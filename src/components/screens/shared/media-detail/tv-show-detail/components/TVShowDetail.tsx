@@ -1,12 +1,12 @@
 /* eslint-disable react/display-name */
-import React, { useLayoutEffect, useMemo } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo } from 'react';
 import { ScrollView, StatusBar } from 'react-native';
 import { withTheme } from 'styled-components';
 
 import RoundedButton from '@components/common/rounded-button/RoundedButton';
 import ImagesList from '@components/common/images-list/ImagesList';
 import Section from '@components/common/section/Section';
-import { useStatusBarStyle } from '@hooks';
+import { useShowLanguageAlert, useStatusBarStyle } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
@@ -26,6 +26,7 @@ import * as Styles from './TVShowDetail.styles';
 import SimilarSection from './SimilarSection';
 
 const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
+  const { handleShowLanguageAlert } = useShowLanguageAlert();
   const {
     onPressSimilarItem,
     onPressSeeSeasons,
@@ -56,6 +57,18 @@ const TVShowDetail = ({ navigation, theme, route }: TVShowDetailStackProps) => {
     hasGenresIds: !!route.params.genreIds,
     id: route.params.id,
   });
+
+  useEffect(() => {
+    if (!isLoading && tvShow && !tvShow.overview) {
+      handleShowLanguageAlert({
+        descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_DESCRIPTION,
+        positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION,
+        titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_TITLE,
+        onPressPositiveAction: () => {},
+        singleAction: true,
+      });
+    }
+  }, [isLoading, tvShow]);
 
   const firstAirDate = useMemo(
     (): string => (tvShow?.firstAirDate || '-').split('-')[0],

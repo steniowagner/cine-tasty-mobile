@@ -3,11 +3,17 @@ import { Locale } from './Locale';
 const ptBR: Locale = {
   languageWarning: {
     quiz: {
-      positiveAction: 'Yes',
-      negativeAction: 'No',
-      title: 'Oops, hold on...',
+      positiveAction: 'Sim',
+      negativeAction: 'Não',
+      title: 'Oops, só uma coisa...',
       description:
-        'All the quiz questions are in english, do you want to play the game anyway?',
+        'Todas as perguntas deste quiz estão em inglês, quer jogar mesmo assim?',
+    },
+    media: {
+      positiveAction: 'OK',
+      title: 'Só uma coisa...',
+      description:
+        'Este aplicativo não é responsável pelas traduções do texto da visão geral, e é possível que não esteja disponível para o seu idioma.',
     },
   },
   onboarding: {

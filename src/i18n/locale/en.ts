@@ -6,9 +6,15 @@ const en: Locale = {
     quiz: {
       positiveAction: 'Yes',
       negativeAction: 'No',
-      title: 'Oops, hold on...',
+      title: 'Oops, just one thing...',
       description:
         'All the quiz questions are in english, do you want to play the game anyway?',
+    },
+    media: {
+      positiveAction: 'OK',
+      title: 'Just one thing...',
+      description:
+        "This app is not responsible for the translations of this overview text, and it's maybe not available for your language.",
     },
   },
   onboarding: {

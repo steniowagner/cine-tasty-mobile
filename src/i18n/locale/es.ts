@@ -10,11 +10,17 @@ const en: Locale = {
   },
   languageWarning: {
     quiz: {
-      positiveAction: 'Yes',
+      positiveAction: 'Sí',
       negativeAction: 'No',
-      title: 'Oops, hold on...',
+      title: 'Oops, sólo una cosa...',
       description:
-        'All the quiz questions are in english, do you want to play the game anyway?',
+        'Todas las preguntas del cuestionario están en inglés, ¿quieres jugar de todos modos?',
+    },
+    media: {
+      positiveAction: 'OK',
+      title: 'Solo una cosa...',
+      description:
+        'Esta aplicación no es responsable de las traducciones de este texto de descripción general y es posible que no esté disponible para su idioma.',
     },
   },
   onboarding: {
