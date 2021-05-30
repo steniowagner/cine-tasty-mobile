@@ -2,11 +2,10 @@ import { Locale } from './Locale';
 
 const es: Locale = {
   languages: {
-    en: 'Sp-English',
-    es: 'Sp-Spanish',
-    ptBR: 'Sp-Brazilian Portuguese',
-    ptPT: 'Sp-Portuguese',
-    sv: 'Sp-Swendish',
+    en: 'Inglés',
+    es: 'Español',
+    ptBR: 'Portugués',
+    sv: 'Swedish',
   },
   languageWarning: {
     quiz: {
@@ -80,12 +79,7 @@ const es: Locale = {
     high: 'Alta',
     veryHigh: 'Muy alta',
   },
-  languages: {
-    en: 'Inglés',
-    es: 'Español',
-    ptBR: 'Portugués',
-    sv: 'Swedish',
-  },
+
   errors: {
     paginateFamousError: 'No se pudo cargar más famoso',
     searchFamousError: 'No se pudo buscar a esta persona',
