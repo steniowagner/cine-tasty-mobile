@@ -1,13 +1,9 @@
-import { Platform } from 'react-native';
 import { DefaultTheme } from 'styled-components';
 
 import metrics from '@styles/metrics';
 
 const headerTitleStyle = {
-  fontSize: Platform.select({
-    ios: metrics.getWidthFromDP('5.3%'),
-    android: metrics.getWidthFromDP('5.3%'),
-  }),
+  fontSize: metrics.extraLargeSize,
   fontFamily: 'CircularStd-Bold',
   fontWeight: undefined,
 };

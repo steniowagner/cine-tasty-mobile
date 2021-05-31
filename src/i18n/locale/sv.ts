@@ -1,43 +1,83 @@
 import { Locale } from './Locale';
 
-const en: Locale = {
+const sv: Locale = {
+  softwareEngineer: 'Software Engineer',
   languageWarning: {
     quiz: {
-      positiveAction: 'Yes',
-      negativeAction: 'No',
-      title: 'Oops, hold on...',
+      positiveAction: 'Ja',
+      negativeAction: 'Nej',
+      title: 'Oops, just one thing...',
       description:
         'All the quiz questions are in english, do you want to play the game anyway?',
     },
-  },
-  languages: {
-    en: 'sv-English',
-    es: 'sv-Spanish',
-    ptBR: 'sv-Brazilian Portuguese',
-    ptPT: 'sv-Portuguese',
-    sv: 'sv-Swendish',
+    media: {
+      positiveAction: 'OK',
+      title: 'Just one thing...',
+      description:
+        "This app is not responsible for the translations of this overview text, and it's maybe not available for your language.",
+    },
+    famous: {
+      positiveAction: 'OK',
+      title: 'Just one thing...',
+      description:
+        "This app is not responsible for the translations of this biography text, and it's maybe not available for your language.",
+    },
   },
   onboarding: {
     cinema: {
-      description: 'SV Cinema Description',
-      buttonTitle: 'SV Cinema',
-      title: 'SV Cinema Title',
+      description: 'English Cinema Description',
+      buttonTitle: 'English Cinema',
+      title: 'English Cinema Title',
     },
     famous: {
-      description: 'SV Famous Description',
-      buttonTitle: 'SV Famous',
-      title: 'SV Famous Title',
+      description: 'English Famous Description',
+      buttonTitle: 'English Famous',
+      title: 'English Famous Title',
     },
     quiz: {
-      description: 'SV Quiz Quiz',
-      buttonTitle: 'SV Quiz',
-      title: 'SV Quiz Title',
+      description: 'English Quiz Quiz',
+      buttonTitle: 'English Quiz',
+      title: 'English Quiz Title',
     },
     news: {
-      description: 'SV News Description',
-      buttonTitle: 'SV News',
-      title: 'SV News Title',
+      description: 'English News Description',
+      buttonTitle: 'English News',
+      title: 'English News Title',
     },
+  },
+  select: 'SELECT',
+  theme: {
+    dark: 'Dark',
+    light: 'Light',
+    system: 'Follow System Preferences',
+  },
+  about:
+    "Hey!\n\nI'm Full-Stack Software Engineer that loves apply his knowledge to solve problems, create amazing products and impact lives!",
+  openSource: {
+    libraries: {
+      description: 'List of all libraries that was used by this project',
+      title: 'Support libraries',
+    },
+    github: {
+      description: "Public repository with the project's source-code",
+      title: 'GitHub repository',
+    },
+    tmdb: {
+      description: 'Movies and TV Shows datasource',
+      title: 'TheMovieDB',
+    },
+  },
+  imageQualities: {
+    low: 'Low',
+    medium: 'Medium',
+    high: 'High',
+    veryHigh: 'Very High',
+  },
+  languages: {
+    en: 'English',
+    es: 'Spanish',
+    ptBR: 'Portuguese',
+    sv: 'Swendish',
   },
   errors: {
     paginateFamousError: "Couldn't load more Famous",
@@ -45,9 +85,9 @@ const en: Locale = {
     reloadNewsError: "Couldn't reload the news",
     loadMoreNewsError: "Couldn't load more news",
     network: {
-      description: 'description',
-      suggestion: 'suggestion',
-      title: 'title',
+      description: 'Something went wrong',
+      suggestion: 'Please try again later',
+      title: 'Oops...',
     },
   },
   tabs: {
@@ -71,8 +111,8 @@ const en: Locale = {
     second_plural: '{{ value }}s ago',
   },
   news: {
-    i18nQueryByPaginationErrorRef: 'i18nQueryByPaginationErrorRef',
-    i18EntryQueryErrorRef: 'i18EntryQueryErrorRef',
+    i18nQueryByPaginationErrorRef: "Couldn't load more news",
+    i18EntryQueryErrorRef: "Couldn't load the news",
     languages: {
       english: 'English',
       arabic: 'Arabic',
@@ -85,15 +125,15 @@ const en: Locale = {
       norwegian: 'Norwegian',
       portuguese: 'Portuguese',
       russian: 'Russian',
-      sami: 'Sami',
+      sami: 'Finnish',
       spanish: 'Spanish',
     },
-    filterMessage: 'Choose a language to filter the News',
+    filterMessage: 'Choose a language to filter the news',
     selectFilterMessage: 'SELECT',
     emptyList: {
-      description: 'description',
-      suggestion: 'suggestion',
-      title: 'title',
+      description: 'We could not find any news for this language',
+      suggestion: 'Please try again later',
+      title: 'Oops...',
     },
   },
   quiz: {
@@ -119,35 +159,35 @@ const en: Locale = {
     difficultyHard: 'Hard',
     difficultyMixed: 'Mixed',
     typeMultiple: 'Multiple',
-    typeBoolean: 'Boolean',
+    typeBoolean: 'True/False',
     typeMixed: 'Mixed',
     playAgain: 'Play Again',
     playAgainDescription: 'Do you want to play the Quiz again?',
     answer: 'Answer',
-    yourAnswer: 'Your Answer',
+    yourAnswer: 'Your answer',
     scores: 'You scored',
     no: 'No',
     yes: 'Yes',
     noQuestionsAdviseTitle: 'Wow!',
     noQuestionsAdviseDescription:
-      "Seems like we don't have enough questions for your taste today.",
-    noQuestionsAdviseSuggestion: 'Try to change the search parameters.',
+      "Seems like we don't have enough questions for your taste today",
+    noQuestionsAdviseSuggestion: 'Try to change the search parameters',
     next: 'NEXT',
     true: 'True',
     false: 'False',
   },
   famous: {
     searchBarPlaceholder: 'Search for an Actor or Actress...',
-    i18nQueryByPaginationErrorRef: 'i18nQueryByPaginationErrorRef',
-    i18nQueryByTextErrorRef: 'i18nQueryByTextErrorRef',
-    i18EntryQueryErrorRef: 'i18EntryQueryErrorRef',
+    i18nQueryByPaginationErrorRef: "Couldn't load more famous",
+    i18nQueryByTextErrorRef: "Couldn't for this famous",
+    i18EntryQueryErrorRef: "Couldn't load the famous",
   },
   search: {
     recent: 'Recent',
     emptyList: {
-      description: 'emptyList -- description',
-      suggestion: 'emptyList -- suggestion',
-      title: 'emptyList -- title',
+      description: 'Nothing found :/',
+      suggestion: 'Try to change your search',
+      title: 'Oops...',
     },
   },
   months: [
@@ -171,9 +211,9 @@ const en: Locale = {
     images: 'Images',
     castMovies: 'Cast (Movies)',
     castTV: 'Cast (TV Shows)',
-    errorDescription: 'errorDescription',
-    errorSuggestion: 'errorSuggestion',
-    errorTitle: 'errorTitle',
+    errorDescription: 'Something went wrong',
+    errorSuggestion: 'Please try again later',
+    errorTitle: 'Oops...',
   },
   home: {
     learMoreButtonText: 'LEARN MORE',
@@ -182,59 +222,73 @@ const en: Locale = {
     viewAll: 'View All',
     movies: 'Movies',
     trendingMovies: {
-      error: 'trendingMoviesError',
+      error: "Couldn't load the Movies",
       nowPlaying: 'Now Playing',
-      nowPlayingViewAllTitle: 'nowPlayingViewAllTitle',
+      nowPlayingViewAllTitle: 'Movies playing now',
       popular: 'Popular',
-      popularViewAllTitle: 'popularViewAllTitle',
+      popularViewAllTitle: 'Popular Movies',
       topRated: 'Top Rated',
-      topRatedViewAllTitle: 'topRatedViewAllTitle',
+      topRatedViewAllTitle: 'Top rated Movies',
       upcoming: 'Upcoming',
-      upcomingViewAllTitle: 'upcomingViewAllTitle',
+      upcomingViewAllTitle: 'Upcoming Movies',
     },
     settingsSections: {
+      openSource: {
+        sectionDescription: 'List with all open-source resources used',
+        sectionTitle: 'Open-Source',
+        headerTitle: 'Open-Source',
+      },
       language: {
-        sectionDescription: 'languageDescription',
-        sectionTitle: 'languageTitle',
+        sectionDescription: 'Choose the language that the app will use',
+        sectionTitle: 'Language',
         headerTitle: 'Language',
       },
-      imageQualityDescription: 'imageQualityDescription',
-      imageQualityTitle: 'imageQualityTitle',
-      profileDescription: 'profileDescription',
-      profileTitle: 'profileTitle',
-      openSourceDescription: 'openSourceDescription',
-      openSourceTitle: 'openSourceTitle',
+      about: {
+        sectionDescription: 'Learn more about the creator of this app',
+        sectionTitle: 'About',
+        headerTitle: 'About',
+      },
+      imagesQuality: {
+        sectionDescription: 'Adjust the quality of the images showed',
+        sectionTitle: 'Images Quality',
+        headerTitle: 'Images Quality',
+      },
+      theme: {
+        sectionDescription: 'Choose between Light and Dark mode',
+        sectionTitle: 'Theme',
+        headerTitle: 'Theme',
+      },
     },
     trendingTvShows: {
-      error: 'trendingTVShowsError',
-      onTheAirViewAllTitle: 'onTheAirViewAllTitle',
+      error: "Couldn't load the TV Shows",
+      onTheAirViewAllTitle: 'TV Shows on the Air',
       onTheAir: 'On the Air',
-      popularViewAllTitle: 'popularViewAllTitle',
+      popularViewAllTitle: 'Popular TV Shows',
       popular: 'Popular',
-      topRatedViewAllTitle: 'topRatedViewAllTitle',
+      topRatedViewAllTitle: 'Top Rated TV Shows',
       topRated: 'Top Rated',
       airingToday: 'Airing Today',
-      airingTodayViewAllTitle: 'airingTodayViewAllTitle',
+      airingTodayViewAllTitle: 'TV Shows Airing Today',
     },
-    tvShowsPaginationError: 'tvShowsPaginationError',
-    moviesPaginationError: 'moviesPaginationError',
+    tvShowsPaginationError: "Couldn't load more TV-Shows",
+    moviesPaginationError: "Couldn't load more Movies",
     search: {
       movie: {
-        queryByTextError: 'movie-queryByTextError',
-        paginationError: 'movie-paginationError',
-        placeholder: 'movies-placeholder',
+        placeholder: 'Search for any Movie...',
+        queryByTextError: "Couldn't find this Movie",
+        paginationError: "Couldn't load more Movies",
       },
       tvShows: {
-        queryByTextError: 'tv-shows-queryByTextError',
-        paginationError: 'tv-shows-paginationError',
-        placeholder: 'tv-shows-placeholder',
+        placeholder: 'Search for any TV Show...',
+        queryByTextError: "Couldn't find this TV-Show",
+        paginationError: "Couldn't load more TV-Show",
       },
     },
   },
   mediaDetail: {
-    errorDescription: 'errorDescription',
-    errorSuggestion: 'errorSuggestion',
-    errorTitle: 'errorTitle',
+    errorDescription: 'Please try again later',
+    errorSuggestion: 'Something went wrong',
+    errorTitle: 'Oops...',
     votes: 'Votes',
     tvShow: {
       tvShow: 'TV-Show',
@@ -245,9 +299,9 @@ const en: Locale = {
         season: 'Season',
       },
       errors: {
-        description: 'description',
-        suggestion: 'suggestion',
-        title: 'title',
+        description: 'Something went wrong',
+        suggestion: 'Please try again later',
+        title: 'Oops...',
       },
     },
     movie: {
@@ -283,4 +337,4 @@ const en: Locale = {
   },
 };
 
-export default en;
+export default sv;
