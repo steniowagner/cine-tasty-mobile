@@ -65,28 +65,28 @@ const useOnboarding = ({ route }: Pick<OnboardingStackProps, 'route'>) => {
   const items: OnboardingItem[] = useMemo(
     () => [
       {
-        buttonTitle: t(TRANSLATIONS.ONBOARDING_CINEMA_BUTTON_TITLE),
+        buttonTitle: t(TRANSLATIONS.ONBOARDING_NEXT),
         description: t(TRANSLATIONS.ONBOARDING_CINEMA_DESCRIPTION),
         title: t(TRANSLATIONS.ONBOARDING_CINEMA_TITLE),
         onPress: () => setIndexSelected(1),
         icon: 'video-vintage',
       },
       {
-        buttonTitle: t(TRANSLATIONS.ONBOARDING_FAMOUS_BUTTON_TITLE),
+        buttonTitle: t(TRANSLATIONS.ONBOARDING_NEXT),
         description: t(TRANSLATIONS.ONBOARDING_FAMOUS_DESCRIPTION),
         title: t(TRANSLATIONS.ONBOARDING_FAMOUS_TITLE),
         onPress: () => setIndexSelected(2),
         icon: 'famous-active',
       },
       {
-        buttonTitle: t(TRANSLATIONS.ONBOARDING_QUIZ_BUTTON_TITLE),
+        buttonTitle: t(TRANSLATIONS.ONBOARDING_NEXT),
         description: t(TRANSLATIONS.ONBOARDING_QUIZ_DESCRIPTION),
         title: t(TRANSLATIONS.ONBOARDING_QUIZ_TITLE),
         onPress: () => setIndexSelected(3),
         icon: 'quiz-active',
       },
       {
-        buttonTitle: t(TRANSLATIONS.ONBOARDING_NEWS_BUTTON_TITLE),
+        buttonTitle: t(TRANSLATIONS.ONBOARDING_START),
         description: t(TRANSLATIONS.ONBOARDING_NEWS_DESCRIPTION),
         title: t(TRANSLATIONS.ONBOARDING_NEWS_TITLE),
         onPress: () => route.params.onFinishShowOnboarding(),

@@ -42,7 +42,6 @@ type OpenSourceSection = {
 
 type Onboarding = {
   description: string;
-  buttonTitle: string;
   title: string;
 };
 
@@ -70,6 +69,8 @@ export type Locale = {
     famous: Onboarding;
     quiz: Onboarding;
     news: Onboarding;
+    next: string;
+    start: string;
   };
   openSource: {
     libraries: OpenSourceSection;

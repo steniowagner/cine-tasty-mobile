@@ -30,24 +30,22 @@ const es: Locale = {
   },
   softwareEngineer: 'Ingeniero de software',
   onboarding: {
+    next: 'PRÓXIMO',
+    start: 'COMENZAR',
     cinema: {
       description: 'Spanish Cinema Description',
-      buttonTitle: 'Spanish Cinema',
       title: 'Spanish Cinema Title',
     },
     famous: {
       description: 'Spanish Famous Description',
-      buttonTitle: 'Spanish Famous',
       title: 'Spanish Famous Title',
     },
     quiz: {
       description: 'Spanish Quiz Quiz',
-      buttonTitle: 'Spanish Quiz',
       title: 'Spanish Quiz Title',
     },
     news: {
       description: 'Spanish News Description',
-      buttonTitle: 'Spanish News',
       title: 'Spanish News Title',
     },
   },
