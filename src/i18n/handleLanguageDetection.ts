@@ -24,10 +24,6 @@ const defaultLanguagesMapping = {
   // Spanish (Spain)
   'es-US': 'es',
   es_ES: 'es',
-
-  // Swedish (Sweden)
-  'sv-US': 'sv',
-  sv_SE: 'sv',
 };
 
 const fallbackLanguagesMapping = {
@@ -39,9 +35,6 @@ const fallbackLanguagesMapping = {
 
   // Spanish
   es: 'es',
-
-  // Swedish
-  sv: 'sv',
 };
 
 const handleGetLanguageFallbackMapping = (language: string): string => {
