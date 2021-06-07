@@ -1,10 +1,12 @@
 import { View, Text } from 'react-native';
 import styled from 'styled-components';
 
+import { dark } from '@styles/themes/dark';
+
 export const Wrapper = styled(View)`
   width: ${({ theme }) => theme.metrics.width}px;
   height: ${({ theme }) => theme.metrics.height}px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const ItemWrapper = styled(View)`
@@ -26,13 +28,13 @@ export const TextSection = styled(View)`
 `;
 
 export const LargeText = styled(Text)`
-  color: #111111;
+  color: ${dark.colors.secondary};
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
   font-family: CircularStd-Black;
 `;
 
 export const SmallText = styled(Text)`
-  color: #111111;
+  color: ${dark.colors.secondary};
   font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
   margin-top: ${({ theme }) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Medium;
