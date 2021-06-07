@@ -23,24 +23,22 @@ const ptBR: Locale = {
     },
   },
   onboarding: {
+    start: 'COMEÇAR',
+    next: 'PRÓXIMO',
     cinema: {
       description: 'PtBR Cinema Description',
-      buttonTitle: 'PtBR Cinema',
       title: 'PtBR Cinema Title',
     },
     famous: {
       description: 'PtBR Famous Description',
-      buttonTitle: 'PtBR Famous',
       title: 'PtBR Famous Title',
     },
     quiz: {
       description: 'PtBR Quiz Quiz',
-      buttonTitle: 'PtBR Quiz',
       title: 'PtBR Quiz Title',
     },
     news: {
       description: 'PtBR News Description',
-      buttonTitle: 'PtBR News',
       title: 'PtBR News Title',
     },
   },

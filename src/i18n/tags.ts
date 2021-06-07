@@ -6,24 +6,24 @@ export const ABOUT = 'translations:about';
 export const MONTHS = 'translations:months';
 export const SELECT = 'translations:select';
 
+// Onboarding
+export const ONBOARDING_NEXT = 'translations:onboarding:next';
+export const ONBOARDING_START = 'translations:onboarding:start';
+
 // Onboarding -- Cinema
 export const ONBOARDING_CINEMA_DESCRIPTION = 'translations:onboarding:cinema:description';
-export const ONBOARDING_CINEMA_BUTTON_TITLE = 'translations:onboarding:cinema:buttonTitle';
 export const ONBOARDING_CINEMA_TITLE = 'translations:onboarding:cinema:description';
 
 // Onboarding -- Famous
 export const ONBOARDING_FAMOUS_DESCRIPTION = 'translations:onboarding:famous:description';
-export const ONBOARDING_FAMOUS_BUTTON_TITLE = 'translations:onboarding:famous:buttonTitle';
 export const ONBOARDING_FAMOUS_TITLE = 'translations:onboarding:famous:description';
 
 // Onboarding -- Quiz
 export const ONBOARDING_QUIZ_DESCRIPTION = 'translations:onboarding:quiz:description';
-export const ONBOARDING_QUIZ_BUTTON_TITLE = 'translations:onboarding:quiz:buttonTitle';
 export const ONBOARDING_QUIZ_TITLE = 'translations:onboarding:quiz:description';
 
 // Onboarding -- Quiz
 export const ONBOARDING_NEWS_DESCRIPTION = 'translations:onboarding:news:description';
-export const ONBOARDING_NEWS_BUTTON_TITLE = 'translations:onboarding:news:buttonTitle';
 export const ONBOARDING_NEWS_TITLE = 'translations:onboarding:news:description';
 
 // THEME
