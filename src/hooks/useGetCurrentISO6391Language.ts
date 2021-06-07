@@ -11,9 +11,6 @@ export const useGetCurrentISO6391Language = () => {
       case 'en':
         return SchemaTypes.ISO6391Language.EN;
 
-      case 'sv':
-        return SchemaTypes.ISO6391Language.SV;
-
       case 'es':
         return SchemaTypes.ISO6391Language.ES;
 
