@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { TMDBImageQualityProvider, ThemeContextProvider } from '@providers';
@@ -21,7 +22,7 @@ const App = () => (
             <Navigation />
           </RouteSuspenseWrapper>
         </ApolloProvider>
-        <AndroidNavigationBar />
+        {Platform.OS === 'android' && <AndroidNavigationBar />}
       </>
     </TMDBImageQualityProvider>
   </ThemeContextProvider>
