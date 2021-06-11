@@ -1,4 +1,3 @@
-import React from 'react';
 import { DefaultTheme, withTheme } from 'styled-components';
 
 import useSplashScreen from './useSplashScreen';
@@ -11,7 +10,7 @@ type SplashScreenProps = {
 const SplashScreen = ({ onLoad, theme }: SplashScreenProps) => {
   useSplashScreen({ onLoad, theme });
 
-  return <></>;
+  return null;
 };
 
 export default withTheme(SplashScreen);
