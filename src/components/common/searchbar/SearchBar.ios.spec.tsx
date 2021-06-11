@@ -1,6 +1,5 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
-import { DefaultTheme } from 'styled-components';
 
 import { ThemeContextProvider } from '@providers';
 
@@ -12,7 +11,6 @@ type RenderSearchBarProps = {
   onPressSearch?: () => void;
   onPressClose: () => void;
   placeholder: string;
-  theme: DefaultTheme;
 };
 
 const renderSearchBar = ({
