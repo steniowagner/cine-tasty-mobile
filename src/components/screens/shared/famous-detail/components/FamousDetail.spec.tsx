@@ -7,6 +7,7 @@ import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import FamousDetail from './FamousDetail';
 
@@ -68,6 +69,8 @@ const renderFamousDetail = (mockResolvers?: IMocks) => {
           <FamousDetail
             navigation={navigation}
             route={{
+              name: Routes.Famous.DETAILS,
+              key: `${Routes.Famous.DETAILS}-key`,
               params: {
                 profileImage: 'profileImage',
                 name: 'name',

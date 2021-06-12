@@ -136,7 +136,11 @@ const renderTVShowDetail = ({
               navigate: navigate,
               push: push,
             }}
-            route={route || {}}
+            route={{
+              ...route,
+              name: Routes.TVShow.DETAILS,
+              key: `${Routes.TVShow.DETAILS}-key`,
+            }}
           />
         </AutoMockProvider>
       </ThemeContextProvider>

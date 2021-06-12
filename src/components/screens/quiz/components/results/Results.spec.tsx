@@ -1,19 +1,18 @@
 import React from 'react';
-import { RouteProp } from '@react-navigation/native';
 import { cleanup, render, act } from '@testing-library/react-native';
 
 import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
+import * as SchemaTypes from '@schema-types';
 import { Routes } from '@routes/routes';
 
 import Results from './Results';
 
-const quiz = [
+const quiz: SchemaTypes.GetQuizQuestions_quiz[] = [
   {
     __typename: 'Question',
     category: 'Entertainment: Television',
     correctAnswer: 'D',
-    difficulty: 'difficulty',
     options: ['A', 'B', 'C', 'D'],
     question: 'Question 01',
     type: 'multiple',
@@ -22,25 +21,25 @@ const quiz = [
     __typename: 'Question',
     category: 'Entertainment: Film',
     correctAnswer: 'True',
-    difficulty: 'difficulty',
     options: ['False'],
     question: 'Question 02',
     type: 'boolean',
   },
 ];
 
-const route = {
-  name: Routes.Quiz.RESULTS,
-  key: '',
-  params: {
-    questions: quiz,
-    answers: ['A', 'true'],
-  },
-};
-
-const renderResults = (mockedNavigation = navigation, mockedRoute = route) => (
+const renderResults = (mockedNavigation = navigation) => (
   <ThemeContextProvider>
-    <Results navigation={mockedNavigation} route={mockedRoute} />
+    <Results
+      navigation={mockedNavigation}
+      route={{
+        name: Routes.Quiz.RESULTS,
+        key: `${Routes.Quiz.RESULTS}-key`,
+        params: {
+          questions: quiz,
+          answers: ['A', 'true'],
+        },
+      }}
+    />
   </ThemeContextProvider>
 );
 

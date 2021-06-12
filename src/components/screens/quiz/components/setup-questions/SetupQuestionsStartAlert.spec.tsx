@@ -5,6 +5,7 @@ import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 jest.spyOn(Alert, 'alert');
 
@@ -23,6 +24,10 @@ const renderSetupQuestions = (navigate = jest.fn) => (
       navigation={{
         ...navigation,
         navigate,
+      }}
+      route={{
+        name: Routes.Quiz.SETUP_QUESTIONS,
+        key: `${Routes.Quiz.SETUP_QUESTIONS}-key`,
       }}
     />
   </ThemeContextProvider>

@@ -1,6 +1,5 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { MockList, IMocks } from 'graphql-tools';
 
@@ -11,6 +10,7 @@ import AutoMockProvider from '@mocks/AutoMockedProvider';
 import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import Famous from './Famous';
 
@@ -31,7 +31,10 @@ const renderFamousScreen = (resolvers?: IMocks) => (
   <TMDBImageQualityProvider>
     <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
-        <Famous navigation={navigation} />
+        <Famous
+          route={{ name: Routes.Famous.FAMOUS, key: `${Routes.Famous.FAMOUS}-key` }}
+          navigation={navigation}
+        />
       </AutoMockProvider>
     </ThemeContextProvider>
   </TMDBImageQualityProvider>

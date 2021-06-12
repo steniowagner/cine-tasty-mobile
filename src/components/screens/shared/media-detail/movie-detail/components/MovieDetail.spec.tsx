@@ -113,7 +113,14 @@ const renderMovieDetail = ({
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <MovieDetail navigation={{ ...navigation, navigate, push }} route={route} />
+          <MovieDetail
+            navigation={{ ...navigation, navigate, push }}
+            route={{
+              name: Routes.Movie.DETAILS,
+              key: `${Routes.Movie.DETAILS}-key`,
+              params: route.params,
+            }}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>

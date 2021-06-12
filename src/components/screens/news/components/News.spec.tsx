@@ -19,7 +19,13 @@ import News from './News';
 const renderNews = (mockResolvers?: IMocks, navigate = jest.fn()) => {
   const NewsComponent = ({ navigation }) => (
     <AutoMockProvider mockResolvers={mockResolvers}>
-      <News navigation={{ ...navigation, navigate }} />
+      <News
+        navigation={{ ...navigation, navigate }}
+        route={{
+          name: Routes.News.NEWS,
+          key: `${Routes.News.NEWS}-key`,
+        }}
+      />
     </AutoMockProvider>
   );
 

@@ -12,16 +12,7 @@ import { quiz } from '@mocks/fixtures';
 
 import Questions from './Questions';
 
-const routeParams = {
-  name: Routes.Quiz.QUESTIONS,
-  key: '',
-  params: {
-    numberOfQuestions: quiz.length,
-    difficulty: SchemaTypes.QuestionDifficulty.MIXED,
-    category: SchemaTypes.QuestionCategory.MIXED,
-    type: SchemaTypes.QuestionType.MIXED,
-  },
-};
+const routeParams = {};
 
 type RenderQuestionsProps = {
   route?: typeof routeParams;
@@ -29,15 +20,23 @@ type RenderQuestionsProps = {
   mockResolvers?: IMocks;
 };
 
-const renderQuestions = ({
-  route = routeParams,
-  mockResolvers,
-  navigate,
-}: RenderQuestionsProps) => {
+const renderQuestions = ({ mockResolvers, navigate }: RenderQuestionsProps) => {
   const QuestionsComponent = ({ navigation }) => (
     <ThemeContextProvider>
       <AutoMockProvider mockResolvers={mockResolvers}>
-        <Questions navigation={{ ...navigation, navigate }} route={route} />
+        <Questions
+          navigation={{ ...navigation, navigate }}
+          route={{
+            name: Routes.Quiz.QUESTIONS,
+            key: `${Routes.Quiz.QUESTIONS}-key`,
+            params: {
+              numberOfQuestions: quiz.length,
+              difficulty: SchemaTypes.QuestionDifficulty.MIXED,
+              category: SchemaTypes.QuestionCategory.MIXED,
+              type: SchemaTypes.QuestionType.MIXED,
+            },
+          }}
+        />
       </AutoMockProvider>
     </ThemeContextProvider>
   );

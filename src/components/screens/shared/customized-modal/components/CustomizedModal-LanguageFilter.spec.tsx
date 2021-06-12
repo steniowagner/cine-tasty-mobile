@@ -5,6 +5,7 @@ import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
+import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
 import { ANIMATION_TIMING } from './useCustomizedModal';
@@ -17,6 +18,8 @@ const renderCustomizedModal = (onPressSelect = jest.fn, goBack = jest.fn) => (
     <CustomizedModal
       navigation={{ ...navigation, goBack }}
       route={{
+        name: Routes.CustomModal.CUSTOM_MODAL,
+        key: `${Routes.CustomModal.CUSTOM_MODAL}-key`,
         params: {
           type: Types.CustomizedModalChildrenType.LANGUAGE,
           headerText: HEADER_TEXT,

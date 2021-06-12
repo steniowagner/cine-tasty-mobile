@@ -11,6 +11,7 @@ import { TRANSITIONING_DURATION } from './hooks/useHome';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import * as fixtures from '@mocks/fixtures';
+import { Routes } from '@routes/routes';
 
 import Home from './Home';
 
@@ -25,7 +26,10 @@ const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
   const HomeScreen = ({ navigation }) => {
     return (
       <AutoMockProvider mockResolvers={mockResolvers}>
-        <Home navigation={{ ...navigation, navigate }} />
+        <Home
+          route={{ name: Routes.Home.HOME, key: `${Routes.Home.HOME}-key` }}
+          navigation={{ ...navigation, navigate }}
+        />
       </AutoMockProvider>
     );
   };

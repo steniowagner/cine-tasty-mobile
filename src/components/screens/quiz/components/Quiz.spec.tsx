@@ -10,7 +10,13 @@ import Quiz from './Quiz';
 
 const renderQuiz = (navigate = jest.fn()) => (
   <ThemeContextProvider>
-    <Quiz navigation={{ ...navigation, navigate }} />
+    <Quiz
+      navigation={{ ...navigation, navigate }}
+      route={{
+        name: Routes.Quiz.QUIZ,
+        key: `${Routes.Quiz.QUIZ}-key`,
+      }}
+    />
   </ThemeContextProvider>
 );
 

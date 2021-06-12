@@ -18,6 +18,10 @@ const renderSetupQuestions = (navigate = jest.fn) => (
         ...navigation,
         navigate,
       }}
+      route={{
+        name: Routes.Quiz.SETUP_QUESTIONS,
+        key: `${Routes.Quiz.SETUP_QUESTIONS}-key`,
+      }}
     />
   </ThemeContextProvider>
 );

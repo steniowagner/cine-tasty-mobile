@@ -33,7 +33,7 @@ export type HomeStackNavigationProp = StackNavigationProp<
   HomeStackParams,
   Routes.Home.HOME
 >;
-export type HomeStackRouteProp = StackNavigationProp<HomeStackParams, Routes.Home.HOME>;
+export type HomeStackRouteProp = RouteProp<HomeStackParams, Routes.Home.HOME>;
 
 export type HomeStackProps = {
   navigation: HomeStackNavigationProp;

@@ -41,6 +41,8 @@ const renderMediaSectionViewAll = (
         <MediaSectionViewAll
           navigation={{ ...navigation, navigate }}
           route={{
+            name: Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+            key: `${Routes.Home.MEDIA_DETAILS_VIEW_ALL}-key`,
             params: {
               initialDataset,
               sectionKey,

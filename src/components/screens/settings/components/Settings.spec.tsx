@@ -14,7 +14,13 @@ const renderSettings = (navigate = jest.fn()) => {
   const SettingsScreen = ({ navigation }) => {
     return (
       <ThemeContextProvider>
-        <Settings navigation={{ ...navigation, navigate }} />
+        <Settings
+          navigation={{ ...navigation, navigate }}
+          route={{
+            name: Routes.Settings.SETTINGS,
+            key: `${Routes.Settings.SETTINGS}-key`,
+          }}
+        />
       </ThemeContextProvider>
     );
   };

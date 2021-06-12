@@ -10,6 +10,7 @@ import MockedNavigation from '@mocks/MockedNavigator';
 import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 import { navigation } from '@mocks/navigationMock';
+import { Routes } from '@routes/routes';
 
 import Famous from './Famous';
 
@@ -27,7 +28,10 @@ const renderFamousScreen = (resolvers?: IMocks) => {
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={resolvers}>
-          <Famous navigation={navigation} />
+          <Famous
+            route={{ name: Routes.Famous.FAMOUS, key: `${Routes.Famous.FAMOUS}-key` }}
+            navigation={navigation}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>

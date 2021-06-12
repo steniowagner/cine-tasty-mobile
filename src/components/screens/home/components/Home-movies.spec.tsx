@@ -23,7 +23,10 @@ const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
   const HomeScreen = ({ navigation }) => {
     return (
       <AutoMockProvider mockResolvers={mockResolvers}>
-        <Home navigation={{ ...navigation, navigate }} />
+        <Home
+          route={{ name: Routes.Home.HOME, key: `${Routes.Home.HOME}-key` }}
+          navigation={{ ...navigation, navigate }}
+        />
       </AutoMockProvider>
     );
   };
