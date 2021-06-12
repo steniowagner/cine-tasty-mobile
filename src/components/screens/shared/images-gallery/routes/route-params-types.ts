@@ -14,12 +14,18 @@ type ImagesGalleryParams = {
   images: string[];
 };
 
+/** Images-Gallery-Stack-Props */
 export type ImagesGalleryNavigationProp = StackNavigationProp<
   ImagesGalleryStackParams,
   Routes.ImagesGallery.IMAGES_GALLERY
 >;
 
+export type ImagesGalleryRouteProp = RouteProp<
+  ImagesGalleryStackParams,
+  Routes.ImagesGallery.IMAGES_GALLERY
+>;
+
 export type ImagesGalleryStackProps = {
-  route: RouteProp<ImagesGalleryStackParams, Routes.ImagesGallery.IMAGES_GALLERY>;
   navigation: ImagesGalleryNavigationProp;
+  route: ImagesGalleryRouteProp;
 };

@@ -6,7 +6,6 @@ import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import { Routes } from '@routes/routes';
 
-import { ResultsStackProps } from '../../routes/route-params-types';
 import Results from './Results';
 
 const quiz = [
@@ -30,7 +29,7 @@ const quiz = [
   },
 ];
 
-const route: QuestionsScreenRouteProp = {
+const route = {
   name: Routes.Quiz.RESULTS,
   key: '',
   params: {

@@ -23,13 +23,19 @@ export type TVShowDetailParams = {
   id: number;
 };
 
+/** TVShow-Detail-Stack-Props */
 export type TVShowDetailNavigationProp = StackNavigationProp<
+  TVShowdetailStackParams,
+  Routes.TVShow.DETAILS
+>;
+
+export type TVShowDetailRouteProp = RouteProp<
   TVShowdetailStackParams,
   Routes.TVShow.DETAILS
 >;
 
 export type TVShowDetailStackProps = {
   navigation: TVShowDetailNavigationProp;
-  route: RouteProp<TVShowdetailStackParams, Routes.TVShow.DETAILS>;
+  route: TVShowDetailRouteProp;
   theme: DefaultTheme;
 };

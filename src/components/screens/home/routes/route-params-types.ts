@@ -28,18 +28,29 @@ type MediaSectionViewAllProps = {
   isMovie: boolean;
 };
 
-export type MediaSectionViewAllNavigationProp = StackNavigationProp<
+/** Home-Stack-Props */
+export type HomeStackNavigationProp = StackNavigationProp<
+  HomeStackParams,
+  Routes.Home.HOME
+>;
+export type HomeStackRouteProp = StackNavigationProp<HomeStackParams, Routes.Home.HOME>;
+
+export type HomeStackProps = {
+  navigation: HomeStackNavigationProp;
+  route: HomeStackRouteProp;
+};
+
+/** MedialSectionViewAll-Stack-Props */
+export type MediaSectionViewAllStackNavigationProp = StackNavigationProp<
+  HomeStackParams,
+  Routes.Home.MEDIA_DETAILS_VIEW_ALL
+>;
+export type MediaSectionViewAllStackRouteProp = RouteProp<
   HomeStackParams,
   Routes.Home.MEDIA_DETAILS_VIEW_ALL
 >;
 
-export type HomeNavigationProp = StackNavigationProp<HomeStackParams, Routes.Home.HOME>;
-
-export type HomeStackProps = {
-  navigation: HomeNavigationProp;
-};
-
 export type MediaSectionViewAllStackProps = {
-  navigation: MediaSectionViewAllNavigationProp;
-  route: RouteProp<HomeStackParams, Routes.Home.MEDIA_DETAILS_VIEW_ALL>;
+  navigation: MediaSectionViewAllStackNavigationProp;
+  route: MediaSectionViewAllStackRouteProp;
 };

@@ -9,7 +9,18 @@ type OnboardingStackParams = {
   };
 };
 
+/** Onboarding-Stack-Props */
+export type OnboardingStackNavigationProp = StackNavigationProp<
+  OnboardingStackParams,
+  Routes.Onboarding.ONBOARDING
+>;
+
+export type OnboardingStackRouteProp = RouteProp<
+  OnboardingStackParams,
+  Routes.Onboarding.ONBOARDING
+>;
+
 export type OnboardingStackProps = {
-  navigation: StackNavigationProp<OnboardingStackParams, Routes.Onboarding.ONBOARDING>;
-  route: RouteProp<OnboardingStackParams, Routes.Onboarding.ONBOARDING>;
+  navigation: OnboardingStackNavigationProp;
+  route: OnboardingStackRouteProp;
 };

@@ -18,10 +18,17 @@ export type CustomModalParams = {
   };
 };
 
+/** Custom-Modal-Stack-Props */
+export type CustomModalNavigationProp = StackNavigationProp<
+  CustomModalStackParams,
+  Routes.CustomModal.CUSTOM_MODAL
+>;
+export type CustomModalRouteProp = RouteProp<
+  CustomModalStackParams,
+  Routes.CustomModal.CUSTOM_MODAL
+>;
+
 export type CustomModalStackProps = {
-  navigation: StackNavigationProp<
-    CustomModalStackParams,
-    Routes.CustomModal.CUSTOM_MODAL
-  >;
-  route: RouteProp<CustomModalStackParams, Routes.CustomModal.CUSTOM_MODAL>;
+  navigation: CustomModalNavigationProp;
+  route: CustomModalRouteProp;
 };

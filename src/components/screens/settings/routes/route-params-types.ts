@@ -1,4 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 
 import { Routes } from '@routes/routes';
 
@@ -11,11 +12,14 @@ type SettingsStackParams = {
   [Routes.Settings.ABOUT]: undefined;
 };
 
+/** Settings-Stack-Props */
 export type SettingsNavigationProp = StackNavigationProp<
   SettingsStackParams,
   Routes.Settings.SETTINGS
 >;
+export type SettingsRouteProp = RouteProp<SettingsStackParams, Routes.Settings.SETTINGS>;
 
 export type SettingsStackProps = {
   navigation: SettingsNavigationProp;
+  route: SettingsRouteProp;
 };

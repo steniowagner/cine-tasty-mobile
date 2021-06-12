@@ -9,7 +9,7 @@ import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { MediaSectionViewAllNavigationProp } from '../../routes/route-params-types';
+import { MediaSectionViewAllStackNavigationProp } from '../../routes/route-params-types';
 import { getTVShowProperQuery, getMovieProperQuery } from './getProperQuery';
 import useOnGetData, { Data } from './useOnGetData';
 
@@ -19,8 +19,8 @@ type PaginationVariables = {
 };
 
 type UseMediaSectionViewAllProps = {
+  navigation: MediaSectionViewAllStackNavigationProp;
   trendingMediaItemKey: Types.TrendingMediaItemKey;
-  navigation: MediaSectionViewAllNavigationProp;
   initialMediaItems: Types.SimplifiedMedia[];
   isMovie: boolean;
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { RouteProp } from '@react-navigation/native';
 import { IMocks } from 'graphql-tools';
 
 import AutoMockProvider from '@mocks/AutoMockedProvider';
@@ -10,7 +9,6 @@ import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
-import { QuizStackParams } from '../../routes/route-params-types';
 import Questions from './Questions';
 
 const quiz = [
@@ -32,9 +30,7 @@ const quiz = [
   },
 ];
 
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, Routes.Quiz.QUESTIONS>;
-
-const routeParams: QuestionsScreenRouteProp = {
+const routeParams = {
   name: Routes.Quiz.QUESTIONS,
   key: '',
   params: {
@@ -46,7 +42,7 @@ const routeParams: QuestionsScreenRouteProp = {
 };
 
 type RenderQuestionsProps = {
-  route?: QuestionsScreenRouteProp;
+  route?: typeof routeParams;
   navigate?: typeof jest.fn;
   mockResolvers?: IMocks;
 };

@@ -8,7 +8,7 @@ import Onboarding from '../components/Onboarding';
 
 const Stack = createStackNavigator();
 
-const OnboardingStack = ({ route }: Pick<OnboardingStackProps, 'route'>) => (
+const OnboardingStack = ({ route }: OnboardingStackProps) => (
   <Stack.Navigator>
     <Stack.Screen
       options={{
