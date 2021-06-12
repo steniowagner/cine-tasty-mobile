@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 
+import MockedNavigation from '@mocks/MockedNavigator';
 import { ThemeContextProvider } from '@providers';
 
-import MockedNavigation from '../../../../__mocks__/MockedNavigator';
 import SearchBar from './SearchBar.ios';
 
 type RenderSearchBarProps = {

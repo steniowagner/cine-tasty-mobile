@@ -3,14 +3,14 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
 import { SWITCH_ANIMATION_DURATION_MS } from './header/media-switcher/useMediaSwitcherAnimation';
-import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
 import Home from './Home';
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
+import { navigation } from '@mocks/ReactNavigation';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
 import { difficulties, categories, types } from './options';
 import SetupQuestions from './SetupQuestions';

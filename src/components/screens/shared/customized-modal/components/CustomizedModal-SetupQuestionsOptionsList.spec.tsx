@@ -1,11 +1,11 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
-import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import { ANIMATION_TIMING } from './useCustomizedModal';
 import CustomizedModal from './CustomizedModal';
 

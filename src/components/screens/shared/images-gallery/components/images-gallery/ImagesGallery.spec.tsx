@@ -3,6 +3,8 @@ import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import MockedNavigation from '@mocks/MockedNavigator';
+import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 
 jest.mock('../../../../../../styles/metrics', () => ({
@@ -18,8 +20,6 @@ jest.mock('../../../../../../styles/metrics', () => ({
   height: 1,
 }));
 
-import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
-import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
 import ImagesGallery from './ImagesGallery';
 
 const IMAGES = ['image01', 'image02', 'image03'];

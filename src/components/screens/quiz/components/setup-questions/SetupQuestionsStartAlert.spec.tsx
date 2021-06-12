@@ -2,9 +2,9 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
+import { navigation } from '@mocks/ReactNavigation';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
 
 jest.spyOn(Alert, 'alert');
 
@@ -15,7 +15,6 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
-import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import SetupQuestions from './SetupQuestions';
 
 const getNavigationParam = (navigate = jest.fn) => ({

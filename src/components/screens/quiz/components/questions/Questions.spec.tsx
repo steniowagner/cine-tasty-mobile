@@ -3,13 +3,13 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { RouteProp } from '@react-navigation/native';
 import { IMocks } from 'graphql-tools';
 
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
-import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
 import { QuizStackParams } from '../../routes/route-params-types';
 import Questions from './Questions';
 

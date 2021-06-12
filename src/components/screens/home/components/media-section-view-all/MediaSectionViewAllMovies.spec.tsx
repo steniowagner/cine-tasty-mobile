@@ -4,13 +4,13 @@ import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
+import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../../common/popup-advice/PopupAdvice';
-import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';
 
 const mockedInitialDataset = Array(5)

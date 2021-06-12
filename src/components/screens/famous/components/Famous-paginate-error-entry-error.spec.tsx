@@ -5,12 +5,13 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../common/popup-advice/PopupAdvice';
-import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
 import Famous from './Famous';
 
 const FAMOUS_COUNT = 10;
@@ -26,18 +27,19 @@ const mockResolversWithError = {
   PeopleQueryResult: () => new Error(),
 };
 
-const navigation = {
-  setOptions: () => ({
-    // eslint-disable-next-line react/display-name
-    headerRight: () => <TouchableOpacity onPress={jest.fn} />,
-  }),
-};
-
 const renderFamousScreen = (resolvers?: IMocks) => (
   <TMDBImageQualityProvider>
     <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
-        <Famous navigation={navigation} />
+        <Famous
+          navigation={{
+            ...navigation,
+            setOptions: () => ({
+              // eslint-disable-next-line react/display-name
+              headerRight: () => <TouchableOpacity onPress={jest.fn} />,
+            }),
+          }}
+        />
       </AutoMockProvider>
     </ThemeContextProvider>
   </TMDBImageQualityProvider>

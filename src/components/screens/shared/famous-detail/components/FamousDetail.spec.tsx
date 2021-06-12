@@ -3,11 +3,10 @@ import { cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-
-import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
 
 import FamousDetail from './FamousDetail';
 

@@ -5,11 +5,11 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
+import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 
-import { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import Famous from './Famous';
 
 const FAMOUS_COUNT = 10;

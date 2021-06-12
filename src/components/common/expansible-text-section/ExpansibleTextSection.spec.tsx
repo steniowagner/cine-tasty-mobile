@@ -2,10 +2,10 @@ import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
 
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 
 import { NUMBER_ITEMS } from './loading-expansible-text-section/LoadingExpansibleTextSection';
-import timeTravel, { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import ExpansibleTextSection from './ExpansibleTextSection';
 
 const SECTION_TITLE = 'SECTION_TITLE';

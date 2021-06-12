@@ -2,9 +2,9 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 
-import timeTravel, { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import NewsListItemImage, { ANIMATION_DURATION } from './NewsListItemImage';
 
 const renderNewsListItemImage = (imageURL = 'image') => (

@@ -4,11 +4,9 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { ANIMATION_DURATION } from '@src/hooks/useLoadListItemImage';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 
-import timeTravel, {
-  setupTimeTravel,
-} from '../../../../../../../../__mocks__/timeTravel';
 import ProfileImage from './ProfileImage';
 
 const renderProfileImage = (profileImage = 'profileImage') => (

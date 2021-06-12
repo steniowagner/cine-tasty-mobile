@@ -9,9 +9,9 @@ import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 
 import News from './News';
 

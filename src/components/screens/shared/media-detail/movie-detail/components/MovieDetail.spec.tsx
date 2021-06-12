@@ -4,13 +4,12 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
+import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-
-import AutoMockProvider from '../../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../../__mocks__/MockedNavigator';
-import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 
 import { NUMBER_ITEMS } from '../../common/sections/tags/Tags';
 import MovieDetail from './MovieDetail';

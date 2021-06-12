@@ -6,10 +6,10 @@ import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDB
 import * as TRANSLATIONS from '@i18n/tags';
 
 import { SWITCH_ANIMATION_DURATION_MS } from './header/media-switcher/useMediaSwitcherAnimation';
-import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;

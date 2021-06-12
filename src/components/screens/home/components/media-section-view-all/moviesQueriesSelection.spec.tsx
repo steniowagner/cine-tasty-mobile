@@ -17,9 +17,9 @@ jest.mock('@hooks', () => ({
   useShowLanguageAlert: () => jest.fn(),
 }));
 
+import AutoMockProvider from '@mocks/AutoMockedProvider';
 import * as Queries from '@graphql/queries';
 
-import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';
 
 const renderMediaSectionViewAll = (

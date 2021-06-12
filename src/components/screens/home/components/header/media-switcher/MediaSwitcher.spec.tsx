@@ -2,9 +2,9 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components';
 
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { dark as theme } from '@styles/themes/dark';
 
-import timeTravel, { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import { SWITCH_ANIMATION_DURATION_MS } from './useMediaSwitcherAnimation';
 import MediaSwitcher from './MediaSwitcher';
 

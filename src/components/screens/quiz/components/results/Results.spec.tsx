@@ -2,14 +2,12 @@ import React from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { cleanup, render, act } from '@testing-library/react-native';
 
+import { navigation } from '@mocks/ReactNavigation';
 import { ThemeContextProvider } from '@providers';
 import { Routes } from '@routes/routes';
 
-import { navigation } from '../../../../../../__mocks__/ReactNavigation';
-import { QuizStackParams } from '../../routes/route-params-types';
+import { ResultsStackProps } from '../../routes/route-params-types';
 import Results from './Results';
-
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, Routes.Quiz.RESULTS>;
 
 const quiz = [
   {

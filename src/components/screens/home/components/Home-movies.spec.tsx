@@ -7,8 +7,8 @@ import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
