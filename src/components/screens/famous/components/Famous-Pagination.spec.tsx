@@ -9,6 +9,7 @@ import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
+import { navigation } from '@mocks/navigationMock';
 
 import Famous from './Famous';
 
@@ -20,13 +21,6 @@ const getMockResolvers = (hasMore: boolean = false) => ({
     hasMore,
   }),
 });
-
-const navigation = {
-  setOptions: () => ({
-    // eslint-disable-next-line react/display-name
-    headerRight: () => <TouchableOpacity onPress={jest.fn} />,
-  }),
-};
 
 const renderFamousScreen = (resolvers?: IMocks) => {
   const FamousScreen = () => (

@@ -1,5 +1,4 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
@@ -7,6 +6,7 @@ import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDB
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import { setupTimeTravel } from '@mocks/timeTravel';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
@@ -94,38 +94,26 @@ const reviews = [
   },
 ];
 
-const getNavigation = (push = () => {}, navigate = () => {}) => ({
-  setOptions: () => ({
-    // eslint-disable-next-line react/display-name
-    headerRight: () => <TouchableOpacity onPress={jest.fn} />,
-  }),
-  navigate,
-  push,
-});
-
 type RenderMovieDetailProps = {
+  navigate?: typeof jest.fn;
   mockResolvers?: IMocks;
-  navigation?: {
-    navigate: (route: string, params: any) => void;
-    setOptions: () => {
-      headerRight: () => React.ReactNode;
-    };
-  };
-  route: {
+  push?: typeof jest.fn;
+  route?: {
     params: typeof baseParams;
   };
 };
 
 const renderMovieDetail = ({
+  route = { params: baseParams },
+  navigate = jest.fn(),
+  push = jest.fn(),
   mockResolvers,
-  navigation = getNavigation(),
-  route,
 }: RenderMovieDetailProps) => {
   const MovieDetailScreen = () => (
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <MovieDetail navigation={navigation} route={route} />
+          <MovieDetail navigation={{ ...navigation, navigate, push }} route={route} />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>
@@ -347,11 +335,8 @@ describe('Testing <MovieDetail />', () => {
 
     const { getAllByTestId } = render(
       renderMovieDetail({
-        navigation: getNavigation(push),
         mockResolvers,
-        route: {
-          params: baseParams,
-        },
+        push,
       }),
     );
 
@@ -383,11 +368,8 @@ describe('Testing <MovieDetail />', () => {
 
     const { getAllByTestId } = render(
       renderMovieDetail({
-        navigation: getNavigation(push),
         mockResolvers,
-        route: {
-          params: baseParams,
-        },
+        push,
       }),
     );
 
@@ -419,11 +401,8 @@ describe('Testing <MovieDetail />', () => {
 
     const { getAllByTestId } = render(
       renderMovieDetail({
-        navigation: getNavigation(push),
         mockResolvers,
-        route: {
-          params: baseParams,
-        },
+        push,
       }),
     );
 
@@ -460,11 +439,8 @@ describe('Testing <MovieDetail />', () => {
 
     const { getByTestId } = render(
       renderMovieDetail({
-        navigation: getNavigation(undefined, navigate),
         mockResolvers,
-        route: {
-          params: baseParams,
-        },
+        navigate,
       }),
     );
 

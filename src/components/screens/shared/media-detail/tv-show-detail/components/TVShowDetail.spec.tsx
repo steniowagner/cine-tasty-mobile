@@ -1,5 +1,4 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
@@ -7,6 +6,7 @@ import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDB
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import { setupTimeTravel } from '@mocks/timeTravel';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
@@ -111,38 +111,33 @@ const reviews = [
   },
 ];
 
-const getNavigation = (push = () => {}, navigate = () => {}) => ({
-  setOptions: () => ({
-    // eslint-disable-next-line react/display-name
-    headerRight: () => <TouchableOpacity onPress={jest.fn} />,
-  }),
-  navigate,
-  push,
-});
-
 type RenderTVShowDetailProps = {
   mockResolvers?: IMocks;
-  navigation?: {
-    navigate: (route: string, params: any) => void;
-    setOptions: () => {
-      headerRight: () => React.ReactNode;
-    };
-  };
-  route: {
+  navigate?: typeof jest.fn;
+  push?: typeof jest.fn;
+  route?: {
     params: typeof baseParams;
   };
 };
 
 const renderTVShowDetail = ({
+  navigate = jest.fn(),
+  push = jest.fn(),
   mockResolvers,
-  navigation = getNavigation(),
   route,
 }: RenderTVShowDetailProps) => {
   const TVShowDetailScreen = () => (
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <TVShowDetail navigation={navigation} route={route} />
+          <TVShowDetail
+            navigation={{
+              ...navigation,
+              navigate: navigate,
+              push: push,
+            }}
+            route={route || {}}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>
@@ -392,11 +387,11 @@ describe('Testing <TVShowDetail />', () => {
 
     const { getAllByTestId } = render(
       renderTVShowDetail({
-        navigation: getNavigation(push),
         mockResolvers,
         route: {
           params: baseParams,
         },
+        push,
       }),
     );
 
@@ -429,11 +424,11 @@ describe('Testing <TVShowDetail />', () => {
 
     const { getAllByTestId } = render(
       renderTVShowDetail({
-        navigation: getNavigation(push),
         mockResolvers,
         route: {
           params: baseParams,
         },
+        push,
       }),
     );
 
@@ -465,11 +460,11 @@ describe('Testing <TVShowDetail />', () => {
 
     const { getAllByTestId } = render(
       renderTVShowDetail({
-        navigation: getNavigation(push),
         mockResolvers,
         route: {
           params: baseParams,
         },
+        push,
       }),
     );
 
@@ -501,11 +496,11 @@ describe('Testing <TVShowDetail />', () => {
 
     const { getAllByTestId } = render(
       renderTVShowDetail({
-        navigation: getNavigation(push),
         mockResolvers,
         route: {
           params: baseParams,
         },
+        push,
       }),
     );
 
@@ -542,11 +537,11 @@ describe('Testing <TVShowDetail />', () => {
 
     const { getByTestId } = render(
       renderTVShowDetail({
-        navigation: getNavigation(undefined, navigate),
         mockResolvers,
         route: {
           params: baseParams,
         },
+        navigate,
       }),
     );
 
@@ -581,11 +576,11 @@ describe('Testing <TVShowDetail />', () => {
 
     const { getByTestId } = render(
       renderTVShowDetail({
-        navigation: getNavigation(undefined, navigate),
         mockResolvers,
         route: {
           params: baseParams,
         },
+        navigate,
       }),
     );
 

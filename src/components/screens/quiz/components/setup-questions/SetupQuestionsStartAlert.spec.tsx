@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
-import { navigation } from '@mocks/ReactNavigation';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 
@@ -17,14 +17,14 @@ jest.mock('react-i18next', () => ({
 
 import SetupQuestions from './SetupQuestions';
 
-const getNavigationParam = (navigate = jest.fn) => ({
-  ...navigation,
-  navigate,
-});
-
 const renderSetupQuestions = (navigate = jest.fn) => (
   <ThemeContextProvider>
-    <SetupQuestions navigation={getNavigationParam(navigate)} />
+    <SetupQuestions
+      navigation={{
+        ...navigation,
+        navigate,
+      }}
+    />
   </ThemeContextProvider>
 );
 

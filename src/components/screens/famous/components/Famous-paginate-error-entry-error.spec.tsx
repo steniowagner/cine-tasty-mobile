@@ -31,15 +31,7 @@ const renderFamousScreen = (resolvers?: IMocks) => (
   <TMDBImageQualityProvider>
     <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
-        <Famous
-          navigation={{
-            ...navigation,
-            setOptions: () => ({
-              // eslint-disable-next-line react/display-name
-              headerRight: () => <TouchableOpacity onPress={jest.fn} />,
-            }),
-          }}
-        />
+        <Famous navigation={navigation} />
       </AutoMockProvider>
     </ThemeContextProvider>
   </TMDBImageQualityProvider>

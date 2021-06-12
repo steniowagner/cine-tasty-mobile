@@ -8,6 +8,7 @@ import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDB
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
 import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 
 import Famous from './Famous';
@@ -23,13 +24,6 @@ const getMockResolvers = (hasMore: boolean = false) => ({
 
 const mockResolversWithError = {
   PeopleQueryResult: () => new Error(),
-};
-
-const navigation = {
-  setOptions: () => ({
-    // eslint-disable-next-line react/display-name
-    headerRight: () => <TouchableOpacity onPress={jest.fn} />,
-  }),
 };
 
 const renderFamousScreen = (resolvers?: IMocks) => (

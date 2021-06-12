@@ -2,6 +2,7 @@ import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
 import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
@@ -11,26 +12,20 @@ import CustomizedModal from './CustomizedModal';
 
 const HEADER_TEXT = 'LANGUAGE_FILTER_HEADER_TEXT';
 
-const getRouteParam = (onPressSelect = jest.fn) => ({
-  params: {
-    type: Types.CustomizedModalChildrenType.LANGUAGE,
-    headerText: HEADER_TEXT,
-    extraData: {
-      lastItemSelected: SchemaTypes.ArticleLanguage.PT,
-      onPressSelect,
-    },
-  },
-});
-
-const getNavigationParam = (goBack = jest.fn) => ({
-  goBack,
-});
-
 const renderCustomizedModal = (onPressSelect = jest.fn, goBack = jest.fn) => (
   <ThemeContextProvider>
     <CustomizedModal
-      navigation={getNavigationParam(goBack)}
-      route={getRouteParam(onPressSelect)}
+      navigation={{ ...navigation, goBack }}
+      route={{
+        params: {
+          type: Types.CustomizedModalChildrenType.LANGUAGE,
+          headerText: HEADER_TEXT,
+          extraData: {
+            lastItemSelected: SchemaTypes.ArticleLanguage.PT,
+            onPressSelect,
+          },
+        },
+      }}
     />
   </ThemeContextProvider>
 );

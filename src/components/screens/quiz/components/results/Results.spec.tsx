@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { cleanup, render, act } from '@testing-library/react-native';
 
-import { navigation } from '@mocks/ReactNavigation';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import { Routes } from '@routes/routes';
 

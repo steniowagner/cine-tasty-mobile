@@ -7,6 +7,7 @@ import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPag
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
 import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
@@ -24,14 +25,13 @@ const mockedInitialDataset = Array(5)
     id: index,
   }));
 
-const navigate = jest.fn();
-
 const renderMediaSectionViewAll = (
   {
     initialDataset = mockedInitialDataset,
     sectionKey = 'onTheAir',
     headerTitle = '',
     isMovie = false,
+    navigate = jest.fn(),
   },
   resolvers?: IMocks,
 ) => (
@@ -39,7 +39,7 @@ const renderMediaSectionViewAll = (
     <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
         <MediaSectionViewAll
-          navigation={{ navigate }}
+          navigation={{ ...navigation, navigate }}
           route={{
             params: {
               initialDataset,
@@ -114,8 +114,10 @@ describe('Testing <MediaSectionViewAll /> - [TV-Shows]', () => {
     const INDEX_ITEM_PRESSED =
       (Math.random() * (mockedInitialDataset.length - 1 - 0 + 1)) << 0;
 
+    const navigate = jest.fn();
+
     const { queryAllByTestId } = render(
-      renderMediaSectionViewAll({}, getMockResolvers()),
+      renderMediaSectionViewAll({ navigate }, getMockResolvers()),
     );
 
     fireEvent.press(queryAllByTestId('full-media-list-item')[INDEX_ITEM_PRESSED]);

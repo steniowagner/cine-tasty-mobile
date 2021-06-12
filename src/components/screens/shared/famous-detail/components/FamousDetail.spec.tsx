@@ -10,14 +10,6 @@ import * as TRANSLATIONS from '@i18n/tags';
 
 import FamousDetail from './FamousDetail';
 
-const route = {
-  params: {
-    profileImage: 'profileImage',
-    name: 'name',
-    id: 123,
-  },
-};
-
 const person = {
   __typename: 'Person',
   images: ['image01', 'image02', 'image03'],
@@ -73,7 +65,16 @@ const renderFamousDetail = (mockResolvers?: IMocks) => {
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <FamousDetail navigation={navigation} route={route} />
+          <FamousDetail
+            navigation={navigation}
+            route={{
+              params: {
+                profileImage: 'profileImage',
+                name: 'name',
+                id: 123,
+              },
+            }}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>

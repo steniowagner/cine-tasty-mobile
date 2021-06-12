@@ -11,6 +11,7 @@ import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
+import { dark } from '@styles/themes';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
@@ -60,7 +61,7 @@ const renderSearchTVShows = (mockResolvers: IMocks = {}, navigate = jest.fn()) =
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <Search navigation={{ ...navigation, navigate }} route={route} />
+          <Search navigation={{ ...navigation, navigate }} route={route} theme={dark} />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>
