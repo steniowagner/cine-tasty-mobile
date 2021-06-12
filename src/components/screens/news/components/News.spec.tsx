@@ -12,22 +12,9 @@ import * as Types from '@local-types';
 import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
+import { news } from '@mocks/fixtures';
 
 import News from './News';
-
-const news = Array(10)
-  .fill({})
-  .map((_, index) => ({
-    publishedAt: `publishedAt-${index}`,
-    content: `content-${index}`,
-    source: `source-${index}`,
-    author: `author-${index}`,
-    title: `title-${index}`,
-    image: `image-${index}`,
-    url: `url-${index}`,
-    id: `${index}`,
-    __typename: 'Article',
-  }));
 
 const renderNews = (mockResolvers?: IMocks, navigate = jest.fn()) => {
   const NewsComponent = ({ navigation }) => (

@@ -6,103 +6,12 @@ import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDB
 import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
+import * as fixtures from '@mocks/fixtures';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
 import { TRANSITIONING_DURATION } from './hooks/useHome';
 import Home from './Home';
-
-const trendingTVShowsItems = Array(10)
-  .fill({})
-  .map((_, index) => ({
-    genreIds: Array(index + 1)
-      .fill('')
-      .map((_, index) => `genre-${index}`),
-    posterPath: `/posterPath-${index}`,
-    __typename: 'BaseTVShow',
-    name: `name-${index}`,
-    voteAverage: index,
-    voteCount: index,
-    id: index,
-  }));
-
-const trendingTVShowsItemsWithTitle = Array(10)
-  .fill({})
-  .map((_, index) => ({
-    genreIds: Array(index + 1)
-      .fill('')
-      .map((_, index) => `genre-${index}`),
-    posterPath: `/posterPath-${index}`,
-    __typename: 'BaseTVShow',
-    title: `name-${index}`,
-    voteAverage: index,
-    voteCount: index,
-    id: index,
-  }));
-
-const trendingTVShowsWithTitle = {
-  onTheAir: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItemsWithTitle,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  popular: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingTVShowsItemsWithTitle,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  topRated: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItemsWithTitle,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  airingToday: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItemsWithTitle,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  __typename: 'TrendingTVShows',
-};
-
-const trendingTVShows = {
-  onTheAir: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItems,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  popular: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingTVShowsItems,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  topRated: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItems,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  airingToday: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItems,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  __typename: 'TrendingTVShows',
-};
 
 type RenderHomeProps = {
   navigate?: jest.FunctionLike;
@@ -134,7 +43,7 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
     const TOP3_ITEM_SELECTED_INDEX = 0;
 
     const mockResolvers = {
-      TrendingTVShows: () => trendingTVShows,
+      TrendingTVShows: () => fixtures.trendingTVShows,
     };
 
     const navigate = jest.fn();
@@ -168,12 +77,12 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
     const { id } = navigate.mock.calls[0][1];
 
     expect(navigate).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
-      voteAverage: trendingTVShowsWithTitle.onTheAir.items[id].voteAverage,
-      posterPath: trendingTVShowsWithTitle.onTheAir.items[id].posterPath,
-      voteCount: trendingTVShowsWithTitle.onTheAir.items[id].voteCount,
-      genreIds: trendingTVShowsWithTitle.onTheAir.items[id].genreIds,
-      title: trendingTVShowsWithTitle.onTheAir.items[id].title,
-      id: trendingTVShowsWithTitle.onTheAir.items[id].id,
+      voteAverage: fixtures.trendingTVShowsWithTitle.onTheAir.items[id].voteAverage,
+      posterPath: fixtures.trendingTVShowsWithTitle.onTheAir.items[id].posterPath,
+      voteCount: fixtures.trendingTVShowsWithTitle.onTheAir.items[id].voteCount,
+      genreIds: fixtures.trendingTVShowsWithTitle.onTheAir.items[id].genreIds,
+      title: fixtures.trendingTVShowsWithTitle.onTheAir.items[id].title,
+      id: fixtures.trendingTVShowsWithTitle.onTheAir.items[id].id,
     });
   });
 
@@ -186,11 +95,11 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
     ];
 
     const SECTION_ITEM_INDEX_SELECTED =
-      (Math.random() * (trendingTVShowsItemsWithTitle.length - 1 - 0 + 1)) << 0;
+      (Math.random() * (fixtures.trendingTVShowsItemsWithTitle.length - 1 - 0 + 1)) << 0;
     const SECTION_SELECTED_INDEX = (Math.random() * (sections.length - 1 - 0 + 1)) << 0;
 
     const mockResolvers = {
-      TrendingTVShows: () => trendingTVShows,
+      TrendingTVShows: () => fixtures.trendingTVShows,
     };
 
     const navigate = jest.fn();
@@ -226,12 +135,16 @@ describe('Testing <Home /> - [TVShows -- Extras]', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
-      voteAverage: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].voteAverage,
-      posterPath: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].posterPath,
-      voteCount: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].voteCount,
-      genreIds: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].genreIds,
-      title: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].title,
-      id: trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].id,
+      voteAverage:
+        fixtures.trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].voteAverage,
+      posterPath:
+        fixtures.trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].posterPath,
+      voteCount:
+        fixtures.trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].voteCount,
+      genreIds:
+        fixtures.trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].genreIds,
+      title: fixtures.trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].title,
+      id: fixtures.trendingTVShowsItemsWithTitle[SECTION_ITEM_INDEX_SELECTED].id,
     });
   });
 });

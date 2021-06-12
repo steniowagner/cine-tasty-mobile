@@ -8,27 +8,9 @@ import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
+import { quiz } from '@mocks/fixtures';
 
 import Questions from './Questions';
-
-const quiz = [
-  {
-    __typename: 'Question',
-    category: 'Entertainment: Television',
-    correctAnswer: 'D',
-    options: ['A', 'B', 'C', 'D'],
-    question: 'Question 01',
-    type: 'multiple',
-  },
-  {
-    __typename: 'Question',
-    category: 'Entertainment: Film',
-    correctAnswer: 'True',
-    options: ['False'],
-    question: 'Question 02',
-    type: 'boolean',
-  },
-];
 
 const routeParams = {
   name: Routes.Quiz.QUESTIONS,

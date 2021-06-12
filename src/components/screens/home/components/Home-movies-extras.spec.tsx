@@ -10,55 +10,11 @@ import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
+import * as fixtures from '@mocks/fixtures';
+
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
-
-const trendingMoviesItems = Array(10)
-  .fill({})
-  .map((_, index) => ({
-    genreIds: Array(index + 1)
-      .fill('')
-      .map((_, index) => `genre-${index}`),
-    posterPath: `/posterPath-${index}`,
-    title: `title-${index}`,
-    __typename: 'BaseMovie',
-    voteAverage: index,
-    voteCount: index,
-    id: index,
-  }));
-
-const trendingMovies = {
-  nowPlaying: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  popular: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  topRated: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  upcoming: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  __typename: 'TrendingMovies',
-};
 
 type RenderHomeProps = {
   navigate?: jest.FunctionLike;
@@ -88,7 +44,7 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
 
   it('should show the movies-content after press the "Movies" when the "TVShows" is selected', () => {
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const { queryByTestId, getByTestId, getByText, queryByText, getAllByTestId } = render(
@@ -253,7 +209,7 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
     };
 
     const mockResolversSuccess = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const { getAllByTestId, queryByTestId, getByTestId, getByText, rerender } = render(

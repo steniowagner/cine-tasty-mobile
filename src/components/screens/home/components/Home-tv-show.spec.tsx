@@ -7,6 +7,7 @@ import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import * as SchemaTypes from '@schema-types';
+import * as fixtures from '@mocks/fixtures';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
@@ -15,84 +16,6 @@ import { TRANSITIONING_DURATION } from './hooks/useHome';
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
-
-const trendingTVShowsItems = Array(10)
-  .fill({})
-  .map((_, index) => ({
-    genreIds: Array(index + 1)
-      .fill('')
-      .map((_, index) => `genre-${index}`),
-    posterPath: `/posterPath-${index}`,
-    __typename: 'BaseTVShow',
-    name: `name-${index}`,
-    voteAverage: index,
-    voteCount: index,
-    id: index,
-  }));
-
-const trendingTVShowsItemsWithTitle = Array(10)
-  .fill({})
-  .map((_, index) => ({
-    genreIds: Array(index + 1)
-      .fill('')
-      .map((_, index) => `genre-${index}`),
-    posterPath: `/posterPath-${index}`,
-    __typename: 'BaseTVShow',
-    title: `name-${index}`,
-    voteAverage: index,
-    voteCount: index,
-    id: index,
-  }));
-
-const trendingTVShowsWithTitle = {
-  onTheAir: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItemsWithTitle,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  popular: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingTVShowsItemsWithTitle,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  topRated: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItemsWithTitle,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  __typename: 'TrendingTVShows',
-};
-
-const trendingTVShows = {
-  onTheAir: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItems,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  popular: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingTVShowsItems,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  topRated: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingTVShowsItems,
-    __typename: 'TrendingTVShowsQueryResult',
-  },
-  __typename: 'TrendingTVShows',
-};
 
 type RenderHomeProps = {
   navigate?: jest.FunctionLike;
@@ -134,7 +57,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
   it('should render the section-title correctly when the user select the "TV Shows" section', () => {
     const mockResolvers = {
-      TrendingTVShows: () => trendingTVShows,
+      TrendingTVShows: () => fixtures.trendingTVShows,
     };
 
     const navigate = jest.fn();
@@ -202,7 +125,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
   it('should call correct params when press "View All" button on the "On the Air section" and the "TV-Shows" is selected', () => {
     const mockResolvers = {
-      TrendingTVShows: () => trendingTVShows,
+      TrendingTVShows: () => fixtures.trendingTVShows,
     };
 
     const navigate = jest.fn();
@@ -238,7 +161,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
-      trendingTVShowsWithTitle.onTheAir.items,
+      fixtures.trendingTVShowsWithTitle.onTheAir.items,
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
@@ -252,7 +175,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
   it('should call correct params when press "View All" button on the "Popular section" and the "TV-Shows" is selected', () => {
     const mockResolvers = {
-      TrendingTVShows: () => trendingTVShows,
+      TrendingTVShows: () => fixtures.trendingTVShows,
     };
 
     const navigate = jest.fn();
@@ -288,7 +211,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
-      trendingTVShowsWithTitle.popular.items,
+      fixtures.trendingTVShowsWithTitle.popular.items,
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
@@ -302,7 +225,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
   it('should call correct params when press "View All" button on the "Top Rated section" and the "TV-Shows" is selected', () => {
     const mockResolvers = {
-      TrendingTVShows: () => trendingTVShows,
+      TrendingTVShows: () => fixtures.trendingTVShows,
     };
 
     const navigate = jest.fn();
@@ -338,7 +261,7 @@ describe('Testing <Home /> - [TVShows]', () => {
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
-      trendingTVShowsWithTitle.topRated.items,
+      fixtures.trendingTVShowsWithTitle.topRated.items,
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
@@ -352,7 +275,7 @@ describe('Testing <Home /> - [TVShows]', () => {
 
   it('should navigate to "Search" screen passing the params correctly', () => {
     const mockResolvers = {
-      TrendingTVShows: () => trendingTVShows,
+      TrendingTVShows: () => fixtures.trendingTVShows,
     };
 
     const navigate = jest.fn();
