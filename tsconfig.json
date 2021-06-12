@@ -15,6 +15,7 @@
       "@components/*": ["./components/*"],
       "@hooks": ["./hooks/index.ts"],
       "@graphql/*": ["./graphql/*"],
+      "@mocks/*": ["../__mocks__/*"],
       "@routes/*": ["./routes/*"],
       "@styles/*": ["./styles/*"],
       "@utils/*": ["./utils/*"],
