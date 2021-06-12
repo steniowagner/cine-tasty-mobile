@@ -1,29 +1,11 @@
 import React from 'react';
-import { fireEvent, cleanup, render } from '@testing-library/react-native';
+import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { ThemeContextProvider } from '@providers';
+import * as fixtures from '@mocks/fixtures';
 
 import PersonList from './PeopleList';
-
-const cast = Array(3)
-  .fill({})
-  .map((_, index) => ({
-    profilePath: `/cast-profilePath${index}`,
-    character: `character${index}`,
-    name: `cast-name${index}`,
-    id: `cast-id${index}`,
-  }));
-
-const crew = Array(3)
-  .fill({})
-  .map((_, index) => ({
-    profilePath: `/crew-profilePath${index}`,
-    department: `department${index}`,
-    name: `crew-name${index}`,
-    job: `job${index}`,
-    id: `crew-id${index}`,
-  }));
 
 const renderPersonList = ({ sectionTitle, onPressItem, dataset, type }) => (
   <TMDBImageQualityProvider>
@@ -50,44 +32,55 @@ describe('Testing <PeopleList />', () => {
 
     const { getAllByTestId, getByTestId, getByText } = render(
       renderPersonList({
+        dataset: fixtures.peopleListCast,
         onPressItem: jest.fn,
-        dataset: cast,
         type: 'cast',
         sectionTitle,
       }),
     );
 
+    act(() => {
+      jest.runAllTimers();
+    });
+
     expect(getByText(sectionTitle)).not.toBeNull();
 
     expect(getByTestId('people-list-cast')).not.toBeNull();
 
-    expect(getAllByTestId('button-wrapper-cast').length).toEqual(cast.length);
+    expect(getAllByTestId('button-wrapper-cast').length).toEqual(
+      fixtures.peopleListCast.length,
+    );
 
-    expect(getAllByTestId('person-image').length).toEqual(cast.length);
+    expect(getAllByTestId('person-image').length).toEqual(fixtures.peopleListCast.length);
 
     expect(
       getAllByTestId('person-image').every((personSubtextInstance, index) => {
         const splittedUri = personSubtextInstance.props.source.uri.split('/');
 
-        return `/${splittedUri[splittedUri.length - 1]}` === cast[index].profilePath;
+        return (
+          `/${splittedUri[splittedUri.length - 1]}` ===
+          fixtures.peopleListCast[index].profilePath
+        );
       }),
     ).toEqual(true);
 
-    expect(getAllByTestId('person-name').length).toEqual(cast.length);
+    expect(getAllByTestId('person-name').length).toEqual(fixtures.peopleListCast.length);
 
     expect(
       getAllByTestId('person-name').every(
         (personNameInstance, index) =>
-          personNameInstance.children[0] === cast[index].name,
+          personNameInstance.children[0] === fixtures.peopleListCast[index].name,
       ),
     ).toEqual(true);
 
-    expect(getAllByTestId('person-subtext').length).toEqual(cast.length);
+    expect(getAllByTestId('person-subtext').length).toEqual(
+      fixtures.peopleListCast.length,
+    );
 
     expect(
       getAllByTestId('person-subtext').every(
         (personSubtextInstance, index) =>
-          personSubtextInstance.children[0] === cast[index].character,
+          personSubtextInstance.children[0] === fixtures.peopleListCast[index].character,
       ),
     ).toEqual(true);
   });
@@ -99,20 +92,24 @@ describe('Testing <PeopleList />', () => {
     const { getAllByTestId } = render(
       renderPersonList({
         sectionTitle: 'Cast',
-        dataset: cast,
+        dataset: fixtures.peopleListCast,
         type: 'cast',
         onPressItem,
       }),
     );
+
+    act(() => {
+      jest.runAllTimers();
+    });
 
     fireEvent.press(getAllByTestId('button-wrapper-cast')[INDEX_SELECTED]);
 
     expect(onPressItem).toHaveBeenCalledTimes(1);
 
     expect(onPressItem).toHaveBeenCalledWith(
-      cast[INDEX_SELECTED].id,
-      cast[INDEX_SELECTED].name,
-      cast[INDEX_SELECTED].profilePath,
+      fixtures.peopleListCast[INDEX_SELECTED].id,
+      fixtures.peopleListCast[INDEX_SELECTED].name,
+      fixtures.peopleListCast[INDEX_SELECTED].profilePath,
     );
   });
 
@@ -121,44 +118,55 @@ describe('Testing <PeopleList />', () => {
 
     const { getAllByTestId, getByTestId, getAllByText, getByText } = render(
       renderPersonList({
+        dataset: fixtures.peopleListCrew,
         onPressItem: jest.fn,
-        dataset: crew,
         type: 'crew',
         sectionTitle,
       }),
     );
 
+    act(() => {
+      jest.runAllTimers();
+    });
+
     expect(getByText(sectionTitle)).not.toBeNull();
 
     expect(getByTestId('people-list-crew')).not.toBeNull();
 
-    expect(getAllByTestId('button-wrapper-crew').length).toEqual(crew.length);
+    expect(getAllByTestId('button-wrapper-crew').length).toEqual(
+      fixtures.peopleListCrew.length,
+    );
 
-    expect(getAllByTestId('person-image').length).toEqual(crew.length);
+    expect(getAllByTestId('person-image').length).toEqual(fixtures.peopleListCrew.length);
 
     expect(
       getAllByTestId('person-image').every((personSubtextInstance, index) => {
         const splittedUri = personSubtextInstance.props.source.uri.split('/');
 
-        return `/${splittedUri[splittedUri.length - 1]}` === crew[index].profilePath;
+        return (
+          `/${splittedUri[splittedUri.length - 1]}` ===
+          fixtures.peopleListCrew[index].profilePath
+        );
       }),
     ).toEqual(true);
 
-    expect(getAllByTestId('person-name').length).toEqual(crew.length);
+    expect(getAllByTestId('person-name').length).toEqual(fixtures.peopleListCrew.length);
 
     expect(
       getAllByTestId('person-name').every(
         (personNameInstance, index) =>
-          personNameInstance.children[0] === crew[index].name,
+          personNameInstance.children[0] === fixtures.peopleListCrew[index].name,
       ),
     ).toEqual(true);
 
-    expect(getAllByTestId('person-subtext').length).toEqual(crew.length);
+    expect(getAllByTestId('person-subtext').length).toEqual(
+      fixtures.peopleListCrew.length,
+    );
 
     expect(
       getAllByTestId('person-subtext').every(
         (personSubtextInstance, index) =>
-          personSubtextInstance.children[0] === crew[index].job,
+          personSubtextInstance.children[0] === fixtures.peopleListCrew[index].job,
       ),
     ).toEqual(true);
   });
@@ -170,20 +178,24 @@ describe('Testing <PeopleList />', () => {
     const { getAllByTestId } = render(
       renderPersonList({
         sectionTitle: 'Crew',
-        dataset: crew,
+        dataset: fixtures.peopleListCrew,
         type: 'crew',
         onPressItem,
       }),
     );
+
+    act(() => {
+      jest.runAllTimers();
+    });
 
     fireEvent.press(getAllByTestId('button-wrapper-crew')[INDEX_SELECTED]);
 
     expect(onPressItem).toHaveBeenCalledTimes(1);
 
     expect(onPressItem).toHaveBeenCalledWith(
-      crew[INDEX_SELECTED].id,
-      crew[INDEX_SELECTED].name,
-      crew[INDEX_SELECTED].profilePath,
+      fixtures.peopleListCrew[INDEX_SELECTED].id,
+      fixtures.peopleListCrew[INDEX_SELECTED].name,
+      fixtures.peopleListCrew[INDEX_SELECTED].profilePath,
     );
   });
 });

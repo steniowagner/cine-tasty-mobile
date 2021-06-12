@@ -8,6 +8,7 @@ import MockedNavigation from '@mocks/MockedNavigator';
 import { setupTimeTravel } from '@mocks/timeTravel';
 import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
+import * as fixtures from '@mocks/fixtures';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
@@ -19,80 +20,6 @@ const baseParams = {
   title: 'title',
   id: 123,
 };
-
-const cast = [
-  {
-    voteAverage: 79.24046692747518,
-    posterPath: 'Hello World',
-    voteCount: -50.84916555615129,
-    name: 'Hello World',
-    id: '1',
-    __typename: 'CastItem',
-  },
-  {
-    voteAverage: 92.31814886121063,
-    posterPath: 'Hello World',
-    voteCount: 1.4805898520850604,
-    name: 'Hello World',
-    id: '2',
-    __typename: 'CastItem',
-  },
-];
-
-const crew = [
-  {
-    voteAverage: 79.24046692747518,
-    posterPath: 'Hello World',
-    voteCount: -50.84916555615129,
-    name: 'Hello World',
-    id: '1',
-    __typename: 'CrewItem',
-  },
-  {
-    voteAverage: 92.31814886121063,
-    posterPath: 'Hello World',
-    voteCount: 1.4805898520850604,
-    name: 'Hello World',
-    id: '2',
-    __typename: 'CrewItem',
-  },
-];
-
-const similar = [
-  {
-    __typename: 'BaseMovie',
-    voteAverage: 1.0,
-    posterPath: 'posterPath',
-    voteCount: 2,
-    genreIds: ['genre01'],
-    title: 'title',
-    id: 1,
-  },
-  {
-    __typename: 'BaseMovie',
-    voteAverage: 1.0,
-    posterPath: 'posterPath',
-    voteCount: 2,
-    genreIds: ['genre01'],
-    title: 'title',
-    id: 2,
-  },
-];
-
-const reviews = [
-  {
-    __typename: 'Review',
-    author: 'author01',
-    content: 'content01',
-    id: 'review01',
-  },
-  {
-    __typename: 'Review',
-    author: 'author02',
-    content: 'content02',
-    id: 'review02',
-  },
-];
 
 type RenderMovieDetailProps = {
   navigate?: typeof jest.fn;
@@ -334,7 +261,7 @@ describe('Testing <MovieDetail />', () => {
 
     const mockResolvers = {
       Movie: () => ({
-        cast,
+        cast: fixtures.cast,
       }),
     };
 
@@ -356,9 +283,9 @@ describe('Testing <MovieDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-      profileImage: cast[INDEX_CAST_ITEM_SELECTED].posterPath,
-      id: Number(cast[INDEX_CAST_ITEM_SELECTED].id),
-      name: cast[INDEX_CAST_ITEM_SELECTED].name,
+      profileImage: fixtures.cast[INDEX_CAST_ITEM_SELECTED].profilePath,
+      id: Number(fixtures.cast[INDEX_CAST_ITEM_SELECTED].id),
+      name: fixtures.cast[INDEX_CAST_ITEM_SELECTED].name,
     });
   });
 
@@ -367,7 +294,7 @@ describe('Testing <MovieDetail />', () => {
 
     const mockResolvers = {
       Movie: () => ({
-        crew,
+        crew: fixtures.crew,
       }),
     };
 
@@ -389,9 +316,9 @@ describe('Testing <MovieDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-      profileImage: cast[INDEX_CREW_ITEM_SELECTED].posterPath,
-      id: Number(cast[INDEX_CREW_ITEM_SELECTED].id),
-      name: cast[INDEX_CREW_ITEM_SELECTED].name,
+      profileImage: fixtures.cast[INDEX_CREW_ITEM_SELECTED].profilePath,
+      id: Number(fixtures.cast[INDEX_CREW_ITEM_SELECTED].id),
+      name: fixtures.cast[INDEX_CREW_ITEM_SELECTED].name,
     });
   });
 
@@ -400,7 +327,7 @@ describe('Testing <MovieDetail />', () => {
 
     const mockResolvers = {
       Movie: () => ({
-        similar,
+        similar: fixtures.similarMovies,
       }),
     };
 
@@ -424,11 +351,11 @@ describe('Testing <MovieDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
-      voteAverage: similar[INDEX_SIMILAR_ITEM_SELECTED].voteAverage,
-      posterPath: similar[INDEX_SIMILAR_ITEM_SELECTED].posterPath,
-      voteCount: similar[INDEX_SIMILAR_ITEM_SELECTED].voteCount,
-      title: similar[INDEX_SIMILAR_ITEM_SELECTED].title,
-      id: similar[INDEX_SIMILAR_ITEM_SELECTED].id,
+      voteAverage: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].voteAverage,
+      posterPath: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].posterPath,
+      voteCount: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].voteCount,
+      title: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].title,
+      id: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].id,
     });
   });
 
@@ -437,7 +364,7 @@ describe('Testing <MovieDetail />', () => {
 
     const mockResolvers = {
       Movie: () => ({
-        reviews,
+        reviews: fixtures.reviews,
         title,
       }),
     };
@@ -460,8 +387,8 @@ describe('Testing <MovieDetail />', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith(Routes.MediaDetail.REVIEWS, {
+      reviews: fixtures.reviews,
       mediaTitle: title,
-      reviews,
     });
   });
 });

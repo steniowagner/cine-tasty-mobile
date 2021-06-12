@@ -8,6 +8,7 @@ import MockedNavigation from '@mocks/MockedNavigator';
 import { setupTimeTravel } from '@mocks/timeTravel';
 import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
+import * as fixtures from '@mocks/fixtures';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
@@ -19,97 +20,6 @@ const baseParams = {
   title: 'title',
   id: 123,
 };
-
-const cast = [
-  {
-    voteAverage: 79.24046692747518,
-    posterPath: 'Hello World',
-    voteCount: -50.84916555615129,
-    name: 'Hello World',
-    id: '1',
-    __typename: 'CastItem',
-  },
-  {
-    voteAverage: 92.31814886121063,
-    posterPath: 'Hello World',
-    voteCount: 1.4805898520850604,
-    name: 'Hello World',
-    id: '2',
-    __typename: 'CastItem',
-  },
-];
-
-const createdBy = [
-  {
-    id: 'id1',
-    creditId: 'creditId1',
-    name: 'name1',
-    gender: 1,
-    profilePath: 'profilePath1',
-  },
-  {
-    id: 'id2',
-    creditId: 'creditId2',
-    name: 'name2',
-    gender: 2,
-    profilePath: 'profilePath2',
-  },
-];
-
-const crew = [
-  {
-    voteAverage: 79.24046692747518,
-    posterPath: 'Hello World',
-    voteCount: -50.84916555615129,
-    name: 'Hello World',
-    id: '1',
-    __typename: 'CrewItem',
-  },
-  {
-    voteAverage: 92.31814886121063,
-    posterPath: 'Hello World',
-    voteCount: 1.4805898520850604,
-    name: 'Hello World',
-    id: '2',
-    __typename: 'CrewItem',
-  },
-];
-
-const similar = [
-  {
-    __typename: 'BaseMovie',
-    voteAverage: 1.0,
-    posterPath: 'posterPath',
-    voteCount: 2,
-    genreIds: ['genre01'],
-    name: 'name',
-    id: 1,
-  },
-  {
-    __typename: 'BaseMovie',
-    voteAverage: 1.0,
-    posterPath: 'posterPath',
-    voteCount: 2,
-    genreIds: ['genre01'],
-    name: 'name',
-    id: 2,
-  },
-];
-
-const reviews = [
-  {
-    __typename: 'Review',
-    author: 'author01',
-    content: 'content01',
-    id: 'review01',
-  },
-  {
-    __typename: 'Review',
-    author: 'author02',
-    content: 'content02',
-    id: 'review02',
-  },
-];
 
 type RenderTVShowDetailProps = {
   mockResolvers?: IMocks;
@@ -383,7 +293,7 @@ describe('Testing <TVShowDetail />', () => {
 
     const mockResolvers = {
       TVShow: () => ({
-        cast,
+        cast: fixtures.cast,
       }),
     };
 
@@ -408,9 +318,9 @@ describe('Testing <TVShowDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-      profileImage: cast[INDEX_CAST_ITEM_SELECTED].posterPath,
-      id: Number(cast[INDEX_CAST_ITEM_SELECTED].id),
-      name: cast[INDEX_CAST_ITEM_SELECTED].name,
+      profileImage: fixtures.cast[INDEX_CAST_ITEM_SELECTED].profilePath,
+      id: Number(fixtures.cast[INDEX_CAST_ITEM_SELECTED].id),
+      name: fixtures.cast[INDEX_CAST_ITEM_SELECTED].name,
     });
   });
 
@@ -419,8 +329,8 @@ describe('Testing <TVShowDetail />', () => {
 
     const mockResolvers = {
       TVShow: () => ({
-        createdBy,
-        crew,
+        createdBy: fixtures.createdBy,
+        crew: fixtures.crew,
       }),
     };
 
@@ -445,9 +355,9 @@ describe('Testing <TVShowDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-      profileImage: createdBy[INDEX_CREATED_BY_SELECTED].profilePath,
-      id: Number(createdBy[INDEX_CREATED_BY_SELECTED].id),
-      name: createdBy[INDEX_CREATED_BY_SELECTED].name,
+      profileImage: fixtures.createdBy[INDEX_CREATED_BY_SELECTED].profilePath,
+      id: Number(fixtures.createdBy[INDEX_CREATED_BY_SELECTED].id),
+      name: fixtures.createdBy[INDEX_CREATED_BY_SELECTED].name,
     });
   });
 
@@ -456,7 +366,7 @@ describe('Testing <TVShowDetail />', () => {
 
     const mockResolvers = {
       TVShow: () => ({
-        crew,
+        crew: fixtures.crew,
       }),
     };
 
@@ -481,9 +391,9 @@ describe('Testing <TVShowDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-      profileImage: cast[INDEX_CREW_ITEM_SELECTED].posterPath,
-      id: Number(cast[INDEX_CREW_ITEM_SELECTED].id),
-      name: cast[INDEX_CREW_ITEM_SELECTED].name,
+      profileImage: fixtures.crew[INDEX_CREW_ITEM_SELECTED].profilePath,
+      id: Number(fixtures.crew[INDEX_CREW_ITEM_SELECTED].id),
+      name: fixtures.crew[INDEX_CREW_ITEM_SELECTED].name,
     });
   });
 
@@ -492,7 +402,7 @@ describe('Testing <TVShowDetail />', () => {
 
     const mockResolvers = {
       TVShow: () => ({
-        similar,
+        similar: fixtures.similarTVShows,
       }),
     };
 
@@ -519,11 +429,11 @@ describe('Testing <TVShowDetail />', () => {
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
-      voteAverage: similar[INDEX_SIMILAR_ITEM_SELECTED].voteAverage,
-      posterPath: similar[INDEX_SIMILAR_ITEM_SELECTED].posterPath,
-      voteCount: similar[INDEX_SIMILAR_ITEM_SELECTED].voteCount,
-      title: similar[INDEX_SIMILAR_ITEM_SELECTED].name,
-      id: similar[INDEX_SIMILAR_ITEM_SELECTED].id,
+      voteAverage: fixtures.similarTVShows[INDEX_SIMILAR_ITEM_SELECTED].voteAverage,
+      posterPath: fixtures.similarTVShows[INDEX_SIMILAR_ITEM_SELECTED].posterPath,
+      voteCount: fixtures.similarTVShows[INDEX_SIMILAR_ITEM_SELECTED].voteCount,
+      title: fixtures.similarTVShows[INDEX_SIMILAR_ITEM_SELECTED].name,
+      id: fixtures.similarTVShows[INDEX_SIMILAR_ITEM_SELECTED].id,
     });
   });
 
@@ -532,7 +442,7 @@ describe('Testing <TVShowDetail />', () => {
 
     const mockResolvers = {
       TVShow: () => ({
-        reviews,
+        reviews: fixtures.reviews,
         name,
       }),
     };
@@ -559,7 +469,7 @@ describe('Testing <TVShowDetail />', () => {
 
     expect(navigate).toHaveBeenCalledWith(Routes.MediaDetail.REVIEWS, {
       mediaTitle: name,
-      reviews,
+      reviews: fixtures.reviews,
     });
   });
 
