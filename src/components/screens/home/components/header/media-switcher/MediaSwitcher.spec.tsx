@@ -29,7 +29,11 @@ const getMediaSwitcherProps = (switchPresses: SwitchPress[]) =>
 
 const renderMediaSwitcher = (switchPresses = defaultPresses, isDisabled = false) => (
   <ThemeProvider theme={theme}>
-    <MediaSwitcher items={getMediaSwitcherProps(switchPresses)} isDisabled={isDisabled} />
+    <MediaSwitcher
+      items={getMediaSwitcherProps(switchPresses)}
+      onCalcuateSwitchWidth={jest.fn()}
+      isDisabled={isDisabled}
+    />
   </ThemeProvider>
 );
 

@@ -89,3 +89,25 @@ export const trendingTVShows = {
   },
   __typename: 'TrendingTVShows',
 };
+
+export const getMockedTVShowSeason = (numberOfEpisodes: number) => ({
+  seasonNumber: 1,
+  posterPath: 'posterPath',
+  overview: 'overview',
+  id: 'season-id',
+  episodes: Array(numberOfEpisodes)
+    .fill({
+      voteAverage: 1,
+      stillPath: 'stillPath',
+      voteCount: 1,
+      overview: 'overview',
+      airDate: '1994-02-21',
+      name: 'name',
+      __typename: 'TVShowSeasonEpisode',
+    })
+    .map((item, index) => ({
+      ...item,
+      id: `episode-${index}`,
+    })),
+  __typename: 'TVShowSeason',
+});

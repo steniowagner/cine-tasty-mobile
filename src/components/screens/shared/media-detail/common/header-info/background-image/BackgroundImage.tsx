@@ -37,6 +37,7 @@ const BackgroundImage = ({ isLoading, imageURL, theme }: BackgroundImageProps) =
         />
       )}
       <Styles.SmokeShadow
+        // @ts-ignore
         currentTheme={currentTheme}
       />
     </Styles.Wrapper>

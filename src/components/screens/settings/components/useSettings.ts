@@ -4,7 +4,11 @@ import { useTranslation } from 'react-i18next';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
-import { SettingsStackProps as UseSettingsProps } from '../routes/route-params-types';
+import { SettingsNavigationProp } from '../routes/route-params-types';
+
+type UseSettingsProps = {
+  navigation: SettingsNavigationProp;
+};
 
 const useSettings = ({ navigation }: UseSettingsProps) => {
   const { t } = useTranslation();

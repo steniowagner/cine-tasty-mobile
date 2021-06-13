@@ -4,45 +4,31 @@ import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
+import { getMockedTVShowSeason } from '@mocks/fixtures';
 import MockedNavigation from '@mocks/MockedNavigator';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
 
 import TVShowSeasonsDetail from './TVShowSeasonsDetail';
-
-const params = {
-  season: 1,
-  id: '123',
-};
-
-const getMockedTVShowSeason = (numberOfEpisodes: number) => ({
-  seasonNumber: 1,
-  posterPath: 'posterPath',
-  overview: 'overview',
-  id: 'season-id',
-  episodes: Array(numberOfEpisodes)
-    .fill({
-      voteAverage: 1,
-      stillPath: 'stillPath',
-      voteCount: 1,
-      overview: 'overview',
-      airDate: '1994-02-21',
-      name: 'name',
-      __typename: 'TVShowSeasonEpisode',
-    })
-    .map((item, index) => ({
-      ...item,
-      id: `episode-${index}`,
-    })),
-  __typename: 'TVShowSeason',
-});
 
 const renderTVShowSeasonsDetail = (mockResolvers?: IMocks) => {
   const FamousScreen = () => (
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <TVShowSeasonsDetail route={{ params }} />
+          <TVShowSeasonsDetail
+            route={{
+              key: `${Routes.TVShow.SEASONS_TABS}-key`,
+              name: Routes.TVShow.SEASONS_TABS,
+              params: {
+                season: 1,
+                id: '1',
+              },
+            }}
+            navigation={navigation}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>

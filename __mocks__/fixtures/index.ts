@@ -1,3 +1,4 @@
+export * from './media-view-all';
 export * from './people-list';
 export * from './tv-shows';
 export * from './famous';

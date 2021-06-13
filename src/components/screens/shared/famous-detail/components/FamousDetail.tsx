@@ -95,6 +95,7 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
           />
         </Animated.View>
         <Styles.SmokeShadow
+          // @ts-ignore
           currentTheme={currentTheme}
         />
       </Styles.BackgroundImageWrapper>

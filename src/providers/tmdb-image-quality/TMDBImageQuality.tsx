@@ -20,7 +20,7 @@ type TMDBImageQualityProviderProps = {
 };
 
 export const TMDBImageQualityProvider = ({ children }: TMDBImageQualityProviderProps) => {
-  const [imagesQualities, setImagesQualities] = useState<Types.ImageType | {}>({});
+  const [imagesQualities, setImagesQualities] = useState<Types.ImageQuailties | {}>({});
 
   const { screenClassification } = useClassifyDeviceScreen();
 
@@ -36,6 +36,7 @@ export const TMDBImageQualityProvider = ({ children }: TMDBImageQualityProviderP
 
   return (
     <TMDBImageQualityContext.Provider
+      // @ts-ignore
       value={{ ...imagesQualities }}
     >
       {children}

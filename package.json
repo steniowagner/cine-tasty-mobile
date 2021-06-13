@@ -12,6 +12,7 @@
     "start": "npx react-native start",
     "ios": "npx react-native run-ios",
     "test": "jest",
+    "compile": "tsc -p .",
     "test:coverage": "jest --coverage",
     "clear:ios": "cd ios && rm -rf build && cd ..",
     "clear:android": "cd android && ./gradlew clean && cd ..",
@@ -26,12 +27,6 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "*.+(ts|tsx)": [
-      "yarn prettier:fix",
-      "yarn lint:fix"
-    ]
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",

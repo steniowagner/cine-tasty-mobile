@@ -143,6 +143,7 @@ describe('Testing <Questions />', () => {
 
     expect(getAllByTestId('question-text')[0].children[0]).toEqual(quiz[0].question);
 
+    // @ts-ignore
     const firstOptions = getAllByTestId('card-wrapper')[0].children[1].props.answers;
 
     expect(checkHasCorrespondingOptions(quiz[0].options, firstOptions)).toEqual(true);

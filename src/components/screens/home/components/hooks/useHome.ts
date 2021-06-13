@@ -7,7 +7,7 @@ import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import { HomeStackProps } from '../../routes/route-params-types';
+import { HomeStackNavigationProp } from '../../routes/route-params-types';
 import useTrendingTVShows from './trendings/useTrendingTVShows';
 import useTrendingMovies from './trendings/useTrendingMovies';
 import useHomeTrendings from './useHomeTrendings';
@@ -16,7 +16,11 @@ import useTop3 from './top3/useTop3';
 
 export const TRANSITIONING_DURATION = 500;
 
-const useHome = ({ navigation }: HomeStackProps) => {
+type UseHomeProps = {
+  navigation: HomeStackNavigationProp;
+};
+
+const useHome = ({ navigation }: UseHomeProps) => {
   const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
     true,
   );
