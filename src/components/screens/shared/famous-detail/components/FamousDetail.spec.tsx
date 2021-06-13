@@ -3,21 +3,13 @@ import { cleanup, render, act } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-
-import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
+import { Routes } from '@routes/routes';
 
 import FamousDetail from './FamousDetail';
-
-const route = {
-  params: {
-    profileImage: 'profileImage',
-    name: 'name',
-    id: 123,
-  },
-};
 
 const person = {
   __typename: 'Person',
@@ -74,7 +66,18 @@ const renderFamousDetail = (mockResolvers?: IMocks) => {
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <FamousDetail navigation={navigation} route={route} />
+          <FamousDetail
+            navigation={navigation}
+            route={{
+              name: Routes.Famous.DETAILS,
+              key: `${Routes.Famous.DETAILS}-key`,
+              params: {
+                profileImage: 'profileImage',
+                name: 'name',
+                id: 123,
+              },
+            }}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>

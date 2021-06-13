@@ -6,59 +6,16 @@ import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDB
 import * as TRANSLATIONS from '@i18n/tags';
 
 import { SWITCH_ANIMATION_DURATION_MS } from './header/media-switcher/useMediaSwitcherAnimation';
-import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { TRANSITIONING_DURATION } from './hooks/useHome';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
+import * as fixtures from '@mocks/fixtures';
+import { Routes } from '@routes/routes';
+
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
-
-const trendingMoviesItems = Array(10)
-  .fill({})
-  .map((_, index) => ({
-    genreIds: Array(index + 1)
-      .fill('')
-      .map((_, index) => `genre-${index}`),
-    posterPath: `/posterPath-${index}`,
-    title: `title-${index}`,
-    __typename: 'BaseMovie',
-    voteAverage: index,
-    voteCount: index,
-    id: index,
-  }));
-
-const trendingMovies = {
-  nowPlaying: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  popular: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  topRated: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  upcoming: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  __typename: 'TrendingMovies',
-};
 
 type RenderHomeProps = {
   navigate?: jest.FunctionLike;
@@ -69,7 +26,10 @@ const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
   const HomeScreen = ({ navigation }) => {
     return (
       <AutoMockProvider mockResolvers={mockResolvers}>
-        <Home navigation={{ ...navigation, navigate }} />
+        <Home
+          route={{ name: Routes.Home.HOME, key: `${Routes.Home.HOME}-key` }}
+          navigation={{ ...navigation, navigate }}
+        />
       </AutoMockProvider>
     );
   };
@@ -88,7 +48,7 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
 
   it('should show the movies-content after press the "Movies" when the "TVShows" is selected', () => {
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const { queryByTestId, getByTestId, getByText, queryByText, getAllByTestId } = render(
@@ -253,7 +213,7 @@ describe('Testing <Home /> - [Movies -- Extras]', () => {
     };
 
     const mockResolversSuccess = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const { getAllByTestId, queryByTestId, getByTestId, getByText, rerender } = render(

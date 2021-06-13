@@ -18,13 +18,18 @@ export type FamousDetailParams = {
   id: number;
 };
 
+/** Famous-Detail-Stack-Props */
 export type FamousDetailNavigationProp = StackNavigationProp<
+  FamousDetailStackParams,
+  Routes.Famous.DETAILS
+>;
+export type FamousDetailRouteProp = RouteProp<
   FamousDetailStackParams,
   Routes.Famous.DETAILS
 >;
 
 export type FamousDetailStackProps = {
   navigation: FamousDetailNavigationProp;
-  route: RouteProp<FamousDetailStackParams, Routes.Famous.DETAILS>;
+  route: FamousDetailRouteProp;
   theme: DefaultTheme;
 };

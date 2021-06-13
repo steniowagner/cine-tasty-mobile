@@ -7,7 +7,7 @@ import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { SetupQuestionsStackProps as UseSetupQuestionsProps } from '../../routes/route-params-types';
+import { SetupQuestionsStackNavigationProp } from '../../routes/route-params-types';
 import { difficulties, categories, types } from './options';
 
 export const INITIAL_NUMBER_QUESTIONS = 10;
@@ -23,6 +23,10 @@ type NavigateToCustomModalProps = {
   currentDataset: Types.QuizFilterOption[];
   option: Types.QuizOption;
   headerText: string;
+};
+
+type UseSetupQuestionsProps = {
+  navigation: SetupQuestionsStackNavigationProp;
 };
 
 const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {

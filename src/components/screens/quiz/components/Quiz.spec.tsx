@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent, cleanup, render } from '@testing-library/react-native';
 
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
@@ -9,7 +10,13 @@ import Quiz from './Quiz';
 
 const renderQuiz = (navigate = jest.fn()) => (
   <ThemeContextProvider>
-    <Quiz navigation={{ navigate }} />
+    <Quiz
+      navigation={{ ...navigation, navigate }}
+      route={{
+        name: Routes.Quiz.QUIZ,
+        key: `${Routes.Quiz.QUIZ}-key`,
+      }}
+    />
   </ThemeContextProvider>
 );
 

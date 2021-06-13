@@ -25,20 +25,53 @@ type ResultsProps = {
   answers: string[];
 };
 
+/** Quiz-Stack-Props */
+export type QuizStackPropsNavigationProp = StackNavigationProp<
+  QuizStackParams,
+  Routes.Quiz.QUIZ
+>;
+export type QuizStackPropsRouteProp = RouteProp<QuizStackParams, Routes.Quiz.QUIZ>;
+
 export type QuizStackProps = {
-  navigation: StackNavigationProp<QuizStackParams, Routes.Quiz.QUIZ>;
+  navigation: QuizStackPropsNavigationProp;
+  route: QuizStackPropsRouteProp;
 };
+
+/* SetupQuestions-Stack-Props */
+export type SetupQuestionsStackNavigationProp = StackNavigationProp<
+  QuizStackParams,
+  Routes.Quiz.SETUP_QUESTIONS
+>;
+export type SetupQuestionsStackRouteProp = RouteProp<
+  QuizStackParams,
+  Routes.Quiz.SETUP_QUESTIONS
+>;
 
 export type SetupQuestionsStackProps = {
   navigation: StackNavigationProp<QuizStackParams, Routes.Quiz.SETUP_QUESTIONS>;
+  route: SetupQuestionsStackRouteProp;
 };
+
+/* Questions-Stack-Props */
+export type QuestionsStackNavigationProp = StackNavigationProp<
+  QuizStackParams,
+  Routes.Quiz.QUESTIONS
+>;
+export type QuestionsStackRouteProp = RouteProp<QuizStackParams, Routes.Quiz.QUESTIONS>;
 
 export type QuestionsStackProps = {
-  navigation: StackNavigationProp<QuizStackParams, Routes.Quiz.QUESTIONS>;
-  route: RouteProp<QuizStackParams, Routes.Quiz.QUESTIONS>;
+  navigation: QuestionsStackNavigationProp;
+  route: QuestionsStackRouteProp;
 };
 
+/* Results-Stack-Props */
+export type ResultsStackNavigationProp = StackNavigationProp<
+  QuizStackParams,
+  Routes.Quiz.RESULTS
+>;
+export type ResultsStackRouteProp = RouteProp<QuizStackParams, Routes.Quiz.RESULTS>;
+
 export type ResultsStackProps = {
-  navigation: StackNavigationProp<QuizStackParams, Routes.Quiz.RESULTS>;
-  route: RouteProp<QuizStackParams, Routes.Quiz.RESULTS>;
+  navigation: ResultsStackNavigationProp;
+  route: ResultsStackRouteProp;
 };

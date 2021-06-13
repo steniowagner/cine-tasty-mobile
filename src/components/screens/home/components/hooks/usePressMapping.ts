@@ -5,7 +5,7 @@ import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { HomeNavigationProp } from '../../routes/route-params-types';
+import { HomeStackNavigationProp } from '../../routes/route-params-types';
 
 export const TRANSITIONING_DURATION = 1200;
 
@@ -16,7 +16,7 @@ type ViewAllProps = {
 };
 
 type UsePressMappingProps = {
-  navigation: HomeNavigationProp;
+  navigation: HomeStackNavigationProp;
   isMoviesSelected: boolean;
 };
 

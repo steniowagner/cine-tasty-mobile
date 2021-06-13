@@ -2,14 +2,13 @@ import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import { ThemeContextProvider } from '@providers';
+import { answers } from '@mocks/fixtures';
 
 import MultiChoiceQuestion from './MultiChoiceQuestion';
 
-const mockedAnswers = ['A', 'B', 'C', 'D'];
-
 const renderMultiChoice = (onPressNext = jest.fn()) => (
   <ThemeContextProvider>
-    <MultiChoiceQuestion onPressNext={onPressNext} answers={mockedAnswers} isFocused />
+    <MultiChoiceQuestion onPressNext={onPressNext} answers={answers} isFocused />
   </ThemeContextProvider>
 );
 
@@ -23,18 +22,15 @@ describe('Testing <MultiChoiceQuestion />', () => {
   it("it should render correctly when there's no answer selected", () => {
     const { getByTestId, getAllByTestId } = render(renderMultiChoice());
 
-    expect(getByTestId('multi-choice-options').props.data.length).toBe(
-      mockedAnswers.length,
-    );
+    expect(getByTestId('multi-choice-options').props.data.length).toBe(answers.length);
 
     expect(getAllByTestId('icon-checkbox-blank-circle-outline').length).toEqual(
-      mockedAnswers.length,
+      answers.length,
     );
   });
 
   it('it shoud change the style of them selected item from non-selected-style to selected-style', () => {
-    const INDEX_OPTION_SELECTED =
-      (Math.random() * (mockedAnswers.length - 1 - 0 + 1)) << 0;
+    const INDEX_OPTION_SELECTED = (Math.random() * (answers.length - 1 - 0 + 1)) << 0;
     const onSelectAnswer = jest.fn();
 
     const { getAllByTestId } = render(renderMultiChoice(onSelectAnswer));
@@ -59,7 +55,7 @@ describe('Testing <MultiChoiceQuestion />', () => {
   it('it should change the selected item after every item selection', () => {
     const { getAllByTestId } = render(renderMultiChoice());
 
-    for (let i = 0; i < mockedAnswers.length; i++) {
+    for (let i = 0; i < answers.length; i++) {
       fireEvent.press(getAllByTestId('multi-choice-answer')[i]);
 
       act(() => {
@@ -77,8 +73,7 @@ describe('Testing <MultiChoiceQuestion />', () => {
   });
 
   it('it should call "onPressNext" with the selected answer', () => {
-    const INDEX_OPTION_SELECTED =
-      (Math.random() * (mockedAnswers.length - 1 - 0 + 1)) << 0;
+    const INDEX_OPTION_SELECTED = (Math.random() * (answers.length - 1 - 0 + 1)) << 0;
     const onPressNext = jest.fn();
 
     const { getAllByTestId, getByTestId } = render(renderMultiChoice(onPressNext));
@@ -93,6 +88,6 @@ describe('Testing <MultiChoiceQuestion />', () => {
 
     expect(onPressNext).toBeCalledTimes(1);
 
-    expect(onPressNext).toHaveBeenCalledWith(mockedAnswers[INDEX_OPTION_SELECTED]);
+    expect(onPressNext).toHaveBeenCalledWith(answers[INDEX_OPTION_SELECTED]);
   });
 });

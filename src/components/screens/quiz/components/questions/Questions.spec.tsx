@@ -1,65 +1,42 @@
 import React from 'react';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { RouteProp } from '@react-navigation/native';
 import { IMocks } from 'graphql-tools';
 
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
+import { quiz } from '@mocks/fixtures';
 
-import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../__mocks__/MockedNavigator';
-import { QuizStackParams } from '../../routes/route-params-types';
 import Questions from './Questions';
 
-const quiz = [
-  {
-    __typename: 'Question',
-    category: 'Entertainment: Television',
-    correctAnswer: 'D',
-    options: ['A', 'B', 'C', 'D'],
-    question: 'Question 01',
-    type: 'multiple',
-  },
-  {
-    __typename: 'Question',
-    category: 'Entertainment: Film',
-    correctAnswer: 'True',
-    options: ['False'],
-    question: 'Question 02',
-    type: 'boolean',
-  },
-];
-
-type QuestionsScreenRouteProp = RouteProp<QuizStackParams, Routes.Quiz.QUESTIONS>;
-
-const routeParams: QuestionsScreenRouteProp = {
-  name: Routes.Quiz.QUESTIONS,
-  key: '',
-  params: {
-    numberOfQuestions: quiz.length,
-    difficulty: SchemaTypes.QuestionDifficulty.MIXED,
-    category: SchemaTypes.QuestionCategory.MIXED,
-    type: SchemaTypes.QuestionType.MIXED,
-  },
-};
+const routeParams = {};
 
 type RenderQuestionsProps = {
-  route?: QuestionsScreenRouteProp;
+  route?: typeof routeParams;
   navigate?: typeof jest.fn;
   mockResolvers?: IMocks;
 };
 
-const renderQuestions = ({
-  route = routeParams,
-  mockResolvers,
-  navigate,
-}: RenderQuestionsProps) => {
+const renderQuestions = ({ mockResolvers, navigate }: RenderQuestionsProps) => {
   const QuestionsComponent = ({ navigation }) => (
     <ThemeContextProvider>
       <AutoMockProvider mockResolvers={mockResolvers}>
-        <Questions navigation={{ ...navigation, navigate }} route={route} />
+        <Questions
+          navigation={{ ...navigation, navigate }}
+          route={{
+            name: Routes.Quiz.QUESTIONS,
+            key: `${Routes.Quiz.QUESTIONS}-key`,
+            params: {
+              numberOfQuestions: quiz.length,
+              difficulty: SchemaTypes.QuestionDifficulty.MIXED,
+              category: SchemaTypes.QuestionCategory.MIXED,
+              type: SchemaTypes.QuestionType.MIXED,
+            },
+          }}
+        />
       </AutoMockProvider>
     </ThemeContextProvider>
   );
@@ -166,6 +143,7 @@ describe('Testing <Questions />', () => {
 
     expect(getAllByTestId('question-text')[0].children[0]).toEqual(quiz[0].question);
 
+    // @ts-ignore
     const firstOptions = getAllByTestId('card-wrapper')[0].children[1].props.answers;
 
     expect(checkHasCorrespondingOptions(quiz[0].options, firstOptions)).toEqual(true);

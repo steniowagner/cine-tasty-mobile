@@ -2,11 +2,9 @@ import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
 
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 
-import timeTravel, {
-  setupTimeTravel,
-} from '../../../../../../../../__mocks__/timeTravel';
 import Tags, { NUMBER_ITEMS } from './Tags';
 
 const RELEASE_YEAR = '1994';

@@ -4,18 +4,17 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
+import { dark } from '@styles/themes';
 
 jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
-import timeTravel, {
-  setupTimeTravel,
-} from '../../../../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
 
 const {
@@ -62,7 +61,7 @@ const renderSearchTVShows = (mockResolvers: IMocks = {}, navigate = jest.fn()) =
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <Search navigation={{ ...navigation, navigate }} route={route} />
+          <Search navigation={{ ...navigation, navigate }} route={route} theme={dark} />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>

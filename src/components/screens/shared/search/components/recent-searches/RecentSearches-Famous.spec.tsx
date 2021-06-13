@@ -6,10 +6,10 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 jest.mock('../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 
-import { setupTimeTravel } from '../../../../../../../__mocks__/timeTravel';
 import { STORAGE_SEARCH_SECTION } from './useRecentSearches';
 import RecentSearches from './RecentSearches';
 

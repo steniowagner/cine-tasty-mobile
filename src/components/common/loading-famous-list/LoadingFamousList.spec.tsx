@@ -1,10 +1,10 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react-native';
 
+import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 
 import LoadingFamousList, { INITIAL_ITEMS_TO_RENDER } from './LoadingFamousList';
-import { setupTimeTravel } from '../../../../__mocks__/timeTravel';
 import { NUMBER_FLATLIST_COLUMNS } from '../../screens/famous/components/Famous';
 
 const renderLoadingFamousList = () => (

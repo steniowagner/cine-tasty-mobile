@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import i18next, { Module } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import handleLanguageDetection from './handleLanguageDetection';
@@ -8,8 +8,12 @@ import ptBR from './locale/ptBR';
 import es from './locale/es';
 import en from './locale/en';
 
-const languageDetector = {
+const languageDetectorType: Module = {
   type: 'languageDetector',
+};
+
+const languageDetector = {
+  type: languageDetectorType.type,
   async: true,
   detect: async (callback) => {
     const language = await handleLanguageDetection();

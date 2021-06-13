@@ -4,59 +4,57 @@ import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
+import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import { tvShowViewAllInitialDataset } from '@mocks/fixtures';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
+import * as Types from '@local-types';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../../common/popup-advice/PopupAdvice';
-import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';
-
-const mockedInitialDataset = Array(5)
-  .fill({})
-  .map((_, index) => ({
-    voteAverage: 10 / index + 1,
-    title: `Title ${index + 1}`,
-    posterPath: `PosterPath ${index + 1}`,
-    voteCount: 10 / index + 1,
-    genreIds: [`Genre${index}`],
-    id: index,
-  }));
-
-const navigate = jest.fn();
 
 const renderMediaSectionViewAll = (
   {
-    initialDataset = mockedInitialDataset,
+    initialDataset = tvShowViewAllInitialDataset,
     sectionKey = 'onTheAir',
     headerTitle = '',
     isMovie = false,
+    navigate = jest.fn(),
   },
   resolvers?: IMocks,
-) => (
-  <TMDBImageQualityProvider>
-    <ThemeContextProvider>
-      <AutoMockProvider mockResolvers={resolvers}>
-        <MediaSectionViewAll
-          navigation={{ navigate }}
-          route={{
-            params: {
-              initialDataset,
-              sectionKey,
-              headerTitle,
-              isMovie,
-            },
-          }}
-        />
-      </AutoMockProvider>
-    </ThemeContextProvider>
-  </TMDBImageQualityProvider>
-);
+) => {
+  const trendingMediaItemkeY = sectionKey as Types.TrendingMediaItemKey;
+
+  return (
+    <TMDBImageQualityProvider>
+      <ThemeContextProvider>
+        <AutoMockProvider mockResolvers={resolvers}>
+          <MediaSectionViewAll
+            navigation={{ ...navigation, navigate }}
+            route={{
+              name: Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+              key: `${Routes.Home.MEDIA_DETAILS_VIEW_ALL}-key`,
+              params: {
+                sectionKey: trendingMediaItemkeY,
+                onPressItem: jest.fn(),
+                initialDataset,
+                headerTitle,
+                isMovie,
+              },
+            }}
+          />
+        </AutoMockProvider>
+      </ThemeContextProvider>
+    </TMDBImageQualityProvider>
+  );
+};
 
 const getMockResolvers = (hasMore: boolean = false) => ({
   TrendingTVShowsQueryResult: () => ({
-    items: () => new MockList(mockedInitialDataset.length),
+    items: () => new MockList(tvShowViewAllInitialDataset.length),
     hasMore,
   }),
 });
@@ -76,7 +74,7 @@ describe('Testing <MediaSectionViewAll /> - [TV-Shows]', () => {
     );
 
     expect(queryAllByTestId('full-media-list-item').length).toEqual(
-      mockedInitialDataset.length,
+      tvShowViewAllInitialDataset.length,
     );
 
     expect(getByTestId('media-view-all-list')).not.toBeNull();
@@ -106,26 +104,32 @@ describe('Testing <MediaSectionViewAll /> - [TV-Shows]', () => {
     });
 
     expect(queryAllByTestId('full-media-list-item').length).toEqual(
-      mockedInitialDataset.length * 2,
+      tvShowViewAllInitialDataset.length * 2,
     );
   });
 
   it('should call "onPressItem" correctly when some item on the list is pressed', () => {
     const INDEX_ITEM_PRESSED =
-      (Math.random() * (mockedInitialDataset.length - 1 - 0 + 1)) << 0;
+      (Math.random() * (tvShowViewAllInitialDataset.length - 1 - 0 + 1)) << 0;
+
+    const navigate = jest.fn();
 
     const { queryAllByTestId } = render(
-      renderMediaSectionViewAll({}, getMockResolvers()),
+      renderMediaSectionViewAll({ navigate }, getMockResolvers()),
     );
 
     fireEvent.press(queryAllByTestId('full-media-list-item')[INDEX_ITEM_PRESSED]);
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith(
-      Routes.TVShow.DETAILS,
-      mockedInitialDataset[INDEX_ITEM_PRESSED],
-    );
+    expect(navigate).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
+      genreIds: tvShowViewAllInitialDataset[INDEX_ITEM_PRESSED].genreIds,
+      voteAverage: tvShowViewAllInitialDataset[INDEX_ITEM_PRESSED].voteAverage,
+      posterPath: tvShowViewAllInitialDataset[INDEX_ITEM_PRESSED].posterPath,
+      voteCount: tvShowViewAllInitialDataset[INDEX_ITEM_PRESSED].voteCount,
+      title: tvShowViewAllInitialDataset[INDEX_ITEM_PRESSED].title,
+      id: tvShowViewAllInitialDataset[INDEX_ITEM_PRESSED].id,
+    });
   });
 
   it('shound show an error message when the user scroll to the end of the list and some error occurs during the pagination', () => {
@@ -144,9 +148,7 @@ describe('Testing <MediaSectionViewAll /> - [TV-Shows]', () => {
     act(() => {
       try {
         jest.runAllTimers();
-      } catch (err) {
-        console.log('MediaSectionViewAllTVShows - error - 126');
-      }
+      } catch (err) {}
     });
 
     expect(getByTestId('popup-advice-wrapper')).not.toBeNull();
@@ -176,9 +178,7 @@ describe('Testing <MediaSectionViewAll /> - [TV-Shows]', () => {
     act(() => {
       try {
         jest.runAllTimers();
-      } catch (err) {
-        console.log('MediaSectionViewAllTVShows - error - 126');
-      }
+      } catch (err) {}
     });
 
     expect(queryByTestId('pagination-footer-wrapper')).not.toBeNull();
@@ -204,9 +204,7 @@ describe('Testing <MediaSectionViewAll /> - [TV-Shows]', () => {
     act(() => {
       try {
         jest.runAllTimers();
-      } catch (err) {
-        console.log('MediaSectionViewAllTVShows - error - 185');
-      }
+      } catch (err) {}
     });
 
     expect(queryByTestId('pagination-footer-wrapper')).toBeNull();
@@ -216,7 +214,7 @@ describe('Testing <MediaSectionViewAll /> - [TV-Shows]', () => {
     expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
     expect(queryAllByTestId('full-media-list-item').length).toEqual(
-      mockedInitialDataset.length * 2,
+      tvShowViewAllInitialDataset.length * 2,
     );
   });
 });

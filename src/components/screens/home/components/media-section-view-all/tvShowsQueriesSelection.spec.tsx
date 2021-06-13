@@ -3,6 +3,7 @@ import { render } from '@testing-library/react-native';
 import { IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 
 const mockUsePaginatedQuery = jest.fn();
@@ -19,10 +20,11 @@ jest.mock('@hooks', () => ({
   useGetCurrentISO6391Language: () => jest.fn(),
 }));
 
+import AutoMockProvider from '@mocks/AutoMockedProvider';
 import * as Queries from '@graphql/queries';
 
-import AutoMockProvider from '../../../../../../__mocks__/AutoMockedProvider';
 import MediaSectionViewAll from './MediaSectionViewAll';
+import { Routes } from '@routes/routes';
 
 const renderMediaSectionViewAll = (
   {
@@ -38,7 +40,10 @@ const renderMediaSectionViewAll = (
     <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
         <MediaSectionViewAll
+          navigation={navigation}
           route={{
+            name: Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+            key: `${Routes.Home.MEDIA_DETAILS_VIEW_ALL}-key`,
             params: {
               initialDataset,
               onPressItem,

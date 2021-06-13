@@ -5,11 +5,13 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
+import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
+import { navigation } from '@mocks/navigationMock';
+import { Routes } from '@routes/routes';
 
-import { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import Famous from './Famous';
 
 const FAMOUS_COUNT = 10;
@@ -21,19 +23,15 @@ const getMockResolvers = (hasMore: boolean = false) => ({
   }),
 });
 
-const navigation = {
-  setOptions: () => ({
-    // eslint-disable-next-line react/display-name
-    headerRight: () => <TouchableOpacity onPress={jest.fn} />,
-  }),
-};
-
 const renderFamousScreen = (resolvers?: IMocks) => {
   const FamousScreen = () => (
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={resolvers}>
-          <Famous navigation={navigation} />
+          <Famous
+            route={{ name: Routes.Famous.FAMOUS, key: `${Routes.Famous.FAMOUS}-key` }}
+            navigation={navigation}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>

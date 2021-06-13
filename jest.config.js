@@ -19,4 +19,5 @@ module.exports = {
   transformIgnorePatterns: [`node_modules/(?!(${dependenciesToBeTranspiled})/)`],
   setupFiles: ['./jest.setup.js'],
   testMatch: ['**/*.spec.(ts|tsx)'],
+  moduleNameMapper: { '^@mocks/(.*)$': '<rootDir>/__mocks__/$1' },
 };

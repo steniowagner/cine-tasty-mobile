@@ -7,57 +7,12 @@ import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
+import * as fixtures from '@mocks/fixtures';
 import Home from './Home';
 
 const NUMBER_OF_SECTIONS = 4;
-
-const trendingMoviesItems = Array(10)
-  .fill({})
-  .map((_, index) => ({
-    genreIds: Array(index + 1)
-      .fill('')
-      .map((_, index) => `genre-${index}`),
-    posterPath: `/posterPath-${index}`,
-    title: `title-${index}`,
-    __typename: 'BaseMovie',
-    voteAverage: index,
-    voteCount: index,
-    id: index,
-  }));
-
-const trendingMovies = {
-  nowPlaying: {
-    totalResults: 1,
-    totalPages: 2,
-    hasMore: true,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  popular: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  topRated: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  upcoming: {
-    totalResults: 1,
-    totalPages: 1,
-    hasMore: false,
-    items: trendingMoviesItems,
-    __typename: 'TrendingMoviesQueryResult',
-  },
-  __typename: 'TrendingMovies',
-};
 
 type RenderHomeProps = {
   navigate?: jest.FunctionLike;
@@ -68,7 +23,10 @@ const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
   const HomeScreen = ({ navigation }) => {
     return (
       <AutoMockProvider mockResolvers={mockResolvers}>
-        <Home navigation={{ ...navigation, navigate }} />
+        <Home
+          route={{ name: Routes.Home.HOME, key: `${Routes.Home.HOME}-key` }}
+          navigation={{ ...navigation, navigate }}
+        />
       </AutoMockProvider>
     );
   };
@@ -101,7 +59,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
   it("should render the content properly when the query-result isnt' null", () => {
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const { queryByTestId, getByTestId, getByText, getAllByTestId } = render(
@@ -197,7 +155,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
   it('should call correct params when press "View All" button on the "Now Playing section" and the "Movies" is selected', () => {
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const navigate = jest.fn();
@@ -221,7 +179,7 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
-      trendingMovies.nowPlaying.items,
+      fixtures.trendingMovies.nowPlaying.items,
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
@@ -235,7 +193,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
   it('should call correct params when press "View All" button on the "Popular section" and the "Movies" is selected', () => {
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const navigate = jest.fn();
@@ -259,7 +217,7 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
-      trendingMovies.popular.items,
+      fixtures.trendingMovies.popular.items,
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
@@ -273,7 +231,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
   it('should call correct params when press "View All" button on the "Top Rated section" and the "Movies" is selected', () => {
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const navigate = jest.fn();
@@ -297,7 +255,7 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
-      trendingMovies.topRated.items,
+      fixtures.trendingMovies.topRated.items,
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
@@ -311,7 +269,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
   it('should call correct params when press "View All" button on the "Upcoming section" and the "Movies" is selected', () => {
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const navigate = jest.fn();
@@ -335,7 +293,7 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
-      trendingMovies.upcoming.items,
+      fixtures.trendingMovies.upcoming.items,
     );
 
     expect(navigate.mock.calls[0][1].headerTitle).toEqual(
@@ -349,7 +307,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
   it('should navigate to "Search" screen passing the params correctly', () => {
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const navigate = jest.fn();
@@ -384,11 +342,11 @@ describe('Testing <Home /> - [Movies]', () => {
     ];
 
     const SECTION_ITEM_INDEX_SELECTED =
-      (Math.random() * (trendingMoviesItems.length - 1 - 0 + 1)) << 0;
+      (Math.random() * (fixtures.trendingMoviesItems.length - 1 - 0 + 1)) << 0;
     const SECTION_SELECTED_INDEX = (Math.random() * (sections.length - 1 - 0 + 1)) << 0;
 
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const navigate = jest.fn();
@@ -410,12 +368,12 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
-      voteAverage: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteAverage,
-      posterPath: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].posterPath,
-      voteCount: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteCount,
-      genreIds: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].genreIds,
-      title: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].title,
-      id: trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].id,
+      voteAverage: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteAverage,
+      posterPath: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].posterPath,
+      voteCount: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteCount,
+      genreIds: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].genreIds,
+      title: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].title,
+      id: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].id,
     });
   });
 
@@ -423,7 +381,7 @@ describe('Testing <Home /> - [Movies]', () => {
     const TOP3_ITEM_SELECTED_INDEX = 0;
 
     const mockResolvers = {
-      TrendingMovies: () => trendingMovies,
+      TrendingMovies: () => fixtures.trendingMovies,
     };
 
     const navigate = jest.fn();
@@ -443,12 +401,12 @@ describe('Testing <Home /> - [Movies]', () => {
     const { id } = navigate.mock.calls[0][1];
 
     expect(navigate).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
-      voteAverage: trendingMovies.nowPlaying.items[id].voteAverage,
-      posterPath: trendingMovies.nowPlaying.items[id].posterPath,
-      voteCount: trendingMovies.nowPlaying.items[id].voteCount,
-      genreIds: trendingMovies.nowPlaying.items[id].genreIds,
-      title: trendingMovies.nowPlaying.items[id].title,
-      id: trendingMovies.nowPlaying.items[id].id,
+      voteAverage: fixtures.trendingMovies.nowPlaying.items[id].voteAverage,
+      posterPath: fixtures.trendingMovies.nowPlaying.items[id].posterPath,
+      voteCount: fixtures.trendingMovies.nowPlaying.items[id].voteCount,
+      genreIds: fixtures.trendingMovies.nowPlaying.items[id].genreIds,
+      title: fixtures.trendingMovies.nowPlaying.items[id].title,
+      id: fixtures.trendingMovies.nowPlaying.items[id].id,
     });
   });
 

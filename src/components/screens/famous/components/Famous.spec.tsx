@@ -4,14 +4,14 @@ import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import { ThemeContextProvider } from '@providers';
+import { famousItems } from '@mocks/fixtures';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
-
-import timeTravel, { setupTimeTravel } from '../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../__mocks__/MockedNavigator';
 import Famous from './Famous';
 
 type FamousScreenProps = {
@@ -19,21 +19,12 @@ type FamousScreenProps = {
   mockResolvers?: IMocks;
 };
 
-const famouseItems = Array(5)
-  .fill({})
-  .map((_, index) => ({
-    profilePath: `profilePath-${index}`,
-    name: `name-${index}`,
-    id: index,
-    __typename: 'BasePerson',
-  }));
-
 const renderFamousScreen = ({ mockResolvers, navigate }: FamousScreenProps) => {
-  const FamousScreen = ({ navigation }) => (
+  const FamousScreen = ({ navigation, route }) => (
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <Famous navigation={{ ...navigation, navigate }} />
+          <Famous navigation={{ ...navigation, navigate }} route={route} />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>
@@ -87,7 +78,7 @@ describe('Testing <Famous />', () => {
 
     const mockResolvers = {
       PeopleQueryResult: () => ({
-        items: () => famouseItems,
+        items: () => famousItems,
       }),
     };
 
@@ -102,9 +93,9 @@ describe('Testing <Famous />', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-      profileImage: famouseItems[INDEX_ITEM_SELECTED].profilePath,
-      name: famouseItems[INDEX_ITEM_SELECTED].name,
-      id: famouseItems[INDEX_ITEM_SELECTED].id,
+      profileImage: famousItems[INDEX_ITEM_SELECTED].profilePath,
+      name: famousItems[INDEX_ITEM_SELECTED].name,
+      id: famousItems[INDEX_ITEM_SELECTED].id,
     });
   });
 

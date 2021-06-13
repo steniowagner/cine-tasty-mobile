@@ -6,13 +6,11 @@ import { MockList, IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as SchemaTypes from '@schema-types';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../../../../common/popup-advice/PopupAdvice';
-import timeTravel, {
-  setupTimeTravel,
-} from '../../../../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
+import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 
 import Search from '../Search';
 

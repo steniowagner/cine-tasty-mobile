@@ -29,7 +29,12 @@ const renderTabNavigator = (
   currentRouteName = Routes.Home.HOME as string,
 ) => (
   <ThemeContextProvider>
-    <TabNavigator navigation={{ navigate }} state={getState(currentRouteName)} />
+    <TabNavigator
+      // @ts-ignore
+      state={getState(currentRouteName)}
+      // @ts-ignore
+      navigation={{ navigate }}
+    />
   </ThemeContextProvider>
 );
 

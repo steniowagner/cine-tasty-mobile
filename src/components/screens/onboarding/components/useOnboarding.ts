@@ -14,7 +14,7 @@ import { Icons } from '@components/common/svg-icon/icons';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
-import { OnboardingStackProps } from '../routes/route-params-types';
+import { OnboardingStackRouteProp } from '../routes/route-params-types';
 
 type OnboardingItem = {
   description: string;
@@ -24,7 +24,11 @@ type OnboardingItem = {
   icon: Icons;
 };
 
-const useOnboarding = ({ route }: Pick<OnboardingStackProps, 'route'>) => {
+type UseOnboardingProps = {
+  route: OnboardingStackRouteProp;
+};
+
+const useOnboarding = ({ route }: UseOnboardingProps) => {
   const [indexSelected, setIndexSelected] = useState<number>(0);
   const flatlistRef = useRef<FlatList>(null);
 

@@ -12,12 +12,9 @@ import useOnboarding from './useOnboarding';
 
 type OnboardingProps = {
   theme: DefaultTheme;
-};
+} & OnboardingStackProps;
 
-const Onboarding = ({
-  route,
-  theme,
-}: Pick<OnboardingStackProps, 'route'> & OnboardingProps) => {
+const Onboarding = ({ route, theme }: OnboardingProps) => {
   const {
     onMomentumScrollEnd, indexSelected, flatlistRef, items,
   } = useOnboarding({

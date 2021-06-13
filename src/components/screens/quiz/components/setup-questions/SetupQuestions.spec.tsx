@@ -1,24 +1,28 @@
 import React from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 
+import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
-import { navigation } from '../../../../../../__mocks__/ReactNavigation';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
 import { difficulties, categories, types } from './options';
 import SetupQuestions from './SetupQuestions';
 
-const getNavigationParam = (navigate = jest.fn) => ({
-  ...navigation,
-  navigate,
-});
-
 const renderSetupQuestions = (navigate = jest.fn) => (
   <ThemeContextProvider>
-    <SetupQuestions navigation={getNavigationParam(navigate)} />
+    <SetupQuestions
+      navigation={{
+        ...navigation,
+        navigate,
+      }}
+      route={{
+        name: Routes.Quiz.SETUP_QUESTIONS,
+        key: `${Routes.Quiz.SETUP_QUESTIONS}-key`,
+      }}
+    />
   </ThemeContextProvider>
 );
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 
-import timeTravel, { setupTimeTravel } from '../../../../../../__mocks__/timeTravel';
 import LanguageFilter, { ANIMATION_TIMING } from './LanguageFilter';
 import languages from './languages';
 

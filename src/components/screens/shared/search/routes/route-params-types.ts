@@ -24,13 +24,16 @@ export type SearchParams = {
   queryId: Types.CineTastyQuery;
 };
 
+/** Search-Stack-Props */
 export type SearchNavigationProp = StackNavigationProp<
   SearchStackParams,
   Routes.Search.SEARCH
 >;
 
+export type SearchRouteProp = RouteProp<SearchStackParams, Routes.Search.SEARCH>;
+
 export type SearchStackProps = {
-  route: RouteProp<SearchStackParams, Routes.Search.SEARCH>;
   navigation: SearchNavigationProp;
+  route: SearchRouteProp;
   theme: DefaultTheme;
 };

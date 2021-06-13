@@ -4,16 +4,13 @@ import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 import { MockList, IMocks } from 'graphql-tools';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import AutoMockProvider from '@mocks/AutoMockedProvider';
+import MockedNavigation from '@mocks/MockedNavigator';
 import * as SchemaTypes from '@schema-types';
 
-import { DEFAULT_ANIMATION_DURATION } from '../../../../../../common/popup-advice/PopupAdvice';
-import timeTravel, {
-  setupTimeTravel,
-} from '../../../../../../../../__mocks__/timeTravel';
-import AutoMockProvider from '../../../../../../../../__mocks__/AutoMockedProvider';
-import MockedNavigation from '../../../../../../../../__mocks__/MockedNavigator';
 import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
-
 import Search from '../Search';
 
 const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF = 'i18nMoviesQueryByPaginationErrorRef';

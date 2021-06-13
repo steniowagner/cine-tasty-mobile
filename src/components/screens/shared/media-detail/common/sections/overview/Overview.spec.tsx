@@ -2,14 +2,12 @@ import React from 'react';
 import { render, cleanup, act } from '@testing-library/react-native';
 
 import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import timeTravel, {
-  setupTimeTravel,
-} from '../../../../../../../../__mocks__/timeTravel';
-import Overview from './Overview';
 import { NUMBER_ITEMS } from './loading-overview/LoadingOverview';
+import Overview from './Overview';
 
 const renderOverview = (isLoading = false, overview = 'overview') => (
   <ThemeContextProvider>

@@ -17,7 +17,17 @@ export type ReviewsParams = {
   reviews: Review[];
 };
 
+/** Reviews-Stack-Props */
+export type ReviewsDetailNavigationProp = StackNavigationProp<
+  ReviewsStackParams,
+  Routes.MediaDetail.REVIEWS
+>;
+export type ReviewsDetailRouteProp = RouteProp<
+  ReviewsStackParams,
+  Routes.MediaDetail.REVIEWS
+>;
+
 export type ReviewsStackProps = {
-  navigation: StackNavigationProp<ReviewsStackParams, Routes.MediaDetail.REVIEWS>;
-  route: RouteProp<ReviewsStackParams, Routes.MediaDetail.REVIEWS>;
+  navigation: ReviewsDetailNavigationProp;
+  route: ReviewsDetailRouteProp;
 };
