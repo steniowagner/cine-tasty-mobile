@@ -25,16 +25,6 @@ describe('Testing useParseDate', () => {
     expect(formatDate(date)).toEqual(`${year}-${month}-${day}`);
   });
 
-  it('should return correctly when the language selected is "sv"', () => {
-    jest.mock('react-i18next', () => ({
-      getI18n: () => ({ language: 'sv' }),
-    }));
-
-    const { formatDate } = require('./formatDate');
-
-    expect(formatDate(date)).toEqual(`${year}-${month}-${day}`);
-  });
-
   it('should return correctly when the language selected is "es"', () => {
     jest.mock('react-i18next', () => ({
       getI18n: () => ({ language: 'es' }),

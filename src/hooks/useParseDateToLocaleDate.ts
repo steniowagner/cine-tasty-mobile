@@ -18,13 +18,8 @@ export const useParseDateToLocaleDate = (rawDateString: string) => {
 
       switch (currentLanguage) {
         case 'ptBR':
-        case 'ptPT':
         case 'es':
           parsedDate = `${day} de ${monthText.toLowerCase()} de ${year}`;
-          break;
-
-        case 'sv':
-          parsedDate = `${day} ${monthText.toLowerCase()} ${year}`;
           break;
 
         case 'en':

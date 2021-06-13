@@ -17,7 +17,7 @@ const languageDetector = {
   async: true,
   detect: async (callback) => {
     const language = await handleLanguageDetection();
-
+    console.log('>>> language: ', language);
     callback(language);
   },
   cacheUserLanguage: () => {},
