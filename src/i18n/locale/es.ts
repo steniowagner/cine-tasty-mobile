@@ -5,7 +5,6 @@ const es: Locale = {
     en: 'Inglés',
     es: 'Español',
     ptBR: 'Portugués',
-    sv: 'Swedish',
   },
   languageWarning: {
     quiz: {

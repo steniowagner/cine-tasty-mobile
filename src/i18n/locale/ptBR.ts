@@ -75,7 +75,6 @@ const ptBR: Locale = {
     en: 'Inglês',
     es: 'Espanhol',
     ptBR: 'Português',
-    sv: 'Sueco',
   },
   errors: {
     paginateFamousError: 'Não foi possível carregar mais famosos',

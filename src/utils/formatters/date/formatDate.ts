@@ -9,7 +9,7 @@ export const formatDate = (date: string) => {
 
   const { language } = getI18n();
 
-  if (language === 'sv' || language === 'en') {
+  if (language === 'en') {
     return `${year}-${month}-${day}`;
   }
 

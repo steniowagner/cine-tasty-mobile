@@ -60,7 +60,7 @@ describe('Testing <Languages />', () => {
 
   it('should call "onPress" with the correct params when the user press on the list-item', () => {
     const { getAllByTestId } = render(renderLanguageSettings());
-    const languages = ['en', 'es', 'ptBR', 'ptPT', 'sv'];
+    const languages = ['en', 'es', 'ptBR'];
 
     for (let i = 0; i < languages.length; i++) {
       fireEvent.press(getAllByTestId('option-settings')[i]);

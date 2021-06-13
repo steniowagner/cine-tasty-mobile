@@ -75,7 +75,6 @@ const en: Locale = {
     en: 'English',
     es: 'Spanish',
     ptBR: 'Portuguese',
-    sv: 'Swendish',
   },
   errors: {
     paginateFamousError: "Couldn't load more Famous",
