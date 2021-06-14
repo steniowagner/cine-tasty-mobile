@@ -15,10 +15,12 @@ const useProgressiveImage = () => {
   }, []);
 
   const onLoadImage = useCallback(() => {
-    Animated.timing(imageOpacity, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start(() => setIsImageLoaded(true));
+    setTimeout(() => {
+      Animated.timing(imageOpacity, {
+        useNativeDriver: true,
+        toValue: 1,
+      }).start(() => setIsImageLoaded(true));
+    }, 500);
   }, []);
 
   return {
