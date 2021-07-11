@@ -5,7 +5,6 @@ const dependenciesToBeTranspiled = [
   'react-native-screens',
   '@react-native-community',
   'react-native-gesture-handler',
-  'react-native-vector-icons',
   'react-native-iphone-x-helper',
   'react-native-linear-gradient',
   'react-native-shimmer-placeholder',
