@@ -5,6 +5,11 @@ import { IMocks } from 'graphql-tools';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { navigation } from '@mocks/navigationMock';
 
+import {
+  MediaSectionViewAllStackNavigationProp,
+  MediaSectionViewAllStackRouteProp,
+} from '../../routes/route-params-types';
+
 const mockUsePaginatedQuery = jest.fn();
 
 mockUsePaginatedQuery.mockImplementation(() => ({
@@ -37,18 +42,20 @@ const renderMediaSectionViewAll = (
   <TMDBImageQualityProvider>
     <AutoMockProvider mockResolvers={resolvers}>
       <MediaSectionViewAll
-        navigation={navigation}
-        route={{
-          name: Routes.Home.MEDIA_DETAILS_VIEW_ALL,
-          key: `${Routes.Home.MEDIA_DETAILS_VIEW_ALL}-key`,
-          params: {
-            initialDataset,
-            onPressItem,
-            sectionKey,
-            headerTitle,
-            isMovie,
-          },
-        }}
+        navigation={navigation as MediaSectionViewAllStackNavigationProp}
+        route={
+          {
+            name: Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+            key: `${Routes.Home.MEDIA_DETAILS_VIEW_ALL}-key`,
+            params: {
+              initialDataset,
+              onPressItem,
+              sectionKey,
+              headerTitle,
+              isMovie,
+            },
+          } as MediaSectionViewAllStackRouteProp
+        }
       />
     </AutoMockProvider>
   </TMDBImageQualityProvider>
