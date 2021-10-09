@@ -10,18 +10,26 @@ import * as Types from '@local-types';
 import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
 import { difficulties, categories, types } from './options';
 import SetupQuestions from './SetupQuestions';
+import {
+  SetupQuestionsStackNavigationProp,
+  SetupQuestionsStackRouteProp,
+} from '../../routes/route-params-types';
 
 const renderSetupQuestions = (navigate = jest.fn) => (
   <ThemeContextProvider>
     <SetupQuestions
-      navigation={{
-        ...navigation,
-        navigate,
-      }}
-      route={{
-        name: Routes.Quiz.SETUP_QUESTIONS,
-        key: `${Routes.Quiz.SETUP_QUESTIONS}-key`,
-      }}
+      navigation={
+        {
+          ...navigation,
+          navigate,
+        } as SetupQuestionsStackNavigationProp
+      }
+      route={
+        {
+          name: Routes.Quiz.SETUP_QUESTIONS,
+          key: `${Routes.Quiz.SETUP_QUESTIONS}-key`,
+        } as SetupQuestionsStackRouteProp
+      }
     />
   </ThemeContextProvider>
 );
