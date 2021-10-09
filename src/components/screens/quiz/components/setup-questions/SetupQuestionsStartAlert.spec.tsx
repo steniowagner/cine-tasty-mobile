@@ -7,6 +7,11 @@ import { ThemeContextProvider } from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 
+import {
+  SetupQuestionsStackNavigationProp,
+  SetupQuestionsStackRouteProp,
+} from '../../routes/route-params-types';
+
 jest.spyOn(Alert, 'alert');
 
 jest.mock('react-i18next', () => ({
@@ -21,14 +26,18 @@ import SetupQuestions from './SetupQuestions';
 const renderSetupQuestions = (navigate = jest.fn) => (
   <ThemeContextProvider>
     <SetupQuestions
-      navigation={{
-        ...navigation,
-        navigate,
-      }}
-      route={{
-        name: Routes.Quiz.SETUP_QUESTIONS,
-        key: `${Routes.Quiz.SETUP_QUESTIONS}-key`,
-      }}
+      navigation={
+        {
+          ...navigation,
+          navigate,
+        } as SetupQuestionsStackNavigationProp
+      }
+      route={
+        {
+          name: Routes.Quiz.SETUP_QUESTIONS,
+          key: `${Routes.Quiz.SETUP_QUESTIONS}-key`,
+        } as SetupQuestionsStackRouteProp
+      }
     />
   </ThemeContextProvider>
 );
