@@ -15,6 +15,10 @@ import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
 
 import MediaSectionViewAll from './MediaSectionViewAll';
+import {
+  MediaSectionViewAllStackNavigationProp,
+  MediaSectionViewAllStackRouteProp,
+} from '../../routes/route-params-types';
 
 const renderMediaSectionViewAll = (
   {
@@ -33,18 +37,22 @@ const renderMediaSectionViewAll = (
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={resolvers}>
           <MediaSectionViewAll
-            navigation={{ ...navigation, navigate }}
-            route={{
-              name: Routes.Home.MEDIA_DETAILS_VIEW_ALL,
-              key: `${Routes.Home.MEDIA_DETAILS_VIEW_ALL}-key`,
-              params: {
-                sectionKey: trendingMediaItemkeY,
-                onPressItem: jest.fn(),
-                initialDataset,
-                headerTitle,
-                isMovie,
-              },
-            }}
+            navigation={
+              { ...navigation, navigate } as MediaSectionViewAllStackNavigationProp
+            }
+            route={
+              {
+                name: Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+                key: `${Routes.Home.MEDIA_DETAILS_VIEW_ALL}-key`,
+                params: {
+                  sectionKey: trendingMediaItemkeY,
+                  onPressItem: jest.fn(),
+                  initialDataset,
+                  headerTitle,
+                  isMovie,
+                },
+              } as MediaSectionViewAllStackRouteProp
+            }
           />
         </AutoMockProvider>
       </ThemeContextProvider>
