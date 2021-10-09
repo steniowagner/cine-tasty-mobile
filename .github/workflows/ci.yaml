@@ -22,8 +22,8 @@ jobs:
       - name: Running ESlint
         run: npm run lint:fix
 
-      - name: Building TS files
-        run: npm run compile
+      # - name: Building TS files
+      #  run: npm run compile
 
       - name: Running tests
         run: npm run test
