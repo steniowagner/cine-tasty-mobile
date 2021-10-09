@@ -10,25 +10,31 @@ import * as Types from '@local-types';
 
 import { ANIMATION_TIMING } from './useCustomizedModal';
 import CustomizedModal from './CustomizedModal';
+import {
+  CustomModalNavigationProp,
+  CustomModalRouteProp,
+} from '../routes/route-params-types';
 
 const HEADER_TEXT = 'SETUP_QUESTIONS_OPTIONS_LIST_HEADER_TEXT';
 
 const renderCustomizedModal = (onPressSelect = jest.fn, goBack = jest.fn) => (
   <ThemeContextProvider>
     <CustomizedModal
-      navigation={{ ...navigation, goBack }}
-      route={{
-        name: Routes.CustomModal.CUSTOM_MODAL,
-        key: `${Routes.CustomModal.CUSTOM_MODAL}-key`,
-        params: {
-          type: Types.CustomizedModalChildrenType.MEDIA_FILTER,
-          headerText: HEADER_TEXT,
-          extraData: {
-            lastItemSelected: SchemaTypes.ArticleLanguage.PT,
-            onPressSelect,
+      navigation={{ ...navigation, goBack } as CustomModalNavigationProp}
+      route={
+        {
+          name: Routes.CustomModal.CUSTOM_MODAL,
+          key: `${Routes.CustomModal.CUSTOM_MODAL}-key`,
+          params: {
+            type: Types.CustomizedModalChildrenType.MEDIA_FILTER,
+            headerText: HEADER_TEXT,
+            extraData: {
+              lastItemSelected: SchemaTypes.ArticleLanguage.PT,
+              onPressSelect,
+            },
           },
-        },
-      }}
+        } as CustomModalRouteProp
+      }
     />
   </ThemeContextProvider>
 );
