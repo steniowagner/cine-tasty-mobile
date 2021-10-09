@@ -11,6 +11,7 @@ import { navigation } from '@mocks/navigationMock';
 import { ThemeContextProvider } from '@providers';
 import { Routes } from '@routes/routes';
 
+import { FamousNavigationProp, FamousRouteProp } from '../routes/route-params-types';
 import Famous from './Famous';
 
 const FAMOUS_COUNT = 10;
@@ -31,8 +32,13 @@ const renderFamousScreen = (resolvers?: IMocks) => (
     <ThemeContextProvider>
       <AutoMockProvider mockResolvers={resolvers}>
         <Famous
-          route={{ name: Routes.Famous.FAMOUS, key: `${Routes.Famous.FAMOUS}-key` }}
-          navigation={navigation}
+          navigation={navigation as FamousNavigationProp}
+          route={
+            {
+              name: Routes.Famous.FAMOUS,
+              key: `${Routes.Famous.FAMOUS}-key`,
+            } as FamousRouteProp
+          }
         />
       </AutoMockProvider>
     </ThemeContextProvider>
