@@ -6,6 +6,10 @@ import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
 import { Routes } from '@routes/routes';
 
+import {
+  ResultsStackNavigationProp,
+  ResultsStackRouteProp,
+} from '../../routes/route-params-types';
 import Results from './Results';
 
 const quiz: SchemaTypes.GetQuizQuestions_quiz[] = [
@@ -30,15 +34,17 @@ const quiz: SchemaTypes.GetQuizQuestions_quiz[] = [
 const renderResults = (mockedNavigation = navigation) => (
   <ThemeContextProvider>
     <Results
-      navigation={mockedNavigation}
-      route={{
-        name: Routes.Quiz.RESULTS,
-        key: `${Routes.Quiz.RESULTS}-key`,
-        params: {
-          questions: quiz,
-          answers: ['A', 'true'],
-        },
-      }}
+      navigation={mockedNavigation as ResultsStackNavigationProp}
+      route={
+        {
+          name: Routes.Quiz.RESULTS,
+          key: `${Routes.Quiz.RESULTS}-key`,
+          params: {
+            questions: quiz,
+            answers: ['A', 'true'],
+          },
+        } as ResultsStackRouteProp
+      }
     />
   </ThemeContextProvider>
 );
