@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build-android": "cd android && ./gradlew assembleRelease && cd ..",
+    "build:android": "cd android && ./gradlew assembleRelease && cd ..",
+    "android:deploy:qa": "npx jetify && cd android && bundle exec fastlane android deploy_staging --env staging",
     "android-release": "npx react-native run-android --variant=release",
     "start:clean": "npx react-native start --reset-cache",
     "android": "npx react-native run-android",

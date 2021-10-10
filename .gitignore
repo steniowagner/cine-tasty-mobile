@@ -65,3 +65,6 @@ buck-out/
 # Environment
 .env.development
 .env.production
+
+# Google services
+/android/google-service-account-api.json
