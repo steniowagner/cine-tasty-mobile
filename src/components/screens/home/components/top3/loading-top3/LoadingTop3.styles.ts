@@ -38,7 +38,7 @@ export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
   colors: ['transparent', theme.colors.backgroundAlphax1, theme.colors.background],
 }))<Pick<ItemWrapperStyleProps, 'isTheMiddle'>>`
   width: ${Top3ListItemStyles.ITEM_WIDTH}px;
-  height: ${Top3ListItemStyles.ITEM_HEIGHT}px;
+  height: ${Top3ListItemStyles.ITEM_HEIGHT + 2}px;
   margin-horizontal: ${({ isTheMiddle, theme }) => (isTheMiddle ? theme.metrics.largeSize : 0)}px;
   position: absolute;
 `;
