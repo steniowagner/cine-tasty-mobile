@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from 'styled-components';
 
 import { Icons } from '@components/common/svg-icon/icons';
 import * as TRANSLATIONS from '@i18n/tags';
@@ -33,10 +34,11 @@ const useOnboarding = ({ route }: UseOnboardingProps) => {
   const flatlistRef = useRef<FlatList>(null);
 
   const { t } = useTranslation();
+  const theme = useTheme();
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-      changeNavigationBarColor('#ffffff', true, true);
+      changeNavigationBarColor(theme.colors.primary, true, true);
     }
   }, []);
 
