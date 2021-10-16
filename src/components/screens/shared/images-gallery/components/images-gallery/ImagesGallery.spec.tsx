@@ -7,9 +7,9 @@ import MockedNavigation from '@mocks/MockedNavigator';
 import { setupTimeTravel } from '@mocks/timeTravel';
 import { ThemeContextProvider } from '@providers';
 
-jest.mock('../../../../../../styles/metrics', () => ({
+jest.mock('@styles/metrics', () => ({
   getHeightFromDP: jest.fn(),
-  getWidthFromDP: jest.fn(),
+  getWidthFromDP: jest.fn().mockReturnValue(25),
   navigationHeaderFontSize: 1,
   extraLargeSize: 1,
   extraSmallSize: 1,
