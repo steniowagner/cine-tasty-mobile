@@ -1,9 +1,10 @@
 import React from 'react';
-import { Platform, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 
 import metrics from '@styles/metrics';
 
-import useThumbsGalleryList, { THUMB_SPACING, THUMB_SIZE } from './useThumbsGalleryList';
+import useThumbsGalleryList, { INITIAL_NUMBER_ITEMS_LIST } from './useThumbsGalleryList';
+import { THUMB_SPACING, THUMB_SIZE } from './ThumbsGalleryListItem.styles';
 import ThumbsGalleryListItem from './ThumbsGalleryListItem';
 
 type ThumbsGalleryListProps = {
@@ -17,7 +18,9 @@ const ThumbsGalleryList = ({
   indexImageSelected,
   thumbs,
 }: ThumbsGalleryListProps) => {
-  const { thumbsListRef } = useThumbsGalleryList({ indexImageSelected });
+  const { thumbsListRef, listStyle } = useThumbsGalleryList({
+    indexImageSelected,
+  });
 
   return (
     <FlatList
@@ -28,12 +31,6 @@ const ThumbsGalleryList = ({
           image={item}
         />
       )}
-      style={{
-        height: Platform.select({
-          ios: metrics.getWidthFromDP('36%'),
-          android: metrics.getWidthFromDP('42%'),
-        }),
-      }}
       contentContainerStyle={{
         paddingHorizontal: metrics.extraLargeSize,
       }}
@@ -42,11 +39,13 @@ const ThumbsGalleryList = ({
         length: THUMB_SPACING + THUMB_SIZE,
         index,
       })}
+      initialNumToRender={INITIAL_NUMBER_ITEMS_LIST}
       initialScrollIndex={indexImageSelected}
       showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => item}
       testID="thumb-list"
       ref={thumbsListRef}
+      style={listStyle}
       data={thumbs}
       horizontal
     />

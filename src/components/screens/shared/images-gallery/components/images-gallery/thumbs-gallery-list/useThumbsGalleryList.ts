@@ -1,14 +1,17 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { FlatList } from 'react-native';
+import {
+  useCallback, useEffect, useMemo, useRef,
+} from 'react';
+import { Platform, FlatList } from 'react-native';
 
 import metrics from '@styles/metrics';
 
-export const THUMB_SIZE = metrics.getWidthFromDP('24%');
-export const THUMB_SPACING = metrics.mediumSize;
+import { THUMB_SPACING, THUMB_SIZE } from './ThumbsGalleryListItem.styles';
 
 type UseThumbsGalleryListProps = {
   indexImageSelected: number;
 };
+
+export const INITIAL_NUMBER_ITEMS_LIST = Math.ceil(metrics.width / THUMB_SIZE);
 
 const useThumbsGalleryList = ({ indexImageSelected }: UseThumbsGalleryListProps) => {
   const thumbsListRef = useRef<FlatList>();
@@ -31,14 +34,30 @@ const useThumbsGalleryList = ({ indexImageSelected }: UseThumbsGalleryListProps)
     });
   }, [indexImageSelected]);
 
-  useEffect(() => {
+  const moveThumbGalleryList = useCallback(() => {
     if (thumbsListRef && thumbsListRef.current) {
       handleMoveThumbsGalleryList();
     }
+  }, [thumbsListRef, handleMoveThumbsGalleryList]);
+
+  useEffect(() => {
+    moveThumbGalleryList();
   }, [indexImageSelected]);
 
+  const listStyle = useMemo(
+    () => ({
+      height: Platform.select({
+        android: metrics.getWidthFromDP('42%'),
+        ios: metrics.getWidthFromDP('36%'),
+      }),
+    }),
+    [],
+  );
+
   return {
+    onContentSizeChange: moveThumbGalleryList,
     thumbsListRef,
+    listStyle,
   };
 };
 

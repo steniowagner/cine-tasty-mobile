@@ -1,6 +1,5 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { Dimensions } from 'react-native';
 import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
 
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
