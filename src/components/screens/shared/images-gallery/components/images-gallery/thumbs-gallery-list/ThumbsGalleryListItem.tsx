@@ -27,6 +27,7 @@ const ThumbListItem = ({ isSelected, onPress, image }: ThumbListItemProps) => (
         borderRadius: Styles.BORDER_RADIUS,
       }}
     />
+    {isSelected && <Styles.DotMarker />}
   </Styles.Wrapper>
 );
 
