@@ -6,7 +6,7 @@ import { cleanup, render } from '@testing-library/react-native';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { ThemeContextProvider } from '@providers';
 
-import ImagesGalleryListItem from './ImagesGalleryListItemComponent';
+import ImagesGalleryListItem from './ImagesGalleryListItem';
 
 const IMAGE_URL = 'SOME_IMAGE_URL';
 

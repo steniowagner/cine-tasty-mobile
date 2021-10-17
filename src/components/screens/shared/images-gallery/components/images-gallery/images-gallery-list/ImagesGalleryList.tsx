@@ -31,7 +31,6 @@ const ImagesGalleryList = ({
         if (isIndexesAllowedToRenderImage[index]) {
           return (
             <ImagesGalleryListItem
-              isFocused={indexImageSelected === index}
               imageURL={item}
             />
           );

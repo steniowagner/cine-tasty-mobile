@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import useTMDBImage from '@components/common/tmdb-image/useTMDBImage';
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
@@ -8,13 +8,11 @@ import metrics from '@styles/metrics';
 import useImagesGalleryListItem from './useImagesGalleryListItem';
 import * as Styles from './ImagesGalleryListItem.styles';
 
-type ImagesGalleryListItemComponentProps = {
+type ImagesGalleryListItemProps = {
   imageURL: string;
 };
 
-const ImagesGalleryListItemComponent = ({
-  imageURL,
-}: ImagesGalleryListItemComponentProps) => {
+const ImagesGalleryListItem = ({ imageURL }: ImagesGalleryListItemProps) => {
   const { uri } = useTMDBImage({
     imageType: 'backdrop',
     isThumbnail: false,
@@ -78,4 +76,4 @@ const ImagesGalleryListItemComponent = ({
   return null;
 };
 
-export default ImagesGalleryListItemComponent;
+export default memo(ImagesGalleryListItem, (): boolean => true);
