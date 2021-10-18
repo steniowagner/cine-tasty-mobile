@@ -65,7 +65,7 @@ const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => 
             height: theme.metrics.extraSmallSize,
           },
           labelStyle: {
-            fontSize: theme.metrics.mediumSize * 1.2,
+            fontSize: theme.metrics.mediumSize * 1.05,
             fontFamily: 'CircularStd-Bold',
           },
           tabStyle: {
