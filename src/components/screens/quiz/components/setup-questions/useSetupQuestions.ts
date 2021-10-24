@@ -6,6 +6,7 @@ import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import { Routes } from '@routes/routes';
 import * as Types from '@local-types';
+import metrics from '@styles/metrics';
 
 import { SetupQuestionsStackNavigationProp } from '../../routes/route-params-types';
 import { difficulties, categories, types } from './options';
@@ -129,6 +130,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
           dataset: currentDataset,
         },
         type: Types.CustomizedModalChildrenType.MEDIA_FILTER,
+        modalHeight: metrics.getHeightFromDP('68%'),
         headerText,
       });
     },

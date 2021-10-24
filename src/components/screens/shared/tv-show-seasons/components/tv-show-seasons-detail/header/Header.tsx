@@ -6,11 +6,15 @@ import SeasonOverviewText from './overview-text/season-overview-text/SeasonOverv
 import * as Styles from './Header.styles';
 
 type HeaderProps = {
+  tvShowTitle: string;
   overview: string;
+  season: number;
   image: string;
 };
 
-const Header = ({ overview, image }: HeaderProps) => (
+const Header = ({
+  tvShowTitle, overview, season, image,
+}: HeaderProps) => (
   <Styles.Wrapper
     testID="header-wrapper"
   >
@@ -22,6 +26,8 @@ const Header = ({ overview, image }: HeaderProps) => (
       />
     </Styles.SeasonPosterImageWrapper>
     <SeasonOverviewText
+      tvShowTitle={tvShowTitle}
+      season={season}
       overview={overview}
     />
   </Styles.Wrapper>

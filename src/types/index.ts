@@ -109,6 +109,7 @@ export type BaseSearchProps = {
 export type QuizFilterOption = QuestionOption<QuestionDifficulty | QuestionCategory | QuestionType>;
 
 export enum CustomizedModalChildrenType {
+  TV_SHOW_READ_MORE_DETAILS = 'TV_SHOW_READ_MORE_DETAILS',
   MEDIA_FILTER = 'MEDIA_FILTER',
   LANGUAGE = 'LANGUAGE',
 }

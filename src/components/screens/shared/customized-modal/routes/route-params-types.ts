@@ -10,10 +10,11 @@ export type CustomModalStackParams = {
 
 export type CustomModalParams = {
   type: Types.CustomizedModalChildrenType;
+  modalHeight?: number;
   headerText: string;
   extraData: {
-    onPressSelect: (value: any) => void;
-    lastItemSelected: any;
+    onPressSelect?: (value: any) => void;
+    lastItemSelected?: any;
     dataset?: any[];
   };
 };

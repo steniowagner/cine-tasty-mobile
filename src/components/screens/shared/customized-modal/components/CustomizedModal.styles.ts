@@ -1,10 +1,6 @@
 import { Animated, View, Text } from 'react-native';
 import styled from 'styled-components';
 
-import metrics from '@styles/metrics';
-
-export const CARD_CONTAINER_HEIGHT = metrics.getHeightFromDP('75%');
-
 export const Wrapper = styled(View)`
   width: 100%;
   height: 100%;
@@ -14,12 +10,11 @@ export const Wrapper = styled(View)`
 
 export const PressAreaClose = styled(View)`
   width: 100%;
-  height: ${({ theme }) => theme.metrics.getHeightFromDP('35%')}px;
+  height: 100%;
 `;
 
 export const CardWrapper = styled(Animated.View)`
   width: 100%;
-  height: ${CARD_CONTAINER_HEIGHT}px;
   border-top-left-radius: ${({ theme }) => theme.metrics.mediumSize}px;
   border-top-right-radius: ${({ theme }) => theme.metrics.mediumSize}px;
   background-color: white;

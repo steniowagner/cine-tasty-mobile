@@ -43,8 +43,10 @@ const TVShowSeasonsDetail = ({ route }: TVShowSeasonsTabsStackProps) => {
         ListHeaderComponent={() => (
           <>
             <Header
+              season={seasonDetail.seasonNumber}
               overview={seasonDetail.overview}
               image={seasonDetail.posterPath}
+              tvShowTitle={route.params.tvShowTitle}
             />
             <Section
               title={t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_EPISODE)}

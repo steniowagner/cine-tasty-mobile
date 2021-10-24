@@ -6,9 +6,7 @@ import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 
 import useTVShowSeasonsListItem from './useTVShowSeasonsListItem';
-import EpisodeDetail from './episode-detail/EpisodeDetail';
 import * as Styles from './TVShowSeasonsListItem.styles';
-import ModalDetail from '../modal-detail/ModalDetail';
 
 type TVShowSeasonsListItemProps = {
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
@@ -16,7 +14,7 @@ type TVShowSeasonsListItemProps = {
 };
 
 const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) => {
-  const { onPressListItem, onCloseModal, isModalOpen } = useTVShowSeasonsListItem();
+  const { onPressListItem } = useTVShowSeasonsListItem();
 
   return (
     <>
@@ -44,7 +42,7 @@ const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) =
           id="chevron-right"
         />
       </Styles.ListItemWrapper>
-      {isModalOpen && (
+      {/* isModalOpen && (
         <ModalDetail
           onCloseModal={onCloseModal}
         >
@@ -52,7 +50,7 @@ const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) =
             episode={episode}
           />
         </ModalDetail>
-      )}
+      ) */}
     </>
   );
 };
