@@ -2,14 +2,17 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { DefaultTheme } from 'styled-components';
 
+import { CustomModalParams } from '@components/screens/shared/customized-modal/routes/route-params-types';
 import { Routes } from '@routes/routes';
 
 type TVShowSeasonsStackParams = {
   [Routes.TVShow.SEASONS_TABS]: TVShowSeasonsTabsDetailProps;
+  [Routes.CustomModal.CUSTOM_MODAL]: CustomModalParams;
   [Routes.TVShow.SEASONS]: TVShowSeasonsParams;
 };
 
 type TVShowSeasonsTabsDetailProps = {
+  tvShowTitle: string;
   season: number;
   id: string;
 };

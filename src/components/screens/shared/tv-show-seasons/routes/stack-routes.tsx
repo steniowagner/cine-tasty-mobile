@@ -37,6 +37,7 @@ const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => 
           // @ts-ignore
           route={{
             params: {
+              tvShowTitle: route.params.title,
               id: route.params.id,
               season: 1,
             },
@@ -87,6 +88,7 @@ const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => 
                 TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON,
               )} ${index + 1}`}
               initialParams={{
+                tvShowTitle: route.params.title,
                 id: route.params.id,
                 season: index + 1,
               }}

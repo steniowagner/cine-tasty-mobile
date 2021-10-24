@@ -8,30 +8,41 @@ import {
   State,
 } from 'react-native-gesture-handler';
 
+import metrics from '@styles/metrics';
+
 export const ANIMATION_TIMING = 400;
 
 type UseCustomizedModalProps = {
-  cardContainerHeight: number;
+  modalHeight: number;
   onClose: () => void;
 };
 
 type HookState = {
   onHandlerStateChange: (event: PanGestureHandlerStateChangeEvent) => void;
   animatedEvent: (event: PanGestureHandlerGestureEvent) => void;
+  cardContainerHeight: number;
   translateY: Animated.Value;
   onCloseModal: () => void;
   shouldHideCard: boolean;
 };
 
 const useCustomizedModal = ({
-  cardContainerHeight,
+  modalHeight,
   onClose,
 }: UseCustomizedModalProps): HookState => {
-  let offset = 0;
+  const [shouldHideCard, setShouldHideCard] = useState<boolean>(false);
+
+  const cardContainerHeight = useMemo(() => {
+    if (!modalHeight) {
+      return metrics.getHeightFromDP('70%');
+    }
+
+    return modalHeight;
+  }, [modalHeight]);
 
   const translateY = useRef(new Animated.Value(cardContainerHeight)).current;
 
-  const [shouldHideCard, setShouldHideCard] = useState<boolean>(false);
+  let offset = 0;
 
   const animatedEvent = useMemo(
     () => Animated.event(
@@ -102,13 +113,13 @@ const useCustomizedModal = ({
   const onCloseModal = useCallback(() => {
     onAnimateCard(cardContainerHeight, () => {
       setShouldHideCard(true);
-
       onClose();
     });
   }, [onClose]);
 
   return {
     onHandlerStateChange,
+    cardContainerHeight,
     shouldHideCard,
     animatedEvent,
     onCloseModal,

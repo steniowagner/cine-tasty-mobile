@@ -1,24 +1,30 @@
 import React from 'react';
 
-import EpisodeOverviewDetail from '../episode-overview-detail/EpisodeOverviewDetail';
 import useSeasonOverviewText from './useSeasonOverviewText';
-import ModalDetail from '../../../modal-detail/ModalDetail';
 import * as Styles from './SeasonOverviewText.styles';
 
 type SeasonOverviewTextProps = {
+  tvShowTitle: string;
   overview: string;
+  season: number;
 };
 
-const SeasonOverviewText = ({ overview }: SeasonOverviewTextProps) => {
+const SeasonOverviewText = ({
+  tvShowTitle,
+  overview,
+  season,
+}: SeasonOverviewTextProps) => {
   const {
     shouldShowReadMoreButton,
     readMoreButtonText,
     onGetTextLayout,
     onPressReadMore,
     numberOfLines,
-    onCloseModal,
-    isModalOpen,
-  } = useSeasonOverviewText();
+  } = useSeasonOverviewText({
+    tvShowTitle,
+    overview,
+    season,
+  });
 
   if (!overview) {
     return (
@@ -57,15 +63,6 @@ const SeasonOverviewText = ({ overview }: SeasonOverviewTextProps) => {
           </Styles.ReadMoreButton>
         )}
       </Styles.Wrapper>
-      {isModalOpen && (
-        <ModalDetail
-          onCloseModal={onCloseModal}
-        >
-          <EpisodeOverviewDetail
-            overview={overview}
-          />
-        </ModalDetail>
-      )}
     </>
   );
 };

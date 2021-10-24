@@ -23,6 +23,7 @@ const renderTVShowSeasonsDetail = (mockResolvers?: IMocks) => {
               key: `${Routes.TVShow.SEASONS_TABS}-key`,
               name: Routes.TVShow.SEASONS_TABS,
               params: {
+                tvShowTitle: 'tvshowtitle',
                 season: 1,
                 id: '1',
               },
