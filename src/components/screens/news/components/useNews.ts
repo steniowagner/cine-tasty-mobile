@@ -1,13 +1,27 @@
 /* eslint-disable camelcase */
-import { useCallback, useEffect, useState } from 'react';
+import {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { GET_ARTICLES } from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import { usePaginatedQuery } from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
+import * as Types from '@local-types';
+import metrics from '@styles/metrics';
 
-const useNews = () => {
+import { NewsStackNavigationProp } from '../routes/route-params-types';
+import { imageWrapper } from './list-item/NewsListItem.styles';
+
+export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
+
+type UseNewsProps = {
+  navigation: NewsStackNavigationProp;
+};
+
+const useNews = ({ navigation }: UseNewsProps) => {
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [articleLanguage, setArticleLanguage] = useState<SchemaTypes.ArticleLanguage>(
     SchemaTypes.ArticleLanguage.EN,
@@ -54,9 +68,7 @@ const useNews = () => {
 
   const onPressFooterReloadButton = useCallback(() => {
     setHasPaginationError(false);
-
     setError('');
-
     onPaginateQuery();
   }, []);
 
@@ -73,9 +85,7 @@ const useNews = () => {
       if (error) {
         setError('');
       }
-
       setArticles([]);
-
       setArticleLanguage(language);
     },
     [],
@@ -83,24 +93,50 @@ const useNews = () => {
 
   const onPressTopReloadButton = useCallback(async (): Promise<void> => {
     setHasPaginationError(false);
-
     setError('');
-
     await onReloadData();
   }, []);
 
+  const shouldShowEmptyListAdvice = useMemo(
+    () => !isLoading && !error && !articles.length,
+    [isLoading, error, articles],
+  );
+
+  const shouldShowListTopReloadButton = useMemo(
+    () => !articles.length && !!error && !isLoading,
+    [isLoading, error, articles],
+  );
+
+  const shouldShowListBottomReloadButton = useMemo(
+    () => !!articles.length && (hasPaginationError || isPaginating),
+    [articles, hasPaginationError, isPaginating],
+  );
+
+  const onPressHeaderIconButton = useCallback(() => {
+    navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
+      type: Types.CustomizedModalChildrenType.LANGUAGE,
+      headerText: t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
+      extraData: {
+        onPressSelect: onSelectArticleLanguage,
+        lastItemSelected: articleLanguage,
+      },
+    });
+  }, [onSelectArticleLanguage, articleLanguage]);
+
   return {
+    shouldShowListBottomReloadButton,
+    shouldShowListTopReloadButton,
     onEndReached: onPaginateQuery,
+    shouldShowEmptyListAdvice,
     onPressFooterReloadButton,
+    onPressHeaderIconButton,
     onPressTopReloadButton,
-    onSelectArticleLanguage,
     hasPaginationError,
     articleLanguage,
     isPaginating,
     articles,
     isLoading,
     error,
-    t,
   };
 };
 

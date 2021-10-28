@@ -8,26 +8,24 @@ import ListFooterComponent from '@components/common/pagination-footer/Pagination
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
 import metrics from '@styles/metrics';
-import * as Types from '@local-types';
 
 import { imageWrapper } from './list-item/NewsListItem.styles';
 import { NewsStackProps } from '../routes/route-params-types';
+import useNews, { INITIAL_ITEMS_TO_RENDER } from './useNews';
 import NewsLoading from './loading-list/NewsLoading';
 import NewsListItem from './list-item/NewsListItem';
 import EmtpyListError from './EmtpyListError';
-import useNews from './useNews';
-
-export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
 
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
 const News = ({ navigation }: NewsStackProps) => {
   const {
+    shouldShowListBottomReloadButton,
+    shouldShowListTopReloadButton,
     onPressFooterReloadButton,
-    onSelectArticleLanguage,
+    shouldShowEmptyListAdvice,
+    onPressHeaderIconButton,
     onPressTopReloadButton,
     hasPaginationError,
     articleLanguage,
@@ -36,21 +34,13 @@ const News = ({ navigation }: NewsStackProps) => {
     articles,
     isLoading,
     error,
-    t,
-  } = useNews();
+  } = useNews({ navigation });
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
-          onPress={() => navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
-            type: Types.CustomizedModalChildrenType.LANGUAGE,
-            headerText: t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
-            extraData: {
-              onPressSelect: onSelectArticleLanguage,
-              lastItemSelected: articleLanguage,
-            },
-          })}
+          onPress={onPressHeaderIconButton}
           disabled={isLoading}
           withMarginRight
           iconName="tune"
@@ -63,14 +53,9 @@ const News = ({ navigation }: NewsStackProps) => {
     return <NewsLoading />;
   }
 
-  const shouldShowEmptyListAdvice = !isLoading && !error && !articles.length;
-
   if (shouldShowEmptyListAdvice) {
     return <EmtpyListError />;
   }
-
-  const shouldShowListTopReloadButton = !articles.length && !!error && !isLoading;
-  const shouldShowListBottomReloadButton = !!articles.length && (hasPaginationError || isPaginating);
 
   return (
     <>
