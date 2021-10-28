@@ -3,6 +3,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 
 import SeasonFullOverview from '@components/screens/shared/tv-show-seasons/components/tv-show-seasons-detail/header/overview-text/season-full-overview/SeasonFullOverview';
+import EpisodeDetail from '@components/screens/shared/tv-show-seasons/components/tv-show-seasons-detail/tv-show-list-item/episode-detail/EpisodeDetail';
 import SetupQuestionsOptionsList from '@components/screens/quiz/components/setup-questions/setup-options-list/SetupQuestionsOptionsList';
 import LanguageFilter from '@components/screens/news/components/language-filter/LanguageFilter';
 import * as Types from '@local-types';
@@ -57,10 +58,12 @@ const CustomizedModal = ({ navigation, route }: CustomModalStackProps) => {
             <Styles.GripWrapper>
               <Styles.Grip />
             </Styles.GripWrapper>
-            <Styles.ListHeaderWrapper>
-              <Styles.HeadLineText>{route.params.headerText}</Styles.HeadLineText>
-              <Styles.LineDivider />
-            </Styles.ListHeaderWrapper>
+            {route.params.headerText && (
+              <Styles.ListHeaderWrapper>
+                <Styles.HeadLineText>{route.params.headerText}</Styles.HeadLineText>
+                <Styles.LineDivider />
+              </Styles.ListHeaderWrapper>
+            )}
             {route.params.type === Types.CustomizedModalChildrenType.LANGUAGE && (
               <LanguageFilter
                 lastLanguageSelected={route.params.extraData.lastItemSelected}
@@ -80,6 +83,12 @@ const CustomizedModal = ({ navigation, route }: CustomModalStackProps) => {
               === Types.CustomizedModalChildrenType.TV_SHOW_READ_MORE_DETAILS && (
               <SeasonFullOverview
                 overview={route.params.extraData.dataset[0].overview}
+              />
+            )}
+            {route.params.type
+              === Types.CustomizedModalChildrenType.TV_SHOW_EPISODE_DETAILS && (
+              <EpisodeDetail
+                episode={route.params.extraData.dataset[0]}
               />
             )}
           </Styles.CardWrapper>

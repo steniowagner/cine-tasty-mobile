@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import CONSTANTS from '@utils/constants';
 
 export const Wrapper = styled(View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('90%')}px;
+  width: 100%;
+  padding-bottom: ${({ theme }) => theme.metrics.getWidthFromDP('8%')}px;
   max-height: ${({ theme }) => theme.metrics.getHeightFromDP('80%')}px;
   background-color: white;
   border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
@@ -22,14 +23,13 @@ export const EpisodeImageFallback = styled(View)`
 
 export const EpisodeTitleText = styled(Text)`
   margin-bottom: ${({ theme }) => theme.metrics.smallSize}px;
-  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
+  font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
   color: ${({ theme }) => theme.colors.buttonText};
   font-family: CircularStd-Black;
 `;
 
 export const EpisodeOverviewText = styled(Text)`
-  padding-bottom: ${CONSTANTS.VALUES.DEFAULT_SPACING * 2}px;
-  font-size: ${({ theme }) => theme.metrics.getWidthFromDP('5%')}px;
+  font-size: ${({ theme }) => theme.metrics.largeSize}px;
   font-family: CircularStd-Medium;
   color: ${({ theme }) => theme.colors.buttonText};
 `;
@@ -37,7 +37,11 @@ export const EpisodeOverviewText = styled(Text)`
 export const EpisodeAiredText = styled(Text)`
   margin-bottom: ${({ theme }) => theme.metrics.largeSize}px;
   margin-top: ${({ theme }) => theme.metrics.smallSize}px;
-  font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
+  font-size: ${({ theme }) => theme.metrics.largeSize}px;
   font-family: CircularStd-Medium;
   color: rgba(0, 0, 0, 0.5);
+`;
+
+export const TextWrapper = styled(View)`
+  padding: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
 `;

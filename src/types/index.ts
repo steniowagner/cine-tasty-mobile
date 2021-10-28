@@ -110,6 +110,7 @@ export type QuizFilterOption = QuestionOption<QuestionDifficulty | QuestionCateg
 
 export enum CustomizedModalChildrenType {
   TV_SHOW_READ_MORE_DETAILS = 'TV_SHOW_READ_MORE_DETAILS',
+  TV_SHOW_EPISODE_DETAILS = 'TV_SHOW_EPISODE_DETAILS',
   MEDIA_FILTER = 'MEDIA_FILTER',
   LANGUAGE = 'LANGUAGE',
 }

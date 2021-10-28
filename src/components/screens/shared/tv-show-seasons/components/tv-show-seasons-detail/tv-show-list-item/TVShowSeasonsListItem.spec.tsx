@@ -4,7 +4,9 @@ import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
 import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import { ThemeContextProvider } from '@providers';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
+import { Routes } from '@routes/routes';
+import * as Types from '@local-types';
+import metrics from '@styles/metrics';
 
 import TVShowSeasonsListItem from './TVShowSeasonsListItem';
 
@@ -66,7 +68,7 @@ describe('Testing <TVShowSeasonsListItem />', () => {
     expect(getByTestId('episode-name-text').children[0]).toEqual(episodeMock.name);
   });
 
-  it.skip('should navigate to the episode-details-modal correctly when the user press on the list-item', () => {
+  it('should navigate to the episode-details-modal correctly when the user press on the list-item', () => {
     const { getByTestId } = render(renderTVShowSeasonsListItem());
 
     act(() => {
@@ -79,36 +81,16 @@ describe('Testing <TVShowSeasonsListItem />', () => {
 
     expect(mockedNavigate).toHaveBeenCalledTimes(1);
 
-    expect(getByTestId('episode-title-text').children[0]).toEqual(episodeMock.name);
+    expect(mockedNavigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
 
-    expect(getByTestId('air-date-text').children[0]).toEqual(
-      `${TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE} ${episodeMock.airDate}`,
+    expect(mockedNavigate.mock.calls[0][1].type).toEqual(
+      Types.CustomizedModalChildrenType.TV_SHOW_EPISODE_DETAILS,
     );
 
-    expect(getByTestId('overview-text').children[0]).toEqual(episodeMock.overview);
-  });
+    expect(mockedNavigate.mock.calls[0][1].modalHeight).toEqual(
+      metrics.getHeightFromDP('50%'),
+    );
 
-  it.skip('should close the modal when press the close-modal-button', () => {
-    const { queryByTestId, getByTestId } = render(renderTVShowSeasonsListItem());
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    fireEvent.press(getByTestId('episode-list-item'));
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(getByTestId('modal-wrapper')).not.toBeNull();
-
-    fireEvent.press(getByTestId('close-modal-button'));
-
-    act(() => {
-      jest.runAllTimers();
-    });
-
-    expect(queryByTestId('modal-wrapper')).toBeNull();
+    expect(mockedNavigate.mock.calls[0][1].extraData.dataset).toEqual([episodeMock]);
   });
 });
