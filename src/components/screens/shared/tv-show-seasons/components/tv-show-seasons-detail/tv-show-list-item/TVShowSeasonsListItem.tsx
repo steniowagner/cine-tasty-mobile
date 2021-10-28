@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react';
 
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
@@ -9,12 +8,13 @@ import useTVShowSeasonsListItem from './useTVShowSeasonsListItem';
 import * as Styles from './TVShowSeasonsListItem.styles';
 
 type TVShowSeasonsListItemProps = {
+  // eslint-disable-next-line camelcase
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
   index: number;
 };
 
 const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) => {
-  const { onPressListItem } = useTVShowSeasonsListItem();
+  const { onPressListItem } = useTVShowSeasonsListItem({ episode });
 
   return (
     <>
@@ -42,15 +42,6 @@ const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) =
           id="chevron-right"
         />
       </Styles.ListItemWrapper>
-      {/* isModalOpen && (
-        <ModalDetail
-          onCloseModal={onCloseModal}
-        >
-          <EpisodeDetail
-            episode={episode}
-          />
-        </ModalDetail>
-      ) */}
     </>
   );
 };
