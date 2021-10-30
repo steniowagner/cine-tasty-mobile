@@ -88,7 +88,7 @@ const useDateDiff = ({ date, now }: UseDateDiffProps) => {
     return handleSecondsPassed(diffValue);
   }, [getDateDiffInSeconds]);
 
-  const dateDiffText = useMemo(() => getDateDiffText(), []);
+  const dateDiffText = useMemo(() => getDateDiffText(), [getDateDiffText]);
 
   return {
     dateDiffText,

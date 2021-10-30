@@ -26,20 +26,23 @@ const ptBR: Locale = {
     start: 'COMEÇAR',
     next: 'PRÓXIMO',
     cinema: {
-      description: 'PtBR Cinema Description',
-      title: 'PtBR Cinema Title',
+      description:
+        'Descubra quais são os títulos mais recentes do cinema e das séries de TV',
+      title: 'Cinema/TV',
     },
     famous: {
-      description: 'PtBR Famous Description',
-      title: 'PtBR Famous Title',
+      description: 'Veja quem são os atores e atrizes que estão nas tendências de hoje',
+      title: 'Famosos',
     },
     quiz: {
-      description: 'PtBR Quiz Quiz',
-      title: 'PtBR Quiz Title',
+      description:
+        'Teste seus conhecimentos de cinema com perguntas desfiadoras e interessantes',
+      title: 'Quiz',
     },
     news: {
-      description: 'PtBR News Description',
-      title: 'PtBR News Title',
+      description:
+        'Mantenha-se atualizado com as últimas notícias do mundo do cinema / séries de TV',
+      title: 'News',
     },
   },
   softwareEngineer: 'Engenheiro de Software',
@@ -327,7 +330,7 @@ const ptBR: Locale = {
       originalLanguage: 'Idioma original',
       episodeRunTime: 'Tamanho do episódio',
       originCountry: 'País de origem',
-      createdBy: 'Creado por',
+      createdBy: 'Criado por',
       seasons: 'Ver temporadas',
       networks: 'Redes',
     },

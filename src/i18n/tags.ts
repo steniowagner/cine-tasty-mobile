@@ -12,19 +12,19 @@ export const ONBOARDING_START = 'translations:onboarding:start';
 
 // Onboarding -- Cinema
 export const ONBOARDING_CINEMA_DESCRIPTION = 'translations:onboarding:cinema:description';
-export const ONBOARDING_CINEMA_TITLE = 'translations:onboarding:cinema:description';
+export const ONBOARDING_CINEMA_TITLE = 'translations:onboarding:cinema:title';
 
 // Onboarding -- Famous
 export const ONBOARDING_FAMOUS_DESCRIPTION = 'translations:onboarding:famous:description';
-export const ONBOARDING_FAMOUS_TITLE = 'translations:onboarding:famous:description';
+export const ONBOARDING_FAMOUS_TITLE = 'translations:onboarding:famous:title';
 
 // Onboarding -- Quiz
 export const ONBOARDING_QUIZ_DESCRIPTION = 'translations:onboarding:quiz:description';
-export const ONBOARDING_QUIZ_TITLE = 'translations:onboarding:quiz:description';
+export const ONBOARDING_QUIZ_TITLE = 'translations:onboarding:quiz:title';
 
 // Onboarding -- Quiz
 export const ONBOARDING_NEWS_DESCRIPTION = 'translations:onboarding:news:description';
-export const ONBOARDING_NEWS_TITLE = 'translations:onboarding:news:description';
+export const ONBOARDING_NEWS_TITLE = 'translations:onboarding:news:title';
 
 // THEME
 export const THEME_SYSTEM_PREFERENCES = 'translations:theme:system';
