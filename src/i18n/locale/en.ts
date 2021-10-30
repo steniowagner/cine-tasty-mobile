@@ -27,20 +27,20 @@ const en: Locale = {
     next: 'NEXT',
     start: 'START',
     cinema: {
-      description: 'English Cinema Description',
-      title: 'English Cinema Title',
+      description: 'Discover which are the latest cinema and tv-shows titles',
+      title: 'Cinema/TV',
     },
     famous: {
-      description: 'English Famous Description',
-      title: 'English Famous Title',
+      description: 'See who are the actors and actresses that are in the trends today',
+      title: 'Famous',
     },
     quiz: {
-      description: 'English Quiz Quiz',
-      title: 'English Quiz Title',
+      description: 'Test your cinema knowledge with exciting and challenging questions',
+      title: 'Quiz',
     },
     news: {
-      description: 'English News Description',
-      title: 'English News Title',
+      description: 'Stay up to date with the latest news of the movies/tv world',
+      title: 'News',
     },
   },
   select: 'SELECT',

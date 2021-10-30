@@ -32,20 +32,24 @@ const es: Locale = {
     next: 'PRÓXIMO',
     start: 'COMENZAR',
     cinema: {
-      description: 'Spanish Cinema Description',
-      title: 'Spanish Cinema Title',
+      description:
+        'Descubre cuáles son los últimos títulos del mundo del cine y series de tv',
+      title: 'Cinema/TV',
     },
     famous: {
-      description: 'Spanish Famous Description',
-      title: 'Spanish Famous Title',
+      description:
+        'Mira quiénes son los actores y actrices que están en las tendencias de hoy',
+      title: 'Famosos',
     },
     quiz: {
-      description: 'Spanish Quiz Quiz',
-      title: 'Spanish Quiz Title',
+      description:
+        'Pon a prueba tus conocimientos de cine con preguntas emocionantes y desafiantes',
+      title: 'Quiz',
     },
     news: {
-      description: 'Spanish News Description',
-      title: 'Spanish News Title',
+      description:
+        'Manténgase al día con las últimas noticias del mundo del cine y la televisión',
+      title: 'Noticias',
     },
   },
   select: 'SELECCIONE',
