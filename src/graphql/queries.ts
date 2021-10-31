@@ -7,7 +7,6 @@ const TrendingMovieFragment = gql`
     voteAverage
     posterPath
     voteCount
-    genreIds
     title
     id
   }
@@ -100,6 +99,7 @@ export const NOW_PLAYING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovieFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -115,6 +115,7 @@ export const POPULAR_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovieFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -130,6 +131,7 @@ export const TOP_RATED_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovieFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -145,6 +147,7 @@ export const UPCOMING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovieFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -216,7 +219,6 @@ export const GET_TRENDING_MOVIES = gql`
     voteAverage
     posterPath
     voteCount
-    genreIds
     title
     id
   }
@@ -229,6 +231,7 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
+          genreIds(language: $language)
         }
       }
       popular(args: { page: $page, language: $language }) {
@@ -237,6 +240,7 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
+          genreIds(language: $language)
         }
       }
       topRated(args: { page: $page, language: $language }) {
@@ -245,6 +249,7 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
+          genreIds(language: $language)
         }
       }
       upcoming(args: { page: $page, language: $language }) {
@@ -253,6 +258,7 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
+          genreIds(language: $language)
         }
       }
     }
