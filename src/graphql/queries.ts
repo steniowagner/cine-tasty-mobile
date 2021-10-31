@@ -7,7 +7,6 @@ const TrendingMovieFragment = gql`
     voteAverage
     posterPath
     voteCount
-    genreIds
     title
     id
   }
@@ -19,7 +18,6 @@ const TrendingTVShowFragment = gql`
     title: name
     posterPath
     voteCount
-    genreIds
     id
   }
 `;
@@ -100,6 +98,7 @@ export const NOW_PLAYING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovieFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -115,6 +114,7 @@ export const POPULAR_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovieFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -130,6 +130,7 @@ export const TOP_RATED_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovieFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -145,6 +146,7 @@ export const UPCOMING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovieFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -160,6 +162,7 @@ export const AIRING_TODAY_TV_SHOWS = gql`
         hasMore
         items {
           ...TrendingTVShowFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -175,6 +178,7 @@ export const ON_THE_AIR_TV_SHOWS = gql`
         hasMore
         items {
           ...TrendingTVShowFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -190,6 +194,7 @@ export const POPULAR_TV_SHOWS = gql`
         hasMore
         items {
           ...TrendingTVShowFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -205,6 +210,7 @@ export const TOP_RATED_TV_SHOWS = gql`
         hasMore
         items {
           ...TrendingTVShowFragment
+          genreIds(language: $language)
         }
       }
     }
@@ -216,7 +222,6 @@ export const GET_TRENDING_MOVIES = gql`
     voteAverage
     posterPath
     voteCount
-    genreIds
     title
     id
   }
@@ -229,6 +234,7 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
+          genreIds(language: $language)
         }
       }
       popular(args: { page: $page, language: $language }) {
@@ -237,6 +243,7 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
+          genreIds(language: $language)
         }
       }
       topRated(args: { page: $page, language: $language }) {
@@ -245,6 +252,7 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
+          genreIds(language: $language)
         }
       }
       upcoming(args: { page: $page, language: $language }) {
@@ -253,6 +261,7 @@ export const GET_TRENDING_MOVIES = gql`
         hasMore
         items {
           ...TrendingMovie
+          genreIds(language: $language)
         }
       }
     }
@@ -260,14 +269,7 @@ export const GET_TRENDING_MOVIES = gql`
 `;
 
 export const GET_TRENDING_TV_SHOWS = gql`
-  fragment TrendingTVShow on BaseTVShow {
-    voteAverage
-    title: name
-    posterPath
-    voteCount
-    genreIds
-    id
-  }
+  ${TrendingTVShowFragment}
 
   query TrendingTVShows($page: Int!, $language: ISO6391Language) {
     trendingTvShows {
@@ -276,7 +278,8 @@ export const GET_TRENDING_TV_SHOWS = gql`
         totalPages
         hasMore
         items {
-          ...TrendingTVShow
+          ...TrendingTVShowFragment
+          genreIds(language: $language)
         }
       }
       airingToday(args: { page: $page, language: $language }) {
@@ -284,7 +287,8 @@ export const GET_TRENDING_TV_SHOWS = gql`
         totalPages
         hasMore
         items {
-          ...TrendingTVShow
+          ...TrendingTVShowFragment
+          genreIds(language: $language)
         }
       }
       popular(args: { page: $page, language: $language }) {
@@ -292,7 +296,8 @@ export const GET_TRENDING_TV_SHOWS = gql`
         totalPages
         hasMore
         items {
-          ...TrendingTVShow
+          ...TrendingTVShowFragment
+          genreIds(language: $language)
         }
       }
       topRated(args: { page: $page, language: $language }) {
@@ -300,7 +305,8 @@ export const GET_TRENDING_TV_SHOWS = gql`
         totalPages
         hasMore
         items {
-          ...TrendingTVShow
+          ...TrendingTVShowFragment
+          genreIds(language: $language)
         }
       }
     }
