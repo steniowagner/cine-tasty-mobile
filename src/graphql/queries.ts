@@ -23,7 +23,7 @@ const TrendingTVShowFragment = gql`
 `;
 
 export const SEARCH_TV_SHOWS = gql`
-  query SearchTVShow($input: SearchInput!) {
+  query SearchTVShow($input: SearchInput!, $language: ISO6391Language) {
     search(input: $input) {
       totalResults
       hasMore
@@ -33,7 +33,7 @@ export const SEARCH_TV_SHOWS = gql`
           voteAverage
           posterPath
           voteCount
-          genreIds
+          genreIds(language: $language)
           id
         }
       }
@@ -42,7 +42,7 @@ export const SEARCH_TV_SHOWS = gql`
 `;
 
 export const SEARCH_MOVIES = gql`
-  query SearchMovie($input: SearchInput!) {
+  query SearchMovie($input: SearchInput!, $language: ISO6391Language) {
     search(input: $input) {
       totalResults
       hasMore
@@ -51,7 +51,7 @@ export const SEARCH_MOVIES = gql`
           voteAverage
           posterPath
           voteCount
-          genreIds
+          genreIds(language: $language)
           title
           id
         }
