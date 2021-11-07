@@ -45,11 +45,11 @@ const useSearchByQuery = ({
 
       const variables = {
         input: {
-          language: currentISO6391Language,
           query: query.trim(),
           type: searchType,
           page: 1,
         },
+        language: currentISO6391Language,
       };
 
       const { data } = await search(variables);
