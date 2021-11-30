@@ -67,6 +67,14 @@ const ptBR: Locale = {
       description: 'Fonte dos dados de Filmes e Séries de TV',
       title: 'TheMovieDB',
     },
+    opentrivia: {
+      description: 'Fonte dos dados dos Quizes',
+      title: 'OpenTriviaDB',
+    },
+    newsapi: {
+      description: 'Fonte dos dados das Notícias',
+      title: 'News API',
+    },
   },
   imageQualities: {
     low: 'Baixa',

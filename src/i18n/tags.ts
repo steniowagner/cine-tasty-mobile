@@ -38,6 +38,10 @@ export const OPEN_SOURCE_GITHUB_DESCRIPTION = 'translations:openSource:github:de
 export const OPEN_SOURCE_GITHUB_TITLE = 'translations:openSource:github:title';
 export const OPEN_SOURCE_TMDB_DESCRIPTION = 'translations:openSource:tmdb:description';
 export const OPEN_SOURCE_TMDB_TITLE = 'translations:openSource:tmdb:title';
+export const OPEN_SOURCE_NEWS_API_DESCRIPTION = 'translations:openSource:newsapi:description';
+export const OPEN_SOURCE_NEWS_API_TITLE = 'translations:openSource:newsapi:title';
+export const OPEN_SOURCE_OPEN_TRIVIA_API_DESCRIPTION = 'translations:openSource:opentrivia:description';
+export const OPEN_SOURCE_OPEN_TRIVIA_API_TITLE = 'translations:openSource:opentrivia:title';
 
 // IMAGES-QUALITIES
 export const IMAGE_QUALITIES = 'translations:imageQualities';
