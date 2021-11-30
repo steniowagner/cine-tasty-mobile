@@ -7,7 +7,7 @@ type DefaultItemTextStyleProps = {
 
 export const SectionWrapper = styled(View)`
   width: 100%;
-  margin-bottom: ${({ theme }) => theme.metrics.getWidthFromDP('10%')}px;
+  margin-bottom: ${({ theme }) => theme.metrics.getWidthFromDP('8%')}px;
 `;
 
 export const SectionTitle = styled(Text)`
@@ -18,6 +18,7 @@ export const SectionTitle = styled(Text)`
 `;
 
 export const SectionDescrpition = styled(Text)`
+  margin-bottom: ${({ theme }) => theme.metrics.largeSize}px;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
   color: ${({ theme }) => theme.colors.subText};
   font-family: CircularStd-Bold;
@@ -26,11 +27,5 @@ export const SectionDescrpition = styled(Text)`
 export const DefaultItemText = styled(Text)<DefaultItemTextStyleProps>`
   font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
   color: ${({ isSubtext, theme }) => (isSubtext ? theme.colors.subText : theme.colors.text)};
-  font-family: CircularStd-Bold;
-`;
-
-export const LibraryWrapper = styled(View)`
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  font-family: CircularStd-Medium;
 `;
