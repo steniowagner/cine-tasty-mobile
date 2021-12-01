@@ -18,7 +18,6 @@ export const SectionTitle = styled(Text)`
 `;
 
 export const SectionDescrpition = styled(Text)`
-  margin-bottom: ${({ theme }) => theme.metrics.largeSize}px;
   font-size: ${({ theme }) => theme.metrics.largeSize}px;
   color: ${({ theme }) => theme.colors.subText};
   font-family: CircularStd-Bold;
