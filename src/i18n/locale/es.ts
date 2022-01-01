@@ -73,6 +73,14 @@ const es: Locale = {
       description: 'Fuente de datos de películas y programas de televisión',
       title: 'TheMovieDB',
     },
+    opentrivia: {
+      description: 'Fuente de datos de los Quizes',
+      title: 'OpenTriviaDB',
+    },
+    newsapi: {
+      description: 'Fuente de datos de las Noticias',
+      title: 'News API',
+    },
   },
   imageQualities: {
     low: 'Baja',

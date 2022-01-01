@@ -76,6 +76,8 @@ export type Locale = {
     libraries: OpenSourceSection;
     github: OpenSourceSection;
     tmdb: OpenSourceSection;
+    newsapi: OpenSourceSection;
+    opentrivia: OpenSourceSection;
   };
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;

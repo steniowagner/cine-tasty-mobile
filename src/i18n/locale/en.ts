@@ -64,6 +64,14 @@ const en: Locale = {
       description: 'Movies and TV Shows datasource',
       title: 'TheMovieDB',
     },
+    opentrivia: {
+      description: 'Quiz datasource',
+      title: 'OpenTriviaDB',
+    },
+    newsapi: {
+      description: 'News datasource',
+      title: 'News API',
+    },
   },
   imageQualities: {
     low: 'Low',
