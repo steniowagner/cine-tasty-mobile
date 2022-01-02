@@ -38,6 +38,7 @@ const Section: React.FC<{
           styles.sectionTitle,
           {
             color: isDarkMode ? Colors.white : Colors.black,
+            fontFamily: 'CircularStd-Black',
           },
         ]}>
         {title}
