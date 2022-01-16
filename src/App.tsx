@@ -1,37 +1,35 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Text} from 'react-native';
 import {ApolloProvider} from '@apollo/client';
-import styled, {ThemeProvider} from 'styled-components/native';
-
+import styled from 'styled-components/native';
+import {useTranslation} from 'react-i18next';
+import * as TRANSLATIONS from '@i18n/tags';
+import {ThemeProvider} from 'styled-components/native';
+import {light} from '@styles/themes';
+import RouteSuspenseWrapper from './components/common/route-suspense-wrapper/RouteSuspenseWrapper';
 import {TMDBImageQualityProvider, ThemeContextProvider} from '@providers';
-import {dark, light} from '@styles/themes';
 
 import makeGraphQLClient from './graphql/client';
 
-import * as storage from '@utils/storage';
-
 const client = makeGraphQLClient();
 
+const Comp = () => {
+  const {t} = useTranslation();
+  return (
+    <Wrapper>
+      <VotesText>{t(TRANSLATIONS.FAMOUS_DETAIL_READ_MORE)}</VotesText>
+    </Wrapper>
+  );
+};
+
 const App = () => {
-  const handle = async () => {
-    const item = await storage.get<{name: string}, null>('HUE', null);
-
-    if (!item) {
-      await storage.set('HUE', {name: 'Stenio Wagner'});
-      console.warn('value persisted');
-    } else {
-      console.warn('value: ', item);
-    }
-  };
-  useEffect(() => {
-    handle();
-  }, []);
-
   return (
     <ThemeProvider theme={light}>
-      <Wrapper>
-        <VotesText>123</VotesText>
-      </Wrapper>
+      <ApolloProvider client={client}>
+        <RouteSuspenseWrapper>
+          <Comp />
+        </RouteSuspenseWrapper>
+      </ApolloProvider>
     </ThemeProvider>
   );
 };
@@ -45,7 +43,7 @@ const Wrapper = styled(View)`
 `;
 
 const VotesText = styled(Text)`
-  font-size: ${({theme}) => theme.metrics.extraLargeSize * 10}px;
+  font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
   color: ${({theme}) => theme.colors.text};
   font-family: CircularStd-Black;
 `;
