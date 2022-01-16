@@ -8,6 +8,10 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "clear:cache": "watchman watch-del-all",
+    "clear:ios": "cd ios && rm -rf build && rm -rf Pods && rm Podfile.lock && pod install && cd ..",
+    "clear:android": "cd android && ./gradlew clean && cd ..",
+    "clear": "kill $(lsof -t -i:8081); yarn clear:ios; yarn clear:android; yarn clear:cache",
     "schema:download": "npx apollo client:download-schema --endpoint=http://localhost:3000",
     "schema:generate": "npx apollo client:codegen src/types/schema.ts --localSchemaFile=schema.json --includes=src/**/*.ts,src/**/*.tsx --addTypename --target=typescript --outputFlat",
     "generate:types": "yarn schema:download && yarn schema:generate",
@@ -16,6 +20,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.5.7",
+    "@react-native-async-storage/async-storage": "^1.15.15",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",

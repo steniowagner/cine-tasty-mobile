@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {ApolloProvider} from '@apollo/client';
 import styled, {ThemeProvider} from 'styled-components/native';
@@ -8,15 +8,36 @@ import {dark, light} from '@styles/themes';
 
 import makeGraphQLClient from './graphql/client';
 
+import {
+  getItemFromStorage,
+  persistItemInStorage,
+} from '@utils/async-storage-adapter/AsyncStorageAdapter';
+
 const client = makeGraphQLClient();
 
-const App = () => (
-  <ThemeProvider theme={light}>
-    <Wrapper>
-      <VotesText>123</VotesText>
-    </Wrapper>
-  </ThemeProvider>
-);
+const App = () => {
+  const handle = async () => {
+    const item = await getItemFromStorage<{name: string}, null>('HUE', null);
+
+    if (!item) {
+      await persistItemInStorage('HUE', {name: 'Stenio Wagner'});
+      console.warn('value persisted');
+    } else {
+      console.warn('value: ', item);
+    }
+  };
+  useEffect(() => {
+    handle();
+  }, []);
+
+  return (
+    <ThemeProvider theme={light}>
+      <Wrapper>
+        <VotesText>123</VotesText>
+      </Wrapper>
+    </ThemeProvider>
+  );
+};
 
 const Wrapper = styled(View)`
   width: 100%;
