@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CONSTANTS from '../constants';
 
-export const getItemFromStorage = async <T, D>(
+export const get = async <T, D>(
   key: string,
   defaultValue: D,
 ): Promise<T | D> => {
@@ -11,20 +11,17 @@ export const getItemFromStorage = async <T, D>(
   );
 
   if (valueFromStorage) {
-    return JSON.parse(valueFromStorage);
+    return JSON.parse(valueFromStorage) as T;
   }
 
   return defaultValue;
 };
 
-export const persistItemInStorage = async (
-  key: string,
-  value: any,
-): Promise<void> =>
+export const set = async (key: string, value: any): Promise<void> =>
   AsyncStorage.setItem(
     `${CONSTANTS.KEYS.APP_STORAGE_KEY}:${key}`,
     JSON.stringify(value),
   );
 
-export const removeItemFromStorage = async (key: string): Promise<void> =>
+export const remove = async (key: string): Promise<void> =>
   AsyncStorage.removeItem(`${CONSTANTS.KEYS.APP_STORAGE_KEY}:${key}`);

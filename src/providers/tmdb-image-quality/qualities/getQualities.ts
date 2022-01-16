@@ -1,4 +1,4 @@
-import { getItemFromStorage } from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import * as storage from '@utils/storage';
 import CONSTANTS from '@utils/constants';
 import * as Types from '@local-types';
 
@@ -21,7 +21,7 @@ const getQualitiesBasedScreenClassification = (
 ) => classifications[screenClassification];
 
 const getImageQualityFromStore = async (): Promise<Types.ImageQualities> => {
-  const imageQualityFromStore = await getItemFromStorage<
+  const imageQualityFromStore = await storage.get<
     Types.ImageQualities,
     Types.ImageQualities
   >(CONSTANTS.KEYS.IMAGES_QUALITY, 'medium');
@@ -29,10 +29,11 @@ const getImageQualityFromStore = async (): Promise<Types.ImageQualities> => {
   return imageQualityFromStore;
 };
 
-const getQualities = async (screenClassification: Types.DeviceScreenClassification) => {
-  const qualitiesBasedScreenClassification = getQualitiesBasedScreenClassification(
-    screenClassification,
-  );
+const getQualities = async (
+  screenClassification: Types.DeviceScreenClassification,
+) => {
+  const qualitiesBasedScreenClassification =
+    getQualitiesBasedScreenClassification(screenClassification);
 
   const imageQualityFromStore = await getImageQualityFromStore();
 

@@ -1,23 +1,23 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { Text } from 'react-native';
-import { cleanup, render, act } from '@testing-library/react-native';
+import {Text} from 'react-native';
+import {cleanup, render, act} from '@testing-library/react-native';
 
-import { ThemeContextProvider } from '@providers';
+import {ThemeContextProvider} from '@providers';
 
 import small from './qualities/small';
 
-jest.mock('../../utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('../../utils/async-storage-adapter/storage');
 
 jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
 
   return {
     Platform: {
-      select: ({ android }) => android,
+      select: ({android}) => android,
     },
     Dimensions: {
-      get: jest.fn().mockReturnValue({ width: 320, height: 426 }),
+      get: jest.fn().mockReturnValue({width: 320, height: 426}),
     },
     PixelRatio: {
       roundToNearestPixel: () => 1,
@@ -26,16 +26,17 @@ jest.mock('react-native', () => {
   };
 });
 
-const {
-  getItemFromStorage,
-} = require('../../utils/async-storage-adapter/AsyncStorageAdapter');
+const storage = require('../../utils/async-storage-adapter/storage');
 
-import { TMDBImageQualityProvider, useTMDBImageQuality } from './TMDBImageQuality';
+import {
+  TMDBImageQualityProvider,
+  useTMDBImageQuality,
+} from './TMDBImageQuality';
 
 describe('Testing <TMDBImageQuality /> - [Android/Small-screen]', () => {
   const renderTMDBImageQualityProvider = () => {
     const ContextChildren = () => {
-      const { backdrop, poster, still, profile } = useTMDBImageQuality();
+      const {backdrop, poster, still, profile} = useTMDBImageQuality();
 
       return (
         <>
@@ -64,9 +65,9 @@ describe('Testing <TMDBImageQuality /> - [Android/Small-screen]', () => {
   afterEach(cleanup);
 
   it('should return qualitites correctly when the screen-classification is "small" and the quality selected is "low"', () => {
-    getItemFromStorage.mockImplementationOnce(() => 'low');
+    storage.get.mockImplementationOnce(() => 'low');
 
-    const { getByTestId, rerender } = render(renderTMDBImageQualityProvider());
+    const {getByTestId, rerender} = render(renderTMDBImageQualityProvider());
 
     act(() => {
       jest.runAllTimers();
@@ -81,9 +82,9 @@ describe('Testing <TMDBImageQuality /> - [Android/Small-screen]', () => {
   });
 
   it('should return qualitites correctly when the screen-classification is "small" and the quality selected is "medium"', () => {
-    getItemFromStorage.mockImplementationOnce(() => 'medium');
+    storage.get.mockImplementationOnce(() => 'medium');
 
-    const { getByTestId, rerender } = render(renderTMDBImageQualityProvider());
+    const {getByTestId, rerender} = render(renderTMDBImageQualityProvider());
 
     act(() => {
       jest.runAllTimers();
@@ -98,9 +99,9 @@ describe('Testing <TMDBImageQuality /> - [Android/Small-screen]', () => {
   });
 
   it('should return qualitites correctly when the screen-classification is "small" and the quality selected is "high"', () => {
-    getItemFromStorage.mockImplementationOnce(() => 'high');
+    storage.get.mockImplementationOnce(() => 'high');
 
-    const { getByTestId, rerender } = render(renderTMDBImageQualityProvider());
+    const {getByTestId, rerender} = render(renderTMDBImageQualityProvider());
 
     act(() => {
       jest.runAllTimers();
@@ -115,9 +116,9 @@ describe('Testing <TMDBImageQuality /> - [Android/Small-screen]', () => {
   });
 
   it('should return qualitites correctly when the screen-classification is "small" and the quality selected is "veryHigh"', () => {
-    getItemFromStorage.mockImplementationOnce(() => 'veryHigh');
+    storage.get.mockImplementationOnce(() => 'veryHigh');
 
-    const { getByTestId, rerender } = render(renderTMDBImageQualityProvider());
+    const {getByTestId, rerender} = render(renderTMDBImageQualityProvider());
 
     act(() => {
       jest.runAllTimers();
@@ -125,7 +126,9 @@ describe('Testing <TMDBImageQuality /> - [Android/Small-screen]', () => {
 
     rerender(renderTMDBImageQualityProvider());
 
-    expect(getByTestId('backdrop').children[0]).toEqual(small.veryHigh.backdrop);
+    expect(getByTestId('backdrop').children[0]).toEqual(
+      small.veryHigh.backdrop,
+    );
     expect(getByTestId('still').children[0]).toEqual(small.veryHigh.still);
     expect(getByTestId('profile').children[0]).toEqual(small.veryHigh.profile);
     expect(getByTestId('poster').children[0]).toEqual(small.veryHigh.poster);

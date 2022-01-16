@@ -1,33 +1,26 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
+import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
 
 import CONSTANTS from '@utils/constants';
 import * as Types from '@local-types';
 
-jest.mock('../../utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('../../utils/async-storage-adapter/storage');
 
 jest.mock('react-native-appearance', () => ({
   useColorScheme: () => 'light',
 }));
 
-const {
-  getItemFromStorage,
-  persistItemInStorage,
-} = require('../../utils/async-storage-adapter/AsyncStorageAdapter');
+const storage = require('../../utils/async-storage-adapter/storage');
 
-import { ThemeContextProvider, useThemeProvider } from './Theme';
+import {ThemeContextProvider, useThemeProvider} from './Theme';
 
 describe('Testing <ThemeProvider />', () => {
   const renderThemeProvider = (theme?: Types.ThemeId) => {
     const ContextChildren = () => {
-      const {
-        onSetSystemTheme,
-        onSetLightTheme,
-        onSetDarkTheme,
-        themeId,
-      } = useThemeProvider();
+      const {onSetSystemTheme, onSetLightTheme, onSetDarkTheme, themeId} =
+        useThemeProvider();
 
       const pressMapping = {
         [Types.ThemeId.SYSTEM]: onSetSystemTheme,
@@ -38,7 +31,10 @@ describe('Testing <ThemeProvider />', () => {
       return (
         <View>
           <Text testID="themeId">{themeId}</Text>
-          <TouchableOpacity testID="toggle-button" onPress={pressMapping[theme]} />
+          <TouchableOpacity
+            testID="toggle-button"
+            onPress={pressMapping[theme]}
+          />
         </View>
       );
     };
@@ -59,9 +55,9 @@ describe('Testing <ThemeProvider />', () => {
   afterEach(cleanup);
 
   it('should return an undefined theme initially when the app has no theme previously set', () => {
-    getItemFromStorage.mockImplementationOnce(() => undefined);
+    storage.get.mockImplementationOnce(() => undefined);
 
-    const { getByTestId } = render(renderThemeProvider());
+    const {getByTestId} = render(renderThemeProvider());
 
     expect(getByTestId('themeId').children[0]).toEqual(undefined);
 
@@ -71,9 +67,9 @@ describe('Testing <ThemeProvider />', () => {
   });
 
   it('should return an undefined theme initially when the app has some theme previously set', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.DARK);
 
-    const { getByTestId } = render(renderThemeProvider());
+    const {getByTestId} = render(renderThemeProvider());
 
     expect(getByTestId('themeId').children[0]).toEqual(undefined);
 
@@ -83,9 +79,9 @@ describe('Testing <ThemeProvider />', () => {
   });
 
   it("should set the dark-theme as default-theme when there's no theme previously set after the initialization", () => {
-    getItemFromStorage.mockImplementationOnce(() => undefined);
+    storage.get.mockImplementationOnce(() => undefined);
 
-    const { getByTestId } = render(renderThemeProvider(Types.ThemeId.DARK));
+    const {getByTestId} = render(renderThemeProvider(Types.ThemeId.DARK));
 
     act(() => {
       jest.runAllTimers();
@@ -95,9 +91,9 @@ describe('Testing <ThemeProvider />', () => {
   });
 
   it('should set the dark-theme as default-theme when the theme previously set was the dark-theme', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.DARK);
 
-    const { getByTestId } = render(renderThemeProvider(Types.ThemeId.DARK));
+    const {getByTestId} = render(renderThemeProvider(Types.ThemeId.DARK));
 
     act(() => {
       jest.runAllTimers();
@@ -107,9 +103,9 @@ describe('Testing <ThemeProvider />', () => {
   });
 
   it('should set the light-theme as default-theme when the theme previously set was the light-theme', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
-    const { getByTestId } = render(renderThemeProvider(Types.ThemeId.LIGHT));
+    const {getByTestId} = render(renderThemeProvider(Types.ThemeId.LIGHT));
 
     act(() => {
       jest.runAllTimers();
@@ -119,9 +115,9 @@ describe('Testing <ThemeProvider />', () => {
   });
 
   it('should change the theme from Dark to Light correctly', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.DARK);
 
-    const { getByTestId } = render(renderThemeProvider(Types.ThemeId.LIGHT));
+    const {getByTestId} = render(renderThemeProvider(Types.ThemeId.LIGHT));
 
     act(() => {
       jest.runAllTimers();
@@ -131,9 +127,9 @@ describe('Testing <ThemeProvider />', () => {
 
     fireEvent.press(getByTestId('toggle-button'));
 
-    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
+    expect(storage.set).toHaveBeenCalledTimes(1);
 
-    expect(persistItemInStorage).nthCalledWith(
+    expect(storage.set).nthCalledWith(
       1,
       CONSTANTS.KEYS.APP_THEME,
       Types.ThemeId.LIGHT,
@@ -147,9 +143,9 @@ describe('Testing <ThemeProvider />', () => {
   });
 
   it('should change the theme from Light to Dark correctly', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
-    const { getByTestId } = render(renderThemeProvider(Types.ThemeId.DARK));
+    const {getByTestId} = render(renderThemeProvider(Types.ThemeId.DARK));
 
     act(() => {
       jest.runAllTimers();
@@ -159,9 +155,9 @@ describe('Testing <ThemeProvider />', () => {
 
     fireEvent.press(getByTestId('toggle-button'));
 
-    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
+    expect(storage.set).toHaveBeenCalledTimes(1);
 
-    expect(persistItemInStorage).nthCalledWith(
+    expect(storage.set).nthCalledWith(
       1,
       CONSTANTS.KEYS.APP_THEME,
       Types.ThemeId.DARK,

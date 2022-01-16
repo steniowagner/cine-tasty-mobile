@@ -1,11 +1,7 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CONSTANTS from '../constants';
-import {
-  removeItemFromStorage,
-  persistItemInStorage,
-  getItemFromStorage,
-} from './AsyncStorageAdapter';
+import * as storage from '.';
 
 const KEY = 'MY_KEY';
 const STORAGE_KEY = `${CONSTANTS.KEYS.APP_STORAGE_KEY}:${KEY}`;
@@ -15,19 +11,19 @@ type Data = {
   age: number;
 };
 
-const data: Data = { name: 'stenio', age: 25 };
+const data: Data = {name: 'stenio', age: 25};
 
-describe('Testing the Async-Storage Adapater', () => {
+describe('Testing the Storage', () => {
   beforeEach(async () => {
     await AsyncStorage.removeItem(STORAGE_KEY);
     jest.clearAllMocks();
   });
 
-  describe('getItemFromStorage()', () => {
+  describe('get()', () => {
     it('should get an item from the storage using the received key', async () => {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
-      const itemFromStorage = await getItemFromStorage<Data, null>(KEY, null);
+      const itemFromStorage = await storage.get<Data, null>(KEY, null);
 
       expect(AsyncStorage.getItem).toBeCalledWith(STORAGE_KEY);
 
@@ -35,7 +31,7 @@ describe('Testing the Async-Storage Adapater', () => {
     });
 
     it("should return the default value when the item doesn't exists on the storage", async () => {
-      const itemFromStorage = await getItemFromStorage<Data, string>(
+      const itemFromStorage = await storage.get<Data, string>(
         KEY,
         'default value',
       );
@@ -46,11 +42,14 @@ describe('Testing the Async-Storage Adapater', () => {
     });
   });
 
-  describe('persistItemInStorage()', () => {
+  describe('set()', () => {
     it('should persist an item correctly on the storage', async () => {
-      await persistItemInStorage(KEY, data);
+      await storage.set(KEY, data);
 
-      expect(AsyncStorage.setItem).toBeCalledWith(STORAGE_KEY, JSON.stringify(data));
+      expect(AsyncStorage.setItem).toBeCalledWith(
+        STORAGE_KEY,
+        JSON.stringify(data),
+      );
 
       const itemFromStorage = await AsyncStorage.getItem(STORAGE_KEY, null);
 
@@ -58,11 +57,11 @@ describe('Testing the Async-Storage Adapater', () => {
     });
   });
 
-  describe('removeItemFromStorage()', () => {
+  describe('remove()', () => {
     it('should remove an item from the storage using the received key', async () => {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
-      await removeItemFromStorage(KEY);
+      await storage.remove(KEY);
 
       const itemFromStorage = await AsyncStorage.getItem(STORAGE_KEY, null);
 
@@ -70,7 +69,7 @@ describe('Testing the Async-Storage Adapater', () => {
     });
 
     it("should return null when the item doesn't exists on the storage", async () => {
-      await removeItemFromStorage(KEY);
+      await storage.remove(KEY);
 
       const itemFromStorage = await AsyncStorage.getItem(STORAGE_KEY, null);
 

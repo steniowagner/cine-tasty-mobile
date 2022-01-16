@@ -1,28 +1,27 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { MockList, IMocks } from 'graphql-tools';
+import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
+import {MockList, IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
-import { ThemeContextProvider } from '@providers';
+import {ThemeContextProvider} from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
-import { light } from '@styles/themes';
+import {Routes} from '@routes/routes';
+import {light} from '@styles/themes';
 
-jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('../../../../../../../utils/storage');
 
-import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
+import {SEARCH_BY_QUERY_DELAY} from '../use-search/useSearchByQuery';
 import Search from '../Search';
 
-const {
-  getItemFromStorage,
-} = require('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+const storage = require('../../../../../../../utils/storage');
 
-const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF = 'i18nMoviesQueryByPaginationErrorRef';
+const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF =
+  'i18nMoviesQueryByPaginationErrorRef';
 const I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF = 'i18nMoviesQueryByTextErrorRef';
 const SOME_MOVIE_NAME = 'SOME_MOVIE_NAME';
 
@@ -40,7 +39,10 @@ const defaultItems = Array(10)
     id: index,
   }));
 
-const getMockResolvers = (hasMore: boolean = false, items: any = defaultItems) => ({
+const getMockResolvers = (
+  hasMore: boolean = false,
+  items: any = defaultItems,
+) => ({
   SearchQueryResult: () => ({
     items: () => items,
     hasMore,
@@ -54,12 +56,19 @@ const params = {
   queryId: 'search_movie',
 };
 
-const renderSearchMovies = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {
-  const SearchMovieScreen = ({ navigation, route }) => (
+const renderSearchMovies = (
+  mockResolvers: IMocks = {},
+  navigate = jest.fn(),
+) => {
+  const SearchMovieScreen = ({navigation, route}) => (
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <Search navigation={{ ...navigation, navigate }} route={route} theme={light} />
+          <Search
+            navigation={{...navigation, navigate}}
+            route={route}
+            theme={light}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>
@@ -80,9 +89,9 @@ describe('Testing <Search /> - [Movies]', () => {
   });
 
   it('should render correctly on the first render', () => {
-    getItemFromStorage.mockImplementationOnce(() => []);
+    storage.get.mockImplementationOnce(() => []);
 
-    const { queryByTestId } = render(renderSearchMovies(getMockResolvers()));
+    const {queryByTestId} = render(renderSearchMovies(getMockResolvers()));
 
     expect(queryByTestId('loading-media-search')).toBeNull();
 
@@ -100,7 +109,7 @@ describe('Testing <Search /> - [Movies]', () => {
   });
 
   it('should show the loading-state after user type some text on the search-bar', () => {
-    const { queryByTestId } = render(renderSearchMovies(getMockResolvers()));
+    const {queryByTestId} = render(renderSearchMovies(getMockResolvers()));
 
     fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
 
@@ -116,7 +125,7 @@ describe('Testing <Search /> - [Movies]', () => {
   });
 
   it("should should show an advise when there's no search results", () => {
-    const { queryByTestId } = render(
+    const {queryByTestId} = render(
       renderSearchMovies(getMockResolvers(false, new MockList(0))),
     );
 
@@ -138,7 +147,7 @@ describe('Testing <Search /> - [Movies]', () => {
   });
 
   it('should show the list with the items returned by the query', () => {
-    const { queryByTestId } = render(renderSearchMovies(getMockResolvers()));
+    const {queryByTestId} = render(renderSearchMovies(getMockResolvers()));
 
     fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIE_NAME);
 
@@ -156,7 +165,7 @@ describe('Testing <Search /> - [Movies]', () => {
   });
 
   it('should show an advise when the search returns an empty array', () => {
-    const { queryByTestId, getByText } = render(
+    const {queryByTestId, getByText} = render(
       renderSearchMovies(getMockResolvers(false, [])),
     );
 
@@ -174,7 +183,9 @@ describe('Testing <Search /> - [Movies]', () => {
 
     expect(queryByTestId('search-media-list').props.data).toEqual([]);
 
-    expect(getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_DESCRIPTION)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_DESCRIPTION),
+    ).not.toBeNull();
 
     expect(getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_SUGGESTION)).not.toBeNull();
 
@@ -182,11 +193,12 @@ describe('Testing <Search /> - [Movies]', () => {
   });
 
   it('should navigate to tv-show-detail-screen when the user press a certain tv-show-item', () => {
-    const INDEX_ITEM_SELECTED = (Math.random() * (defaultItems.length - 1 - 0 + 1)) << 0;
+    const INDEX_ITEM_SELECTED =
+      (Math.random() * (defaultItems.length - 1 - 0 + 1)) << 0;
 
     const onPress = jest.fn();
 
-    const { getAllByTestId, getByTestId } = render(
+    const {getAllByTestId, getByTestId} = render(
       renderSearchMovies(getMockResolvers(), onPress),
     );
 
@@ -204,7 +216,9 @@ describe('Testing <Search /> - [Movies]', () => {
       defaultItems.length,
     );
 
-    fireEvent.press(getAllByTestId('full-media-list-item')[INDEX_ITEM_SELECTED]);
+    fireEvent.press(
+      getAllByTestId('full-media-list-item')[INDEX_ITEM_SELECTED],
+    );
 
     expect(onPress).toHaveBeenCalledTimes(1);
 
@@ -227,14 +241,14 @@ describe('Testing <Search /> - [Movies]', () => {
         id: index,
       }));
 
-    getItemFromStorage.mockImplementationOnce(() => recentMoviesSearched);
+    storage.get.mockImplementationOnce(() => recentMoviesSearched);
 
     const INDEX_ITEM_SELECTED =
       (Math.random() * (recentMoviesSearched.length - 1 - 0 + 1)) << 0;
 
     const onPress = jest.fn();
 
-    const { getAllByTestId, getByTestId } = render(
+    const {getAllByTestId, getByTestId} = render(
       renderSearchMovies(getMockResolvers(), onPress),
     );
 

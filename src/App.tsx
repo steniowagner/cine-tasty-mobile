@@ -8,19 +8,16 @@ import {dark, light} from '@styles/themes';
 
 import makeGraphQLClient from './graphql/client';
 
-import {
-  getItemFromStorage,
-  persistItemInStorage,
-} from '@utils/async-storage-adapter/AsyncStorageAdapter';
+import * as storage from '@utils/storage';
 
 const client = makeGraphQLClient();
 
 const App = () => {
   const handle = async () => {
-    const item = await getItemFromStorage<{name: string}, null>('HUE', null);
+    const item = await storage.get<{name: string}, null>('HUE', null);
 
     if (!item) {
-      await persistItemInStorage('HUE', {name: 'Stenio Wagner'});
+      await storage.set('HUE', {name: 'Stenio Wagner'});
       console.warn('value persisted');
     } else {
       console.warn('value: ', item);

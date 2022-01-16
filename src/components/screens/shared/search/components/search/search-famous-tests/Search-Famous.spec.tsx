@@ -1,28 +1,27 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { IMocks } from 'graphql-tools';
+import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
+import {IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
-import { ThemeContextProvider } from '@providers';
+import {ThemeContextProvider} from '@providers';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
-import { dark } from '@styles/themes';
+import {Routes} from '@routes/routes';
+import {dark} from '@styles/themes';
 
-jest.mock('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('../../../../../../../utils/storage');
 
-import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
+import {SEARCH_BY_QUERY_DELAY} from '../use-search/useSearchByQuery';
 import Search from '../Search';
 
-const {
-  getItemFromStorage,
-} = require('../../../../../../../utils/async-storage-adapter/AsyncStorageAdapter');
+const storage = require('../../../../../../../utils/storage');
 
-const I18N_FAMOUS_QUERY_BY_PAGINATION_ERROR_REF = 'i18nFamousQueryByPaginationErrorRef';
+const I18N_FAMOUS_QUERY_BY_PAGINATION_ERROR_REF =
+  'i18nFamousQueryByPaginationErrorRef';
 const I18N_FAMOUS_QUERY_BY_TEXT_ERROR_REF = 'i18nFamousQueryByTextErrorRef';
 const SOME_FAMOUS_NAME = 'SOME_FAMOUS_NAME';
 const FAMOUS_COUNT = 10;
@@ -58,12 +57,19 @@ const params = {
   queryId: 'search_famous',
 };
 
-const renderSearchFamous = (mockResolvers: IMocks = {}, navigate = jest.fn()) => {
-  const SearchFamousScreen = ({ navigation, route }) => (
+const renderSearchFamous = (
+  mockResolvers: IMocks = {},
+  navigate = jest.fn(),
+) => {
+  const SearchFamousScreen = ({navigation, route}) => (
     <TMDBImageQualityProvider>
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
-          <Search navigation={{ ...navigation, navigate }} route={route} theme={dark} />
+          <Search
+            navigation={{...navigation, navigate}}
+            route={route}
+            theme={dark}
+          />
         </AutoMockProvider>
       </ThemeContextProvider>
     </TMDBImageQualityProvider>
@@ -78,7 +84,7 @@ describe('Testing <Search /> - [Famous]', () => {
   afterEach(cleanup);
 
   it('should render correctly on the first render', () => {
-    const { queryByTestId } = render(renderSearchFamous(getMockResolvers({})));
+    const {queryByTestId} = render(renderSearchFamous(getMockResolvers({})));
 
     expect(queryByTestId('famous-loading-list')).toBeNull();
 
@@ -92,7 +98,7 @@ describe('Testing <Search /> - [Famous]', () => {
   });
 
   it('should show the loading-state after user type some text on the search-bar', () => {
-    const { queryByTestId } = render(renderSearchFamous(getMockResolvers({})));
+    const {queryByTestId} = render(renderSearchFamous(getMockResolvers({})));
 
     fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_FAMOUS_NAME);
 
@@ -108,7 +114,9 @@ describe('Testing <Search /> - [Famous]', () => {
   });
 
   it("should should show an advise when there's no search results", () => {
-    const { queryByTestId } = render(renderSearchFamous(getMockResolvers({ items: [] })));
+    const {queryByTestId} = render(
+      renderSearchFamous(getMockResolvers({items: []})),
+    );
 
     fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_FAMOUS_NAME);
 
@@ -128,7 +136,7 @@ describe('Testing <Search /> - [Famous]', () => {
   });
 
   it('should show the list with the items returned by the query', () => {
-    const { queryByTestId } = render(renderSearchFamous(getMockResolvers({})));
+    const {queryByTestId} = render(renderSearchFamous(getMockResolvers({})));
 
     fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_FAMOUS_NAME);
 
@@ -140,12 +148,14 @@ describe('Testing <Search /> - [Famous]', () => {
       jest.runAllTimers();
     });
 
-    expect(queryByTestId('search-famous-list').props.data.length).toEqual(FAMOUS_COUNT);
+    expect(queryByTestId('search-famous-list').props.data.length).toEqual(
+      FAMOUS_COUNT,
+    );
   });
 
   it('should show an advise when the search returns an empty array', () => {
-    const { queryByTestId, getByText } = render(
-      renderSearchFamous(getMockResolvers({ items: [] })),
+    const {queryByTestId, getByText} = render(
+      renderSearchFamous(getMockResolvers({items: []})),
     );
 
     fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_FAMOUS_NAME);
@@ -162,7 +172,9 @@ describe('Testing <Search /> - [Famous]', () => {
 
     expect(queryByTestId('search-famous-list').props.data).toEqual([]);
 
-    expect(getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_DESCRIPTION)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_DESCRIPTION),
+    ).not.toBeNull();
 
     expect(getByText(TRANSLATIONS.SEARCH_EMPTY_LIST_SUGGESTION)).not.toBeNull();
 
@@ -170,11 +182,12 @@ describe('Testing <Search /> - [Famous]', () => {
   });
 
   it('should navigate to tv-show-detail-screen when the user press a certain tv-show-item', () => {
-    const INDEX_ITEM_SELECTED = (Math.random() * (defaultItems.length - 1 - 0 + 1)) << 0;
+    const INDEX_ITEM_SELECTED =
+      (Math.random() * (defaultItems.length - 1 - 0 + 1)) << 0;
 
     const onPress = jest.fn();
 
-    const { getAllByTestId, getByTestId } = render(
+    const {getAllByTestId, getByTestId} = render(
       renderSearchFamous(getMockResolvers({}), onPress),
     );
 
@@ -192,7 +205,9 @@ describe('Testing <Search /> - [Famous]', () => {
       defaultItems.length,
     );
 
-    fireEvent.press(getAllByTestId('famous-list-item-button')[INDEX_ITEM_SELECTED]);
+    fireEvent.press(
+      getAllByTestId('famous-list-item-button')[INDEX_ITEM_SELECTED],
+    );
 
     expect(onPress).toHaveBeenCalledTimes(1);
 
@@ -212,14 +227,14 @@ describe('Testing <Search /> - [Famous]', () => {
         id: index,
       }));
 
-    getItemFromStorage.mockImplementationOnce(() => recentFamousSearched);
+    storage.get.mockImplementationOnce(() => recentFamousSearched);
 
     const INDEX_ITEM_SELECTED =
       (Math.random() * (recentFamousSearched.length - 1 - 0 + 1)) << 0;
 
     const onPress = jest.fn();
 
-    const { getAllByTestId, getByTestId } = render(
+    const {getAllByTestId, getByTestId} = render(
       renderSearchFamous(getMockResolvers({}), onPress),
     );
 

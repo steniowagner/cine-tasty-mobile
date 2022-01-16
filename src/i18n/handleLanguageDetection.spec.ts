@@ -17,7 +17,7 @@ describe('Testing the handleLanguageDetection()', () => {
             select: () => 'pt_BR'.split('-'),
           },
           Dimensions: {
-            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+            get: jest.fn().mockReturnValueOnce({width: 100, height: 100}),
           },
           PixelRatio: {
             roundToNearestPixel: () => 1,
@@ -29,22 +29,22 @@ describe('Testing the handleLanguageDetection()', () => {
           },
         }));
 
-        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+        jest.mock('../utils/async-storage-adapter/storage');
 
-        const {
-          getItemFromStorage,
-          persistItemInStorage,
-        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+        const storage = require('../utils/async-storage-adapter/storage');
 
-        getItemFromStorage.mockImplementationOnce(() => '');
+        storage.get.mockImplementationOnce(() => '');
 
         const handleLanguageDetection = require('./handleLanguageDetection');
 
         const language = await handleLanguageDetection.default();
 
-        expect(persistItemInStorage).toBeCalledTimes(1);
+        expect(storage.set).toBeCalledTimes(1);
 
-        expect(persistItemInStorage).toBeCalledWith(CONSTANTS.KEYS.LANGUAGE, 'ptBR');
+        expect(storage.set).toBeCalledWith(
+          CONSTANTS.KEYS.LANGUAGE,
+          'ptBR',
+        );
 
         expect(language).toBe('ptBR');
       });
@@ -56,7 +56,7 @@ describe('Testing the handleLanguageDetection()', () => {
             select: () => 'pt-BR'.split('_'),
           },
           Dimensions: {
-            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+            get: jest.fn().mockReturnValueOnce({width: 100, height: 100}),
           },
           PixelRatio: {
             roundToNearestPixel: () => 1,
@@ -70,22 +70,22 @@ describe('Testing the handleLanguageDetection()', () => {
           },
         }));
 
-        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+        jest.mock('../utils/async-storage-adapter/storage');
 
-        const {
-          getItemFromStorage,
-          persistItemInStorage,
-        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+        const storage = require('../utils/async-storage-adapter/storage');
 
-        getItemFromStorage.mockImplementationOnce(() => '');
+        storage.get.mockImplementationOnce(() => '');
 
         const handleLanguageDetection = require('./handleLanguageDetection');
 
         const language = await handleLanguageDetection.default();
 
-        expect(persistItemInStorage).toBeCalledTimes(1);
+        expect(storage.set).toBeCalledTimes(1);
 
-        expect(persistItemInStorage).toBeCalledWith(CONSTANTS.KEYS.LANGUAGE, 'ptBR');
+        expect(storage.set).toBeCalledWith(
+          CONSTANTS.KEYS.LANGUAGE,
+          'ptBR',
+        );
 
         expect(language).toBe('ptBR');
       });
@@ -100,7 +100,7 @@ describe('Testing the handleLanguageDetection()', () => {
             },
           },
           Dimensions: {
-            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+            get: jest.fn().mockReturnValueOnce({width: 100, height: 100}),
           },
           PixelRatio: {
             roundToNearestPixel: () => 1,
@@ -114,22 +114,22 @@ describe('Testing the handleLanguageDetection()', () => {
           },
         }));
 
-        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+        jest.mock('../utils/async-storage-adapter/storage');
 
-        const {
-          getItemFromStorage,
-          persistItemInStorage,
-        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+        const storage = require('../utils/async-storage-adapter/storage');
 
-        getItemFromStorage.mockImplementationOnce(() => '');
+        storage.get.mockImplementationOnce(() => '');
 
         const handleLanguageDetection = require('./handleLanguageDetection');
 
         const language = await handleLanguageDetection.default();
 
-        expect(persistItemInStorage).toBeCalledTimes(1);
+        expect(storage.set).toBeCalledTimes(1);
 
-        expect(persistItemInStorage).toBeCalledWith(CONSTANTS.KEYS.LANGUAGE, 'ptBR');
+        expect(storage.set).toBeCalledWith(
+          CONSTANTS.KEYS.LANGUAGE,
+          'ptBR',
+        );
 
         expect(language).toBe('ptBR');
       });
@@ -143,7 +143,7 @@ describe('Testing the handleLanguageDetection()', () => {
             select: () => 'x_Y'.split('-'),
           },
           Dimensions: {
-            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+            get: jest.fn().mockReturnValueOnce({width: 100, height: 100}),
           },
           PixelRatio: {
             roundToNearestPixel: () => 1,
@@ -155,22 +155,19 @@ describe('Testing the handleLanguageDetection()', () => {
           },
         }));
 
-        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+        jest.mock('../utils/async-storage-adapter/storage');
 
-        const {
-          getItemFromStorage,
-          persistItemInStorage,
-        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+        const storage = require('../utils/async-storage-adapter/storage');
 
-        getItemFromStorage.mockImplementationOnce(() => '');
+        storage.get.mockImplementationOnce(() => '');
 
         const handleLanguageDetection = require('./handleLanguageDetection');
 
         const language = await handleLanguageDetection.default();
 
-        expect(persistItemInStorage).toBeCalledTimes(1);
+        expect(storage.set).toBeCalledTimes(1);
 
-        expect(persistItemInStorage).toBeCalledWith(
+        expect(storage.set).toBeCalledWith(
           CONSTANTS.KEYS.LANGUAGE,
           CONSTANTS.VALUES.FALLBACK_LANGUAGE,
         );
@@ -179,14 +176,11 @@ describe('Testing the handleLanguageDetection()', () => {
       });
 
       it('[iOS >= 13] should return the "en" when there\'s no traslation for that language', async () => {
-        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+        jest.mock('../utils/async-storage-adapter/storage');
 
-        const {
-          getItemFromStorage,
-          persistItemInStorage,
-        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+        const storage = require('../utils/async-storage-adapter/storage');
 
-        getItemFromStorage.mockImplementationOnce(() => '');
+        storage.get.mockImplementationOnce(() => '');
 
         jest.mock('react-native', () => ({
           Platform: {
@@ -194,7 +188,7 @@ describe('Testing the handleLanguageDetection()', () => {
             select: () => 'x-Y'.split('_'),
           },
           Dimensions: {
-            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+            get: jest.fn().mockReturnValueOnce({width: 100, height: 100}),
           },
           PixelRatio: {
             roundToNearestPixel: () => 1,
@@ -212,9 +206,9 @@ describe('Testing the handleLanguageDetection()', () => {
 
         const language = await handleLanguageDetection.default();
 
-        expect(persistItemInStorage).toBeCalledTimes(1);
+        expect(storage.set).toBeCalledTimes(1);
 
-        expect(persistItemInStorage).toBeCalledWith(
+        expect(storage.set).toBeCalledWith(
           CONSTANTS.KEYS.LANGUAGE,
           CONSTANTS.VALUES.FALLBACK_LANGUAGE,
         );
@@ -223,14 +217,11 @@ describe('Testing the handleLanguageDetection()', () => {
       });
 
       it('[ios < 13] should return the "en" when there\'s no traslation for that language', async () => {
-        jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+        jest.mock('../utils/async-storage-adapter/storage');
 
-        const {
-          getItemFromStorage,
-          persistItemInStorage,
-        } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+        const storage = require('../utils/async-storage-adapter/storage');
 
-        getItemFromStorage.mockImplementationOnce(() => '');
+        storage.get.mockImplementationOnce(() => '');
 
         jest.mock('react-native', () => ({
           Platform: {
@@ -238,7 +229,7 @@ describe('Testing the handleLanguageDetection()', () => {
             select: () => 'x-Y'.split('_'),
           },
           Dimensions: {
-            get: jest.fn().mockReturnValueOnce({ width: 100, height: 100 }),
+            get: jest.fn().mockReturnValueOnce({width: 100, height: 100}),
           },
           PixelRatio: {
             roundToNearestPixel: () => 1,
@@ -256,9 +247,9 @@ describe('Testing the handleLanguageDetection()', () => {
 
         const language = await handleLanguageDetection.default();
 
-        expect(persistItemInStorage).toBeCalledTimes(1);
+        expect(storage.set).toBeCalledTimes(1);
 
-        expect(persistItemInStorage).toBeCalledWith(
+        expect(storage.set).toBeCalledWith(
           CONSTANTS.KEYS.LANGUAGE,
           CONSTANTS.VALUES.FALLBACK_LANGUAGE,
         );
@@ -270,13 +261,13 @@ describe('Testing the handleLanguageDetection()', () => {
 
   describe("Testing the flow when there's a language saved on storage", () => {
     it('should return the language saved on storage', async () => {
-      jest.mock('../utils/async-storage-adapter/AsyncStorageAdapter');
+      jest.mock('../utils/async-storage-adapter/storage');
 
       const {
-        getItemFromStorage,
-      } = require('../utils/async-storage-adapter/AsyncStorageAdapter');
+        storage.get,
+      } = require('../utils/async-storage-adapter/storage');
 
-      getItemFromStorage.mockImplementationOnce(() => 'ptBR');
+      storage.get.mockImplementationOnce(() => 'ptBR');
 
       const handleLanguageDetection = require('./handleLanguageDetection');
 

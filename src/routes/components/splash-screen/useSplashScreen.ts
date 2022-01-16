@@ -1,12 +1,9 @@
-import { useCallback, useEffect } from 'react';
+import {useCallback, useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import { DefaultTheme } from 'styled-components';
+import {DefaultTheme} from 'styled-components';
 
-import {
-  getItemFromStorage,
-  persistItemInStorage,
-} from '@utils/async-storage-adapter/AsyncStorageAdapter';
-import { useThemeProvider } from '@src/providers/theme/Theme';
+import * as storage from '@utils/storage';
+import {useThemeProvider} from '@src/providers/theme/Theme';
 import CONSTANTS from '@utils/constants';
 import * as Types from '@local-types';
 
@@ -15,17 +12,17 @@ type UseSplashScreenProps = {
   onLoad: () => void;
 };
 
-const useSplashScreen = ({ onLoad, theme }: UseSplashScreenProps) => {
-  const { handleInitialThemeSelection } = useThemeProvider();
+const useSplashScreen = ({onLoad, theme}: UseSplashScreenProps) => {
+  const {handleInitialThemeSelection} = useThemeProvider();
 
   const handleImageSizeOptionSelection = useCallback(async () => {
-    const selectedImageSizesOption = await getItemFromStorage<
+    const selectedImageSizesOption = await storage.get<
       Types.ImageQualities,
       undefined
     >(CONSTANTS.KEYS.IMAGES_QUALITY, undefined);
 
     if (!selectedImageSizesOption) {
-      await persistItemInStorage(CONSTANTS.KEYS.IMAGES_QUALITY, 'medium');
+      await storage.set(CONSTANTS.KEYS.IMAGES_QUALITY, 'medium');
     }
   }, []);
 

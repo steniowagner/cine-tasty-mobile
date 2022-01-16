@@ -1,21 +1,18 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
 
-import { ThemeContextProvider } from '@providers';
+import {ThemeContextProvider} from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import CONSTANTS from '@utils/constants';
 import * as Types from '@local-types';
 
 import ThemeSettings from './ThemeSettings';
 
-jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('utils/storage');
 
-const {
-  persistItemInStorage,
-  getItemFromStorage,
-} = require('utils/async-storage-adapter/AsyncStorageAdapter');
+const storage = require('utils/storage');
 
-jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('utils/storage');
 
 const renderThemeSettings = () => (
   <ThemeContextProvider>
@@ -33,7 +30,7 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   afterEach(cleanup);
 
   it('should render all items correctly', () => {
-    const { getAllByTestId } = render(renderThemeSettings());
+    const {getAllByTestId} = render(renderThemeSettings());
 
     expect(getAllByTestId('option-settings').length).toEqual(2);
 
@@ -51,17 +48,21 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should render them dark-theme marked when the theme previsouly selected was the dark-theme', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.DARK);
 
-    const { getAllByTestId } = render(renderThemeSettings());
+    const {getAllByTestId} = render(renderThemeSettings());
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-marked');
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual(
+      'icon-radiobox-marked',
+    );
 
-    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-blank');
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual(
+      'icon-radiobox-blank',
+    );
 
     act(() => {
       jest.runAllTimers();
@@ -69,17 +70,21 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should render them light-theme marked when the theme previsouly selected was the light-theme', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
-    const { getAllByTestId } = render(renderThemeSettings());
+    const {getAllByTestId} = render(renderThemeSettings());
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-blank');
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual(
+      'icon-radiobox-blank',
+    );
 
-    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-marked');
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual(
+      'icon-radiobox-marked',
+    );
 
     act(() => {
       jest.runAllTimers();
@@ -87,17 +92,21 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should change theme to dark when the user select the dark-theme-option and the light-theme is currently selected', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
-    const { getAllByTestId } = render(renderThemeSettings());
+    const {getAllByTestId} = render(renderThemeSettings());
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-blank');
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual(
+      'icon-radiobox-blank',
+    );
 
-    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-marked');
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual(
+      'icon-radiobox-marked',
+    );
 
     fireEvent.press(getAllByTestId('option-settings')[0]);
 
@@ -105,13 +114,17 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-marked');
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual(
+      'icon-radiobox-marked',
+    );
 
-    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-blank');
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual(
+      'icon-radiobox-blank',
+    );
 
-    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
+    expect(storage.set).toHaveBeenCalledTimes(1);
 
-    expect(persistItemInStorage).nthCalledWith(
+    expect(storage.set).nthCalledWith(
       1,
       CONSTANTS.KEYS.APP_THEME,
       Types.ThemeId.DARK,
@@ -119,17 +132,21 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should change theme to light when the user select the dark-theme-option and the dark-theme is currently selected', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.DARK);
 
-    const { getAllByTestId } = render(renderThemeSettings());
+    const {getAllByTestId} = render(renderThemeSettings());
 
     act(() => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-marked');
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual(
+      'icon-radiobox-marked',
+    );
 
-    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-blank');
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual(
+      'icon-radiobox-blank',
+    );
 
     fireEvent.press(getAllByTestId('option-settings')[1]);
 
@@ -137,13 +154,17 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
       jest.runAllTimers();
     });
 
-    expect(getAllByTestId(/icon/)[0].props.testID).toEqual('icon-radiobox-blank');
+    expect(getAllByTestId(/icon/)[0].props.testID).toEqual(
+      'icon-radiobox-blank',
+    );
 
-    expect(getAllByTestId(/icon/)[1].props.testID).toEqual('icon-radiobox-marked');
+    expect(getAllByTestId(/icon/)[1].props.testID).toEqual(
+      'icon-radiobox-marked',
+    );
 
-    expect(persistItemInStorage).toHaveBeenCalledTimes(1);
+    expect(storage.set).toHaveBeenCalledTimes(1);
 
-    expect(persistItemInStorage).nthCalledWith(
+    expect(storage.set).nthCalledWith(
       1,
       CONSTANTS.KEYS.APP_THEME,
       Types.ThemeId.LIGHT,
@@ -151,9 +172,9 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should not change the theme when the current theme is dark and the user press on the dark-option', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.DARK);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.DARK);
 
-    const { getAllByTestId } = render(renderThemeSettings());
+    const {getAllByTestId} = render(renderThemeSettings());
 
     act(() => {
       jest.runAllTimers();
@@ -167,9 +188,9 @@ describe('Testing <ThemeSettings /> - [No theme support]', () => {
   });
 
   it('should not change the theme when the current theme is light and the user press on the light-option', () => {
-    getItemFromStorage.mockImplementationOnce(() => Types.ThemeId.LIGHT);
+    storage.get.mockImplementationOnce(() => Types.ThemeId.LIGHT);
 
-    const { getAllByTestId } = render(renderThemeSettings());
+    const {getAllByTestId} = render(renderThemeSettings());
 
     act(() => {
       jest.runAllTimers();
