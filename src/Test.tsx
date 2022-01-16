@@ -1,14 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,10 +16,26 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {useQuery} from '@apollo/client';
+
+import {GET_FAMOUS_DETAIL} from '@graphql/queries';
 
 const Section: React.FC<{
   title: string;
 }> = ({children, title}) => {
+  const {data, error, loading} = useQuery(GET_FAMOUS_DETAIL, {
+    variables: {
+      id: 123,
+    },
+    fetchPolicy: 'cache-first',
+  });
+
+  useEffect(() => {
+    console.log('data: ', data);
+    console.log('error: ', error);
+    console.log('loading: ', loading);
+  }, [data, error, loading]);
+
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>

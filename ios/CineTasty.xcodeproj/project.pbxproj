@@ -11,13 +11,13 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		209945E552EA4BF58FAB29B2 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD3C8496EC8F49EAA0F7E33A /* CircularStd-Book.otf */; };
+		38AA3C0886A84311906B234F /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF5C02D22AA8450596C595A2 /* CircularStd-Medium.otf */; };
 		6172F2D35A4C3AA820D92908 /* libPods-CineTasty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6423831EA8574132BED9D8CC /* libPods-CineTasty.a */; };
 		7EF68E3733C33B6898317E18 /* libPods-CineTasty-CineTastyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-CineTasty-CineTastyTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8337BC5CF8B14B6C889F5BD1 /* CircularStd-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 594D6A5BCF44488D8C65F951 /* CircularStd-Black.otf */; };
 		D21784396BB54039BC457A70 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FF7A6997ED394FD0B2DABD46 /* CircularStd-Bold.otf */; };
-		209945E552EA4BF58FAB29B2 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD3C8496EC8F49EAA0F7E33A /* CircularStd-Book.otf */; };
-		38AA3C0886A84311906B234F /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF5C02D22AA8450596C595A2 /* CircularStd-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,17 +41,17 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CineTasty/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CineTasty/main.m; sourceTree = "<group>"; };
 		1D0AE47A65C8663E3B452821 /* Pods-CineTasty-CineTastyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CineTasty-CineTastyTests.release.xcconfig"; path = "Target Support Files/Pods-CineTasty-CineTastyTests/Pods-CineTasty-CineTastyTests.release.xcconfig"; sourceTree = "<group>"; };
+		594D6A5BCF44488D8C65F951 /* CircularStd-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "CircularStd-Black.otf"; path = "../assets/fonts/CircularStd-Black.otf"; sourceTree = "<group>"; };
 		6423831EA8574132BED9D8CC /* libPods-CineTasty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CineTasty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C97AB639B58BBB4B15BBE30 /* Pods-CineTasty-CineTastyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CineTasty-CineTastyTests.debug.xcconfig"; path = "Target Support Files/Pods-CineTasty-CineTastyTests/Pods-CineTasty-CineTastyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = CineTasty/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABFE59519B596E51CEFDCCC0 /* libPods-CineTasty-CineTastyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CineTasty-CineTastyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A881CF5CF3F2B244570E2A /* Pods-CineTasty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CineTasty.debug.xcconfig"; path = "Target Support Files/Pods-CineTasty/Pods-CineTasty.debug.xcconfig"; sourceTree = "<group>"; };
+		CF5C02D22AA8450596C595A2 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "CircularStd-Medium.otf"; path = "../assets/fonts/CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-CineTasty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CineTasty.release.xcconfig"; path = "Target Support Files/Pods-CineTasty/Pods-CineTasty.release.xcconfig"; sourceTree = "<group>"; };
+		DD3C8496EC8F49EAA0F7E33A /* CircularStd-Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "CircularStd-Book.otf"; path = "../assets/fonts/CircularStd-Book.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		594D6A5BCF44488D8C65F951 /* CircularStd-Black.otf */ = {isa = PBXFileReference; name = "CircularStd-Black.otf"; path = "../assets/fonts/CircularStd-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		FF7A6997ED394FD0B2DABD46 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; name = "CircularStd-Bold.otf"; path = "../assets/fonts/CircularStd-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DD3C8496EC8F49EAA0F7E33A /* CircularStd-Book.otf */ = {isa = PBXFileReference; name = "CircularStd-Book.otf"; path = "../assets/fonts/CircularStd-Book.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CF5C02D22AA8450596C595A2 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; name = "CircularStd-Medium.otf"; path = "../assets/fonts/CircularStd-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FF7A6997ED394FD0B2DABD46 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "CircularStd-Bold.otf"; path = "../assets/fonts/CircularStd-Bold.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +114,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7EA0D45F60984C789AFB93C4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				594D6A5BCF44488D8C65F951 /* CircularStd-Black.otf */,
+				FF7A6997ED394FD0B2DABD46 /* CircularStd-Bold.otf */,
+				DD3C8496EC8F49EAA0F7E33A /* CircularStd-Book.otf */,
+				CF5C02D22AA8450596C595A2 /* CircularStd-Medium.otf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,18 +169,6 @@
 			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		7EA0D45F60984C789AFB93C4 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				594D6A5BCF44488D8C65F951 /* CircularStd-Black.otf */,
-				FF7A6997ED394FD0B2DABD46 /* CircularStd-Bold.otf */,
-				DD3C8496EC8F49EAA0F7E33A /* CircularStd-Book.otf */,
-				CF5C02D22AA8450596C595A2 /* CircularStd-Medium.otf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
