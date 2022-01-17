@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/react-hooks';
+import {useTranslation} from 'react-i18next';
+import {useQuery} from '@apollo/client';
 
-import { useGetCurrentISO6391Language } from '@hooks';
-import { GET_MOVIE_DETAIL } from '@graphql/queries';
+import {useGetCurrentISO6391Language} from '@hooks';
+import {GET_MOVIE_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 
 type UseMovieDetailProps = {
@@ -27,10 +27,10 @@ const useMovieDetail = ({
   hasVoteCount,
   id,
 }: UseMovieDetailProps) => {
-  const { currentISO6391Language } = useGetCurrentISO6391Language();
-  const { t } = useTranslation();
+  const {currentISO6391Language} = useGetCurrentISO6391Language();
+  const {t} = useTranslation();
 
-  const { data, error, loading } = useQuery<SchemaTypes.MovieDetail, Variables>(
+  const {data, error, loading} = useQuery<SchemaTypes.MovieDetail, Variables>(
     GET_MOVIE_DETAIL,
     {
       variables: {
