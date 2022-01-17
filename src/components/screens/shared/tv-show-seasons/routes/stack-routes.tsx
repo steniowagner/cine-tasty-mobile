@@ -1,14 +1,14 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { withTheme } from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import {StatusBar} from 'react-native';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {withTheme} from 'styled-components/native';
+import {useTranslation} from 'react-i18next';
 
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
 import TVShowSeasonsDetailScreen from '../components/tv-show-seasons-detail/TVShowSeasonsDetail';
-import { TVShowSeasonsStackProps } from './route-params-types';
+import {TVShowSeasonsStackProps} from './route-params-types';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -20,10 +20,10 @@ const getTabStyleWidth = (numberOfSeasons: number): number => {
   return metrics.width / 3;
 };
 
-const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => {
-  const { t } = useTranslation();
+const TVShowSeasonsDetailStack = ({route, theme}: TVShowSeasonsStackProps) => {
+  const {t} = useTranslation();
 
-  const { numberOfSeasons } = route.params;
+  const {numberOfSeasons} = route.params;
 
   if (numberOfSeasons === 1) {
     return (
@@ -55,7 +55,7 @@ const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => 
         animated
       />
       <Tab.Navigator
-        initialLayout={{ width: metrics.width, height: metrics.height }}
+        initialLayout={{width: metrics.width, height: metrics.height}}
         tabBarOptions={{
           activeTintColor: theme.colors.buttonText,
           style: {
@@ -75,8 +75,7 @@ const TVShowSeasonsDetailStack = ({ route, theme }: TVShowSeasonsStackProps) => 
           scrollEnabled: true,
         }}
         lazyPreloadDistance={0}
-        lazy
-      >
+        lazy>
         {Array(numberOfSeasons)
           .fill({})
           .map((_, index) => (

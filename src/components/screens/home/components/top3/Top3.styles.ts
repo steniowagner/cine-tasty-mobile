@@ -1,5 +1,5 @@
-import { Platform, View } from 'react-native';
-import styled from 'styled-components';
+import {Platform, View} from 'react-native';
+import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';
 
@@ -16,9 +16,11 @@ export const ListGap = styled(View)`
 
 export const ListWrapper = styled(View)`
   width: 100%;
-  height: ${Top3listItemStyles.ITEM_HEIGHT + Top3listItemStyles.ITEM_MARGING_TOP}px;
-  margin-top: ${({ theme }) => Platform.select({
-    android: theme.metrics.getWidthFromDP('22%'),
-    ios: theme.metrics.getWidthFromDP('28%'),
-  })}px;
+  height: ${Top3listItemStyles.ITEM_HEIGHT +
+  Top3listItemStyles.ITEM_MARGING_TOP}px;
+  margin-top: ${({theme}) =>
+    Platform.select({
+      android: theme.metrics.getWidthFromDP('22%'),
+      ios: theme.metrics.getWidthFromDP('28%'),
+    })}px;
 `;

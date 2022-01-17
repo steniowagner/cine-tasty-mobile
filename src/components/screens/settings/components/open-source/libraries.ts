@@ -8,8 +8,8 @@ const production = [
     url: 'https://www.npmjs.com/package/react',
   },
   {
-    title: '@apollo/react-hooks',
-    url: 'https://www.npmjs.com/package/@apollo/react-hooks',
+    title: '@apollo/client',
+    url: 'https://www.npmjs.com/package/@apollo/client',
   },
   {
     title: '@react-native-community/async-storage',
@@ -124,7 +124,7 @@ const production = [
     url: 'https://www.npmjs.com/package/react-native-svg',
   },
   {
-    title: 'styled-components',
+    title: 'styled-components/native',
     url: 'https://www.npmjs.com/package/styled-components',
   },
   {

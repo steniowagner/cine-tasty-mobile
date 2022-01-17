@@ -1,9 +1,9 @@
-import React, { useMemo, memo } from 'react';
-import { DefaultTheme, withTheme } from 'styled-components';
+import React, {useMemo, memo} from 'react';
+import {DefaultTheme, withTheme} from 'styled-components/native';
 
 import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import { SupportedIcons } from '@components/common/svg-icon/getXML';
-import { useGetCurrentTheme } from '@hooks';
+import {SupportedIcons} from '@components/common/svg-icon/getXML';
+import {useGetCurrentTheme} from '@hooks';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
@@ -31,7 +31,7 @@ const NavigatorItem = withTheme(
     width,
     title,
   }: NavigatorItemProps) => {
-    const { currentTheme } = useGetCurrentTheme({ theme });
+    const {currentTheme} = useGetCurrentTheme({theme});
 
     const selectedIconColor = useMemo(
       () => (currentTheme === Types.ThemeId.DARK ? 'primary' : 'text'),
@@ -39,17 +39,16 @@ const NavigatorItem = withTheme(
     );
 
     const textColor = useMemo(() => {
-      const selectedColor = currentTheme === Types.ThemeId.DARK ? theme.colors.primary : theme.colors.text;
+      const selectedColor =
+        currentTheme === Types.ThemeId.DARK
+          ? theme.colors.primary
+          : theme.colors.text;
 
       return isSelected ? selectedColor : theme.colors.inactiveWhite;
     }, [isSelected, currentTheme]);
 
     return (
-      <Styles.Wrapper
-        testID="button-wrapper"
-        onPress={onPress}
-        width={width}
-      >
+      <Styles.Wrapper testID="button-wrapper" onPress={onPress} width={width}>
         {renderSVGIconConditionally({
           condition: isSelected,
           ifTrue: {
@@ -63,10 +62,7 @@ const NavigatorItem = withTheme(
             id: inactiveIcon,
           },
         })}
-        <Styles.ItemText
-          testID="item-title"
-          color={textColor}
-        >
+        <Styles.ItemText testID="item-title" color={textColor}>
           {title}
         </Styles.ItemText>
       </Styles.Wrapper>
@@ -77,7 +73,8 @@ const NavigatorItem = withTheme(
 const shouldComponentUpdate = (
   previousState: NavigatorItemProps,
   nextState: NavigatorItemProps,
-): boolean => (previousState.isSelected || !nextState.isSelected)
-  && (!previousState.isSelected || nextState.isSelected);
+): boolean =>
+  (previousState.isSelected || !nextState.isSelected) &&
+  (!previousState.isSelected || nextState.isSelected);
 
 export default memo(NavigatorItem, shouldComponentUpdate);

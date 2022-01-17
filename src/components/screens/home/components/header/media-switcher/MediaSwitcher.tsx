@@ -1,8 +1,8 @@
 import React from 'react';
-import { LayoutChangeEvent } from 'react-native';
-import { DefaultTheme, withTheme } from 'styled-components';
+import {LayoutChangeEvent} from 'react-native';
+import {DefaultTheme, withTheme} from 'styled-components/native';
 
-import useMediaSwitcher, { SwitchItem } from './useMediaSwitcher';
+import useMediaSwitcher, {SwitchItem} from './useMediaSwitcher';
 import * as Styles from './MediaSwitcher.styles';
 
 type MediaSwitcherProps = {
@@ -18,13 +18,12 @@ const MediaSwitcher = ({
   items,
   theme,
 }: MediaSwitcherProps) => {
-  const {
-    switchItemWidth, translateX, switchItems, isSwitching,
-  } = useMediaSwitcher({
-    onCalcuateSwitchWidth,
-    theme,
-    items,
-  });
+  const {switchItemWidth, translateX, switchItems, isSwitching} =
+    useMediaSwitcher({
+      onCalcuateSwitchWidth,
+      theme,
+      items,
+    });
 
   return (
     <Styles.Wrapper
@@ -39,8 +38,7 @@ const MediaSwitcher = ({
         shadowRadius: 3.84,
         elevation: 5,
       }}
-      testID="media-switcher-wrapper"
-    >
+      testID="media-switcher-wrapper">
       <Styles.SwitcherIndicator
         width={switchItemWidth}
         testID="switcher-indicator"
@@ -58,19 +56,19 @@ const MediaSwitcher = ({
         }}
       />
       <Styles.Row>
-        {switchItems.map((switchItem) => (
+        {switchItems.map(switchItem => (
           <Styles.OptionButton
             disabled={isSwitching || isDisabled}
             onPress={switchItem.onPress}
             testID={`${switchItem.title}-button`}
             width={switchItemWidth}
-            key={switchItem.title}
-          >
+            key={switchItem.title}>
             <Styles.OptionText
-              onLayout={(event: LayoutChangeEvent) => switchItem.onLayout(event)}
-              style={{ color: switchItem.textColor }}
-              testID={`${switchItem.title}-text`}
-            >
+              onLayout={(event: LayoutChangeEvent) =>
+                switchItem.onLayout(event)
+              }
+              style={{color: switchItem.textColor}}
+              testID={`${switchItem.title}-text`}>
               {switchItem.title}
             </Styles.OptionText>
           </Styles.OptionButton>

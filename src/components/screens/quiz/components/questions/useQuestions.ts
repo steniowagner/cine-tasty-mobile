@@ -1,21 +1,19 @@
 /* eslint-disable camelcase */
-import {
-  useCallback, useEffect, useState, useRef,
-} from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import {useCallback, useEffect, useState, useRef} from 'react';
+import {useQuery} from '@apollo/client';
 
-import { GET_QUIZ_QUESTIONS } from '@graphql/queries';
+import {GET_QUIZ_QUESTIONS} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
-import { QuestionsStackProps } from '../../routes/route-params-types';
+import {QuestionsStackProps} from '../../routes/route-params-types';
 
-const useQuestions = ({ navigation, route }: QuestionsStackProps) => {
+const useQuestions = ({navigation, route}: QuestionsStackProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const questionsFlatListRef = useRef(null);
 
-  const { data, error, loading } = useQuery<
+  const {data, error, loading} = useQuery<
     SchemaTypes.GetQuizQuestions,
     SchemaTypes.GetQuizQuestionsVariables
   >(GET_QUIZ_QUESTIONS, {
@@ -69,7 +67,8 @@ const useQuestions = ({ navigation, route }: QuestionsStackProps) => {
   }, []);
 
   return {
-    onPressNext: (currentAnswer: string) => setAnswers((prevAnswers) => [...prevAnswers, currentAnswer]),
+    onPressNext: (currentAnswer: string) =>
+      setAnswers(prevAnswers => [...prevAnswers, currentAnswer]),
     questions: data ? data.quiz : [],
     currentQuestionIndex,
     questionsFlatListRef,

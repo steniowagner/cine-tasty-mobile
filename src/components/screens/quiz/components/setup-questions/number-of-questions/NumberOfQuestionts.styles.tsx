@@ -1,9 +1,9 @@
-import { View, Text } from 'react-native';
-import styled from 'styled-components';
+import {View, Text} from 'react-native';
+import styled from 'styled-components/native';
 
 export const DefaultText = styled(Text)`
-  color: ${({ theme }) => theme.colors.text};
-  font-size: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  color: ${({theme}) => theme.colors.text};
+  font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Medium;
 `;
 

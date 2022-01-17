@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
-import React, { useEffect, useLayoutEffect, useMemo } from 'react';
-import { ScrollView, StatusBar } from 'react-native';
-import { withTheme } from 'styled-components';
+import React, {useEffect, useLayoutEffect, useMemo} from 'react';
+import {ScrollView, StatusBar} from 'react-native';
+import {withTheme} from 'styled-components/native';
 
 import ImagesList from '@components/common/images-list/ImagesList';
-import { useShowLanguageAlert, useStatusBarStyle } from '@hooks';
+import {useShowLanguageAlert, useStatusBarStyle} from '@hooks';
 import Section from '@components/common/section/Section';
 import * as TRANSLATIONS from '@i18n/tags';
 
@@ -12,7 +12,7 @@ import ProductionCompanies from '../../common/sections/production-network-compan
 import HeaderBackButton from '../../../header-back-button/HeaderBackButton';
 import useMovieDetailPressHandlers from './useMovieDetailPressHandlers';
 import Header from '../../common/header-info/header-info/HeaderInfo';
-import { MovieDetailStackProps } from '../routes/route-params-types';
+import {MovieDetailStackProps} from '../routes/route-params-types';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
 import MediaDetailError from '../../common/MediaDetailError';
@@ -23,31 +23,23 @@ import useMovieDetail from './useMovieDetail';
 import DetailsSection from './MovieDetailsSection';
 import SimilarSection from './SimilarSection';
 
-const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
-  const { handleShowLanguageAlert } = useShowLanguageAlert();
-  const {
-    onPressSimilarItem,
-    onPressCrew,
-    onPressReviews,
-    onPressCast,
-  } = useMovieDetailPressHandlers({
-    navigation,
-  });
-  const { barStyle } = useStatusBarStyle({ theme });
+const MovieDetail = ({navigation, theme, route}: MovieDetailStackProps) => {
+  const {handleShowLanguageAlert} = useShowLanguageAlert();
+  const {onPressSimilarItem, onPressCrew, onPressReviews, onPressCast} =
+    useMovieDetailPressHandlers({
+      navigation,
+    });
+  const {barStyle} = useStatusBarStyle({theme});
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <HeaderBackButton
-          onPress={() => navigation.goBack()}
-        />
+        <HeaderBackButton onPress={() => navigation.goBack()} />
       ),
     });
   }, []);
 
-  const {
-    isLoading, hasError, movie, t,
-  } = useMovieDetail({
+  const {isLoading, hasError, movie, t} = useMovieDetail({
     hasVoteAverage: !!route.params.voteAverage,
     hasVoteCount: !!route.params.voteCount,
     hasGenresIds: !!route.params.genreIds,
@@ -66,17 +58,13 @@ const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
     }
   }, [isLoading, movie]);
 
-  const releaseDate = useMemo((): string => (movie?.releaseDate || '-').split('-')[0], [
-    movie,
-  ]);
+  const releaseDate = useMemo(
+    (): string => (movie?.releaseDate || '-').split('-')[0],
+    [movie],
+  );
 
   if (hasError) {
-    return (
-      <MediaDetailError
-        barStyle={barStyle}
-        theme={theme}
-      />
-    );
+    return <MediaDetailError barStyle={barStyle} theme={theme} />;
   }
 
   return (
@@ -86,9 +74,7 @@ const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
         barStyle={barStyle}
         animated
       />
-      <ScrollView
-        bounces={false}
-      >
+      <ScrollView bounces={false}>
         <Header
           votesAverage={route.params.voteAverage || movie?.voteAverage}
           voteCount={route.params.voteCount || movie?.voteCount}
@@ -102,15 +88,10 @@ const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
           tags={route.params.genreIds || movie?.genres || []}
           isLoading={!route.params.genreIds && isLoading}
         />
-        <Overview
-          overview={movie?.overview}
-          isLoading={isLoading}
-        />
+        <Overview overview={movie?.overview} isLoading={isLoading} />
         {!!movie && (
           <>
-            <DetailsSection
-              movie={movie}
-            />
+            <DetailsSection movie={movie} />
             {!!movie.cast.length && (
               <PeopleList
                 sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
@@ -128,23 +109,16 @@ const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
               />
             )}
             {!!movie.images.length && (
-              <Section
-                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}
-              >
-                <ImagesList
-                  images={movie.images}
-                />
+              <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}>
+                <ImagesList images={movie.images} />
               </Section>
             )}
-            {!!movie.videos.length && (
-            <Videos
-              videos={movie.videos}
-            />
-            )}
+            {!!movie.videos.length && <Videos videos={movie.videos} />}
             {!!movie.productionCompanies.length && (
               <Section
-                title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES)}
-              >
+                title={t(
+                  TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
+                )}>
                 <ProductionCompanies
                   productionsList={movie.productionCompanies}
                 />
@@ -154,10 +128,7 @@ const MovieDetail = ({ navigation, theme, route }: MovieDetailStackProps) => {
               onPressViewAll={() => onPressReviews(movie)}
               reviews={movie.reviews}
             />
-            <SimilarSection
-              movie={movie}
-              onPressItem={onPressSimilarItem}
-            />
+            <SimilarSection movie={movie} onPressItem={onPressSimilarItem} />
           </>
         )}
       </ScrollView>

@@ -1,11 +1,11 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
+import {ThemeProvider} from 'styled-components/native';
 
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
-import { dark as theme } from '@styles/themes/dark';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
+import {dark as theme} from '@styles/themes/dark';
 
-import { SWITCH_ANIMATION_DURATION_MS } from './useMediaSwitcherAnimation';
+import {SWITCH_ANIMATION_DURATION_MS} from './useMediaSwitcherAnimation';
 import MediaSwitcher from './MediaSwitcher';
 
 const ACTIVE_TEXT_RGBA = theme.colors.buttonText;
@@ -27,7 +27,10 @@ const getMediaSwitcherProps = (switchPresses: SwitchPress[]) =>
       onPress: switchPresses[index],
     }));
 
-const renderMediaSwitcher = (switchPresses = defaultPresses, isDisabled = false) => (
+const renderMediaSwitcher = (
+  switchPresses = defaultPresses,
+  isDisabled = false,
+) => (
   <ThemeProvider theme={theme}>
     <MediaSwitcher
       items={getMediaSwitcherProps(switchPresses)}
@@ -43,11 +46,11 @@ describe('Testing <MediaSwitcher />', () => {
   afterEach(cleanup);
 
   it('should render correctly on the first render', () => {
-    const { getByTestId, getByText } = render(renderMediaSwitcher());
+    const {getByTestId, getByText} = render(renderMediaSwitcher());
 
-    expect(switchTitlesI18NRefs.every(titlei18nRef => getByText(titlei18nRef))).toBe(
-      true,
-    );
+    expect(
+      switchTitlesI18NRefs.every(titlei18nRef => getByText(titlei18nRef)),
+    ).toBe(true);
 
     expect(getByTestId('switch-title-0-text').props.style.color).toEqual(
       ACTIVE_TEXT_RGBA,
@@ -59,16 +62,16 @@ describe('Testing <MediaSwitcher />', () => {
 
     expect(getByTestId('switcher-indicator').props.style.opacity).toEqual(1);
 
-    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
-      0,
-    );
+    expect(
+      getByTestId('switcher-indicator').props.style.transform[0].translateX,
+    ).toEqual(0);
   });
 
   it('should switch the selection from the currently-selected-item to the next-item when the next-item is pressed', () => {
     const pressFirstItem = jest.fn();
     const pressSecondItem = jest.fn();
 
-    const { getByTestId } = render(
+    const {getByTestId} = render(
       renderMediaSwitcher([pressFirstItem, pressSecondItem]),
     );
 
@@ -94,9 +97,9 @@ describe('Testing <MediaSwitcher />', () => {
       ACTIVE_TEXT_RGBA,
     );
 
-    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
-      750,
-    );
+    expect(
+      getByTestId('switcher-indicator').props.style.transform[0].translateX,
+    ).toEqual(750);
 
     expect(pressFirstItem).toHaveBeenCalledTimes(0);
 
@@ -107,7 +110,7 @@ describe('Testing <MediaSwitcher />', () => {
     const pressFirstItem = jest.fn();
     const pressSecondItem = jest.fn();
 
-    const { getByTestId } = render(
+    const {getByTestId} = render(
       renderMediaSwitcher([pressFirstItem, pressSecondItem]),
     );
 
@@ -119,9 +122,9 @@ describe('Testing <MediaSwitcher />', () => {
       INACTIVE_TEXT_RGBA,
     );
 
-    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
-      0,
-    );
+    expect(
+      getByTestId('switcher-indicator').props.style.transform[0].translateX,
+    ).toEqual(0);
 
     fireEvent.press(getByTestId('switch-title-1-button'));
 
@@ -137,9 +140,9 @@ describe('Testing <MediaSwitcher />', () => {
       ACTIVE_TEXT_RGBA,
     );
 
-    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
-      750,
-    );
+    expect(
+      getByTestId('switcher-indicator').props.style.transform[0].translateX,
+    ).toEqual(750);
 
     fireEvent.press(getByTestId('switch-title-0-button'));
 
@@ -155,9 +158,9 @@ describe('Testing <MediaSwitcher />', () => {
       INACTIVE_TEXT_RGBA,
     );
 
-    expect(getByTestId('switcher-indicator').props.style.transform[0].translateX).toEqual(
-      0,
-    );
+    expect(
+      getByTestId('switcher-indicator').props.style.transform[0].translateX,
+    ).toEqual(0);
 
     expect(pressFirstItem).toHaveBeenCalledTimes(1);
 
@@ -168,7 +171,7 @@ describe('Testing <MediaSwitcher />', () => {
     const pressFirstItem = jest.fn();
     const pressSecondItem = jest.fn();
 
-    const { getByTestId } = render(
+    const {getByTestId} = render(
       renderMediaSwitcher([pressFirstItem, pressSecondItem]),
     );
 
@@ -187,7 +190,7 @@ describe('Testing <MediaSwitcher />', () => {
     const pressFirstItem = jest.fn();
     const pressSecondItem = jest.fn();
 
-    const { getByTestId } = render(
+    const {getByTestId} = render(
       renderMediaSwitcher([pressFirstItem, pressSecondItem]),
     );
 
@@ -211,7 +214,7 @@ describe('Testing <MediaSwitcher />', () => {
   it('should not call the press-first-item-callback when "isDisabled" is "true" and the user press the first-item', () => {
     const pressFirstItem = jest.fn();
 
-    const { getByTestId } = render(
+    const {getByTestId} = render(
       renderMediaSwitcher([pressFirstItem, jest.fn()], true),
     );
 
@@ -227,7 +230,7 @@ describe('Testing <MediaSwitcher />', () => {
   it('should not call the press-first-item-callback when "isDisabled" is "true" and the user press the second-item', () => {
     const pressSecondItem = jest.fn();
 
-    const { getByTestId } = render(
+    const {getByTestId} = render(
       renderMediaSwitcher([jest.fn(), pressSecondItem], true),
     );
 
@@ -241,7 +244,7 @@ describe('Testing <MediaSwitcher />', () => {
   });
 
   it('should render correctly when "isDisabled" is "true"', () => {
-    const { getByTestId } = render(renderMediaSwitcher(undefined, true));
+    const {getByTestId} = render(renderMediaSwitcher(undefined, true));
 
     expect(getByTestId('switcher-indicator').props.style.opacity).toEqual(0.5);
   });

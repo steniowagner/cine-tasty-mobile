@@ -1,12 +1,12 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { DefaultTheme } from 'styled-components';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {DefaultTheme} from 'styled-components/native';
 
-import { TVShowDetailParams } from '@components/screens/shared/media-detail/tv-show-detail/routes/route-params-types';
-import { MovieDetailParams } from '@components/screens/shared/media-detail/movie-detail/routes/route-params-types';
-import { FamousDetailParams } from '@components/screens/shared/famous-detail/routes/route-params-types';
+import {TVShowDetailParams} from '@components/screens/shared/media-detail/tv-show-detail/routes/route-params-types';
+import {MovieDetailParams} from '@components/screens/shared/media-detail/movie-detail/routes/route-params-types';
+import {FamousDetailParams} from '@components/screens/shared/famous-detail/routes/route-params-types';
 import * as SchemaTypes from '@schema-types';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
 type SearchStackParams = {
@@ -30,7 +30,10 @@ export type SearchNavigationProp = StackNavigationProp<
   Routes.Search.SEARCH
 >;
 
-export type SearchRouteProp = RouteProp<SearchStackParams, Routes.Search.SEARCH>;
+export type SearchRouteProp = RouteProp<
+  SearchStackParams,
+  Routes.Search.SEARCH
+>;
 
 export type SearchStackProps = {
   navigation: SearchNavigationProp;

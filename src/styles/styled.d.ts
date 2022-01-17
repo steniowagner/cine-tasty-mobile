@@ -1,8 +1,8 @@
-import 'styled-components';
+import 'styled-components/native';
 
-import { ThemeId } from '../types';
+import {ThemeId} from '../types';
 
-declare module 'styled-components' {
+declare module 'styled-components/native' {
   export type Colors = {
     fallbackImageBackground: string;
     backgroundAlphax1: string;

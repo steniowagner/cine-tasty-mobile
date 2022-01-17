@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
-import { StyleProp } from 'react-native';
-import { withTheme, DefaultTheme, Colors } from 'styled-components';
-import { SvgXml } from 'react-native-svg';
+import React, {useMemo} from 'react';
+import {StyleProp} from 'react-native';
+import {withTheme, DefaultTheme, Colors} from 'styled-components/native';
+import {SvgXml} from 'react-native-svg';
 
-import getXML, { SupportedIcons } from './getXML';
+import getXML, {SupportedIcons} from './getXML';
 
 export type SVGIconProps = {
   colorThemeRef?: keyof Colors;
@@ -13,9 +13,7 @@ export type SVGIconProps = {
   size: number;
 };
 
-const SVGIcon = ({
-  colorThemeRef, style, theme, size, id,
-}: SVGIconProps) => {
+const SVGIcon = ({colorThemeRef, style, theme, size, id}: SVGIconProps) => {
   const xml = useMemo(() => {
     let color: string = theme.colors.text;
 

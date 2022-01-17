@@ -1,11 +1,11 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { DefaultTheme } from 'styled-components';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {DefaultTheme} from 'styled-components/native';
 
-import { TVShowSeasonsParams } from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
-import { ReviewsParams } from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
-import { FamousDetailParams } from '@components/screens/shared/famous-detail/routes/route-params-types';
-import { Routes } from '@routes/routes';
+import {TVShowSeasonsParams} from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
+import {ReviewsParams} from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
+import {FamousDetailParams} from '@components/screens/shared/famous-detail/routes/route-params-types';
+import {Routes} from '@routes/routes';
 
 type TVShowdetailStackParams = {
   [Routes.TVShow.DETAILS]: TVShowDetailParams;

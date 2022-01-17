@@ -1,6 +1,6 @@
-import { View } from 'react-native';
+import {View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 import * as Types from '@local-types';
 
@@ -10,11 +10,11 @@ type SmokeShadowStyleProps = {
 
 export const Wrapper = styled(View)`
   width: 100%;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('50%')}px;
+  height: ${({theme}) => theme.metrics.getWidthFromDP('50%')}px;
 `;
 
 export const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
-  ({ currentTheme, theme }) => {
+  ({currentTheme, theme}) => {
     if (currentTheme === Types.ThemeId.DARK) {
       return {
         colors: [

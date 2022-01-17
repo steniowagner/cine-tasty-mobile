@@ -1,13 +1,13 @@
-import { Animated, Text } from 'react-native';
-import styled from 'styled-components';
+import {Animated, Text} from 'react-native';
+import styled from 'styled-components/native';
 
 export const PersonName = styled(Text).attrs({
   numberOfLines: 2,
 })`
-  margin-top: ${({ theme }) => theme.metrics.mediumSize}px;
-  font-size: ${({ theme }) => theme.metrics.largeSize}px;
+  margin-top: ${({theme}) => theme.metrics.mediumSize}px;
+  font-size: ${({theme}) => theme.metrics.largeSize}px;
   font-family: CircularStd-Medium;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({theme}) => theme.colors.text};
 `;
 
 export const FallbackImageWrapper = styled(Animated.View)`
@@ -16,6 +16,6 @@ export const FallbackImageWrapper = styled(Animated.View)`
   justify-content: center;
   align-items: center;
   position: absolute;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
+  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
+  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;

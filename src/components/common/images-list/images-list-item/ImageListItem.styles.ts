@@ -1,5 +1,5 @@
-import { TouchableOpacity, Animated } from 'react-native';
-import styled from 'styled-components';
+import {TouchableOpacity, Animated} from 'react-native';
+import styled from 'styled-components/native';
 
 import CONSTANTS from '@utils/constants';
 
@@ -8,17 +8,17 @@ type WrapperStyleProps = {
 };
 
 export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('45%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('32%')}px;
-  margin-left: ${({ isFirst }) => {
+  width: ${({theme}) => theme.metrics.getWidthFromDP('45%')}px;
+  height: ${({theme}) => theme.metrics.getWidthFromDP('32%')}px;
+  margin-left: ${({isFirst}) => {
     if (isFirst) {
       return CONSTANTS.VALUES.DEFAULT_SPACING;
     }
 
     return 0;
   }}px;
-  margin-right: ${({ theme }) => theme.metrics.largeSize}px;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  margin-right: ${({theme}) => theme.metrics.largeSize}px;
+  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;
 
 export const FallbackImageWrapper = styled(Animated.View)`
@@ -27,6 +27,6 @@ export const FallbackImageWrapper = styled(Animated.View)`
   justify-content: center;
   align-items: center;
   position: absolute;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
+  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
+  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;

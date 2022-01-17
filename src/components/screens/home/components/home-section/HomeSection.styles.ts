@@ -1,17 +1,17 @@
 /* eslint-disable react/display-name */
-import { View } from 'react-native';
-import styled from 'styled-components';
+import {View} from 'react-native';
+import styled from 'styled-components/native';
 
 import CONSTANTS from '@utils/constants';
 
 export const Wrapper = styled(View)`
   width: 100%;
-  margin-vertical: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  margin-vertical: ${({theme}) => theme.metrics.extraLargeSize}px;
 `;
 
 export const SectionTextContentWrapper = styled(View)`
   width: 100%;
-  margin-bottom: ${({ theme }) => theme.metrics.largeSize}px;
+  margin-bottom: ${({theme}) => theme.metrics.largeSize}px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

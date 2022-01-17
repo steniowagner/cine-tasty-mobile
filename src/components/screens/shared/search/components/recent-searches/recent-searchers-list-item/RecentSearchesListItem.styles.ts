@@ -1,7 +1,5 @@
-import {
-  TouchableOpacity, Animated, Text, View,
-} from 'react-native';
-import styled from 'styled-components';
+import {TouchableOpacity, Animated, Text, View} from 'react-native';
+import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';
 
@@ -14,7 +12,7 @@ export const Wrapper = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: ${({ theme }) => theme.metrics.getWidthFromDP('6%')}px;
+  margin-bottom: ${({theme}) => theme.metrics.getWidthFromDP('6%')}px;
 `;
 
 export const PressableContent = styled(TouchableOpacity)`
@@ -23,27 +21,28 @@ export const PressableContent = styled(TouchableOpacity)`
 `;
 
 export const FallbackImageWrapper = styled(Animated.View)`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP(IMAGE_WIDTH_PERCENTAGE)}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP(IMAGE_HEIGHT_PERCENTAGE)}px;
+  width: ${({theme}) => theme.metrics.getWidthFromDP(IMAGE_WIDTH_PERCENTAGE)}px;
+  height: ${({theme}) =>
+    theme.metrics.getWidthFromDP(IMAGE_HEIGHT_PERCENTAGE)}px;
   justify-content: center;
   align-items: center;
   position: absolute;
-  border-radius: ${({ theme }) => theme.metrics.smallSize}px;
-  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
+  border-radius: ${({theme}) => theme.metrics.smallSize}px;
+  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;
 
 export const ItemText = styled(Text).attrs({
   numberOfLines: 2,
 })`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('55%')}px;
-  margin-left: ${({ theme }) => theme.metrics.mediumSize}px;
-  margin-right: ${({ theme }) => theme.metrics.extraLargeSize}px;
+  width: ${({theme}) => theme.metrics.getWidthFromDP('55%')}px;
+  margin-left: ${({theme}) => theme.metrics.mediumSize}px;
+  margin-right: ${({theme}) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Medium;
-  font-size: ${({ theme }) => theme.metrics.largeSize * 1.2}px;
-  color: ${({ theme }) => theme.colors.text};
+  font-size: ${({theme}) => theme.metrics.largeSize * 1.2}px;
+  color: ${({theme}) => theme.colors.text};
 `;
 
-export const CloseButtonWrapper = styled(TouchableOpacity).attrs(({ theme }) => ({
+export const CloseButtonWrapper = styled(TouchableOpacity).attrs(({theme}) => ({
   hitSlop: {
     top: theme.metrics.largeSize,
     bottom: theme.metrics.largeSize,

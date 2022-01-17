@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { DefaultTheme, withTheme } from 'styled-components';
+import React, {useRef} from 'react';
+import {DefaultTheme, withTheme} from 'styled-components/native';
 import Slider from '@react-native-community/slider';
 
 import * as Styles from './NumberOfQuestionts.styles';
@@ -26,15 +26,16 @@ const NumberOfQuestions = ({
         style={{
           textAlign: 'center',
         }}
-        testID="default-text"
-      >
+        testID="default-text">
         {numberOfQuestions}
       </Styles.DefaultText>
       <Slider
-        onLayout={() => numberQuestionsSliderRef.current.setNativeProps({
-          value: numberOfQuestions,
-        })}
-        onValueChange={(distance) => onSetNumberQuestions(distance)}
+        onLayout={() =>
+          numberQuestionsSliderRef.current.setNativeProps({
+            value: numberOfQuestions,
+          })
+        }
+        onValueChange={distance => onSetNumberQuestions(distance)}
         maximumTrackTintColor={theme.colors.contrast}
         minimumTrackTintColor={theme.colors.text}
         thumbTintColor={theme.colors.text}

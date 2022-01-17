@@ -1,9 +1,9 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { DefaultTheme } from 'styled-components';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {DefaultTheme} from 'styled-components/native';
 
-import { CustomModalParams } from '@components/screens/shared/customized-modal/routes/route-params-types';
-import { Routes } from '@routes/routes';
+import {CustomModalParams} from '@components/screens/shared/customized-modal/routes/route-params-types';
+import {Routes} from '@routes/routes';
 
 type TVShowSeasonsStackParams = {
   [Routes.TVShow.SEASONS_TABS]: TVShowSeasonsTabsDetailProps;

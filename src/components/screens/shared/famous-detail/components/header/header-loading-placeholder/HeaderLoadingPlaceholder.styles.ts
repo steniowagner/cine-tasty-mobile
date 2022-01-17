@@ -1,5 +1,5 @@
-import { View } from 'react-native';
-import styled from 'styled-components';
+import {View} from 'react-native';
+import styled from 'styled-components/native';
 
 export const LoadingWrapper = styled(View)`
   flex-direction: row;
@@ -7,5 +7,5 @@ export const LoadingWrapper = styled(View)`
 `;
 
 export const TextLoadingWrapper = styled(View)`
-  margin-left: ${({ theme }) => theme.metrics.mediumSize}px;
+  margin-left: ${({theme}) => theme.metrics.mediumSize}px;
 `;

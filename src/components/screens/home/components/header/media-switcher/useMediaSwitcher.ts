@@ -1,9 +1,7 @@
-import {
-  useCallback, useState, useMemo, useEffect,
-} from 'react';
-import { LayoutChangeEvent } from 'react-native';
-import { DefaultTheme } from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useState, useMemo, useEffect} from 'react';
+import {LayoutChangeEvent} from 'react-native';
+import {DefaultTheme} from 'styled-components/native';
+import {useTranslation} from 'react-i18next';
 
 import metrics from '@styles/metrics';
 
@@ -29,9 +27,9 @@ const useMediaSwitcher = ({
   const [isSwitching, setIsSwitching] = useState<boolean>(false);
   const [indexSelected, setIndexSelected] = useState<number>(0);
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
-  const { onAniamateSwitch, translateX } = useMediaSwitcherAnimation({
+  const {onAniamateSwitch, translateX} = useMediaSwitcherAnimation({
     setIndexSelected,
     setIsSwitching,
     indexSelected,
@@ -45,9 +43,13 @@ const useMediaSwitcher = ({
         return;
       }
 
-      const { width } = event.nativeEvent.layout;
+      const {width} = event.nativeEvent.layout;
 
-      setSwitchItemsWidth((previousSwitchItemsWidths: number[]) => Object.assign([...previousSwitchItemsWidths], { [switchItemindex]: width }));
+      setSwitchItemsWidth((previousSwitchItemsWidths: number[]) =>
+        Object.assign([...previousSwitchItemsWidths], {
+          [switchItemindex]: width,
+        }),
+      );
     },
     [switchItemsWidths],
   );
@@ -72,13 +74,15 @@ const useMediaSwitcher = ({
     () => [
       {
         onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 0),
-        textColor: indexSelected === 0 ? theme.colors.buttonText : theme.colors.text,
+        textColor:
+          indexSelected === 0 ? theme.colors.buttonText : theme.colors.text,
         onPress: () => onAniamateSwitch(0, items[0].onPress),
         title: t(items[0].titlei18nRef),
       },
       {
         onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 1),
-        textColor: indexSelected === 1 ? theme.colors.buttonText : theme.colors.text,
+        textColor:
+          indexSelected === 1 ? theme.colors.buttonText : theme.colors.text,
         onPress: () => onAniamateSwitch(1, items[1].onPress),
         title: t(items[1].titlei18nRef),
       },

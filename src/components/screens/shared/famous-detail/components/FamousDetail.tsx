@@ -1,49 +1,46 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/display-name */
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import { StatusBar, Animated } from 'react-native';
-import { withTheme } from 'styled-components';
+import React, {useEffect, useLayoutEffect, useRef} from 'react';
+import {StatusBar, Animated} from 'react-native';
+import {withTheme} from 'styled-components/native';
 
 import ExpansibleTextSection from '@components/common/expansible-text-section/ExpansibleTextSection';
 import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
-import { useGetCurrentTheme, useShowLanguageAlert, useStatusBarStyle } from '@hooks';
+import {
+  useGetCurrentTheme,
+  useShowLanguageAlert,
+  useStatusBarStyle,
+} from '@hooks';
 import Advise from '@components/common/advise/Advise';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
 import useRenderFamousDetailSections from './useRenderFamousDetailSections';
 import HeaderBackButton from '../../header-back-button/HeaderBackButton';
-import { FamousDetailStackProps } from '../routes/route-params-types';
+import {FamousDetailStackProps} from '../routes/route-params-types';
 import HeaderInfo from './header/header-info/HeaderInfo';
 import useFamousDetail from './useFamousDetail';
 import * as Styles from './FamousDetail.styles';
 import DeathDay from './death-day/DeathDay';
 
-const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
+const FamousDetail = ({navigation, theme, route}: FamousDetailStackProps) => {
   const scrollViewOffset = useRef(new Animated.Value(0)).current;
 
-  const { handleShowLanguageAlert } = useShowLanguageAlert();
-  const { currentTheme } = useGetCurrentTheme({ theme });
-  const {
-    renderTVShowCastSection,
-    renderMovieCastSection,
-    renderImagesSection,
-  } = useRenderFamousDetailSections({ navigation });
-  const { barStyle } = useStatusBarStyle({ theme });
+  const {handleShowLanguageAlert} = useShowLanguageAlert();
+  const {currentTheme} = useGetCurrentTheme({theme});
+  const {renderTVShowCastSection, renderMovieCastSection, renderImagesSection} =
+    useRenderFamousDetailSections({navigation});
+  const {barStyle} = useStatusBarStyle({theme});
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <HeaderBackButton
-          onPress={() => navigation.goBack()}
-        />
+        <HeaderBackButton onPress={() => navigation.goBack()} />
       ),
     });
   }, []);
 
-  const {
-    backgroundImage, isLoading, famous, hasError, t,
-  } = useFamousDetail({
+  const {backgroundImage, isLoading, famous, hasError, t} = useFamousDetail({
     id: route.params.id,
   });
 
@@ -77,9 +74,7 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
         barStyle={barStyle}
         animated
       />
-      <Styles.BackgroundImageWrapper
-        testID="background-image-wrapper"
-      >
+      <Styles.BackgroundImageWrapper testID="background-image-wrapper">
         <Animated.View
           style={{
             opacity: scrollViewOffset.interpolate({
@@ -87,12 +82,8 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
               outputRange: [1, 0],
               extrapolate: 'clamp',
             }),
-          }}
-        >
-          <ProgressiveImage
-            image={backgroundImage}
-            imageType="backdrop"
-          />
+          }}>
+          <ProgressiveImage image={backgroundImage} imageType="backdrop" />
         </Animated.View>
         <Styles.SmokeShadow
           // @ts-ignore
@@ -105,7 +96,7 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
           [
             {
               nativeEvent: {
-                contentOffset: { y: scrollViewOffset },
+                contentOffset: {y: scrollViewOffset},
               },
             },
           ],
@@ -113,8 +104,7 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
             useNativeDriver: true,
           },
         )}
-        testID="scroll-content"
-      >
+        testID="scroll-content">
         <HeaderInfo
           knownForDepartment={famous?.knownForDepartment}
           profileImage={route.params.profileImage}
@@ -123,14 +113,8 @@ const FamousDetail = ({ navigation, theme, route }: FamousDetailStackProps) => {
           name={route.params.name}
           isLoading={isLoading}
         />
-        {!!famous?.deathday && (
-        <DeathDay
-          deathDate={famous.deathday}
-        />
-        )}
-        <Styles.BiographySectionWrapper
-          testID="biography-section"
-        >
+        {!!famous?.deathday && <DeathDay deathDate={famous.deathday} />}
+        <Styles.BiographySectionWrapper testID="biography-section">
           <ExpansibleTextSection
             sectionTitle={t(TRANSLATIONS.FAMOUS_DETAIL_BIOGRAPGY)}
             text={famous?.biography}

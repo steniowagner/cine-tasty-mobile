@@ -1,7 +1,7 @@
 import React from 'react';
-import { StatusBar, StatusBarStyle } from 'react-native';
-import { DefaultTheme } from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import {StatusBar, StatusBarStyle} from 'react-native';
+import {DefaultTheme} from 'styled-components/native';
+import {useTranslation} from 'react-i18next';
 
 import Advise from '@components/common/advise/Advise';
 import * as TRANSLATIONS from '@i18n/tags';
@@ -11,8 +11,8 @@ type MediaDetailErrorProps = {
   theme: DefaultTheme;
 };
 
-const MediaDetailError = ({ barStyle, theme }: MediaDetailErrorProps) => {
-  const { t } = useTranslation();
+const MediaDetailError = ({barStyle, theme}: MediaDetailErrorProps) => {
+  const {t} = useTranslation();
 
   return (
     <>

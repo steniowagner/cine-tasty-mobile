@@ -1,7 +1,7 @@
-import { TouchableOpacity } from 'react-native';
-import styled from 'styled-components';
+import {TouchableOpacity} from 'react-native';
+import styled from 'styled-components/native';
 
-export const ReloadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
+export const ReloadButton = styled(TouchableOpacity).attrs(({theme}) => ({
   hitSlop: {
     top: theme.metrics.largeSize,
     bottom: theme.metrics.largeSize,
@@ -10,5 +10,5 @@ export const ReloadButton = styled(TouchableOpacity).attrs(({ theme }) => ({
   },
 }))`
   align-self: center;
-  margin-top: ${({ theme }) => theme.metrics.largeSize}px;
+  margin-top: ${({theme}) => theme.metrics.largeSize}px;
 `;

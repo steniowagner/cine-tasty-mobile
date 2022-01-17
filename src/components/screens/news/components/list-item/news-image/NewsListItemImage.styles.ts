@@ -1,8 +1,8 @@
-import { Animated } from 'react-native';
-import styled from 'styled-components';
+import {Animated} from 'react-native';
+import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 
-import { imageWrapper } from '../NewsListItem.styles';
+import {imageWrapper} from '../NewsListItem.styles';
 
 export const ImageContent = styled(FastImage)`
   width: ${imageWrapper.width}px;
@@ -17,5 +17,5 @@ export const FallbackImageWrapper = styled(Animated.View)`
   align-items: center;
   position: absolute;
   border-radius: ${imageWrapper.borderRadius}px;
-  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
+  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;
