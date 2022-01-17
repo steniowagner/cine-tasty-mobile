@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
+import {fireEvent, render} from '@testing-library/react-native';
 
-import { ThemeContextProvider } from '@providers';
-import { Routes } from '@routes/routes';
+import {ThemeContextProvider} from '@providers';
+import {Routes} from '@routes/routes';
 
 import TabNavigator from './TabNavigator';
 import items from './items';
@@ -26,14 +26,14 @@ const getState = (currentRouteName: string) => ({
 
 const renderTabNavigator = (
   navigate = jest.fn(),
-  currentRouteName = Routes.Home.HOME as string,
+  currentRouteName = Routes.Tabs.HOME as string,
 ) => (
   <ThemeContextProvider>
     <TabNavigator
       // @ts-ignore
       state={getState(currentRouteName)}
       // @ts-ignore
-      navigation={{ navigate }}
+      navigation={{navigate}}
     />
   </ThemeContextProvider>
 );
@@ -45,27 +45,34 @@ describe('Testing <TabNavigator />', () => {
 
   describe('Testing the render', () => {
     it('should render correctly', () => {
-      const { getByTestId } = render(renderTabNavigator());
+      const {getByTestId} = render(renderTabNavigator());
 
       expect(getByTestId('tab-wrapper')).not.toBeNull();
 
-      expect(Array.isArray(getByTestId('tab-wrapper').props.children)).toEqual(true);
+      expect(Array.isArray(getByTestId('tab-wrapper').props.children)).toEqual(
+        true,
+      );
 
-      expect(getByTestId('tab-wrapper').props.children.length).toEqual(items.length);
+      expect(getByTestId('tab-wrapper').props.children.length).toEqual(
+        items.length,
+      );
     });
 
     it('should return null when the current screen is not able to show the "TabNavigator"', () => {
-      const { queryByTestId } = render(renderTabNavigator(undefined, 'OTHER_SCREEN'));
+      const {queryByTestId} = render(
+        renderTabNavigator(undefined, 'OTHER_SCREEN'),
+      );
 
       expect(queryByTestId('tab-wrapper')).toBeNull();
     });
 
     it('should render children correctly on the first render', () => {
       const TAB_SELECTED_INDEX = 0;
-      const { getByTestId } = render(renderTabNavigator());
+      const {getByTestId} = render(renderTabNavigator());
 
       expect(
-        getByTestId('tab-wrapper').props.children[TAB_SELECTED_INDEX].props.isSelected,
+        getByTestId('tab-wrapper').props.children[TAB_SELECTED_INDEX].props
+          .isSelected,
       ).toEqual(true);
 
       expect(
@@ -80,9 +87,11 @@ describe('Testing <TabNavigator />', () => {
 
       const navigate = jest.fn();
 
-      const { getByTestId } = render(renderTabNavigator(navigate));
+      const {getByTestId} = render(renderTabNavigator(navigate));
 
-      fireEvent.press(getByTestId('tab-wrapper').props.children[INDEX_SELECTED]);
+      fireEvent.press(
+        getByTestId('tab-wrapper').props.children[INDEX_SELECTED],
+      );
 
       expect(navigate).toBeCalledTimes(1);
 
@@ -92,13 +101,13 @@ describe('Testing <TabNavigator />', () => {
     it('should call navigation when the user press in a certain tab', () => {
       const navigate = jest.fn();
 
-      const { getAllByTestId } = render(renderTabNavigator(navigate));
+      const {getAllByTestId} = render(renderTabNavigator(navigate));
 
       fireEvent.press(getAllByTestId('button-wrapper')[0]);
 
       expect(navigate).toHaveBeenCalledTimes(1);
 
-      expect(navigate).toHaveBeenCalledWith(Routes.Home.HOME);
+      expect(navigate).toHaveBeenCalledWith(Routes.Tabs.HOME);
     });
   });
 });

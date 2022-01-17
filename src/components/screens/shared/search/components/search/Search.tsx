@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useLayoutEffect } from 'react';
+import React, {useLayoutEffect} from 'react';
 
 import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 // @ts-ignore
@@ -8,23 +8,29 @@ import Advise from '@components/common/advise/Advise';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import { SearchStackProps } from '../../routes/route-params-types';
+import {SearchStackProps} from '../../routes/route-params-types';
 import RecentSearches from '../recent-searches/RecentSearches';
 import FamousSearch from '../famous-search/FamousSearch';
 import MediaSearch from '../media-search/MediaSearch';
 import usePressHandlers from './usePressHandlers';
 import useSearch from './use-search/useSearch';
 
-type FamousSearchPress = (item: SchemaTypes.SearchPerson_search_items_BasePerson) => void;
+type FamousSearchPress = (
+  item: SchemaTypes.SearchPerson_search_items_BasePerson,
+) => void;
 type FamousSearchItems = SchemaTypes.SearchPerson_search_items_BasePerson[];
 
-type TVShowSearchPress = (item: SchemaTypes.SearchTVShow_search_items_BaseTVShow) => void;
+type TVShowSearchPress = (
+  item: SchemaTypes.SearchTVShow_search_items_BaseTVShow,
+) => void;
 type TVShowSearchItems = SchemaTypes.SearchTVShow_search_items_BaseTVShow[];
 
-type MovieSearchPress = (item: SchemaTypes.SearchMovie_search_items_BaseMovie) => void;
+type MovieSearchPress = (
+  item: SchemaTypes.SearchMovie_search_items_BaseMovie,
+) => void;
 type MovieSearchItems = SchemaTypes.SearchMovie_search_items_BaseMovie[];
 
-const Search = ({ navigation, route }: SearchStackProps) => {
+const Search = ({navigation, route}: SearchStackProps) => {
   const {
     onPressFooterReloadButton,
     shouldShowEmptyListAdvise,
@@ -45,7 +51,7 @@ const Search = ({ navigation, route }: SearchStackProps) => {
     queryId: route.params.queryId,
   });
 
-  const { onPressRecentSearchItem, onPressListItem } = usePressHandlers({
+  const {onPressRecentSearchItem, onPressListItem} = usePressHandlers({
     searchType: route.params.searchType,
     navigation,
   });
@@ -118,11 +124,7 @@ const Search = ({ navigation, route }: SearchStackProps) => {
           searchType={route.params.searchType}
         />
       )}
-      {!!errorMessage && (
-      <PopupAdvice
-        text={errorMessage}
-      />
-      )}
+      {!!errorMessage && <PopupAdvice text={errorMessage} />}
     </>
   );
 };

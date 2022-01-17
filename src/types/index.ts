@@ -40,7 +40,7 @@ export type LocalStackRoute<T> = {
 };
 
 export type TabNavigatorItem = {
-  id: Routes.Home.HOME | Routes.Famous.FAMOUS | Routes.Quiz.QUIZ | Routes.News.NEWS;
+  id: Routes.Tabs.HOME | Routes.Tabs.FAMOUS | Routes.Tabs.QUIZ | Routes.Tabs.NEWS;
   inactiveIcon: SupportedIcons;
   activeIcon: SupportedIcons;
 };

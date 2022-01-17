@@ -37,7 +37,9 @@ const RouteNavigation = () => {
         animationEnabled: false,
         headerShown: false,
       }}
-      mode="modal">
+      defaultScreenOptions={{
+        presentation: 'modal',
+      }}>
       {currentStack === 'checking-initial-screen' && (
         <RootStack.Screen
           options={{headerShown: false}}
@@ -63,7 +65,7 @@ const RouteNavigation = () => {
           <RootStack.Screen
             options={{headerShown: false, animationEnabled: true}}
             component={CustomModal}
-            name={Routes.CustomModal.CUSTOM_MODAL}
+            name={Routes.CustomModal.CUSTOM_MODAL_STACK}
           />
         </>
       )}

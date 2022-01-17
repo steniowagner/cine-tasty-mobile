@@ -1,26 +1,26 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { IMocks } from 'graphql-tools';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
+import {IMocks} from 'graphql-tools';
 
-import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
+import {PAGINATION_DELAY} from '@src/hooks/use-paginated-query/useQueryWithPagination';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
-import { news } from '@mocks/fixtures';
+import {news} from '@mocks/fixtures';
 
 import News from './News';
 
 const renderNews = (mockResolvers?: IMocks, navigate = jest.fn()) => {
-  const NewsComponent = ({ navigation }) => (
+  const NewsComponent = ({navigation}) => (
     <AutoMockProvider mockResolvers={mockResolvers}>
       <News
-        navigation={{ ...navigation, navigate }}
+        navigation={{...navigation, navigate}}
         route={{
           name: Routes.News.NEWS,
           key: `${Routes.News.NEWS}-key`,
@@ -46,7 +46,7 @@ describe('Testing <News />', () => {
       }),
     };
 
-    const { getByTestId } = render(renderNews(mockResolvers, navigate));
+    const {getByTestId} = render(renderNews(mockResolvers, navigate));
 
     act(() => {
       try {
@@ -60,7 +60,9 @@ describe('Testing <News />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
+    expect(navigate.mock.calls[0][0]).toEqual(
+      Routes.CustomModal.CUSTOM_MODAL_STACK,
+    );
 
     expect(navigate.mock.calls[0][1].headerText).toEqual(
       TRANSLATIONS.NEWS_FILTER_MESSAGE,
@@ -70,7 +72,9 @@ describe('Testing <News />', () => {
       Types.CustomizedModalChildrenType.LANGUAGE,
     );
 
-    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
+    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual(
+      'function',
+    );
 
     expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(
       SchemaTypes.ArticleLanguage.EN,
@@ -84,7 +88,7 @@ describe('Testing <News />', () => {
       }),
     };
 
-    const { queryByTestId } = render(renderNews(mockResolvers));
+    const {queryByTestId} = render(renderNews(mockResolvers));
 
     expect(queryByTestId('news-loading-list')).not.toBeNull();
 
@@ -102,7 +106,7 @@ describe('Testing <News />', () => {
       }),
     };
 
-    const { queryByTestId, getByText } = render(renderNews(mockResolvers));
+    const {queryByTestId, getByText} = render(renderNews(mockResolvers));
 
     expect(queryByTestId('news-loading-list')).not.toBeNull();
 
@@ -131,7 +135,7 @@ describe('Testing <News />', () => {
       }),
     };
 
-    const { queryByTestId, getByTestId } = render(renderNews(mockResolvers));
+    const {queryByTestId, getByTestId} = render(renderNews(mockResolvers));
 
     expect(getByTestId('news-loading-list')).not.toBeNull();
 
@@ -169,7 +173,9 @@ describe('Testing <News />', () => {
       } catch (err) {}
     });
 
-    expect(queryByTestId('news-list').props.data.length).toEqual(news.length * 2);
+    expect(queryByTestId('news-list').props.data.length).toEqual(
+      news.length * 2,
+    );
 
     expect(queryByTestId('pagination-footer-wrapper')).toBeNull();
 
@@ -186,7 +192,7 @@ describe('Testing <News />', () => {
       }),
     };
 
-    const { queryByTestId } = render(renderNews(mockResolvers));
+    const {queryByTestId} = render(renderNews(mockResolvers));
 
     expect(queryByTestId('news-loading-list')).not.toBeNull();
 

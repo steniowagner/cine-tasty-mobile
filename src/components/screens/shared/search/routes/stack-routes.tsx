@@ -24,7 +24,10 @@ const SearchStack = ({route, theme}: SearchStackProps) => {
   const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
 
   return (
-    <Stack.Navigator headerMode="screen">
+    <Stack.Navigator
+      screenOptions={{
+        headerMode: 'screen',
+      }}>
       <Stack.Screen
         name={Routes.Search.SEARCH}
         options={{

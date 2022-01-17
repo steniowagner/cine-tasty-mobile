@@ -7,7 +7,7 @@ import {Routes} from '@routes/routes';
 
 type TVShowSeasonsStackParams = {
   [Routes.TVShow.SEASONS_TABS]: TVShowSeasonsTabsDetailProps;
-  [Routes.CustomModal.CUSTOM_MODAL]: CustomModalParams;
+  [Routes.CustomModal.CUSTOM_MODAL_STACK]: CustomModalParams;
   [Routes.TVShow.SEASONS]: TVShowSeasonsParams;
 };
 

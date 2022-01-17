@@ -1,11 +1,11 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
-import { CustomModalParams } from '@components/screens/shared/customized-modal/routes/route-params-types';
-import { Routes } from '@routes/routes';
+import {CustomModalParams} from '@components/screens/shared/customized-modal/routes/route-params-types';
+import {Routes} from '@routes/routes';
 
 type NewsStackParams = {
-  [Routes.CustomModal.CUSTOM_MODAL]: CustomModalParams;
+  [Routes.CustomModal.CUSTOM_MODAL_STACK]: CustomModalParams;
   [Routes.News.NEWS]: undefined;
 };
 

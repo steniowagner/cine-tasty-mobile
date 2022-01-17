@@ -32,7 +32,10 @@ const HomeStack = ({theme}: HomeStackProps) => {
   const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
 
   return (
-    <Stack.Navigator headerMode="screen">
+    <Stack.Navigator
+      screenOptions={{
+        headerMode: 'screen',
+      }}>
       <Stack.Screen
         options={{
           ...TRANSPARENT_HEADER_OPTIONS,
@@ -107,7 +110,7 @@ const HomeStack = ({theme}: HomeStackProps) => {
       <Stack.Screen
         options={{headerShown: false}}
         component={SearchStack}
-        name={Routes.Search.SEARCH}
+        name={Routes.Search.SEARCH_STACK}
       />
       {SettingsScreen(Stack)}
     </Stack.Navigator>

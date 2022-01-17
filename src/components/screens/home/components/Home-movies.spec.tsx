@@ -1,11 +1,11 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { IMocks } from 'graphql-tools';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
+import {IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
@@ -19,13 +19,13 @@ type RenderHomeProps = {
   mockResolvers?: IMocks;
 };
 
-const renderHome = ({ navigate = jest.fn, mockResolvers }: RenderHomeProps) => {
-  const HomeScreen = ({ navigation }) => {
+const renderHome = ({navigate = jest.fn, mockResolvers}: RenderHomeProps) => {
+  const HomeScreen = ({navigation}) => {
     return (
       <AutoMockProvider mockResolvers={mockResolvers}>
         <Home
-          route={{ name: Routes.Home.HOME, key: `${Routes.Home.HOME}-key` }}
-          navigation={{ ...navigation, navigate }}
+          route={{name: Routes.Home.HOME, key: `${Routes.Home.HOME}-key`}}
+          navigation={{...navigation, navigate}}
         />
       </AutoMockProvider>
     );
@@ -46,7 +46,7 @@ describe('Testing <Home /> - [Movies]', () => {
   afterEach(cleanup);
 
   it('should render the loading state when the screen is first mounted', () => {
-    const { queryByTestId } = render(renderHome({}));
+    const {queryByTestId} = render(renderHome({}));
 
     expect(queryByTestId('loading-home')).not.toBeNull();
 
@@ -62,8 +62,8 @@ describe('Testing <Home /> - [Movies]', () => {
       TrendingMovies: () => fixtures.trendingMovies,
     };
 
-    const { queryByTestId, getByTestId, getByText, getAllByTestId } = render(
-      renderHome({ mockResolvers }),
+    const {queryByTestId, getByTestId, getByText, getAllByTestId} = render(
+      renderHome({mockResolvers}),
     );
 
     expect(queryByTestId('loading-home')).not.toBeNull();
@@ -78,27 +78,39 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(getByTestId('top3-list')).not.toBeNull();
 
-    expect(getAllByTestId('section-wrapper').length).toEqual(NUMBER_OF_SECTIONS);
+    expect(getAllByTestId('section-wrapper').length).toEqual(
+      NUMBER_OF_SECTIONS,
+    );
 
     // now-playing-section
 
-    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING),
+    ).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`),
+      getByTestId(
+        `home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`,
+      ),
     ).not.toBeNull();
 
     // top-rated-section
 
-    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED),
+    ).not.toBeNull();
 
     expect(
-      getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`),
+      getByTestId(
+        `home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`,
+      ),
     ).not.toBeNull();
 
     // upcoming-section
 
-    expect(getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING),
+    ).not.toBeNull();
 
     expect(
       getByTestId(`home-section-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`),
@@ -124,8 +136,8 @@ describe('Testing <Home /> - [Movies]', () => {
       TrendingMovies: () => new Error(),
     };
 
-    const { getByTestId, queryByTestId, queryAllByTestId } = render(
-      renderHome({ mockResolvers }),
+    const {getByTestId, queryByTestId, queryAllByTestId} = render(
+      renderHome({mockResolvers}),
     );
 
     expect(queryByTestId('loading-home')).not.toBeNull();
@@ -160,7 +172,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const navigate = jest.fn();
 
-    const { getByTestId } = render(renderHome({ mockResolvers, navigate }));
+    const {getByTestId} = render(renderHome({mockResolvers, navigate}));
 
     act(() => {
       try {
@@ -169,14 +181,20 @@ describe('Testing <Home /> - [Movies]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`),
+      getByTestId(
+        `view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_NOW_PLAYING}`,
+      ),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
+    expect(navigate.mock.calls[0][0]).toEqual(
+      Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+    );
 
-    expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
+    expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(
+      true,
+    );
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
       fixtures.trendingMovies.nowPlaying.items,
@@ -198,7 +216,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const navigate = jest.fn();
 
-    const { getByTestId } = render(renderHome({ mockResolvers, navigate }));
+    const {getByTestId} = render(renderHome({mockResolvers, navigate}));
 
     act(() => {
       try {
@@ -207,14 +225,20 @@ describe('Testing <Home /> - [Movies]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`),
+      getByTestId(
+        `view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_POPULAR}`,
+      ),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
+    expect(navigate.mock.calls[0][0]).toEqual(
+      Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+    );
 
-    expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
+    expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(
+      true,
+    );
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
       fixtures.trendingMovies.popular.items,
@@ -236,7 +260,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const navigate = jest.fn();
 
-    const { getByTestId } = render(renderHome({ mockResolvers, navigate }));
+    const {getByTestId} = render(renderHome({mockResolvers, navigate}));
 
     act(() => {
       try {
@@ -245,14 +269,20 @@ describe('Testing <Home /> - [Movies]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`),
+      getByTestId(
+        `view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_TOP_RATED}`,
+      ),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
+    expect(navigate.mock.calls[0][0]).toEqual(
+      Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+    );
 
-    expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
+    expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(
+      true,
+    );
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
       fixtures.trendingMovies.topRated.items,
@@ -274,7 +304,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const navigate = jest.fn();
 
-    const { getByTestId } = render(renderHome({ mockResolvers, navigate }));
+    const {getByTestId} = render(renderHome({mockResolvers, navigate}));
 
     act(() => {
       try {
@@ -283,14 +313,20 @@ describe('Testing <Home /> - [Movies]', () => {
     });
 
     fireEvent.press(
-      getByTestId(`view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`),
+      getByTestId(
+        `view-all-button-${TRANSLATIONS.HOME_TRENDING_MOVIES_UPCOMING}`,
+      ),
     );
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate.mock.calls[0][0]).toEqual(Routes.Home.MEDIA_DETAILS_VIEW_ALL);
+    expect(navigate.mock.calls[0][0]).toEqual(
+      Routes.Home.MEDIA_DETAILS_VIEW_ALL,
+    );
 
-    expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(true);
+    expect(Array.isArray(navigate.mock.calls[0][1].initialDataset)).toEqual(
+      true,
+    );
 
     expect(navigate.mock.calls[0][1].initialDataset).toEqual(
       fixtures.trendingMovies.upcoming.items,
@@ -312,7 +348,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const navigate = jest.fn();
 
-    const { getByTestId } = render(renderHome({ mockResolvers, navigate }));
+    const {getByTestId} = render(renderHome({mockResolvers, navigate}));
 
     act(() => {
       try {
@@ -324,9 +360,11 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(navigate).toHaveBeenCalledWith(Routes.Search.SEARCH, {
-      i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
-      i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
+    expect(navigate).toHaveBeenCalledWith(Routes.Search.SEARCH_STACK, {
+      i18nQueryByPaginationErrorRef:
+        TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
+      i18nQueryByTextErrorRef:
+        TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
       i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PLACEHOLDER,
       searchType: SchemaTypes.SearchType.MOVIE,
       queryId: 'search_movie',
@@ -343,7 +381,8 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const SECTION_ITEM_INDEX_SELECTED =
       (Math.random() * (fixtures.trendingMoviesItems.length - 1 - 0 + 1)) << 0;
-    const SECTION_SELECTED_INDEX = (Math.random() * (sections.length - 1 - 0 + 1)) << 0;
+    const SECTION_SELECTED_INDEX =
+      (Math.random() * (sections.length - 1 - 0 + 1)) << 0;
 
     const mockResolvers = {
       TrendingMovies: () => fixtures.trendingMovies,
@@ -351,7 +390,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const navigate = jest.fn();
 
-    const { getAllByTestId } = render(renderHome({ mockResolvers, navigate }));
+    const {getAllByTestId} = render(renderHome({mockResolvers, navigate}));
 
     act(() => {
       try {
@@ -368,10 +407,14 @@ describe('Testing <Home /> - [Movies]', () => {
     expect(navigate).toHaveBeenCalledTimes(1);
 
     expect(navigate).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
-      voteAverage: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteAverage,
-      posterPath: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].posterPath,
-      voteCount: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteCount,
-      genreIds: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].genreIds,
+      voteAverage:
+        fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteAverage,
+      posterPath:
+        fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].posterPath,
+      voteCount:
+        fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].voteCount,
+      genreIds:
+        fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].genreIds,
       title: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].title,
       id: fixtures.trendingMoviesItems[SECTION_ITEM_INDEX_SELECTED].id,
     });
@@ -386,7 +429,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     const navigate = jest.fn();
 
-    const { getAllByTestId } = render(renderHome({ mockResolvers, navigate }));
+    const {getAllByTestId} = render(renderHome({mockResolvers, navigate}));
 
     act(() => {
       try {
@@ -398,7 +441,7 @@ describe('Testing <Home /> - [Movies]', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    const { id } = navigate.mock.calls[0][1];
+    const {id} = navigate.mock.calls[0][1];
 
     expect(navigate).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
       voteAverage: fixtures.trendingMovies.nowPlaying.items[id].voteAverage,

@@ -1,10 +1,10 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import { ThemeContextProvider } from '@providers';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {ThemeContextProvider} from '@providers';
 import * as SchemaTypes from '@schema-types';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 import metrics from '@styles/metrics';
 
@@ -55,7 +55,7 @@ describe('Testing <TVShowSeasonsListItem />', () => {
   it('should render the correctly', () => {
     const INDEX = 1;
 
-    const { getByTestId } = render(renderTVShowSeasonsListItem(INDEX));
+    const {getByTestId} = render(renderTVShowSeasonsListItem(INDEX));
 
     act(() => {
       jest.runAllTimers();
@@ -63,13 +63,17 @@ describe('Testing <TVShowSeasonsListItem />', () => {
 
     expect(getByTestId('episode-list-item')).not.toBeNull();
 
-    expect(getByTestId('episode-index-text').children[0]).toEqual(`${INDEX + 1}`);
+    expect(getByTestId('episode-index-text').children[0]).toEqual(
+      `${INDEX + 1}`,
+    );
 
-    expect(getByTestId('episode-name-text').children[0]).toEqual(episodeMock.name);
+    expect(getByTestId('episode-name-text').children[0]).toEqual(
+      episodeMock.name,
+    );
   });
 
   it('should navigate to the episode-details-modal correctly when the user press on the list-item', () => {
-    const { getByTestId } = render(renderTVShowSeasonsListItem());
+    const {getByTestId} = render(renderTVShowSeasonsListItem());
 
     act(() => {
       jest.runAllTimers();
@@ -81,7 +85,9 @@ describe('Testing <TVShowSeasonsListItem />', () => {
 
     expect(mockedNavigate).toHaveBeenCalledTimes(1);
 
-    expect(mockedNavigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
+    expect(mockedNavigate.mock.calls[0][0]).toEqual(
+      Routes.CustomModal.CUSTOM_MODAL_STACK,
+    );
 
     expect(mockedNavigate.mock.calls[0][1].type).toEqual(
       Types.CustomizedModalChildrenType.TV_SHOW_EPISODE_DETAILS,
@@ -91,6 +97,8 @@ describe('Testing <TVShowSeasonsListItem />', () => {
       metrics.getHeightFromDP('50%'),
     );
 
-    expect(mockedNavigate.mock.calls[0][1].extraData.dataset).toEqual([episodeMock]);
+    expect(mockedNavigate.mock.calls[0][1].extraData.dataset).toEqual([
+      episodeMock,
+    ]);
   });
 });

@@ -1,25 +1,25 @@
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
 import * as Types from '@local-types';
 
 const items: Types.TabNavigatorItem[] = [
   {
-    id: Routes.Home.HOME,
+    id: Routes.Tabs.HOME,
     activeIcon: 'home-active',
     inactiveIcon: 'home-inactive',
   },
   {
-    id: Routes.Famous.FAMOUS,
+    id: Routes.Tabs.FAMOUS,
     activeIcon: 'famous-active',
     inactiveIcon: 'famous-inactive',
   },
   {
-    id: Routes.Quiz.QUIZ,
+    id: Routes.Tabs.QUIZ,
     activeIcon: 'quiz-active',
     inactiveIcon: 'quiz-inactive',
   },
   {
-    id: Routes.News.NEWS,
+    id: Routes.Tabs.NEWS,
     activeIcon: 'news-active',
     inactiveIcon: 'news-inactive',
   },

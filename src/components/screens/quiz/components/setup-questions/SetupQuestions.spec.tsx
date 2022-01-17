@@ -1,14 +1,14 @@
 import React from 'react';
-import { cleanup, fireEvent, render } from '@testing-library/react-native';
+import {cleanup, fireEvent, render} from '@testing-library/react-native';
 
-import { navigation } from '@mocks/navigationMock';
-import { ThemeContextProvider } from '@providers';
+import {navigation} from '@mocks/navigationMock';
+import {ThemeContextProvider} from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import { INITIAL_NUMBER_QUESTIONS } from './useSetupQuestions';
-import { difficulties, categories, types } from './options';
+import {INITIAL_NUMBER_QUESTIONS} from './useSetupQuestions';
+import {difficulties, categories, types} from './options';
 import SetupQuestions from './SetupQuestions';
 
 const renderSetupQuestions = (navigate = jest.fn) => (
@@ -30,15 +30,18 @@ describe('Testing <SetupQuestions />', () => {
   afterEach(cleanup);
 
   it('should render correctly with the default params', () => {
-    const { getAllByTestId, getByText } = render(renderSetupQuestions());
+    const {getAllByTestId, getByText} = render(renderSetupQuestions());
 
-    const [difficultySelected, categorySelected, typeSelected] = getAllByTestId(
-      'option-value',
+    const [difficultySelected, categorySelected, typeSelected] =
+      getAllByTestId('option-value');
+
+    expect(
+      difficultySelected.props.children.includes(difficulties[0].id),
+    ).toEqual(true);
+
+    expect(categorySelected.props.children.includes(categories[0].id)).toEqual(
+      true,
     );
-
-    expect(difficultySelected.props.children.includes(difficulties[0].id)).toEqual(true);
-
-    expect(categorySelected.props.children.includes(categories[0].id)).toEqual(true);
 
     expect(typeSelected.props.children.includes(types[0].id)).toEqual(true);
 
@@ -58,7 +61,7 @@ describe('Testing <SetupQuestions />', () => {
   it('should navigate to CustomModal correctly when the user press the difficulty-dropdown', () => {
     const navigate = jest.fn();
 
-    const { getAllByTestId } = render(renderSetupQuestions(navigate));
+    const {getAllByTestId} = render(renderSetupQuestions(navigate));
 
     const [difficultDropdown] = getAllByTestId('dropdown-button');
 
@@ -66,7 +69,9 @@ describe('Testing <SetupQuestions />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
+    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual(
+      'function',
+    );
     expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(difficulties);
     expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
     expect(navigate.mock.calls[0][1].type).toEqual(
@@ -75,13 +80,15 @@ describe('Testing <SetupQuestions />', () => {
     expect(navigate.mock.calls[0][1].headerText).toEqual(
       TRANSLATIONS.QUIZ_SET_DIFFICULTY,
     );
-    expect(navigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
+    expect(navigate.mock.calls[0][0]).toEqual(
+      Routes.CustomModal.CUSTOM_MODAL_STACK,
+    );
   });
 
   it('should navigate to CustomModal correctly when the user press the category-dropdown', () => {
     const navigate = jest.fn();
 
-    const { getAllByTestId } = render(renderSetupQuestions(navigate));
+    const {getAllByTestId} = render(renderSetupQuestions(navigate));
 
     const [, categoryDropdown] = getAllByTestId('dropdown-button');
 
@@ -89,20 +96,26 @@ describe('Testing <SetupQuestions />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
+    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual(
+      'function',
+    );
     expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(categories);
     expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
     expect(navigate.mock.calls[0][1].type).toEqual(
       Types.CustomizedModalChildrenType.MEDIA_FILTER,
     );
-    expect(navigate.mock.calls[0][1].headerText).toEqual(TRANSLATIONS.QUIZ_SET_CATEGORY);
-    expect(navigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
+    expect(navigate.mock.calls[0][1].headerText).toEqual(
+      TRANSLATIONS.QUIZ_SET_CATEGORY,
+    );
+    expect(navigate.mock.calls[0][0]).toEqual(
+      Routes.CustomModal.CUSTOM_MODAL_STACK,
+    );
   });
 
   it('should navigate to CustomModal correctly when the user press the type-dropdown', () => {
     const navigate = jest.fn();
 
-    const { getAllByTestId } = render(renderSetupQuestions(navigate));
+    const {getAllByTestId} = render(renderSetupQuestions(navigate));
 
     const [, , typeDropdown] = getAllByTestId('dropdown-button');
 
@@ -110,20 +123,26 @@ describe('Testing <SetupQuestions />', () => {
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
-    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual('function');
+    expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual(
+      'function',
+    );
     expect(navigate.mock.calls[0][1].extraData.dataset).toEqual(types);
     expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(0);
     expect(navigate.mock.calls[0][1].type).toEqual(
       Types.CustomizedModalChildrenType.MEDIA_FILTER,
     );
-    expect(navigate.mock.calls[0][1].headerText).toEqual(TRANSLATIONS.QUIZ_SET_TYPE);
-    expect(navigate.mock.calls[0][0]).toEqual(Routes.CustomModal.CUSTOM_MODAL);
+    expect(navigate.mock.calls[0][1].headerText).toEqual(
+      TRANSLATIONS.QUIZ_SET_TYPE,
+    );
+    expect(navigate.mock.calls[0][0]).toEqual(
+      Routes.CustomModal.CUSTOM_MODAL_STACK,
+    );
   });
 
   it('should navigate to Questions with the selected params when the user press the "START QUIZ" button', () => {
     const navigate = jest.fn();
 
-    const { getByTestId } = render(renderSetupQuestions(navigate));
+    const {getByTestId} = render(renderSetupQuestions(navigate));
 
     fireEvent.press(getByTestId('rounded-button'));
 

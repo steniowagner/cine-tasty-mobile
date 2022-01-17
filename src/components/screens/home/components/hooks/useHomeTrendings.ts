@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
-import { DocumentNode } from 'graphql';
+import {useCallback, useState} from 'react';
+import {DocumentNode} from 'graphql';
 
 import useImperativeQuery from '@utils/useImperativeQuery';
-import { useGetCurrentISO6391Language } from '@hooks';
+import {useGetCurrentISO6391Language} from '@hooks';
 import * as SchemaTypes from '@schema-types';
 
 const INITIAL_STATE = {
@@ -25,10 +25,10 @@ type Props<T> = {
   query: DocumentNode;
 };
 
-const useHomeTrendings = <TData = any>({ onGetData, query }: Props<TData>) => {
+const useHomeTrendings = <TData = any>({onGetData, query}: Props<TData>) => {
   const [state, setState] = useState<InternalState>(INITIAL_STATE);
 
-  const { currentISO6391Language } = useGetCurrentISO6391Language();
+  const {currentISO6391Language} = useGetCurrentISO6391Language();
   const execQuery = useImperativeQuery<TData, TVariables>(query);
 
   const getTrendings = useCallback(async () => {
@@ -38,7 +38,7 @@ const useHomeTrendings = <TData = any>({ onGetData, query }: Props<TData>) => {
         isLoading: true,
       });
 
-      const { data } = await execQuery({
+      const {data} = await execQuery({
         language: currentISO6391Language,
         page: 1,
       });

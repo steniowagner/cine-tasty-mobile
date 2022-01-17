@@ -1,15 +1,15 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
-import { getMockedTVShowSeason } from '@mocks/fixtures';
-import { navigation } from '@mocks/navigationMock';
-import { ThemeContextProvider } from '@providers';
-import { Routes } from '@routes/routes';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
+import {getMockedTVShowSeason} from '@mocks/fixtures';
+import {navigation} from '@mocks/navigationMock';
+import {ThemeContextProvider} from '@providers';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import { ANIMATION_TIMING } from './useCustomizedModal';
+import {ANIMATION_TIMING} from './useCustomizedModal';
 import CustomizedModal from './CustomizedModal';
 
 const episode = getMockedTVShowSeason(1).episodes[0];
@@ -18,10 +18,10 @@ const renderCustomizedModal = (goBack = jest.fn) => (
   <ThemeContextProvider>
     <TMDBImageQualityProvider>
       <CustomizedModal
-        navigation={{ ...navigation, goBack }}
+        navigation={{...navigation, goBack}}
         route={{
-          name: Routes.CustomModal.CUSTOM_MODAL,
-          key: `${Routes.CustomModal.CUSTOM_MODAL}-key`,
+          name: Routes.CustomModal.CUSTOM_MODAL_STACK,
+          key: `${Routes.CustomModal.CUSTOM_MODAL_STACK}-key`,
           params: {
             type: Types.CustomizedModalChildrenType.TV_SHOW_EPISODE_DETAILS,
             extraData: {
@@ -40,7 +40,7 @@ describe('Testing <CustomizedModal /> -- TVShowEpisodeDetail', () => {
   afterEach(cleanup);
 
   it('should render correctly', () => {
-    const { getByTestId } = render(renderCustomizedModal());
+    const {getByTestId} = render(renderCustomizedModal());
 
     act(() => {
       timeTravel(ANIMATION_TIMING);
@@ -69,7 +69,7 @@ describe('Testing <CustomizedModal /> -- TVShowEpisodeDetail', () => {
   it('should call onClose when the CloseableArea is pressed', () => {
     const onClose = jest.fn();
 
-    const { getByTestId } = render(renderCustomizedModal(onClose));
+    const {getByTestId} = render(renderCustomizedModal(onClose));
 
     fireEvent.press(getByTestId('closeable-area'));
 

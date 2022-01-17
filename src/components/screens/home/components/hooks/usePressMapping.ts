@@ -1,11 +1,11 @@
-import { useCallback, useMemo } from 'react';
+import {useCallback, useMemo} from 'react';
 
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import { HomeStackNavigationProp } from '../../routes/route-params-types';
+import {HomeStackNavigationProp} from '../../routes/route-params-types';
 
 export const TRANSITIONING_DURATION = 1200;
 
@@ -20,7 +20,10 @@ type UsePressMappingProps = {
   isMoviesSelected: boolean;
 };
 
-const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps) => {
+const usePressMapping = ({
+  isMoviesSelected,
+  navigation,
+}: UsePressMappingProps) => {
   const onNavigateToMovieDetailAfterPress = useCallback(
     (movie: Types.SimplifiedMedia): void => {
       navigation.navigate(Routes.Movie.DETAILS, {
@@ -57,9 +60,15 @@ const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps)
   } = useMemo(() => {
     const pressesHandlersMapping = {
       [SchemaTypes.SearchType.MOVIE]: {
-        onPressTop3LearnMore: (movie: Types.SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
-        onPressTrendingItem: (movie: Types.SimplifiedMedia) => onNavigateToMovieDetailAfterPress(movie),
-        onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
+        onPressTop3LearnMore: (movie: Types.SimplifiedMedia) =>
+          onNavigateToMovieDetailAfterPress(movie),
+        onPressTrendingItem: (movie: Types.SimplifiedMedia) =>
+          onNavigateToMovieDetailAfterPress(movie),
+        onPressViewAll: ({
+          sectionItems,
+          viewAllTitle,
+          sectionID,
+        }: ViewAllProps) => {
           navigation.navigate(Routes.Home.MEDIA_DETAILS_VIEW_ALL, {
             initialDataset: sectionItems,
             headerTitle: viewAllTitle,
@@ -68,20 +77,28 @@ const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps)
           });
         },
         onPressSearch: () => {
-          navigation.navigate(Routes.Search.SEARCH, {
+          navigation.navigate(Routes.Search.SEARCH_STACK, {
             i18nQueryByPaginationErrorRef:
               TRANSLATIONS.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
-            i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
-            i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_MOVIE_PLACEHOLDER,
+            i18nQueryByTextErrorRef:
+              TRANSLATIONS.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
+            i18nSearchBarPlaceholderRef:
+              TRANSLATIONS.HOME_SEARCH_MOVIE_PLACEHOLDER,
             searchType: SchemaTypes.SearchType.MOVIE,
             queryId: 'search_movie',
           });
         },
       },
       [SchemaTypes.SearchType.TV]: {
-        onPressTop3LearnMore: (tvShow: Types.SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
-        onPressTrendingItem: (tvShow: Types.SimplifiedMedia) => onNavigateToTVShowDetailAfterPress(tvShow),
-        onPressViewAll: ({ sectionItems, viewAllTitle, sectionID }: ViewAllProps) => {
+        onPressTop3LearnMore: (tvShow: Types.SimplifiedMedia) =>
+          onNavigateToTVShowDetailAfterPress(tvShow),
+        onPressTrendingItem: (tvShow: Types.SimplifiedMedia) =>
+          onNavigateToTVShowDetailAfterPress(tvShow),
+        onPressViewAll: ({
+          sectionItems,
+          viewAllTitle,
+          sectionID,
+        }: ViewAllProps) => {
           navigation.navigate(Routes.Home.MEDIA_DETAILS_VIEW_ALL, {
             initialDataset: sectionItems,
             headerTitle: viewAllTitle,
@@ -90,10 +107,13 @@ const usePressMapping = ({ isMoviesSelected, navigation }: UsePressMappingProps)
           });
         },
         onPressSearch: () => {
-          navigation.navigate(Routes.Search.SEARCH, {
-            i18nQueryByPaginationErrorRef: TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR,
-            i18nQueryByTextErrorRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
-            i18nSearchBarPlaceholderRef: TRANSLATIONS.HOME_SEARCH_TV_SHOW_PLACEHOLDER,
+          navigation.navigate(Routes.Search.SEARCH_STACK, {
+            i18nQueryByPaginationErrorRef:
+              TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR,
+            i18nQueryByTextErrorRef:
+              TRANSLATIONS.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
+            i18nSearchBarPlaceholderRef:
+              TRANSLATIONS.HOME_SEARCH_TV_SHOW_PLACEHOLDER,
             searchType: SchemaTypes.SearchType.TV,
             queryId: 'search_tv',
           });

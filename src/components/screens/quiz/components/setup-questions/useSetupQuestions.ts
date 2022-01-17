@@ -1,15 +1,15 @@
-import { useState, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useState, useCallback} from 'react';
+import {useTranslation} from 'react-i18next';
 
-import { useShowLanguageAlert } from '@hooks';
+import {useShowLanguageAlert} from '@hooks';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 import metrics from '@styles/metrics';
 
-import { SetupQuestionsStackNavigationProp } from '../../routes/route-params-types';
-import { difficulties, categories, types } from './options';
+import {SetupQuestionsStackNavigationProp} from '../../routes/route-params-types';
+import {difficulties, categories, types} from './options';
 
 export const INITIAL_NUMBER_QUESTIONS = 10;
 
@@ -30,7 +30,7 @@ type UseSetupQuestionsProps = {
   navigation: SetupQuestionsStackNavigationProp;
 };
 
-const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
+const useSetupQuestions = ({navigation}: UseSetupQuestionsProps) => {
   const [questionDifficulty, setQuestionDifficulty] = useState<
     Types.QuestionOption<SchemaTypes.QuestionDifficulty>
   >(difficulties[0]);
@@ -44,8 +44,8 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
     INITIAL_NUMBER_QUESTIONS,
   );
 
-  const { handleShowLanguageAlert } = useShowLanguageAlert();
-  const { t } = useTranslation();
+  const {handleShowLanguageAlert} = useShowLanguageAlert();
+  const {t} = useTranslation();
 
   const getOptionSelectedInfo = useCallback(
     (option: Types.QuizOption): OptionSelectedInfo => {
@@ -103,7 +103,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
       currentOptionSelected: Types.QuizFilterOption,
     ) => {
       const index = currentDataset.findIndex(
-        (datasetItem) => datasetItem.id === currentOptionSelected.id,
+        datasetItem => datasetItem.id === currentOptionSelected.id,
       );
 
       return index;
@@ -118,7 +118,7 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
       headerText,
       option,
     }: NavigateToCustomModalProps): void => {
-      navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
+      navigation.navigate(Routes.CustomModal.CUSTOM_MODAL_STACK, {
         extraData: {
           onPressSelect: (indexOptionSelected: number) => {
             onSelectOption(indexOptionSelected, option);
@@ -139,9 +139,8 @@ const useSetupQuestions = ({ navigation }: UseSetupQuestionsProps) => {
 
   const onPressOptionDropdown = useCallback(
     (option: Types.QuizOption): void => {
-      const { currentOptionSelected, currentDataset, headerText } = getOptionSelectedInfo(
-        option,
-      );
+      const {currentOptionSelected, currentDataset, headerText} =
+        getOptionSelectedInfo(option);
 
       navigateToCustomModal({
         currentOptionSelected,

@@ -1,13 +1,11 @@
-import {
-  useCallback, useEffect, useState, useMemo,
-} from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useEffect, useState, useMemo} from 'react';
+import {useTranslation} from 'react-i18next';
 
-import { GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES } from '@graphql/queries';
+import {GET_TRENDING_TV_SHOWS, GET_TRENDING_MOVIES} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import { HomeStackNavigationProp } from '../../routes/route-params-types';
+import {HomeStackNavigationProp} from '../../routes/route-params-types';
 import useTrendingTVShows from './trendings/useTrendingTVShows';
 import useTrendingMovies from './trendings/useTrendingMovies';
 import useHomeTrendings from './useHomeTrendings';
@@ -20,20 +18,18 @@ type UseHomeProps = {
   navigation: HomeStackNavigationProp;
 };
 
-const useHome = ({ navigation }: UseHomeProps) => {
-  const [shouldDisableHeaderActions, setShouldDisableHeaderActions] = useState<boolean>(
-    true,
-  );
-  const [trendingTVShows, setTrendingTVShows] = useState<SchemaTypes.TrendingTVShows>(
-    undefined,
-  );
-  const [trendingMovies, setTrendingMovies] = useState<SchemaTypes.TrendingMovies>(
-    undefined,
-  );
-  const [isTransitioningData, setIsTransitioningData] = useState<boolean>(false);
+const useHome = ({navigation}: UseHomeProps) => {
+  const [shouldDisableHeaderActions, setShouldDisableHeaderActions] =
+    useState<boolean>(true);
+  const [trendingTVShows, setTrendingTVShows] =
+    useState<SchemaTypes.TrendingTVShows>(undefined);
+  const [trendingMovies, setTrendingMovies] =
+    useState<SchemaTypes.TrendingMovies>(undefined);
+  const [isTransitioningData, setIsTransitioningData] =
+    useState<boolean>(false);
   const [isMoviesSelected, setIsMovieSelected] = useState<boolean>(true);
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const {
     onPressTop3LearnMore,
@@ -45,11 +41,11 @@ const useHome = ({ navigation }: UseHomeProps) => {
     navigation,
   });
 
-  const { trendingMovies: homeTrendingMovies } = useTrendingMovies({
+  const {trendingMovies: homeTrendingMovies} = useTrendingMovies({
     rawTrendingMovies: trendingMovies,
   });
 
-  const { trendingTVShows: homeTrendingTVShows } = useTrendingTVShows({
+  const {trendingTVShows: homeTrendingTVShows} = useTrendingTVShows({
     rawTrendingTVShows: trendingTVShows,
   });
 
@@ -71,7 +67,7 @@ const useHome = ({ navigation }: UseHomeProps) => {
     query: GET_TRENDING_TV_SHOWS,
   });
 
-  const { top3TVShows, top3Movies } = useTop3({
+  const {top3TVShows, top3Movies} = useTop3({
     trendingTVShows,
     trendingMovies,
   });
@@ -97,7 +93,9 @@ const useHome = ({ navigation }: UseHomeProps) => {
 
     setShouldDisableHeaderActions(true);
 
-    const getTrendings = isMoviesSelected ? getTrendingMovies : getTrendingTVShows;
+    const getTrendings = isMoviesSelected
+      ? getTrendingMovies
+      : getTrendingTVShows;
 
     await getTrendings();
 

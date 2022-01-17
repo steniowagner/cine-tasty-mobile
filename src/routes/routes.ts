@@ -9,6 +9,10 @@ export namespace Routes {
 
   export enum Tabs {
     TABS = 'APP/TABS',
+    HOME = 'APP/TABS/HOME',
+    FAMOUS = 'APP/TABS/FAMOUS',
+    QUIZ = 'APP/TABS/QUIZ',
+    NEWS = 'APP/TABS/NEWS',
   }
 
   export enum ImagesGallery {
@@ -16,11 +20,13 @@ export namespace Routes {
   }
 
   export enum CustomModal {
+    CUSTOM_MODAL_STACK = 'APP/CUSTOM_MODAL_STACK',
     CUSTOM_MODAL = 'APP/CUSTOM_MODAL',
   }
 
   export enum Search {
-    SEARCH = 'APP/SEARCH',
+    SEARCH_STACK = 'APP/SEARCH_STACK',
+    SEARCH = 'APP/SEARCH_STACK/SEARCH',
   }
 
   export enum Home {
