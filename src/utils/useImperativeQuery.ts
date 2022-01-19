@@ -7,7 +7,6 @@ const useImperativeQuery = <TData = any, TVariables = any>(
   fetchPolicy: FetchPolicy = 'cache-first',
 ) => {
   const {refetch} = useQuery<TData, TVariables>(query, {
-    skip: true,
     fetchPolicy,
   });
 

@@ -10,16 +10,6 @@ import metrics from '@styles/metrics';
 
 export const MAX_NUMBER_LINES = 5;
 
-const INITIAL_STATE: InternalState = {
-  shouldShowReadMoreButton: undefined,
-  numberOfLines: undefined,
-};
-
-type InternalState = {
-  shouldShowReadMoreButton: boolean | undefined;
-  numberOfLines: number | undefined;
-};
-
 type UseSeasonOverviewTextProps = {
   tvShowTitle: string;
   overview: string;
@@ -31,29 +21,27 @@ const useSeasonOverviewText = ({
   overview,
   season,
 }: UseSeasonOverviewTextProps) => {
-  const [state, setState] = useState<InternalState>(INITIAL_STATE);
+  const [numberOfLines, setNumberOfLines] = useState<number | undefined>();
+  const [shouldShowReadMoreButton, setShouldShowReadMoreButton] =
+    useState(false);
 
   const navigation = useNavigation<TVShowSeasonsNavigationProp>();
   const {t} = useTranslation();
 
   const onGetTextLayout = useCallback(
     (linesLength: number) => {
-      if (state.numberOfLines) {
+      if (numberOfLines) {
         return;
       }
 
-      const shouldShowReadMoreButton = linesLength > MAX_NUMBER_LINES;
-      const numberOfLines = shouldShowReadMoreButton
-        ? MAX_NUMBER_LINES
-        : linesLength;
-
-      setState({
-        shouldShowReadMoreButton,
-        numberOfLines,
-      });
+      const hasTooMuchLines = linesLength > MAX_NUMBER_LINES;
+      setShouldShowReadMoreButton(hasTooMuchLines);
+      const linesCount = hasTooMuchLines ? MAX_NUMBER_LINES : linesLength;
+      setNumberOfLines(linesCount);
     },
-    [state.numberOfLines],
+    [numberOfLines],
   );
+
   const modalHeight = useMemo(() => {
     if (!overview) {
       return 0;
@@ -66,7 +54,7 @@ const useSeasonOverviewText = ({
     }
 
     return metrics.getHeightFromDP('70%');
-  }, [metrics.getHeightFromDP, state.numberOfLines]);
+  }, [overview]);
 
   const onPressReadMore = useCallback(() => {
     const headerText = `${tvShowTitle}\n${t(
@@ -85,16 +73,16 @@ const useSeasonOverviewText = ({
       },
       headerText,
     });
-  }, [tvShowTitle, overview, season, modalHeight]);
+  }, [tvShowTitle, overview, season, modalHeight, navigation, t]);
 
   return {
     readMoreButtonText: t(
       TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_READ_MORE_SEASON_OVERVIEW,
     ),
-    shouldShowReadMoreButton: state.shouldShowReadMoreButton,
-    numberOfLines: state.numberOfLines,
+    shouldShowReadMoreButton,
     onPressReadMore,
     onGetTextLayout,
+    numberOfLines,
   };
 };
 

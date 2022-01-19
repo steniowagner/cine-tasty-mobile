@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {StatusBar} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {withTheme} from 'styled-components/native';
@@ -6,24 +6,25 @@ import {useTranslation} from 'react-i18next';
 
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
+import {Routes} from '@routes/routes';
 
 import TVShowSeasonsDetailScreen from '../components/tv-show-seasons-detail/TVShowSeasonsDetail';
 import {TVShowSeasonsStackProps} from './route-params-types';
 
 const Tab = createMaterialTopTabNavigator();
 
-const getTabStyleWidth = (numberOfSeasons: number): number => {
-  if (numberOfSeasons === 2) {
-    return metrics.width / 2;
-  }
-
-  return metrics.width / 3;
-};
-
 const TVShowSeasonsDetailStack = ({route, theme}: TVShowSeasonsStackProps) => {
   const {t} = useTranslation();
 
   const {numberOfSeasons} = route.params;
+
+  const tabItemWidth = useMemo(() => {
+    if (numberOfSeasons === 2) {
+      return metrics.width / 2;
+    }
+
+    return metrics.width / 3;
+  }, [numberOfSeasons]);
 
   if (numberOfSeasons === 1) {
     return (
@@ -34,14 +35,16 @@ const TVShowSeasonsDetailStack = ({route, theme}: TVShowSeasonsStackProps) => {
           animated
         />
         <TVShowSeasonsDetailScreen
-          // @ts-ignore
           route={{
+            name: Routes.TVShow.SEASONS_TABS,
+            key: Routes.TVShow.SEASONS_TABS,
             params: {
               tvShowTitle: route.params.title,
               id: route.params.id,
               season: 1,
             },
           }}
+          navigation={{} as any}
         />
       </>
     );
@@ -56,36 +59,39 @@ const TVShowSeasonsDetailStack = ({route, theme}: TVShowSeasonsStackProps) => {
       />
       <Tab.Navigator
         initialLayout={{width: metrics.width, height: metrics.height}}
-        tabBarOptions={{
-          activeTintColor: theme.colors.buttonText,
-          style: {
+        screenOptions={{
+          tabBarActiveTintColor: theme.colors.buttonText,
+          tabBarStyle: {
             backgroundColor: theme.colors.primary,
           },
-          indicatorStyle: {
+          tabBarIndicatorStyle: {
             backgroundColor: theme.colors.buttonText,
             height: theme.metrics.extraSmallSize,
           },
-          labelStyle: {
+          tabBarScrollEnabled: true,
+          tabBarLabelStyle: {
             fontSize: theme.metrics.mediumSize * 1.05,
             fontFamily: 'CircularStd-Bold',
           },
-          tabStyle: {
-            width: getTabStyleWidth(numberOfSeasons),
+          tabBarItemStyle: {
+            width: tabItemWidth,
           },
-          scrollEnabled: true,
-        }}
-        lazyPreloadDistance={0}
-        lazy>
+          lazy: true,
+        }}>
         {Array(numberOfSeasons)
           .fill({})
           .map((_, index) => (
             <Tab.Screen
               component={TVShowSeasonsDetailScreen}
-              // eslint-disable-next-line react/no-array-index-key
               key={index}
+              options={{
+                tabBarLabel: `${t(
+                  TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON,
+                )} ${index + 1}`,
+              }}
               name={`${t(
                 TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON,
-              )} ${index + 1}`}
+              )}-${index + 1}`}
               initialParams={{
                 tvShowTitle: route.params.title,
                 id: route.params.id,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SupportedIcons } from '@components/common/svg-icon/getXML';
+import {SupportedIcons} from '@components/common/svg-icon/getXML';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import metrics from '@styles/metrics';
 
@@ -13,15 +13,9 @@ type AdviseProps = {
   title: string;
 };
 
-const Advise = ({
-  description, suggestion, title, icon,
-}: AdviseProps) => (
-  <Styles.Wrapper
-    testID="advise-wrapper"
-  >
-    <Styles.IconWrapper
-      testID="icon-wrapper"
-    >
+const Advise = ({description, suggestion, title, icon}: AdviseProps) => (
+  <Styles.Wrapper testID="advise-wrapper">
+    <Styles.IconWrapper testID="icon-wrapper">
       <SVGIcon
         size={metrics.getWidthFromDP('20%')}
         colorThemeRef="buttonText"

@@ -28,11 +28,7 @@ const SeasonOverviewText = ({
 
   if (!overview) {
     return (
-      <Styles.OverviewText
-        testID="overview-text"
-      >
-        ...
-      </Styles.OverviewText>
+      <Styles.OverviewText testID="overview-text">...</Styles.OverviewText>
     );
   }
 
@@ -40,24 +36,20 @@ const SeasonOverviewText = ({
     <>
       <Styles.Wrapper
         shouldShowReadMoreButton={shouldShowReadMoreButton}
-        testID="season-overview-wrapper"
-      >
+        testID="season-overview-wrapper">
         <Styles.OverviewText
-          // @ts-ignore onTextLayout does exist on Text component
-          onTextLayout={({ nativeEvent: { lines } }) => onGetTextLayout(lines.length)}
+          onTextLayout={({nativeEvent: {lines}}) =>
+            onGetTextLayout(lines.length)
+          }
           numberOfLines={numberOfLines}
-          testID="overview-text"
-        >
+          testID="overview-text">
           {overview}
         </Styles.OverviewText>
         {shouldShowReadMoreButton && (
           <Styles.ReadMoreButton
             onPress={onPressReadMore}
-            testID="read-more-button"
-          >
-            <Styles.ReadMoreText
-              testID="read-more-text"
-            >
+            testID="read-more-button">
+            <Styles.ReadMoreText testID="read-more-text">
               {readMoreButtonText}
             </Styles.ReadMoreText>
           </Styles.ReadMoreButton>
