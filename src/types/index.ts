@@ -3,8 +3,11 @@ import {
   ApolloQueryResult,
   FetchMoreOptions,
 } from 'apollo-client';
+
 import { SupportedIcons } from '@components/common/svg-icon/getXML';
 import { Routes } from '@routes/routes';
+import * as SchemaTypes from '@schema-types';
+
 import {
   SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
   SearchPerson_search_items_BasePerson as SearchPersonResult,
@@ -165,3 +168,21 @@ export enum ThemeId {
 }
 
 export type CineTastyQuery = 'search_movie' | 'search_tv' | 'search_famous' | 'get_famous' | 'now_playing_movies' | 'popular_movies' | 'top_rated_movies' | 'upcoming_movies' | 'airing_today_tv_shows' | 'on_the_air_tv_shows' | 'popular_tv_shows' | 'top_rated_tv_shows' | 'get_trending_movies' | 'get_trending_tv_shows' | 'get_articles' | 'get_quiz_questions' | 'get_famous_detail' | 'tv_show_seasons_detail' | 'get_tv_show_detail' | 'get_movie_detail';
+
+export type FamousSearchItems = SchemaTypes.SearchPerson_search_items_BasePerson[];
+
+export type FamousSearchPress = (
+  item: SchemaTypes.SearchPerson_search_items_BasePerson,
+) => void;
+
+export type TVShowSearchItems = SchemaTypes.SearchTVShow_search_items_BaseTVShow[];
+
+export type TVShowSearchPress = (
+  item: SchemaTypes.SearchTVShow_search_items_BaseTVShow,
+) => void;
+
+export type MovieSearchItems = SchemaTypes.SearchMovie_search_items_BaseMovie[];
+
+export type MovieSearchPress = (
+  item: SchemaTypes.SearchMovie_search_items_BaseMovie,
+) => void;

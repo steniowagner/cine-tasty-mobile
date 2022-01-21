@@ -1,9 +1,7 @@
-import {
-  useCallback, useState, useEffect, useMemo,
-} from 'react';
+import {useCallback, useState, useEffect, useMemo} from 'react';
 
-import { useTranslation } from 'react-i18next';
-import { getQuery } from '@graphql/queries';
+import {useTranslation} from 'react-i18next';
+import {getQuery} from '@graphql/queries';
 
 import useImperativeQuery from '@utils/useImperativeQuery';
 import * as SchemaTypes from '@schema-types';
@@ -30,10 +28,10 @@ const useSearch = ({
   searchType,
   queryId,
 }: UseSearchProps) => {
-  const [queryResult, setQueryResult] = useState<Types.PaginatedQueryResult>(
-    INITIAL_QUERY_RESULT,
-  );
-  const [isSearchResultEmpty, setIsSearchResultEmpty] = useState<boolean>(false);
+  const [queryResult, setQueryResult] =
+    useState<Types.PaginatedQueryResult>(INITIAL_QUERY_RESULT);
+  const [isSearchResultEmpty, setIsSearchResultEmpty] =
+    useState<boolean>(false);
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [queryString, setQueryString] = useState<string>('');
@@ -42,9 +40,9 @@ const useSearch = ({
 
   const search = useImperativeQuery<Types.SearchResult>(query);
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
-  const { onTypeSearchQuery, onSearchByQuery, isLoading } = useSearchByQuery({
+  const {onTypeSearchQuery, onSearchByQuery, isLoading} = useSearchByQuery({
     setQueryString,
     searchType,
     search,
@@ -52,7 +50,7 @@ const useSearch = ({
 
   const concatPaginatedItems = useCallback(
     (data: Types.SearchResult) => {
-      setQueryResult((previousQueryResult) => ({
+      setQueryResult(previousQueryResult => ({
         items: [...previousQueryResult.items, ...data.search.items],
         hasMore: data.search.hasMore,
       }));
@@ -65,19 +63,20 @@ const useSearch = ({
     setHasPaginationError(true);
   }, []);
 
-  const { restartPaginatedSearch, onPaginateSearch, isPaginating } = usePaginatedSearch({
-    onError: onPaginationError,
-    concatPaginatedItems,
-    queryString,
-    searchType,
-    search,
-  });
+  const {restartPaginatedSearch, onPaginateSearch, isPaginating} =
+    usePaginatedSearch({
+      onError: onPaginationError,
+      concatPaginatedItems,
+      queryString,
+      searchType,
+      search,
+    });
 
   const handleOnSearchByQuery = useCallback(async () => {
     try {
       setIsSearchResultEmpty(false);
 
-      const { search: data } = await onSearchByQuery(queryString);
+      const {search: data} = await onSearchByQuery(queryString);
 
       restartPaginatedSearch();
 

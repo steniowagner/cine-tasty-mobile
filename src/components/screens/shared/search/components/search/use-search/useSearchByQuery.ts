@@ -1,7 +1,7 @@
-import { useCallback, useState, useRef } from 'react';
-import { ApolloQueryResult } from 'apollo-client';
+import {useCallback, useState, useRef} from 'react';
+import {ApolloQueryResult} from 'apollo-client';
 
-import { useGetCurrentISO6391Language } from '@hooks';
+import {useGetCurrentISO6391Language} from '@hooks';
 import * as SchemaTypes from '@schema-types';
 import debounce from '@utils/debounce';
 import * as Types from '@local-types';
@@ -13,7 +13,9 @@ type TVariables = {
 };
 
 type UseSearchByQueryProps = {
-  search: (variables: TVariables) => Promise<ApolloQueryResult<Types.SearchResult>>;
+  search: (
+    variables: TVariables,
+  ) => Promise<ApolloQueryResult<Types.SearchResult>>;
   setQueryString: (queryString: string) => void;
   searchType: SchemaTypes.SearchType;
 };
@@ -25,7 +27,7 @@ const useSearchByQuery = ({
 }: UseSearchByQueryProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { currentISO6391Language } = useGetCurrentISO6391Language();
+  const {currentISO6391Language} = useGetCurrentISO6391Language();
 
   const debouncedSetQueryString = useRef(
     debounce((queryStringTyped: string) => {
@@ -37,32 +39,33 @@ const useSearchByQuery = ({
     debouncedSetQueryString(queryStringTyped);
   }, []);
 
-  const onSearchByQuery = useCallback(async (query: string): Promise<
-    Types.SearchResult
-  > => {
-    try {
-      setIsLoading(true);
+  const onSearchByQuery = useCallback(
+    async (query: string): Promise<Types.SearchResult> => {
+      try {
+        setIsLoading(true);
 
-      const variables = {
-        input: {
-          query: query.trim(),
-          type: searchType,
-          page: 1,
-        },
-        language: currentISO6391Language,
-      };
+        const variables = {
+          input: {
+            query: query.trim(),
+            type: searchType,
+            page: 1,
+          },
+          language: currentISO6391Language,
+        };
 
-      const { data } = await search(variables);
+        const {data} = await search(variables);
 
-      setIsLoading(false);
+        setIsLoading(false);
 
-      return data;
-    } catch (err) {
-      setIsLoading(false);
+        return data;
+      } catch (err) {
+        setIsLoading(false);
 
-      throw err;
-    }
-  }, []);
+        throw err;
+      }
+    },
+    [],
+  );
 
   return {
     onTypeSearchQuery,
