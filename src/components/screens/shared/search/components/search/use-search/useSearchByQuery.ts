@@ -1,4 +1,9 @@
 import {useCallback, useRef} from 'react';
+import {
+  OperationVariables,
+  QueryLazyOptions,
+  LazyQueryResult,
+} from '@apollo/client';
 
 import {useGetCurrentISO6391Language} from '@hooks';
 import * as SchemaTypes from '@schema-types';
@@ -7,16 +12,20 @@ import * as Types from '@local-types';
 
 export const SEARCH_BY_QUERY_DELAY = 1000;
 
+type SearchByQuery = (
+  variables: QueryLazyOptions<SchemaTypes.SearchMovieVariables>,
+) => Promise<LazyQueryResult<Types.SearchResult, OperationVariables>>;
+
 type UseSearchByQueryProps = {
   setQueryString: (queryString: string) => void;
   searchType: SchemaTypes.SearchType;
-  search: Types.SearchFunction;
+  searchByQuery: SearchByQuery;
 };
 
 const useSearchByQuery = ({
   setQueryString,
+  searchByQuery,
   searchType,
-  search,
 }: UseSearchByQueryProps) => {
   const {currentISO6391Language} = useGetCurrentISO6391Language();
 
@@ -35,7 +44,7 @@ const useSearchByQuery = ({
 
   const onSearchByQuery = useCallback(
     async (query: string) => {
-      await search({
+      await searchByQuery({
         variables: {
           input: {
             language: currentISO6391Language,
@@ -46,7 +55,7 @@ const useSearchByQuery = ({
         },
       });
     },
-    [currentISO6391Language, search, searchType],
+    [currentISO6391Language, searchByQuery, searchType],
   );
 
   return {

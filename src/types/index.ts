@@ -3,11 +3,6 @@ import {
   ApolloQueryResult,
   FetchMoreOptions,
 } from 'apollo-client';
-import {
-  OperationVariables,
-  QueryLazyOptions,
-  LazyQueryResult,
-} from '@apollo/client';
 
 import { SupportedIcons } from '@components/common/svg-icon/getXML';
 import * as SchemaTypes from '@schema-types';
@@ -192,6 +187,3 @@ export type MovieSearchPress = (
   item: SchemaTypes.SearchMovie_search_items_BaseMovie,
 ) => void;
 
-export type SearchFunction = (
-  variables: QueryLazyOptions<{ input: SchemaTypes.SearchInput }>,
-) => Promise<LazyQueryResult<SearchResult, OperationVariables>>;

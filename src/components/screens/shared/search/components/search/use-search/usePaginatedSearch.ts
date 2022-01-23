@@ -1,22 +1,21 @@
-import {
-  useCallback, useState, useEffect, useRef,
-} from 'react';
-import { ApolloQueryResult } from 'apollo-client';
+import {useCallback, useState, useEffect, useRef} from 'react';
+import {useTranslation} from 'react-i18next';
 
+import {useGetCurrentISO6391Language} from '@hooks';
 import * as SchemaTypes from '@schema-types';
 import debounce from '@utils/debounce';
 import * as Types from '@local-types';
+import {
+  FetchMoreQueryOptions,
+  OperationVariables,
+  FetchMoreOptions,
+} from '@apollo/client';
 
 export const PAGINATION_SEARCH_DELAY = 500;
 
-const initialPagination: Pagination = {
+const INITIAL_PAGINATION = {
   isPaginating: false,
   page: 1,
-};
-
-type DebouncedPaginationProps = {
-  queryStringTyped: string;
-  pageSelected: number;
 };
 
 type Pagination = {
@@ -24,87 +23,98 @@ type Pagination = {
   page: number;
 };
 
-type TVariables = {
-  input: SchemaTypes.SearchInput;
-};
+type SearchByPagination = (
+  options: FetchMoreQueryOptions<OperationVariables, Types.SearchResult> &
+    FetchMoreOptions<Types.SearchResult, OperationVariables>,
+) => Promise<{data: Types.SearchResult}>;
 
 type UsePaginatedSearchProps = {
-  search: (variables: TVariables) => Promise<ApolloQueryResult<Types.SearchResult>>;
-  concatPaginatedItems: (data: Types.SearchResult) => void;
+  onSearchByPaginationResult: (result: Types.SearchResult) => void;
+  setHasPaginationError: (hasPaginationError: boolean) => void;
+  setErrorMessage: (errorMessage: string) => void;
+  searchByPagination: SearchByPagination;
+  i18nQueryByPaginationErrorRef: string;
   searchType: SchemaTypes.SearchType;
-  onError: () => void;
   queryString: string;
 };
 
 const usePaginatedSearch = ({
-  concatPaginatedItems,
+  i18nQueryByPaginationErrorRef,
+  onSearchByPaginationResult,
+  setHasPaginationError,
+  searchByPagination,
+  setErrorMessage,
   queryString,
   searchType,
-  onError,
-  search,
 }: UsePaginatedSearchProps) => {
-  const [pagination, setPagination] = useState<Pagination>(initialPagination);
+  const [pagination, setPagination] = useState<Pagination>(INITIAL_PAGINATION);
+  const {currentISO6391Language} = useGetCurrentISO6391Language();
+  const {t} = useTranslation();
 
   const onSearchByPagination = useCallback(
-    async ({ queryStringTyped, pageSelected }: DebouncedPaginationProps) => {
+    async (query: string, page: number) => {
       try {
-        const variables = {
-          input: { page: pageSelected, query: queryStringTyped, type: searchType },
-        };
-        const { data } = await search(variables);
-
+        const result = await searchByPagination({
+          variables: {
+            input: {
+              language: currentISO6391Language,
+              type: searchType,
+              query,
+              page,
+            },
+          },
+        });
+        onSearchByPaginationResult(result.data);
         setPagination((previousPagination: Pagination) => ({
           ...previousPagination,
           isPaginating: false,
         }));
-
-        if (!data) {
-          return;
-        }
-
-        concatPaginatedItems(data);
       } catch (err) {
         setPagination((previousPagination: Pagination) => ({
           page: previousPagination.page - 1,
           isPaginating: false,
         }));
-
-        onError();
+        setErrorMessage(t(i18nQueryByPaginationErrorRef));
+        setHasPaginationError(true);
       }
     },
-    [],
+    [
+      i18nQueryByPaginationErrorRef,
+      onSearchByPaginationResult,
+      currentISO6391Language,
+      setHasPaginationError,
+      searchByPagination,
+      setErrorMessage,
+      searchType,
+      t,
+    ],
   );
 
   const debouncedPaginateSearch = useRef(
-    debounce(({ queryStringTyped, pageSelected }: DebouncedPaginationProps) => {
-      onSearchByPagination({ queryStringTyped, pageSelected });
+    debounce((queryStringTyped: string, pageSelected: number) => {
+      onSearchByPagination(queryStringTyped, pageSelected);
     }, PAGINATION_SEARCH_DELAY),
   ).current;
 
   useEffect(() => {
     if (pagination.isPaginating) {
-      debouncedPaginateSearch({
-        queryStringTyped: queryString,
-        pageSelected: pagination.page,
-      });
+      debouncedPaginateSearch(queryString, pagination.page);
     }
-  }, [pagination]);
+  }, [debouncedPaginateSearch, pagination, queryString]);
 
   const onPaginateSearch = useCallback(() => {
-    setPagination((previousPagination: Pagination) => {
-      if (previousPagination.isPaginating) {
-        return previousPagination;
-      }
+    if (pagination.isPaginating) {
+      return;
+    }
 
-      return {
-        page: previousPagination.page + 1,
-        isPaginating: true,
-      };
+    setPagination({
+      page: pagination.page + 1,
+      isPaginating: true,
     });
-  }, []);
+  }, [pagination]);
 
   const restartPaginatedSearch = useCallback(() => {
-    setPagination(initialPagination);
+    setPagination(INITIAL_PAGINATION);
   }, []);
 
   return {
