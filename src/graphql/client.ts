@@ -22,11 +22,18 @@ const errorLink = onError(({graphQLErrors, networkError, operation}) => {
 
 const makeClient = () => {
   const cache = new InMemoryCache({
-    dataIdFromObject: obj =>
-      obj.id
-        ? `${obj.__typename}-${obj.id}`
-        : `${obj.__typename}-${obj.cursor}`,
     possibleTypes,
+    typePolicies: {
+      SearchQueryResult: {
+        fields: {
+          items: {
+            merge(_, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
+    },
   });
 
   const httpLink = new HttpLink({

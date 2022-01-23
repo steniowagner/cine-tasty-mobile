@@ -3,10 +3,15 @@ import {
   ApolloQueryResult,
   FetchMoreOptions,
 } from 'apollo-client';
+import {
+  OperationVariables,
+  QueryLazyOptions,
+  LazyQueryResult,
+} from '@apollo/client';
 
 import { SupportedIcons } from '@components/common/svg-icon/getXML';
-import { Routes } from '@routes/routes';
 import * as SchemaTypes from '@schema-types';
+import { Routes } from '@routes/routes';
 
 import {
   SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
@@ -186,3 +191,7 @@ export type MovieSearchItems = SchemaTypes.SearchMovie_search_items_BaseMovie[];
 export type MovieSearchPress = (
   item: SchemaTypes.SearchMovie_search_items_BaseMovie,
 ) => void;
+
+export type SearchFunction = (
+  variables: QueryLazyOptions<{ input: SchemaTypes.SearchInput }>,
+) => Promise<LazyQueryResult<SearchResult, OperationVariables>>;

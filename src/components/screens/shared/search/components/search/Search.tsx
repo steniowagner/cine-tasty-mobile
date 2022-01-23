@@ -43,7 +43,6 @@ const Search = ({navigation, route}: SearchStackProps) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/display-name
       header: () => (
         <SearchBar
           placeholder={t(route.params.i18nSearchBarPlaceholderRef)}

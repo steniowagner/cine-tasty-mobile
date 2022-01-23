@@ -1,19 +1,14 @@
-import {useCallback, useState, useEffect, useMemo} from 'react';
+import {useCallback, useState, useEffect} from 'react';
 
 import {useTranslation} from 'react-i18next';
+import {useLazyQuery} from '@apollo/client';
 import {getQuery} from '@graphql/queries';
 
-import useImperativeQuery from '@utils/useImperativeQuery';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
 import usePaginatedSearch from './usePaginatedSearch';
 import useSearchByQuery from './useSearchByQuery';
-
-const INITIAL_QUERY_RESULT = {
-  hasMore: true,
-  items: [],
-};
 
 type UseSearchProps = {
   i18nQueryByPaginationErrorRef: string;
@@ -28,117 +23,92 @@ const useSearch = ({
   searchType,
   queryId,
 }: UseSearchProps) => {
-  const [queryResult, setQueryResult] =
-    useState<Types.PaginatedQueryResult>(INITIAL_QUERY_RESULT);
-  const [isSearchResultEmpty, setIsSearchResultEmpty] =
-    useState<boolean>(false);
-  const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [queryString, setQueryString] = useState<string>('');
-
-  const query = useMemo(() => getQuery(queryId), [queryId]);
-
-  const search = useImperativeQuery<Types.SearchResult>(query);
+  const [isSearchResultEmpty, setIsSearchResultEmpty] = useState(false);
+  const [hasPaginationError, setHasPaginationError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [queryString, setQueryString] = useState('');
+  const [hasMore, setHasMore] = useState(true);
+  const [items, setItems] = useState([]);
 
   const {t} = useTranslation();
 
-  const {onTypeSearchQuery, onSearchByQuery, isLoading} = useSearchByQuery({
+  useEffect(() => {
+    console.log('>>> items: ', items);
+  }, [items]);
+
+  const handleSearchByQueryResult = useCallback(
+    (result: Types.SearchResult) => {
+      setItems(result.search.items);
+
+      if (!result.search.items.length) {
+        setIsSearchResultEmpty(true);
+      }
+    },
+    [],
+  );
+
+  const onSearchCompleted = useCallback(
+    (result: Types.SearchResult) => {
+      if (!items.length && !!queryString) {
+        return handleSearchByQueryResult(result);
+      }
+    },
+    [handleSearchByQueryResult, queryString, items],
+  );
+
+  const [search, {loading}] = useLazyQuery<Types.SearchResult>(
+    getQuery(queryId),
+    {
+      onCompleted: onSearchCompleted,
+    },
+  );
+
+  const {onTypeSearchQuery, onSearchByQuery} = useSearchByQuery({
     setQueryString,
     searchType,
     search,
   });
 
-  const concatPaginatedItems = useCallback(
-    (data: Types.SearchResult) => {
-      setQueryResult(previousQueryResult => ({
-        items: [...previousQueryResult.items, ...data.search.items],
-        hasMore: data.search.hasMore,
-      }));
-    },
-    [queryResult],
-  );
-
-  const onPaginationError = useCallback(() => {
-    setErrorMessage(i18nQueryByPaginationErrorRef);
-    setHasPaginationError(true);
-  }, []);
-
-  const {restartPaginatedSearch, onPaginateSearch, isPaginating} =
-    usePaginatedSearch({
-      onError: onPaginationError,
-      concatPaginatedItems,
-      queryString,
-      searchType,
-      search,
-    });
-
-  const handleOnSearchByQuery = useCallback(async () => {
+  const handlSearchByQuery = useCallback(async () => {
     try {
       setIsSearchResultEmpty(false);
-
-      const {search: data} = await onSearchByQuery(queryString);
-
-      restartPaginatedSearch();
-
-      if (!data.items.length) {
-        setIsSearchResultEmpty(true);
-      }
-
-      setQueryResult({
-        hasMore: data.hasMore,
-        items: data.items,
-      });
+      setItems([]);
+      await onSearchByQuery(queryString);
+      //restartPaginatedSearch();
     } catch (error) {
       setErrorMessage(t(i18nQueryByTextErrorRef));
     }
-  }, [queryString]);
-
-  const onPressHeaderReloadButton = useCallback(async (): Promise<void> => {
-    setErrorMessage('');
-
-    await handleOnSearchByQuery();
-  }, [queryString]);
-
-  const onPressFooterReloadButton = useCallback(() => {
-    setHasPaginationError(false);
-
-    setErrorMessage('');
-
-    if (queryResult.hasMore && queryResult.items.length > 0) {
-      onPaginateSearch();
-    }
-  }, [hasPaginationError, queryResult]);
-
-  const handleOnPaginatedSearch = useCallback(() => {
-    if (queryResult.hasMore && !hasPaginationError) {
-      onPressFooterReloadButton();
-    }
-  }, [hasPaginationError, queryResult]);
+  }, [i18nQueryByTextErrorRef, onSearchByQuery, queryString, t]);
 
   useEffect(() => {
     setHasPaginationError(false);
-
-    setQueryResult(INITIAL_QUERY_RESULT);
+    setHasMore(true);
+    setItems([]);
 
     if (queryString) {
-      handleOnSearchByQuery();
+      handlSearchByQuery();
     }
-  }, [queryString]);
+  }, [handlSearchByQuery, queryString]);
+
+  const onPressHeaderReloadButton = useCallback(async (): Promise<void> => {
+    setErrorMessage('');
+    await handlSearchByQuery();
+  }, [handlSearchByQuery]);
 
   return {
-    shouldShowRecentSearches:
-      !queryString && !isLoading && !errorMessage && !queryResult.items.length,
+    shouldShowRecentSearches: false,
+    // !queryString && !isLoading && !errorMessage && !queryResult.items.length,
     shouldShowEmptyListAdvise:
-      isSearchResultEmpty && !isLoading && !errorMessage && !!queryString,
-    onEndReached: handleOnPaginatedSearch,
-    onPressFooterReloadButton,
+      isSearchResultEmpty && !loading && !errorMessage && !!queryString,
+    onEndReached: () => {},
+    onPressFooterReloadButton: () => {},
     onPressHeaderReloadButton,
-    items: queryResult.items,
+    items: items,
     hasPaginationError,
     onTypeSearchQuery,
     errorMessage,
-    isPaginating,
-    isLoading,
+    isPaginating: false,
+    isLoading: loading,
     t,
   };
 };
