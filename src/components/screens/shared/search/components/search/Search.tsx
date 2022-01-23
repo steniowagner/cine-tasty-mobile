@@ -9,11 +9,11 @@ import * as TRANSLATIONS from '@i18n/tags';
 import * as Types from '@local-types';
 
 import {SearchStackProps} from '../../routes/route-params-types';
-import RecentSearches from '../recent-searches/RecentSearches';
-import FamousSearch from '../famous-search/FamousSearch';
-import MediaSearch from '../media-search/MediaSearch';
 import usePressHandlers from './press-handlers/usePressHandlers';
+import RecentSearches from '../recent-searches/RecentSearches';
 import useSearch from './use-search/useSearch';
+import FamousSearch from '../FamousSearch';
+import MediaSearch from '../MediaSearch';
 
 const Search = ({navigation, route}: SearchStackProps) => {
   const {

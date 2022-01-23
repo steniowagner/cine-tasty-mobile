@@ -1,5 +1,6 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import {FlatList} from 'react-native';
+import styled from 'styled-components/native';
 
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
@@ -15,37 +16,40 @@ type RecentSearchesProps = {
   searchType: SchemaTypes.SearchType;
 };
 
-const RecentSearches = ({ onPressItem, searchType }: RecentSearchesProps) => {
-  const { onRemoveItem, recentSearches, t } = useRecentSearches({
+const RecentSearches = ({onPressItem, searchType}: RecentSearchesProps) => {
+  const {onRemoveItem, recentSearches, t} = useRecentSearches({
     shouldSkipGetInitialRecentSearches: false,
     searchType,
   });
 
   return (
-    <FlatList
-      style={{
-        height: '100%',
-        position: 'absolute',
-      }}
+    <RecentSearchesList
       contentContainerStyle={{
         paddingHorizontal: metrics.mediumSize,
         paddingTop: metrics.largeSize,
       }}
-      ListHeaderComponent={() => recentSearches.length > 0 && (
-      <Styles.RecentText>{t(TRANSLATIONS.SEARCH_RECENT)}</Styles.RecentText>
-      )}
-      renderItem={({ item }) => (
+      ListHeaderComponent={() =>
+        recentSearches.length > 0 && (
+          <Styles.RecentText>{t(TRANSLATIONS.SEARCH_RECENT)}</Styles.RecentText>
+        )
+      }
+      renderItem={({item}) => (
         <RecentSearchListItem
           onPressRemove={() => onRemoveItem(item)}
           onPressItem={() => onPressItem(item)}
           item={item}
         />
       )}
-      keyExtractor={({ id }) => `${id}`}
+      keyExtractor={({id}) => `${id}`}
       testID="recent-searches-list"
       data={recentSearches}
     />
   );
 };
+
+const RecentSearchesList = styled(FlatList)`
+  height: 100%;
+  position: absolute;
+`;
 
 export default RecentSearches;

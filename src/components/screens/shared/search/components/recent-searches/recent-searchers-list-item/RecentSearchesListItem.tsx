@@ -3,7 +3,7 @@ import React from 'react';
 import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import { useLoadListItemImage } from '@hooks';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
@@ -20,24 +20,16 @@ const RecentSearchesListItem = ({
   onPressItem,
   item,
 }: RecentSearchesListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image: item.image,
-  });
+  const {isFallbackImageVisible, hasError, onError, opacity, onLoad} =
+    useLoadListItemImage({
+      image: item.image,
+    });
 
   return (
-    <Styles.Wrapper
-      testID="recent-searches-list-item"
-    >
+    <Styles.Wrapper testID="recent-searches-list-item">
       <Styles.PressableContent
         onPress={onPressItem}
-        testID="recent-searches-list-item-button"
-      >
+        testID="recent-searches-list-item-button">
         <>
           <TMDBImage
             onError={onError}
@@ -57,8 +49,7 @@ const RecentSearchesListItem = ({
                 {
                   opacity,
                 },
-              ]}
-            >
+              ]}>
               {renderSVGIconConditionally({
                 condition: hasError,
                 ifTrue: {
@@ -79,12 +70,8 @@ const RecentSearchesListItem = ({
       </Styles.PressableContent>
       <Styles.CloseButtonWrapper
         testID="recent-searches-list-item-close-button"
-        onPress={onPressRemove}
-      >
-        <SVGIcon
-          size={metrics.extraLargeSize}
-          id="close"
-        />
+        onPress={onPressRemove}>
+        <SVGIcon size={metrics.extraLargeSize} id="close" />
       </Styles.CloseButtonWrapper>
     </Styles.Wrapper>
   );

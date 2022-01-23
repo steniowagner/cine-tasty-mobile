@@ -1,6 +1,5 @@
-/* eslint-disable camelcase */
-import React, { useMemo } from 'react';
-import { Platform, FlatList } from 'react-native';
+import React, {useMemo} from 'react';
+import {Platform, FlatList} from 'react-native';
 
 import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import LoadingMediaSearch from '@components/common/full-media-list-item/LoadingFullMediaList';
@@ -29,34 +28,36 @@ const MediaSearch = ({
   isLoading,
   items,
 }: MediaSearchProps) => {
-  if (isLoading) {
-    return <LoadingMediaSearch />;
-  }
-
   const shouldShowHeaderReloadButton = useMemo(
     (): boolean => !items.length && !!errorMessage && !isLoading,
     [items.length, errorMessage, isLoading],
   );
 
+  if (isLoading) {
+    return <LoadingMediaSearch />;
+  }
+
   return (
     <FlatList
-      ListHeaderComponent={() => shouldShowHeaderReloadButton && (
-      <PaginatedListHeader
-        onPress={onPressHeaderReloadButton}
-      />
-      )}
-      ListFooterComponent={() => !!items.length && (
-      <ListFooterComponent
-        onPressReloadButton={onPressFooterReloadButton}
-        hasError={hasPaginationError}
-        isPaginating={isPaginating}
-      />
-      )}
+      ListHeaderComponent={() =>
+        shouldShowHeaderReloadButton && (
+          <PaginatedListHeader onPress={onPressHeaderReloadButton} />
+        )
+      }
+      ListFooterComponent={() =>
+        !!items.length && (
+          <ListFooterComponent
+            onPressReloadButton={onPressFooterReloadButton}
+            hasError={hasPaginationError}
+            isPaginating={isPaginating}
+          />
+        )
+      }
       onEndReachedThreshold={Platform.select({
         android: 0.5,
         ios: 0.1,
       })}
-      renderItem={({ item }) => (
+      renderItem={({item}) => (
         <MediaSearchListItem
           onPressDetails={() => onPressListItem(item)}
           voteCount={item.voteCount}
@@ -66,7 +67,7 @@ const MediaSearch = ({
           title={item.title}
         />
       )}
-      keyExtractor={({ id }) => `${id}`}
+      keyExtractor={({id}) => `${id}`}
       onEndReached={onEndReached}
       testID="search-media-list"
       data={items}
