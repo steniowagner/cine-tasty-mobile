@@ -1,13 +1,15 @@
-import { useCallback, useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useState, useMemo, useRef, useEffect} from 'react';
+import {ScrollView} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 import * as SchemaTypes from '@schema-types';
 
+import {ITEM_LIST_HEIGHT} from './list-item/LanguageListItem.styles';
 import languages from './languages';
 
 type UseLanguageFilterProps = {
-  onSelectLanguage: (language: string) => void;
   lastLanguageSelected: SchemaTypes.ArticleLanguage;
+  onSelectLanguage: (language: string) => void;
   closeModal: () => void;
 };
 
@@ -16,16 +18,23 @@ const useLanguageFilter = ({
   onSelectLanguage,
   closeModal,
 }: UseLanguageFilterProps) => {
-  const [languageSelected, setLanguageSelected] = useState<SchemaTypes.ArticleLanguage>(
-    lastLanguageSelected,
-  );
+  const [languageSelected, setLanguageSelected] =
+    useState<SchemaTypes.ArticleLanguage>(lastLanguageSelected);
 
-  const { t } = useTranslation();
+  const scrollViewRef = useRef<ScrollView>(null);
+  const {t} = useTranslation();
 
   const initialFlatListIndex = useMemo(
-    () => languages.findIndex((language) => language.id === lastLanguageSelected),
+    () => languages.findIndex(language => language.id === lastLanguageSelected),
     [lastLanguageSelected],
   );
+
+  useEffect(() => {
+    if (scrollViewRef && scrollViewRef.current) {
+      const y = initialFlatListIndex * ITEM_LIST_HEIGHT;
+      scrollViewRef.current.scrollTo({x: 0, y, animated: true});
+    }
+  }, [initialFlatListIndex]);
 
   const onPressSelectButton = useCallback((): void => {
     if (lastLanguageSelected !== languageSelected) {
@@ -33,13 +42,13 @@ const useLanguageFilter = ({
     }
 
     closeModal();
-  }, [lastLanguageSelected, languageSelected]);
+  }, [lastLanguageSelected, languageSelected, closeModal, onSelectLanguage]);
 
   return {
-    initialFlatListIndex,
     onPressSelectButton,
     setLanguageSelected,
     languageSelected,
+    scrollViewRef,
     t,
   };
 };

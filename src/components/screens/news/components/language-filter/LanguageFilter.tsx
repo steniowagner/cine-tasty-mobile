@@ -1,11 +1,10 @@
 import React from 'react';
-import { FlatList } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native';
 
 import ModalSelectButton from '@components/common/modal-select-button/ModalSelectButton';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem.styles';
 import LanguageListItem from './list-item/LanguageListItem';
 import useLanguageFilter from './useLanguageFilter';
 import languages from './languages';
@@ -24,10 +23,10 @@ const LanguageFilter = ({
   closeModal,
 }: LanguageFilterProps) => {
   const {
-    initialFlatListIndex,
     onPressSelectButton,
     setLanguageSelected,
     languageSelected,
+    scrollViewRef,
     t,
   } = useLanguageFilter({
     lastLanguageSelected,
@@ -37,27 +36,19 @@ const LanguageFilter = ({
 
   return (
     <>
-      <FlatList
-        renderItem={({ item }) => (
+      <ScrollView testID="languages-list" ref={scrollViewRef}>
+        {languages.map(language => (
           <LanguageListItem
-            name={t(`${TRANSLATIONS.NEWS_LANGUAGES}:${item.name}`)}
-            isSelected={languageSelected === item.id}
+            name={t(`${TRANSLATIONS.NEWS_LANGUAGES}:${language.name}`)}
+            isSelected={languageSelected === language.id}
             onPress={() => {
-              setLanguageSelected(item.id);
+              setLanguageSelected(language.id);
             }}
-            flag={item.flag}
+            flag={language.flag}
+            key={language.id}
           />
-        )}
-        initialScrollIndex={initialFlatListIndex}
-        getItemLayout={(_, index) => ({
-          offset: ITEM_LIST_HEIGHT * index,
-          length: ITEM_LIST_HEIGHT,
-          index,
-        })}
-        keyExtractor={(item) => item.id}
-        testID="languages-list"
-        data={languages}
-      />
+        ))}
+      </ScrollView>
       <ModalSelectButton
         title={t(TRANSLATIONS.SELECT)}
         onPress={onPressSelectButton}
