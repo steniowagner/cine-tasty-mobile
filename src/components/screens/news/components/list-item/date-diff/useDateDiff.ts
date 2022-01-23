@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useMemo} from 'react';
+import {useTranslation} from 'react-i18next';
 
 import * as TRANSLATIONS from '@i18n/tags';
 
@@ -14,37 +14,37 @@ type UseDateDiffProps = {
   now: Date;
 };
 
-const useDateDiff = ({ date, now }: UseDateDiffProps) => {
-  const { t } = useTranslation();
+const useDateDiff = ({date, now}: UseDateDiffProps) => {
+  const {t} = useTranslation();
 
   const handleYearsPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_YEAR, { value }),
-    [],
+    (value: number): string => t(TRANSLATIONS.TIME_YEAR, {value}),
+    [t],
   );
 
   const handleMonthsPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_MONTH, { value }),
-    [],
+    (value: number): string => t(TRANSLATIONS.TIME_MONTH, {value}),
+    [t],
   );
 
   const handleDaysPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_DAY, { value }),
-    [],
+    (value: number): string => t(TRANSLATIONS.TIME_DAY, {value}),
+    [t],
   );
 
   const handleHoursPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_HOUR, { value }),
-    [],
+    (value: number): string => t(TRANSLATIONS.TIME_HOUR, {value}),
+    [t],
   );
 
   const handleMinutesPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_MINUTE, { value }),
-    [],
+    (value: number): string => t(TRANSLATIONS.TIME_MINUTE, {value}),
+    [t],
   );
 
   const handleSecondsPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_SECOND, { value }),
-    [],
+    (value: number): string => t(TRANSLATIONS.TIME_SECOND, {value}),
+    [t],
   );
 
   const getDateDiffInSeconds = useCallback((): number => {
@@ -86,7 +86,15 @@ const useDateDiff = ({ date, now }: UseDateDiffProps) => {
     }
 
     return handleSecondsPassed(diffValue);
-  }, [getDateDiffInSeconds]);
+  }, [
+    getDateDiffInSeconds,
+    handleDaysPassed,
+    handleHoursPassed,
+    handleMinutesPassed,
+    handleMonthsPassed,
+    handleSecondsPassed,
+    handleYearsPassed,
+  ]);
 
   const dateDiffText = useMemo(() => getDateDiffText(), [getDateDiffText]);
 

@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
-import { Linking } from 'react-native';
+import React, {memo} from 'react';
+import {Linking} from 'react-native';
 
-import NewsImage from './news-image/NewsListItemImage';
+import NewsImage from './news-image/NewsImage';
 import * as Styles from './NewsListItem.styles';
 import DateDiff from './date-diff/DateDiff';
 
@@ -15,28 +15,23 @@ type NewsListItemProps = {
 };
 
 const NewsListItem = ({
-  withRTL, source, image, text, date, url,
+  withRTL,
+  source,
+  image,
+  text,
+  date,
+  url,
 }: NewsListItemProps) => (
   <Styles.Wrapper
     onPress={() => Linking.openURL(url)}
-    testID="news-list-item-wrapper"
-  >
-    <NewsImage
-      image={image}
-    />
+    testID="news-list-item-wrapper">
+    <NewsImage image={image} />
     <Styles.TextWrapper>
       <Styles.SourceText>{source}</Styles.SourceText>
-      <Styles.NewsText
-        testID="news-text"
-        withRTL={withRTL}
-        numberOfLines={3}
-      >
+      <Styles.NewsText testID="news-text" withRTL={withRTL} numberOfLines={3}>
         {text}
       </Styles.NewsText>
-      <DateDiff
-        now={new Date()}
-        date={date}
-      />
+      <DateDiff now={new Date()} date={date} />
     </Styles.TextWrapper>
   </Styles.Wrapper>
 );

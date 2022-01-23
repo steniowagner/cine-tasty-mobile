@@ -9,8 +9,8 @@ export const Wrapper = styled(View)`
 `;
 
 export const IconWrapper = styled(View)`
-  width: ${({theme}) => theme.metrics.getWidthFromDP('45%')}px;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('45%')}px;
+  width: ${({theme}) => theme.metrics.getWidthFromDP('35%')}px;
+  height: ${({theme}) => theme.metrics.getWidthFromDP('35%')}px;
   justify-content: center;
   align-items: center;
   border-radius: ${({theme}) => theme.metrics.getWidthFromDP('27.5%')}px;

@@ -1,19 +1,19 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
 
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
-import { ThemeContextProvider } from '@providers';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
+import {ThemeContextProvider} from '@providers';
 
-import NewsListItemImage, { ANIMATION_DURATION } from './NewsListItemImage';
+import NewsImage, {ANIMATION_DURATION} from './NewsImage';
 
-const renderNewsListItemImage = (imageURL = 'image') => (
+const renderNewsImage = (imageURL = 'image') => (
   <ThemeContextProvider>
-    <NewsListItemImage image={imageURL} />
+    <NewsImage image={imageURL} />
   </ThemeContextProvider>
 );
 
-describe('Testing <NewsListItemImage />', () => {
+describe('Testing <NewsImage />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
     setupTimeTravel();
@@ -22,7 +22,7 @@ describe('Testing <NewsListItemImage />', () => {
   afterEach(cleanup);
 
   it('should render the loading layout when is mounted', () => {
-    const { getByTestId } = render(renderNewsListItemImage());
+    const {getByTestId} = render(renderNewsImage());
 
     expect(getByTestId('news-image')).not.toBeNull();
 
@@ -32,7 +32,7 @@ describe('Testing <NewsListItemImage />', () => {
   });
 
   it('should render only the image after the image be loaded', () => {
-    const { queryByTestId, getByTestId } = render(renderNewsListItemImage());
+    const {queryByTestId, getByTestId} = render(renderNewsImage());
 
     act(() => {
       jest.runAllTimers();
@@ -52,7 +52,7 @@ describe('Testing <NewsListItemImage />', () => {
   });
 
   it("should render the error layout when there's some error when try to load the image", () => {
-    const { getByTestId } = render(renderNewsListItemImage());
+    const {getByTestId} = render(renderNewsImage());
 
     fireEvent(getByTestId('news-image'), 'onError');
 
@@ -62,7 +62,7 @@ describe('Testing <NewsListItemImage />', () => {
   });
 
   it('should render the error layout when the image URL is null', () => {
-    const { getByTestId } = render(renderNewsListItemImage(null));
+    const {getByTestId} = render(renderNewsImage(null));
 
     expect(getByTestId('fallback-image-wrapper')).not.toBeNull();
 

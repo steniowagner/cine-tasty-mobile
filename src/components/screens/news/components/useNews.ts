@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
@@ -27,7 +26,7 @@ const useNews = ({navigation}: UseNewsProps) => {
   const [articles, setArticles] = useState<
     SchemaTypes.GetArticles_articles_items[]
   >([]);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState('');
 
   const {t} = useTranslation();
 
@@ -39,7 +38,6 @@ const useNews = ({navigation}: UseNewsProps) => {
           ...data.articles.items,
         ],
       );
-
       return data.articles.hasMore;
     },
     [],

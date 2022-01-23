@@ -1,7 +1,5 @@
-/* eslint-disable react/display-name */
-
-import React, { useLayoutEffect } from 'react';
-import { FlatList, Platform } from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {FlatList, Platform} from 'react-native';
 
 import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
@@ -10,16 +8,16 @@ import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 
-import { imageWrapper } from './list-item/NewsListItem.styles';
-import { NewsStackProps } from '../routes/route-params-types';
-import useNews, { INITIAL_ITEMS_TO_RENDER } from './useNews';
+import {imageWrapper} from './list-item/NewsListItem.styles';
+import {NewsStackProps} from '../routes/route-params-types';
+import useNews, {INITIAL_ITEMS_TO_RENDER} from './useNews';
 import NewsLoading from './loading-list/NewsLoading';
 import NewsListItem from './list-item/NewsListItem';
 import EmtpyListError from './EmtpyListError';
 
 const ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 
-const News = ({ navigation }: NewsStackProps) => {
+const News = ({navigation}: NewsStackProps) => {
   const {
     shouldShowListBottomReloadButton,
     shouldShowListTopReloadButton,
@@ -34,7 +32,7 @@ const News = ({ navigation }: NewsStackProps) => {
     articles,
     isLoading,
     error,
-  } = useNews({ navigation });
+  } = useNews({navigation});
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -47,7 +45,7 @@ const News = ({ navigation }: NewsStackProps) => {
         />
       ),
     });
-  }, [isLoading]);
+  }, [isLoading, navigation, onPressHeaderIconButton]);
 
   if (isLoading) {
     return <NewsLoading />;
@@ -60,19 +58,21 @@ const News = ({ navigation }: NewsStackProps) => {
   return (
     <>
       <FlatList
-        ListHeaderComponent={() => shouldShowListTopReloadButton && (
-        <PaginatedListHeader
-          onPress={onPressTopReloadButton}
-        />
-        )}
-        ListFooterComponent={() => shouldShowListBottomReloadButton && (
-        <ListFooterComponent
-          onPressReloadButton={onPressFooterReloadButton}
-          hasError={hasPaginationError}
-          isPaginating={isPaginating}
-        />
-        )}
-        renderItem={({ item }) => (
+        ListHeaderComponent={() =>
+          shouldShowListTopReloadButton && (
+            <PaginatedListHeader onPress={onPressTopReloadButton} />
+          )
+        }
+        ListFooterComponent={() =>
+          shouldShowListBottomReloadButton && (
+            <ListFooterComponent
+              onPressReloadButton={onPressFooterReloadButton}
+              hasError={hasPaginationError}
+              isPaginating={isPaginating}
+            />
+          )
+        }
+        renderItem={({item}) => (
           <NewsListItem
             withRTL={articleLanguage === SchemaTypes.ArticleLanguage.AR}
             date={item.publishedAt}
@@ -98,11 +98,7 @@ const News = ({ navigation }: NewsStackProps) => {
         testID="news-list"
         data={articles}
       />
-      {!!error && (
-      <PopupAdvice
-        text={error}
-      />
-      )}
+      {!!error && <PopupAdvice text={error} />}
     </>
   );
 };
