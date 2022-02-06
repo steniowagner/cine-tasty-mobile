@@ -8,10 +8,13 @@ type DateDiffProps = {
   now: Date;
 };
 
-const DateDiff = ({ date, now }: DateDiffProps) => {
-  const { dateDiffText } = useDateDiff({ date, now });
-
-  return <Styles.DefaultText>{dateDiffText}</Styles.DefaultText>;
+const DateDiff = (props: DateDiffProps) => {
+  const dateDiff = useDateDiff({date: props.date, now: props.now});
+  return (
+    <Styles.DefaultText testID="date-diff-text">
+      {dateDiff.text}
+    </Styles.DefaultText>
+  );
 };
 
 export default DateDiff;
