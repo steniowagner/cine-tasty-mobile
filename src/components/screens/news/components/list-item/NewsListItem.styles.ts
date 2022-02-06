@@ -36,7 +36,11 @@ export const SourceText = styled(Text).attrs({
       : theme.colors.buttonText};
 `;
 
-export const NewsText = styled(Text)<{withRTL: boolean}>`
+type NewsTextStyleProps = {
+  withRTL: boolean;
+};
+
+export const NewsText = styled(Text)<NewsTextStyleProps>`
   margin-vertical: ${({theme}) => theme.metrics.mediumSize}px;
   font-family: CircularStd-Medium;
   font-size: ${({theme}) => theme.metrics.largeSize}px;
