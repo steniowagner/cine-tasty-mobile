@@ -1,17 +1,17 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useTranslation } from 'react-i18next';
+import {createStackNavigator} from '@react-navigation/stack';
+import {useTranslation} from 'react-i18next';
 
-import { DEFAULT_HEADER_OPTIONS } from '@routes/constants';
+import {DEFAULT_HEADER_OPTIONS} from '@routes/constants';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
 import News from '../components/News';
 
 const Stack = createStackNavigator();
 
 const NewsStack = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   return (
     <Stack.Navigator>
