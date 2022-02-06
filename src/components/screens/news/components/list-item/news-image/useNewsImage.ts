@@ -7,35 +7,35 @@ type NewsListItemImageProps = {
   image: string;
 };
 
-const useNewsImage = ({image}: NewsListItemImageProps) => {
+const useNewsImage = (props: NewsListItemImageProps) => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState(true);
-  const [isImageWithError, setIsImageWithError] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const fallbackImageWrapperOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    if (isImageLoaded && !isImageWithError) {
+    if (isImageLoaded && !hasError) {
       Animated.timing(fallbackImageWrapperOpacity, {
         duration: ANIMATION_DURATION,
         useNativeDriver: true,
         toValue: 0,
       }).start(() => setIsFallbackImageVisible(false));
     }
-  }, [fallbackImageWrapperOpacity, isImageLoaded, isImageWithError]);
+  }, [fallbackImageWrapperOpacity, isImageLoaded, hasError]);
 
   useEffect(() => {
-    if (!image) {
-      setIsImageWithError(true);
+    if (!props.image) {
+      setHasError(true);
     }
-  }, [image]);
+  }, [props.image]);
 
   return {
-    onError: () => setIsImageWithError(true),
+    onError: () => setHasError(true),
     onLoad: () => setIsImageLoaded(true),
     fallbackImageWrapperOpacity,
     isFallbackImageVisible,
-    isImageWithError,
+    hasError,
   };
 };
 
