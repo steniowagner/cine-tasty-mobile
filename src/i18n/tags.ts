@@ -8,6 +8,20 @@ export namespace Translations {
     NEWS_EMPTY_LIST_DESCRIPTION = 'translations:news:emptyList:description',
     NEWS_EMPTY_LIST_SUGGESTION = 'translations:news:emptyList:suggestion',
     NEWS_EMPTY_LIST_TITLE = 'translations:news:emptyList:title',
+
+    // TIME
+    TIME_YEAR_PLURAL = 'translations:time:year_plural',
+    TIME_YEAR = 'translations:time:year',
+    TIME_MONTH_PLURAL = 'translations:time:month_plural',
+    TIME_MONTH = 'translations:time:month',
+    TIME_DAY_PLURAL = 'translations:time:day_plural',
+    TIME_DAY = 'translations:time:day',
+    TIME_HOUR_PLURAL = 'translations:time:hour_plural',
+    TIME_HOUR = 'translations:time:hour',
+    TIME_MINUTE_PLURAL = 'translations:time:minute:plural',
+    TIME_MINUTE = 'translations:time:minute',
+    TIME_SECOND_PLURAL = 'translations:time:second_plural',
+    TIME_SECOND = 'translations:time:second',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -86,20 +100,6 @@ export const TABS_HOME = 'translations:tabs:home';
 export const TABS_NEWS = 'translations:tabs:news';
 export const TABS_FAMOUS = 'translations:tabs:famous';
 export const TABS_QUIZ = 'translations:tabs:quiz';
-
-// TIME
-export const TIME_YEAR_PLURAL = 'translations:time:year_plural';
-export const TIME_YEAR = 'translations:time:year';
-export const TIME_MONTH_PLURAL = 'translations:time:month_plural';
-export const TIME_MONTH = 'translations:time:month';
-export const TIME_DAY_PLURAL = 'translations:time:day_plural';
-export const TIME_DAY = 'translations:time:day';
-export const TIME_HOUR_PLURAL = 'translations:time:hour_plural';
-export const TIME_HOUR = 'translations:time:hour';
-export const TIME_MINUTE_PLURAL = 'translations:time:minute:plural';
-export const TIME_MINUTE = 'translations:time:minute';
-export const TIME_SECOND_PLURAL = 'translations:time:second_plural';
-export const TIME_SECOND = 'translations:time:second';
 
 // QUIZ
 export const QUIZ = 'translations:quiz';

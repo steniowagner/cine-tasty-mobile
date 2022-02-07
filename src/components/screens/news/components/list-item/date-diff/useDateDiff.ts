@@ -1,7 +1,7 @@
 import {useCallback, useMemo} from 'react';
-import {useTranslation} from 'react-i18next';
 
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
+import {useTranslations} from '@hooks';
 
 const ONE_MINUTE_IN_SECONDS = 60;
 const ONE_HOUR_IN_SECONDS = ONE_MINUTE_IN_SECONDS * 60;
@@ -15,11 +15,12 @@ type UseDateDiffProps = {
 };
 
 const useDateDiff = (props: UseDateDiffProps) => {
-  const {t} = useTranslation();
+  const translations = useTranslations();
 
   const handleYearsPassed = useCallback(
-    (value: number) => t(TRANSLATIONS.TIME_YEAR, {value}),
-    [t],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_YEAR, {value}),
+    [translations.translate],
   );
 
   const handleMonthsPassed = useCallback(
@@ -27,29 +28,33 @@ const useDateDiff = (props: UseDateDiffProps) => {
       if (value % 12 === 0) {
         return handleYearsPassed(value / 12);
       }
-      return t(TRANSLATIONS.TIME_MONTH, {value});
+      return translations.translate(Translations.Tags.TIME_MONTH, {value});
     },
-    [t],
+    [translations.translate],
   );
 
   const handleDaysPassed = useCallback(
-    (value: number) => t(TRANSLATIONS.TIME_DAY, {value}),
-    [t],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_DAY, {value}),
+    [translations.translate],
   );
 
   const handleHoursPassed = useCallback(
-    (value: number) => t(TRANSLATIONS.TIME_HOUR, {value}),
-    [t],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_HOUR, {value}),
+    [translations.translate],
   );
 
   const handleMinutesPassed = useCallback(
-    (value: number) => t(TRANSLATIONS.TIME_MINUTE, {value}),
-    [t],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_MINUTE, {value}),
+    [translations.translate],
   );
 
   const handleSecondsPassed = useCallback(
-    (value: number) => t(TRANSLATIONS.TIME_SECOND, {value}),
-    [t],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_SECOND, {value}),
+    [translations.translate],
   );
 
   const getDateDiffInSeconds = useCallback(() => {

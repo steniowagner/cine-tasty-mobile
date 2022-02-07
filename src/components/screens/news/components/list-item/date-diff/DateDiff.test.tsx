@@ -6,14 +6,13 @@ import {dark as theme} from '@styles/themes/dark';
 
 import DateDiff from './DateDiff';
 
-type I18NextProps = {
+type Options = {
   value: number;
 };
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    i18n: {language: 'en'},
-    t: (key: string, {value}: I18NextProps) => {
+jest.mock('@hooks', () => ({
+  useTranslations: () => ({
+    translate: (key: string, {value}: Options) => {
       const [, , keySelected] = key.split(':');
 
       switch (keySelected) {
@@ -61,7 +60,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-14T19:55:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('1yr ago');
     });
 
@@ -72,7 +70,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('1yr ago');
     });
 
@@ -83,7 +80,6 @@ describe('Testing <DateDiff />', () => {
           '2017-03-13T19:55:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('2yr ago');
     });
 
@@ -94,7 +90,6 @@ describe('Testing <DateDiff />', () => {
           '2017-03-13T19:55:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('2yr ago');
     });
 
@@ -105,7 +100,6 @@ describe('Testing <DateDiff />', () => {
           '2017-03-13T19:55:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('3yr ago');
     });
 
@@ -116,7 +110,6 @@ describe('Testing <DateDiff />', () => {
           '2017-03-13T19:55:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('3yr ago');
     });
   });
@@ -129,7 +122,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-20T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('1mth ago');
     });
 
@@ -140,7 +132,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('1mth ago');
     });
 
@@ -151,7 +142,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-20T20:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('3mth ago');
     });
 
@@ -162,7 +152,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('3mth ago');
     });
 
@@ -173,7 +162,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-20T20:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('7mth ago');
     });
 
@@ -184,7 +172,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('7mth ago');
     });
 
@@ -195,7 +182,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-20T20:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('11mth ago');
     });
 
@@ -206,7 +192,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('11mth ago');
     });
   });
@@ -219,7 +204,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-19T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('1d ago');
     });
 
@@ -230,7 +214,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-17T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('3d ago');
     });
 
@@ -241,7 +224,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('7d ago');
     });
 
@@ -252,7 +234,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-05T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('15d ago');
     });
 
@@ -263,7 +244,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-20T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('22d ago');
     });
 
@@ -274,7 +254,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-20T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('25d ago');
     });
   });
@@ -287,7 +266,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('1h ago');
     });
 
@@ -298,7 +276,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('3h ago');
     });
 
@@ -309,7 +286,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T02:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('7h ago');
     });
 
@@ -320,7 +296,6 @@ describe('Testing <DateDiff />', () => {
           '2019-04-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('10h ago');
     });
 
@@ -331,7 +306,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('12h ago');
     });
 
@@ -342,7 +316,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('15h ago');
     });
 
@@ -353,7 +326,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('23h ago');
     });
   });
@@ -366,7 +338,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('1min ago');
     });
 
@@ -377,7 +348,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('5min ago');
     });
 
@@ -388,7 +358,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('21min ago');
     });
 
@@ -399,7 +368,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('37min ago');
     });
 
@@ -410,7 +378,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('40min ago');
     });
 
@@ -421,7 +388,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('47min ago');
     });
 
@@ -432,7 +398,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('52min ago');
     });
 
@@ -443,7 +408,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:33:37Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('59min ago');
     });
   });
@@ -456,7 +420,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:30Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('1s ago');
     });
 
@@ -467,7 +430,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:30Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('7s ago');
     });
 
@@ -478,7 +440,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:30Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('23s ago');
     });
 
@@ -489,7 +450,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:30Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('30s ago');
     });
 
@@ -500,7 +460,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:30Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('37s ago');
     });
 
@@ -511,7 +470,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:30Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('45s ago');
     });
 
@@ -522,7 +480,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:30Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('55s ago');
     });
 
@@ -533,7 +490,6 @@ describe('Testing <DateDiff />', () => {
           '2019-03-13T19:55:30Z',
         ),
       );
-
       expect(elements.dateDiffText(component).children[0]).toEqual('59s ago');
     });
   });
