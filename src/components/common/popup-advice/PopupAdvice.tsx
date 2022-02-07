@@ -11,22 +11,21 @@ type PopupAdviceProps = {
   text: string;
 };
 
-const PopupAdvice = ({ onFinishToShow = () => {}, text }: PopupAdviceProps) => {
-  const { wrapperOpacity } = usePopupAdvice({ onFinishToShow });
+const PopupAdvice = (props: PopupAdviceProps) => {
+  const popupAdvice = usePopupAdvice({
+    onFinishToShow: props.onFinishToShow,
+  });
 
   return (
     <Styles.Wrapper
       testID="popup-advice-wrapper"
       style={[
         {
-          opacity: wrapperOpacity,
+          opacity: popupAdvice.opacity,
         },
-      ]}
-    >
-      <Styles.Message
-        testID="popup-advice-message"
-      >
-        {text}
+      ]}>
+      <Styles.Message testID="popup-advice-message">
+        {props.text}
       </Styles.Message>
     </Styles.Wrapper>
   );
