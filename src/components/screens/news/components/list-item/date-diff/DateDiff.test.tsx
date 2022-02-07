@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  RenderAPI,
-  fireEvent,
-  cleanup,
-  render,
-  act,
-} from '@testing-library/react-native';
+import {RenderAPI, render} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';

@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 
-import { SupportedIcons } from '@components/common/svg-icon/getXML';
+import {SupportedIcons} from '@components/common/svg-icon/getXML';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 
 import * as Styles from './LanguageListItem.styles';
@@ -12,32 +12,21 @@ type LanguageListItemProps = {
   name: string;
 };
 
-const LanguageListItem = ({
-  isSelected, onPress, name, flag,
-}: LanguageListItemProps) => (
-  <Styles.Wrapper
-    testID="language-filter-list-item"
-    onPress={onPress}
-  >
+const LanguageListItem = (props: LanguageListItemProps) => (
+  <Styles.Wrapper testID="language-filter-list-item" onPress={props.onPress}>
     <Styles.ContentWrapper>
       <Styles.OutterFlagWrapper
         testID="outter-flag-wrapper"
-        isSelected={isSelected}
-      >
+        isSelected={props.isSelected}>
         <Styles.InnerFlagWrapper>
-          <SVGIcon
-            size={Styles.DEFAULT_ICON_SIZE}
-            id={flag}
-          />
+          <SVGIcon size={Styles.DEFAULT_ICON_SIZE} id={props.flag} />
         </Styles.InnerFlagWrapper>
       </Styles.OutterFlagWrapper>
-      <Styles.LanguageText
-        testID="language-text"
-      >
-        {name}
+      <Styles.LanguageText testID="language-text">
+        {props.name}
       </Styles.LanguageText>
     </Styles.ContentWrapper>
-    {isSelected && (
+    {props.isSelected && (
       <SVGIcon
         size={Styles.DEFAULT_ICON_SIZE}
         colorThemeRef="primary"
@@ -50,7 +39,8 @@ const LanguageListItem = ({
 const shouldComponentUpdate = (
   previousState: LanguageListItemProps,
   nextState: LanguageListItemProps,
-): boolean => (previousState.isSelected || !nextState.isSelected)
-  && (!previousState.isSelected || nextState.isSelected);
+): boolean =>
+  (previousState.isSelected || !nextState.isSelected) &&
+  (!previousState.isSelected || nextState.isSelected);
 
 export default memo(LanguageListItem, shouldComponentUpdate);
