@@ -1,7 +1,5 @@
-import {
-  useCallback, useEffect, useMemo, useRef,
-} from 'react';
-import { Animated } from 'react-native';
+import {useCallback, useEffect, useMemo, useRef} from 'react';
+import {Animated} from 'react-native';
 
 type UseLoadingPlaceholderProps = {
   indexToDelayAnimation?: number;
@@ -9,12 +7,12 @@ type UseLoadingPlaceholderProps = {
 
 const ANIMATION_DURATION = 500;
 
-const useLoadingPlaceholder = ({ indexToDelayAnimation }: UseLoadingPlaceholderProps) => {
+const useLoadingPlaceholder = (props: UseLoadingPlaceholderProps) => {
   const animatedOpacity = useRef(new Animated.Value(1)).current;
 
   const animationDuration = useMemo(
-    () => ANIMATION_DURATION + indexToDelayAnimation * 150,
-    [indexToDelayAnimation],
+    () => ANIMATION_DURATION + props.indexToDelayAnimation * 150,
+    [props.indexToDelayAnimation],
   );
 
   const animateOpacity = useCallback(() => {
@@ -35,10 +33,11 @@ const useLoadingPlaceholder = ({ indexToDelayAnimation }: UseLoadingPlaceholderP
   }, []);
 
   const interpolatedOpacity = useMemo(
-    () => animatedOpacity.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0.4, 1],
-    }),
+    () =>
+      animatedOpacity.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0.4, 1],
+      }),
     [],
   );
 
