@@ -14,7 +14,7 @@ import MockedNavigation from '@mocks/MockedNavigator';
 import {flatListScrollEventData} from '@mocks/utils';
 import * as mockNews from '@mocks/fixtures/news';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
@@ -45,7 +45,6 @@ const renderNews = (
       />
     </MockedProvider>
   );
-
   return <MockedNavigation component={NewsComponent} />;
 };
 
@@ -102,15 +101,13 @@ describe('<News />', () => {
       });
 
       expect(elements.headerIconButton(component)).not.toBeNull();
-
       fireEvent.press(elements.headerIconButton(component));
-
       expect(navigate).toHaveBeenCalledTimes(1);
       expect(navigate.mock.calls[0][0]).toEqual(
         Routes.CustomModal.CUSTOM_MODAL_STACK,
       );
       expect(navigate.mock.calls[0][1].headerText).toEqual(
-        TRANSLATIONS.NEWS_FILTER_MESSAGE,
+        Translations.Tags.NEWS_FILTER_MESSAGE,
       );
       expect(navigate.mock.calls[0][1].type).toEqual(
         Types.CustomizedModalChildrenType.LANGUAGE,
@@ -137,11 +134,8 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers, navigate));
-
       expect(elements.headerIconButton(component)).not.toBeNull();
-
       fireEvent.press(elements.headerIconButton(component));
-
       expect(navigate).toHaveBeenCalledTimes(0);
     });
   });
@@ -166,11 +160,9 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsListItem(component).length).toEqual(
         INITIAL_ITEMS_TO_RENDER + 1,
       );
@@ -189,7 +181,6 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       expect(elements.newsLoadingList(component)).not.toBeNull();
       expect(elements.newsList(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
@@ -210,11 +201,9 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toBeGreaterThan(0);
       expect(elements.popupAdviceWrapper(component)).toBeNull();
@@ -236,20 +225,18 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.adviseWrapper(component)).not.toBeNull();
       expect(
-        component.getByText(TRANSLATIONS.NEWS_EMPTY_LIST_DESCRIPTION),
+        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION),
       ).not.toBeNull();
       expect(
-        component.getByText(TRANSLATIONS.NEWS_EMPTY_LIST_SUGGESTION),
+        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION),
       ).not.toBeNull();
       expect(
-        component.getByText(TRANSLATIONS.NEWS_EMPTY_LIST_TITLE),
+        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
       ).not.toBeNull();
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.newsList(component)).toBeNull();
@@ -279,29 +266,23 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       expect(elements.newsLoadingList(component)).not.toBeNull();
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.popupAdviceWrapper(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR,
+        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
       );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
-
       fireEvent.press(elements.topReloadButton(component));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.popupAdviceWrapper(component)).toBeNull();
       expect(elements.popupAdviceMessage(component)).toBeNull();
@@ -332,29 +313,23 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       expect(elements.newsLoadingList(component)).not.toBeNull();
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.popupAdviceWrapper(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR,
+        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
       );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
-
       fireEvent.press(elements.topReloadButton(component));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.popupAdviceWrapper(component)).toBeNull();
       expect(elements.popupAdviceMessage(component)).toBeNull();
@@ -384,11 +359,9 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.topReloadButton(component)).not.toBeNull();
     });
 
@@ -405,15 +378,13 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.popupAdviceWrapper(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR,
+        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
       );
     });
 
@@ -439,34 +410,28 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       expect(elements.newsLoadingList(component)).not.toBeNull();
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.popupAdviceWrapper(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR,
+        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
       );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
-
       fireEvent.press(elements.topReloadButton(component));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.popupAdviceWrapper(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR,
+        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
       );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
@@ -494,11 +459,9 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.topReloadButton(component)).not.toBeNull();
     });
 
@@ -515,15 +478,13 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.popupAdviceWrapper(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR,
+        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
       );
     });
 
@@ -549,34 +510,28 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       expect(elements.newsLoadingList(component)).not.toBeNull();
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.popupAdviceWrapper(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR,
+        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
       );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
-
       fireEvent.press(elements.topReloadButton(component));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.popupAdviceWrapper(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component)).not.toBeNull();
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR,
+        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
       );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
@@ -613,21 +568,16 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
-
       fireEvent(elements.newsList(component), 'onEndReached');
-
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationLoading(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
-
       act(() => {
         jest.runAllTimers();
       });
@@ -655,31 +605,23 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
-
       fireEvent(elements.newsList(component), 'onEndReached');
-
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationLoading(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
-
       act(() => {
         jest.runAllTimers();
       });
-
       component.rerender(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
@@ -707,17 +649,13 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
-
       fireEvent.scroll(elements.newsList(component), flatListScrollEventData);
-
       expect(elements.newsListItem(component).length).toEqual(
         mockNews.DATASET_LENGTH,
       );
@@ -730,13 +668,10 @@ describe('<News />', () => {
               'page1',
           ),
       ).toEqual(true);
-
       fireEvent(elements.newsList(component), 'onEndReached');
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsListItem(component).length).toEqual(
         mockNews.DATASET_LENGTH * 2,
       );
@@ -774,17 +709,13 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
-
       fireEvent.scroll(elements.newsList(component), flatListScrollEventData);
-
       expect(elements.newsListItem(component).length).toEqual(
         mockNews.DATASET_LENGTH,
       );
@@ -797,13 +728,10 @@ describe('<News />', () => {
               'page1',
           ),
       ).toEqual(true);
-
       fireEvent(elements.newsList(component), 'onEndReached');
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.newsListItem(component).length).toEqual(
         mockNews.DATASET_LENGTH,
       );
@@ -843,20 +771,16 @@ describe('<News />', () => {
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.popupAdviceMessage(component)).toBeNull();
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
-
       fireEvent(elements.newsList(component), 'onEndReached');
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_QUERY_BY_PAGINATION_ERROR,
+        Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
       );
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).not.toBeNull();
@@ -885,25 +809,19 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       fireEvent(elements.newsList(component), 'onEndReached');
-
       act(() => {
         jest.runAllTimers();
       });
-
       fireEvent.press(elements.paginationReloadButton(component));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_QUERY_BY_PAGINATION_ERROR,
+        Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
       );
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).not.toBeNull();
@@ -940,24 +858,19 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.popupAdviceMessage(component)).toBeNull();
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
-
       fireEvent(elements.newsList(component), 'onEndReached');
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_QUERY_BY_PAGINATION_ERROR,
+        Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
       );
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).not.toBeNull();
@@ -986,25 +899,19 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
-
       act(() => {
         jest.runAllTimers();
       });
-
       fireEvent(elements.newsList(component), 'onEndReached');
-
       act(() => {
         jest.runAllTimers();
       });
-
       fireEvent.press(elements.paginationReloadButton(component));
-
       act(() => {
         jest.runAllTimers();
       });
-
       expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        TRANSLATIONS.NEWS_QUERY_BY_PAGINATION_ERROR,
+        Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
       );
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).not.toBeNull();

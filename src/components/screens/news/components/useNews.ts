@@ -1,12 +1,11 @@
 import {useCallback, useMemo, useState} from 'react';
-import {useTranslation} from 'react-i18next';
 
+import {useTranslations, usePagination} from '@hooks';
 import {GET_ARTICLES} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
-import {usePagination} from '@hooks';
 
 import {NewsStackNavigationProp} from '../routes/route-params-types';
 
@@ -18,7 +17,7 @@ const useNews = (props: UseNewsProps) => {
   const [language, setLanguage] = useState<SchemaTypes.ArticleLanguage>(
     SchemaTypes.ArticleLanguage.EN,
   );
-  const {t} = useTranslation();
+  const translations = useTranslations();
 
   const handleOnGetData = useCallback(
     (result: SchemaTypes.GetArticles) => ({
@@ -40,8 +39,12 @@ const useNews = (props: UseNewsProps) => {
     SchemaTypes.GetArticles_articles_items,
     SchemaTypes.GetArticlesVariables
   >({
-    paginationError: t(TRANSLATIONS.NEWS_QUERY_BY_PAGINATION_ERROR),
-    entryQueryError: t(TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR),
+    paginationError: translations.translate(
+      Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+    ),
+    entryQueryError: translations.translate(
+      Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+    ),
     onGetData: handleOnGetData,
     fireWhenMounted: true,
     query: GET_ARTICLES,
@@ -51,19 +54,23 @@ const useNews = (props: UseNewsProps) => {
   const handlePressHeaderIconButton = useCallback(() => {
     props.navigation.navigate(Routes.CustomModal.CUSTOM_MODAL_STACK, {
       type: Types.CustomizedModalChildrenType.LANGUAGE,
-      headerText: t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
+      headerText: translations.translate(Translations.Tags.NEWS_FILTER_MESSAGE),
       extraData: {
         onPressSelect: setLanguage,
         lastItemSelected: language,
       },
     });
-  }, [props.navigation, language, t]);
+  }, [props.navigation, language, translations.translate]);
 
   const adviseTexts = useMemo(
     () => ({
-      description: t(TRANSLATIONS.NEWS_EMPTY_LIST_DESCRIPTION),
-      suggestion: t(TRANSLATIONS.NEWS_EMPTY_LIST_SUGGESTION),
-      title: t(TRANSLATIONS.NEWS_EMPTY_LIST_TITLE),
+      description: translations.translate(
+        Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION,
+      ),
+      suggestion: translations.translate(
+        Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION,
+      ),
+      title: translations.translate(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
     }),
     [],
   );
