@@ -35,11 +35,9 @@ describe('<NewsLoading />', () => {
 
   it('should render the correct number of items', async () => {
     const component = render(renderNewsLoading());
-
     act(() => {
       timeTravel();
     });
-
     await waitFor(() => {
       expect(elements.newsLoadingList(component)).not.toBeNull();
       expect(elements.newsListItems(component).length).toEqual(

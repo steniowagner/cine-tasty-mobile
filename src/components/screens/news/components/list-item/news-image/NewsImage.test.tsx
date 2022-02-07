@@ -44,17 +44,13 @@ describe('<NewsImage />', () => {
 
   it('should render only the image after the image be loaded', () => {
     const component = render(renderNewsImage());
-
     act(() => {
       jest.runAllTimers();
     });
-
     fireEvent(elements.newsImage(component), 'onLoad');
-
     act(() => {
       timeTravel(ANIMATION_DURATION);
     });
-
     expect(elements.newsImage(component)).not.toBeNull();
     expect(elements.fallbackImageWrapper(component)).toBeNull();
     expect(elements.iconImage(component)).toBeNull();
@@ -62,9 +58,7 @@ describe('<NewsImage />', () => {
 
   it("should render the error layout when there's some error when try to load the image", () => {
     const component = render(renderNewsImage());
-
     fireEvent(elements.newsImage(component), 'onError');
-
     expect(elements.fallbackImageWrapper(component)).not.toBeNull();
     expect(elements.iconImageOff(component)).not.toBeNull();
   });

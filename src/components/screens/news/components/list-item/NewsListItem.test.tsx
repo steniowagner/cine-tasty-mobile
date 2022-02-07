@@ -32,9 +32,7 @@ describe('<NewsListItem />', () => {
   it('should call the "Linking.openURL" with the correct params when the user presses the list-item', () => {
     const url = 'MY_URL.com';
     const component = render(renderNewsListItem(url));
-
     fireEvent.press(elements.wrapperButton(component));
-
     expect(Linking.openURL).toHaveBeenCalledTimes(1);
     expect(Linking.openURL).toHaveBeenCalledWith(url);
   });
