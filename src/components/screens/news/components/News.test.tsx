@@ -7,13 +7,11 @@ import {
   act,
 } from '@testing-library/react-native';
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
-import {ThemeProvider} from 'styled-components/native';
 import {InMemoryCache} from '@apollo/client';
 
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
 import {flatListScrollEventData} from '@mocks/utils';
-import {dark as theme} from '@styles/themes/dark';
 import * as mockNews from '@mocks/fixtures/news';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
@@ -27,27 +25,25 @@ const renderNews = (
   navigate = jest.fn(),
 ) => {
   const NewsComponent = ({navigation}) => (
-    <ThemeProvider theme={theme}>
-      <MockedProvider
-        mocks={mockResolvers}
-        defaultOptions={{
-          watchQuery: {fetchPolicy: 'no-cache'},
-          query: {fetchPolicy: 'no-cache'},
+    <MockedProvider
+      mocks={mockResolvers}
+      defaultOptions={{
+        watchQuery: {fetchPolicy: 'no-cache'},
+        query: {fetchPolicy: 'no-cache'},
+      }}
+      cache={
+        new InMemoryCache({
+          possibleTypes,
+        })
+      }>
+      <News
+        navigation={{...navigation, navigate}}
+        route={{
+          key: `${Routes.News.NEWS}-key`,
+          name: Routes.News.NEWS,
         }}
-        cache={
-          new InMemoryCache({
-            possibleTypes,
-          })
-        }>
-        <News
-          navigation={{...navigation, navigate}}
-          route={{
-            key: `${Routes.News.NEWS}-key`,
-            name: Routes.News.NEWS,
-          }}
-        />
-      </MockedProvider>
-    </ThemeProvider>
+      />
+    </MockedProvider>
   );
 
   return <MockedNavigation component={NewsComponent} />;
