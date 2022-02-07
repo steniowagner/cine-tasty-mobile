@@ -3,6 +3,8 @@ import {ScrollView} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 import * as SchemaTypes from '@schema-types';
+import * as TRANSLATIONS from '@i18n/tags';
+import * as Types from '@local-types';
 
 import {ITEM_LIST_HEIGHT} from './list-item/LanguageListItem.styles';
 import languages from './languages';
@@ -13,20 +15,22 @@ type UseLanguageFilterProps = {
   closeModal: () => void;
 };
 
-const useLanguageFilter = ({
-  lastLanguageSelected,
-  onSelectLanguage,
-  closeModal,
-}: UseLanguageFilterProps) => {
-  const [languageSelected, setLanguageSelected] =
-    useState<SchemaTypes.ArticleLanguage>(lastLanguageSelected);
-
+const useLanguageFilter = (props: UseLanguageFilterProps) => {
+  const [language, setLanguage] = useState<SchemaTypes.ArticleLanguage>(
+    props.lastLanguageSelected,
+  );
   const scrollViewRef = useRef<ScrollView>(null);
+
   const {t} = useTranslation();
 
+  const modalSelectButtonTitle = useMemo(() => t(TRANSLATIONS.SELECT), [t]);
+
   const initialFlatListIndex = useMemo(
-    () => languages.findIndex(language => language.id === lastLanguageSelected),
-    [lastLanguageSelected],
+    () =>
+      languages.findIndex(
+        languageItem => languageItem.id === props.lastLanguageSelected,
+      ),
+    [props.lastLanguageSelected],
   );
 
   useEffect(() => {
@@ -37,18 +41,41 @@ const useLanguageFilter = ({
   }, [initialFlatListIndex]);
 
   const onPressSelectButton = useCallback((): void => {
-    if (lastLanguageSelected !== languageSelected) {
-      onSelectLanguage(languageSelected);
+    if (props.lastLanguageSelected !== language) {
+      props.onSelectLanguage(language);
     }
+    props.closeModal();
+  }, [
+    props.lastLanguageSelected,
+    props.onSelectLanguage,
+    props.closeModal,
+    language,
+  ]);
 
-    closeModal();
-  }, [lastLanguageSelected, languageSelected, closeModal, onSelectLanguage]);
+  const handleSetScrollViewRef = useCallback(
+    (ref: ScrollView) => {
+      if (scrollViewRef.current) {
+        return;
+      }
+      scrollViewRef.current = ref;
+    },
+    [scrollViewRef.current],
+  );
+
+  const languageName = useCallback(
+    (name: Types.NewsFilterLanguage) =>
+      t(`${TRANSLATIONS.NEWS_LANGUAGES}:${name}`),
+    [t],
+  );
 
   return {
+    modalSelectButtonTitle,
+    handleSetScrollViewRef,
     onPressSelectButton,
-    setLanguageSelected,
-    languageSelected,
     scrollViewRef,
+    languageName,
+    setLanguage,
+    language,
     t,
   };
 };
