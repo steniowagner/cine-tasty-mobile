@@ -1,7 +1,10 @@
 import React from 'react';
 import {ApolloProvider} from '@apollo/client';
-
-import {TMDBImageQualityProvider, ThemeContextProvider} from '@providers';
+import {
+  TMDBImageQualityProvider,
+  ThemeContextProvider,
+  AlertMessageProvider,
+} from '@providers';
 
 import RouteSuspenseWrapper from './components/common/route-suspense-wrapper/RouteSuspenseWrapper';
 import Navigation from './routes/Navigation';
@@ -11,15 +14,17 @@ const client = makeClient();
 
 const App = () => (
   <ThemeContextProvider>
-    <TMDBImageQualityProvider>
-      <>
-        <ApolloProvider client={client}>
-          <RouteSuspenseWrapper>
-            <Navigation />
-          </RouteSuspenseWrapper>
-        </ApolloProvider>
-      </>
-    </TMDBImageQualityProvider>
+    <AlertMessageProvider>
+      <TMDBImageQualityProvider>
+        <>
+          <ApolloProvider client={client}>
+            <RouteSuspenseWrapper>
+              <Navigation />
+            </RouteSuspenseWrapper>
+          </ApolloProvider>
+        </>
+      </TMDBImageQualityProvider>
+    </AlertMessageProvider>
   </ThemeContextProvider>
 );
 

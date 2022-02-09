@@ -5,6 +5,7 @@ import {
   cleanup,
   render,
   act,
+  waitFor,
 } from '@testing-library/react-native';
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
 import {InMemoryCache} from '@apollo/client';
@@ -13,6 +14,7 @@ import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
 import {flatListScrollEventData} from '@mocks/utils';
 import * as mockNews from '@mocks/fixtures/news';
+import {AlertMessageProvider} from '@providers';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
@@ -36,13 +38,15 @@ const renderNews = (
           possibleTypes,
         })
       }>
-      <News
-        navigation={{...navigation, navigate}}
-        route={{
-          key: `${Routes.News.NEWS}-key`,
-          name: Routes.News.NEWS,
-        }}
-      />
+      <AlertMessageProvider>
+        <News
+          navigation={{...navigation, navigate}}
+          route={{
+            key: `${Routes.News.NEWS}-key`,
+            name: Routes.News.NEWS,
+          }}
+        />
+      </AlertMessageProvider>
     </MockedProvider>
   );
   return <MockedNavigation component={NewsComponent} />;
@@ -60,18 +64,18 @@ describe('<News />', () => {
       api.queryByTestId('pagination-loading-footer-wrapper'),
     paginationReloadButton: (api: RenderAPI) =>
       api.queryByTestId('pagination-footer-reload-button'),
-    popupAdviceMessage: (api: RenderAPI) =>
-      api.queryByTestId('popup-advice-message'),
     headerIconButton: (api: RenderAPI) =>
       api.queryByTestId('header-icon-button-wrapper-tune'),
     newsLoadingList: (api: RenderAPI) => api.queryByTestId('news-loading-list'),
     adviseWrapper: (api: RenderAPI) => api.queryByTestId('advise-wrapper'),
-    popupAdviceWrapper: (api: RenderAPI) =>
-      api.queryByTestId('popup-advice-wrapper'),
     topReloadButton: (api: RenderAPI) => api.queryByTestId('top-reload-button'),
     articlesListItems: (api: RenderAPI) =>
       api.queryAllByTestId('news-list-item-wrapper'),
     languagesList: (api: RenderAPI) => api.queryByTestId('languages-list'),
+    alertMessageText: (api: RenderAPI) =>
+      api.queryByTestId('alert-message-text'),
+    alertMessageWrapper: (api: RenderAPI) =>
+      api.queryByTestId('alert-message-wrapper'),
   };
 
   describe('Change Language', () => {
@@ -184,8 +188,8 @@ describe('<News />', () => {
       expect(elements.newsLoadingList(component)).not.toBeNull();
       expect(elements.newsList(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).toBeNull();
-      expect(elements.popupAdviceMessage(component)).toBeNull();
+      expect(elements.alertMessageWrapper(component)).toBeNull();
+      expect(elements.alertMessageText(component)).toBeNull();
     });
 
     it('should render the "news-list" correctly when the user receives the articles', () => {
@@ -206,8 +210,8 @@ describe('<News />', () => {
       });
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toBeGreaterThan(0);
-      expect(elements.popupAdviceWrapper(component)).toBeNull();
-      expect(elements.popupAdviceMessage(component)).toBeNull();
+      expect(elements.alertMessageWrapper(component)).toBeNull();
+      expect(elements.alertMessageText(component)).toBeNull();
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
     });
@@ -240,11 +244,11 @@ describe('<News />', () => {
       ).not.toBeNull();
       expect(elements.newsLoadingList(component)).toBeNull();
       expect(elements.newsList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).toBeNull();
-      expect(elements.popupAdviceMessage(component)).toBeNull();
+      expect(elements.alertMessageWrapper(component)).toBeNull();
+      expect(elements.alertMessageText(component)).toBeNull();
     });
 
-    it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button" after a network-error', () => {
+    it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button" after a network-error', async () => {
       const entryQueryFirstResult = mockNews.resolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
@@ -271,11 +275,6 @@ describe('<News />', () => {
         jest.runAllTimers();
       });
       expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-      );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
@@ -284,14 +283,12 @@ describe('<News />', () => {
         jest.runAllTimers();
       });
       expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).toBeNull();
-      expect(elements.popupAdviceMessage(component)).toBeNull();
       expect(elements.topReloadButton(component)).toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toBeGreaterThan(0);
     });
 
-    it('should refetch the data and show the articles-list correctly when the user presses the "top-reload-button" after a graphql-error', () => {
+    it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button" after a graphql-error', async () => {
       const entryQueryFirstResult = mockNews.resolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
@@ -318,11 +315,6 @@ describe('<News />', () => {
         jest.runAllTimers();
       });
       expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-      );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
@@ -331,8 +323,8 @@ describe('<News />', () => {
         jest.runAllTimers();
       });
       expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).toBeNull();
-      expect(elements.popupAdviceMessage(component)).toBeNull();
+      expect(elements.alertMessageWrapper(component)).toBeNull();
+      expect(elements.alertMessageText(component)).toBeNull();
       expect(elements.topReloadButton(component)).toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toBeGreaterThan(0);
@@ -346,7 +338,7 @@ describe('<News />', () => {
 
     afterEach(cleanup);
 
-    it('should show the "top-reload-button" when the user receives a network-error during the entry-query', () => {
+    it('should show the "entry-query-error-message" when the user receives some network-error during the entry-query', async () => {
       const entryQueryResult = mockNews.resolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
@@ -359,36 +351,20 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
       expect(elements.topReloadButton(component)).not.toBeNull();
     });
 
-    it('should show the "entry-query-error-message" when the user receives some Network-error during the entry-query', () => {
-      const entryQueryResult = mockNews.resolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.popupAdviceWrapper(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-      );
-    });
-
-    it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a network-error and another network-erro occurs', () => {
+    it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a network-error', async () => {
       const entryQueryFirstResult = mockNews.resolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
@@ -411,28 +387,32 @@ describe('<News />', () => {
       ];
       const component = render(renderNews(resolvers));
       expect(elements.newsLoadingList(component)).not.toBeNull();
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
       expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-      );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
       fireEvent.press(elements.topReloadButton(component));
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
       expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-      );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
@@ -446,7 +426,7 @@ describe('<News />', () => {
 
     afterEach(cleanup);
 
-    it('should show the top-reload-button when the user receives some GraphlQL-error during the entry-query', () => {
+    it('should show the "entry-query-error-message" when the user receives some GraphQL-error during the entry-query', async () => {
       const entryQueryResult = mockNews.resolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
@@ -459,36 +439,20 @@ describe('<News />', () => {
         },
       ];
       const component = render(renderNews(resolvers));
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
       expect(elements.topReloadButton(component)).not.toBeNull();
     });
 
-    it('should show the "entry-query-error-message" when the user receives some GraphQL-error during the entry-query', () => {
-      const entryQueryResult = mockNews.resolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.popupAdviceWrapper(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-      );
-    });
-
-    it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a Graphql-error', () => {
+    it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a Graphql-error', async () => {
       const entryQueryFirstResult = mockNews.resolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
@@ -511,28 +475,32 @@ describe('<News />', () => {
       ];
       const component = render(renderNews(resolvers));
       expect(elements.newsLoadingList(component)).not.toBeNull();
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
       expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-      );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
       fireEvent.press(elements.topReloadButton(component));
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
       expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.popupAdviceWrapper(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component)).not.toBeNull();
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-      );
       expect(elements.topReloadButton(component)).not.toBeNull();
       expect(elements.newsList(component)).not.toBeNull();
       expect(elements.articlesListItems(component).length).toEqual(0);
@@ -771,17 +739,21 @@ describe('<News />', () => {
       act(() => {
         jest.runAllTimers();
       });
-      expect(elements.popupAdviceMessage(component)).toBeNull();
+      expect(elements.alertMessageText(component)).toBeNull();
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
       fireEvent(elements.newsList(component), 'onEndReached');
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
-      );
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).not.toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
@@ -817,12 +789,16 @@ describe('<News />', () => {
         jest.runAllTimers();
       });
       fireEvent.press(elements.paginationReloadButton(component));
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
-      );
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).not.toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
@@ -836,7 +812,7 @@ describe('<News />', () => {
 
     afterEach(cleanup);
 
-    it('should show the "pagination-reload-button" and an "error-message" when the user paginate the "news-list" and a networking error occurs', async () => {
+    it('should show the "pagination-reload-button" and an "error-message" when the user paginate the "news-list" and a GraphQL error occurs', async () => {
       const entryQueryResult = mockNews.resolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
@@ -861,23 +837,27 @@ describe('<News />', () => {
       act(() => {
         jest.runAllTimers();
       });
-      expect(elements.popupAdviceMessage(component)).toBeNull();
+      expect(elements.alertMessageText(component)).toBeNull();
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
       expect(elements.paginationReloadButton(component)).toBeNull();
       fireEvent(elements.newsList(component), 'onEndReached');
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
-      );
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).not.toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();
     });
 
-    it('should show the "pagination-loading-state" and then the "pagination-reload-button" and an "error-message" when the user press the "pagiantion-reload-button" and a networking error occurs', async () => {
+    it('should show the "pagination-loading-state" and then the "pagination-reload-button" and an "error-message" when the user press the "pagiantion-reload-button" and a GraphQL error occurs', async () => {
       const entryQueryResult = mockNews.resolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
@@ -892,6 +872,10 @@ describe('<News />', () => {
         {
           ...entryQueryResult.request,
           ...entryQueryResult.result,
+        },
+        {
+          ...paginationQueryResult.request,
+          ...paginationQueryResult.responseWithGraphQLError,
         },
         {
           ...paginationQueryResult.request,
@@ -907,12 +891,16 @@ describe('<News />', () => {
         jest.runAllTimers();
       });
       fireEvent.press(elements.paginationReloadButton(component));
+      await waitFor(() => {
+        expect(elements.alertMessageWrapper(component)).not.toBeNull();
+        expect(elements.alertMessageText(component)).not.toBeNull();
+        expect(elements.alertMessageText(component).children[0]).toEqual(
+          Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+        );
+      });
       act(() => {
         jest.runAllTimers();
       });
-      expect(elements.popupAdviceMessage(component).children[0]).toEqual(
-        Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
-      );
       expect(elements.paginationFooter(component)).not.toBeNull();
       expect(elements.paginationReloadButton(component)).not.toBeNull();
       expect(elements.paginationLoading(component)).toBeNull();

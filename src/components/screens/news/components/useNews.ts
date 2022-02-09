@@ -1,8 +1,9 @@
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {useTranslations, usePagination} from '@hooks';
 import {GET_ARTICLES} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
+import {useAlertMessage} from '@providers';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
@@ -13,14 +14,23 @@ type UseNewsProps = {
   navigation: NewsStackNavigationProp;
 };
 
+const DEFAULT_DATA: SchemaTypes.GetArticles = {
+  articles: {
+    __typename: 'Articles',
+    hasMore: false,
+    items: [],
+  },
+};
+
 const useNews = (props: UseNewsProps) => {
   const [language, setLanguage] = useState<SchemaTypes.ArticleLanguage>(
     SchemaTypes.ArticleLanguage.EN,
   );
   const translations = useTranslations();
+  const alertMessage = useAlertMessage();
 
   const handleOnGetData = useCallback(
-    (result: SchemaTypes.GetArticles) => ({
+    (result: SchemaTypes.GetArticles = DEFAULT_DATA) => ({
       hasMore: result.articles.hasMore,
       dataset: result.articles.items,
     }),
@@ -74,6 +84,13 @@ const useNews = (props: UseNewsProps) => {
     }),
     [],
   );
+
+  useEffect(() => {
+    if (!pagination.error) {
+      return;
+    }
+    alertMessage.show(pagination.error);
+  }, [pagination.error]);
 
   return {
     shouldShowPaginationFooter:

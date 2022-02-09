@@ -20,7 +20,7 @@ type UsePaginatedQueryProps<TResult, TDataset, TVariables> = {
   query: DocumentNode;
 };
 
-export const usePaginatedQuery = <TResult, TDataset, TVariables>(
+export const usePagination = <TResult, TDataset, TVariables>(
   props: UsePaginatedQueryProps<TResult, TDataset, TVariables>,
 ) => {
   const [isLoading, setIsLoading] = useState(props.fireWhenMounted);
@@ -97,9 +97,11 @@ export const usePaginatedQuery = <TResult, TDataset, TVariables>(
   }, [props.variables]);
 
   useEffect(() => {
-    if (paginateQuery.hasError) {
-      setError(props.paginationError);
+    if (!paginateQuery.hasError) {
+      setError('');
+      return;
     }
+    setError(props.paginationError);
   }, [paginateQuery.hasError]);
 
   return {
