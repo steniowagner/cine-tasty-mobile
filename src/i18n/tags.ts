@@ -22,6 +22,9 @@ export namespace Translations {
     TIME_MINUTE = 'translations:time:minute',
     TIME_SECOND_PLURAL = 'translations:time:second_plural',
     TIME_SECOND = 'translations:time:second',
+
+    // General
+    SELECT = 'translations:select',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -30,7 +33,6 @@ export namespace Translations {
 export const SOFTWARE_ENGINEER = 'translations:softwareEngineer';
 export const ABOUT = 'translations:about';
 export const MONTHS = 'translations:months';
-export const SELECT = 'translations:select';
 
 // Onboarding
 export const ONBOARDING_NEXT = 'translations:onboarding:next';

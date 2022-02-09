@@ -1,12 +1,12 @@
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
-import { SupportedIcons } from '@components/common/svg-icon/getXML';
+import {FlagsIcons} from '@components/common/svg-icon/flags';
 
 type Language = {
   id: SchemaTypes.ArticleLanguage;
   name: Types.NewsFilterLanguage;
-  flag: SupportedIcons;
+  flag: FlagsIcons;
 };
 
 const langauges: Language[] = [

@@ -1,9 +1,9 @@
 import {useCallback, useState, useMemo, useRef, useEffect} from 'react';
 import {ScrollView} from 'react-native';
-import {useTranslation} from 'react-i18next';
 
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
+import {useTranslations} from '@hooks';
 import * as Types from '@local-types';
 
 import {ITEM_LIST_HEIGHT} from './list-item/LanguageListItem.styles';
@@ -21,9 +21,12 @@ const useLanguageFilter = (props: UseLanguageFilterProps) => {
   );
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const {t} = useTranslation();
+  const translations = useTranslations();
 
-  const modalSelectButtonTitle = useMemo(() => t(TRANSLATIONS.SELECT), [t]);
+  const modalSelectButtonTitle = useMemo(
+    () => translations.translate(Translations.Tags.SELECT),
+    [translations.translate],
+  );
 
   const initialFlatListIndex = useMemo(
     () =>
@@ -64,8 +67,10 @@ const useLanguageFilter = (props: UseLanguageFilterProps) => {
 
   const languageName = useCallback(
     (name: Types.NewsFilterLanguage) =>
-      t(`${TRANSLATIONS.NEWS_LANGUAGES}:${name}`),
-    [t],
+      translations.translate(
+        `${Translations.Tags.NEWS_LANGUAGES}:${name}` as Translations.Tags,
+      ),
+    [translations.translate],
   );
 
   return {
@@ -76,7 +81,6 @@ const useLanguageFilter = (props: UseLanguageFilterProps) => {
     languageName,
     setLanguage,
     language,
-    t,
   };
 };
 

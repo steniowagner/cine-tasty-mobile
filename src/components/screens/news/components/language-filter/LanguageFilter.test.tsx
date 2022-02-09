@@ -11,7 +11,7 @@ import {ThemeProvider} from 'styled-components/native';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {dark as theme} from '@styles/themes/dark';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
 
 import {ITEM_LIST_HEIGHT} from './list-item/LanguageListItem.styles';
 import LanguageFilter, {ANIMATION_TIMING} from './LanguageFilter';
@@ -73,7 +73,7 @@ describe('<LanguageFilter />', () => {
         `icon-${languages[i].flag}`,
       );
       expect(elements.languageFlagsTexts(component)[i].children[0]).toEqual(
-        `${TRANSLATIONS.NEWS_LANGUAGES}:${languages[i].name}`,
+        `${Translations.Tags.NEWS_LANGUAGES}:${languages[i].name}`,
       );
     }
   });
