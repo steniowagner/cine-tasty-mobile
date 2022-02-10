@@ -1,22 +1,22 @@
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
-const difficulties: Types.QuestionOption<SchemaTypes.QuestionDifficulty>[] = [
+const difficulties: Types.QuestionDifficulty[] = [
   {
     value: SchemaTypes.QuestionDifficulty.MIXED,
-    id: 'difficultyMixed',
+    id: 'mixed',
   },
   {
     value: SchemaTypes.QuestionDifficulty.EASY,
-    id: 'difficultyEasy',
+    id: 'easy',
   },
   {
     value: SchemaTypes.QuestionDifficulty.MEDIUM,
-    id: 'difficultyMedium',
+    id: 'medium',
   },
   {
     value: SchemaTypes.QuestionDifficulty.HARD,
-    id: 'difficultyHard',
+    id: 'hard',
   },
 ];
 
