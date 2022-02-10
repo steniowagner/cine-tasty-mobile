@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import {CustomModalParams} from '@components/screens/shared/customized-modal/routes/route-params-types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';

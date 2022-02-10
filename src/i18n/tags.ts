@@ -25,6 +25,48 @@ export namespace Translations {
 
     // General
     SELECT = 'translations:select',
+
+    // TABS
+    TABS_QUIZ = 'translations:tabs:quiz',
+
+    // QUIZ
+    QUIZ = 'translations:quiz',
+    QUIZ_WELCOME = 'translations:quiz:welcome',
+    QUIZ_DESCRIPTION = 'translations:quiz:decription',
+    QUIZ_CHALLENGE = 'translations:quiz:challenge',
+    QUIZ_CHOOSE_QUESTIONS = 'translations:quiz:chooseQuestions',
+    QUIZ_START_BUTTON = 'translations:quiz:startButton',
+    QUIZ_CATEGORY = 'translations:quiz:category',
+    QUIZ_CATEGORY_MIXED = 'translations:quiz:categoryMixed',
+    QUIZ_CATEGORY_MOVIE = 'translations:quiz:categoryMovie',
+    QUIZ_CATEGORY_TV = 'translations:quiz:categoryTv',
+    QUIZ_TYPE = 'translations:quiz:type',
+    QUIZ_TYPE_MULTIPLE = 'translations:quiz:typeMultiple',
+    QUIZ_TYPE_BOOLEAN = 'translations:quiz:typeBoolean',
+    QUIZ_TYPE_MIXED = 'translations:quiz:typeMixed',
+    QUIZ_NUMBER_OF_QUESTIONS = 'translations:quiz:numberOfQuestions',
+    QUIZ_SET_DIFFICULTY = 'translations:quiz:setDifficulty',
+    QUIZ_SET_CATEGORY = 'translations:quiz:setCategory',
+    QUIZ_SET_TYPE = 'translations:quiz:setType',
+    QUIZ_MODAL_SELECT_TEXT = 'translations:quiz:modalSelectText',
+    QUIZ_DIFFICULTY = 'translations:quiz:difficulty',
+    QUIZ_DIFFICULTY_EASY = 'translations:quiz:difficultyEasy',
+    QUIZ_DIFFICULTY_MEDIUM = 'translations:quiz:difficultyMedium',
+    QUIZ_DIFFICULTY_HARD = 'translations:quiz:difficultyHard',
+    QUIZ_DIFFICULTY_MIXED = 'translations:quiz:difficultyMixed',
+    QUIZ_PLAY_AGAIN_DESCRIPTION = 'translations:quiz:playAgainDescription',
+    QUIZ_PLAY_AGAIN = 'translations:quiz:playAgain',
+    QUIZ_ANSWER = 'translations:quiz:answer',
+    QUIZ_YOUR_ANSWER = 'translations:quiz:yourAnswer',
+    QUIZ_SCORES = 'translations:quiz:scores',
+    QUIZ_YES = 'translations:quiz:yes',
+    QUIZ_NO = 'translations:quiz:no',
+    QUIZ_NO_QUESTIONS_ADVISE_DESCRIPTION = 'translations:quiz:noQuestionsAdviseDescription',
+    QUIZ_NO_QUESTIONS_ADVISE_SUGGESTION = 'translations:quiz:noQuestionsAdviseSuggestion',
+    QUIZ_NO_QUESTIONS_ADVISE_TITLE = 'translations:quiz:noQuestionsAdviseTitle',
+    QUIZ_NEXT = 'translations:quiz:next',
+    QUIZ_TRUE = 'translations:quiz:true',
+    QUIZ_FALSE = 'translations:quiz:false',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -101,50 +143,6 @@ export const TABS = 'translations:tabs';
 export const TABS_HOME = 'translations:tabs:home';
 export const TABS_NEWS = 'translations:tabs:news';
 export const TABS_FAMOUS = 'translations:tabs:famous';
-export const TABS_QUIZ = 'translations:tabs:quiz';
-
-// QUIZ
-export const QUIZ = 'translations:quiz';
-export const QUIZ_WELCOME = 'translations:quiz:welcome';
-export const QUIZ_DESCRIPTION = 'translations:quiz:decription';
-export const QUIZ_CHALLENGE = 'translations:quiz:challenge';
-export const QUIZ_CHOOSE_QUESTIONS = 'translations:quiz:chooseQuestions';
-export const QUIZ_START_BUTTON = 'translations:quiz:startButton';
-export const QUIZ_CATEGORY = 'translations:quiz:category';
-export const QUIZ_CATEGORY_MIXED = 'translations:quiz:categoryMixed';
-export const QUIZ_CATEGORY_MOVIE = 'translations:quiz:categoryMovie';
-export const QUIZ_CATEGORY_TV = 'translations:quiz:categoryTv';
-export const QUIZ_TYPE = 'translations:quiz:type';
-export const QUIZ_TYPE_MULTIPLE = 'translations:quiz:typeMultiple';
-export const QUIZ_TYPE_BOOLEAN = 'translations:quiz:typeBoolean';
-export const QUIZ_TYPE_MIXED = 'translations:quiz:typeMixed';
-export const QUIZ_NUMBER_OF_QUESTIONS = 'translations:quiz:numberOfQuestions';
-export const QUIZ_SET_DIFFICULTY = 'translations:quiz:setDifficulty';
-export const QUIZ_SET_CATEGORY = 'translations:quiz:setCategory';
-export const QUIZ_SET_TYPE = 'translations:quiz:setType';
-export const QUIZ_MODAL_SELECT_TEXT = 'translations:quiz:modalSelectText';
-export const QUIZ_DIFFICULTY = 'translations:quiz:difficulty';
-export const QUIZ_DIFFICULTY_EASY = 'translations:quiz:difficultyEasy';
-export const QUIZ_DIFFICULTY_MEDIUM = 'translations:quiz:difficultyMedium';
-export const QUIZ_DIFFICULTY_HARD = 'translations:quiz:difficultyHard';
-export const QUIZ_DIFFICULTY_MIXED = 'translations:quiz:difficultyMixed';
-export const QUIZ_PLAY_AGAIN_DESCRIPTION =
-  'translations:quiz:playAgainDescription';
-export const QUIZ_PLAY_AGAIN = 'translations:quiz:playAgain';
-export const QUIZ_ANSWER = 'translations:quiz:answer';
-export const QUIZ_YOUR_ANSWER = 'translations:quiz:yourAnswer';
-export const QUIZ_SCORES = 'translations:quiz:scores';
-export const QUIZ_YES = 'translations:quiz:yes';
-export const QUIZ_NO = 'translations:quiz:no';
-export const QUIZ_NO_QUESTIONS_ADVISE_DESCRIPTION =
-  'translations:quiz:noQuestionsAdviseDescription';
-export const QUIZ_NO_QUESTIONS_ADVISE_SUGGESTION =
-  'translations:quiz:noQuestionsAdviseSuggestion';
-export const QUIZ_NO_QUESTIONS_ADVISE_TITLE =
-  'translations:quiz:noQuestionsAdviseTitle';
-export const QUIZ_NEXT = 'translations:quiz:next';
-export const QUIZ_TRUE = 'translations:quiz:true';
-export const QUIZ_FALSE = 'translations:quiz:false';
 
 // FAMOUS
 export const FAMOUS_SEARCHBAR_PLACEHOLDER =
