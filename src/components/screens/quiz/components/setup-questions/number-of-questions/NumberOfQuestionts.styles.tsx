@@ -5,6 +5,7 @@ export const DefaultText = styled(Text)`
   color: ${({theme}) => theme.colors.text};
   font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Medium;
+  text-align: center;
 `;
 
 export const NumberQuestionsWrapper = styled(View)`
