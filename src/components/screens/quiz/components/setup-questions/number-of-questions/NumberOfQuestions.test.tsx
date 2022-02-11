@@ -38,6 +38,7 @@ describe('<NumberOfQuestions />', () => {
   it('should render correctly', () => {
     const numberOfQuestions = 10;
     const component = render(renderNumberOfQuestions(numberOfQuestions));
+    fireEvent(elements.slider(component), 'onLayout');
     expect(elements.numberQuestionsText(component)).not.toBeNull();
     expect(elements.numberQuestionsText(component).children[0]).toEqual(
       `${numberOfQuestions}`,

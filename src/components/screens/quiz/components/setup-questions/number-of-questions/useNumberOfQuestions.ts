@@ -9,7 +9,9 @@ const useNumberOfQuestions = (props: UseNumberOfQuestionsProps) => {
   const numberQuestionsSliderRef = useRef(null);
 
   const handleOnValueChange = useCallback(
-    (distance: number) => props.onSetNumberQuestions(distance),
+    (distance: number) => {
+      props.onSetNumberQuestions(distance);
+    },
     [props.onSetNumberQuestions],
   );
 
