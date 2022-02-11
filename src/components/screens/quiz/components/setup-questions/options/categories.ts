@@ -4,14 +4,17 @@ import * as Types from '@local-types';
 const categories: Types.QuestionCategory[] = [
   {
     value: SchemaTypes.QuestionCategory.MIXED,
+    option: 'category',
     id: 'mixed',
   },
   {
     value: SchemaTypes.QuestionCategory.MOVIE,
-    id: 'movies',
+    option: 'category',
+    id: 'movie',
   },
   {
     value: SchemaTypes.QuestionCategory.TV,
+    option: 'category',
     id: 'tv',
   },
 ];

@@ -28,7 +28,7 @@ const SetupQuestionsOptionsList = (props: SetupQuestionsOptionsListProps) => {
           <OptionListItem
             isSelected={setupOptionsList.indexOptionSelected === index}
             onPress={() => setupOptionsList.onSelectOption(index)}
-            title={setupOptionsList.makeItemTitle(item.id)}
+            title={setupOptionsList.makeItemTitle(`${item.option}_${item.id}`)}
             key={item.id}
           />
         ))}

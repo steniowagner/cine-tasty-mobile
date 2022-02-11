@@ -1,4 +1,4 @@
-import { Locale } from './Locale';
+import {Locale} from './Locale';
 
 const es: Locale = {
   languages: {
@@ -161,16 +161,16 @@ const es: Locale = {
     setCategory: 'Categoría de las preguntas',
     setType: 'Tipo de preguntas',
     modalSelectText: 'Seleccione',
-    categoryMixed: 'Mezclado',
-    categoryMovie: 'Películas',
-    categoryTv: 'Tv',
-    difficultyEasy: 'Fácil',
-    difficultyMedium: 'Medio',
-    difficultyHard: 'Duro',
-    difficultyMixed: 'Mezclado',
-    typeMultiple: 'Múltiple',
-    typeBoolean: 'Verdadero/Falso',
-    typeMixed: 'Mezclado',
+    category_mixed: 'Mezclado',
+    category_movie: 'Películas',
+    category_tv: 'Tv',
+    difficulty_easy: 'Fácil',
+    difficulty_medium: 'Medio',
+    difficulty_hard: 'Duro',
+    difficulty_mixed: 'Mezclado',
+    type_multiple: 'Múltiple',
+    type_boolean: 'Verdadero/Falso',
+    type_mixed: 'Mezclado',
     playAgain: 'Juega de nuevo',
     playAgainDescription: '¿Quieres volver a jugar el Quiz?',
     answer: 'Respuesta',
@@ -244,7 +244,8 @@ const es: Locale = {
     },
     settingsSections: {
       openSource: {
-        sectionDescription: 'Lista con todos los recursos de código abierto utilizados',
+        sectionDescription:
+          'Lista con todos los recursos de código abierto utilizados',
         sectionTitle: 'Código-Abierto',
         headerTitle: 'Código-Abierto',
       },
@@ -254,7 +255,8 @@ const es: Locale = {
         headerTitle: 'Idioma',
       },
       about: {
-        sectionDescription: 'Más información sobre el creador de esta aplicación.',
+        sectionDescription:
+          'Más información sobre el creador de esta aplicación.',
         sectionTitle: 'Acerca de',
         headerTitle: 'Acerca de',
       },

@@ -1,4 +1,4 @@
-import { Locale } from './Locale';
+import {Locale} from './Locale';
 
 const ptBR: Locale = {
   languageWarning: {
@@ -31,7 +31,8 @@ const ptBR: Locale = {
       title: 'Cinema/TV',
     },
     famous: {
-      description: 'Veja quem são os atores e atrizes que estão nas tendências de hoje',
+      description:
+        'Veja quem são os atores e atrizes que estão nas tendências de hoje',
       title: 'Famosos',
     },
     quiz: {
@@ -56,7 +57,8 @@ const ptBR: Locale = {
     'Olá!\n\nSou um Engeiro de Software e amo aplicar meu conhecimento para resolver problemas, criar produtos incríveis e impactar vidas!',
   openSource: {
     libraries: {
-      description: 'Lista de todas as bibliotecas que foram usados por este projeto',
+      description:
+        'Lista de todas as bibliotecas que foram usados por este projeto',
       title: 'Bibliotecas de suporte',
     },
     github: {
@@ -159,16 +161,16 @@ const ptBR: Locale = {
     setCategory: 'Categoria das perguntas',
     setType: 'Tipo das pergutnas',
     modalSelectText: 'Selecionar',
-    categoryMixed: 'Misturado',
-    categoryMovie: 'Filmes',
-    categoryTv: 'Séries',
-    difficultyEasy: 'Fácil',
-    difficultyMedium: 'Médio',
-    difficultyHard: 'Difícil',
-    difficultyMixed: 'Misturado',
-    typeMultiple: 'Múltipla',
-    typeBoolean: 'Verdadeiro/Falso',
-    typeMixed: 'Misturado',
+    category_mixed: 'Misturado',
+    category_movie: 'Filmes',
+    category_tv: 'Séries',
+    difficulty_easy: 'Fácil',
+    difficulty_medium: 'Médio',
+    difficulty_hard: 'Difícil',
+    difficulty_mixed: 'Misturado',
+    type_multiple: 'Múltipla',
+    type_boolean: 'Verdadeiro/Falso',
+    type_mixed: 'Misturado',
     playAgain: 'Jogar novamente',
     playAgainDescription: 'Quer jogar o Quiz novamente?',
     answer: 'Resposta',
@@ -242,7 +244,8 @@ const ptBR: Locale = {
     },
     settingsSections: {
       openSource: {
-        sectionDescription: 'Lista com todos os recursos de código aberto utilizados',
+        sectionDescription:
+          'Lista com todos os recursos de código aberto utilizados',
         sectionTitle: 'Código-Aberto',
         headerTitle: 'Código-Aberto',
       },

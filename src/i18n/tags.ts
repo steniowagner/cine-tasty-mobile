@@ -37,23 +37,23 @@ export namespace Translations {
     QUIZ_CHOOSE_QUESTIONS = 'translations:quiz:chooseQuestions',
     QUIZ_START_BUTTON = 'translations:quiz:startButton',
     QUIZ_CATEGORY = 'translations:quiz:category',
-    QUIZ_CATEGORY_MIXED = 'translations:quiz:categoryMixed',
-    QUIZ_CATEGORY_MOVIE = 'translations:quiz:categoryMovie',
-    QUIZ_CATEGORY_TV = 'translations:quiz:categoryTv',
+    QUIZ_CATEGORY_MIXED = 'translations:quiz:category_mixed',
+    QUIZ_CATEGORY_MOVIE = 'translations:quiz:category_movie',
+    QUIZ_CATEGORY_TV = 'translations:quiz:category_tv',
     QUIZ_TYPE = 'translations:quiz:type',
-    QUIZ_TYPE_MULTIPLE = 'translations:quiz:typeMultiple',
-    QUIZ_TYPE_BOOLEAN = 'translations:quiz:typeBoolean',
-    QUIZ_TYPE_MIXED = 'translations:quiz:typeMixed',
+    QUIZ_TYPE_MULTIPLE = 'translations:quiz:type_multiple',
+    QUIZ_TYPE_BOOLEAN = 'translations:quiz:type_noolean',
+    QUIZ_TYPE_MIXED = 'translations:quiz:type_mixed',
     QUIZ_NUMBER_OF_QUESTIONS = 'translations:quiz:numberOfQuestions',
     QUIZ_SET_DIFFICULTY = 'translations:quiz:setDifficulty',
     QUIZ_SET_CATEGORY = 'translations:quiz:setCategory',
     QUIZ_SET_TYPE = 'translations:quiz:setType',
     QUIZ_MODAL_SELECT_TEXT = 'translations:quiz:modalSelectText',
     QUIZ_DIFFICULTY = 'translations:quiz:difficulty',
-    QUIZ_DIFFICULTY_EASY = 'translations:quiz:difficultyEasy',
-    QUIZ_DIFFICULTY_MEDIUM = 'translations:quiz:difficultyMedium',
-    QUIZ_DIFFICULTY_HARD = 'translations:quiz:difficultyHard',
-    QUIZ_DIFFICULTY_MIXED = 'translations:quiz:difficultyMixed',
+    QUIZ_DIFFICULTY_EASY = 'translations:quiz:difficulty_easy',
+    QUIZ_DIFFICULTY_MEDIUM = 'translations:quiz:difficulty_medium',
+    QUIZ_DIFFICULTY_HARD = 'translations:quiz:difficulty_hard',
+    QUIZ_DIFFICULTY_MIXED = 'translations:quiz:difficulty_mixed',
     QUIZ_PLAY_AGAIN_DESCRIPTION = 'translations:quiz:playAgainDescription',
     QUIZ_PLAY_AGAIN = 'translations:quiz:playAgain',
     QUIZ_ANSWER = 'translations:quiz:answer',
@@ -67,6 +67,12 @@ export namespace Translations {
     QUIZ_NEXT = 'translations:quiz:next',
     QUIZ_TRUE = 'translations:quiz:true',
     QUIZ_FALSE = 'translations:quiz:false',
+
+    // LANGUAGE WARNING
+    LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION = 'translations:languageWarning:quiz:positiveAction',
+    LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION = 'translations:languageWarning:quiz:negativeAction',
+    LANGUAGE_WARNING_QUIZ_TITLE = 'translations:languageWarning:quiz:title',
+    LANGUAGE_WARNING_QUIZ_DESCRIPTION = 'translations:languageWarning:quiz:description',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -343,15 +349,6 @@ export const MEDIA_DETAIL_SECTIONS_NETWORKS =
   'translations:mediaDetail:sections:networks';
 
 // LANGUAGE WARNING
-export const LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION =
-  'translations:languageWarning:quiz:positiveAction';
-export const LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION =
-  'translations:languageWarning:quiz:negativeAction';
-export const LANGUAGE_WARNING_QUIZ_TITLE =
-  'translations:languageWarning:quiz:title';
-export const LANGUAGE_WARNING_QUIZ_DESCRIPTION =
-  'translations:languageWarning:quiz:description';
-
 export const LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION =
   'translations:languageWarning:media:positiveAction';
 export const LANGUAGE_WARNING_MEDIA_TITLE =
