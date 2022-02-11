@@ -32,9 +32,6 @@ import {
   MovieDetail_movie_crew as MovieCrew,
 
   GetArticlesVariables,
-  QuestionDifficulty,
-  QuestionCategory,
-  QuestionType,
   GetArticles,
 } from './schema';
 
@@ -68,11 +65,26 @@ export type FetchMoreArticles = <K extends keyof GetArticlesVariables>(
     FetchMoreOptions<GetArticles, GetArticlesVariables>,
 ) => Promise<ApolloQueryResult<GetArticles>>;
 
-export type QuizOption = 'DIFFICULTY' | 'CATEGORY' | 'TYPE';
+export type QuizOption = 'difficulty' | 'category' | 'type';
 
-export type QuestionOption<T> = {
-  id: string;
-  value: T;
+export type QuizFilterOption = QuestionDifficulty | QuestionCategory | QuestionType
+
+export type QuestionDifficulty = {
+  id: 'mixed' | 'easy' | 'medium' | 'hard';
+  value: SchemaTypes.QuestionDifficulty;
+  option: 'difficulty';
+};
+
+export type QuestionCategory = {
+  value: SchemaTypes.QuestionCategory;
+  id: 'mixed' | 'movie' | 'tv';
+  option: 'category';
+};
+
+export type QuestionType = {
+  id: 'mixed' | 'multiple' | 'boolean';
+  value: SchemaTypes.QuestionType;
+  option: 'type';
 };
 
 export type QuizResult = {
@@ -108,8 +120,6 @@ export type BaseSearchProps = {
   errorMessage: string;
   isLoading: boolean;
 }
-
-export type QuizFilterOption = QuestionOption<QuestionDifficulty | QuestionCategory | QuestionType>;
 
 export enum CustomizedModalChildrenType {
   TV_SHOW_READ_MORE_DETAILS = 'TV_SHOW_READ_MORE_DETAILS',

@@ -1,9 +1,8 @@
-import {useState, useCallback} from 'react';
-import {useTranslation} from 'react-i18next';
+import {useState, useCallback, useMemo} from 'react';
 
-import {useShowLanguageAlert} from '@hooks';
+import {useShowLanguageAlert, useTranslations} from '@hooks';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 import metrics from '@styles/metrics';
@@ -14,15 +13,21 @@ import {difficulties, categories, types} from './options';
 export const INITIAL_NUMBER_QUESTIONS = 10;
 
 type OptionSelectedInfo = {
-  currentOptionSelected: Types.QuizFilterOption;
-  currentDataset: Types.QuizFilterOption[];
+  optionSelected: Types.QuizFilterOption;
+  dataset: Types.QuizFilterOption[];
   headerText: string;
 };
 
 type NavigateToCustomModalProps = {
-  currentOptionSelected: Types.QuizFilterOption;
-  currentDataset: Types.QuizFilterOption[];
+  optionSelected: Types.QuizFilterOption;
+  dataset: Types.QuizFilterOption[];
   option: Types.QuizOption;
+  headerText: string;
+};
+
+type OptionSelectedMapping = {
+  optionSelected: Types.QuizFilterOption;
+  dataset: Types.QuizFilterOption[];
   headerText: string;
 };
 
@@ -30,157 +35,194 @@ type UseSetupQuestionsProps = {
   navigation: SetupQuestionsStackNavigationProp;
 };
 
-const useSetupQuestions = ({navigation}: UseSetupQuestionsProps) => {
-  const [questionDifficulty, setQuestionDifficulty] = useState<
-    Types.QuestionOption<SchemaTypes.QuestionDifficulty>
-  >(difficulties[0]);
-  const [questionCategory, setQuestionCategory] = useState<
-    Types.QuestionOption<SchemaTypes.QuestionCategory>
-  >(categories[0]);
-  const [questionType, setQuestionType] = useState<
-    Types.QuestionOption<SchemaTypes.QuestionType>
-  >(types[0]);
+const useSetupQuestions = (props: UseSetupQuestionsProps) => {
+  const [questionType, setQuestionType] = useState<Types.QuestionType>(
+    types[0],
+  );
+  const [questionDifficulty, setQuestionDifficulty] =
+    useState<Types.QuestionDifficulty>(difficulties[0]);
+  const [questionCategory, setQuestionCategory] =
+    useState<Types.QuestionCategory>(categories[0]);
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(
     INITIAL_NUMBER_QUESTIONS,
   );
 
-  const {handleShowLanguageAlert} = useShowLanguageAlert();
-  const {t} = useTranslation();
+  const languageAlert = useShowLanguageAlert();
+  const translations = useTranslations();
 
   const getOptionSelectedInfo = useCallback(
     (option: Types.QuizOption): OptionSelectedInfo => {
-      let currentOptionSelected: Types.QuizFilterOption;
-      let currentDataset: Types.QuizFilterOption[] = [];
-      let headerText: string = '';
-
-      if (option === 'CATEGORY') {
-        headerText = t(TRANSLATIONS.QUIZ_SET_CATEGORY);
-        currentOptionSelected = questionCategory;
-        currentDataset = categories;
-      }
-
-      if (option === 'DIFFICULTY') {
-        headerText = t(TRANSLATIONS.QUIZ_SET_DIFFICULTY);
-        currentOptionSelected = questionDifficulty;
-        currentDataset = difficulties;
-      }
-
-      if (option === 'TYPE') {
-        headerText = t(TRANSLATIONS.QUIZ_SET_TYPE);
-        currentOptionSelected = questionType;
-        currentDataset = types;
-      }
-
-      return {
-        currentOptionSelected,
-        currentDataset,
-        headerText,
+      const optionSelectedMapping: Record<
+        Types.QuizOption,
+        OptionSelectedMapping
+      > = {
+        category: {
+          headerText: translations.translate(
+            Translations.Tags.QUIZ_SET_CATEGORY,
+          ),
+          optionSelected: questionCategory,
+          dataset: categories,
+        },
+        difficulty: {
+          headerText: translations.translate(
+            Translations.Tags.QUIZ_SET_DIFFICULTY,
+          ),
+          optionSelected: questionDifficulty,
+          dataset: difficulties,
+        },
+        type: {
+          headerText: translations.translate(Translations.Tags.QUIZ_SET_TYPE),
+          optionSelected: questionType,
+          dataset: types,
+        },
       };
+      return optionSelectedMapping[option];
     },
-    [questionDifficulty, questionCategory, questionType],
+    [
+      translations.translate,
+      questionDifficulty,
+      questionCategory,
+      questionType,
+    ],
   );
 
-  const onSelectOption = useCallback(
+  const handleSelectOption = useCallback(
     (indexOptionSelected: number, optionSelected: Types.QuizOption): void => {
-      if (optionSelected === 'CATEGORY') {
-        setQuestionCategory(categories[indexOptionSelected]);
-      }
-
-      if (optionSelected === 'DIFFICULTY') {
-        setQuestionDifficulty(difficulties[indexOptionSelected]);
-      }
-
-      if (optionSelected === 'TYPE') {
-        setQuestionType(types[indexOptionSelected]);
-      }
+      const selectOptionMapping: Record<Types.QuizOption, () => void> = {
+        category: () => setQuestionCategory(categories[indexOptionSelected]),
+        difficulty: () =>
+          setQuestionDifficulty(difficulties[indexOptionSelected]),
+        type: () => setQuestionType(types[indexOptionSelected]),
+      };
+      const properOptionUpdater = selectOptionMapping[optionSelected];
+      properOptionUpdater();
     },
     [],
   );
 
-  const getLastIndexOptionSelected = useCallback(
+  const lastItemSelected = useCallback(
     (
-      currentDataset: Types.QuizFilterOption[],
-      currentOptionSelected: Types.QuizFilterOption,
+      dataset: Types.QuizFilterOption[],
+      optionSelected: Types.QuizFilterOption,
     ) => {
-      const index = currentDataset.findIndex(
-        datasetItem => datasetItem.id === currentOptionSelected.id,
+      const lastIndexOptionSelected = dataset.findIndex(
+        datasetItem => datasetItem.id === optionSelected.id,
       );
-
-      return index;
+      return lastIndexOptionSelected;
     },
     [],
   );
 
   const navigateToCustomModal = useCallback(
-    ({
-      currentOptionSelected,
-      currentDataset,
-      headerText,
-      option,
-    }: NavigateToCustomModalProps): void => {
-      navigation.navigate(Routes.CustomModal.CUSTOM_MODAL_STACK, {
+    (params: NavigateToCustomModalProps): void => {
+      props.navigation.navigate(Routes.CustomModal.CUSTOM_MODAL_STACK, {
         extraData: {
           onPressSelect: (indexOptionSelected: number) => {
-            onSelectOption(indexOptionSelected, option);
+            handleSelectOption(indexOptionSelected, params.option);
           },
-          lastItemSelected: getLastIndexOptionSelected(
-            currentDataset,
-            currentOptionSelected,
+          dataset: params.dataset,
+          lastItemSelected: lastItemSelected(
+            params.dataset,
+            params.optionSelected,
           ),
-          dataset: currentDataset,
         },
         type: Types.CustomizedModalChildrenType.MEDIA_FILTER,
         modalHeight: metrics.getHeightFromDP('68%'),
-        headerText,
+        headerText: params.headerText,
       });
     },
-    [],
+    [props.navigation, lastItemSelected],
   );
 
-  const onPressOptionDropdown = useCallback(
+  const handlePressOptionDropdown = useCallback(
     (option: Types.QuizOption): void => {
-      const {currentOptionSelected, currentDataset, headerText} =
+      const {optionSelected, dataset, headerText} =
         getOptionSelectedInfo(option);
 
       navigateToCustomModal({
-        currentOptionSelected,
-        currentDataset,
+        optionSelected,
         headerText,
+        dataset,
         option,
       });
     },
-    [questionDifficulty, questionCategory, questionType],
+    [getOptionSelectedInfo, navigateToCustomModal],
   );
 
   const navigateToQuestions = useCallback(() => {
-    navigation.navigate(Routes.Quiz.QUESTIONS, {
+    props.navigation.navigate(Routes.Quiz.QUESTIONS, {
       difficulty: questionDifficulty.value,
       category: questionCategory.value,
       type: questionType.value,
       numberOfQuestions,
     });
-  }, [numberOfQuestions, questionDifficulty, questionCategory, questionType]);
+  }, [
+    props.navigation,
+    numberOfQuestions,
+    questionDifficulty,
+    questionCategory,
+    questionType,
+  ]);
 
-  const onPressStartQuiz = useCallback(() => {
-    handleShowLanguageAlert({
-      descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_DESCRIPTION,
-      negativei18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION,
-      positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION,
-      titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_QUIZ_TITLE,
+  const handleShowLanguageAlert = useCallback(() => {
+    languageAlert.show({
+      negativeActionTitle: translations.translate(
+        Translations.Tags.LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION,
+      ),
+      positiveActionTitle: translations.translate(
+        Translations.Tags.LANGUAGE_WARNING_QUIZ_POSITIVE_ACTION,
+      ),
+      description: translations.translate(
+        Translations.Tags.LANGUAGE_WARNING_QUIZ_DESCRIPTION,
+      ),
+      title: translations.translate(
+        Translations.Tags.LANGUAGE_WARNING_QUIZ_TITLE,
+      ),
       onPressPositiveAction: navigateToQuestions,
       singleAction: false,
     });
-  }, [navigateToQuestions]);
+  }, [languageAlert.show, navigateToQuestions]);
+
+  const handlePressStartQuiz = useCallback(() => {
+    if (translations.language !== SchemaTypes.ISO6391Language.EN) {
+      return handleShowLanguageAlert();
+    }
+    navigateToQuestions();
+  }, [handleShowLanguageAlert, navigateToQuestions, translations.language]);
+
+  const texts = useMemo(
+    () => ({
+      difficultyDropdown: translations.translate(
+        `${Translations.Tags.QUIZ_DIFFICULTY}_${questionDifficulty.id}` as Translations.Tags,
+      ),
+      categoryDropdown: translations.translate(
+        `${Translations.Tags.QUIZ_CATEGORY}_${questionCategory.id}` as Translations.Tags,
+      ),
+      typeDropdown: translations.translate(
+        `${Translations.Tags.QUIZ_TYPE}_${questionType.id}` as Translations.Tags,
+      ),
+      difficulties: translations.translate(Translations.Tags.QUIZ_DIFFICULTY),
+      startQuiz: translations.translate(Translations.Tags.QUIZ_START_BUTTON),
+      categories: translations.translate(Translations.Tags.QUIZ_CATEGORY),
+      types: translations.translate(Translations.Tags.QUIZ_TYPE),
+      numberOfQuestions: translations.translate(
+        Translations.Tags.QUIZ_NUMBER_OF_QUESTIONS,
+      ),
+    }),
+    [
+      translations.translate,
+      questionDifficulty,
+      questionCategory,
+      questionType,
+    ],
+  );
 
   return {
-    onPressOptionDropdown,
+    onPressOptionDropdown: handlePressOptionDropdown,
+    onPressStartQuiz: handlePressStartQuiz,
     setNumberOfQuestions,
-    questionDifficulty,
     numberOfQuestions,
-    onPressStartQuiz,
-    questionCategory,
-    questionType,
-    t,
+    texts,
   };
 };
 
