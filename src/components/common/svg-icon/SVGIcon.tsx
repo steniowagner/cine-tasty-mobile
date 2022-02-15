@@ -13,24 +13,24 @@ export type SVGIconProps = {
   size: number;
 };
 
-const SVGIcon = ({colorThemeRef, style, theme, size, id}: SVGIconProps) => {
+const SVGIcon = (props: SVGIconProps) => {
   const xml = useMemo(() => {
-    let color: string = theme.colors.text;
+    let color: string = props.theme.colors.text;
 
-    if (colorThemeRef) {
-      color = theme.colors[colorThemeRef];
+    if (props.colorThemeRef) {
+      color = props.theme.colors[props.colorThemeRef];
     }
 
-    return getXML(id, color);
-  }, [colorThemeRef, theme]);
+    return getXML(props.id, color);
+  }, [props]);
 
   return (
     <SvgXml
       xml={xml}
-      width={size}
-      height={size}
-      testID={`icon-${id}`}
-      style={style || {}}
+      width={props.size}
+      height={props.size}
+      testID={`icon-${props.id}`}
+      style={props.style || {}}
     />
   );
 };

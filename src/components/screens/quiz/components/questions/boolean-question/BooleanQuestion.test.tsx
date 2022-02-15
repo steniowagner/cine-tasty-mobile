@@ -49,10 +49,6 @@ describe('<BooleanQuestion />', () => {
       expect(elements.nextButtonText(component).children[0]).toEqual(
         Translations.Tags.QUIZ_NEXT,
       );
-    });
-
-    it("should render the option-buttons with the disabled-style when there's no option selected", () => {
-      const component = render(renderBooleanQuestion());
       expect(
         elements.trueOptionButton(component).props.style.backgroundColor,
       ).toEqual(theme.colors.fallbackImageBackground);

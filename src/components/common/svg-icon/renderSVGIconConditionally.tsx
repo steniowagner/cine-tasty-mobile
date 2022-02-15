@@ -1,5 +1,5 @@
 import React from 'react';
-import SVGIcon, { SVGIconProps } from '@components/common/svg-icon/SVGIcon';
+import SVGIcon, {SVGIconProps} from '@components/common/svg-icon/SVGIcon';
 
 type RenderSVGIconConditionallyProps = {
   ifFalse: Omit<SVGIconProps, 'theme'>;
@@ -11,19 +11,15 @@ const renderSVGIconConditionally = ({
   condition,
   ifFalse,
   ifTrue,
-}: RenderSVGIconConditionallyProps) => {
-  if (condition) {
-    return (
-      <SVGIcon
-        colorThemeRef={ifTrue.colorThemeRef}
-        style={ifTrue.style}
-        size={ifTrue.size}
-        id={ifTrue.id}
-      />
-    );
-  }
-
-  return (
+}: RenderSVGIconConditionallyProps) =>
+  condition ? (
+    <SVGIcon
+      colorThemeRef={ifTrue.colorThemeRef}
+      style={ifTrue.style}
+      size={ifTrue.size}
+      id={ifTrue.id}
+    />
+  ) : (
     <SVGIcon
       colorThemeRef={ifFalse.colorThemeRef}
       style={ifFalse.style}
@@ -31,6 +27,5 @@ const renderSVGIconConditionally = ({
       id={ifFalse.id}
     />
   );
-};
 
 export default renderSVGIconConditionally;
