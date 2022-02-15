@@ -8,7 +8,8 @@ type SelectionStyleProps = {
 export const ListItemWrapper = styled(TouchableOpacity)<SelectionStyleProps>`
   flex-direction: row;
   align-items: center;
-  margin-vertical: ${({theme}) => theme.metrics.smallSize}px;
+  margin-horizontal: ${({theme}) => theme.metrics.smallSize}px;
+  margin-bottom: ${({theme}) => theme.metrics.mediumSize}px;
   padding: ${({theme}) => theme.metrics.mediumSize}px;
   background-color: ${({isSelected, theme}) =>
     isSelected ? theme.colors.primary : 'white'};
