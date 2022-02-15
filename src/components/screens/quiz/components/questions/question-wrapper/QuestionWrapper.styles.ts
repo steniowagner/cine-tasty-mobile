@@ -25,7 +25,7 @@ export const TextWrapper = styled(View)`
 export const QuestionsIndicatorText = styled(Text)`
   font-family: CircularStd-Bold;
   font-size: ${({theme}) => theme.metrics.largeSize}px;
-  color: rgba(0, 0, 0, 0.8);
+  color: ${({theme}) => theme.colors.buttonText};
 `;
 
 export const QuestionText = styled(Text).attrs({
@@ -34,6 +34,6 @@ export const QuestionText = styled(Text).attrs({
   font-family: CircularStd-Bold;
   font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
   margin-top: ${({theme}) => theme.metrics.largeSize}px;
-  color: rgba(0, 0, 0, 0.8);
+  color: ${({theme}) => theme.colors.buttonText};
   text-align: center;
 `;

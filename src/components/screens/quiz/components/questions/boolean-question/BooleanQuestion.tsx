@@ -2,7 +2,7 @@ import React, {memo} from 'react';
 
 import ModalSelectButton from '@components/common/modal-select-button/ModalSelectButton';
 
-import {DEFAULT_BORDER_RADIUS} from '../list-item-wrapper-question/ListItemWrapperQuestion.styles';
+import {DEFAULT_BORDER_RADIUS} from '../question-wrapper/QuestionWrapper.styles';
 import useBooleanQuestion from './useBooleanQuestion';
 import * as Styles from './BooleanQuestion.styles';
 
