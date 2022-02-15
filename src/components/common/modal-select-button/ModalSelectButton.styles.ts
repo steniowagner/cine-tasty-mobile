@@ -3,7 +3,12 @@ import styled from 'styled-components/native';
 
 import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
 
-export const SelectButton = styled(TouchableOpacity)`
+type SelectButtonStyleProps = {
+  borderBottomRightRadius?: number;
+  borderBottomLeftRadius?: number;
+};
+
+export const SelectButton = styled(TouchableOpacity)<SelectButtonStyleProps>`
   width: 100%;
   height: ${({theme}) =>
     isEqualsOrLargestThanIphoneX()
@@ -12,6 +17,10 @@ export const SelectButton = styled(TouchableOpacity)`
   justify-content: center;
   align-items: center;
   background-color: ${({theme}) => theme.colors.primary};
+  border-bottom-right-radius: ${({borderBottomRightRadius}) =>
+    borderBottomRightRadius || 0}px;
+  border-bottom-left-radius: ${({borderBottomLeftRadius}) =>
+    borderBottomLeftRadius || 0}px;
 `;
 
 export const SelectButtonText = styled(Text)`

@@ -1,6 +1,10 @@
 import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
+import metrics from '@styles/metrics';
+
+export const DEFAULT_BORDER_RADIUS = metrics.smallSize;
+
 export const Wrapper = styled(View)`
   width: ${({theme}) => theme.metrics.width}px;
   justify-content: center;
@@ -9,7 +13,7 @@ export const Wrapper = styled(View)`
 
 export const CardWrapper = styled(View)`
   width: ${({theme}) => theme.metrics.getWidthFromDP('90%')}px;
-  border-radius: ${({theme}) => theme.metrics.smallSize}px;
+  border-radius: ${DEFAULT_BORDER_RADIUS}px;
   background-color: white;
 `;
 

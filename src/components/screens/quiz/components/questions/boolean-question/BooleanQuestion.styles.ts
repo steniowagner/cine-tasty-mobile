@@ -10,7 +10,8 @@ export const Wrapper = styled(View)`
   padding-horizontal: ${({theme}) => theme.metrics.getWidthFromDP('10%')}px;
   flex-direction: row;
   justify-content: space-between;
-  margin-vertical: ${({theme}) => theme.metrics.extraLargeSize}px;
+  margin-top: ${({theme}) => theme.metrics.extraLargeSize}px;
+  margin-bottom: ${({theme}) => theme.metrics.getWidthFromDP('12%')}px;
 `;
 
 export const OptionButton = styled(TouchableOpacity)<OptionSelectedStyleProps>`
@@ -18,12 +19,12 @@ export const OptionButton = styled(TouchableOpacity)<OptionSelectedStyleProps>`
   padding-horizontal: ${({theme}) => theme.metrics.extraLargeSize}px;
   border-radius: ${({theme}) => theme.metrics.smallSize}px;
   background-color: ${({isSelected, theme}) =>
-    isSelected ? theme.colors.primary : '#CCC'};
+    isSelected ? theme.colors.primary : theme.colors.fallbackImageBackground};
 `;
 
 export const OptionText = styled(Text)`
   font-family: CircularStd-Bold;
-  font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
+  font-size: ${({theme}) => theme.metrics.largeSize}px;
   color: ${({theme}) => theme.colors.buttonText};
   text-transform: uppercase;
 `;
