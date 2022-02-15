@@ -73,6 +73,11 @@ export namespace Translations {
     LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION = 'translations:languageWarning:quiz:negativeAction',
     LANGUAGE_WARNING_QUIZ_TITLE = 'translations:languageWarning:quiz:title',
     LANGUAGE_WARNING_QUIZ_DESCRIPTION = 'translations:languageWarning:quiz:description',
+
+    // ERRORS
+    ERRORS_NETWORK_ERROR_DESCRIPTION = 'translations:errors:network:description',
+    ERRORS_NETWORK_ERROR_SUGGESTION = 'translations:errors:network:suggestion',
+    ERRORS_NETWORK_ERROR_TITLE = 'translations:errors:network:title',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -136,13 +141,6 @@ export const IMAGE_QUALITIES = 'translations:imageQualities';
 
 // LANGUAGES
 export const LANGUAGES = 'translations:languages';
-
-// ERRORS
-export const ERRORS_NETWORK_ERROR_DESCRIPTION =
-  'translations:errors:network:description';
-export const ERRORS_NETWORK_ERROR_SUGGESTION =
-  'translations:errors:network:suggestion';
-export const ERRORS_NETWORK_ERROR_TITLE = 'translations:errors:network:title';
 
 // TABS
 export const TABS = 'translations:tabs';
