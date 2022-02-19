@@ -11,7 +11,6 @@ import {InMemoryCache} from '@apollo/client';
 
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
-import shuffleDataset from '@utils/shuffleDataset';
 import {randomPositiveNumber} from '@mocks/utils';
 import * as SchemaTypes from '@schema-types';
 import {mockQuiz} from '@mocks/fixtures';
@@ -97,25 +96,6 @@ const selectSomeMultiChoiceOption = (
     .children[0];
 };
 
-const mixedQuestions = (numberOfQuestions: number) => {
-  const multiChoiceQuestionsLength =
-    numberOfQuestions % 2 === 0
-      ? numberOfQuestions / 2
-      : Math.floor(numberOfQuestions / 2);
-  const booleaneQuestionsLength =
-    numberOfQuestions % 2 === 0
-      ? numberOfQuestions / 2
-      : numberOfQuestions - Math.floor(numberOfQuestions / 2);
-  const multiChoiceQuestions = mockQuiz().multiChoiceQuestions(
-    multiChoiceQuestionsLength,
-  );
-  const booleanQuestions = mockQuiz().booleanQuestions(booleaneQuestionsLength);
-  return shuffleDataset<SchemaTypes.GetQuizQuestions_quiz>([
-    ...multiChoiceQuestions,
-    ...booleanQuestions,
-  ]);
-};
-
 const renderQuestions = (
   numberOfQuestions: number,
   mockResolvers?: readonly MockedResponse<Record<string, any>>[],
@@ -169,7 +149,7 @@ describe('<Questions />', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
       const resolvers = mockQuiz().resolvers(
         numberOfQuestions,
-        mixedQuestions(numberOfQuestions),
+        mockQuiz().mixedQuestions(numberOfQuestions),
       );
       const component = render(
         renderQuestions(numberOfQuestions, [
@@ -188,7 +168,7 @@ describe('<Questions />', () => {
 
     it('should render the list of questions correctly when has both "Multi-choice" and "True/False" questions', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       const component = render(
         renderQuestions(numberOfQuestions, [
@@ -272,7 +252,7 @@ describe('<Questions />', () => {
 
     it('should render the header correctly for each question when has both "Multi-choice" and "True/False" questions', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       const component = render(
         renderQuestions(numberOfQuestions, [
@@ -367,7 +347,7 @@ describe('<Questions />', () => {
   describe('Navigate to the next question', () => {
     it('should navigate to the next question when the user selects an answer and press the "NEXT" button', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       let currentQuestionCategory;
       const component = render(
@@ -412,7 +392,7 @@ describe('<Questions />', () => {
 
     it('should not navigate to the next question when the user didnt select an answer and didnt press the "NEXT" button', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       let currentQuestionCategory;
       const component = render(
@@ -449,7 +429,7 @@ describe('<Questions />', () => {
 
     it('should not navigate to the next question when the user selected an answer but didnt press the "NEXT" button', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       let currentQuestionCategory;
       const component = render(
@@ -494,7 +474,7 @@ describe('<Questions />', () => {
 
     it('should not navigate to the next question when the user pressed the "NEXT" button but didnt select an answer', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       let currentQuestionCategory;
       const component = render(
@@ -535,7 +515,7 @@ describe('<Questions />', () => {
     it('should navigate to the "Results" screen whent he user answer the last question', () => {
       const navigate = jest.fn();
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       const component = render(
         renderQuestions(
@@ -581,7 +561,7 @@ describe('<Questions />', () => {
   describe('Restart Quiz', () => {
     it('should not show the "Restart-questionaire" button when its loading', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       const component = render(
         renderQuestions(numberOfQuestions, [
@@ -597,7 +577,7 @@ describe('<Questions />', () => {
 
     it('should not show the "Restart-questionaire" button on the first question', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       const component = render(
         renderQuestions(numberOfQuestions, [
@@ -658,7 +638,7 @@ describe('<Questions />', () => {
         numberOfQuestions,
         2,
       );
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       const component = render(
         renderQuestions(numberOfQuestions, [
@@ -701,7 +681,7 @@ describe('<Questions />', () => {
   describe('Error states', () => {
     it('should show the "Error-state" when some Network-error happens', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       const component = render(
         renderQuestions(numberOfQuestions, [
@@ -721,7 +701,7 @@ describe('<Questions />', () => {
 
     it('should show the "Error-state" when some GraphQL-error happens', () => {
       const numberOfQuestions = randomPositiveNumber(10, 2);
-      const questions = mixedQuestions(numberOfQuestions);
+      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
       const resolvers = mockQuiz().resolvers(numberOfQuestions, questions);
       const component = render(
         renderQuestions(numberOfQuestions, [

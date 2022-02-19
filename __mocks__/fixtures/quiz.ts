@@ -2,6 +2,7 @@ import { GraphQLError } from 'graphql';
 
 import {randomPositiveNumber, randomArrayElement} from '@mocks/utils';
 import {GET_QUIZ_QUESTIONS} from '@graphql/queries';
+import shuffleDataset from '@utils/shuffleDataset';
 import * as SchemaTypes from '@schema-types';
 
 export const mockQuiz = () => {
@@ -80,6 +81,24 @@ export const mockQuiz = () => {
       result,
     };
   };
+  const mixedQuestions = (numberOfQuestions: number) => {
+    const multiChoiceQuestionsLength =
+      numberOfQuestions % 2 === 0
+        ? numberOfQuestions / 2
+        : Math.floor(numberOfQuestions / 2);
+    const booleaneQuestionsLength =
+      numberOfQuestions % 2 === 0
+        ? numberOfQuestions / 2
+        : numberOfQuestions - Math.floor(numberOfQuestions / 2);
+    const multipleChoiceQuestions = mockQuiz().multiChoiceQuestions(
+      multiChoiceQuestionsLength,
+    );
+    const trueOrFlaseQuestions = mockQuiz().booleanQuestions(booleaneQuestionsLength);
+    return shuffleDataset<SchemaTypes.GetQuizQuestions_quiz>([
+      ...multipleChoiceQuestions,
+      ...trueOrFlaseQuestions,
+    ]);
+  };
 
   return {
     multiChoiceQuestions,
@@ -88,6 +107,7 @@ export const mockQuiz = () => {
     wrongAnswerResult,
     booleanQuestions,
     defaultOptions,
+    mixedQuestions,
     resolvers,
   };
 };
