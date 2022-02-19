@@ -6,6 +6,18 @@ import * as SchemaTypes from '@schema-types';
 
 export const mockQuiz = () => {
   const multiChoiceOptions = Array(4).fill('').map((__, _index) => `OPTION_${_index}`);
+  const correctAnswerResult = {
+    userAnswer: 'USER_ANSWER',
+    answer: 'USER_ANSWER',
+    question: 'QUESTION',
+    isCorrect: true,
+  };
+  const wrongAnswerResult = {
+    userAnswer: 'USER_ANSWER',
+    answer: 'OTHER_ANSWER',
+    question: 'QUESTION',
+    isCorrect: false,
+  };
   const defaultOptions = {
     difficulty: SchemaTypes.QuestionDifficulty.MIXED,
     category: SchemaTypes.QuestionCategory.MIXED,
@@ -71,7 +83,9 @@ export const mockQuiz = () => {
 
   return {
     multiChoiceQuestions,
+    correctAnswerResult,
     multiChoiceOptions,
+    wrongAnswerResult,
     booleanQuestions,
     defaultOptions,
     resolvers,

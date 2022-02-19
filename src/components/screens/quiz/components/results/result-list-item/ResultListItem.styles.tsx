@@ -26,20 +26,18 @@ export const IconWrapper = styled(View)`
   background-color: white;
 `;
 
-export const QuestionText = styled(Text).attrs({
-  numberOfLines: 4,
-})`
+export const QuestionText = styled(Text)`
   margin-bottom: ${({theme}) => theme.metrics.extraLargeSize}px;
-  font-family: CircularStd-Bold;
-  font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
-  color: rgba(0, 0, 0, 0.8);
+  font-family: CircularStd-Black;
+  font-size: ${({theme}) => theme.metrics.largeSize}px;
+  color: ${({theme}) => theme.colors.buttonText};
   text-align: center;
 `;
 
 export const AnswerText = styled(Text)`
-  font-family: CircularStd-Bold;
+  font-family: CircularStd-Medium;
   font-size: ${({theme}) => theme.metrics.largeSize}px;
-  color: rgba(0, 0, 0, 0.8);
+  color: ${({theme}) => theme.colors.buttonText};
   text-transform: capitalize;
 `;
 
@@ -47,5 +45,5 @@ export const LineDivider = styled(View)`
   width: 100%;
   height: ${StyleSheet.hairlineWidth}px;
   margin-vertical: ${({theme}) => theme.metrics.largeSize}px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${({theme}) => theme.colors.darkLayer};
 `;
