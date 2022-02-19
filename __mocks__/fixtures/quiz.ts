@@ -1,22 +1,79 @@
-export const answers = ['A', 'B', 'C', 'D'];
+import { GraphQLError } from 'graphql';
 
-export const multiChoiceOptions = Array(5).fill('').map((_, index) => `option-${index}`);
+import {randomPositiveNumber, randomArrayElement} from '@mocks/utils';
+import {GET_QUIZ_QUESTIONS} from '@graphql/queries';
+import * as SchemaTypes from '@schema-types';
 
-export const quiz = [
-  {
+export const mockQuiz = () => {
+  const multiChoiceOptions = Array(4).fill('').map((__, _index) => `OPTION_${_index}`);
+  const defaultOptions = {
+    difficulty: SchemaTypes.QuestionDifficulty.MIXED,
+    category: SchemaTypes.QuestionCategory.MIXED,
+    type:SchemaTypes. QuestionType.MIXED,
+  };
+
+  const booleanQuestions = (length: number) => Array(length).fill({}).map((_, index) => ({
+    question: `${SchemaTypes.QuestionType.BOOLEAN}_QUESTION_${index}`,
+    type: SchemaTypes.QuestionType.BOOLEAN.toLowerCase(),
+    category: `Entertainment: BOOLEAN-CATEGORY-${index}`,
     __typename: 'Question',
-    category: 'Entertainment: Television',
-    correctAnswer: 'D',
-    options: ['A', 'B', 'C', 'D'],
-    question: 'Question 01',
-    type: 'multiple',
-  },
-  {
-    __typename: 'Question',
-    category: 'Entertainment: Film',
-    correctAnswer: 'True',
-    options: ['False'],
-    question: 'Question 02',
-    type: 'boolean',
-  },
-];
+    options: ['True', 'False'],
+    correctAnswer: randomPositiveNumber(2) % 2 === 0 ? 'False' : 'True',
+  })) as SchemaTypes.GetQuizQuestions_quiz[];
+
+  const multiChoiceQuestions = (length: number) => Array(length).fill({}).map((_, index) => {
+    const correctAnswer = randomArrayElement<string>(multiChoiceOptions);
+    return {
+      question: `${SchemaTypes.QuestionType.MULTIPLE}_QUESTION_${index}`,
+      type: SchemaTypes.QuestionType.MULTIPLE.toLowerCase(),
+      category: `Entertainment: MULTI-CATEGORY-${index}`,
+      __typename: 'Question',
+      options: multiChoiceOptions,
+      correctAnswer,
+    };
+  })  as SchemaTypes.GetQuizQuestions_quiz[];
+
+  const resolvers = (numberOfQuestions: number, quiz: SchemaTypes.GetQuizQuestions_quiz[] = []) => {
+    const variables: SchemaTypes.GetQuizQuestionsVariables = {
+      input: {
+        numberOfQuestions,
+        ...defaultOptions,
+      },
+    };
+    const request = {
+      request: {
+        query: GET_QUIZ_QUESTIONS,
+        variables,
+      },
+    };
+    const result = {
+      result: {
+        data: {
+          quiz,
+        },
+      },
+    };
+    const responseWithNetworkError = {
+      ...request,
+      error: new Error('A Network error occurred'),
+    };
+    const responseWithGraphQLError = {
+      ...request,
+      errors: [new GraphQLError('A GraphQL error occurred')],
+    };
+    return {
+      responseWithNetworkError,
+      responseWithGraphQLError,
+      request,
+      result,
+    };
+  };
+
+  return {
+    multiChoiceQuestions,
+    multiChoiceOptions,
+    booleanQuestions,
+    defaultOptions,
+    resolvers,
+  };
+};
