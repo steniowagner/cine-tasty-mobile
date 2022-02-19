@@ -1,100 +1,77 @@
-/* eslint-disable react/display-name */
-/* eslint-disable react/jsx-no-undef */
-import React, { useLayoutEffect } from 'react';
-import { FlatList } from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {FlatList} from 'react-native';
 
 import LoadingIndicator from '@components/common/loading-indicator/LoadingIndicator';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 
-import ListItemWrapper from './list-item-wrapper-question/ListItemWrapperQuestion';
 import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
-import { QuestionsStackProps } from '../../routes/route-params-types';
+import NoQuestionsError from './no-questions-error/NoQuestionsError';
+import {QuestionsStackProps} from '../../routes/route-params-types';
+import QuestionWrapper from './question-wrapper/QuestionWrapper';
 import BooleanQuestion from './boolean-question/BooleanQuestion';
-import NoQuestionsError from './NoQuestionsError';
+import QuestionError from './questions-error/QuestionsError';
 import * as Styles from './Questions.styles';
-import QuestionError from './QuestionError';
 import useQuestions from './useQuestions';
 
-const Questions = ({ navigation, route }: QuestionsStackProps) => {
-  const {
-    currentQuestionIndex,
-    questionsFlatListRef,
-    onRestartQuiz,
-    onPressNext,
-    questions,
-    loading,
-    hasError,
-  } = useQuestions({ navigation, route });
+const Questions = (props: QuestionsStackProps) => {
+  const questions = useQuestions({
+    navigation: props.navigation,
+    route: props.route,
+  });
 
   useLayoutEffect(() => {
-    const hasErrorOrIsLoading = loading || hasError;
-
-    if (hasErrorOrIsLoading && !!questions.length) {
-      return;
-    }
-
-    let headerTitle = '';
-
-    if (questions[currentQuestionIndex]) {
-      headerTitle = questions[currentQuestionIndex].category.split(':')[1].trim();
-    }
-
-    navigation.setOptions({
-      title: headerTitle,
-      headerRight: () => currentQuestionIndex > 0 && (
-      <Styles.RestartQuizButton
-        onPress={onRestartQuiz}
-        testID="retart-quiz-button"
-      >
-        <SVGIcon
-          size={metrics.getWidthFromDP('8%')}
-          id="restart"
-        />
-      </Styles.RestartQuizButton>
-      ),
+    props.navigation.setOptions({
+      title: questions.headerTitle,
+      headerRight: () =>
+        !questions.shouldHideRestarButton && (
+          <Styles.RestartQuizButton
+            onPress={questions.restart}
+            testID="restart-quiz-button">
+            <SVGIcon size={metrics.getWidthFromDP('8%')} id="restart" />
+          </Styles.RestartQuizButton>
+        ),
     });
-  }, [currentQuestionIndex, loading, hasError]);
+  }, [questions.shouldHideRestarButton, questions.headerTitle]);
 
-  if (loading) {
+  if (questions.loading) {
     return <LoadingIndicator />;
   }
 
-  if (hasError) {
+  if (questions.hasError) {
     return <QuestionError />;
   }
 
-  if (!loading && !hasError && !questions.length) {
+  if (questions.noQuestions) {
     return <NoQuestionsError />;
   }
 
   return (
     <FlatList
-      renderItem={({ item, index }) => (
-        <ListItemWrapper
-          numberOfQuestions={route.params.numberOfQuestions}
-          question={questions[index].question}
+      renderItem={({item, index}) => (
+        <QuestionWrapper
+          numberOfQuestions={props.route.params.numberOfQuestions}
           currentQuestionIndex={index + 1}
-        >
+          question={item.question}>
           <>
-            {item.type.toLowerCase()
-              === SchemaTypes.QuestionType.BOOLEAN.toLowerCase() && (
+            {item.type.toLowerCase() ===
+              SchemaTypes.QuestionType.BOOLEAN.toLowerCase() && (
               <BooleanQuestion
-                isFocused={currentQuestionIndex === index}
-                onPressNext={onPressNext}
+                isFocused={questions.currentQuestionIndex === index}
+                onPressNext={questions.onPressNext}
               />
             )}
-            {item.type.toLowerCase()
-              === SchemaTypes.QuestionType.MULTIPLE.toLowerCase() && (
+            {item.type.toLowerCase() ===
+              SchemaTypes.QuestionType.MULTIPLE.toLowerCase() && (
               <MultiChoiceQuestion
-                isFocused={currentQuestionIndex === index}
-                onPressNext={onPressNext}
+                isFocused={questions.currentQuestionIndex === index}
+                onPressNext={questions.onPressNext}
                 answers={item.options}
               />
             )}
           </>
-        </ListItemWrapper>
+        </QuestionWrapper>
       )}
       keyExtractor={(item, index) => `${item.question}${index}`}
       showsHorizontalScrollIndicator={false}
@@ -103,10 +80,10 @@ const Questions = ({ navigation, route }: QuestionsStackProps) => {
         length: metrics.width,
         index,
       })}
-      ref={questionsFlatListRef}
+      ref={questions.questionsListRef}
+      data={questions.questions}
       testID="questions-list"
       scrollEnabled={false}
-      data={questions}
       pagingEnabled
       horizontal
     />
