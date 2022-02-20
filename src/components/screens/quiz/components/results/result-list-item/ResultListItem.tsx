@@ -25,7 +25,8 @@ const ResultListItem = (props: ResultListItemProps) => {
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
         elevation: 4,
-      }}>
+      }}
+      testID="result-list-item-wrapper">
       <Styles.IconWrapper>
         <SVGIcon
           colorThemeRef={resultListItem.icon.colorThemeRef}

@@ -1,49 +1,40 @@
-import React, { useLayoutEffect } from 'react';
-import { FlatList } from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {ScrollView} from 'react-native';
 
 import RoundedButton from '@components/common/rounded-button/RoundedButton';
-import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
-import { ResultsStackProps } from '../../routes/route-params-types';
+import {ResultsStackProps} from '../../routes/route-params-types';
 import ResultListItem from './result-list-item/ResultListItem';
 import * as Styles from './Results.styles';
 import useResults from './useResults';
 
-const Results = ({ navigation, route }: ResultsStackProps) => {
-  const { onPressPlayAgain, results, t } = useResults({ navigation, route });
+const Results = (props: ResultsStackProps) => {
+  const results = useResults(props);
 
   useLayoutEffect(() => {
-    const scores = results.reduce(
-      (total, current) => total + Number(current.isCorrect),
-      0,
-    );
-
-    navigation.setOptions({
-      title: `${t(TRANSLATIONS.QUIZ_SCORES)} ${scores}/${results.length}!`,
+    props.navigation.setOptions({
+      title: results.texts.headerText,
     });
-  }, [results]);
+  }, [results.texts.headerText, props.navigation]);
 
   return (
     <Styles.Wrapper>
-      <FlatList
-        renderItem={({ item }) => (
-          <ResultListItem
-            result={item}
-          />
-        )}
+      <ScrollView
         contentContainerStyle={{
           paddingBottom: metrics.getWidthFromDP('20%'),
           paddingHorizontal: metrics.largeSize,
           paddingTop: metrics.largeSize,
         }}
-        keyExtractor={(item) => item.question}
-        data={results}
-      />
+        testID="results-list">
+        {results.quizResults.map((result, index) => (
+          <ResultListItem key={`${index}`} result={result} />
+        ))}
+      </ScrollView>
       <Styles.PlayAgainButtonWrapper>
         <RoundedButton
-          text={t(TRANSLATIONS.QUIZ_PLAY_AGAIN)}
-          onPress={onPressPlayAgain}
+          onPress={results.onPressPlayAgain}
+          text={results.texts.playAgain}
         />
       </Styles.PlayAgainButtonWrapper>
     </Styles.Wrapper>
