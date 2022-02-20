@@ -60,7 +60,7 @@ const useQuestions = (props: QuestionsStackProps) => {
       index: currentQuestionIndex === -1 ? 0 : currentQuestionIndex,
       animated: true,
     });
-  }, []);
+  }, [currentQuestionIndex]);
 
   const handlePressNext = useCallback(
     (currentAnswer: string) =>
