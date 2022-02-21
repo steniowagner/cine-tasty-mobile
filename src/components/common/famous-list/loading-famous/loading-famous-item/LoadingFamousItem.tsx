@@ -1,21 +1,20 @@
 import React from 'react';
 
-import metrics from '@styles/metrics';
-
 import LoadingPlaceholder from '../../../loading-placeholder/LoadingPlaceholder';
-import useLoadingFamousItem from './useLoadingFamousItem';
+import useFamousListItemMeasures from '../../useFamousListItemMeasures';
+import Styles from './LoadingFamousItem.styles';
 
 type LoadingFamousItemProps = {
   index: number;
 };
 
 const LoadingFamousItem = (props: LoadingFamousItemProps) => {
-  const loadingFamousItem = useLoadingFamousItem(props);
+  const famousListItemMeasures = useFamousListItemMeasures(props);
   return (
     <LoadingPlaceholder
       style={{
-        ...loadingFamousItem.wrapperMeasures,
-        borderRadius: metrics.extraSmallSize,
+        ...famousListItemMeasures.measures,
+        ...Styles.placeholder,
       }}
       indexToDelayAnimation={props.index}
     />

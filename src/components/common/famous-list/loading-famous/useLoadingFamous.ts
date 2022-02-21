@@ -1,8 +1,9 @@
 import {useMemo} from 'react';
 
-import {DEFAULT_LIST_ITEM_HEIGHT} from '@components/common/famous-list/famous-list-item/getWrapperMeasures';
-import {NUMBER_OF_COLUMNS} from '../FamousList';
 import metrics from '@styles/metrics';
+
+import {DEFAULT_LIST_ITEM_HEIGHT} from '../useFamousListItemMeasures';
+import {NUMBER_OF_COLUMNS} from '../FamousList';
 
 export const INITIAL_ITEMS_TO_RENDER = Math.floor(
   metrics.height / DEFAULT_LIST_ITEM_HEIGHT,

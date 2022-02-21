@@ -1,7 +1,6 @@
 import React from 'react';
 
 import LoadingFamousItem from './loading-famous-item/LoadingFamousItem';
-
 import useLoadingFamous from './useLoadingFamous';
 import * as Styles from './LoadingFamous.styles';
 
