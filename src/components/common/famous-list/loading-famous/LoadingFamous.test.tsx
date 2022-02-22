@@ -1,7 +1,7 @@
 import React from 'react';
 import {cleanup, render, RenderAPI} from '@testing-library/react-native';
 
-import {NUMBER_FLATLIST_COLUMNS} from '@components/screens/famous/components/Famous';
+import {NUMBER_OF_COLUMNS} from '@components/common/famous-list/FamousList';
 import {setupTimeTravel} from '@mocks/timeTravel';
 import {ThemeProvider} from 'styled-components/native';
 import {dark as theme} from '@styles/themes/dark';
@@ -32,7 +32,7 @@ describe('<LoadingFamous />', () => {
       const component = render(renderLoadingFamousList());
       expect(elements.famousLoadingList(component)).not.toBeNull();
       expect(elements.loadingPlaceholder(component).length).toEqual(
-        INITIAL_ITEMS_TO_RENDER * NUMBER_FLATLIST_COLUMNS,
+        INITIAL_ITEMS_TO_RENDER * NUMBER_OF_COLUMNS,
       );
     });
   });
