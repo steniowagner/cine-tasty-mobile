@@ -1,75 +1,67 @@
-/* eslint-disable camelcase */
-import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback} from 'react';
 
-import { GET_FAMOUS } from '@graphql/queries';
+import {useTranslations, usePagination} from '@hooks';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
-import { usePaginatedQuery } from '@hooks';
+import {GET_FAMOUS} from '@graphql/queries';
+import {Translations} from '@i18n/tags';
+import {Routes} from '@routes/routes';
 
-const useFamous = () => {
-  const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [famous, setFamous] = useState<SchemaTypes.GetFamous_people_items[]>([]);
-  const [error, setError] = useState<string>('');
+import {FamousNavigationProp} from '../routes/route-params-types';
 
-  const { t } = useTranslation();
+type UseFamousProps = {
+  navigation: FamousNavigationProp;
+};
 
-  const handleOnGetData = useCallback((data: SchemaTypes.GetFamous): boolean => {
-    setFamous((previousFamous: SchemaTypes.GetFamous_people_items[]) => [
-      ...previousFamous,
-      ...data.people.items,
-    ]);
+const useFamous = (props: UseFamousProps) => {
+  const translations = useTranslations();
 
-    return data.people.hasMore;
-  }, []);
+  const handleOnGetData = useCallback(
+    (result: SchemaTypes.GetFamous) => ({
+      hasMore: result?.people.hasMore || false,
+      dataset: result?.people.items || [],
+    }),
+    [],
+  );
 
-  const {
-    onPaginateQuery, onReloadData, isPaginating, isLoading,
-  } = usePaginatedQuery<
+  const pagination = usePagination<
     SchemaTypes.GetFamous,
+    SchemaTypes.GetFamous_people_items,
     SchemaTypes.GetFamousVariables
   >({
-    onPaginationQueryError: () => {
-      setError(t(TRANSLATIONS.FAMOUS_QUERY_BY_PAGINATION_ERROR));
-      setHasPaginationError(true);
-    },
-    onEntryQueryError: () => {
-      setError(t(TRANSLATIONS.FAMOUS_ENTRY_QUERY_ERROR));
-
-      if (hasPaginationError) {
-        setHasPaginationError(false);
-      }
-    },
+    paginationError: translations.translate(
+      Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
+    ),
+    entryQueryError: translations.translate(
+      Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
+    ),
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
+    fireWhenMounted: true,
     query: GET_FAMOUS,
   });
 
-  const onPressTopReloadButton = useCallback(async (): Promise<void> => {
-    setHasPaginationError(false);
-
-    setError('');
-
-    await onReloadData();
-  }, []);
-
-  const onPressBottomReloadButton = useCallback(() => {
-    setHasPaginationError(false);
-
-    setError('');
-
-    onPaginateQuery();
+  const onPressHeaderIconButton = useCallback(() => {
+    props.navigation.navigate(Routes.Search.SEARCH_STACK, {
+      i18nQueryByPaginationErrorRef:
+        Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
+      i18nSearchBarPlaceholderRef:
+        Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER,
+      i18nQueryByTextErrorRef: Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
+      searchType: SchemaTypes.SearchType.PERSON,
+      queryId: 'search_famous',
+    });
   }, []);
 
   return {
-    onEndReached: onPaginateQuery,
-    onPressBottomReloadButton,
-    onPressTopReloadButton,
-    hasPaginationError,
-    isPaginating,
-    isLoading,
-    famous,
-    error,
+    hasPaginationError: pagination.hasPaginationError,
+    onPressFooterReloadButton: pagination.paginate,
+    onPressTopReloadButton: pagination.reset,
+    isPaginating: pagination.isPaginating,
+    onEndReached: pagination.paginate,
+    isLoading: pagination.isLoading,
+    dataset: pagination.dataset,
+    error: pagination.error,
+    onPressHeaderIconButton,
   };
 };
 
