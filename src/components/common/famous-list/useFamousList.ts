@@ -1,9 +1,8 @@
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 import {FamousNavigationProp} from '@components/screens/famous/routes/route-params-types';
 import * as SchemaTypes from '@schema-types';
-import {useAlertMessage} from '@providers';
 import {Routes} from '@routes/routes';
 
 type UseFamousListProps = {
@@ -16,7 +15,6 @@ type UseFamousListProps = {
 
 const useFamousList = (props: UseFamousListProps) => {
   const navigation = useNavigation<FamousNavigationProp>();
-  const alertMessage = useAlertMessage();
 
   const shouldShowTopReloadButton = useMemo(
     () => !props.famous.length && !!props.error && !props.isLoading,
@@ -39,13 +37,6 @@ const useFamousList = (props: UseFamousListProps) => {
     },
     [],
   );
-
-  useEffect(() => {
-    if (!props.error) {
-      return;
-    }
-    alertMessage.show(props.error);
-  }, [props.error]);
 
   return {
     onPressFamousListItem: handlePressFamousListItem,

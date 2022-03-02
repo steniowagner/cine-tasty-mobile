@@ -20,11 +20,11 @@ import {Routes} from '@routes/routes';
 const mockNavigate = jest.fn();
 
 jest.mock('@react-navigation/native', () => {
-  const actualReactNavigationNative = jest.requireActual(
+  const reactNavigationNativeModule = jest.requireActual(
     '@react-navigation/native',
   );
   return {
-    ...actualReactNavigationNative,
+    ...reactNavigationNativeModule,
     useNavigation: () => ({
       navigate: mockNavigate,
     }),
@@ -75,10 +75,6 @@ describe('<FamousList />', () => {
       api.queryByTestId('pagination-loading-footer-wrapper'),
     paginationFooterReloadButton: (api: RenderAPI) =>
       api.queryByTestId('pagination-footer-reload-button'),
-    alertMessageWrapper: (api: RenderAPI) =>
-      api.queryByTestId('alert-message-wrapper'),
-    alertMessageText: (api: RenderAPI) =>
-      api.queryByTestId('alert-message-text'),
   };
 
   beforeEach(() => {
@@ -123,7 +119,6 @@ describe('<FamousList />', () => {
         expect(elements.famousListItemButton(component).length).toEqual(
           famous.length,
         );
-        expect(elements.alertMessageWrapper(component)).toBeNull();
       });
     });
 
@@ -141,7 +136,6 @@ describe('<FamousList />', () => {
         expect(elements.topReloadButton(component)).toBeNull();
         expect(elements.paginationFooterWrapper(component)).toBeNull();
         expect(elements.famousListItemButton(component).length).toEqual(0);
-        expect(elements.alertMessageWrapper(component)).toBeNull();
       });
     });
   });
@@ -164,7 +158,6 @@ describe('<FamousList />', () => {
         expect(elements.paginationFooterWrapper(component)).not.toBeNull();
         expect(elements.paginationLoadingFooter(component)).not.toBeNull();
         expect(elements.paginationFooterReloadButton(component)).toBeNull();
-        expect(elements.alertMessageWrapper(component)).toBeNull();
         expect(elements.famousListItemButton(component).length).toEqual(
           famous.length,
         );
@@ -217,111 +210,70 @@ describe('<FamousList />', () => {
       });
     });
 
-    it('should show the "pagination-error" when "hasPaginationError" is "true"', async () => {
-      const numberOfItems = randomPositiveNumber(10, 1);
-      const famous = famousList(numberOfItems);
-      const onPressBottomReloadButton = jest.fn();
-      const data = {
-        ...mockHandlersFunctions,
-        onPressBottomReloadButton,
-        hasPaginationError: true,
-        isPaginating: false,
-        error: 'SOME_ERROR',
-        isLoading: false,
-        famous,
-      };
-      const component = render(renderFamousList(data));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          data.error,
-        );
-      });
-    });
-  });
-
-  describe('Entry Error', () => {
-    it('should show "Entry-error-state" when has some error and has no data', async () => {
-      const data = {
-        ...mockHandlersFunctions,
-        isPaginating: false,
-        error: 'SOME_ERROR',
-        isLoading: false,
-        famous: [],
-      };
-      const component = render(renderFamousList(data));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          data.error,
-        );
+    describe('Entry Error', () => {
+      it('should call the "onPressTopReloadButton" when the user press the "Top-reload-button"', async () => {
+        const onPressTopReloadButton = jest.fn();
+        const data = {
+          ...mockHandlersFunctions,
+          onPressTopReloadButton,
+          isPaginating: false,
+          error: 'SOME_ERROR',
+          isLoading: false,
+          famous: [],
+        };
+        const component = render(renderFamousList(data));
+        expect(onPressTopReloadButton).toHaveBeenCalledTimes(0);
+        await waitFor(() => {
+          fireEvent.press(elements.topReloadButton(component));
+          expect(onPressTopReloadButton).toHaveBeenCalledTimes(1);
+        });
       });
     });
 
-    it('should call the "onPressTopReloadButton" when the user press the "Top-reload-button"', async () => {
-      const onPressTopReloadButton = jest.fn();
-      const data = {
-        ...mockHandlersFunctions,
-        onPressTopReloadButton,
-        isPaginating: false,
-        error: 'SOME_ERROR',
-        isLoading: false,
-        famous: [],
-      };
-      const component = render(renderFamousList(data));
-      expect(onPressTopReloadButton).toHaveBeenCalledTimes(0);
-      await waitFor(() => {
-        fireEvent.press(elements.topReloadButton(component));
-        expect(onPressTopReloadButton).toHaveBeenCalledTimes(1);
+    describe('Scrolling down the list', () => {
+      it('should call the "onEndReached" when the user scrolls down to the end of the list', async () => {
+        const numberOfItems = randomPositiveNumber(10, 1);
+        const famous = famousList(numberOfItems);
+        const onEndReached = jest.fn();
+        const data = {
+          ...mockHandlersFunctions,
+          onEndReached,
+          isPaginating: false,
+          isLoading: false,
+          famous,
+        };
+        const component = render(renderFamousList(data));
+        await waitFor(() => {
+          expect(onEndReached).toHaveBeenCalledTimes(0);
+          fireEvent(elements.famousList(component), 'onEndReached');
+          expect(onEndReached).toHaveBeenCalledTimes(1);
+        });
       });
     });
-  });
 
-  describe('Scrolling down the list', () => {
-    it('should call the "onEndReached" when the user scrolls down to the end of the list', async () => {
-      const numberOfItems = randomPositiveNumber(10, 1);
-      const famous = famousList(numberOfItems);
-      const onEndReached = jest.fn();
-      const data = {
-        ...mockHandlersFunctions,
-        onEndReached,
-        isPaginating: false,
-        isLoading: false,
-        famous,
-      };
-      const component = render(renderFamousList(data));
-      await waitFor(() => {
-        expect(onEndReached).toHaveBeenCalledTimes(0);
-        fireEvent(elements.famousList(component), 'onEndReached');
-        expect(onEndReached).toHaveBeenCalledTimes(1);
-      });
-    });
-  });
-
-  describe('Press list-item', () => {
-    it('should call "navigation.navigate" correctly when the user presses some list-item', async () => {
-      const numberOfItems = randomPositiveNumber(10, 1);
-      const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
-      const famous = famousList(numberOfItems);
-      const data = {
-        ...mockHandlersFunctions,
-        isPaginating: false,
-        isLoading: false,
-        famous,
-      };
-      const component = render(renderFamousList(data));
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledTimes(0);
-        fireEvent.press(
-          elements.famousListItemButton(component)[indexItemSelected],
-        );
-        expect(mockNavigate).toHaveBeenCalledTimes(1);
-        expect(mockNavigate).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-          profileImage: famous[indexItemSelected].profilePath,
-          name: famous[indexItemSelected].name,
-          id: famous[indexItemSelected].id,
+    describe('Press list-item', () => {
+      it('should call "navigation.navigate" correctly when the user presses some list-item', async () => {
+        const numberOfItems = randomPositiveNumber(10, 1);
+        const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
+        const famous = famousList(numberOfItems);
+        const data = {
+          ...mockHandlersFunctions,
+          isPaginating: false,
+          isLoading: false,
+          famous,
+        };
+        const component = render(renderFamousList(data));
+        await waitFor(() => {
+          expect(mockNavigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.famousListItemButton(component)[indexItemSelected],
+          );
+          expect(mockNavigate).toHaveBeenCalledTimes(1);
+          expect(mockNavigate).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+            profileImage: famous[indexItemSelected].profilePath,
+            name: famous[indexItemSelected].name,
+            id: famous[indexItemSelected].id,
+          });
         });
       });
     });
