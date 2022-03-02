@@ -1,6 +1,12 @@
 import {useState, useCallback, useEffect} from 'react';
-import {useLazyQuery, FetchPolicy, ApolloQueryResult} from '@apollo/client';
-import {DocumentNode} from 'graphql';
+import {
+  ApolloQueryResult,
+  useLazyQuery,
+  DocumentNode,
+  FetchPolicy,
+} from '@apollo/client';
+
+import {useAlertMessage} from '@providers';
 
 import usePaginateQuery from './usePaginateQuery';
 import useEntryQuery from './useEntryQuery';
@@ -27,6 +33,8 @@ export const usePagination = <TResult, TDataset, TVariables>(
   const [dataset, setDataset] = useState<TDataset[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState('');
+
+  const alertMessage = useAlertMessage();
 
   const handleOnEntryQueryCompleted = useCallback(
     (queryResult: TResult) => {
@@ -103,6 +111,13 @@ export const usePagination = <TResult, TDataset, TVariables>(
     }
     setError(props.paginationError);
   }, [paginateQuery.hasError]);
+
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+    alertMessage.show(error);
+  }, [error]);
 
   return {
     hasPaginationError: paginateQuery.hasError,
