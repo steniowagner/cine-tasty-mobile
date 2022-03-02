@@ -87,7 +87,7 @@ describe('<News />', () => {
 
     it('should opens the language-filter modal when the user presses the "header-right-filter-button"', () => {
       const navigate = jest.fn();
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -126,7 +126,7 @@ describe('<News />', () => {
 
     it('should disable the "header-right-filter-button"-press while is loading', () => {
       const navigate = jest.fn();
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -152,7 +152,7 @@ describe('<News />', () => {
     afterEach(cleanup);
 
     it('should only render a pre-defined number of "news-list-items" when the list receive the data on the "entry-query"', () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -173,7 +173,7 @@ describe('<News />', () => {
     });
 
     it('should only render the loading-state when the component mounts', () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -193,7 +193,7 @@ describe('<News />', () => {
     });
 
     it('should render the "news-list" correctly when the user receives the articles', () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -217,7 +217,7 @@ describe('<News />', () => {
     });
 
     it('should only renders the "empty-list-state" when the query returns an empty array of articles', () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         [],
         true,
@@ -249,12 +249,12 @@ describe('<News />', () => {
     });
 
     it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button" after a network-error', async () => {
-      const entryQueryFirstResult = mockNews.resolvers(
+      const entryQueryFirstResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const entryQuerySecondResult = mockNews.resolvers(
+      const entryQuerySecondResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -289,12 +289,12 @@ describe('<News />', () => {
     });
 
     it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button" after a graphql-error', async () => {
-      const entryQueryFirstResult = mockNews.resolvers(
+      const entryQueryFirstResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const entryQuerySecondResult = mockNews.resolvers(
+      const entryQuerySecondResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -339,7 +339,7 @@ describe('<News />', () => {
     afterEach(cleanup);
 
     it('should show the "entry-query-error-message" when the user receives some network-error during the entry-query', async () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -365,12 +365,12 @@ describe('<News />', () => {
     });
 
     it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a network-error', async () => {
-      const entryQueryFirstResult = mockNews.resolvers(
+      const entryQueryFirstResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const entryQuerySecondResult = mockNews.resolvers(
+      const entryQuerySecondResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -427,7 +427,7 @@ describe('<News />', () => {
     afterEach(cleanup);
 
     it('should show the "entry-query-error-message" when the user receives some GraphQL-error during the entry-query', async () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -453,12 +453,12 @@ describe('<News />', () => {
     });
 
     it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a Graphql-error', async () => {
-      const entryQueryFirstResult = mockNews.resolvers(
+      const entryQueryFirstResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const entryQuerySecondResult = mockNews.resolvers(
+      const entryQuerySecondResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
@@ -515,12 +515,12 @@ describe('<News />', () => {
     afterEach(cleanup);
 
     it('should show the "pagination-loading" when the user start to paginate the "news-list"', () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const paginationQueryResult = mockNews.resolvers(
+      const paginationQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 2},
         mockNews.dataset(2),
         true,
@@ -552,12 +552,12 @@ describe('<News />', () => {
     });
 
     it('should not show the "pagination-loading" when the pagination-process is finished', () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const paginationQueryResult = mockNews.resolvers(
+      const paginationQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 2},
         mockNews.dataset(2),
         true,
@@ -596,12 +596,12 @@ describe('<News />', () => {
     });
 
     it('should paginate to the next page when the user reaches the bottom of the "news-list" and "hasMore" is true', () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const paginationQueryResult = mockNews.resolvers(
+      const paginationQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 2},
         mockNews.dataset(2),
         true,
@@ -656,12 +656,12 @@ describe('<News />', () => {
     });
 
     it('should not paginate to the next page when the user reaches the bottom of the "news-list" and "hasMore" is false', () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         false,
       );
-      const paginationQueryResult = mockNews.resolvers(
+      const paginationQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 2},
         mockNews.dataset(2),
         true,
@@ -714,12 +714,12 @@ describe('<News />', () => {
     afterEach(cleanup);
 
     it('should show the "pagination-reload-button" and an "error-message" when the user paginate the "news-list" and a networking error occurs', async () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const paginationQueryResult = mockNews.resolvers(
+      const paginationQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 2},
         mockNews.dataset(2),
         true,
@@ -760,12 +760,12 @@ describe('<News />', () => {
     });
 
     it('should show the "pagination-loading-state" and then the "pagination-reload-button" and an "error-message" when the user press the "pagiantion-reload-button" and a networking error occurs', async () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const paginationQueryResult = mockNews.resolvers(
+      const paginationQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 2},
         mockNews.dataset(2),
         true,
@@ -813,12 +813,12 @@ describe('<News />', () => {
     afterEach(cleanup);
 
     it('should show the "pagination-reload-button" and an "error-message" when the user paginate the "news-list" and a GraphQL error occurs', async () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const paginationQueryResult = mockNews.resolvers(
+      const paginationQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 2},
         mockNews.dataset(2),
         true,
@@ -858,12 +858,12 @@ describe('<News />', () => {
     });
 
     it('should show the "pagination-loading-state" and then the "pagination-reload-button" and an "error-message" when the user press the "pagiantion-reload-button" and a GraphQL error occurs', async () => {
-      const entryQueryResult = mockNews.resolvers(
+      const entryQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 1},
         mockNews.dataset(1),
         true,
       );
-      const paginationQueryResult = mockNews.resolvers(
+      const paginationQueryResult = mockNews.newsRresolvers(
         {language: 'EN', page: 2},
         mockNews.dataset(2),
         true,
