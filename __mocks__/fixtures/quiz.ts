@@ -6,7 +6,7 @@ import shuffleDataset from '@utils/shuffleDataset';
 import * as SchemaTypes from '@schema-types';
 
 export const mockQuiz = () => {
-  const multiChoiceOptions = Array(4).fill('').map((__, _index) => `OPTION_${_index}`);
+  const multiChoiceOptions = Array(4).fill('').map((_, index) => `OPTION_${index}`);
   const correctAnswerResult = {
     userAnswer: 'USER_ANSWER',
     answer: 'USER_ANSWER',
@@ -81,6 +81,7 @@ export const mockQuiz = () => {
       result,
     };
   };
+
   const mixedQuestions = (numberOfQuestions: number) => {
     const multiChoiceQuestionsLength =
       numberOfQuestions % 2 === 0
