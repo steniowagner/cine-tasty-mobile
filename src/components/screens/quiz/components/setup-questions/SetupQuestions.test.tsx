@@ -21,16 +21,13 @@ jest.spyOn(Alert, 'alert');
 
 let mockLanguage;
 
-jest.mock('@hooks', () => {
-  const hooksModule = jest.requireActual('@hooks');
-  return {
-    ...hooksModule,
-    useTranslations: () => ({
-      translate: (key: string) => key,
-      language: mockLanguage,
-    }),
-  };
-});
+jest.mock('@hooks', () => ({
+  useShowLanguageAlert: jest.requireActual('@hooks').useShowLanguageAlert,
+  useTranslations: () => ({
+    translate: (key: string) => key,
+    language: mockLanguage,
+  }),
+}));
 
 const renderSetupQuestions = (navigate = jest.fn) => {
   const SetupQuestionsComponent = ({navigation}) => (
