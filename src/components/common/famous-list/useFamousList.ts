@@ -2,15 +2,19 @@ import {useCallback, useMemo} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 import {FamousNavigationProp} from '@components/screens/famous/routes/route-params-types';
-import * as SchemaTypes from '@schema-types';
 import {Routes} from '@routes/routes';
-import * as Types from '@local-types';
+
+export type Famous = {
+  profileImage: string | null;
+  name: string | null;
+  id: number | null;
+};
 
 type UseFamousListProps = {
   hasPaginationError: boolean;
-  famous: Types.Famous[];
   isPaginating: boolean;
   isLoading: boolean;
+  famous: Famous[];
   error?: string;
 };
 
@@ -28,16 +32,9 @@ const useFamousList = (props: UseFamousListProps) => {
     [props.famous, props.hasPaginationError, props.isPaginating],
   );
 
-  const handlePressFamousListItem = useCallback(
-    (famous: SchemaTypes.GetFamous_people_items) => {
-      navigation.navigate(Routes.Famous.DETAILS, {
-        profileImage: famous.profilePath,
-        name: famous.name,
-        id: famous.id,
-      });
-    },
-    [],
-  );
+  const handlePressFamousListItem = useCallback((famous: Famous) => {
+    navigation.navigate(Routes.Famous.DETAILS, famous);
+  }, []);
 
   return {
     onPressFamousListItem: handlePressFamousListItem,

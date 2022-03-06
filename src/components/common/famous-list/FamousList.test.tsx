@@ -14,7 +14,6 @@ import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 import {setupTimeTravel} from '@mocks/timeTravel';
 import {AlertMessageProvider} from '@providers';
-import {famousList} from '@mocks/fixtures';
 import {Routes} from '@routes/routes';
 
 const mockNavigate = jest.fn();
@@ -32,6 +31,15 @@ jest.mock('@react-navigation/native', () => {
 });
 
 import FamousList, {FamousListProps} from './FamousList';
+
+const makeFamousList = (size: number) =>
+  Array(size)
+    .fill({})
+    .map((_, index) => ({
+      profileImage: `profilePath-${index}`,
+      name: `name-${index}`,
+      id: index,
+    }));
 
 const renderFamousList = (props: FamousListProps) => {
   const FamoustListComponent = () => (
@@ -103,7 +111,7 @@ describe('<FamousList />', () => {
 
     it('should render correctly when has some data to show', async () => {
       const numberOfItems = randomPositiveNumber(10, 1);
-      const famous = famousList(numberOfItems);
+      const famous = makeFamousList(numberOfItems);
       const data = {
         ...mockHandlersFunctions,
         isPaginating: false,
@@ -143,7 +151,7 @@ describe('<FamousList />', () => {
   describe('Pagination', () => {
     it('should show the "Footer-loading" when is paginating', async () => {
       const numberOfItems = randomPositiveNumber(10, 1);
-      const famous = famousList(numberOfItems);
+      const famous = makeFamousList(numberOfItems);
       const data = {
         ...mockHandlersFunctions,
         isPaginating: true,
@@ -166,7 +174,7 @@ describe('<FamousList />', () => {
 
     it('should show the "Reload-footer-button" after a "Pagination-error"', async () => {
       const numberOfItems = randomPositiveNumber(10, 1);
-      const famous = famousList(numberOfItems);
+      const famous = makeFamousList(numberOfItems);
       const data = {
         ...mockHandlersFunctions,
         hasPaginationError: true,
@@ -191,7 +199,7 @@ describe('<FamousList />', () => {
 
     it('should call the "onPressBottomReloadButton" when the user press the "Reload-footer-button"', async () => {
       const numberOfItems = randomPositiveNumber(10, 1);
-      const famous = famousList(numberOfItems);
+      const famous = makeFamousList(numberOfItems);
       const onPressBottomReloadButton = jest.fn();
       const data = {
         ...mockHandlersFunctions,
@@ -233,7 +241,7 @@ describe('<FamousList />', () => {
     describe('Scrolling down the list', () => {
       it('should call the "onEndReached" when the user scrolls down to the end of the list', async () => {
         const numberOfItems = randomPositiveNumber(10, 1);
-        const famous = famousList(numberOfItems);
+        const famous = makeFamousList(numberOfItems);
         const onEndReached = jest.fn();
         const data = {
           ...mockHandlersFunctions,
@@ -255,7 +263,7 @@ describe('<FamousList />', () => {
       it('should call "navigation.navigate" correctly when the user presses some list-item', async () => {
         const numberOfItems = randomPositiveNumber(10, 1);
         const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
-        const famous = famousList(numberOfItems);
+        const famous = makeFamousList(numberOfItems);
         const data = {
           ...mockHandlersFunctions,
           isPaginating: false,
@@ -270,7 +278,7 @@ describe('<FamousList />', () => {
           );
           expect(mockNavigate).toHaveBeenCalledTimes(1);
           expect(mockNavigate).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-            profileImage: famous[indexItemSelected].profilePath,
+            profileImage: famous[indexItemSelected].profileImage,
             name: famous[indexItemSelected].name,
             id: famous[indexItemSelected].id,
           });

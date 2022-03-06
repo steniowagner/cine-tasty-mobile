@@ -2,12 +2,11 @@ import React from 'react';
 import {Platform, FlatList} from 'react-native';
 
 import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
-import DefaultListItem from '@components/common/famous-list/famous-list-item/FamousListItem';
+import FamousListItem from '@components/common/famous-list/famous-list-item/FamousListItem';
 import LoadingFamous from '@components/common/famous-list/loading-famous/LoadingFamous';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
-import * as Types from '@local-types';
 
-import useFamousList from './useFamousList';
+import useFamousList, {Famous} from './useFamousList';
 import Styles from './FamousList.styles';
 
 export const NUMBER_OF_COLUMNS = 3;
@@ -17,9 +16,9 @@ export type FamousListProps = {
   onPressTopReloadButton: () => void;
   hasPaginationError?: boolean;
   onEndReached: () => void;
-  famous: Types.Famous[];
   isPaginating: boolean;
   isLoading: boolean;
+  famous: Famous[];
   error?: string;
 };
 
@@ -59,9 +58,9 @@ const FamousList = (props: FamousListProps) => {
       })}
       numColumns={NUMBER_OF_COLUMNS}
       renderItem={({item, index}) => (
-        <DefaultListItem
+        <FamousListItem
           onPress={() => famousList.onPressFamousListItem(item)}
-          image={item.profilePath}
+          image={item.profileImage}
           title={item.name}
           index={index}
         />
