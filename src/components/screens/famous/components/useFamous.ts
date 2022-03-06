@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import {useTranslations, usePagination} from '@hooks';
 import * as SchemaTypes from '@schema-types';
@@ -36,7 +36,7 @@ const useFamous = (props: UseFamousProps) => {
     ),
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
-    fireWhenMounted: true,
+    skipFirstRun: false,
     query: GET_FAMOUS,
   });
 
@@ -56,6 +56,16 @@ const useFamous = (props: UseFamousProps) => {
     });
   }, [translations.translate]);
 
+  const dataset = useMemo(
+    () =>
+      pagination.dataset.map(famous => ({
+        profileImage: famous.profilePath,
+        name: famous.name,
+        id: famous.id,
+      })),
+    [pagination.dataset],
+  );
+
   return {
     hasPaginationError: pagination.hasPaginationError,
     onPressFooterReloadButton: pagination.paginate,
@@ -63,9 +73,9 @@ const useFamous = (props: UseFamousProps) => {
     isPaginating: pagination.isPaginating,
     onEndReached: pagination.paginate,
     isLoading: pagination.isLoading,
-    dataset: pagination.dataset,
     error: pagination.error,
     onPressHeaderIconButton,
+    dataset,
   };
 };
 
