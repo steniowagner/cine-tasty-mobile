@@ -4,10 +4,11 @@ import {useNavigation} from '@react-navigation/native';
 import {FamousNavigationProp} from '@components/screens/famous/routes/route-params-types';
 import * as SchemaTypes from '@schema-types';
 import {Routes} from '@routes/routes';
+import * as Types from '@local-types';
 
 type UseFamousListProps = {
-  famous: SchemaTypes.GetFamous_people_items[];
   hasPaginationError: boolean;
+  famous: Types.Famous[];
   isPaginating: boolean;
   isLoading: boolean;
   error?: string;

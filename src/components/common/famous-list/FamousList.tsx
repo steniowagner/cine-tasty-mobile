@@ -5,7 +5,7 @@ import PaginatedListHeader from '@components/common/paginated-list-header/Pagina
 import DefaultListItem from '@components/common/famous-list/famous-list-item/FamousListItem';
 import LoadingFamous from '@components/common/famous-list/loading-famous/LoadingFamous';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
-import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
 import useFamousList from './useFamousList';
 import Styles from './FamousList.styles';
@@ -13,11 +13,11 @@ import Styles from './FamousList.styles';
 export const NUMBER_OF_COLUMNS = 3;
 
 export type FamousListProps = {
-  famous: SchemaTypes.GetFamous_people_items[];
   onPressBottomReloadButton: () => void;
   onPressTopReloadButton: () => void;
   hasPaginationError?: boolean;
   onEndReached: () => void;
+  famous: Types.Famous[];
   isPaginating: boolean;
   isLoading: boolean;
   error?: string;
