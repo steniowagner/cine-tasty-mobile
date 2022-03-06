@@ -46,8 +46,8 @@ const useNews = (props: UseNewsProps) => {
       Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
     ),
     onGetData: handleOnGetData,
-    fireWhenMounted: true,
     query: GET_ARTICLES,
+    skipFirstRun: false,
     variables,
   });
 

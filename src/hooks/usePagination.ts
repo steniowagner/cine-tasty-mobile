@@ -29,9 +29,9 @@ type UsePaginationProps<TResult, TDataset, TVariables> = {
   onGetData: (result: TResult) => GetQueryResult<TDataset>;
   variables?: ReceivedVariables<TVariables>;
   fetchPolicy?: FetchPolicy;
-  fireWhenMounted?: boolean;
   entryQueryError: string;
   paginationError: string;
+  skipFirstRun: boolean;
   query: DocumentNode;
 };
 
@@ -92,6 +92,7 @@ export const usePagination = <TResult, TDataset, TVariables>(
 
   const entryQuery = useEntryQuery<TResult, UsedVariables<TVariables>>({
     onComplete: handleOnCompleteEntryQuery,
+    skipFirstRun: props.skipFirstRun,
     fetchPolicy: props.fetchPolicy,
     query: props.query,
     beforeExecQuery,
@@ -99,7 +100,7 @@ export const usePagination = <TResult, TDataset, TVariables>(
   });
 
   const paginateQuery = usePaginateQuery<TResult, UsedVariables<TVariables>>({
-    initialPage: props.fireWhenMounted ? 1 : 2,
+    initialPage: props.skipFirstRun ? 1 : 2,
     onComplete: handleOnCompletePaginatedQuery,
     fetchPolicy: props.fetchPolicy,
     query: props.query,
@@ -126,13 +127,6 @@ export const usePagination = <TResult, TDataset, TVariables>(
     }
     reset();
   }, [props.variables]);
-
-  useEffect(() => {
-    if (!props.fireWhenMounted) {
-      return;
-    }
-    entryQuery.exec();
-  }, [props.fireWhenMounted]);
 
   useEffect(() => {
     if (!entryQuery.hasError) {

@@ -9,6 +9,7 @@ type UseEntryQueryProps<TResult, TVariables> = {
   getVariables: (page: number) => TVariables;
   beforeExecQuery: () => void;
   fetchPolicy?: FetchPolicy;
+  skipFirstRun: boolean;
   query: DocumentNode;
 };
 
@@ -16,6 +17,7 @@ const useEntryQuery = <TResult, TVariables>(
   props: UseEntryQueryProps<TResult, TVariables>,
 ) => {
   const imperativeQuery = useImperativeQuery<TResult, TVariables>({
+    skipFirstRun: props.skipFirstRun,
     fetchPolicy: props.fetchPolicy,
     query: props.query,
   });

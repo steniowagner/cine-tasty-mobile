@@ -30,13 +30,14 @@ const usePaginateQuery = <TResult, TVariables>(
 
   const imperativeQuery = useImperativeQuery<TResult, TVariables>({
     fetchPolicy: props.fetchPolicy,
+    skipFirstRun: false,
     query: props.query,
   });
 
   const reset = useCallback(() => {
     setPagination({
-      page: props.initialPage,
       isPaginating: false,
+      page: 1,
     });
   }, [props.initialPage]);
 
