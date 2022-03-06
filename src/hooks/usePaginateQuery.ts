@@ -1,76 +1,92 @@
 import {useState, useEffect, useCallback} from 'react';
-import {
-  FetchMoreQueryOptions,
-  OperationVariables,
-  ApolloQueryResult,
-  FetchMoreOptions,
-} from '@apollo/client';
+import {ApolloQueryResult} from '@apollo/client';
+import {DocumentNode} from '@apollo/client';
+import {FetchPolicy} from 'apollo-client';
 
-type PaginateFunction<TResult> = (
-  result: FetchMoreQueryOptions<OperationVariables, TResult> &
-    FetchMoreOptions<TResult, OperationVariables>,
-) => Promise<ApolloQueryResult<TResult>>;
+import useImperativeQuery from '@utils/useImperativeQuery';
 
 type UsePaginateQueryProps<TResult, TVariables> = {
-  onPaginatedQueryCompleted: (result: ApolloQueryResult<TResult>) => void;
-  variables?: Omit<TVariables, 'page'>;
-  paginate: PaginateFunction<TResult>;
+  onComplete: (result: ApolloQueryResult<TResult>) => void;
+  getVariables: (page: number) => TVariables;
+  beforeExecQuery: () => void;
+  fetchPolicy: FetchPolicy;
   initialPage: number;
+  query: DocumentNode;
   hasMore: boolean;
+};
+
+type Pagination = {
+  isPaginating: boolean;
+  page: number;
 };
 
 const usePaginateQuery = <TResult, TVariables>(
   props: UsePaginateQueryProps<TResult, TVariables>,
 ) => {
-  const [isPaginating, setIsPagianting] = useState(false);
-  const [page, setPage] = useState(props.initialPage);
-  const [hasError, setHasError] = useState(false);
+  const [pagination, setPagination] = useState<Pagination>({
+    page: props.initialPage,
+    isPaginating: false,
+  });
 
-  const handleResetPaginationState = useCallback(() => {
-    setPage(props.initialPage);
-    setIsPagianting(false);
-    setHasError(false);
+  const imperativeQuery = useImperativeQuery<TResult, TVariables>({
+    fetchPolicy: props.fetchPolicy,
+    query: props.query,
+  });
+
+  const reset = useCallback(() => {
+    setPagination({
+      page: props.initialPage,
+      isPaginating: false,
+    });
   }, [props.initialPage]);
 
-  const handlePaginateQueryError = useCallback(() => {
-    setHasError(true);
-    setIsPagianting(false);
-  }, [hasError]);
-
   const handleExecPaginatedQuery = useCallback(async () => {
-    try {
-      const result = await props.paginate({
-        variables: {...props.variables, page},
-      });
-      setIsPagianting(false);
-      props.onPaginatedQueryCompleted(result);
-    } catch (err) {
-      handlePaginateQueryError();
-    }
-  }, [props.onPaginatedQueryCompleted, props.variables, props.paginate, page]);
-
-  useEffect(() => {
-    if (isPaginating) {
-      handleExecPaginatedQuery();
-    }
-  }, [handleExecPaginatedQuery, isPaginating]);
-
-  const handlePaginate = useCallback(() => {
-    if (isPaginating || !props.hasMore) {
+    props.beforeExecQuery();
+    const variables = props.getVariables(pagination.page);
+    const result = await imperativeQuery.exec(variables);
+    setPagination((previousPagination: Pagination) => ({
+      ...previousPagination,
+      isPaginating: false,
+    }));
+    if (!result || !result.data) {
       return;
     }
-    setPage((previousPage: number) =>
-      hasError ? previousPage : previousPage + 1,
-    );
-    setIsPagianting(true);
-    setHasError(false);
-  }, [isPaginating, props.hasMore]);
+    props.onComplete(result);
+  }, [
+    props.beforeExecQuery,
+    props.onComplete,
+    props.getVariables,
+    pagination.page,
+  ]);
+
+  const exec = useCallback(() => {
+    const isLoading = imperativeQuery.isLoading || pagination.isPaginating;
+    if (isLoading || !props.hasMore) {
+      return;
+    }
+    setPagination((previousPagination: Pagination) => {
+      const page = imperativeQuery.hasError
+        ? previousPagination.page
+        : previousPagination.page + 1;
+      return {
+        isPaginating: true,
+        page,
+      };
+    });
+  }, [imperativeQuery.isLoading, props.hasMore, pagination]);
+
+  useEffect(() => {
+    if (!pagination.isPaginating) {
+      return;
+    }
+    handleExecPaginatedQuery();
+  }, [pagination.isPaginating]);
 
   return {
-    reset: handleResetPaginationState,
-    exec: handlePaginate,
-    isPaginating,
-    hasError,
+    isPaginating: imperativeQuery.isLoading,
+    hasError: imperativeQuery.hasError,
+    reset,
+    exec,
   };
 };
 

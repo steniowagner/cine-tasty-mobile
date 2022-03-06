@@ -1,10 +1,5 @@
 import {useState, useCallback, useEffect} from 'react';
-import {
-  ApolloQueryResult,
-  useLazyQuery,
-  DocumentNode,
-  FetchPolicy,
-} from '@apollo/client';
+import {ApolloQueryResult, DocumentNode, FetchPolicy} from '@apollo/client';
 
 import {useAlertMessage} from '@providers';
 
@@ -16,9 +11,23 @@ type GetQueryResult<TDataset> = {
   hasMore: boolean;
 };
 
-type UsePaginatedQueryProps<TResult, TDataset, TVariables> = {
+type Input = {
+  input?: Object;
+};
+
+type ReceivedVariables<TVariables> = Omit<TVariables, 'page'> & Input;
+
+type Page = {page: number};
+
+type InputWithPaging = {
+  input: Input & Page;
+};
+
+type UsedVariables<TVariables> = Page | (Page & TVariables) | InputWithPaging;
+
+type UsePaginationProps<TResult, TDataset, TVariables> = {
   onGetData: (result: TResult) => GetQueryResult<TDataset>;
-  variables?: Omit<TVariables, 'page'>;
+  variables?: ReceivedVariables<TVariables>;
   fetchPolicy?: FetchPolicy;
   fireWhenMounted?: boolean;
   entryQueryError: string;
@@ -27,44 +36,40 @@ type UsePaginatedQueryProps<TResult, TDataset, TVariables> = {
 };
 
 export const usePagination = <TResult, TDataset, TVariables>(
-  props: UsePaginatedQueryProps<TResult, TDataset, TVariables>,
+  props: UsePaginationProps<TResult, TDataset, TVariables>,
 ) => {
-  const [isLoading, setIsLoading] = useState(props.fireWhenMounted);
   const [dataset, setDataset] = useState<TDataset[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState('');
 
   const alertMessage = useAlertMessage();
 
-  const handleOnEntryQueryCompleted = useCallback(
-    (queryResult: TResult) => {
-      setIsLoading(false);
-      const result = props.onGetData(queryResult);
-      setDataset(result.dataset);
-      setHasMore(result.hasMore);
+  const getVariables = useCallback(
+    (page: number): UsedVariables<TVariables> => {
+      if (!props.variables) {
+        return {page};
+      }
+      if (!props.variables.input) {
+        return {
+          ...props.variables,
+          page,
+        };
+      }
+      return {
+        input: {
+          ...props.variables.input,
+          page,
+        },
+      };
     },
-    [props.onGetData],
+    [props.variables],
   );
 
-  const handleOnEntryQueryError = useCallback(() => {
-    setError(props.entryQueryError);
-    setIsLoading(false);
-  }, [props.entryQueryError]);
+  const beforeExecQuery = useCallback(() => {
+    setError('');
+  }, []);
 
-  const [execEntryQuery, {fetchMore: paginate, refetch}] =
-    useLazyQuery<TResult>(props.query, {
-      fetchPolicy: props.fetchPolicy || 'cache-first',
-      onCompleted: handleOnEntryQueryCompleted,
-      onError: handleOnEntryQueryError,
-    });
-
-  useEntryQuery({
-    fireWhenMounted: props.fireWhenMounted,
-    variables: props.variables,
-    exec: execEntryQuery,
-  });
-
-  const handleOnPaginatedQueryCompleted = useCallback(
+  const handleOnCompletePaginatedQuery = useCallback(
     (queryResult: ApolloQueryResult<TResult>) => {
       const result = props.onGetData(queryResult.data);
       setDataset((previousDataset: TDataset[]) => [
@@ -73,40 +78,71 @@ export const usePagination = <TResult, TDataset, TVariables>(
       ]);
       setHasMore(result.hasMore);
     },
-    [props.onGetData],
+    [props.onGetData, dataset],
   );
 
-  const paginateQuery = usePaginateQuery({
-    onPaginatedQueryCompleted: handleOnPaginatedQueryCompleted,
+  const handleOnCompleteEntryQuery = useCallback(
+    (queryResult: ApolloQueryResult<TResult>) => {
+      const result = props.onGetData(queryResult.data);
+      setDataset(result.dataset);
+      setHasMore(result.hasMore);
+    },
+    [props.onGetData, dataset],
+  );
+
+  const entryQuery = useEntryQuery<TResult, UsedVariables<TVariables>>({
+    onComplete: handleOnCompleteEntryQuery,
+    fetchPolicy: props.fetchPolicy,
+    query: props.query,
+    beforeExecQuery,
+    getVariables,
+  });
+
+  const paginateQuery = usePaginateQuery<TResult, UsedVariables<TVariables>>({
     initialPage: props.fireWhenMounted ? 1 : 2,
-    variables: props.variables,
-    paginate,
+    onComplete: handleOnCompletePaginatedQuery,
+    fetchPolicy: props.fetchPolicy,
+    query: props.query,
+    beforeExecQuery,
+    getVariables,
     hasMore,
   });
 
   const reset = useCallback(async () => {
     try {
+      paginateQuery.reset();
       setDataset([]);
       setHasMore(true);
       setError('');
-      setIsLoading(true);
-      await refetch(props.variables);
+      await entryQuery.exec();
     } catch (err) {
-      setIsLoading(false);
       setError(props.entryQueryError);
     }
-  }, [refetch, props.entryQueryError, props.variables]);
+  }, [props.entryQueryError, paginateQuery.reset, props.variables]);
 
   useEffect(() => {
-    if (isLoading || paginateQuery.isPaginating) {
+    if (entryQuery.isLoading || paginateQuery.isPaginating) {
       return;
     }
     reset();
   }, [props.variables]);
 
   useEffect(() => {
+    if (!props.fireWhenMounted) {
+      return;
+    }
+    entryQuery.exec();
+  }, [props.fireWhenMounted]);
+
+  useEffect(() => {
+    if (!entryQuery.hasError) {
+      return;
+    }
+    setError(props.entryQueryError);
+  }, [entryQuery.hasError]);
+
+  useEffect(() => {
     if (!paginateQuery.hasError) {
-      setError('');
       return;
     }
     setError(props.paginationError);
@@ -122,8 +158,8 @@ export const usePagination = <TResult, TDataset, TVariables>(
   return {
     hasPaginationError: paginateQuery.hasError,
     isPaginating: paginateQuery.isPaginating,
+    isLoading: entryQuery.isLoading,
     paginate: paginateQuery.exec,
-    isLoading,
     dataset,
     reset,
     error,

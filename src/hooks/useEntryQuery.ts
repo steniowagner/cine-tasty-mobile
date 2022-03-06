@@ -1,33 +1,40 @@
-import {useEffect, useCallback} from 'react';
-import {
-  OperationVariables,
-  QueryLazyOptions,
-  LazyQueryResult,
-} from '@apollo/client';
+import {useCallback} from 'react';
+import {DocumentNode} from '@apollo/client';
+import {ApolloQueryResult, FetchPolicy} from '@apollo/client';
 
-type ExecFunction<TResult> = (
-  options?: QueryLazyOptions<OperationVariables>,
-) => Promise<LazyQueryResult<TResult, OperationVariables>>;
+import useImperativeQuery from '@utils/useImperativeQuery';
 
-type UsePaginatedQueryProps<TResult, TVariables> = {
-  variables?: Omit<TVariables, 'page'>;
-  exec: ExecFunction<TResult>;
-  fireWhenMounted?: boolean;
+type UseEntryQueryProps<TResult, TVariables> = {
+  onComplete: (result: ApolloQueryResult<TResult>) => void;
+  getVariables: (page: number) => TVariables;
+  beforeExecQuery: () => void;
+  fetchPolicy?: FetchPolicy;
+  query: DocumentNode;
 };
 
 const useEntryQuery = <TResult, TVariables>(
-  props: UsePaginatedQueryProps<TResult, TVariables>,
+  props: UseEntryQueryProps<TResult, TVariables>,
 ) => {
-  const handleExecEntryQuery = useCallback(
-    async () => props.exec({variables: {...props.variables, page: 1}}),
-    [props.variables, props.exec],
-  );
+  const imperativeQuery = useImperativeQuery<TResult, TVariables>({
+    fetchPolicy: props.fetchPolicy,
+    query: props.query,
+  });
 
-  useEffect(() => {
-    if (props.fireWhenMounted) {
-      handleExecEntryQuery();
+  const exec = useCallback(async () => {
+    props.beforeExecQuery();
+    const variables = props.getVariables(1);
+    const result = await imperativeQuery.exec(variables);
+    if (!result || !result.data) {
+      return;
     }
-  }, [props.fireWhenMounted]);
+    props.onComplete(result);
+  }, [props.beforeExecQuery, props.getVariables, props.onComplete]);
+
+  return {
+    isLoading: imperativeQuery.isLoading,
+    hasError: imperativeQuery.hasError,
+    exec,
+  };
 };
 
 export default useEntryQuery;
