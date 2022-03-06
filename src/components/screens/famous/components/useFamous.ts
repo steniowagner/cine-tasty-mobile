@@ -42,15 +42,19 @@ const useFamous = (props: UseFamousProps) => {
 
   const onPressHeaderIconButton = useCallback(() => {
     props.navigation.navigate(Routes.Search.SEARCH_STACK, {
-      i18nQueryByPaginationErrorRef:
+      paginationError: translations.translate(
         Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-      i18nSearchBarPlaceholderRef:
+      ),
+      placeholder: translations.translate(
         Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER,
-      i18nQueryByTextErrorRef: Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
+      ),
+      searchByTextError: translations.translate(
+        Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
+      ),
       searchType: SchemaTypes.SearchType.PERSON,
       queryId: 'search_famous',
     });
-  }, []);
+  }, [translations.translate]);
 
   return {
     hasPaginationError: pagination.hasPaginationError,

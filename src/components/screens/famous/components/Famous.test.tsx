@@ -887,11 +887,9 @@ describe('<Famous />', () => {
       fireEvent.press(elements.headerIconButton(component));
       expect(navigate).toHaveBeenCalledTimes(1);
       expect(navigate).toHaveBeenCalledWith(Routes.Search.SEARCH_STACK, {
-        i18nQueryByPaginationErrorRef:
-          Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-        i18nSearchBarPlaceholderRef:
-          Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER,
-        i18nQueryByTextErrorRef: Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
+        paginationError: Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
+        placeholder: Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER,
+        searchByTextError: Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
         searchType: SchemaTypes.SearchType.PERSON,
         queryId: 'search_famous',
       });
