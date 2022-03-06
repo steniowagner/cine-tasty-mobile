@@ -1,19 +1,43 @@
-import {useQuery} from '@apollo/client';
+import {useCallback, useState} from 'react';
+import {DocumentNode, useQuery} from '@apollo/client';
 import {FetchPolicy} from 'apollo-client';
-import {DocumentNode} from 'graphql';
 
-const useImperativeQuery = <TData = any, TVariables = any>(
-  query: DocumentNode,
-  fetchPolicy: FetchPolicy = 'cache-first',
+type UseImperativeQueryProps = {
+  fetchPolicy?: FetchPolicy;
+  query: DocumentNode;
+};
+
+const useImperativeQuery = <TResult, TVariables>(
+  props: UseImperativeQueryProps,
 ) => {
-  const {refetch} = useQuery<TData, TVariables>(query, {
-    fetchPolicy,
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  const query = useQuery<TResult, TVariables>(props.query, {
+    fetchPolicy: props.fetchPolicy || 'cache-first',
   });
 
-  const imperativelyCallQuery = async (variables: TVariables) =>
-    refetch(variables);
+  const exec = useCallback(
+    async (variables: TVariables) => {
+      try {
+        setIsLoading(true);
+        setHasError(false);
+        const result = await query.refetch(variables);
+        setIsLoading(false);
+        return result;
+      } catch (err) {
+        setHasError(true);
+        setIsLoading(false);
+      }
+    },
+    [query.refetch],
+  );
 
-  return imperativelyCallQuery;
+  return {
+    isLoading,
+    hasError,
+    exec,
+  };
 };
 
 export default useImperativeQuery;
