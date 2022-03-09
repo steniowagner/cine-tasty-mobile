@@ -6,11 +6,11 @@ import {FetchPolicy} from 'apollo-client';
 import useImperativeQuery from '@utils/useImperativeQuery';
 
 type UsePaginateQueryProps<TResult, TVariables> = {
-  onComplete: (result: ApolloQueryResult<TResult>) => void;
+  onCompleted: (result: ApolloQueryResult<TResult>) => void;
   getVariables: (page: number) => TVariables;
   beforeExecQuery: () => void;
   fetchPolicy: FetchPolicy;
-  initialPage: number;
+  skipFirstRun: boolean;
   query: DocumentNode;
   hasMore: boolean;
 };
@@ -24,13 +24,13 @@ const usePaginateQuery = <TResult, TVariables>(
   props: UsePaginateQueryProps<TResult, TVariables>,
 ) => {
   const [pagination, setPagination] = useState<Pagination>({
-    page: props.initialPage,
+    page: props.skipFirstRun ? 0 : 1,
     isPaginating: false,
   });
 
   const imperativeQuery = useImperativeQuery<TResult, TVariables>({
     fetchPolicy: props.fetchPolicy,
-    skipFirstRun: false,
+    onCompleted: props.onCompleted,
     query: props.query,
   });
 
@@ -39,26 +39,17 @@ const usePaginateQuery = <TResult, TVariables>(
       isPaginating: false,
       page: 1,
     });
-  }, [props.initialPage]);
+  }, []);
 
   const handleExecPaginatedQuery = useCallback(async () => {
     props.beforeExecQuery();
     const variables = props.getVariables(pagination.page);
-    const result = await imperativeQuery.exec(variables);
+    await imperativeQuery.exec(variables);
     setPagination((previousPagination: Pagination) => ({
       ...previousPagination,
       isPaginating: false,
     }));
-    if (!result || !result.data) {
-      return;
-    }
-    props.onComplete(result);
-  }, [
-    props.beforeExecQuery,
-    props.onComplete,
-    props.getVariables,
-    pagination.page,
-  ]);
+  }, [props.beforeExecQuery, props.getVariables, pagination.page]);
 
   const exec = useCallback(() => {
     const isLoading = imperativeQuery.isLoading || pagination.isPaginating;

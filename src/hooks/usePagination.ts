@@ -1,4 +1,4 @@
-import {useState, useCallback, useEffect} from 'react';
+import {useState, useCallback, useEffect, useRef} from 'react';
 import {ApolloQueryResult, DocumentNode, FetchPolicy} from '@apollo/client';
 
 import {useAlertMessage} from '@providers';
@@ -41,6 +41,8 @@ export const usePagination = <TResult, TDataset, TVariables>(
   const [dataset, setDataset] = useState<TDataset[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState('');
+
+  const hadFirstRender = useRef(false);
 
   const alertMessage = useAlertMessage();
 
@@ -91,7 +93,7 @@ export const usePagination = <TResult, TDataset, TVariables>(
   );
 
   const entryQuery = useEntryQuery<TResult, UsedVariables<TVariables>>({
-    onComplete: handleOnCompleteEntryQuery,
+    onCompleted: handleOnCompleteEntryQuery,
     skipFirstRun: props.skipFirstRun,
     fetchPolicy: props.fetchPolicy,
     query: props.query,
@@ -100,8 +102,8 @@ export const usePagination = <TResult, TDataset, TVariables>(
   });
 
   const paginateQuery = usePaginateQuery<TResult, UsedVariables<TVariables>>({
-    initialPage: props.skipFirstRun ? 1 : 2,
-    onComplete: handleOnCompletePaginatedQuery,
+    onCompleted: handleOnCompletePaginatedQuery,
+    skipFirstRun: props.skipFirstRun,
     fetchPolicy: props.fetchPolicy,
     query: props.query,
     beforeExecQuery,
@@ -120,13 +122,6 @@ export const usePagination = <TResult, TDataset, TVariables>(
       setError(props.entryQueryError);
     }
   }, [props.entryQueryError, paginateQuery.reset, props.variables]);
-
-  useEffect(() => {
-    if (entryQuery.isLoading || paginateQuery.isPaginating) {
-      return;
-    }
-    reset();
-  }, [props.variables]);
 
   useEffect(() => {
     if (!entryQuery.hasError) {
@@ -148,6 +143,21 @@ export const usePagination = <TResult, TDataset, TVariables>(
     }
     alertMessage.show(error);
   }, [error]);
+
+  useEffect(() => {
+    if (props.skipFirstRun) {
+      return;
+    }
+    entryQuery.exec();
+  }, []);
+
+  useEffect(() => {
+    if (!hadFirstRender.current) {
+      hadFirstRender.current = true;
+      return;
+    }
+    reset();
+  }, [props.variables]);
 
   return {
     hasPaginationError: paginateQuery.hasError,
