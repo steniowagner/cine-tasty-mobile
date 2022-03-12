@@ -3,18 +3,14 @@ import {useNavigation} from '@react-navigation/native';
 
 import {FamousNavigationProp} from '@components/screens/famous/routes/route-params-types';
 import {Routes} from '@routes/routes';
-
-export type Famous = {
-  profileImage: string | null;
-  name: string | null;
-  id: number | null;
-};
+import * as Types from '@local-types';
 
 type UseFamousListProps = {
+  beforePressItem?: (famous: Types.Famous) => unknown;
   hasPaginationError: boolean;
+  famous: Types.Famous[];
   isPaginating: boolean;
   isLoading: boolean;
-  famous: Famous[];
   error?: string;
 };
 
@@ -32,9 +28,13 @@ const useFamousList = (props: UseFamousListProps) => {
     [props.famous, props.hasPaginationError, props.isPaginating],
   );
 
-  const handlePressFamousListItem = useCallback((famous: Famous) => {
-    navigation.navigate(Routes.Famous.DETAILS, famous);
-  }, []);
+  const handlePressFamousListItem = useCallback(
+    (famous: Types.Famous) => {
+      props.beforePressItem && props.beforePressItem(famous);
+      navigation.navigate(Routes.Famous.DETAILS, famous);
+    },
+    [props.beforePressItem],
+  );
 
   return {
     onPressFamousListItem: handlePressFamousListItem,

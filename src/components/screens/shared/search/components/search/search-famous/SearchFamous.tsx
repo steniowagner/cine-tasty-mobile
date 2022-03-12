@@ -21,6 +21,7 @@ const SearchFamous = (props: SearchFamousProps) => {
   return (
     <FamousList
       onPressBottomReloadButton={props.onPressBottomReloadButton}
+      beforePressItem={searchFamous.persistToRecentSearches}
       onPressTopReloadButton={props.onPressTopReloadButton}
       hasPaginationError={props.hasPaginationError}
       onEndReached={props.onEndReached}

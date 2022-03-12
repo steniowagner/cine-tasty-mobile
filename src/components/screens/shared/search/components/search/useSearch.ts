@@ -59,6 +59,15 @@ const useSearch = (props: UseSearchProps) => {
     variables,
   });
 
+  const shouldShowRecentSearches = useMemo(
+    () =>
+      !query &&
+      !pagination.isLoading &&
+      !pagination.error &&
+      !pagination.dataset.length,
+    [pagination.dataset, pagination.isLoading, pagination.error, query],
+  );
+
   return {
     onTypeSearchQuery: searchByQuery.onTypeSearchQuery,
     hasPaginationError: pagination.hasPaginationError,
@@ -68,6 +77,7 @@ const useSearch = (props: UseSearchProps) => {
     onEndReached: pagination.paginate,
     isLoading: pagination.isLoading,
     dataset: pagination.dataset,
+    shouldShowRecentSearches,
     error: pagination.error,
   };
 };

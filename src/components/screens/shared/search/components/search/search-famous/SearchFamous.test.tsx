@@ -146,12 +146,10 @@ describe('<Search /> [Famous]', () => {
         },
       ];
       const component = render(renderSearchFamous(resolvers));
-      expect(elements.famousList(component)).not.toBeNull();
       expect(elements.topReloadButton(component)).toBeNull();
       expect(elements.paginationFooter(component)).toBeNull();
       expect(elements.alertMessageWrapper(component)).toBeNull();
       expect(elements.famousLoadingList(component)).toBeNull();
-      expect(elements.famousListItems(component).length).toEqual(0);
     });
 
     it('should show the "Loading-state" when is loading the data', async () => {

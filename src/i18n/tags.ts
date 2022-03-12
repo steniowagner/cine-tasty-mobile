@@ -29,6 +29,12 @@ export namespace Translations {
     // TABS
     TABS_QUIZ = 'translations:tabs:quiz',
 
+    // FAMOUS
+    FAMOUS_SEARCHBAR_PLACEHOLDER = 'translations:famous:searchBarPlaceholder',
+    FAMOUS_QUERY_BY_PAGINATION_ERROR = 'translations:famous:i18nQueryByPaginationErrorRef',
+    FAMOUS_QUERY_BY_TEXT_ERROR = 'translations:famous:i18nQueryByTextErrorRef',
+    FAMOUS_ENTRY_QUERY_ERROR = 'translations:famous:i18EntryQueryErrorRef',
+
     // QUIZ
     QUIZ = 'translations:quiz',
     QUIZ_WELCOME = 'translations:quiz:welcome',
@@ -78,6 +84,12 @@ export namespace Translations {
     ERRORS_NETWORK_ERROR_DESCRIPTION = 'translations:errors:network:description',
     ERRORS_NETWORK_ERROR_SUGGESTION = 'translations:errors:network:suggestion',
     ERRORS_NETWORK_ERROR_TITLE = 'translations:errors:network:title',
+
+    // SEARCH
+    SEARCH_RECENT = 'translations:search:recent',
+    SEARCH_EMPTY_LIST_DESCRIPTION = 'translations:search:emptyList:description',
+    SEARCH_EMPTY_LIST_SUGGESTION = 'translations:search:emptyList:suggestion',
+    SEARCH_EMPTY_LIST_TITLE = 'translations:search:emptyList:title',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -147,24 +159,6 @@ export const TABS = 'translations:tabs';
 export const TABS_HOME = 'translations:tabs:home';
 export const TABS_NEWS = 'translations:tabs:news';
 export const TABS_FAMOUS = 'translations:tabs:famous';
-
-// FAMOUS
-export const FAMOUS_SEARCHBAR_PLACEHOLDER =
-  'translations:famous:searchBarPlaceholder';
-export const FAMOUS_QUERY_BY_PAGINATION_ERROR =
-  'translations:famous:i18nQueryByPaginationErrorRef';
-export const FAMOUS_QUERY_BY_TEXT_ERROR =
-  'translations:famous:i18nQueryByTextErrorRef';
-export const FAMOUS_ENTRY_QUERY_ERROR =
-  'translations:famous:i18EntryQueryErrorRef';
-
-// SEARCH
-export const SEARCH_RECENT = 'translations:search:recent';
-export const SEARCH_EMPTY_LIST_DESCRIPTION =
-  'translations:search:emptyList:description';
-export const SEARCH_EMPTY_LIST_SUGGESTION =
-  'translations:search:emptyList:suggestion';
-export const SEARCH_EMPTY_LIST_TITLE = 'translations:search:emptyList:title';
 
 // FAMOUS-DETAIL
 export const FAMOUS_DETAIL_READ_LESS = 'translations:famousDetail:readLess';

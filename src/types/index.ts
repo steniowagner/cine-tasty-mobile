@@ -197,3 +197,14 @@ export type MovieSearchPress = (
   item: SchemaTypes.SearchMovie_search_items_BaseMovie,
 ) => void;
 
+export type Famous = {
+  profileImage: string | null;
+  name: string | null;
+  id: number | null;
+};
+
+export type ResentSearchItem = {
+  image: string;
+  title: string;
+  id: number;
+};

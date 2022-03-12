@@ -17,6 +17,10 @@ const useSearchByQuery = (props: UseSearchByQueryProps) => {
 
   const handleTypeSearchQuery = useCallback(
     (queryString: string) => {
+      console.log('>>> queryString:', queryString);
+      if (!queryString) {
+        return;
+      }
       debouncedSetQueryString(queryString);
     },
     [debouncedSetQueryString],

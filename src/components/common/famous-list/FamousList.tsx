@@ -5,26 +5,29 @@ import PaginatedListHeader from '@components/common/paginated-list-header/Pagina
 import FamousListItem from '@components/common/famous-list/famous-list-item/FamousListItem';
 import LoadingFamous from '@components/common/famous-list/loading-famous/LoadingFamous';
 import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
+import * as Types from '@local-types';
 
-import useFamousList, {Famous} from './useFamousList';
+import useFamousList from './useFamousList';
 import Styles from './FamousList.styles';
 
 export const NUMBER_OF_COLUMNS = 3;
 
 export type FamousListProps = {
+  beforePressItem?: (famous: Types.Famous) => unknown;
   onPressBottomReloadButton: () => void;
   onPressTopReloadButton: () => void;
   hasPaginationError?: boolean;
   onEndReached: () => void;
+  famous: Types.Famous[];
   isPaginating: boolean;
   isLoading: boolean;
-  famous: Famous[];
   error?: string;
 };
 
 const FamousList = (props: FamousListProps) => {
   const famousList = useFamousList({
     hasPaginationError: props.hasPaginationError,
+    beforePressItem: props.beforePressItem,
     isPaginating: props.isPaginating,
     isLoading: props.isLoading,
     famous: props.famous,
@@ -68,7 +71,6 @@ const FamousList = (props: FamousListProps) => {
       onEndReached={props.onEndReached}
       keyExtractor={({id}) => `${id}`}
       testID="famous-list"
-      style={Styles.style}
       data={props.famous}
     />
   );

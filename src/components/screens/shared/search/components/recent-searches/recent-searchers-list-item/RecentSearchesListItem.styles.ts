@@ -4,8 +4,8 @@ import styled from 'styled-components/native';
 import metrics from '@styles/metrics';
 
 export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('10%');
-export const IMAGE_WIDTH_PERCENTAGE = '21%';
-export const IMAGE_HEIGHT_PERCENTAGE = '21%';
+export const IMAGE_WIDTH_PERCENTAGE = '18%';
+export const IMAGE_HEIGHT_PERCENTAGE = '18%';
 
 export const Wrapper = styled(View)`
   width: 100%;
@@ -38,7 +38,7 @@ export const ItemText = styled(Text).attrs({
   margin-left: ${({theme}) => theme.metrics.mediumSize}px;
   margin-right: ${({theme}) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Medium;
-  font-size: ${({theme}) => theme.metrics.largeSize * 1.2}px;
+  font-size: ${({theme}) => theme.metrics.largeSize}px;
   color: ${({theme}) => theme.colors.text};
 `;
 

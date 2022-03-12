@@ -17,11 +17,11 @@ type SearchStackParams = {
 };
 
 export type SearchParams = {
-  i18nQueryByPaginationErrorRef: string;
-  i18nSearchBarPlaceholderRef: string;
-  i18nQueryByTextErrorRef: string;
   searchType: SchemaTypes.SearchType;
   queryId: Types.CineTastyQuery;
+  searchByTextError: string;
+  paginationError: string;
+  placeholder: string;
 };
 
 /** Search-Stack-Props */
