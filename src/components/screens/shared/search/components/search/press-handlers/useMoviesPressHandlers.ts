@@ -11,27 +11,27 @@ type UseMoviesPressHandlersProps = {
   navigation: SearchNavigationProp;
 };
 
-const useMoviesPressHandlers = ({navigation}: UseMoviesPressHandlersProps) => {
-  const {persistItemToRecentSearches} = useRecentSearches({
+const useMoviesPressHandlers = (props: UseMoviesPressHandlersProps) => {
+  const recentSearches = useRecentSearches({
     shouldSkipGetInitialRecentSearches: true,
     searchType: SchemaTypes.SearchType.MOVIE,
   });
 
   const handlePersistToRecentSearches = useCallback(
     async (movie: SchemaTypes.SearchMovie_search_items_BaseMovie) => {
-      persistItemToRecentSearches({
+      recentSearches.persistItemToRecentSearches({
         image: movie.posterPath,
         title: movie.title,
         id: movie.id,
       });
     },
-    [persistItemToRecentSearches],
+    [recentSearches.persistItemToRecentSearches],
   );
 
-  const onPressMoviesListItem = useCallback(
+  const handlePressMoviesListItem = useCallback(
     (movie: SchemaTypes.SearchMovie_search_items_BaseMovie) => {
       handlePersistToRecentSearches(movie);
-      navigation.navigate(Routes.Movie.DETAILS, {
+      props.navigation.navigate(Routes.Movie.DETAILS, {
         genreIds: movie.genreIds || [],
         voteAverage: movie.voteAverage,
         posterPath: movie.posterPath,
@@ -40,23 +40,23 @@ const useMoviesPressHandlers = ({navigation}: UseMoviesPressHandlersProps) => {
         id: movie.id,
       });
     },
-    [handlePersistToRecentSearches, navigation],
+    [handlePersistToRecentSearches, props.navigation],
   );
 
-  const onPressRecentMoviesSearchItem = useCallback(
+  const handlePressRecentMoviesSearchItem = useCallback(
     (movie: Types.RecentSearchItem) => {
-      navigation.navigate(Routes.Movie.DETAILS, {
+      props.navigation.navigate(Routes.Movie.DETAILS, {
         posterPath: movie.image,
         title: movie.title,
         id: movie.id,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   return {
-    onPressRecentSearchItem: onPressRecentMoviesSearchItem,
-    onPressListItem: onPressMoviesListItem,
+    onPressRecentSearchItem: handlePressRecentMoviesSearchItem,
+    onPressListItem: handlePressMoviesListItem,
   };
 };
 

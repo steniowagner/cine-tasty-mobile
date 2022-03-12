@@ -11,29 +11,27 @@ type UseTVShowsPressHandlersProps = {
   navigation: SearchNavigationProp;
 };
 
-const useTVShowsPressHandlers = ({
-  navigation,
-}: UseTVShowsPressHandlersProps) => {
-  const {persistItemToRecentSearches} = useRecentSearches({
+const useTVShowsPressHandlers = (props: UseTVShowsPressHandlersProps) => {
+  const recentSearches = useRecentSearches({
     shouldSkipGetInitialRecentSearches: true,
     searchType: SchemaTypes.SearchType.TV,
   });
 
   const handlePersistToRecentSearches = useCallback(
     async (tvShow: SchemaTypes.SearchTVShow_search_items_BaseTVShow) => {
-      persistItemToRecentSearches({
+      recentSearches.persistItemToRecentSearches({
         image: tvShow.posterPath,
         title: tvShow.title,
         id: tvShow.id,
       });
     },
-    [persistItemToRecentSearches],
+    [recentSearches.persistItemToRecentSearches],
   );
 
-  const onPressTVShowsListItem = useCallback(
+  const handlePressTVShowsListItem = useCallback(
     (tvShow: SchemaTypes.SearchTVShow_search_items_BaseTVShow) => {
       handlePersistToRecentSearches(tvShow);
-      navigation.navigate(Routes.TVShow.DETAILS, {
+      props.navigation.navigate(Routes.TVShow.DETAILS, {
         genreIds: tvShow.genreIds || [],
         voteAverage: tvShow.voteAverage,
         posterPath: tvShow.posterPath,
@@ -42,23 +40,23 @@ const useTVShowsPressHandlers = ({
         id: tvShow.id,
       });
     },
-    [handlePersistToRecentSearches, navigation],
+    [handlePersistToRecentSearches, props.navigation],
   );
 
-  const onPressRecentTVShowsSearchItem = useCallback(
+  const handlePressRecentTVShowsSearchItem = useCallback(
     (tvShow: Types.RecentSearchItem) => {
-      navigation.navigate(Routes.TVShow.DETAILS, {
+      props.navigation.navigate(Routes.TVShow.DETAILS, {
         posterPath: tvShow.image,
         title: tvShow.title,
         id: tvShow.id,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   return {
-    onPressRecentSearchItem: onPressRecentTVShowsSearchItem,
-    onPressListItem: onPressTVShowsListItem,
+    onPressRecentSearchItem: handlePressRecentTVShowsSearchItem,
+    onPressListItem: handlePressTVShowsListItem,
   };
 };
 

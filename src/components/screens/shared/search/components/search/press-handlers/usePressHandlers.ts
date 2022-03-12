@@ -12,12 +12,18 @@ type UsePressHandlerProps = {
   navigation: SearchNavigationProp;
 };
 
-const usePressHandler = ({navigation, searchType}: UsePressHandlerProps) => {
-  const tvShowsPressHandlers = useTVShowsPressHandlers({navigation});
-  const famousPressHandlers = useFamousPressHandlers({navigation});
-  const moviesPressHandlers = useMoviesPressHandlers({navigation});
+const usePressHandler = (props: UsePressHandlerProps) => {
+  const tvShowsPressHandlers = useTVShowsPressHandlers({
+    navigation: props.navigation,
+  });
+  const famousPressHandlers = useFamousPressHandlers({
+    navigation: props.navigation,
+  });
+  const moviesPressHandlers = useMoviesPressHandlers({
+    navigation: props.navigation,
+  });
 
-  const {onPressRecentSearchItem, onPressListItem} = useMemo(() => {
+  const pressMapping = useMemo(() => {
     const pressesHandlersMapping = {
       [SchemaTypes.SearchType.PERSON]: {
         onPressRecentSearchItem: famousPressHandlers.onPressRecentSearchItem,
@@ -33,17 +39,17 @@ const usePressHandler = ({navigation, searchType}: UsePressHandlerProps) => {
       },
     };
 
-    return pressesHandlersMapping[searchType];
+    return pressesHandlersMapping[props.searchType];
   }, [
     tvShowsPressHandlers,
     famousPressHandlers,
     moviesPressHandlers,
-    searchType,
+    props.searchType,
   ]);
 
   return {
-    onPressRecentSearchItem,
-    onPressListItem,
+    onPressRecentSearchItem: pressMapping.onPressRecentSearchItem,
+    onPressListItem: pressMapping.onPressListItem,
   };
 };
 

@@ -11,49 +11,49 @@ type UseFamousPressHandlersProps = {
   navigation: SearchNavigationProp;
 };
 
-const useFamousPressHandlers = ({navigation}: UseFamousPressHandlersProps) => {
-  const {persistItemToRecentSearches} = useRecentSearches({
+const useFamousPressHandlers = (props: UseFamousPressHandlersProps) => {
+  const recentSearches = useRecentSearches({
     shouldSkipGetInitialRecentSearches: true,
     searchType: SchemaTypes.SearchType.PERSON,
   });
 
   const handlePersistToRecentSearches = useCallback(
     async (item: SchemaTypes.SearchPerson_search_items_BasePerson) => {
-      persistItemToRecentSearches({
+      recentSearches.persistItemToRecentSearches({
         image: item.image,
         title: item.title,
         id: item.id,
       });
     },
-    [persistItemToRecentSearches],
+    [recentSearches.persistItemToRecentSearches],
   );
 
-  const onPressFamousListItem = useCallback(
+  const handlePressFamousListItem = useCallback(
     (item: SchemaTypes.SearchPerson_search_items_BasePerson) => {
       handlePersistToRecentSearches(item);
-      navigation.navigate(Routes.Famous.DETAILS, {
+      props.navigation.navigate(Routes.Famous.DETAILS, {
         profileImage: item.image,
         name: item.title,
         id: item.id,
       });
     },
-    [handlePersistToRecentSearches, navigation],
+    [handlePersistToRecentSearches, props.navigation],
   );
 
-  const onPressRecentFamousSearchItem = useCallback(
+  const handlePressRecentFamousSearchItem = useCallback(
     (person: Types.RecentSearchItem) => {
-      navigation.navigate(Routes.Famous.DETAILS, {
+      props.navigation.navigate(Routes.Famous.DETAILS, {
         profileImage: person.image,
         name: person.title,
         id: person.id,
       });
     },
-    [navigation],
+    [props.navigation],
   );
 
   return {
-    onPressRecentSearchItem: onPressRecentFamousSearchItem,
-    onPressListItem: onPressFamousListItem,
+    onPressRecentSearchItem: handlePressRecentFamousSearchItem,
+    onPressListItem: handlePressFamousListItem,
   };
 };
 
