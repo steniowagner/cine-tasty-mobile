@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
-import { StatusBar, TextInput } from 'react-native';
+import React from 'react';
+import {StatusBar} from 'react-native';
 
 import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
 import CONSTANTS from '@utils/constants';
 
 import * as Styles from './SearchBar.styles';
+import useSearchBar from './useSearchBar';
 
 type SearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
@@ -13,14 +14,8 @@ type SearchBarProps = {
   placeholder: string;
 };
 
-const SearchBar = ({
-  onTypeSearchQuery,
-  onPressSearch,
-  onPressClose,
-  placeholder,
-}: SearchBarProps) => {
-  const inputRef = useRef<TextInput>();
-
+const SearchBar = (props: SearchBarProps) => {
+  const searchBar = useSearchBar({onTypeSearchQuery: props.onTypeSearchQuery});
   return (
     <>
       <StatusBar
@@ -28,22 +23,20 @@ const SearchBar = ({
         barStyle="light-content"
         animated
       />
-      <Styles.IOSWrapper
-        testID="searchbar-wrapper"
-      >
+      <Styles.IOSWrapper testID="searchbar-wrapper">
         <Styles.ContentWrapper>
           <HeaderIconButton
-            onPress={onPressClose}
+            onPress={props.onPressClose}
             iconName="close"
             withMarginLeft
             color="white"
           />
           <Styles.Input
             testID="search-input"
-            onChangeText={(text: string) => onTypeSearchQuery(text)}
-            onSubmitEditing={onPressSearch}
-            placeholder={placeholder}
-            ref={inputRef}
+            onChangeText={searchBar.onChangeText}
+            onSubmitEditing={props.onPressSearch}
+            placeholder={props.placeholder}
+            ref={searchBar.inputRef}
           />
         </Styles.ContentWrapper>
       </Styles.IOSWrapper>

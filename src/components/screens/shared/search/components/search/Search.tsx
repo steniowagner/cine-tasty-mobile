@@ -1,11 +1,11 @@
 import React, {useLayoutEffect} from 'react';
 
-// @ts-ignore
-import SearchBar from '@components/common/searchbar/SearchBar';
 import * as SchemaTypes from '@schema-types';
 
 import {SearchStackProps} from '../../routes/route-params-types';
 import SearchFamous from './search-famous/SearchFamous';
+// @ts-ignore
+import SearchBar from './searchbar/SearchBar';
 import useSearch from './useSearch';
 
 const Search = (props: SearchStackProps) => {

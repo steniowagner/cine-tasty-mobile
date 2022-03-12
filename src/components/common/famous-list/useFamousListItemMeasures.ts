@@ -15,8 +15,8 @@ const useFamousListItemMeasures = (props: UseFamousListItemMeasures) => {
     (withMargin: boolean) => ({
       marginHorizontal: withMargin
         ? Platform.select({
+            ios: metrics.getWidthFromDP('2.5%'),
             android: metrics.smallSize,
-            ios: metrics.mediumSize,
           })
         : 0,
       width: metrics.getWidthFromDP('30%'),
