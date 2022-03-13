@@ -28,6 +28,7 @@ type UsedVariables<TVariables> = Page | (Page & TVariables) | InputWithPaging;
 type UsePaginationProps<TResult, TDataset, TVariables> = {
   onGetData: (result: TResult) => GetQueryResult<TDataset>;
   variables?: ReceivedVariables<TVariables>;
+  skipCurrentVariableUpdate?: boolean;
   fetchPolicy?: FetchPolicy;
   entryQueryError: string;
   paginationError: string;
@@ -111,17 +112,21 @@ export const usePagination = <TResult, TDataset, TVariables>(
     hasMore,
   });
 
+  const resetPaginationState = useCallback(() => {
+    paginateQuery.reset();
+    setDataset([]);
+    setHasMore(true);
+    setError('');
+  }, [paginateQuery.reset]);
+
   const reset = useCallback(async () => {
     try {
-      paginateQuery.reset();
-      setDataset([]);
-      setHasMore(true);
-      setError('');
+      resetPaginationState();
       await entryQuery.exec();
     } catch (err) {
       setError(props.entryQueryError);
     }
-  }, [props.entryQueryError, paginateQuery.reset, props.variables]);
+  }, [props.entryQueryError, props.variables, resetPaginationState]);
 
   useEffect(() => {
     if (!entryQuery.hasError) {
@@ -152,7 +157,7 @@ export const usePagination = <TResult, TDataset, TVariables>(
   }, []);
 
   useEffect(() => {
-    if (!hadFirstRender.current) {
+    if (!hadFirstRender.current || props.skipCurrentVariableUpdate) {
       hadFirstRender.current = true;
       return;
     }
@@ -164,6 +169,7 @@ export const usePagination = <TResult, TDataset, TVariables>(
     isPaginating: paginateQuery.isPaginating,
     isLoading: entryQuery.isLoading,
     paginate: paginateQuery.exec,
+    resetPaginationState,
     dataset,
     reset,
     error,

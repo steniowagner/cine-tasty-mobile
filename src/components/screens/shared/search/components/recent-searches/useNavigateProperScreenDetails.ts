@@ -32,7 +32,7 @@ const useNavigateProperScreenDetails = (
         case SchemaTypes.SearchType.PERSON:
           return handleNavigateFamousDetails(item);
         default:
-          return undefined;
+          return;
       }
     },
     [props.searchType],

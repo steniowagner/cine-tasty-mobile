@@ -33,12 +33,11 @@ const Search = (props: SearchStackProps) => {
     props.navigation,
   ]);
 
-  if (search.shouldShowRecentSearches) {
-    return <RecentSearches searchType={props.route.params.searchType} />;
-  }
-
   return (
     <>
+      {search.shouldShowRecentSearches && (
+        <RecentSearches searchType={props.route.params.searchType} />
+      )}
       {props.route.params.searchType === SchemaTypes.SearchType.PERSON && (
         <SearchFamous
           dataset={

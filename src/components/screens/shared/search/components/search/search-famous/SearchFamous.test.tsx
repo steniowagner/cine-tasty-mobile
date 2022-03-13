@@ -9,6 +9,8 @@ import {
 } from '@testing-library/react-native';
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
 
+jest.mock('@utils/storage');
+
 import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import {DEFAULT_ANIMATION_DURATION} from '@components/common/popup-advice/PopupAdvice';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
@@ -23,12 +25,16 @@ import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 
+import {STORAGE_SEARCH_SECTION} from '../../recent-searches/useRecentSearches';
 import {SEARCH_BY_QUERY_DELAY} from '../useSearchByQuery';
+
+const storage = require('@utils/storage');
 
 const mockNavigation = {
   navigate: jest.fn(),
 };
 
+const STORAGE_KEY = `${STORAGE_SEARCH_SECTION}:${SchemaTypes.SearchType.PERSON.toString()}`;
 const paginationError = Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR;
 const searchByTextError = Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR;
 const placeholder = Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER;
@@ -130,7 +136,194 @@ describe('<Search /> [Famous]', () => {
     seachInput: (api: RenderAPI) => api.queryByTestId('search-input'),
     headerCloseButton: (api: RenderAPI) =>
       api.queryByTestId('header-icon-button-wrapper-close'),
+    recentSearches: (api: RenderAPI) =>
+      api.queryByTestId('recent-searches-list'),
   };
+
+  describe('Recent-searches-list', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('should show the recent-searches-list on the first render', async () => {
+      const entryQueryResult = mockSearchFamous.searchFamousResolvers(
+        baseVariables(1),
+        mockSearchFamous.famousList(1),
+        true,
+      );
+      const resolvers = [
+        {
+          ...entryQueryResult.request,
+          ...entryQueryResult.result,
+        },
+      ];
+      const component = render(renderSearchFamous(resolvers));
+      expect(elements.recentSearches(component)).not.toBeNull();
+      await waitFor(() => {});
+    });
+
+    it('should not show the recent-searches-list when has some data to show', async () => {
+      const entryQueryResult = mockSearchFamous.searchFamousResolvers(
+        baseVariables(1),
+        mockSearchFamous.famousList(1),
+        true,
+      );
+      const resolvers = [
+        {
+          ...entryQueryResult.request,
+          ...entryQueryResult.result,
+        },
+      ];
+      const component = render(renderSearchFamous(resolvers));
+      fireEvent(
+        elements.seachInput(component),
+        'onChangeText',
+        SOME_FAMOUS_NAME,
+      );
+      act(() => {
+        timeTravel(SEARCH_BY_QUERY_DELAY);
+      });
+      expect(elements.recentSearches(component)).toBeNull();
+      await waitFor(() => {});
+    });
+
+    it('should persist the selected-item into the recent-searches when this selected-item is already persisted', async () => {});
+
+    it('should persist the selected-item into the recent-searches when there is no items persisted', async () => {
+      storage.get.mockImplementation(() => []);
+      const numberOfItems = randomPositiveNumber(10, 1);
+      const famousList = mockSearchFamous.famousList(numberOfItems);
+      const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
+      const entryQueryResult = mockSearchFamous.searchFamousResolvers(
+        baseVariables(1),
+        famousList,
+        true,
+      );
+      const resolvers = [
+        {
+          ...entryQueryResult.request,
+          ...entryQueryResult.result,
+        },
+      ];
+      const component = render(renderSearchFamous(resolvers));
+      fireEvent(
+        elements.seachInput(component),
+        'onChangeText',
+        SOME_FAMOUS_NAME,
+      );
+      act(() => {
+        timeTravel(SEARCH_BY_QUERY_DELAY);
+      });
+      await waitFor(() => {
+        expect(elements.famousList(component)).not.toBeNull();
+      });
+      expect(storage.set).toHaveBeenCalledTimes(0);
+      fireEvent.press(elements.famousListItems(component)[indexItemSelected]);
+      await waitFor(() => {
+        expect(storage.set).toHaveBeenCalledTimes(1);
+        expect(storage.set).toHaveBeenCalledWith(STORAGE_KEY, [
+          {
+            image: famousList[indexItemSelected].image,
+            title: famousList[indexItemSelected].title,
+            id: famousList[indexItemSelected].id,
+          },
+        ]);
+      });
+    });
+
+    it('should persist the selected-item into the recent-searches when there is some items already persisted', async () => {
+      const numberOfItems = randomPositiveNumber(10, 1);
+      const famousList = mockSearchFamous.famousList(numberOfItems);
+      const recentSearches = Array(randomPositiveNumber(3, 1))
+        .fill({})
+        .map((_, index) => ({
+          title: `$title-${index}`,
+          image: `image-${index}`,
+          id: `id-${index}`,
+        }));
+      storage.get.mockImplementation(() => recentSearches);
+      const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
+      const entryQueryResult = mockSearchFamous.searchFamousResolvers(
+        baseVariables(1),
+        famousList,
+        true,
+      );
+      const resolvers = [
+        {
+          ...entryQueryResult.request,
+          ...entryQueryResult.result,
+        },
+      ];
+      const component = render(renderSearchFamous(resolvers));
+      fireEvent(
+        elements.seachInput(component),
+        'onChangeText',
+        SOME_FAMOUS_NAME,
+      );
+      act(() => {
+        timeTravel(SEARCH_BY_QUERY_DELAY);
+      });
+      await waitFor(() => {
+        expect(elements.famousList(component)).not.toBeNull();
+      });
+      expect(storage.set).toHaveBeenCalledTimes(0);
+      fireEvent.press(elements.famousListItems(component)[indexItemSelected]);
+      await waitFor(() => {
+        expect(storage.set).toHaveBeenCalledTimes(1);
+        expect(storage.set).toHaveBeenCalledWith(STORAGE_KEY, [
+          {
+            image: famousList[indexItemSelected].image,
+            title: famousList[indexItemSelected].title,
+            id: famousList[indexItemSelected].id,
+          },
+          ...recentSearches,
+        ]);
+      });
+    });
+
+    it('should persist the selected-item into the recent-searches when the selected-item is already persisted', async () => {
+      const numberOfItems = randomPositiveNumber(10, 1);
+      const famousList = mockSearchFamous.famousList(numberOfItems);
+      storage.get.mockImplementation(() => recentSearches);
+      const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
+      const recentSearches = [famousList[indexItemSelected]];
+      const entryQueryResult = mockSearchFamous.searchFamousResolvers(
+        baseVariables(1),
+        famousList,
+        true,
+      );
+      const resolvers = [
+        {
+          ...entryQueryResult.request,
+          ...entryQueryResult.result,
+        },
+      ];
+      const component = render(renderSearchFamous(resolvers));
+      fireEvent(
+        elements.seachInput(component),
+        'onChangeText',
+        SOME_FAMOUS_NAME,
+      );
+      act(() => {
+        timeTravel(SEARCH_BY_QUERY_DELAY);
+      });
+      await waitFor(() => {
+        expect(elements.famousList(component)).not.toBeNull();
+      });
+      expect(storage.set).toHaveBeenCalledTimes(0);
+      fireEvent.press(elements.famousListItems(component)[indexItemSelected]);
+      await waitFor(() => {
+        expect(storage.set).toHaveBeenCalledTimes(1);
+        expect(storage.set).toHaveBeenCalledWith(STORAGE_KEY, [
+          {
+            image: famousList[indexItemSelected].image,
+            title: famousList[indexItemSelected].title,
+            id: famousList[indexItemSelected].id,
+          },
+        ]);
+      });
+    });
+  });
 
   describe('Entry Query - Success', () => {
     it('should only show the famous-list with no elements on the first render', async () => {
@@ -1016,6 +1209,9 @@ describe('<Search /> [Famous]', () => {
   });
 
   describe('Press items', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
     it('should navigate to the "Famous-detail"-screen when the user press some item on the "famous-list"', async () => {
       const navigate = jest.fn();
       const numberOfItems = randomPositiveNumber(10, 1);

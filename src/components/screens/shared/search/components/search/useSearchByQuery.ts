@@ -6,21 +6,22 @@ export const SEARCH_BY_QUERY_DELAY = 1000;
 
 type UseSearchByQueryProps = {
   setQuery: (queryString: string) => void;
+  resetSearch: () => void;
+  query: string;
 };
 
 const useSearchByQuery = (props: UseSearchByQueryProps) => {
   const debouncedSetQueryString = useRef(
-    debounce((queryStringTyped: string) => {
-      props.setQuery(queryStringTyped);
+    debounce(async (queryStringTyped: string) => {
+      if (!queryStringTyped && !props.query) {
+        props.resetSearch();
+      }
+      props.setQuery(queryStringTyped.trim());
     }, SEARCH_BY_QUERY_DELAY),
   ).current;
 
   const handleTypeSearchQuery = useCallback(
     (queryString: string) => {
-      console.log('>>> queryString:', queryString);
-      if (!queryString) {
-        return;
-      }
       debouncedSetQueryString(queryString);
     },
     [debouncedSetQueryString],

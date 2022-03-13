@@ -21,9 +21,6 @@ type UseSearchProps = {
 const useSearch = (props: UseSearchProps) => {
   const [query, setQuery] = useState('');
 
-  const searchByQuery = useSearchByQuery({
-    setQuery,
-  });
   const translations = useTranslations();
 
   const handleOnGetData = useCallback(
@@ -52,11 +49,18 @@ const useSearch = (props: UseSearchProps) => {
   >({
     entryQueryError: props.searchByTextError,
     paginationError: props.paginationError,
+    skipCurrentVariableUpdate: !query,
     query: getQuery(props.queryId),
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
     skipFirstRun: true,
     variables,
+  });
+
+  const searchByQuery = useSearchByQuery({
+    resetSearch: pagination.resetPaginationState,
+    setQuery,
+    query,
   });
 
   const shouldShowRecentSearches = useMemo(

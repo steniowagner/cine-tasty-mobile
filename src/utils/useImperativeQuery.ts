@@ -1,41 +1,101 @@
 import {useCallback, useState} from 'react';
-import {DocumentNode, useQuery} from '@apollo/client';
-import {FetchPolicy} from 'apollo-client';
+import {
+  ApolloQueryResult,
+  useApolloClient,
+  DocumentNode,
+  ApolloError,
+  FetchPolicy,
+} from '@apollo/client';
 
-type UseImperativeQueryProps = {
+type UseImperativeQueryProps<TResult> = {
+  onCompleted?: (result: ApolloQueryResult<TResult>) => void;
+  onError?: (error: ApolloError | Error) => void;
   fetchPolicy?: FetchPolicy;
   query: DocumentNode;
 };
 
-const useImperativeQuery = <TResult, TVariables>(
-  props: UseImperativeQueryProps,
-) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
+type QueryState = {
+  loading: boolean;
+  error: boolean;
+};
 
-  const query = useQuery<TResult, TVariables>(props.query, {
-    fetchPolicy: props.fetchPolicy || 'cache-first',
-  });
+const INITIAL_QUERY_STATE = {
+  loading: false,
+  error: false,
+};
+
+const useImperativeQuery = <TResult, TVariables>(
+  props: UseImperativeQueryProps<TResult>,
+) => {
+  const [queryState, setQueryState] = useState<QueryState>(INITIAL_QUERY_STATE);
+
+  const apolloClient = useApolloClient();
+
+  const setQueryLoadingState = useCallback(() => {
+    setQueryState({
+      loading: true,
+      error: false,
+    });
+  }, []);
+
+  const setQueryErrorState = useCallback(() => {
+    setQueryState({
+      loading: false,
+      error: true,
+    });
+  }, []);
+
+  const handleOnComplete = useCallback(
+    (result: ApolloQueryResult<TResult>) => {
+      setQueryState(INITIAL_QUERY_STATE);
+      if (!props.onCompleted) {
+        return;
+      }
+      props.onCompleted(result);
+    },
+    [props.onCompleted],
+  );
+
+  const handleOnError = useCallback(
+    (error: ApolloError | Error) => {
+      setQueryErrorState();
+      if (!props.onError) {
+        return;
+      }
+      props.onError(error);
+    },
+    [props.onError],
+  );
 
   const exec = useCallback(
     async (variables: TVariables) => {
       try {
-        setIsLoading(true);
-        setHasError(false);
-        const result = await query.refetch(variables);
-        setIsLoading(false);
-        return result;
-      } catch (err) {
-        setHasError(true);
-        setIsLoading(false);
+        setQueryLoadingState();
+        await apolloClient
+          .query<TResult>({
+            fetchPolicy: props.fetchPolicy,
+            query: props.query,
+            variables,
+          })
+          .then(handleOnComplete)
+          .catch(handleOnError);
+      } catch (error) {
+        setQueryErrorState();
       }
     },
-    [query.refetch],
+    [
+      setQueryLoadingState,
+      setQueryErrorState,
+      props.fetchPolicy,
+      handleOnComplete,
+      handleOnError,
+      props.query,
+    ],
   );
 
   return {
-    isLoading,
-    hasError,
+    isLoading: queryState.loading,
+    hasError: queryState.error,
     exec,
   };
 };
