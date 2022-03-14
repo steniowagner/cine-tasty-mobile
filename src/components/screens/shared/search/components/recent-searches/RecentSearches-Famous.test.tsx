@@ -91,14 +91,13 @@ describe('<RecentSearches /> - [Famous]', () => {
       expect(storage.get).toHaveBeenNthCalledWith(1, STORAGE_KEY, []);
     });
 
-    it("should show an empty-list when there's no items saved on the storage", () => {
+    it("should not show the recent-search-list when there's no items saved on the storage", () => {
       storage.get.mockImplementationOnce(() => []);
       const component = render(renderRecentSearchFamous());
       act(() => {
         jest.runAllTimers();
       });
-      expect(elements.recentSearchesList(component)).not.toBeNull();
-      expect(elements.recentSearchesItems(component).length).toEqual(0);
+      expect(elements.recentSearchesList(component)).toBeNull();
       expect(storage.get).toHaveBeenCalledTimes(2);
       expect(storage.get).toHaveBeenNthCalledWith(1, STORAGE_KEY, []);
     });

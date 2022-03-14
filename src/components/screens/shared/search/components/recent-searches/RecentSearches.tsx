@@ -15,6 +15,11 @@ const RecentSearches = (props: RecentSearchesProps) => {
     shouldSkipGetInitialRecentSearches: false,
     searchType: props.searchType,
   });
+
+  if (!recentSearches.items.length) {
+    return null;
+  }
+
   return (
     <Styles.Wrapper testID="recent-searches-list">
       <Styles.RecentText>{recentSearches.texts.searchRecent}</Styles.RecentText>

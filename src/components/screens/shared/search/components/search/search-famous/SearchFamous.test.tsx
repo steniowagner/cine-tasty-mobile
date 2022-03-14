@@ -145,23 +145,6 @@ describe('<Search /> [Famous]', () => {
       jest.clearAllMocks();
     });
 
-    it('should show the recent-searches-list on the first render', async () => {
-      const entryQueryResult = mockSearchFamous.searchFamousResolvers(
-        baseVariables(1),
-        mockSearchFamous.famousList(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderSearchFamous(resolvers));
-      expect(elements.recentSearches(component)).not.toBeNull();
-      await waitFor(() => {});
-    });
-
     it('should not show the recent-searches-list when has some data to show', async () => {
       const entryQueryResult = mockSearchFamous.searchFamousResolvers(
         baseVariables(1),
