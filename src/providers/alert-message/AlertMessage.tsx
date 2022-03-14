@@ -13,19 +13,17 @@ const AlertMessage = (props: AlertMessageProps) => {
     onFinishToShow: props.onFinishToShow,
   });
   return (
-    <Styles.Wrapper>
-      <Styles.MessageWrapper
-        testID="alert-message-wrapper"
-        style={[
-          {
-            opacity: popupAdvice.opacity,
-          },
-        ]}>
-        <Styles.Message testID="alert-message-text">
-          {props.message}
-        </Styles.Message>
-      </Styles.MessageWrapper>
-    </Styles.Wrapper>
+    <Styles.MessageWrapper
+      testID="alert-message-wrapper"
+      style={[
+        {
+          opacity: popupAdvice.opacity,
+        },
+      ]}>
+      <Styles.Message testID="alert-message-text">
+        {props.message}
+      </Styles.Message>
+    </Styles.MessageWrapper>
   );
 };
 

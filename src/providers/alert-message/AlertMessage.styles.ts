@@ -1,20 +1,30 @@
 import {Animated, Text, View} from 'react-native';
 import styled from 'styled-components/native';
 
+import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
+
 export const Wrapper = styled(View)`
   width: ${({theme}) => theme.metrics.width}px;
   height: 60%;
-  position: absolute;
   justify-content: center;
   align-items: center;
+  background-color: #00f;
 `;
 
 export const MessageWrapper = styled(Animated.View)`
-  margin-top: ${({theme}) => theme.metrics.getHeightFromDP('35%')}px;
   padding-horizontal: ${({theme}) => theme.metrics.extraLargeSize}px;
   padding-vertical: ${({theme}) => theme.metrics.largeSize}px;
   border-radius: ${({theme}) => theme.metrics.smallSize}px;
   background-color: ${({theme}) => theme.colors.popup};
+  position: absolute;
+  align-self: center;
+  top: ${({theme}) => {
+    const tabNavigatorHeight =
+      theme.metrics.getWidthFromDP('18%') +
+      (isEqualsOrLargestThanIphoneX() ? 30 : 0);
+    const headerHeight = 44;
+    return theme.metrics.height / 2 - tabNavigatorHeight + headerHeight;
+  }}px;
 `;
 
 export const Message = styled(Text)`
