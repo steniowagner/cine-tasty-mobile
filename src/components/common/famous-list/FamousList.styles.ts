@@ -6,10 +6,6 @@ export default StyleSheet.create({
   contentContainerStyle: {
     paddingTop: metrics.smallSize,
     paddingBottom: metrics.mediumSize,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-  style: {
-    alignSelf: 'center',
+    paddingLeft: metrics.getWidthFromDP('2.4%'),
   },
 });
