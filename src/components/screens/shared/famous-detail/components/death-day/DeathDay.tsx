@@ -1,7 +1,7 @@
 import React from 'react';
 
+import {useFormatDate} from '@utils/formatters/date/useFormatDate';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import { formatDate } from '@utils/formatters';
 import metrics from '@styles/metrics';
 
 import * as Styles from './DeathDay.styles';
@@ -10,13 +10,11 @@ type DeathInfoProps = {
   deathDate: string;
 };
 
-const DeathInfo = ({ deathDate }: DeathInfoProps) => {
-  const dateText = formatDate(deathDate);
-
+const DeathInfo = (props: DeathInfoProps) => {
+  const formatDate = useFormatDate();
+  const dateText = formatDate.format(props.deathDate);
   return (
-    <Styles.Wrapper
-      testID="death-day-info"
-    >
+    <Styles.Wrapper testID="death-day-wrapper">
       <Styles.IconWrapper>
         <SVGIcon
           size={metrics.extraLargeSize}
@@ -24,7 +22,7 @@ const DeathInfo = ({ deathDate }: DeathInfoProps) => {
           id="christianity"
         />
       </Styles.IconWrapper>
-      <Styles.DateText>{dateText}</Styles.DateText>
+      <Styles.DateText testID="death-day-text">{dateText}</Styles.DateText>
     </Styles.Wrapper>
   );
 };
