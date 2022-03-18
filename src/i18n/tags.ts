@@ -90,6 +90,8 @@ export namespace Translations {
     SEARCH_EMPTY_LIST_DESCRIPTION = 'translations:search:emptyList:description',
     SEARCH_EMPTY_LIST_SUGGESTION = 'translations:search:emptyList:suggestion',
     SEARCH_EMPTY_LIST_TITLE = 'translations:search:emptyList:title',
+
+    MONTHS = 'translations:months',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
