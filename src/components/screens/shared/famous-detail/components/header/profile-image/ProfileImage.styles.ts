@@ -1,7 +1,11 @@
 import {Animated} from 'react-native';
 import styled from 'styled-components/native';
 
+import metrics from '@styles/metrics';
+
 export const IMAGE_SQUARE_PERCENTAGE = '28%';
+
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 export const FallbackImageWrapper = styled(Animated.View)`
   width: ${({theme}) =>
