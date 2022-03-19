@@ -2,35 +2,26 @@ import React from 'react';
 
 import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import { useLoadListItemImage } from '@hooks';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './ProfileImage.styles';
-
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type ProfileImageProps = {
   profileImage: string;
 };
 
-const ProfileImage = ({ profileImage }: ProfileImageProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image: profileImage,
+const ProfileImage = (props: ProfileImageProps) => {
+  const loadListImage = useLoadListItemImage({
+    image: props.profileImage,
   });
-
   return (
     <>
       <TMDBImage
         imageType="profile"
-        onError={onError}
-        onLoad={onLoad}
-        image={profileImage}
+        onError={loadListImage.onError}
+        onLoad={loadListImage.onLoad}
+        image={props.profileImage}
         testID="profile-image"
         style={{
           width: metrics.getWidthFromDP(Styles.IMAGE_SQUARE_PERCENTAGE),
@@ -38,25 +29,24 @@ const ProfileImage = ({ profileImage }: ProfileImageProps) => {
           borderRadius: metrics.extraSmallSize,
         }}
       />
-      {isFallbackImageVisible && (
+      {loadListImage.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity,
+              opacity: loadListImage.opacity,
             },
-          ]}
-        >
+          ]}>
           {renderSVGIconConditionally({
-            condition: hasError,
+            condition: loadListImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
-              size: DEFAULT_ICON_SIZE,
+              size: Styles.DEFAULT_ICON_SIZE,
               id: 'image-off',
             },
             ifFalse: {
               colorThemeRef: 'fallbackImageIcon',
-              size: DEFAULT_ICON_SIZE,
+              size: Styles.DEFAULT_ICON_SIZE,
               id: 'account',
             },
           })}

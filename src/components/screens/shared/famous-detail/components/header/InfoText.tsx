@@ -6,7 +6,7 @@ import metrics from '@styles/metrics';
 export const DEFAULT_MARGIN_VERTICAL = metrics.smallSize;
 
 type InfoTextStyle = {
-  withCustomColor?: number;
+  withCustomColor?: boolean;
   marginBottom?: number;
   marginTop?: number;
 };

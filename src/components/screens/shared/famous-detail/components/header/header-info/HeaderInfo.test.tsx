@@ -153,6 +153,30 @@ describe('<HeaderInfo />', () => {
       await waitFor(() => {});
     });
 
+    it('should not show the "known-for-department" when the "knownForDepartment" is an empty string', async () => {
+      const component = render(
+        renderHeaderInfo({
+          knownForDepartment: '',
+          profileImage: PROFILE_IMAGE,
+          placeOfBirth: PLACE_OF_BIRTH,
+          birthDate: BIRTH_DATE,
+          isLoading: false,
+          name: NAME,
+        }),
+      );
+      act(() => {
+        timeTravel(ANIMATION_DURATION);
+      });
+      expect(elements.loadingHeaderPlaceholder(component)).toBeNull();
+      expect(elements.profileImage(component)).not.toBeNull();
+      expect(elements.name(component)).not.toBeNull();
+      expect(elements.textContentWrapper(component)).not.toBeNull();
+      expect(elements.birthday(component)).not.toBeNull();
+      expect(elements.placeOfBirth(component)).not.toBeNull();
+      expect(elements.knownForDepartment(component)).toBeNull();
+      await waitFor(() => {});
+    });
+
     it('should not show the "place-of-birth" and "birth-date" when the "placeOfBirth" and "birthDate" are empty strings', async () => {
       const component = render(
         renderHeaderInfo({
@@ -174,6 +198,30 @@ describe('<HeaderInfo />', () => {
       expect(elements.birthday(component)).toBeNull();
       expect(elements.placeOfBirth(component)).toBeNull();
       expect(elements.knownForDepartment(component)).not.toBeNull();
+      await waitFor(() => {});
+    });
+
+    it('should not show the "place-of-birth", "birth-date" and "known-for-department" when the "placeOfBirth", "birthDate" and "knownForDepartment are empty strings', async () => {
+      const component = render(
+        renderHeaderInfo({
+          profileImage: PROFILE_IMAGE,
+          knownForDepartment: '',
+          placeOfBirth: '',
+          birthDate: '',
+          isLoading: false,
+          name: NAME,
+        }),
+      );
+      act(() => {
+        timeTravel(ANIMATION_DURATION);
+      });
+      expect(elements.loadingHeaderPlaceholder(component)).toBeNull();
+      expect(elements.profileImage(component)).not.toBeNull();
+      expect(elements.name(component)).not.toBeNull();
+      expect(elements.textContentWrapper(component)).not.toBeNull();
+      expect(elements.birthday(component)).toBeNull();
+      expect(elements.placeOfBirth(component)).toBeNull();
+      expect(elements.knownForDepartment(component)).toBeNull();
       await waitFor(() => {});
     });
   });

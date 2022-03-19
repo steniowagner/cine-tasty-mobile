@@ -1,37 +1,38 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
 import metrics from '@styles/metrics';
 
-import { DEFAULT_MARGIN_VERTICAL } from '../InfoText';
 import * as Styles from './HeaderLoadingPlaceholder.styles';
+import {DEFAULT_MARGIN_VERTICAL} from '../InfoText';
 
-const HeaderLoadingPlaceholder = () => {
-  const TextLoadingPlaceholder = useCallback(
-    (withMarginVertical: boolean = false) => (
+const HeaderLoadingPlaceholder = () => (
+  <Styles.LoadingWrapper testID="loading-header-placeholder">
+    <Styles.TextLoadingWrapper>
       <LoadingPlaceholder
         style={{
-          marginVertical: withMarginVertical ? DEFAULT_MARGIN_VERTICAL : 0,
           width: metrics.getWidthFromDP('60%'),
           borderRadius: metrics.height,
           height: metrics.largeSize,
         }}
       />
-    ),
-    [],
-  );
-
-  return (
-    <Styles.LoadingWrapper
-      testID="loading-header-placeholder"
-    >
-      <Styles.TextLoadingWrapper>
-        {TextLoadingPlaceholder()}
-        {TextLoadingPlaceholder(true)}
-        {TextLoadingPlaceholder()}
-      </Styles.TextLoadingWrapper>
-    </Styles.LoadingWrapper>
-  );
-};
+      <LoadingPlaceholder
+        style={{
+          marginVertical: DEFAULT_MARGIN_VERTICAL,
+          width: metrics.getWidthFromDP('60%'),
+          borderRadius: metrics.height,
+          height: metrics.largeSize,
+        }}
+      />
+      <LoadingPlaceholder
+        style={{
+          width: metrics.getWidthFromDP('60%'),
+          borderRadius: metrics.height,
+          height: metrics.largeSize,
+        }}
+      />
+    </Styles.TextLoadingWrapper>
+  </Styles.LoadingWrapper>
+);
 
 export default HeaderLoadingPlaceholder;
