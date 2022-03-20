@@ -1,7 +1,8 @@
 import {TouchableOpacity, Animated} from 'react-native';
 import styled from 'styled-components/native';
 
-import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
+import {CONSTANTS} from '@utils';
 
 type WrapperStyleProps = {
   isFirst?: boolean;
@@ -30,3 +31,9 @@ export const FallbackImageWrapper = styled(Animated.View)`
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
   background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;
+
+export const TMDBImageStyle = {
+  width: '100%',
+  height: '100%',
+  borderRadius: metrics.extraSmallSize,
+};

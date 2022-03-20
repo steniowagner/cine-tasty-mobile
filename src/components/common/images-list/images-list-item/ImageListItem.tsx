@@ -2,7 +2,7 @@ import React from 'react';
 
 import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import { useLoadListItemImage } from '@hooks';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './ImageListItem.styles';
@@ -15,44 +15,32 @@ type ImageListItemProps = {
   image: string;
 };
 
-const ImageListItem = ({ onPress, isFirst, image }: ImageListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
+const ImageListItem = (props: ImageListItemProps) => {
+  const loadListItemImage = useLoadListItemImage({
+    image: props.image,
   });
-
   return (
     <Styles.Wrapper
-      onPress={onPress}
-      isFirst={isFirst}
-    >
+      testID="image-list-item-button"
+      onPress={props.onPress}
+      isFirst={props.isFirst}>
       <TMDBImage
+        onError={loadListItemImage.onError}
+        onLoad={loadListItemImage.onLoad}
+        style={Styles.TMDBImageStyle}
         imageType="profile"
-        onError={onError}
-        onLoad={onLoad}
-        image={image}
-        style={{
-          width: '100%',
-          height: '100%',
-          borderRadius: metrics.extraSmallSize,
-        }}
+        image={props.image}
       />
-      {isFallbackImageVisible && (
+      {loadListItemImage.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity,
+              opacity: loadListItemImage.opacity,
             },
-          ]}
-        >
+          ]}>
           {renderSVGIconConditionally({
-            condition: hasError,
+            condition: loadListItemImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,

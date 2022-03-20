@@ -1,38 +1,34 @@
 import React from 'react';
-import { FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
-import { ImagesGalleryNavigationProp } from '@components/screens/shared/images-gallery/routes/route-params-types';
-import { Routes } from '@routes/routes';
+import {ScrollView} from 'react-native';
 
 import ImageListItem from './images-list-item/ImageListItem';
+import useImagesList from './useImagesList';
 
 type ImagesListProps = {
   images: string[];
 };
 
-const ImagesList = ({ images }: ImagesListProps) => {
-  const navigation = useNavigation<ImagesGalleryNavigationProp>();
+const ImagesList = (props: ImagesListProps) => {
+  const imagesList = useImagesList({images: props.images});
+
+  if (!props.images || !props.images.length) {
+    return null;
+  }
 
   return (
-    <FlatList
-      renderItem={({ item, index }) => (
-        <ImageListItem
-          onPress={() => navigation.navigate(Routes.ImagesGallery.IMAGES_GALLERY, {
-            gallerySize: images.length,
-            indexSelected: index,
-            images,
-          })}
-          isFirst={index === 0}
-          image={item}
-        />
-      )}
-      keyExtractor={(image) => image}
+    <ScrollView
       showsHorizontalScrollIndicator={false}
       testID="images-list"
-      data={images}
-      horizontal
-    />
+      horizontal>
+      {props.images.map((image, index) => (
+        <ImageListItem
+          onPress={() => imagesList.onPressImage(index)}
+          isFirst={index === 0}
+          image={image}
+          key={image}
+        />
+      ))}
+    </ScrollView>
   );
 };
 
