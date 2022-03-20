@@ -91,6 +91,22 @@ export namespace Translations {
     SEARCH_EMPTY_LIST_SUGGESTION = 'translations:search:emptyList:suggestion',
     SEARCH_EMPTY_LIST_TITLE = 'translations:search:emptyList:title',
 
+    // LANGUAGE WARNING
+    LANGUAGE_WARNING_FAMOUS_POSITIVE_ACTION = 'translations:languageWarning:famous:positiveAction',
+    LANGUAGE_WARNING_FAMOUS_TITLE = 'translations:languageWarning:famous:title',
+    LANGUAGE_WARNING_FAMOUS_DESCRIPTION = 'translations:languageWarning:famous:description',
+
+    // FAMOUS-DETAIL
+    FAMOUS_DETAIL_READ_LESS = 'translations:famousDetail:readLess',
+    FAMOUS_DETAIL_READ_MORE = 'translations:famousDetail:readMore',
+    FAMOUS_DETAIL_BIOGRAPHY = 'translations:famousDetail:biography',
+    FAMOUS_DETAIL_IMAGES = 'translations:famousDetail:images',
+    FAMOUS_DETAIL_CAST_MOVIES = 'translations:famousDetail:castMovies',
+    FAMOUS_DETAIL_CAST_TV = 'translations:famousDetail:castTV',
+    FAMOUS_DETAIL_ERROR_DESCRIPTION = 'translations:famousDetail:errorDescription',
+    FAMOUS_DETAIL_ERROR_SUGGESTION = 'translations:famousDetail:errorSuggestion',
+    FAMOUS_DETAIL_ERROR_TITLE = 'translations:famousDetail:errorTitle',
+
     MONTHS = 'translations:months',
   }
 }
@@ -161,19 +177,6 @@ export const TABS = 'translations:tabs';
 export const TABS_HOME = 'translations:tabs:home';
 export const TABS_NEWS = 'translations:tabs:news';
 export const TABS_FAMOUS = 'translations:tabs:famous';
-
-// FAMOUS-DETAIL
-export const FAMOUS_DETAIL_READ_LESS = 'translations:famousDetail:readLess';
-export const FAMOUS_DETAIL_READ_MORE = 'translations:famousDetail:readMore';
-export const FAMOUS_DETAIL_BIOGRAPGY = 'translations:famousDetail:biography';
-export const FAMOUS_DETAIL_IMAGES = 'translations:famousDetail:images';
-export const FAMOUS_DETAIL_CAST_MOVIES = 'translations:famousDetail:castMovies';
-export const FAMOUS_DETAIL_CAST_TV = 'translations:famousDetail:castTV';
-export const FAMOUS_DETAIL_ERROR_DESCRIPTION =
-  'translations:famousDetail:errorDescription';
-export const FAMOUS_DETAIL_ERROR_SUGGESTION =
-  'translations:famousDetail:errorSuggestion';
-export const FAMOUS_DETAIL_ERROR_TITLE = 'translations:famousDetail:errorTitle';
 
 // HOME
 export const HOME_LEARN_MORE = 'translations:home:learMoreButtonText';
@@ -349,10 +352,3 @@ export const LANGUAGE_WARNING_MEDIA_TITLE =
   'translations:languageWarning:media:title';
 export const LANGUAGE_WARNING_MEDIA_DESCRIPTION =
   'translations:languageWarning:media:description';
-
-export const LANGUAGE_WARNING_FAMOUS_POSITIVE_ACTION =
-  'translations:languageWarning:famous:positiveAction';
-export const LANGUAGE_WARNING_FAMOUS_TITLE =
-  'translations:languageWarning:famous:title';
-export const LANGUAGE_WARNING_FAMOUS_DESCRIPTION =
-  'translations:languageWarning:famous:description';

@@ -19,14 +19,19 @@ type TMDBImageQualityProviderProps = {
   children: JSX.Element;
 };
 
-export const TMDBImageQualityProvider = ({ children }: TMDBImageQualityProviderProps) => {
-  const [imagesQualities, setImagesQualities] = useState<Types.ImageQuailties | {}>({});
+export const TMDBImageQualityProvider = ({
+  children,
+}: TMDBImageQualityProviderProps) => {
+  const [imagesQualities, setImagesQualities] = useState<
+    Types.ImageQuailties | {}
+  >({});
 
-  const { screenClassification } = useClassifyDeviceScreen();
+  const {screenClassification} = useClassifyDeviceScreen();
 
   const handleSetImagesQualities = useCallback(async () => {
-    const qualities = await getQualitiesBasedScreenClassification(screenClassification);
-
+    const qualities = await getQualitiesBasedScreenClassification(
+      screenClassification,
+    );
     setImagesQualities(qualities);
   }, [screenClassification]);
 
@@ -37,8 +42,7 @@ export const TMDBImageQualityProvider = ({ children }: TMDBImageQualityProviderP
   return (
     <TMDBImageQualityContext.Provider
       // @ts-ignore
-      value={{ ...imagesQualities }}
-    >
+      value={{...imagesQualities}}>
       {children}
     </TMDBImageQualityContext.Provider>
   );

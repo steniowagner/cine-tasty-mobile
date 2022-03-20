@@ -1,6 +1,6 @@
 import 'styled-components/native';
 
-import {ThemeId} from '../types';
+import {ThemeId} from './index'
 
 declare module 'styled-components/native' {
   export type Colors = {
@@ -41,9 +41,12 @@ declare module 'styled-components/native' {
     width: number;
     height: number;
   };
-  export interface DefaultTheme {
+
+  interface Theme {
     id: ThemeId;
     metrics: Metrics;
     colors: Colors;
   }
+
+  interface DefaultTheme extends Theme {}
 }

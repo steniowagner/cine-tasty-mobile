@@ -1,10 +1,10 @@
 import {useCallback, useEffect, useState, useMemo} from 'react';
 
 import * as SchemaTypes from '@schema-types';
-import * as storage from '@utils/storage';
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import * as Types from '@local-types';
+import {storage} from '@utils';
 
 import useNavigateProperScreenDetails from './useNavigateProperScreenDetails';
 

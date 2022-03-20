@@ -2,7 +2,7 @@ import {TouchableOpacity, Animated, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS} from '@utils';
 
 type WrapperStyleProps = {
   isFirst: boolean;

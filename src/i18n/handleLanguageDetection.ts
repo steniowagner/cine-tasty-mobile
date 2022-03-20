@@ -1,7 +1,6 @@
 import {Platform, NativeModules} from 'react-native';
 
-import * as storage from '@utils/storage';
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS, storage} from '@utils';
 
 // Android format: x_Y
 // iOS format: x-Y

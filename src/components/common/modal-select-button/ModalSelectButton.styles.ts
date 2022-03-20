@@ -1,7 +1,7 @@
 import {TouchableOpacity, Text} from 'react-native';
 import styled from 'styled-components/native';
 
-import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
+import {isEqualsOrLargestThanIphoneX} from '@utils';
 
 type SelectButtonStyleProps = {
   borderBottomRightRadius?: number;
@@ -21,6 +21,7 @@ export const SelectButton = styled(TouchableOpacity)<SelectButtonStyleProps>`
     borderBottomRightRadius || 0}px;
   border-bottom-left-radius: ${({borderBottomLeftRadius}) =>
     borderBottomLeftRadius || 0}px;
+  opacity: ${({disabled}) => (disabled ? 0.5 : 1)};
 `;
 
 export const SelectButtonText = styled(Text)`

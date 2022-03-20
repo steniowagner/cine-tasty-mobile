@@ -1,7 +1,7 @@
 import {Animated, Text, View} from 'react-native';
 import styled from 'styled-components/native';
 
-import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
+import {isEqualsOrLargestThanIphoneX} from '@utils';
 
 export const Wrapper = styled(View)`
   width: ${({theme}) => theme.metrics.width}px;

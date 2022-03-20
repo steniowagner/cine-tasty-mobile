@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => (
   <>
     <Tab.Navigator
-      initialRouteName={Routes.Tabs.HOME}
+      initialRouteName={Routes.Tabs.FAMOUS}
       tabBar={(props: BottomTabBarProps) => (
         <TabNavigator
           // eslint-disable-next-line react/jsx-props-no-spreading
@@ -28,7 +28,7 @@ const Tabs = () => (
       screenOptions={{
         headerShown: false,
       }}>
-      <Tab.Screen component={HomeStack} name={Routes.Tabs.HOME} />
+      {/**<Tab.Screen component={HomeStack} name={Routes.Tabs.HOME} /> */}
       <Tab.Screen component={FamousStack} name={Routes.Tabs.FAMOUS} />
       <Tab.Screen component={QuizStack} name={Routes.Tabs.QUIZ} />
       <Tab.Screen component={NewsStack} name={Routes.Tabs.NEWS} />

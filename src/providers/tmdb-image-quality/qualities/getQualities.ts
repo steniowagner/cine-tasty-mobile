@@ -1,5 +1,4 @@
-import * as storage from '@utils/storage';
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
 
 import xsmall from './xsmall';

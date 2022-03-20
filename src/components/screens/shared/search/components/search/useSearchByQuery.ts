@@ -1,6 +1,6 @@
 import {useCallback, useRef} from 'react';
 
-import debounce from '@utils/debounce';
+import {debounce} from '@utils';
 
 export const SEARCH_BY_QUERY_DELAY = 1000;
 

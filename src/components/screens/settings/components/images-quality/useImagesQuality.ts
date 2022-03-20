@@ -2,9 +2,8 @@ import {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import RNRestart from 'react-native-restart';
 
-import * as storage from '@utils/storage';
 import * as TRANSLATIONS from '@i18n/tags';
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
 
 export const qualities: Types.ImageQualities[] = [

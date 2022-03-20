@@ -12,24 +12,13 @@ type ExpansibleTextSectionProps = {
   text: string;
 };
 
-const ExpansibleTextSection = ({
-  sectionTitle,
-  isLoading,
-  text,
-}: ExpansibleTextSectionProps) => (
-  <Section
-    title={sectionTitle}
-    noMarginBottom
-  >
-    {isLoading ? (
+const ExpansibleTextSection = (props: ExpansibleTextSectionProps) => (
+  <Section title={props.sectionTitle} noMarginBottom>
+    {props.isLoading ? (
       <LoadingExpansibleTextSection />
     ) : (
-      <Styles.MediaItemDescriptionWrapper
-        testID="media-item-description-wrapper"
-      >
-        <MediaItemDescription
-          description={text}
-        />
+      <Styles.MediaItemDescriptionWrapper testID="media-item-description-wrapper">
+        <MediaItemDescription description={props.text} />
       </Styles.MediaItemDescriptionWrapper>
     )}
   </Section>

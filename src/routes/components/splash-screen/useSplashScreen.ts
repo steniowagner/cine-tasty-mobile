@@ -2,9 +2,8 @@ import {useCallback, useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {DefaultTheme} from 'styled-components/native';
 
-import * as storage from '@utils/storage';
 import {useThemeProvider} from '@src/providers/theme/Theme';
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
 
 type UseSplashScreenProps = {

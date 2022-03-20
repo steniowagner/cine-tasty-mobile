@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import {Text, View} from 'react-native';
 
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS} from '@utils';
 
 export const MediaInfoWrapper = styled(View)`
   width: 100%;

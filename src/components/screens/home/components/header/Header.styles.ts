@@ -2,8 +2,7 @@ import {TouchableOpacity, Platform, Animated} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 
-import isEqualsOrLargestThanIphoneX from '@utils/is-equals-or-largest-than-iphonex/isEqualsOrLargestThanIphoneX';
-import CONSTANTS from '@utils/constants';
+import {isEqualsOrLargestThanIphoneX, CONSTANTS} from '@utils';
 
 export const SmokeShadow = styled(LinearGradient).attrs(({theme}) => ({
   colors: [

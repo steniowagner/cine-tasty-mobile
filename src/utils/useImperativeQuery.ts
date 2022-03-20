@@ -24,7 +24,7 @@ const INITIAL_QUERY_STATE = {
   error: false,
 };
 
-const useImperativeQuery = <TResult, TVariables>(
+export const useImperativeQuery = <TResult, TVariables>(
   props: UseImperativeQueryProps<TResult>,
 ) => {
   const [queryState, setQueryState] = useState<QueryState>(INITIAL_QUERY_STATE);
@@ -99,5 +99,3 @@ const useImperativeQuery = <TResult, TVariables>(
     exec,
   };
 };
-
-export default useImperativeQuery;

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {useFormatDate} from '@utils/formatters/date/useFormatDate';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import metrics from '@styles/metrics';
+import {useFormatDate} from '@utils';
 
 import * as Styles from './DeathDay.styles';
 

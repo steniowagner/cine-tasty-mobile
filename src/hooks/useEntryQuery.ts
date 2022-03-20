@@ -2,7 +2,7 @@ import {useCallback} from 'react';
 import {DocumentNode} from '@apollo/client';
 import {ApolloQueryResult, FetchPolicy} from '@apollo/client';
 
-import useImperativeQuery from '@utils/useImperativeQuery';
+import {useImperativeQuery} from '@utils';
 
 type UseEntryQueryProps<TResult, TVariables> = {
   onCompleted: (result: ApolloQueryResult<TResult>) => void;

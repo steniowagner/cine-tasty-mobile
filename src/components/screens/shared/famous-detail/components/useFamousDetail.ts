@@ -1,54 +1,105 @@
-/* eslint-disable camelcase */
-import {useMemo} from 'react';
-import {useTranslation} from 'react-i18next';
+import {useCallback, useEffect, useMemo, useRef} from 'react';
 import {useQuery} from '@apollo/client';
+import {Animated} from 'react-native';
 
-import getRandomImageFromDataset from '@utils/getRandomImageFromDataset';
-import {useGetCurrentISO6391Language} from '@hooks';
 import {GET_FAMOUS_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
+import {showLanguageAlert} from '@utils';
+import {Translations} from '@i18n/tags';
+import {useTranslations} from '@hooks';
 
 type UseFamousDetailProps = {
   id: number;
 };
 
-const useFamousDetail = ({id}: UseFamousDetailProps) => {
-  const {currentISO6391Language} = useGetCurrentISO6391Language();
+const useFamousDetail = (props: UseFamousDetailProps) => {
+  const scrollViewOffset = useRef(new Animated.Value(0)).current;
 
-  const language =
-    currentISO6391Language === SchemaTypes.ISO6391Language.SV
-      ? SchemaTypes.ISO6391Language.EN
-      : currentISO6391Language;
-
-  const {data, error, loading} = useQuery<
+  const translations = useTranslations();
+  const query = useQuery<
     SchemaTypes.GetFamousDetail,
     SchemaTypes.GetFamousDetailVariables
   >(GET_FAMOUS_DETAIL, {
-    variables: {
-      language,
-      id,
-    },
     fetchPolicy: 'cache-first',
+    variables: {
+      language: translations.language,
+      id: props.id,
+    },
   });
 
-  const {t} = useTranslation();
+  const getRandomImage = useCallback(() => {
+    const hasImages =
+      query.data &&
+      query.data?.person.images &&
+      !!query.data?.person.images.length;
+    if (!hasImages) {
+      return '';
+    }
+    const randomIndex = Math.floor(
+      Math.random() * Math.floor(query.data?.person.images.length),
+    );
+    return query.data?.person.images[randomIndex];
+  }, [query.data?.person.images]);
 
   const backgroundImage = useMemo((): string => {
-    if (data && data.person) {
-      const imageSelected = getRandomImageFromDataset(data.person.images, '');
-
-      return imageSelected;
+    if (!query.data || !query.data?.person) {
+      return '';
     }
+    return getRandomImage();
+  }, [query.data]);
 
-    return '';
-  }, [data]);
+  const handleShowLanguageAlert = useCallback(() => {
+    const shouldShowLanguageAlert =
+      !query.loading && query.data?.person && !query.data?.person.biography;
+    if (!shouldShowLanguageAlert) {
+      return;
+    }
+    showLanguageAlert({
+      description: translations.translate(
+        Translations.Tags.LANGUAGE_WARNING_FAMOUS_DESCRIPTION,
+      ),
+      positiveActionTitle: translations.translate(
+        Translations.Tags.LANGUAGE_WARNING_FAMOUS_POSITIVE_ACTION,
+      ),
+      title: translations.translate(
+        Translations.Tags.LANGUAGE_WARNING_FAMOUS_TITLE,
+      ),
+      onPressPositiveAction: () => {},
+      singleAction: true,
+    });
+  }, [query.loading, query.data]);
+
+  const texts = useMemo(
+    () => ({
+      advise: {
+        description: translations.translate(
+          Translations.Tags.FAMOUS_DETAIL_ERROR_DESCRIPTION,
+        ),
+        suggestion: translations.translate(
+          Translations.Tags.FAMOUS_DETAIL_ERROR_SUGGESTION,
+        ),
+        title: translations.translate(
+          Translations.Tags.FAMOUS_DETAIL_ERROR_TITLE,
+        ),
+      },
+      biography: translations.translate(
+        Translations.Tags.FAMOUS_DETAIL_BIOGRAPHY,
+      ),
+    }),
+    [translations.language],
+  );
+
+  useEffect(() => {
+    handleShowLanguageAlert();
+  }, [query.data]);
 
   return {
-    famous: data?.person,
-    isLoading: loading,
-    hasError: !!error,
+    famous: query.data?.person,
+    isLoading: query.loading,
+    hasError: !!query.error,
+    scrollViewOffset,
     backgroundImage,
-    t,
+    texts,
   };
 };
 

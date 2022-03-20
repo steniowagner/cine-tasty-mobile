@@ -2,7 +2,7 @@ import i18next, {Module} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
 import handleLanguageDetection from './handleLanguageDetection';
-import CONSTANTS from '../utils/constants';
+import {CONSTANTS} from '../utils';
 
 import ptBR from './locale/ptBR';
 import es from './locale/es';

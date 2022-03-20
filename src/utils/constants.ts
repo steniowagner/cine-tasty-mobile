@@ -19,7 +19,4 @@ const VALUES = {
   DEFAULT_SEARCH_COLOR: '#4d4d4d',
 };
 
-export default {
-  VALUES,
-  KEYS,
-};
+export const CONSTANTS = {VALUES, KEYS};

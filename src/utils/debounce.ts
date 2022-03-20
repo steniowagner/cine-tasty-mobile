@@ -1,4 +1,7 @@
-const debounce = <F extends (...args: any[]) => any>(func: F, delay: number) => {
+export const debounce = <F extends (...args: any[]) => any>(
+  func: F,
+  delay: number,
+) => {
   let timeout: ReturnType<typeof setTimeout> | null = null;
 
   const debounced = (...args: Parameters<F>) => {
@@ -12,5 +15,3 @@ const debounce = <F extends (...args: any[]) => any>(func: F, delay: number) => 
 
   return debounced as (...args: Parameters<F>) => ReturnType<F>;
 };
-
-export default debounce;

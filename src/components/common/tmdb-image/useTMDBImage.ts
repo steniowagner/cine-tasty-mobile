@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 
-import { useTMDBImageQuality } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import CONSTANTS from '@utils/constants';
+import {useTMDBImageQuality} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {CONSTANTS} from '@utils';
 import * as Types from '@local-types';
 
 type UseTMDBImageProps = {
@@ -12,7 +12,7 @@ type UseTMDBImageProps = {
 
 const THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
 
-const useTMDBImage = ({ isThumbnail, imageType, image }: UseTMDBImageProps) => {
+const useTMDBImage = ({isThumbnail, imageType, image}: UseTMDBImageProps) => {
   const imagesQualities = useTMDBImageQuality();
 
   const uri = useMemo(() => {

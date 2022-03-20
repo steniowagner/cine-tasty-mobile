@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS} from '@utils';
 
 type ExtraTagStyleProp = {
   isExtra: boolean;

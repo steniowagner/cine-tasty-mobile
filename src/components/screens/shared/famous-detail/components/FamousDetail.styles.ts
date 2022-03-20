@@ -38,7 +38,3 @@ export const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
 export const BiographySectionWrapper = styled(View)`
   margin-top: ${({theme}) => theme.metrics.getWidthFromDP('5%')}px;
 `;
-
-export const ImagesSectionWrapper = styled(View)`
-  margin-bottom: ${({theme}) => theme.metrics.extraLargeSize}px;
-`;

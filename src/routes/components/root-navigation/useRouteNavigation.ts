@@ -1,7 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 
-import * as storage from '@utils/storage';
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS, storage} from '@utils';
 
 type CurrentStack = 'checking-initial-screen' | 'onboarding' | 'tabs';
 

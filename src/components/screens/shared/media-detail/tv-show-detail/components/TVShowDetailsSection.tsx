@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import { formatDate } from '@utils/formatters';
+import {formatDate} from '@utils';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
@@ -12,8 +12,8 @@ type TVShowDetailsSectionProps = {
   tvShow: SchemaTypes.TVShowDetail_tvShow;
 };
 
-const TVShowDetailsSection = ({ tvShow }: TVShowDetailsSectionProps) => {
-  const { t } = useTranslation();
+const TVShowDetailsSection = ({tvShow}: TVShowDetailsSectionProps) => {
+  const {t} = useTranslation();
 
   return (
     <GeneralInfo
@@ -28,7 +28,9 @@ const TVShowDetailsSection = ({ tvShow }: TVShowDetailsSectionProps) => {
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_EPISODES),
-          value: tvShow.numberOfEpisodes ? String(tvShow.numberOfEpisodes) : '-',
+          value: tvShow.numberOfEpisodes
+            ? String(tvShow.numberOfEpisodes)
+            : '-',
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NUMBER_OF_SEASONS),
@@ -36,7 +38,9 @@ const TVShowDetailsSection = ({ tvShow }: TVShowDetailsSectionProps) => {
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_EPISODE_RUNTIME),
-          value: tvShow.episodeRunTime.length ? tvShow.episodeRunTime.join(', ') : '-',
+          value: tvShow.episodeRunTime.length
+            ? tvShow.episodeRunTime.join(', ')
+            : '-',
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_COUNTRY),

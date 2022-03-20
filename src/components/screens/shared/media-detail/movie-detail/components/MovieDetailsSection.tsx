@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import { formatCurrency, formatDate } from '@utils/formatters';
+import {formatCurrency, formatDate} from '@utils';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
@@ -12,8 +12,8 @@ type DetailsSection = {
   movie: SchemaTypes.MovieDetail_movie;
 };
 
-const DetailsSection = ({ movie }: DetailsSection) => {
-  const { t } = useTranslation();
+const DetailsSection = ({movie}: DetailsSection) => {
+  const {t} = useTranslation();
 
   return (
     <GeneralInfo
@@ -42,7 +42,9 @@ const DetailsSection = ({ movie }: DetailsSection) => {
         },
         {
           title: t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES),
-          value: movie.spokenLanguages.length ? movie.spokenLanguages.join(', ') : '-',
+          value: movie.spokenLanguages.length
+            ? movie.spokenLanguages.join(', ')
+            : '-',
         },
       ]}
     />

@@ -1,9 +1,7 @@
-import {
-  useCallback, useState, useEffect, useRef,
-} from 'react';
-import { ApolloQueryResult } from 'apollo-client';
+import {useCallback, useState, useEffect, useRef} from 'react';
+import {ApolloQueryResult} from 'apollo-client';
 
-import debounce from '@utils/debounce';
+import {debounce} from '@utils';
 
 export const PAGINATION_DELAY = 1000;
 
@@ -42,7 +40,7 @@ const useQueryWithPagination = <TData, TVariables>({
           page: pageSelected,
         };
 
-        const { data } = await execQuery(queryVariables);
+        const {data} = await execQuery(queryVariables);
 
         const hasMore = onGetData(data);
 

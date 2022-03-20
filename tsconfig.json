@@ -18,7 +18,7 @@
       "@mocks/*": ["../__mocks__/*"],
       "@routes/*": ["./routes/*"],
       "@styles/*": ["./styles/*"],
-      "@utils/*": ["./utils/*"],
+      "@utils": ["./utils/index"],
       "@i18n/*": ["./i18n/*"],
       "@src/*": ["./*"]
     }

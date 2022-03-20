@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import CONSTANTS from '../constants';
-import * as storage from '.';
+import {CONSTANTS} from '../constants';
+import {storage} from './storage';
 
 const KEY = 'MY_KEY';
 const STORAGE_KEY = `${CONSTANTS.KEYS.APP_STORAGE_KEY}:${KEY}`;

@@ -1,7 +1,7 @@
 import {TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
 
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS} from '@utils';
 
 export const VideoListItemWrapper = styled(TouchableOpacity)`
   width: ${({theme}) => theme.metrics.getWidthFromDP('48%')}px;

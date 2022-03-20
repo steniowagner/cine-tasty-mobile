@@ -76,10 +76,6 @@ const production = [
     url: 'https://www.npmjs.com/package/react-i18next',
   },
   {
-    title: 'react-native-appearance',
-    url: 'https://www.npmjs.com/package/react-native-appearance',
-  },
-  {
     title: 'react-native-dotenv',
     url: 'https://www.npmjs.com/package/react-native-dotenv',
   },
