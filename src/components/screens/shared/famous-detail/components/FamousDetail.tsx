@@ -3,13 +3,13 @@ import {StatusBar, Animated} from 'react-native';
 import {withTheme} from 'styled-components/native';
 
 import ExpansibleTextSection from '@components/common/expansible-text-section/ExpansibleTextSection';
+import MediaHorizontalList from '@components/common/media-horizontal-list/MediaHorizontalList';
 import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
 import ImagesList from '@components/common/images-list/ImagesList';
 import {useGetCurrentTheme, useStatusBarStyle} from '@hooks';
 import Advise from '@components/common/advise/Advise';
 import metrics from '@styles/metrics';
 
-import useRenderFamousDetailSections from './useRenderFamousDetailSections';
 import HeaderBackButton from '../../header-back-button/HeaderBackButton';
 import {FamousDetailStackProps} from '../routes/route-params-types';
 import HeaderInfo from './header/header-info/HeaderInfo';
@@ -19,8 +19,6 @@ import DeathDay from './death-day/DeathDay';
 
 const FamousDetail = (props: FamousDetailStackProps) => {
   const {currentTheme} = useGetCurrentTheme({theme: props.theme});
-  const {renderTVShowCastSection, renderMovieCastSection, renderImagesSection} =
-    useRenderFamousDetailSections({navigation: props.navigation});
   const {barStyle} = useStatusBarStyle({theme: props.theme});
 
   useLayoutEffect(() => {
@@ -110,10 +108,20 @@ const FamousDetail = (props: FamousDetailStackProps) => {
             {!!famousDetail.famous.images && (
               <ImagesList images={famousDetail.famous.images} />
             )}
-            {!!famousDetail.famous.moviesCast &&
-              renderMovieCastSection(famousDetail.famous.moviesCast)}
-            {!!famousDetail.famous.tvCast &&
-              renderTVShowCastSection(famousDetail.famous.tvCast)}
+            {!!famousDetail.famous.moviesCast && (
+              <MediaHorizontalList
+                title={famousDetail.texts.castMoviesSection}
+                dataset={famousDetail.famous.moviesCast}
+                type="MOVIE"
+              />
+            )}
+            {!!famousDetail.famous.tvCast && (
+              <MediaHorizontalList
+                title={famousDetail.texts.castTvShowSection}
+                dataset={famousDetail.famous.tvCast}
+                type="TV_SHOW"
+              />
+            )}
           </>
         )}
       </Animated.ScrollView>

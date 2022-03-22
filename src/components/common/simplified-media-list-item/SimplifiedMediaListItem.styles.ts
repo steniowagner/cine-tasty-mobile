@@ -12,21 +12,10 @@ type DefaultTextStyleProps = {
   withMarginLeft?: boolean;
 };
 
-type WrapperStyleProps = {
-  isFirst?: boolean;
-};
-
-export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
+export const Wrapper = styled(TouchableOpacity)`
   width: ${({theme}) => theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_WIDTH)}px;
   height: ${({theme}) =>
     theme.metrics.getWidthFromDP(WRAPPER_DEFAULT_HEIGHT)}px;
-  margin-left: ${({isFirst, theme}) => {
-    if (isFirst) {
-      return theme.metrics.largeSize;
-    }
-
-    return 0;
-  }}px;
   margin-right: ${({theme}) => theme.metrics.largeSize}px;
 `;
 

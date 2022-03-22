@@ -43,3 +43,12 @@ export const trendingMovies = {
   },
   __typename: 'TrendingMovies',
 };
+
+export const castMovies = (size: number) => Array(size).fill({}).map((_, index) => ({
+  __typename: 'CastMovie',
+  voteAverage: index,
+  posterPath: `POSTER_PATH_${index}`,
+  voteCount: index,
+  title: `TITLE_${index}`,
+  id: index,
+}));

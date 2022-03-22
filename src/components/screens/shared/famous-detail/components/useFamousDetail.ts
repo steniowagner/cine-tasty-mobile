@@ -69,8 +69,14 @@ const useFamousDetail = (props: UseFamousDetailProps) => {
     });
   }, [query.loading, query.data]);
 
-  const texts = useMemo(
-    () => ({
+  const texts = useMemo(() => {
+    const castMoviesSection = translations.translate(
+      Translations.Tags.FAMOUS_DETAIL_CAST_MOVIES,
+    );
+    const castTvShowSection = translations.translate(
+      Translations.Tags.FAMOUS_DETAIL_CAST_TV,
+    );
+    return {
       advise: {
         description: translations.translate(
           Translations.Tags.FAMOUS_DETAIL_ERROR_DESCRIPTION,
@@ -85,9 +91,14 @@ const useFamousDetail = (props: UseFamousDetailProps) => {
       biography: translations.translate(
         Translations.Tags.FAMOUS_DETAIL_BIOGRAPHY,
       ),
-    }),
-    [translations.language],
-  );
+      castMoviesSection: query.data?.person.moviesCast.length
+        ? castMoviesSection
+        : `${castMoviesSection} (0)`,
+      castTvShowSection: query.data?.person.tvCast.length
+        ? castTvShowSection
+        : `${castTvShowSection} (0)`,
+    };
+  }, [translations.language, query.data]);
 
   useEffect(() => {
     handleShowLanguageAlert();

@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 
 import ImageListItem from './images-list-item/ImageListItem';
+import * as Styles from './ImagesList.styles';
 import useImagesList from './useImagesList';
 
 type ImagesListProps = {
@@ -16,19 +17,18 @@ const ImagesList = (props: ImagesListProps) => {
   }
 
   return (
-    <ScrollView
+    <Styles.Wrapper
       showsHorizontalScrollIndicator={false}
       testID="images-list"
       horizontal>
       {props.images.map((image, index) => (
         <ImageListItem
           onPress={() => imagesList.onPressImage(index)}
-          isFirst={index === 0}
           image={image}
           key={image}
         />
       ))}
-    </ScrollView>
+    </Styles.Wrapper>
   );
 };
 

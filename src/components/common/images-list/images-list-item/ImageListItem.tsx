@@ -11,7 +11,6 @@ const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
 type ImageListItemProps = {
   onPress: () => void;
-  isFirst: boolean;
   image: string;
 };
 
@@ -20,10 +19,7 @@ const ImageListItem = (props: ImageListItemProps) => {
     image: props.image,
   });
   return (
-    <Styles.Wrapper
-      testID="image-list-item-button"
-      onPress={props.onPress}
-      isFirst={props.isFirst}>
+    <Styles.Wrapper testID="image-list-item-button" onPress={props.onPress}>
       <TMDBImage
         onError={loadListItemImage.onError}
         onLoad={loadListItemImage.onLoad}

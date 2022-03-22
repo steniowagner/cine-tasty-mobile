@@ -111,3 +111,12 @@ export const getMockedTVShowSeason = (numberOfEpisodes: number) => ({
     })),
   __typename: 'TVShowSeason',
 });
+
+export const castTVshows = (size: number) => Array(size).fill({}).map((_, index) => ({
+  __typename: 'CastTVShow',
+  voteAverage: index,
+  posterPath: `POSTER_PATH_${index}`,
+  voteCount: index,
+  name: `NAME_${index}`,
+  id: index,
+}));

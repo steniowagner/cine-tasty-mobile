@@ -3,7 +3,7 @@ import React from 'react';
 import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
 import TMDBImage from '@components/common/tmdb-image/TMDBImage';
 import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import { useLoadListItemImage } from '@hooks';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './SimplifiedMediaListItem.styles';
@@ -14,7 +14,6 @@ type SimplifiedMediaListItemProps = {
   onPress: () => void;
   voteAverage: number;
   voteCount: number;
-  isFirst: boolean;
   image: string;
   title: string;
 };
@@ -22,27 +21,17 @@ type SimplifiedMediaListItemProps = {
 const SimplifiedMediaListItem = ({
   voteAverage,
   voteCount,
-  isFirst,
   onPress,
   image,
   title,
 }: SimplifiedMediaListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
-  });
+  const {isFallbackImageVisible, hasError, onError, opacity, onLoad} =
+    useLoadListItemImage({
+      image,
+    });
 
   return (
-    <Styles.Wrapper
-      testID="simplified-media-list-button"
-      onPress={onPress}
-      isFirst={isFirst}
-    >
+    <Styles.Wrapper testID="simplified-media-list-button" onPress={onPress}>
       <>
         <TMDBImage
           imageType="poster"
@@ -67,8 +56,7 @@ const SimplifiedMediaListItem = ({
               {
                 opacity,
               },
-            ]}
-          >
+            ]}>
             {renderSVGIconConditionally({
               condition: hasError,
               ifTrue: {
@@ -92,9 +80,7 @@ const SimplifiedMediaListItem = ({
           size={metrics.getWidthFromDP('6%')}
           colorThemeRef="primary"
         />
-        <Styles.DefaultText
-          withMarginLeft
-        >
+        <Styles.DefaultText withMarginLeft>
           {`${voteAverage.toFixed(1)} (${voteCount})`}
         </Styles.DefaultText>
       </Styles.StarsContentWrapper>
