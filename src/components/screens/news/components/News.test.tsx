@@ -20,7 +20,7 @@ import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import News, {INITIAL_ITEMS_TO_RENDER} from './News';
+import {INITIAL_ITEMS_TO_RENDER, News} from './News';
 
 const renderNews = (
   mockResolvers?: readonly MockedResponse<Record<string, any>>[],

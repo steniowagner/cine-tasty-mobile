@@ -3,7 +3,7 @@ import {Animated} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 
-import {ProgressiveImage, RoundedButton, StarsVotes} from '@components/common';
+import {ProgressiveImage, RoundedButton, StarsVotes} from '@components';
 import {useGetCurrentTheme} from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 

@@ -1,7 +1,7 @@
 import React, {useLayoutEffect} from 'react';
 import {ScrollView} from 'react-native';
 
-import {RoundedButton} from '@components/common';
+import {RoundedButton} from '@components';
 import metrics from '@styles/metrics';
 
 import {ResultsStackProps} from '../../routes/route-params-types';

@@ -3,23 +3,23 @@ import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 import {useTranslation} from 'react-i18next';
 
-import {TVShowSeasonsStackProps} from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
-import ImagesGallery from '@components/screens/shared/images-gallery/components/images-gallery/ImagesGallery';
-import {ReviewsStackProps} from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
-import TVShowDetail from '@components/screens/shared/media-detail/tv-show-detail/components/TVShowDetail';
-import MovieDetail from '@components/screens/shared/media-detail/movie-detail/components/MovieDetail';
-import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/routes/stack-routes';
-import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
-import Reviews from '@components/screens/shared/media-detail/reviews/components/Reviews';
+import {TVShowSeasonsStackProps} from '@src/components/screens/common/tv-show-seasons/routes/route-params-types';
+import {ImagesGallery} from '@src/components/screens/common/images-gallery/components/images-gallery/ImagesGallery';
+import {ReviewsStackProps} from '@src/components/screens/common/media-detail/reviews/routes/route-params-types';
+import {TVShowDetail} from '@src/components/screens/common/media-detail/tv-show-detail/components/TVShowDetail';
+import {MovieDetail} from '@src/components/screens/common/media-detail/movie-detail/components/MovieDetail';
+import {TVShowSeasonsDetailStack} from '@src/components/screens/common/tv-show-seasons/routes/stack-routes';
+import {FamousDetails} from '@src/components/screens/common/famous-detail/components/FamousDetail';
+import Reviews from '@src/components/screens/common/media-detail/reviews/components/Reviews';
 import {
   getTransparentHeaderOptions,
   DEFAULT_HEADER_OPTIONS,
 } from '@routes/constants';
-import SearchStack from '@components/screens/shared/search/routes/stack-routes';
+import SearchStack from '@src/components/screens/common/search/routes/stack-routes';
 import * as TRANSLATIONS from '@i18n/tags';
 import {Routes} from '@routes/routes';
 
-import Famous from '../components/Famous';
+import {Famous} from '../components/Famous';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,7 @@ type FamousStackProps = {
   theme: DefaultTheme;
 };
 
-const FamousStack = ({theme}: FamousStackProps) => {
+export const FamousStack = withTheme(({theme}: FamousStackProps) => {
   const {t} = useTranslation();
 
   const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
@@ -52,7 +52,7 @@ const FamousStack = ({theme}: FamousStackProps) => {
           ...TRANSPARENT_HEADER_OPTIONS,
           ...TransitionPresets.SlideFromRightIOS,
         }}
-        component={FamousDetail}
+        component={FamousDetails}
       />
       <Stack.Screen
         name={Routes.Movie.DETAILS}
@@ -98,7 +98,7 @@ const FamousStack = ({theme}: FamousStackProps) => {
           headerTitle: route.params.title,
           headerTitleAlign: 'center',
         })}
-        component={TVShowSeasonDetail}
+        component={TVShowSeasonsDetailStack}
       />
       <Stack.Screen
         options={{headerShown: false}}
@@ -107,6 +107,4 @@ const FamousStack = ({theme}: FamousStackProps) => {
       />
     </Stack.Navigator>
   );
-};
-
-export default withTheme(FamousStack);
+});

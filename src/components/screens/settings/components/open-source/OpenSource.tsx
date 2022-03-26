@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
 
-import {Icons} from '@components/common';
+import {Icons} from '@components';
 import {CONSTANTS} from '@utils';
 
 import SupportLibraries from './support-libraries/SupportLibraries';

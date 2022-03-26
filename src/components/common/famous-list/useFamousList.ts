@@ -1,7 +1,7 @@
 import {useCallback, useMemo} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {FamousNavigationProp} from '@components/screens/famous/routes/route-params-types';
+import {FamousNavigationProp} from '@src/components/screens/famous/routes/route-params-types';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 

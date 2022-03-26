@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SVGIcon, Icons} from '@components/common';
+import {SVGIcon, Icons} from '@components';
 import metrics from '@styles/metrics';
 
 import * as Styles from './Advise.styles';

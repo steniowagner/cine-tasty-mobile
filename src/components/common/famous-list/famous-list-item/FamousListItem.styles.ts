@@ -1,7 +1,7 @@
 import {Animated, Text} from 'react-native';
 import styled from 'styled-components/native';
 
-import {TMDBImage} from '@components/common';
+import {TMDBImage} from '@components';
 
 export const TMDBImageStyled = styled(TMDBImage)`
   width: 100%;

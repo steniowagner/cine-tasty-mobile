@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import {TouchableOpacity} from 'react-native';
 
-import {renderSVGIconConditionally} from '@components/common';
+import {renderSVGIconConditionally} from '@components';
 import metrics from '@styles/metrics';
 
 import {useFamousListItem} from './useFamousListItem';

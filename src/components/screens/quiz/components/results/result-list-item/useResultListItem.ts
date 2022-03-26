@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 
 import {Colors} from 'styled-components/native';
 
-import {Icons} from '@components/common';
+import {Icons} from '@components';
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import * as Types from '@local-types';

@@ -1,20 +1,22 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useTranslation } from 'react-i18next';
+import {createStackNavigator} from '@react-navigation/stack';
+import {useTranslation} from 'react-i18next';
 
-import { DEFAULT_HEADER_OPTIONS } from '@routes/constants';
+import {DEFAULT_HEADER_OPTIONS} from '@routes/constants';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
 import ImagesQuality from '../components/images-quality/ImagesQuality';
 import OpenSource from '../components/open-source/OpenSource';
 import ThemeSettings from '../components/theme/ThemeSettings';
 import Language from '../components/languages/Languages';
-import Settings from '../components/Settings';
+import {Settings} from '../components/Settings';
 import About from '../components/about/About';
 
-const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) => {
-  const { t } = useTranslation();
+export const SettingsStack = (
+  StackNavigator: ReturnType<typeof createStackNavigator>,
+) => {
+  const {t} = useTranslation();
 
   return (
     <>
@@ -75,5 +77,3 @@ const SettingsStack = (StackNavigator: ReturnType<typeof createStackNavigator>) 
     </>
   );
 };
-
-export default SettingsStack;

@@ -6,7 +6,7 @@ import {
   PaginatedListHeader,
   PaginationFooter,
   FamousListItem,
-} from '@components/common';
+} from '@components';
 
 import {LoadingFamous} from './loading-famous/LoadingFamous';
 import {useFamousList} from './useFamousList';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {LoadingPlaceholder} from '@components/common';
+import {LoadingPlaceholder} from '@components';
 
 import * as Top3ListItemStyles from '../top-3-list-item/Top3ListItem.styles';
 import * as Styles from './LoadingTop3.styles';

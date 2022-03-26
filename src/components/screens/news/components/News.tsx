@@ -6,7 +6,7 @@ import {
   PaginationFooter,
   HeaderIconButton,
   Advise,
-} from '@components/common';
+} from '@components';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 
@@ -21,7 +21,7 @@ const LIST_ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
 export const INITIAL_ITEMS_TO_RENDER =
   Math.floor(metrics.height / LIST_ITEM_HEIGHT) - 1;
 
-const News = (props: NewsStackProps) => {
+export const News = (props: NewsStackProps) => {
   const news = useNews({navigation: props.navigation});
 
   useLayoutEffect(() => {
@@ -100,5 +100,3 @@ const News = (props: NewsStackProps) => {
     />
   );
 };
-
-export default News;

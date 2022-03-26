@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Icons} from '@components/common';
+import {Icons} from '@components';
 
 import TextIconButton from './text-icon-button/TextIconButton';
 import * as Styles from './OpenSource.styles';

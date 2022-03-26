@@ -2,7 +2,7 @@
 import React, {useLayoutEffect} from 'react';
 import {ScrollView} from 'react-native';
 
-import {PaginatedListHeader, PopupAdvice} from '@components/common';
+import {PaginatedListHeader, PopupAdvice} from '@components';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
@@ -14,7 +14,7 @@ import useHome from './hooks/useHome';
 import Header from './header/Header';
 import Top3 from './top3/Top3';
 
-const Home = ({navigation}: HomeStackProps) => {
+export const Home = ({navigation}: HomeStackProps) => {
   const {
     shouldDisableHeaderActions,
     onPressTop3LearnMore,
@@ -88,5 +88,3 @@ const Home = ({navigation}: HomeStackProps) => {
     </ScrollView>
   );
 };
-
-export default Home;

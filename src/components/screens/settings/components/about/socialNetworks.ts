@@ -1,4 +1,4 @@
-import {Icons} from '@components/common';
+import {Icons} from '@components';
 
 type SocialNetwork = {
   icon: Icons;

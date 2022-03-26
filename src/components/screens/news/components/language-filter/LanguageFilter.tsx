@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
 
-import {ModalSelectButton} from '@components/common';
+import {ModalSelectButton} from '@components';
 import * as SchemaTypes from '@schema-types';
 
 import LanguageListItem from './list-item/LanguageListItem';

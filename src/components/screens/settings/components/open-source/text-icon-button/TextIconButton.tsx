@@ -1,7 +1,7 @@
 import React from 'react';
 import {Linking} from 'react-native';
 
-import {SVGIcon, Icons} from '@components/common';
+import {SVGIcon, Icons} from '@components';
 import {useTheme} from 'styled-components/native';
 
 import * as Styles from './TextIconButton.styles';

@@ -10,7 +10,7 @@ import MockedNavigation from '@mocks/MockedNavigator';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 
-import Quiz from './Quiz';
+import {Quiz} from './Quiz';
 
 const renderQuiz = (navigate = jest.fn()) => {
   const QuizComponent = ({navigation}) => (

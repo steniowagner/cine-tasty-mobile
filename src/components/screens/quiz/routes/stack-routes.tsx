@@ -9,11 +9,11 @@ import {Routes} from '@routes/routes';
 import SetupQuestions from '../components/setup-questions/SetupQuestions';
 import Questions from '../components/questions/Questions';
 import Results from '../components/results/Results';
-import Quiz from '../components/Quiz';
+import {Quiz} from '../components/Quiz';
 
 const Stack = createStackNavigator();
 
-const QuizStack = () => {
+export const QuizStack = () => {
   const translations = useTranslations();
   return (
     <Stack.Navigator>
@@ -54,5 +54,3 @@ const QuizStack = () => {
     </Stack.Navigator>
   );
 };
-
-export default QuizStack;

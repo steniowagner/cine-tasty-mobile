@@ -8,12 +8,11 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider, AlertMessageProvider} from '@providers';
 import MockedNavigation from '@mocks/MockedNavigator';
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 import {setupTimeTravel} from '@mocks/timeTravel';
-import {AlertMessageProvider} from '@providers';
 import {Routes} from '@routes/routes';
 
 const mockNavigate = jest.fn();

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {StarsVotes} from '@components/common';
+import {StarsVotes} from '@components';
 
 import * as Styles from './FullMediaListItem.styles';
 import {MediaImage} from './media-image/MediaImage';

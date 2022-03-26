@@ -10,7 +10,7 @@ import {useTranslation} from 'react-i18next';
 import {useTheme} from 'styled-components/native';
 
 import * as TRANSLATIONS from '@i18n/tags';
-import {Icons} from '@components/common';
+import {Icons} from '@components';
 import metrics from '@styles/metrics';
 
 import {OnboardingStackRouteProp} from '../routes/route-params-types';

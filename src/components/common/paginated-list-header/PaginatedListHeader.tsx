@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SVGIcon} from '@components/common';
+import {SVGIcon} from '@components';
 import metrics from '@styles/metrics';
 
 import * as Styles from './PagiantedListHeader.styles';

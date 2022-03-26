@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import {renderSVGIconConditionally} from '@components/common';
+import {renderSVGIconConditionally} from '@components';
 import metrics from '@styles/metrics';
 
 import * as Styles from './NewsImage.styles';

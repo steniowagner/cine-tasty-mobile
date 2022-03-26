@@ -1,12 +1,12 @@
 import React from 'react';
 
-import {RoundedButton} from '@components/common';
+import {RoundedButton} from '@components';
 
 import {QuizStackProps} from '../routes/route-params-types';
 import * as Styles from './Quiz.styles';
 import useQuiz from './useQuiz';
 
-const Quiz = (props: QuizStackProps) => {
+export const Quiz = (props: QuizStackProps) => {
   const quiz = useQuiz({navigation: props.navigation});
   return (
     <Styles.Wrapper>
@@ -26,5 +26,3 @@ const Quiz = (props: QuizStackProps) => {
     </Styles.Wrapper>
   );
 };
-
-export default Quiz;

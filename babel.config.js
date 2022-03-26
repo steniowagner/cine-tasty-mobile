@@ -29,7 +29,9 @@ module.exports = {
           '.json',
         ],
         alias: {
-          '@components/common': './src/components/common/index.ts',
+          '@screens/common': './src/components/screens/common/index.ts',
+          '@screens': './src/components/screens/index.ts',
+          '@components': './src/components/common/index.ts',
           '@schema-types': './src/types/schema.ts',
           '@providers': './src/providers/index.ts',
           '@local-types': './src/types/index.ts',

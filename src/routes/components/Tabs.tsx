@@ -5,13 +5,11 @@ import {
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
 
-import AndroidNavigationBar from '@components/utils/AndroidNavigationBar.android';
-import FamousStack from '@components/screens/famous/routes/stack-routes';
-import TabNavigator from '@components/utils/tab-navigator/TabNavigator';
-import HomeStack from '@components/screens/home/routes/stack-routes';
-import QuizStack from '@components/screens/quiz/routes/stack-routes';
-import NewsStack from '@components/screens/news/routes/stack-routes';
 import {Routes} from '@routes/routes';
+import * as Screens from '@screens';
+
+import AndroidNavigationBar from './AndroidNavigationBar.android';
+import TabNavigator from './tab-navigator/TabNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,10 +26,10 @@ const Tabs = () => (
       screenOptions={{
         headerShown: false,
       }}>
-      <Tab.Screen component={HomeStack} name={Routes.Tabs.HOME} />
-      <Tab.Screen component={FamousStack} name={Routes.Tabs.FAMOUS} />
-      <Tab.Screen component={QuizStack} name={Routes.Tabs.QUIZ} />
-      <Tab.Screen component={NewsStack} name={Routes.Tabs.NEWS} />
+      <Tab.Screen component={Screens.HomeStack} name={Routes.Tabs.HOME} />
+      <Tab.Screen component={Screens.FamousStack} name={Routes.Tabs.FAMOUS} />
+      <Tab.Screen component={Screens.QuizStack} name={Routes.Tabs.QUIZ} />
+      <Tab.Screen component={Screens.NewsStack} name={Routes.Tabs.NEWS} />
     </Tab.Navigator>
     {Platform.OS === 'android' && <AndroidNavigationBar />}
   </>

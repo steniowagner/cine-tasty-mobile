@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SimplifiedMediaListItem, Section} from '@components/common';
+import {SimplifiedMediaListItem, Section} from '@components';
 
 import * as Styles from './MediaHorizontalList.styles';
 import {

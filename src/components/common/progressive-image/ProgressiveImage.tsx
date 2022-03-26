@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {TMDBImage} from '@components/common';
+import {TMDBImage} from '@components';
 import {ImageType} from '@local-types';
 
 import {useProgressiveImage} from './useProgressiveImage';

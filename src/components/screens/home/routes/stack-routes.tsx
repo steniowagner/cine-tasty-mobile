@@ -2,25 +2,25 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 
-import {TVShowSeasonsStackProps} from '@components/screens/shared/tv-show-seasons/routes/route-params-types';
-import {ReviewsStackProps} from '@components/screens/shared/media-detail/reviews/routes/route-params-types';
-import ImagesGallery from '@components/screens/shared/images-gallery/components/images-gallery/ImagesGallery';
-import TVShowDetail from '@components/screens/shared/media-detail/tv-show-detail/components/TVShowDetail';
-import MoviedDetail from '@components/screens/shared/media-detail/movie-detail/components/MovieDetail';
-import TVShowSeasonDetail from '@components/screens/shared/tv-show-seasons/routes/stack-routes';
-import FamousDetail from '@components/screens/shared/famous-detail/components/FamousDetail';
-import Reviews from '@components/screens/shared/media-detail/reviews/components/Reviews';
+import {TVShowSeasonsStackProps} from '@src/components/screens/common/tv-show-seasons/routes/route-params-types';
+import {ReviewsStackProps} from '@src/components/screens/common/media-detail/reviews/routes/route-params-types';
+import {ImagesGallery} from '@src/components/screens/common/images-gallery/components/images-gallery/ImagesGallery';
+import {TVShowDetail} from '@src/components/screens/common/media-detail/tv-show-detail/components/TVShowDetail';
+import {MovieDetail} from '@src/components/screens/common/media-detail/movie-detail/components/MovieDetail';
+import {TVShowSeasonsDetailStack} from '@src/components/screens/common/tv-show-seasons/routes/stack-routes';
+import {FamousDetails} from '@src/components/screens/common/famous-detail/components/FamousDetail';
+import Reviews from '@src/components/screens/common/media-detail/reviews/components/Reviews';
 import {
   getTransparentHeaderOptions,
   DEFAULT_HEADER_OPTIONS,
 } from '@routes/constants';
-import SearchStack from '@components/screens/shared/search/routes/stack-routes';
+import SearchStack from '@src/components/screens/common/search/routes/stack-routes';
 import {Routes} from '@routes/routes';
 
 import MediaSectionViewAll from '../components/media-section-view-all/MediaSectionViewAll';
 import {MediaSectionViewAllStackProps} from './route-params-types';
 import SettingsScreen from '../../settings/routes/stack-routes';
-import Home from '../components/Home';
+import {Home} from '../components/Home';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +28,7 @@ type HomeStackProps = {
   theme: DefaultTheme;
 };
 
-const HomeStack = ({theme}: HomeStackProps) => {
+export const HomeStack = withTheme(({theme}: HomeStackProps) => {
   const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
 
   return (
@@ -50,7 +50,7 @@ const HomeStack = ({theme}: HomeStackProps) => {
           ...TransitionPresets.SlideFromRightIOS,
         }}
         name={Routes.Famous.DETAILS}
-        component={FamousDetail}
+        component={FamousDetails}
       />
       <Stack.Screen
         name={Routes.Home.MEDIA_DETAILS_VIEW_ALL}
@@ -66,7 +66,7 @@ const HomeStack = ({theme}: HomeStackProps) => {
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
         })}
-        component={MoviedDetail}
+        component={MovieDetail}
       />
       <Stack.Screen
         name={Routes.TVShow.DETAILS}
@@ -105,7 +105,7 @@ const HomeStack = ({theme}: HomeStackProps) => {
           headerTitle: route.params.title,
           headerTitleAlign: 'center',
         })}
-        component={TVShowSeasonDetail}
+        component={TVShowSeasonsDetailStack}
       />
       <Stack.Screen
         options={{headerShown: false}}
@@ -115,6 +115,4 @@ const HomeStack = ({theme}: HomeStackProps) => {
       {SettingsScreen(Stack)}
     </Stack.Navigator>
   );
-};
-
-export default withTheme(HomeStack);
+});

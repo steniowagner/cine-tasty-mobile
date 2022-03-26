@@ -6,11 +6,11 @@ import {DEFAULT_HEADER_OPTIONS} from '@routes/constants';
 import * as TRANSLATIONS from '@i18n/tags';
 import {Routes} from '@routes/routes';
 
-import News from '../components/News';
+import {News} from '../components/News';
 
 const Stack = createStackNavigator();
 
-const NewsStack = () => {
+export const NewsStack = () => {
   const {t} = useTranslation();
 
   return (
@@ -27,5 +27,3 @@ const NewsStack = () => {
     </Stack.Navigator>
   );
 };
-
-export default NewsStack;

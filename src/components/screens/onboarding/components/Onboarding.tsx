@@ -2,7 +2,7 @@ import React from 'react';
 import {StatusBar, FlatList} from 'react-native';
 import {withTheme, DefaultTheme} from 'styled-components/native';
 
-import {SVGIcon} from '@components/common';
+import {SVGIcon} from '@components';
 import metrics from '@styles/metrics';
 
 import {OnboardingStackProps} from '../routes/route-params-types';
@@ -14,7 +14,7 @@ type OnboardingProps = {
   theme: DefaultTheme;
 } & OnboardingStackProps;
 
-const Onboarding = ({route, theme}: OnboardingProps) => {
+export const Onboarding = withTheme(({route, theme}: OnboardingProps) => {
   const {onMomentumScrollEnd, indexSelected, flatlistRef, items} =
     useOnboarding({
       route,
@@ -65,6 +65,4 @@ const Onboarding = ({route, theme}: OnboardingProps) => {
       />
     </Styles.Wrapper>
   );
-};
-
-export default withTheme(Onboarding);
+});

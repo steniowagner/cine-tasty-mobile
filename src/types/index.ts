@@ -5,7 +5,7 @@ import {
 } from 'apollo-client';
 
 import * as SchemaTypes from '@schema-types';
-import { Icons } from '@components/common';
+import { Icons } from '@components';
 import { Routes } from '@routes/routes';
 
 import {

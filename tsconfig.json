@@ -9,7 +9,9 @@
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "paths": {
-      "@components/common": ["./components/common/index.ts"],
+      "@screens/common": ["./components/screens/common/index.ts"],
+      "@screens": ["./components/screens/index.ts"],
+      "@components": ["./components/common/index.ts"],
       "@providers": ["./providers/index.ts"],
       "@schema-types": ["./types/schema.ts"],
       "@local-types": ["./types/index.ts"],

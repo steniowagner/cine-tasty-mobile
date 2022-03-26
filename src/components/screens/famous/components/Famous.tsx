@@ -1,11 +1,11 @@
 import React, {useLayoutEffect} from 'react';
 
-import {HeaderIconButton, FamousList} from '@components/common';
+import {HeaderIconButton, FamousList} from '@components';
 
 import {FamousStackProps} from '../routes/route-params-types';
 import useFamous from './useFamous';
 
-const Famous = (props: FamousStackProps) => {
+export const Famous = (props: FamousStackProps) => {
   const famous = useFamous({navigation: props.navigation});
 
   useLayoutEffect(() => {
@@ -33,5 +33,3 @@ const Famous = (props: FamousStackProps) => {
     />
   );
 };
-
-export default Famous;

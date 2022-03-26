@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import CustomModal from '@components/screens/shared/customized-modal/routes/stack-routes';
-import Onboarding from '@components/screens/onboarding/routes/stack-routes';
+import {CustomizedModal} from '@screens/common';
+import {Onboarding} from '@screens';
 import {Routes} from '@routes/routes';
 
 import CheckingInitialScreen from './checking-initial-screen/CheckingInitialScreen';
@@ -64,7 +64,7 @@ const RouteNavigation = () => {
           />
           <RootStack.Screen
             options={{headerShown: false, animationEnabled: true}}
-            component={CustomModal}
+            component={CustomizedModal}
             name={Routes.CustomModal.CUSTOM_MODAL_STACK}
           />
         </>

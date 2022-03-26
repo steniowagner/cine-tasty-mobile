@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 
-import {SVGIcon, Icons} from '@components/common';
+import {SVGIcon, Icons} from '@components';
 
 import * as Styles from './LanguageListItem.styles';
 

@@ -1,11 +1,7 @@
 import React from 'react';
 import {Platform, FlatList} from 'react-native';
 
-import {
-  PaginationFooter,
-  FullMediaListItem,
-  PopupAdvice,
-} from '@components/common';
+import {PaginationFooter, FullMediaListItem, PopupAdvice} from '@components';
 
 import {MediaSectionViewAllStackProps} from '../../routes/route-params-types';
 import useMediaSectionViewAll from './useMediaSectionViewAll';

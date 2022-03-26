@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 
-import {renderSVGIconConditionally} from '@components/common';
+import {renderSVGIconConditionally} from '@components';
 import metrics from '@styles/metrics';
 
 import * as Styles from './MultiChoiceQuestionListItem.styles';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import {ModalSelectButton} from '@components/common';
+import {ModalSelectButton} from '@components';
 import * as Types from '@local-types';
 
 import useSetupOptionsList from './useSetupQuestionsOptionsList';

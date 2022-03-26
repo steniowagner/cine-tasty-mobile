@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 
-import {ModalSelectButton} from '@components/common';
+import {ModalSelectButton} from '@components';
 
 import MultiChoiceQuestionListItem from './multi-choice-question-list-item/MultiChoiceQuestionListItem';
 import {DEFAULT_BORDER_RADIUS} from '../question-wrapper/QuestionWrapper.styles';

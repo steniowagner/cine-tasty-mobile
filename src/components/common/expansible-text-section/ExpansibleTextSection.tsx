@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {MediaItemDescription, Section} from '@components/common';
+import {MediaItemDescription, Section} from '@components';
 
 import {LoadingExpansibleTextSection} from './loading-expansible-text-section/LoadingExpansibleTextSection';
 import * as Styles from './ExpansibleTextSection.styles';

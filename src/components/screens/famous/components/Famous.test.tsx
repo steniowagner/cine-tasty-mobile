@@ -21,6 +21,8 @@ import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 
+import {Famous} from './Famous';
+
 const mockNavigation = {
   navigate: jest.fn(),
 };
@@ -34,8 +36,6 @@ jest.mock('@react-navigation/native', () => {
     useNavigation: () => mockNavigation,
   };
 });
-
-import Famous from './Famous';
 
 const renderFamous = (
   mockResolvers?: readonly MockedResponse<Record<string, any>>[],

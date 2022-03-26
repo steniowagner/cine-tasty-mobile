@@ -2,7 +2,7 @@ import React from 'react';
 import {Linking} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import {SVGIcon} from '@components/common';
+import {SVGIcon} from '@components';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 

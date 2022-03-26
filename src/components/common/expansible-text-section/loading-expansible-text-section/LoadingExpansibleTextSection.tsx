@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {LoadingPlaceholder} from '@components/common';
+import {LoadingPlaceholder} from '@components';
 
 import * as Styles from './LoadingExpansibleTextSection.styles';
 

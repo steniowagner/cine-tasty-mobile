@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 
-import {SimplifiedMediaListItem, SectionViewAll} from '@components/common';
+import {SimplifiedMediaListItem, SectionViewAll} from '@components';
 import * as Types from '@local-types';
 
 import * as Styles from './HomeSection.styles';

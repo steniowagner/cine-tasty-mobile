@@ -1,7 +1,7 @@
 import React from 'react';
 import {Colors} from 'styled-components/native';
 
-import {SVGIcon, Icons} from '@components/common';
+import {SVGIcon, Icons} from '@components';
 import metrics from '@styles/metrics';
 
 import * as Styles from './HeaderIconButton.styles';
