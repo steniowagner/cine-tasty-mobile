@@ -1,8 +1,10 @@
 import React from 'react';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {
+  renderSVGIconConditionally,
+  TMDBImage,
+  SVGIcon,
+} from '@components/common';
 import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
@@ -18,7 +20,7 @@ type SimplifiedMediaListItemProps = {
   title: string;
 };
 
-const SimplifiedMediaListItem = ({
+export const SimplifiedMediaListItem = ({
   voteAverage,
   voteCount,
   onPress,
@@ -87,5 +89,3 @@ const SimplifiedMediaListItem = ({
     </Styles.Wrapper>
   );
 };
-
-export default SimplifiedMediaListItem;

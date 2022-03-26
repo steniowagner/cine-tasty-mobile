@@ -1,9 +1,8 @@
 import React from 'react';
 
-import Advise from '@components/common/advise/Advise';
+import {Advise} from '@components/common';
 
 import useQuestionsError from './useQuestionsError';
-
 import * as Styles from '../Questions.styles';
 
 const QuestionError = () => {

@@ -1,14 +1,14 @@
 import React from 'react';
 
+import {usePopupAdvice} from './useAlertMessage';
 import * as Styles from './AlertMessage.styles';
-import usePopupAdvice from './useAlertMessage';
 
 type AlertMessageProps = {
   onFinishToShow?: () => void;
   message: string;
 };
 
-const AlertMessage = (props: AlertMessageProps) => {
+export const AlertMessage = (props: AlertMessageProps) => {
   const popupAdvice = usePopupAdvice({
     onFinishToShow: props.onFinishToShow,
   });
@@ -26,5 +26,3 @@ const AlertMessage = (props: AlertMessageProps) => {
     </Styles.MessageWrapper>
   );
 };
-
-export default AlertMessage;

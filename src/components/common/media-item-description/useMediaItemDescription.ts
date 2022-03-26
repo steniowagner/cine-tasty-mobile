@@ -5,7 +5,7 @@ import {useTranslations} from '@hooks';
 
 export const DEFAULT_NUMBER_OF_LINES = 5;
 
-const useMediaItemDescription = () => {
+export const useMediaItemDescription = () => {
   const [numberOfLines, setNumberOfLines] = useState<number | undefined>();
   const [textNumberOfLines, setTextNumberOfLines] = useState(0);
 
@@ -53,5 +53,3 @@ const useMediaItemDescription = () => {
     numberOfLines,
   };
 };
-
-export default useMediaItemDescription;

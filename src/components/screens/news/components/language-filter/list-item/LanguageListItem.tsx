@@ -1,12 +1,11 @@
 import React, {memo} from 'react';
 
-import {SupportedIcons} from '@components/common/svg-icon/getXML';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon, Icons} from '@components/common';
 
 import * as Styles from './LanguageListItem.styles';
 
 type LanguageListItemProps = {
-  flag: SupportedIcons;
+  flag: Icons;
   onPress: () => void;
   isSelected: boolean;
   name: string;

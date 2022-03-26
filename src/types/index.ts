@@ -4,8 +4,8 @@ import {
   FetchMoreOptions,
 } from 'apollo-client';
 
-import { SupportedIcons } from '@components/common/svg-icon/getXML';
 import * as SchemaTypes from '@schema-types';
+import { Icons } from '@components/common';
 import { Routes } from '@routes/routes';
 
 import {
@@ -41,8 +41,8 @@ export type LocalStackRoute<T> = {
 
 export type TabNavigatorItem = {
   id: Routes.Tabs.HOME | Routes.Tabs.FAMOUS | Routes.Tabs.QUIZ | Routes.Tabs.NEWS;
-  inactiveIcon: SupportedIcons;
-  activeIcon: SupportedIcons;
+  inactiveIcon: Icons;
+  activeIcon: Icons;
 };
 
 export type NewsFilterLanguage =

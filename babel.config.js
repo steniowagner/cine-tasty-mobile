@@ -29,10 +29,10 @@ module.exports = {
           '.json',
         ],
         alias: {
+          '@components/common': './src/components/common/index.ts',
           '@schema-types': './src/types/schema.ts',
           '@providers': './src/providers/index.ts',
           '@local-types': './src/types/index.ts',
-          '@components': './src/components',
           '@hooks': './src/hooks/index.ts',
           '@utils': './src/utils/index.ts',
           '@graphql': './src/graphql',

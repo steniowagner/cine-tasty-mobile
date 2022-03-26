@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, {Suspense} from 'react';
 
 import * as Styles from './RouteSuspenseWrapper.styles';
 
@@ -6,16 +6,13 @@ type RouteSuspenseWrapperProps = {
   children: JSX.Element;
 };
 
-const RouteSuspenseWrapper = ({ children }: RouteSuspenseWrapperProps) => (
+export const RouteSuspenseWrapper = ({children}: RouteSuspenseWrapperProps) => (
   <Suspense
-    fallback={(
+    fallback={
       <Styles.LoadingWrapper>
         <Styles.CustomActivityIndicator />
       </Styles.LoadingWrapper>
-    )}
-  >
+    }>
     {children}
   </Suspense>
 );
-
-export default RouteSuspenseWrapper;

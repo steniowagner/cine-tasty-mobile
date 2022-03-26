@@ -1,17 +1,17 @@
 import React from 'react';
 import {cleanup, render, RenderAPI} from '@testing-library/react-native';
-
-import {NUMBER_OF_COLUMNS} from '@components/common/famous-list/FamousList';
-import {setupTimeTravel} from '@mocks/timeTravel';
 import {ThemeProvider} from 'styled-components/native';
+
+import {setupTimeTravel} from '@mocks/timeTravel';
 import {dark as theme} from '@styles/themes/dark';
 
 import {INITIAL_ITEMS_TO_RENDER} from './useLoadingFamous';
-import LoadingFamousList from './LoadingFamous';
+import {NUMBER_OF_COLUMNS} from '../FamousList';
+import {LoadingFamous} from './LoadingFamous';
 
 const renderLoadingFamousList = () => (
   <ThemeProvider theme={theme}>
-    <LoadingFamousList />
+    <LoadingFamous />
   </ThemeProvider>
 );
 

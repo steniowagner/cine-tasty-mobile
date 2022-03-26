@@ -1,8 +1,6 @@
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 
-import useTMDBImage from '@components/common/tmdb-image/useTMDBImage';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {useTMDBImage, TMDBImage, SVGIcon} from '@components/common';
 import metrics from '@styles/metrics';
 
 import useImagesGalleryListItem from './useImagesGalleryListItem';
@@ -12,24 +10,21 @@ type ImagesGalleryListItemProps = {
   imageURL: string;
 };
 
-const ImagesGalleryListItem = ({ imageURL }: ImagesGalleryListItemProps) => {
-  const { uri } = useTMDBImage({
+const ImagesGalleryListItem = ({imageURL}: ImagesGalleryListItemProps) => {
+  const {uri} = useTMDBImage({
     imageType: 'backdrop',
     isThumbnail: false,
     image: imageURL,
   });
 
-  const {
-    isLandscape, isPortrait, isLoading, hasError,
-  } = useImagesGalleryListItem({
-    imageURL: uri,
-  });
+  const {isLandscape, isPortrait, isLoading, hasError} =
+    useImagesGalleryListItem({
+      imageURL: uri,
+    });
 
   if (isLoading) {
     return (
-      <Styles.Wrapper
-        testID="images-gallery-list-item-loading"
-      >
+      <Styles.Wrapper testID="images-gallery-list-item-loading">
         <Styles.CustomActivityIndicator />
       </Styles.Wrapper>
     );
@@ -37,9 +32,7 @@ const ImagesGalleryListItem = ({ imageURL }: ImagesGalleryListItemProps) => {
 
   if (hasError) {
     return (
-      <Styles.ImageOffWrapper
-        testID="image-error-wrapper"
-      >
+      <Styles.ImageOffWrapper testID="image-error-wrapper">
         <SVGIcon
           size={metrics.getWidthFromDP('25%')}
           colorThemeRef="white"
@@ -61,12 +54,10 @@ const ImagesGalleryListItem = ({ imageURL }: ImagesGalleryListItemProps) => {
     }
 
     return (
-      <Styles.Wrapper
-        testID="images-gallery-list-item"
-      >
+      <Styles.Wrapper testID="images-gallery-list-item">
         <TMDBImage
           image={imageURL}
-          style={{ width: '100%', height }}
+          style={{width: '100%', height}}
           imageType="backdrop"
         />
       </Styles.Wrapper>

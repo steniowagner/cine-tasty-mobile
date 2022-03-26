@@ -1,7 +1,8 @@
 import {useState, useCallback, useMemo} from 'react';
 
-import {useShowLanguageAlert, useTranslations} from '@hooks';
 import * as SchemaTypes from '@schema-types';
+import {showLanguageAlert} from '@utils';
+import {useTranslations} from '@hooks';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
@@ -47,7 +48,6 @@ const useSetupQuestions = (props: UseSetupQuestionsProps) => {
     INITIAL_NUMBER_QUESTIONS,
   );
 
-  const languageAlert = useShowLanguageAlert();
   const translations = useTranslations();
 
   const getOptionSelectedInfo = useCallback(
@@ -165,7 +165,7 @@ const useSetupQuestions = (props: UseSetupQuestionsProps) => {
   ]);
 
   const handleShowLanguageAlert = useCallback(() => {
-    languageAlert.show({
+    showLanguageAlert({
       negativeActionTitle: translations.translate(
         Translations.Tags.LANGUAGE_WARNING_QUIZ_NEGATIVE_ACTION,
       ),
@@ -181,7 +181,7 @@ const useSetupQuestions = (props: UseSetupQuestionsProps) => {
       onPressPositiveAction: navigateToQuestions,
       singleAction: false,
     });
-  }, [languageAlert.show, navigateToQuestions]);
+  }, [showLanguageAlert, navigateToQuestions]);
 
   const handlePressStartQuiz = useCallback(() => {
     if (translations.language !== SchemaTypes.ISO6391Language.EN) {

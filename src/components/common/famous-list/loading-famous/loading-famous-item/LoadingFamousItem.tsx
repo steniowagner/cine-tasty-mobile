@@ -1,7 +1,9 @@
 import React from 'react';
 
-import LoadingPlaceholder from '../../../loading-placeholder/LoadingPlaceholder';
-import useFamousListItemMeasures from '../../useFamousListItemMeasures';
+import {
+  useFamousListItemMeasures,
+  LoadingPlaceholder,
+} from '@components/common';
 import Styles from './LoadingFamousItem.styles';
 
 type LoadingFamousItemProps = {

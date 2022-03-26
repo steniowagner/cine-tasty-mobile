@@ -2,12 +2,15 @@ import React, {useLayoutEffect} from 'react';
 import {StatusBar, Animated} from 'react-native';
 import {withTheme} from 'styled-components/native';
 
-import ExpansibleTextSection from '@components/common/expansible-text-section/ExpansibleTextSection';
-import MediaHorizontalList from '@components/common/media-horizontal-list/MediaHorizontalList';
-import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
-import ImagesList from '@components/common/images-list/ImagesList';
+import {
+  ExpansibleTextSection,
+  MediaHorizontalList,
+  ProgressiveImage,
+  ImagesList,
+  Advise,
+} from '@components/common';
 import {useGetCurrentTheme, useStatusBarStyle} from '@hooks';
-import Advise from '@components/common/advise/Advise';
+
 import metrics from '@styles/metrics';
 
 import HeaderBackButton from '../../header-back-button/HeaderBackButton';

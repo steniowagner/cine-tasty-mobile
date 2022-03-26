@@ -8,7 +8,7 @@ type UsePopupAdviceProps = {
   onFinishToShow?: () => void;
 };
 
-const usePopupAdvice = (props: UsePopupAdviceProps) => {
+export const usePopupAdvice = (props: UsePopupAdviceProps) => {
   const opacity = useRef(new Animated.Value(0)).current;
 
   const onHidePopup = useCallback(() => {
@@ -39,5 +39,3 @@ const usePopupAdvice = (props: UsePopupAdviceProps) => {
     opacity,
   };
 };
-
-export default usePopupAdvice;

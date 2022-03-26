@@ -1,8 +1,10 @@
 import React from 'react';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {
+  renderSVGIconConditionally,
+  TMDBImage,
+  SVGIcon,
+} from '@components/common';
 import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';

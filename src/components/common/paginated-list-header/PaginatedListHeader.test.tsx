@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import PaginatedListHeader from './PaginatedListHeader';
+import {PaginatedListHeader} from './PaginatedListHeader';
 
 const renderPaginationFooter = (onPress = jest.fn()) => (
   <ThemeProvider theme={theme}>

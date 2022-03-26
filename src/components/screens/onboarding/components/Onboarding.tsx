@@ -2,7 +2,7 @@ import React from 'react';
 import {StatusBar, FlatList} from 'react-native';
 import {withTheme, DefaultTheme} from 'styled-components/native';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components/common';
 import metrics from '@styles/metrics';
 
 import {OnboardingStackProps} from '../routes/route-params-types';

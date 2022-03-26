@@ -30,7 +30,7 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
-import FamousList, {FamousListProps} from './FamousList';
+import {FamousListProps, FamousList} from './FamousList';
 
 const makeFamousList = (size: number) =>
   Array(size)

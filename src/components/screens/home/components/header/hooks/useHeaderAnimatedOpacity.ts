@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { Animated } from 'react-native';
+import {useCallback, useEffect, useRef} from 'react';
+import {Animated} from 'react-native';
 
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS} from '@utils';
 
 type UseHeaderAnimatedOpacity = {
   shouldDisableActions: boolean;
 };
 
-const useHeaderAnimatedOpacity = ({ shouldDisableActions }: UseHeaderAnimatedOpacity) => {
+const useHeaderAnimatedOpacity = ({
+  shouldDisableActions,
+}: UseHeaderAnimatedOpacity) => {
   const opacity = useRef(new Animated.Value(0)).current;
 
   const animateHeaderOpacity = useCallback(() => {

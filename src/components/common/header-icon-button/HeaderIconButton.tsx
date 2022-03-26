@@ -1,8 +1,7 @@
 import React from 'react';
 import {Colors} from 'styled-components/native';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import {Icons} from '@components/common/svg-icon/icons';
+import {SVGIcon, Icons} from '@components/common';
 import metrics from '@styles/metrics';
 
 import * as Styles from './HeaderIconButton.styles';
@@ -16,7 +15,7 @@ type HeaderIconButtonProps = {
   iconName: Icons;
 };
 
-const HeaderIconButton = (props: HeaderIconButtonProps) => (
+export const HeaderIconButton = (props: HeaderIconButtonProps) => (
   <Styles.Wrapper
     testID={`header-icon-button-wrapper-${props.iconName}`}
     withMarginRight={props.withMarginRight}
@@ -30,5 +29,3 @@ const HeaderIconButton = (props: HeaderIconButtonProps) => (
     />
   </Styles.Wrapper>
 );
-
-export default HeaderIconButton;

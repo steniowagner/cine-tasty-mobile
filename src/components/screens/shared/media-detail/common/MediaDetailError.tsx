@@ -3,7 +3,7 @@ import {StatusBar, StatusBarStyle} from 'react-native';
 import {DefaultTheme} from 'styled-components/native';
 import {useTranslation} from 'react-i18next';
 
-import Advise from '@components/common/advise/Advise';
+import {Advise} from '@components/common';
 import * as TRANSLATIONS from '@i18n/tags';
 
 type MediaDetailErrorProps = {

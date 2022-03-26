@@ -1,7 +1,14 @@
 import {Animated, Text} from 'react-native';
 import styled from 'styled-components/native';
 
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import {TMDBImage} from '@components/common';
+
+export const TMDBImageStyled = styled(TMDBImage)`
+  width: 100%;
+  height: 70%;
+  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
+  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
+`;
 
 export const PersonName = styled(Text).attrs({
   numberOfLines: 2,
@@ -18,13 +25,6 @@ export const FallbackImageWrapper = styled(Animated.View)`
   justify-content: center;
   align-items: center;
   position: absolute;
-  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
-  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
-`;
-
-export const TMDBImageStyled = styled(TMDBImage)`
-  width: 100%;
-  height: 70%;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
   background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;

@@ -6,11 +6,9 @@ const get = async <T, D>(key: string, defaultValue: D): Promise<T | D> => {
   const valueFromStorage = await AsyncStorage.getItem(
     `${CONSTANTS.KEYS.APP_STORAGE_KEY}:${key}`,
   );
-
   if (valueFromStorage) {
     return JSON.parse(valueFromStorage) as T;
   }
-
   return defaultValue;
 };
 

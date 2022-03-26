@@ -1,8 +1,7 @@
 import React from 'react';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 
-import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
-import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
+import {LoadingPlaceholder, ProgressiveImage} from '@components/common';
 import {useGetCurrentTheme} from '@hooks';
 
 import * as Styles from './BackgroundImage.styles';

@@ -10,13 +10,12 @@ import {
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
 
 import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import {DEFAULT_ANIMATION_DURATION} from '@components/common/popup-advice/PopupAdvice';
+import {DEFAULT_ANIMATION_DURATION, AlertMessageProvider} from '@providers';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
 import * as mockFamous from '@mocks/fixtures/famous';
 import {randomPositiveNumber} from '@mocks/utils';
-import {AlertMessageProvider} from '@providers';
 import {InMemoryCache} from '@apollo/client';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';

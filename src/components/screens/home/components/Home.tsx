@@ -1,13 +1,12 @@
 /* eslint-disable react/display-name */
-import React, { useLayoutEffect } from 'react';
-import { ScrollView } from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {ScrollView} from 'react-native';
 
-import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
-import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
-import { Routes } from '@routes/routes';
+import {PaginatedListHeader, PopupAdvice} from '@components/common';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import { HomeStackProps } from '../routes/route-params-types';
+import {HomeStackProps} from '../routes/route-params-types';
 import LoadingHome from './top3/loading-top3/LoadingTop3';
 import HomeSection from './home-section/HomeSection';
 import * as Styles from './Home.styles';
@@ -15,7 +14,7 @@ import useHome from './hooks/useHome';
 import Header from './header/Header';
 import Top3 from './top3/Top3';
 
-const Home = ({ navigation }: HomeStackProps) => {
+const Home = ({navigation}: HomeStackProps) => {
   const {
     shouldDisableHeaderActions,
     onPressTop3LearnMore,
@@ -29,7 +28,7 @@ const Home = ({ navigation }: HomeStackProps) => {
     isLoading,
     trendings,
     top3,
-  } = useHome({ navigation });
+  } = useHome({navigation});
 
   useLayoutEffect(() => {
     const shouldShowReload = !!errorMessage && !isLoading;
@@ -38,17 +37,15 @@ const Home = ({ navigation }: HomeStackProps) => {
       header: () => (
         <>
           <Header
-            onPressSettings={() => navigation.navigate(Routes.Settings.SETTINGS)}
+            onPressSettings={() =>
+              navigation.navigate(Routes.Settings.SETTINGS)
+            }
             shouldDisableActions={shouldDisableHeaderActions}
             onPresSwitchTVShows={onSelectTVShows}
             onPressSwitchMovies={onSelectMovies}
             onPressSearch={onPressSearch}
           />
-          {shouldShowReload && (
-          <PaginatedListHeader
-            onPress={onPressReload}
-          />
-          )}
+          {shouldShowReload && <PaginatedListHeader onPress={onPressReload} />}
         </>
       ),
     });
@@ -62,30 +59,27 @@ const Home = ({ navigation }: HomeStackProps) => {
     return (
       <>
         <Styles.PopupAdviceWrapper>
-          <PopupAdvice
-            text={errorMessage}
-          />
+          <PopupAdvice text={errorMessage} />
         </Styles.PopupAdviceWrapper>
       </>
     );
   }
 
   return (
-    <ScrollView
-      testID="scrollview-content"
-    >
-      <Top3
-        onPressLearnMore={onPressTop3LearnMore}
-        top3Items={top3}
-      />
-      {trendings.map((trending) => (
+    <ScrollView testID="scrollview-content">
+      <Top3 onPressLearnMore={onPressTop3LearnMore} top3Items={top3} />
+      {trendings.map(trending => (
         <HomeSection
-          onPressItem={(mediaItem: Types.SimplifiedMedia) => onPressTrendingItem(mediaItem)}
-          onPressViewAll={() => onPressViewAll({
-            viewAllTitle: trending.viewAllTitle,
-            sectionItems: trending.data,
-            sectionID: trending.id,
-          })}
+          onPressItem={(mediaItem: Types.SimplifiedMedia) =>
+            onPressTrendingItem(mediaItem)
+          }
+          onPressViewAll={() =>
+            onPressViewAll({
+              viewAllTitle: trending.viewAllTitle,
+              sectionItems: trending.data,
+              sectionID: trending.id,
+            })
+          }
           sectionTitle={trending.sectionTitle}
           key={trending.sectionTitle}
           items={trending.data}

@@ -1,18 +1,18 @@
 import React from 'react';
-import Section from '@components/common/section/Section';
 
-import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
+import {SimplifiedMediaListItem, Section} from '@components/common';
 
 import * as Styles from './MediaHorizontalList.styles';
-import useMediaHorizontalList, {
-  UseMediaHorizontalList,
+import {
+  UseMediaHorizontalListProps,
+  useMediaHorizontalList,
 } from './useMediaHorizontalList';
 
-type MediaHorizontalListProps = UseMediaHorizontalList & {
+type MediaHorizontalListProps = UseMediaHorizontalListProps & {
   title: string;
 };
 
-const MediaHorizontalList = (props: MediaHorizontalListProps) => {
+export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
   const mediaHorizontalList = useMediaHorizontalList(props);
   return (
     <Section title={props.title}>
@@ -34,5 +34,3 @@ const MediaHorizontalList = (props: MediaHorizontalListProps) => {
     </Section>
   );
 };
-
-export default MediaHorizontalList;

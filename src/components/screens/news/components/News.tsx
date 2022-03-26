@@ -1,10 +1,12 @@
 import React, {useLayoutEffect} from 'react';
 import {FlatList, Platform} from 'react-native';
 
-import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
-import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
-import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
-import Advise from '@components/common/advise/Advise';
+import {
+  PaginatedListHeader,
+  PaginationFooter,
+  HeaderIconButton,
+  Advise,
+} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 
@@ -63,7 +65,7 @@ const News = (props: NewsStackProps) => {
       }
       ListFooterComponent={() =>
         news.shouldShowPaginationFooter && (
-          <ListFooterComponent
+          <PaginationFooter
             onPressReloadButton={news.onPressFooterReloadButton}
             hasError={news.hasPaginationError}
             isPaginating={news.isPaginating}

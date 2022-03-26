@@ -1,11 +1,8 @@
-/* eslint-disable react/display-name */
 import React, {useEffect, useLayoutEffect, useMemo} from 'react';
 import {ScrollView, StatusBar} from 'react-native';
 import {withTheme} from 'styled-components/native';
 
-import RoundedButton from '@components/common/rounded-button/RoundedButton';
-import ImagesList from '@components/common/images-list/ImagesList';
-import Section from '@components/common/section/Section';
+import {RoundedButton, ImagesList, Section} from '@components/common';
 import {useShowLanguageAlert, useStatusBarStyle} from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 

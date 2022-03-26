@@ -2,9 +2,7 @@ import React, {useCallback} from 'react';
 import {ScrollView} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-import StarsVotes from '@components/common/stars-votes/StarsVotes';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {TMDBImage, StarsVotes, SVGIcon} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
@@ -13,7 +11,6 @@ import {formatDate} from '@utils';
 import * as Styles from './EpisodeDetail.styles';
 
 type EpisodeDetailProps = {
-  // eslint-disable-next-line camelcase
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
 };
 

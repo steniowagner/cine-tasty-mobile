@@ -8,13 +8,13 @@ type RoundedButtonProps = {
   text: string;
 };
 
-const RoundedButton = ({isDisabled, onPress, text}: RoundedButtonProps) => (
+export const RoundedButton = (props: RoundedButtonProps) => (
   <Styles.Wrapper
     testID="rounded-button"
-    disabled={isDisabled}
-    onPress={onPress}>
-    <Styles.ButtonText testID="rounded-button-text">{text}</Styles.ButtonText>
+    disabled={props.isDisabled}
+    onPress={props.onPress}>
+    <Styles.ButtonText testID="rounded-button-text">
+      {props.text}
+    </Styles.ButtonText>
   </Styles.Wrapper>
 );
-
-export default RoundedButton;

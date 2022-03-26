@@ -4,7 +4,7 @@ import {Platform} from 'react-native';
 import metrics from '@styles/metrics';
 
 import * as Styles from './PaginationFooter.styles';
-import SVGIcon from '../svg-icon/SVGIcon';
+import {SVGIcon} from '../svg-icon/SVGIcon';
 
 type PaginationFooterProps = {
   onPressReloadButton: () => void;
@@ -12,7 +12,7 @@ type PaginationFooterProps = {
   hasError: boolean;
 };
 
-const PaginationFooter = (props: PaginationFooterProps) => (
+export const PaginationFooter = (props: PaginationFooterProps) => (
   <Styles.Wrapper testID="pagination-footer-wrapper">
     {props.isPaginating && (
       <Styles.CustomActivityIndicator
@@ -32,5 +32,3 @@ const PaginationFooter = (props: PaginationFooterProps) => (
     )}
   </Styles.Wrapper>
 );
-
-export default PaginationFooter;

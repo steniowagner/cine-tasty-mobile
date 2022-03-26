@@ -1,7 +1,6 @@
 import React from 'react';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import {renderSVGIconConditionally, TMDBImage} from '@components/common';
 import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 

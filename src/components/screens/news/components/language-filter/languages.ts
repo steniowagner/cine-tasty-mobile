@@ -1,7 +1,7 @@
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
-import {FlagsIcons} from '@components/common/svg-icon/flags';
+import {FlagsIcons} from '@components/common';
 
 type Language = {
   id: SchemaTypes.ArticleLanguage;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RoundedButton from '@components/common/rounded-button/RoundedButton';
+import {RoundedButton} from '@components/common';
 
 import {QuizStackProps} from '../routes/route-params-types';
 import * as Styles from './Quiz.styles';

@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
+import {TMDBImage} from '@components/common';
 
 import * as Styles from './ThumbsGalleryListItem.styles';
 
@@ -10,12 +10,11 @@ type ThumbListItemProps = {
   image: string;
 };
 
-const ThumbListItem = ({ isSelected, onPress, image }: ThumbListItemProps) => (
+const ThumbListItem = ({isSelected, onPress, image}: ThumbListItemProps) => (
   <Styles.Wrapper
     isSelected={isSelected}
     onPress={onPress}
-    testID="thumb-list-item"
-  >
+    testID="thumb-list-item">
     <TMDBImage
       imageType="profile"
       onError={() => {}}
@@ -34,7 +33,8 @@ const ThumbListItem = ({ isSelected, onPress, image }: ThumbListItemProps) => (
 const shouldComponentUpdate = (
   previousState: ThumbListItemProps,
   nextState: ThumbListItemProps,
-): boolean => (previousState.isSelected || !nextState.isSelected)
-  && (!previousState.isSelected || nextState.isSelected);
+): boolean =>
+  (previousState.isSelected || !nextState.isSelected) &&
+  (!previousState.isSelected || nextState.isSelected);
 
 export default memo(ThumbListItem, shouldComponentUpdate);

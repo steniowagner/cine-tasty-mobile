@@ -1,19 +1,18 @@
 import React from 'react';
 
-import {SupportedIcons} from '@components/common/svg-icon/getXML';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon, Icons} from '@components/common';
 import metrics from '@styles/metrics';
 
 import * as Styles from './Advise.styles';
 
 type AdviseProps = {
-  icon: SupportedIcons;
+  icon: Icons;
   description: string;
   suggestion: string;
   title: string;
 };
 
-const Advise = (props: AdviseProps) => (
+export const Advise = (props: AdviseProps) => (
   <Styles.Wrapper testID="advise-wrapper">
     <Styles.IconWrapper testID="icon-wrapper">
       <SVGIcon
@@ -37,5 +36,3 @@ const Advise = (props: AdviseProps) => (
     )}
   </Styles.Wrapper>
 );
-
-export default Advise;

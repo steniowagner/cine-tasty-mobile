@@ -1,18 +1,18 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
+import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
 
-import { ThemeContextProvider } from '@providers';
+import {ThemeContextProvider} from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import { DEFAULT_NUMBER_OF_LINES } from './useMediaItemDescription';
-import MediaListItemDescription from './MediaItemDescription';
+import {DEFAULT_NUMBER_OF_LINES} from './useMediaItemDescription';
+import {MediaItemDescription} from './MediaItemDescription';
 
 const DESCRIPTION = 'SOME DESCRIPTION';
 
 const renderMediaItemDescription = () => (
   <ThemeContextProvider>
-    <MediaListItemDescription description={DESCRIPTION} />
+    <MediaItemDescription description={DESCRIPTION} />
   </ThemeContextProvider>
 );
 
@@ -25,7 +25,7 @@ describe('Testing <MediaItemDescription />', () => {
   afterEach(cleanup);
 
   it('should render correctly when the text is greater than the value stored on DEFAULT_NUMBER_OF_LINES', () => {
-    const { getByTestId } = render(renderMediaItemDescription());
+    const {getByTestId} = render(renderMediaItemDescription());
 
     const textEvent = {
       nativeEvent: {
@@ -51,7 +51,7 @@ describe('Testing <MediaItemDescription />', () => {
   });
 
   it('should render correctly when the text is less than the value stored on DEFAULT_NUMBER_OF_LINES', () => {
-    const { queryByTestId, getByTestId } = render(renderMediaItemDescription());
+    const {queryByTestId, getByTestId} = render(renderMediaItemDescription());
 
     const textEvent = {
       nativeEvent: {
@@ -75,7 +75,7 @@ describe('Testing <MediaItemDescription />', () => {
   });
 
   it('should render correctly when the text is equal to the value stored on DEFAULT_NUMBER_OF_LINES', () => {
-    const { queryByTestId, getByTestId } = render(renderMediaItemDescription());
+    const {queryByTestId, getByTestId} = render(renderMediaItemDescription());
 
     const textEvent = {
       nativeEvent: {
@@ -100,7 +100,7 @@ describe('Testing <MediaItemDescription />', () => {
 
   it('should show correctly when the user press the "READ-MORE" button', () => {
     const INCREASED_NUMBER_OF_LINES = DEFAULT_NUMBER_OF_LINES + 2;
-    const { getByTestId } = render(renderMediaItemDescription());
+    const {getByTestId} = render(renderMediaItemDescription());
 
     const textEvent = {
       nativeEvent: {
@@ -141,7 +141,7 @@ describe('Testing <MediaItemDescription />', () => {
 
   it('should show correctly when the user press the "READ-LESS" button', () => {
     const INCREASED_NUMBER_OF_LINES = DEFAULT_NUMBER_OF_LINES + 2;
-    const { getByTestId } = render(renderMediaItemDescription());
+    const {getByTestId} = render(renderMediaItemDescription());
 
     const textEvent = {
       nativeEvent: {

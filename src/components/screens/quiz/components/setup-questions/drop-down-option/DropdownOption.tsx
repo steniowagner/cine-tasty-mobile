@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components/common';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 

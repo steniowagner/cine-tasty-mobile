@@ -6,7 +6,7 @@ import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {dark as theme} from '@styles/themes/dark';
 
 import {HIDE_POPUP_DELAY} from './useAlertMessage';
-import AlertMessage from './AlertMessage';
+import {AlertMessage} from './AlertMessage';
 
 const DEFAULT_TEXT = 'DEFAULT_TEXT';
 

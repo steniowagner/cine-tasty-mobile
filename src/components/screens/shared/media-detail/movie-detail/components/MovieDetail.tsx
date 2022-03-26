@@ -3,9 +3,9 @@ import React, {useEffect, useLayoutEffect, useMemo} from 'react';
 import {ScrollView, StatusBar} from 'react-native';
 import {withTheme} from 'styled-components/native';
 
-import ImagesList from '@components/common/images-list/ImagesList';
+import {ImagesList} from '@components/common';
 import {useShowLanguageAlert, useStatusBarStyle} from '@hooks';
-import Section from '@components/common/section/Section';
+import {Section} from '@components/common';
 import * as TRANSLATIONS from '@i18n/tags';
 
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';

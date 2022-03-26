@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaView, View} from 'react-native';
 
-import RoundedButton from '@components/common/rounded-button/RoundedButton';
+import {RoundedButton} from '@components/common';
 
 import NumberOfQuestions from './number-of-questions/NumberOfQuestionts';
 import {SetupQuestionsStackProps} from '../../routes/route-params-types';

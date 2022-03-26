@@ -9,8 +9,8 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import {useTranslation} from 'react-i18next';
 import {useTheme} from 'styled-components/native';
 
-import {Icons} from '@components/common/svg-icon/icons';
 import * as TRANSLATIONS from '@i18n/tags';
+import {Icons} from '@components/common';
 import metrics from '@styles/metrics';
 
 import {OnboardingStackRouteProp} from '../routes/route-params-types';

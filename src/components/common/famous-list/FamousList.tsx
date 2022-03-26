@@ -1,13 +1,15 @@
 import React from 'react';
 import {Platform, FlatList} from 'react-native';
 
-import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
-import FamousListItem from '@components/common/famous-list/famous-list-item/FamousListItem';
-import LoadingFamous from '@components/common/famous-list/loading-famous/LoadingFamous';
-import ListFooterComponent from '@components/common/pagination-footer/PaginationFooter';
 import * as Types from '@local-types';
+import {
+  PaginatedListHeader,
+  PaginationFooter,
+  FamousListItem,
+} from '@components/common';
 
-import useFamousList from './useFamousList';
+import {LoadingFamous} from './loading-famous/LoadingFamous';
+import {useFamousList} from './useFamousList';
 import Styles from './FamousList.styles';
 
 export const NUMBER_OF_COLUMNS = 3;
@@ -24,7 +26,7 @@ export type FamousListProps = {
   error?: string;
 };
 
-const FamousList = (props: FamousListProps) => {
+export const FamousList = (props: FamousListProps) => {
   const famousList = useFamousList({
     hasPaginationError: props.hasPaginationError,
     beforePressItem: props.beforePressItem,
@@ -47,7 +49,7 @@ const FamousList = (props: FamousListProps) => {
       }
       ListFooterComponent={() =>
         famousList.shouldShowBottomReloadButton && (
-          <ListFooterComponent
+          <PaginationFooter
             onPressReloadButton={props.onPressBottomReloadButton}
             hasError={props.hasPaginationError}
             isPaginating={props.isPaginating}
@@ -75,5 +77,3 @@ const FamousList = (props: FamousListProps) => {
     />
   );
 };
-
-export default FamousList;

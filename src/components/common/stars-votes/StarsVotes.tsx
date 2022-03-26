@@ -1,11 +1,10 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components/common';
 import metrics from '@styles/metrics';
 
 import * as Styles from './StarsVotes.styles';
-import useStarsVotes from './useStarsVotes';
+import {useStarsVotes} from './useStarsVotes';
 
 type StarsVotesProps = {
   textColor?: string;
@@ -14,10 +13,14 @@ type StarsVotesProps = {
   votes: number;
 };
 
-const StarsVotes = ({
-  textColor, voteCount, withText, votes,
+export const StarsVotes = ({
+  textColor,
+  voteCount,
+  withText,
+  votes,
 }: StarsVotesProps) => {
-  const { numberEmptyStars, numberFullStars, numberHalfStars } = useStarsVotes(votes);
+  const {numberEmptyStars, numberFullStars, numberHalfStars} =
+    useStarsVotes(votes);
 
   const shouldShowVoteCount = withText && !!voteCount;
   const shouldShowVotes = withText && !!votes;
@@ -25,19 +28,13 @@ const StarsVotes = ({
   return (
     <Styles.Wrapper>
       {shouldShowVotes && (
-        <Styles.VotesText
-          textColor={textColor}
-        >
+        <Styles.VotesText textColor={textColor}>
           {`${votes.toFixed(1)} `}
         </Styles.VotesText>
       )}
-      <Styles.Wrapper
-        testID="stars-wrapper"
-      >
+      <Styles.Wrapper testID="stars-wrapper">
         {numberFullStars > 0 && (
-          <Styles.Wrapper
-            testID="full-stars-wrapper"
-          >
+          <Styles.Wrapper testID="full-stars-wrapper">
             {Array(numberFullStars)
               .fill({})
               .map((_, index) => (
@@ -54,9 +51,7 @@ const StarsVotes = ({
           </Styles.Wrapper>
         )}
         {numberHalfStars > 0 && (
-          <Styles.Wrapper
-            testID="half-stars-wrapper"
-          >
+          <Styles.Wrapper testID="half-stars-wrapper">
             {Array(numberHalfStars)
               .fill({})
               .map((_, index) => (
@@ -73,9 +68,7 @@ const StarsVotes = ({
           </Styles.Wrapper>
         )}
         {numberEmptyStars > 0 && (
-          <Styles.Wrapper
-            testID="empty-stars-wrapper"
-          >
+          <Styles.Wrapper testID="empty-stars-wrapper">
             {Array(numberEmptyStars)
               .fill({})
               .map((_, index) => (
@@ -93,14 +86,10 @@ const StarsVotes = ({
         )}
       </Styles.Wrapper>
       {shouldShowVoteCount && (
-        <Styles.VotesText
-          textColor={textColor}
-        >
+        <Styles.VotesText textColor={textColor}>
           {` (${voteCount})`}
         </Styles.VotesText>
       )}
     </Styles.Wrapper>
   );
 };
-
-export default StarsVotes;

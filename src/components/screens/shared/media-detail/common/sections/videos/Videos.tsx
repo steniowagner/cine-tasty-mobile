@@ -1,11 +1,10 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { FlatList, Linking } from 'react-native';
+import {FlatList, Linking} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import Section from '@components/common/section/Section';
+import {SVGIcon, Section} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
@@ -21,23 +20,20 @@ type VideosProps = {
   )[];
 };
 
-const Videos = ({ videos }: VideosProps) => {
-  const { t } = useTranslation();
+const Videos = ({videos}: VideosProps) => {
+  const {t} = useTranslation();
 
   return (
-    <Section
-      title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_VIDEOS)}
-    >
+    <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_VIDEOS)}>
       <FlatList
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: metrics.mediumSize,
         }}
-        keyExtractor={({ id }) => id}
-        renderItem={({ item }) => (
+        keyExtractor={({id}) => id}
+        renderItem={({item}) => (
           <Styles.VideoListItemWrapper
-            onPress={() => Linking.openURL(`${YOUTUBE_BASE_URL}${item.key}`)}
-          >
+            onPress={() => Linking.openURL(`${YOUTUBE_BASE_URL}${item.key}`)}>
             <FastImage
               source={{
                 uri: item.thumbnail.extraSmall,

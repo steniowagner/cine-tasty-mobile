@@ -12,7 +12,7 @@ import {TMDBImageQualityProvider} from '@providers';
 import {dark as theme} from '@styles/themes/dark';
 import {Routes} from '@routes/routes';
 
-import ImagesList from './ImagesList';
+import {ImagesList} from './ImagesList';
 
 const mockNavigation = {
   navigate: jest.fn(),

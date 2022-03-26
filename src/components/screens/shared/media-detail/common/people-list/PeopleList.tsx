@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { FlatList } from 'react-native';
+import {FlatList} from 'react-native';
 
-import Section from '@components/common/section/Section';
+import {Section} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
@@ -27,16 +27,14 @@ const PeopleList = ({
   dataset,
   type,
 }: PeopleListProps) => {
-  const { items } = usePeopleList({ dataset, type });
+  const {items} = usePeopleList({dataset, type});
 
   return (
-    <Section
-      title={sectionTitle}
-    >
+    <Section title={sectionTitle}>
       <FlatList
-        keyExtractor={({ id }, index) => `${id}-${index}`}
+        keyExtractor={({id}, index) => `${id}-${index}`}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ index, item }) => (
+        renderItem={({index, item}) => (
           <PeopleListItem
             onPress={() => onPressItem(item.id, item.name, item.image)}
             withSubtext={noSubtext}

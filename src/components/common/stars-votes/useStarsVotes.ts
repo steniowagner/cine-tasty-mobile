@@ -1,20 +1,22 @@
-import { useCallback, useMemo } from 'react';
+import {useCallback, useMemo} from 'react';
 
 const MAX_STARS = 5;
 
-const useStarsVotes = (votes: number) => {
+export const useStarsVotes = (votes: number) => {
   const getNumberFullStars = useCallback(
     (allVotes: number): number => Math.floor(allVotes / 2),
     [],
   );
 
   const getNumberHalfStars = useCallback(
-    (allVotes: number, numberFullStars: number): number => Math.ceil(allVotes / 2 - numberFullStars),
+    (allVotes: number, numberFullStars: number): number =>
+      Math.ceil(allVotes / 2 - numberFullStars),
     [],
   );
 
   const getNumberEmtpyStars = useCallback(
-    (numberFullStars: number, numberHalfStars: number): number => MAX_STARS - (numberFullStars + numberHalfStars),
+    (numberFullStars: number, numberHalfStars: number): number =>
+      MAX_STARS - (numberFullStars + numberHalfStars),
     [],
   );
 
@@ -37,7 +39,10 @@ const useStarsVotes = (votes: number) => {
 
     const numberFullStars = getNumberFullStars(votes);
     const numberHalfStars = getNumberHalfStars(votes, numberFullStars);
-    const numberEmptyStars = getNumberEmtpyStars(numberFullStars, numberHalfStars);
+    const numberEmptyStars = getNumberEmtpyStars(
+      numberFullStars,
+      numberHalfStars,
+    );
 
     return {
       numberEmptyStars,
@@ -50,5 +55,3 @@ const useStarsVotes = (votes: number) => {
     ...getStars,
   };
 };
-
-export default useStarsVotes;

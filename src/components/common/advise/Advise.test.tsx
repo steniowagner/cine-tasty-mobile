@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import Advise from './Advise';
+import {Advise} from './Advise';
 
 const DEFAULT_DESCRIPTION = 'description';
 const DEFAULT_SUGGESTION = 'suggestion';

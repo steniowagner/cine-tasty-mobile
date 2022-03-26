@@ -1,15 +1,14 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
 
-import ImageListItem from './images-list-item/ImageListItem';
+import {ImageListItem} from './images-list-item/ImageListItem';
 import * as Styles from './ImagesList.styles';
-import useImagesList from './useImagesList';
+import {useImagesList} from './useImagesList';
 
 type ImagesListProps = {
   images: string[];
 };
 
-const ImagesList = (props: ImagesListProps) => {
+export const ImagesList = (props: ImagesListProps) => {
   const imagesList = useImagesList({images: props.images});
 
   if (!props.images || !props.images.length) {
@@ -31,5 +30,3 @@ const ImagesList = (props: ImagesListProps) => {
     </Styles.Wrapper>
   );
 };
-
-export default ImagesList;

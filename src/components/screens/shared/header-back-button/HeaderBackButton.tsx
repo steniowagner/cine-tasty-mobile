@@ -1,7 +1,7 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components/common';
 import metrics from '@styles/metrics';
 
 import * as Styles from './HeaderBackButton.styles';
@@ -10,10 +10,8 @@ type HeaderBackButtonProps = {
   onPress: () => void;
 };
 
-const HeaderBackButton = ({ onPress }: HeaderBackButtonProps) => (
-  <Styles.IconWrapper
-    onPress={onPress}
-  >
+const HeaderBackButton = ({onPress}: HeaderBackButtonProps) => (
+  <Styles.IconWrapper onPress={onPress}>
     <SVGIcon
       size={Platform.select({
         android: metrics.getWidthFromDP('6.5%'),

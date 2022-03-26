@@ -1,9 +1,9 @@
 import {useCallback, useState} from 'react';
 import {DocumentNode} from 'graphql';
 
-import useImperativeQuery from '@utils/useImperativeQuery';
 import {useGetCurrentISO6391Language} from '@hooks';
 import * as SchemaTypes from '@schema-types';
+import {useImperativeQuery} from '@utils';
 
 const INITIAL_STATE = {
   isLoading: false,

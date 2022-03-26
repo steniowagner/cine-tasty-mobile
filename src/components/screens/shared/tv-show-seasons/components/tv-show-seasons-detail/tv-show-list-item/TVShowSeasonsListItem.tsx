@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 
@@ -13,26 +13,24 @@ type TVShowSeasonsListItemProps = {
   index: number;
 };
 
-const TVShowSeasonsListItem = ({ episode, index }: TVShowSeasonsListItemProps) => {
-  const { onPressListItem } = useTVShowSeasonsListItem({ episode });
+const TVShowSeasonsListItem = ({
+  episode,
+  index,
+}: TVShowSeasonsListItemProps) => {
+  const {onPressListItem} = useTVShowSeasonsListItem({episode});
 
   return (
     <>
       <Styles.ListItemWrapper
         onPress={onPressListItem}
-        testID="episode-list-item"
-      >
+        testID="episode-list-item">
         <Styles.Row>
           <Styles.EpisodeIndexWrapper>
-            <Styles.EpisodeIndexText
-              testID="episode-index-text"
-            >
+            <Styles.EpisodeIndexText testID="episode-index-text">
               {index + 1}
             </Styles.EpisodeIndexText>
           </Styles.EpisodeIndexWrapper>
-          <Styles.EpisodeNameText
-            testID="episode-name-text"
-          >
+          <Styles.EpisodeNameText testID="episode-name-text">
             {episode.name}
           </Styles.EpisodeNameText>
         </Styles.Row>

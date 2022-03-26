@@ -1,12 +1,11 @@
 import React from 'react';
-import { render, cleanup, act } from '@testing-library/react-native';
+import {render, cleanup, act} from '@testing-library/react-native';
 
-import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
-import { ThemeContextProvider } from '@providers';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
+import {DEFAULT_ANIMATION_DURATION, ThemeContextProvider} from '@providers';
 
-import { NUMBER_ITEMS } from './loading-expansible-text-section/LoadingExpansibleTextSection';
-import ExpansibleTextSection from './ExpansibleTextSection';
+import {NUMBER_ITEMS} from './loading-expansible-text-section/LoadingExpansibleTextSection';
+import {ExpansibleTextSection} from './ExpansibleTextSection';
 
 const SECTION_TITLE = 'SECTION_TITLE';
 
@@ -30,7 +29,7 @@ describe('Testing <ExpansibleTextSection />', () => {
   afterEach(cleanup);
 
   it('should render correctly when is not loading', () => {
-    const { getByText, queryByTestId, queryAllByTestId, getByTestId } = render(
+    const {getByText, queryByTestId, queryAllByTestId, getByTestId} = render(
       renderExpansibleTextSection({}),
     );
 
@@ -44,8 +43,8 @@ describe('Testing <ExpansibleTextSection />', () => {
   });
 
   it('should render correctly when is loading', () => {
-    const { getByText, queryByTestId, getAllByTestId, getByTestId } = render(
-      renderExpansibleTextSection({ isLoading: true }),
+    const {getByText, queryByTestId, getAllByTestId, getByTestId} = render(
+      renderExpansibleTextSection({isLoading: true}),
     );
 
     act(() => {

@@ -1,8 +1,7 @@
 import React, {useLayoutEffect} from 'react';
 import {FlatList} from 'react-native';
 
-import LoadingIndicator from '@components/common/loading-indicator/LoadingIndicator';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {LoadingIndicator, SVGIcon} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 

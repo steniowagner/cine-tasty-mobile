@@ -1,12 +1,12 @@
 import React from 'react';
 
-import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import {LoadingPlaceholder} from '@components/common';
 
 import * as Styles from './LoadingExpansibleTextSection.styles';
 
 export const NUMBER_ITEMS = 4;
 
-const ExpansibleTextSection = () => (
+export const LoadingExpansibleTextSection = () => (
   <Styles.Wrapper testID="loading-expansible-text-section">
     {Array(NUMBER_ITEMS)
       .fill({})
@@ -18,5 +18,3 @@ const ExpansibleTextSection = () => (
       ))}
   </Styles.Wrapper>
 );
-
-export default ExpansibleTextSection;

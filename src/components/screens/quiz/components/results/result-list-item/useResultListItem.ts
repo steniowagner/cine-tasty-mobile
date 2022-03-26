@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 
 import {Colors} from 'styled-components/native';
 
-import {SupportedIcons} from '@components/common/svg-icon/getXML';
+import {Icons} from '@components/common';
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import * as Types from '@local-types';
@@ -29,8 +29,8 @@ const useResultListItem = (props: UseResultListItemProps) => {
   const icon = useMemo(
     () => ({
       id: props.result.isCorrect
-        ? ('checkbox-circle' as SupportedIcons)
-        : ('close-circle' as SupportedIcons),
+        ? ('checkbox-circle' as Icons)
+        : ('close-circle' as Icons),
       colorThemeRef: props.result.isCorrect
         ? ('green' as keyof Colors)
         : ('red' as keyof Colors),

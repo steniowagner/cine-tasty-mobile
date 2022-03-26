@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import { ImageType } from '@local-types';
+import {TMDBImage} from '@components/common';
+import {ImageType} from '@local-types';
 
-import useProgressiveImage from './useProgressiveImage';
+import {useProgressiveImage} from './useProgressiveImage';
 import * as Styles from './ProgressiveImage.styles';
 
 const styles = StyleSheet.create({
@@ -28,7 +28,7 @@ type ProgressiveImageProps = {
   image: string;
 };
 
-const ProgressiveImage = ({
+export const ProgressiveImage = ({
   borderRadius = 0,
   imageType,
   image,
@@ -42,9 +42,7 @@ const ProgressiveImage = ({
   } = useProgressiveImage();
 
   return (
-    <Styles.ForegroundLayer
-      borderRadius={borderRadius}
-    >
+    <Styles.ForegroundLayer borderRadius={borderRadius}>
       {!isImageLoaded && (
         <TMDBImage
           onLoad={onLoadThumbnail}
@@ -79,5 +77,3 @@ const ProgressiveImage = ({
     </Styles.ForegroundLayer>
   );
 };
-
-export default ProgressiveImage;

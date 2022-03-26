@@ -28,7 +28,7 @@ const Tabs = () => (
       screenOptions={{
         headerShown: false,
       }}>
-      {/**<Tab.Screen component={HomeStack} name={Routes.Tabs.HOME} /> */}
+      <Tab.Screen component={HomeStack} name={Routes.Tabs.HOME} />
       <Tab.Screen component={FamousStack} name={Routes.Tabs.FAMOUS} />
       <Tab.Screen component={QuizStack} name={Routes.Tabs.QUIZ} />
       <Tab.Screen component={NewsStack} name={Routes.Tabs.NEWS} />

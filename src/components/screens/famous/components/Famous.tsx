@@ -1,7 +1,6 @@
 import React, {useLayoutEffect} from 'react';
 
-import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
-import FamousList from '@components/common/famous-list/FamousList';
+import {HeaderIconButton, FamousList} from '@components/common';
 
 import {FamousStackProps} from '../routes/route-params-types';
 import useFamous from './useFamous';

@@ -9,14 +9,12 @@ import {
 } from '@testing-library/react-native';
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
 
-jest.mock('@utils/storage');
-
 import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import {DEFAULT_ANIMATION_DURATION} from '@components/common/popup-advice/PopupAdvice';
+import * as mockSearchFamous from '@mocks/fixtures/searchFamous';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import possibleTypes from '@graphql/possibleTypes.json';
+import {DEFAULT_ANIMATION_DURATION} from '@providers';
 import MockedNavigation from '@mocks/MockedNavigator';
-import * as mockSearchFamous from '@mocks/fixtures/searchFamous';
 import {dark as theme} from '@styles/themes/dark';
 import {randomPositiveNumber} from '@mocks/utils';
 import {AlertMessageProvider} from '@providers';
@@ -24,15 +22,11 @@ import {InMemoryCache} from '@apollo/client';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
+import {storage} from '@utils';
 
 import {STORAGE_SEARCH_SECTION} from '../../recent-searches/useRecentSearches';
 import {SEARCH_BY_QUERY_DELAY} from '../useSearchByQuery';
-
-const storage = require('@utils/storage');
-
-const mockNavigation = {
-  navigate: jest.fn(),
-};
+import SearchFamous from '../Search';
 
 const STORAGE_KEY = `${STORAGE_SEARCH_SECTION}:${SchemaTypes.SearchType.PERSON.toString()}`;
 const paginationError = Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR;
@@ -43,6 +37,17 @@ const SOME_FAMOUS_NAME = 'Stenio Wagner';
 const queryId = 'search_famous';
 const baseVariables = (page: number) => ({
   input: {language: 'EN', type: 'PERSON', query: SOME_FAMOUS_NAME, page},
+});
+const mockNavigation = {
+  navigate: jest.fn(),
+};
+
+jest.mock('@utils', () => {
+  const utilsModule = jest.requireActual('@utils');
+  return {
+    ...utilsModule,
+    storage: {},
+  };
 });
 
 jest.mock('@react-navigation/native', () => {
@@ -58,8 +63,6 @@ jest.mock('@react-navigation/native', () => {
 jest.mock('react-native-status-bar-height', () => ({
   getStatusBarHeight: () => 10,
 }));
-
-import SearchFamous from '../Search';
 
 const renderSearchFamous = (
   mockResolvers?: readonly MockedResponse<Record<string, any>>[],
@@ -109,10 +112,6 @@ const renderSearchFamous = (
 };
 
 describe('<Search /> [Famous]', () => {
-  afterEach(cleanup);
-
-  beforeEach(setupTimeTravel);
-
   const elements = {
     famousList: (api: RenderAPI) => api.queryByTestId('famous-list'),
     topReloadButton: (api: RenderAPI) => api.queryByTestId('top-reload-button'),
@@ -139,6 +138,21 @@ describe('<Search /> [Famous]', () => {
     recentSearches: (api: RenderAPI) =>
       api.queryByTestId('recent-searches-list'),
   };
+  const mockStorage = {
+    remove: jest.fn(),
+    get: jest.fn(),
+    set: jest.fn(),
+  };
+
+  beforeAll(() => {
+    storage.remove = mockStorage.remove;
+    storage.get = mockStorage.get;
+    storage.set = mockStorage.set;
+  });
+
+  afterEach(cleanup);
+
+  beforeEach(setupTimeTravel);
 
   describe('Recent-searches-list', () => {
     beforeEach(() => {
@@ -173,7 +187,7 @@ describe('<Search /> [Famous]', () => {
     it('should persist the selected-item into the recent-searches when this selected-item is already persisted', async () => {});
 
     it('should persist the selected-item into the recent-searches when there is no items persisted', async () => {
-      storage.get.mockImplementation(() => []);
+      mockStorage.get.mockImplementation(() => []);
       const numberOfItems = randomPositiveNumber(10, 1);
       const famousList = mockSearchFamous.famousList(numberOfItems);
       const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
@@ -200,11 +214,11 @@ describe('<Search /> [Famous]', () => {
       await waitFor(() => {
         expect(elements.famousList(component)).not.toBeNull();
       });
-      expect(storage.set).toHaveBeenCalledTimes(0);
+      expect(mockStorage.set).toHaveBeenCalledTimes(0);
       fireEvent.press(elements.famousListItems(component)[indexItemSelected]);
       await waitFor(() => {
-        expect(storage.set).toHaveBeenCalledTimes(1);
-        expect(storage.set).toHaveBeenCalledWith(STORAGE_KEY, [
+        expect(mockStorage.set).toHaveBeenCalledTimes(1);
+        expect(mockStorage.set).toHaveBeenCalledWith(STORAGE_KEY, [
           {
             image: famousList[indexItemSelected].image,
             title: famousList[indexItemSelected].title,
@@ -224,7 +238,7 @@ describe('<Search /> [Famous]', () => {
           image: `image-${index}`,
           id: `id-${index}`,
         }));
-      storage.get.mockImplementation(() => recentSearches);
+      mockStorage.get.mockImplementation(() => recentSearches);
       const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
       const entryQueryResult = mockSearchFamous.searchFamousResolvers(
         baseVariables(1),
@@ -249,11 +263,11 @@ describe('<Search /> [Famous]', () => {
       await waitFor(() => {
         expect(elements.famousList(component)).not.toBeNull();
       });
-      expect(storage.set).toHaveBeenCalledTimes(0);
+      expect(mockStorage.set).toHaveBeenCalledTimes(0);
       fireEvent.press(elements.famousListItems(component)[indexItemSelected]);
       await waitFor(() => {
-        expect(storage.set).toHaveBeenCalledTimes(1);
-        expect(storage.set).toHaveBeenCalledWith(STORAGE_KEY, [
+        expect(mockStorage.set).toHaveBeenCalledTimes(1);
+        expect(mockStorage.set).toHaveBeenCalledWith(STORAGE_KEY, [
           {
             image: famousList[indexItemSelected].image,
             title: famousList[indexItemSelected].title,
@@ -267,7 +281,7 @@ describe('<Search /> [Famous]', () => {
     it('should persist the selected-item into the recent-searches when the selected-item is already persisted', async () => {
       const numberOfItems = randomPositiveNumber(10, 1);
       const famousList = mockSearchFamous.famousList(numberOfItems);
-      storage.get.mockImplementation(() => recentSearches);
+      mockStorage.get.mockImplementation(() => recentSearches);
       const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
       const recentSearches = [famousList[indexItemSelected]];
       const entryQueryResult = mockSearchFamous.searchFamousResolvers(
@@ -293,11 +307,11 @@ describe('<Search /> [Famous]', () => {
       await waitFor(() => {
         expect(elements.famousList(component)).not.toBeNull();
       });
-      expect(storage.set).toHaveBeenCalledTimes(0);
+      expect(mockStorage.set).toHaveBeenCalledTimes(0);
       fireEvent.press(elements.famousListItems(component)[indexItemSelected]);
       await waitFor(() => {
-        expect(storage.set).toHaveBeenCalledTimes(1);
-        expect(storage.set).toHaveBeenCalledWith(STORAGE_KEY, [
+        expect(mockStorage.set).toHaveBeenCalledTimes(1);
+        expect(mockStorage.set).toHaveBeenCalledWith(STORAGE_KEY, [
           {
             image: famousList[indexItemSelected].image,
             title: famousList[indexItemSelected].title,

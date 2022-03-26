@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import HeaderIconButton from './HeaderIconButton';
+import {HeaderIconButton} from './HeaderIconButton';
 
 const ICON_NAME = 'tune';
 

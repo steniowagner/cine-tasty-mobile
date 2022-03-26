@@ -10,7 +10,7 @@ type ModalSelectButtonProps = {
   title: string;
 };
 
-const ModalSelectButton = (props: ModalSelectButtonProps) => (
+export const ModalSelectButton = (props: ModalSelectButtonProps) => (
   <Styles.SelectButton
     borderBottomRightRadius={props.borderBottomRightRadius}
     borderBottomLeftRadius={props.borderBottomLeftRadius}
@@ -22,5 +22,3 @@ const ModalSelectButton = (props: ModalSelectButtonProps) => (
     </Styles.SelectButtonText>
   </Styles.SelectButton>
 );
-
-export default ModalSelectButton;

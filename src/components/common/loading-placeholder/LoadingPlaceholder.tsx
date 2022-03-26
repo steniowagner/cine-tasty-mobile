@@ -11,21 +11,21 @@ type LoadingPlaceholderProps = {
   style: object;
 };
 
-const LoadingPlaceholder = (props: LoadingPlaceholderProps) => {
-  const loadingPlaceholder = useLoadingPlaceholder({
-    indexToDelayAnimation: props.indexToDelayAnimation || 0,
-  });
+export const LoadingPlaceholder = withTheme(
+  (props: LoadingPlaceholderProps) => {
+    const loadingPlaceholder = useLoadingPlaceholder({
+      indexToDelayAnimation: props.indexToDelayAnimation || 0,
+    });
 
-  return (
-    <Animated.View
-      style={{
-        ...props.style,
-        backgroundColor: props.theme.colors.loadingColor,
-        opacity: loadingPlaceholder.opacity,
-      }}
-      testID={props.testID || 'loading-placeholder'}
-    />
-  );
-};
-
-export default withTheme(LoadingPlaceholder);
+    return (
+      <Animated.View
+        style={{
+          ...props.style,
+          backgroundColor: props.theme.colors.loadingColor,
+          opacity: loadingPlaceholder.opacity,
+        }}
+        testID={props.testID || 'loading-placeholder'}
+      />
+    );
+  },
+);

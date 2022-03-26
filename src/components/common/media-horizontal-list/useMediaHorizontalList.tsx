@@ -21,12 +21,12 @@ type MediaItem = {
   id: number;
 };
 
-export type UseMediaHorizontalList = {
+export type UseMediaHorizontalListProps = {
   dataset: MediaHorizontalItem[];
   type: MediaType;
 };
 
-const useMediaHorizontalList = (props: UseMediaHorizontalList) => {
+export const useMediaHorizontalList = (props: UseMediaHorizontalListProps) => {
   const navigation = useNavigation<FamousNavigationProp>();
 
   const handlePressItem = useCallback(
@@ -64,5 +64,3 @@ const useMediaHorizontalList = (props: UseMediaHorizontalList) => {
     dataset,
   };
 };
-
-export default useMediaHorizontalList;

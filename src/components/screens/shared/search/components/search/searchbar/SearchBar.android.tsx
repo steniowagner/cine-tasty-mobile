@@ -1,7 +1,7 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 
-import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
+import {HeaderIconButton} from '@components/common';
 import {CONSTANTS} from '@utils';
 
 import * as Styles from './SearchBar.styles';

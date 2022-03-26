@@ -1,8 +1,7 @@
 import React, {useMemo, memo} from 'react';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import {SupportedIcons} from '@components/common/svg-icon/getXML';
+import {renderSVGIconConditionally, Icons} from '@components/common';
 import {useGetCurrentTheme} from '@hooks';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';
@@ -12,8 +11,8 @@ import * as Styles from './TabNavigatorItem.styles';
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
 type NavigatorItemProps = {
-  inactiveIcon: SupportedIcons;
-  activeIcon: SupportedIcons;
+  inactiveIcon: Icons;
+  activeIcon: Icons;
   onPress: () => void;
   isSelected: boolean;
   theme: DefaultTheme;

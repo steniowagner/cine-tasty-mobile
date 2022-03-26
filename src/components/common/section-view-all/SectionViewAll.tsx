@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components/common';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
@@ -14,27 +14,26 @@ type SectionViewAllProps = {
   id: string;
 };
 
-const SectionViewAll = ({
+export const SectionViewAll = ({
   onPressViewAll,
   sectionTitle,
   withViewAll = true,
   id,
 }: SectionViewAllProps) => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   return (
     <Styles.SectionTextContentWrapper>
-      <Styles.SectionTitle
-        testID="section-title"
-      >
+      <Styles.SectionTitle testID="section-title">
         {sectionTitle}
       </Styles.SectionTitle>
       {withViewAll && (
         <Styles.ViewAllWrapper
           testID={`view-all-button-${id}`}
-          onPress={onPressViewAll}
-        >
-          <Styles.ViewAllText>{t(TRANSLATIONS.HOME_VIEW_ALL)}</Styles.ViewAllText>
+          onPress={onPressViewAll}>
+          <Styles.ViewAllText>
+            {t(TRANSLATIONS.HOME_VIEW_ALL)}
+          </Styles.ViewAllText>
           <SVGIcon
             size={metrics.getWidthFromDP('7%')}
             colorThemeRef="buttonText"
@@ -45,5 +44,3 @@ const SectionViewAll = ({
     </Styles.SectionTextContentWrapper>
   );
 };
-
-export default SectionViewAll;

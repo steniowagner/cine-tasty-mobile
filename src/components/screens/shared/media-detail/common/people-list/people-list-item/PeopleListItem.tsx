@@ -1,8 +1,7 @@
 import React from 'react';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import { useLoadListItemImage } from '@hooks';
+import {renderSVGIconConditionally, TMDBImage} from '@components/common';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './PeopleListItem.styles';
@@ -28,22 +27,16 @@ const PeopleListItem = ({
   name,
   type,
 }: PeopleListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
-  });
+  const {isFallbackImageVisible, hasError, onError, opacity, onLoad} =
+    useLoadListItemImage({
+      image,
+    });
 
   return (
     <Styles.Wrapper
       testID={`button-wrapper-${type}`}
       isFirst={isFirst}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <TMDBImage
         testID="person-image"
         imageType="poster"
@@ -63,8 +56,7 @@ const PeopleListItem = ({
             {
               opacity,
             },
-          ]}
-        >
+          ]}>
           {renderSVGIconConditionally({
             condition: hasError,
             ifTrue: {
@@ -83,15 +75,11 @@ const PeopleListItem = ({
       <Styles.ContentWrapper>
         <Styles.SmokeShadow />
         <Styles.TextContentWrapper>
-          <Styles.PersonNameText
-            testID="person-name"
-          >
+          <Styles.PersonNameText testID="person-name">
             {name}
           </Styles.PersonNameText>
           {withSubtext && (
-            <Styles.PersonSubText
-              testID="person-subtext"
-            >
+            <Styles.PersonSubText testID="person-subtext">
               {subText}
             </Styles.PersonSubText>
           )}

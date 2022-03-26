@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-import shuffleDataset from '@utils/shuffleDataset';
+import {shuffleDataset} from '@utils';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
@@ -11,7 +10,9 @@ type TrendingItems = (
   name?: string;
 };
 
-const parseTop3Data = (trendingItems: TrendingItems[]): Types.HomeTop3Item[] => {
+const parseTop3Data = (
+  trendingItems: TrendingItems[],
+): Types.HomeTop3Item[] => {
   const top3Dataset = shuffleDataset<TrendingItems>(trendingItems);
 
   return top3Dataset.slice(0, 3).map((trendingItem: TrendingItems) => ({

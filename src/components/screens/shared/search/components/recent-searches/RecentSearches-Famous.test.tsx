@@ -8,17 +8,18 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-jest.mock('@utils/storage');
-
 import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import {randomPositiveNumber, randomArrayIndex} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 import {setupTimeTravel} from '@mocks/timeTravel';
 import * as SchemaTypes from '@schema-types';
 import {Routes} from '@routes/routes';
+import {storage} from '@utils';
 
 import {STORAGE_SEARCH_SECTION} from './useRecentSearches';
 import RecentSearches from './RecentSearches';
+
+jest.mock('@utils');
 
 const mockNavigation = {
   navigate: jest.fn(),
@@ -44,8 +45,6 @@ const renderRecentSearchFamous = () => (
 
 const STORAGE_KEY = `${STORAGE_SEARCH_SECTION}:${SchemaTypes.SearchType.PERSON.toString()}`;
 
-const storage = require('@utils/storage');
-
 const items = (length: number) =>
   Array(length)
     .fill({})
@@ -66,6 +65,17 @@ describe('<RecentSearches /> - [Famous]', () => {
     recentSearchesList: (api: RenderAPI) =>
       api.queryByTestId('recent-searches-list'),
   };
+  const mockStorage = {
+    remove: jest.fn(),
+    get: jest.fn(),
+    set: jest.fn(),
+  };
+
+  beforeAll(() => {
+    storage.remove = mockStorage.remove;
+    storage.get = mockStorage.get;
+    storage.set = mockStorage.set;
+  });
 
   beforeEach(() => {
     setupTimeTravel();
@@ -75,10 +85,14 @@ describe('<RecentSearches /> - [Famous]', () => {
   afterEach(cleanup);
 
   describe('Render', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('should show the list of the recent-famous-searched when has some items saved on the storage', () => {
       const datasetLength = randomPositiveNumber(10, 1);
       const dataset = items(datasetLength);
-      storage.get.mockImplementationOnce(() => dataset);
+      mockStorage.get.mockImplementationOnce(() => dataset);
       const component = render(renderRecentSearchFamous());
       act(() => {
         jest.runAllTimers();
@@ -87,19 +101,19 @@ describe('<RecentSearches /> - [Famous]', () => {
       expect(elements.recentSearchesItems(component).length).toEqual(
         datasetLength,
       );
-      expect(storage.get).toHaveBeenCalledTimes(2);
-      expect(storage.get).toHaveBeenNthCalledWith(1, STORAGE_KEY, []);
+      expect(mockStorage.get).toHaveBeenCalledTimes(2);
+      expect(mockStorage.get).toHaveBeenNthCalledWith(1, STORAGE_KEY, []);
     });
 
     it("should not show the recent-search-list when there's no items saved on the storage", () => {
-      storage.get.mockImplementationOnce(() => []);
+      mockStorage.get.mockImplementationOnce(() => []);
       const component = render(renderRecentSearchFamous());
       act(() => {
         jest.runAllTimers();
       });
       expect(elements.recentSearchesList(component)).toBeNull();
-      expect(storage.get).toHaveBeenCalledTimes(2);
-      expect(storage.get).toHaveBeenNthCalledWith(1, STORAGE_KEY, []);
+      expect(mockStorage.get).toHaveBeenCalledTimes(2);
+      expect(mockStorage.get).toHaveBeenNthCalledWith(1, STORAGE_KEY, []);
     });
   });
 
@@ -107,7 +121,7 @@ describe('<RecentSearches /> - [Famous]', () => {
     it("should remove an item from the storage when the user presses on the 'x' button on the list-item", () => {
       const datasetLength = randomPositiveNumber(10, 1);
       const dataset = items(datasetLength);
-      storage.get.mockImplementation(() => dataset);
+      mockStorage.get.mockImplementation(() => dataset);
       const component = render(renderRecentSearchFamous());
       const indexItemRemoved = randomArrayIndex(dataset);
       act(() => {
@@ -123,8 +137,8 @@ describe('<RecentSearches /> - [Famous]', () => {
       act(() => {
         jest.runAllTimers();
       });
-      expect(storage.set).toHaveBeenCalledTimes(1);
-      expect(storage.set).toHaveBeenCalledWith(
+      expect(mockStorage.set).toHaveBeenCalledTimes(1);
+      expect(mockStorage.set).toHaveBeenCalledWith(
         STORAGE_KEY,
         dataset.filter(item => item.id !== dataset[indexItemRemoved].id),
       );
@@ -133,7 +147,7 @@ describe('<RecentSearches /> - [Famous]', () => {
     it('should call "navigation.navigate" correctly when the some item is pressed', () => {
       const datasetLength = randomPositiveNumber(10, 1);
       const dataset = items(datasetLength);
-      storage.get.mockImplementation(() => dataset);
+      mockStorage.get.mockImplementation(() => dataset);
       const component = render(renderRecentSearchFamous());
       const itemPressedIndex = randomArrayIndex(dataset);
       act(() => {

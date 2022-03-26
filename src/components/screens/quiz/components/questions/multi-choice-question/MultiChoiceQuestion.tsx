@@ -1,9 +1,9 @@
 import React, {memo} from 'react';
-import ModalSelectButton from '@components/common/modal-select-button/ModalSelectButton';
+
+import {ModalSelectButton} from '@components/common';
 
 import MultiChoiceQuestionListItem from './multi-choice-question-list-item/MultiChoiceQuestionListItem';
 import {DEFAULT_BORDER_RADIUS} from '../question-wrapper/QuestionWrapper.styles';
-
 import useMultiChoiceQuestion from './useMultiChoiceQuestion';
 
 type MultiChoiceQuestionProps = {

@@ -1,9 +1,8 @@
 import React from 'react';
 
-import MediaItemDescription from '@components/common/media-item-description/MediaItemDescription';
-import Section from '@components/common/section/Section';
+import {MediaItemDescription, Section} from '@components/common';
 
-import LoadingExpansibleTextSection from './loading-expansible-text-section/LoadingExpansibleTextSection';
+import {LoadingExpansibleTextSection} from './loading-expansible-text-section/LoadingExpansibleTextSection';
 import * as Styles from './ExpansibleTextSection.styles';
 
 type ExpansibleTextSectionProps = {
@@ -12,7 +11,7 @@ type ExpansibleTextSectionProps = {
   text: string;
 };
 
-const ExpansibleTextSection = (props: ExpansibleTextSectionProps) => (
+export const ExpansibleTextSection = (props: ExpansibleTextSectionProps) => (
   <Section title={props.sectionTitle} noMarginBottom>
     {props.isLoading ? (
       <LoadingExpansibleTextSection />
@@ -23,5 +22,3 @@ const ExpansibleTextSection = (props: ExpansibleTextSectionProps) => (
     )}
   </Section>
 );
-
-export default ExpansibleTextSection;

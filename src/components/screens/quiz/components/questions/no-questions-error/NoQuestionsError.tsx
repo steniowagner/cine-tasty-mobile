@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Advise from '@components/common/advise/Advise';
+import {Advise} from '@components/common';
 
 import useNoQuestionsError from './useNoQuestionsError';
 

@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import PaginationFooter from './PaginationFooter';
+import {PaginationFooter} from './PaginationFooter';
 
 type RenderPaginationFooterProps = {
   onPressReloadButton?: () => void;

@@ -13,7 +13,7 @@ import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBIm
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 
-import FamousListItem from './FamousListItem';
+import {FamousListItem} from './FamousListItem';
 
 const TITLE = 'TITLE';
 

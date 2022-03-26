@@ -1,11 +1,11 @@
 import React from 'react';
+import {ThemeProvider} from 'styled-components/native';
 import {
   RenderAPI,
   fireEvent,
   render,
   waitFor,
 } from '@testing-library/react-native';
-import {ThemeProvider} from 'styled-components/native';
 
 import {randomPositiveNumber, randomArrayIndex} from '@mocks/utils';
 import {castTVshows} from '@mocks/fixtures/tv-shows';
@@ -14,9 +14,9 @@ import {dark as theme} from '@styles/themes/dark';
 import {castMovies} from '@mocks/fixtures/movie';
 import {Routes} from '@routes/routes';
 
-import MediaHorizontalList from './MediaHorizontalList';
+import {MediaHorizontalList} from './MediaHorizontalList';
 import {
-  UseMediaHorizontalList,
+  UseMediaHorizontalListProps,
   MediaHorizontalItem,
 } from './useMediaHorizontalList';
 
@@ -36,7 +36,7 @@ jest.mock('@react-navigation/native', () => {
 });
 
 const renderMediaHorizontalList = (
-  props: UseMediaHorizontalList & {
+  props: UseMediaHorizontalListProps & {
     title: string;
   },
 ) => (

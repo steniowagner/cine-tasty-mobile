@@ -1,13 +1,13 @@
 import React from 'react';
 
-import useMediaItemDescription from './useMediaItemDescription';
+import {useMediaItemDescription} from './useMediaItemDescription';
 import * as Styles from './MediaItemDescription.styles';
 
 type MediaItemDescriptionProps = {
   description: string;
 };
 
-const MediaItemDescription = (props: MediaItemDescriptionProps) => {
+export const MediaItemDescription = (props: MediaItemDescriptionProps) => {
   const mediaItemDescription = useMediaItemDescription();
   return (
     <>
@@ -32,5 +32,3 @@ const MediaItemDescription = (props: MediaItemDescriptionProps) => {
     </>
   );
 };
-
-export default MediaItemDescription;

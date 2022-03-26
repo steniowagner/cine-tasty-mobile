@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import {LoadingPlaceholder} from '@components/common';
 import metrics from '@styles/metrics';
 
 import * as NewsListItemStyles from '../list-item/NewsListItem.styles';

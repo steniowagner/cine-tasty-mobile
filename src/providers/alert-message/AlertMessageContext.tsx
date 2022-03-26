@@ -7,7 +7,7 @@ import React, {
   useMemo,
 } from 'react';
 
-import AlertMessage from './AlertMessage';
+import {AlertMessage} from './AlertMessage';
 
 type AlertMessageProviderProps = {
   children?: ReactNode;

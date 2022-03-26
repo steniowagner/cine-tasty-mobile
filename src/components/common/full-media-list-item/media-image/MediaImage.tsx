@@ -1,8 +1,7 @@
 import React from 'react';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import { useLoadListItemImage } from '@hooks';
+import {renderSVGIconConditionally, TMDBImage} from '@components/common';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './MediaImage.styles';
@@ -15,16 +14,11 @@ type MediaImageProps = {
   image: string;
 };
 
-const MediaImage = ({ image }: MediaImageProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
-  });
+export const MediaImage = ({image}: MediaImageProps) => {
+  const {isFallbackImageVisible, hasError, onError, opacity, onLoad} =
+    useLoadListItemImage({
+      image,
+    });
 
   return (
     <>
@@ -47,8 +41,7 @@ const MediaImage = ({ image }: MediaImageProps) => {
             {
               opacity,
             },
-          ]}
-        >
+          ]}>
           {renderSVGIconConditionally({
             condition: hasError,
             ifTrue: {
@@ -67,5 +60,3 @@ const MediaImage = ({ image }: MediaImageProps) => {
     </>
   );
 };
-
-export default MediaImage;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
@@ -12,7 +12,7 @@ import items from './items';
 const ITEM_WIDTH = metrics.width / items.length;
 
 const TabNavigator = (props: BottomTabBarProps) => {
-  const { shouldShowTabNavigator, tabTitles, t } = useTabNavigator(props);
+  const {shouldShowTabNavigator, tabTitles, t} = useTabNavigator(props);
 
   if (!shouldShowTabNavigator) {
     return null;
@@ -30,11 +30,17 @@ const TabNavigator = (props: BottomTabBarProps) => {
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-      }}
-    >
+      }}>
       {items.map((item, index) => (
         <TabNavigatorItem
-          onPress={() => props.navigation.navigate(props.state.routeNames[index])}
+          onPress={() => {
+            console.log(
+              props.state.routeNames,
+              index,
+              props.state.routeNames[index],
+            );
+            props.navigation.navigate(props.state.routeNames[index]);
+          }}
           title={t(`${TRANSLATIONS.TABS}:${tabTitles[index].toLowerCase()}`)}
           isSelected={index === props.state.index}
           inactiveIcon={item.inactiveIcon}

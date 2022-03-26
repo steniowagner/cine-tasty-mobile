@@ -1,25 +1,23 @@
 import React from 'react';
-import { FlatList } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import {FlatList} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
-import MediaItemDescription from '@components/common/media-item-description/MediaItemDescription';
+import {MediaItemDescription} from '@components/common';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
-import { ReviewsStackProps } from '../routes/route-params-types';
+import {ReviewsStackProps} from '../routes/route-params-types';
 import * as Styles from './Reviews.styles';
 
-const Reviews = ({ route }: ReviewsStackProps) => {
-  const { t } = useTranslation();
+const Reviews = ({route}: ReviewsStackProps) => {
+  const {t} = useTranslation();
 
   return (
     <FlatList
-      renderItem={({ item }) => (
+      renderItem={({item}) => (
         <Styles.ContentWrapper>
           <Styles.AuthorText>{item.author}</Styles.AuthorText>
-          <MediaItemDescription
-            description={item.content}
-          />
+          <MediaItemDescription description={item.content} />
         </Styles.ContentWrapper>
       )}
       contentContainerStyle={{

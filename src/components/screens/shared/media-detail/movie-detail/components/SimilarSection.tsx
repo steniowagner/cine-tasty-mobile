@@ -1,10 +1,9 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { FlatList } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import {FlatList} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
-import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
-import Section from '@components/common/section/Section';
+import {SimplifiedMediaListItem, Section} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
@@ -13,8 +12,8 @@ type SimilarSectionProps = {
   movie: SchemaTypes.MovieDetail_movie;
 };
 
-const SimilarSection = ({ onPressItem, movie }: SimilarSectionProps) => {
-  const { t } = useTranslation();
+const SimilarSection = ({onPressItem, movie}: SimilarSectionProps) => {
+  const {t} = useTranslation();
 
   return (
     <Section
@@ -22,11 +21,10 @@ const SimilarSection = ({ onPressItem, movie }: SimilarSectionProps) => {
         movie.similar.length
           ? t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)
           : `${t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)} (0)`
-      }
-    >
+      }>
       <FlatList
         keyExtractor={(item, index) => `${item.id}-${index}`}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <SimplifiedMediaListItem
             onPress={() => onPressItem(item)}
             voteAverage={item.voteAverage}

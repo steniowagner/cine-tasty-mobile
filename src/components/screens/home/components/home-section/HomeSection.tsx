@@ -1,8 +1,7 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import {FlatList} from 'react-native';
 
-import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
-import SectionViewAll from '@components/common/section-view-all/SectionViewAll';
+import {SimplifiedMediaListItem, SectionViewAll} from '@components/common';
 import * as Types from '@local-types';
 
 import * as Styles from './HomeSection.styles';
@@ -20,16 +19,14 @@ const HomeSection = ({
   onPressItem,
   items,
 }: HomeSectionProps) => (
-  <Styles.Wrapper
-    testID="section-wrapper"
-  >
+  <Styles.Wrapper testID="section-wrapper">
     <SectionViewAll
       onPressViewAll={onPressViewAll}
       sectionTitle={sectionTitle}
       id={sectionTitle}
     />
     <FlatList
-      renderItem={({ item, index }) => (
+      renderItem={({item, index}) => (
         <SimplifiedMediaListItem
           onPress={() => onPressItem(item)}
           voteAverage={item.voteAverage}

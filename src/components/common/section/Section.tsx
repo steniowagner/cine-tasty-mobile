@@ -10,7 +10,7 @@ type SectionProps = {
   title: string;
 };
 
-const Section = (props: SectionProps) => (
+export const Section = (props: SectionProps) => (
   <Styles.Wrapper
     withHorizontalPadding={props.withHorizontalPadding}
     noMarginBottom={props.noMarginBottom}
@@ -23,5 +23,3 @@ const Section = (props: SectionProps) => (
     {props.children}
   </Styles.Wrapper>
 );
-
-export default Section;

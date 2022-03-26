@@ -1,7 +1,7 @@
-import { useCallback, useState, useRef } from 'react';
-import { Animated } from 'react-native';
+import {useCallback, useState, useRef} from 'react';
+import {Animated} from 'react-native';
 
-const useProgressiveImage = () => {
+export const useProgressiveImage = () => {
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
 
   const thumbnailOpacity = useRef(new Animated.Value(0)).current;
@@ -31,5 +31,3 @@ const useProgressiveImage = () => {
     onLoadImage,
   };
 };
-
-export default useProgressiveImage;

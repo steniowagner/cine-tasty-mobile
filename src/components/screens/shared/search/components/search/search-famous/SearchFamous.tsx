@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FamousList from '@components/common/famous-list/FamousList';
+import {FamousList} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 
 import useSearchFamous from './useSearchFamous';

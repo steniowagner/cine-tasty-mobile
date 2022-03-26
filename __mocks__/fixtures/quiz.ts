@@ -2,7 +2,7 @@ import { GraphQLError } from 'graphql';
 
 import {randomPositiveNumber, randomArrayElement} from '@mocks/utils';
 import {GET_QUIZ_QUESTIONS} from '@graphql/queries';
-import shuffleDataset from '@utils/shuffleDataset';
+import {shuffleDataset} from '@utils';
 import * as SchemaTypes from '@schema-types';
 
 export const mockQuiz = () => {

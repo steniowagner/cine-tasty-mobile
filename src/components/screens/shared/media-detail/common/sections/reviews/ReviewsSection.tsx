@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { FlatList } from 'react-native';
+import {FlatList} from 'react-native';
 
-import SectionViewAll from '@components/common/section-view-all/SectionViewAll';
+import {SectionViewAll} from '@components/common';
 import * as SchemaTypes from '@schema-types';
 
 import ReviewSectionListItem from './reviews-section-list-item/ReviewSectionListItem';
@@ -17,18 +17,12 @@ type ReviewsSectionProps = {
   onPressViewAll: () => void;
 };
 
-const ReviewsSection = ({ onPressViewAll, reviews }: ReviewsSectionProps) => {
-  const {
-    indexReviewSelected,
-    onMomentumScrollEnd,
-    sectionTitle,
-    flatListRef,
-  } = useReviewsSection();
+const ReviewsSection = ({onPressViewAll, reviews}: ReviewsSectionProps) => {
+  const {indexReviewSelected, onMomentumScrollEnd, sectionTitle, flatListRef} =
+    useReviewsSection();
 
   return (
-    <Styles.ContentWrapper
-      testID="reviews-content-wrapper"
-    >
+    <Styles.ContentWrapper testID="reviews-content-wrapper">
       <SectionViewAll
         sectionTitle={`${sectionTitle} (${reviews.length})`}
         onPressViewAll={onPressViewAll}
@@ -38,12 +32,9 @@ const ReviewsSection = ({ onPressViewAll, reviews }: ReviewsSectionProps) => {
       <FlatList
         onMomentumScrollEnd={onMomentumScrollEnd}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={({ id }) => id}
-        renderItem={({ item }) => (
-          <ReviewSectionListItem
-            review={item.content}
-            author={item.author}
-          />
+        keyExtractor={({id}) => id}
+        renderItem={({item}) => (
+          <ReviewSectionListItem review={item.content} author={item.author} />
         )}
         data={reviews.slice(0, 3)}
         ref={flatListRef}
@@ -58,8 +49,7 @@ const ReviewsSection = ({ onPressViewAll, reviews }: ReviewsSectionProps) => {
               <Styles.Dot
                 isSelected={index === indexReviewSelected}
                 // eslint-disable-next-line react/no-array-index-key
-                key={index}
-              >
+                key={index}>
                 {'\u2022'}
               </Styles.Dot>
             ))}

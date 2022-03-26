@@ -8,7 +8,7 @@ type UseImagesListProps = {
   images: string[];
 };
 
-const useImagesList = (props: UseImagesListProps) => {
+export const useImagesList = (props: UseImagesListProps) => {
   const navigation = useNavigation<ImagesGalleryNavigationProp>();
 
   const handlePressImage = useCallback(
@@ -26,5 +26,3 @@ const useImagesList = (props: UseImagesListProps) => {
     onPressImage: handlePressImage,
   };
 };
-
-export default useImagesList;

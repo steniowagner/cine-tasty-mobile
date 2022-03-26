@@ -1,10 +1,10 @@
 import React from 'react';
 
 import LoadingFamousItem from './loading-famous-item/LoadingFamousItem';
-import useLoadingFamous from './useLoadingFamous';
+import {useLoadingFamous} from './useLoadingFamous';
 import * as Styles from './LoadingFamous.styles';
 
-const LoadingFamousList = () => {
+export const LoadingFamous = () => {
   const loadingFamous = useLoadingFamous();
   return (
     <Styles.Wrapper testID="famous-loading-list">
@@ -14,5 +14,3 @@ const LoadingFamousList = () => {
     </Styles.Wrapper>
   );
 };
-
-export default LoadingFamousList;

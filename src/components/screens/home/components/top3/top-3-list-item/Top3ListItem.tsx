@@ -3,9 +3,7 @@ import {Animated} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 
-import ProgressiveImage from '@components/common/progressive-image/ProgressiveImage';
-import RoundedButton from '@components/common/rounded-button/RoundedButton';
-import StarsVotes from '@components/common/stars-votes/StarsVotes';
+import {ProgressiveImage, RoundedButton, StarsVotes} from '@components/common';
 import {useGetCurrentTheme} from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 

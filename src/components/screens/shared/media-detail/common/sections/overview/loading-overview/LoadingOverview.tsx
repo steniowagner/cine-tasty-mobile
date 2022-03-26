@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import {LoadingPlaceholder} from '@components/common';
 import metrics from '@styles/metrics';
 
 import * as Styles from './LoadingOverview.styles';
@@ -8,9 +8,7 @@ import * as Styles from './LoadingOverview.styles';
 export const NUMBER_ITEMS = 4;
 
 const LoadingOverview = () => (
-  <Styles.Wrapper
-    testID="loading-overview"
-  >
+  <Styles.Wrapper testID="loading-overview">
     {Array(NUMBER_ITEMS)
       .fill({})
       .map((_, index) => (

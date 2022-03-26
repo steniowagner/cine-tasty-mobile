@@ -1,9 +1,7 @@
 import React, {Fragment} from 'react';
 import {ScrollView} from 'react-native';
 
-import LoadingIndicator from '@components/common/loading-indicator/LoadingIndicator';
-import Section from '@components/common/section/Section';
-import Advise from '@components/common/advise/Advise';
+import {LoadingIndicator, Section, Advise} from '@components/common';
 import * as TRANSLATIONS from '@i18n/tags';
 
 import TVShowSeasonsListItem from './tv-show-list-item/TVShowSeasonsListItem';

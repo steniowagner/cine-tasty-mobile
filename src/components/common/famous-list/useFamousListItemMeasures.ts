@@ -2,15 +2,14 @@ import {useCallback, useMemo} from 'react';
 import {Platform} from 'react-native';
 import metrics from '@styles/metrics';
 
+import {DEFAULT_LIST_ITEM_HEIGHT} from './FamousList.styles';
 import {NUMBER_OF_COLUMNS} from './FamousList';
-
-export const DEFAULT_LIST_ITEM_HEIGHT = metrics.getWidthFromDP('50%');
 
 type UseFamousListItemMeasures = {
   index: number;
 };
 
-const useFamousListItemMeasures = (props: UseFamousListItemMeasures) => {
+export const useFamousListItemMeasures = (props: UseFamousListItemMeasures) => {
   const getWrapperMeasures = useCallback(
     (withMargin: boolean) => ({
       marginHorizontal: withMargin
@@ -34,5 +33,3 @@ const useFamousListItemMeasures = (props: UseFamousListItemMeasures) => {
     measures,
   };
 };
-
-export default useFamousListItemMeasures;

@@ -14,7 +14,7 @@ type UseFamousListProps = {
   error?: string;
 };
 
-const useFamousList = (props: UseFamousListProps) => {
+export const useFamousList = (props: UseFamousListProps) => {
   const navigation = useNavigation<FamousNavigationProp>();
 
   const shouldShowTopReloadButton = useMemo(
@@ -42,5 +42,3 @@ const useFamousList = (props: UseFamousListProps) => {
     shouldShowTopReloadButton,
   };
 };
-
-export default useFamousList;

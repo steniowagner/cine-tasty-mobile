@@ -1,8 +1,7 @@
 import React from 'react';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import { useLoadListItemImage } from '@hooks';
+import {renderSVGIconConditionally, TMDBImage} from '@components/common';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './PosterImage.styles';
@@ -13,16 +12,11 @@ type PosterImageProps = {
   image: string;
 };
 
-const PosterImage = ({ image }: PosterImageProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
-  });
+const PosterImage = ({image}: PosterImageProps) => {
+  const {isFallbackImageVisible, hasError, onError, opacity, onLoad} =
+    useLoadListItemImage({
+      image,
+    });
 
   return (
     <>
@@ -44,8 +38,7 @@ const PosterImage = ({ image }: PosterImageProps) => {
             {
               opacity,
             },
-          ]}
-        >
+          ]}>
           {renderSVGIconConditionally({
             condition: hasError,
             ifTrue: {

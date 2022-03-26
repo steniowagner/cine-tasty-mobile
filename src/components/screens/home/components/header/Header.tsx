@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
+import {HeaderIconButton} from '@components/common';
 
 import MediaSwitcher from './media-switcher/MediaSwitcher';
 import * as Styles from './Header.styles';
@@ -21,7 +21,7 @@ const Header = ({
   onPressSettings,
   onPressSearch,
 }: HeaderProps) => {
-  const { onCalcuateSwitchWidth, items, opacity } = useHeader({
+  const {onCalcuateSwitchWidth, items, opacity} = useHeader({
     shouldDisableActions,
     onPresSwitchTVShows,
     onPressSwitchMovies,
@@ -29,9 +29,7 @@ const Header = ({
 
   return (
     <>
-      <Styles.Wrapper
-        style={{ opacity }}
-      >
+      <Styles.Wrapper style={{opacity}}>
         <HeaderIconButton
           disabled={shouldDisableActions}
           onPress={onPressSettings}

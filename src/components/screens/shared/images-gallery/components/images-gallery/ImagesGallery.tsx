@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
-import React, { useLayoutEffect } from 'react';
+import React, {useLayoutEffect} from 'react';
 
-import { ImagesGalleryStackProps } from '@components/screens/shared/images-gallery/routes/route-params-types';
-import HeaderIconButton from '@components/common/header-icon-button/HeaderIconButton';
+import {ImagesGalleryStackProps} from '@components/screens/shared/images-gallery/routes/route-params-types';
+import {HeaderIconButton} from '@components/common';
 
 import ImagesGalleryList from './images-gallery-list/ImagesGalleryList';
 // @ts-ignore
@@ -11,7 +11,7 @@ import ThumbsGalleryList from './thumbs-gallery-list/ThumbsGalleryList';
 import useImageGallery from './useImagesGallery';
 import * as Styles from './ImagesGallery.styles';
 
-const ImagesGallery = ({ navigation, route }: ImagesGalleryStackProps) => {
+const ImagesGallery = ({navigation, route}: ImagesGalleryStackProps) => {
   const {
     isIndexesAllowedToRenderImage,
     onFlatlistMomentumScrollEnd,

@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components/common';
 import metrics from '@styles/metrics';
 
 import * as Styles from './OptionListItem.styles';

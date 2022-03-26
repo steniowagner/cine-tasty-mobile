@@ -9,10 +9,10 @@
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "paths": {
+      "@components/common": ["./components/common/index.ts"],
       "@providers": ["./providers/index.ts"],
       "@schema-types": ["./types/schema.ts"],
       "@local-types": ["./types/index.ts"],
-      "@components/*": ["./components/*"],
       "@hooks": ["./hooks/index.ts"],
       "@graphql/*": ["./graphql/*"],
       "@mocks/*": ["../__mocks__/*"],

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Linking } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import {Linking} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components/common';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
@@ -12,7 +12,7 @@ import * as Styles from './About.styles';
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
 const About = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   return (
     <Styles.Wrapper>
@@ -26,19 +26,14 @@ const About = () => {
           shadowOpacity: 0.2,
           shadowRadius: 1.41,
           elevation: 2,
-        }}
-      >
+        }}>
         <Styles.BeautifulImage />
         <Styles.NameText>Stenio Wagner</Styles.NameText>
         <Styles.SoftwareEngineerWrapper>
           <Styles.SoftwareEngineerText>
             {t(TRANSLATIONS.SOFTWARE_ENGINEER)}
           </Styles.SoftwareEngineerText>
-          <SVGIcon
-            size={DEFAULT_ICON_SIZE}
-            id="heart"
-            colorThemeRef="red"
-          />
+          <SVGIcon size={DEFAULT_ICON_SIZE} id="heart" colorThemeRef="red" />
         </Styles.SoftwareEngineerWrapper>
         <Styles.AboutText>{t(TRANSLATIONS.ABOUT)}</Styles.AboutText>
         <Styles.SocialNetworkButtonsWrapper>
@@ -47,8 +42,7 @@ const About = () => {
               onPress={() => Linking.openURL(socialNetwork.url)}
               color={socialNetwork.color}
               key={socialNetwork.url}
-              isMiddle={index === 1}
-            >
+              isMiddle={index === 1}>
               <SVGIcon
                 size={DEFAULT_ICON_SIZE}
                 colorThemeRef="white"
