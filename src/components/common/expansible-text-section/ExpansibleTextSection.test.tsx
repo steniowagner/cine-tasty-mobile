@@ -1,5 +1,11 @@
 import React from 'react';
-import {render, cleanup, act, RenderAPI} from '@testing-library/react-native';
+import {
+  render,
+  cleanup,
+  act,
+  RenderAPI,
+  waitFor,
+} from '@testing-library/react-native';
 
 import {DEFAULT_ANIMATION_DURATION, ThemeContextProvider} from '@providers';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
@@ -8,11 +14,12 @@ import {NUMBER_ITEMS} from './loading-expansible-text-section/LoadingExpansibleT
 import {ExpansibleTextSection} from './ExpansibleTextSection';
 
 const SECTION_TITLE = 'SECTION_TITLE';
+const TEXT = 'TEXT';
 
 const renderExpansibleTextSection = ({
   sectionTitle = SECTION_TITLE,
   isLoading = false,
-  text = 'text',
+  text = TEXT,
 }) => (
   <ThemeContextProvider>
     <ExpansibleTextSection
@@ -31,45 +38,37 @@ describe('<ExpansibleTextSection />', () => {
     mediaItemDescriptionWrapper: (api: RenderAPI) =>
       api.queryByTestId('media-item-description-wrapper'),
     description: (api: RenderAPI) => api.queryByTestId('description-text'),
-    expandableReadButton: (api: RenderAPI) =>
-      api.queryByTestId('expandable-read-button'),
-    expandableReadText: (api: RenderAPI) =>
-      api.queryByTestId('expandable-read-text'),
+    loadingPlaceholder: (api: RenderAPI) =>
+      api.queryAllByTestId('loading-placeholder'),
   };
 
   beforeEach(setupTimeTravel);
 
   afterEach(cleanup);
 
-  it('should render correctly when is not loading', () => {
-    const {getByText, queryByTestId, queryAllByTestId, getByTestId} = render(
-      renderExpansibleTextSection({}),
-    );
-
-    expect(getByText(SECTION_TITLE)).not.toBeNull();
-
-    expect(getByTestId('description-text')).not.toBeNull();
-
-    expect(queryByTestId('loading-expansible-text-section')).toBeNull();
-
-    expect(queryAllByTestId('loading-placeholder').length).toEqual(0);
+  it('should render correctly when is loading', async () => {
+    const component = render(renderExpansibleTextSection({isLoading: true}));
+    expect(elements.sectionTitle(component)).not.toBeNull();
+    expect(elements.sectionTitle(component).children[0]).toEqual(SECTION_TITLE);
+    expect(elements.description(component)).toBeNull();
+    expect(elements.mediaItemDescriptionWrapper(component)).toBeNull();
+    expect(elements.loadingTextSection(component)).not.toBeNull();
+    expect(elements.loadingPlaceholder(component).length).toEqual(NUMBER_ITEMS);
+    await waitFor(() => {});
   });
 
-  it('should render correctly when is loading', () => {
-    const {getByText, queryByTestId, getAllByTestId, getByTestId} = render(
-      renderExpansibleTextSection({isLoading: true}),
-    );
-
+  it('should render correctly when is not loading', async () => {
+    const component = render(renderExpansibleTextSection({}));
     act(() => {
       timeTravel(DEFAULT_ANIMATION_DURATION);
     });
-
-    expect(getByText(SECTION_TITLE)).not.toBeNull();
-
-    expect(queryByTestId('description-text')).toBeNull();
-
-    expect(getByTestId('loading-expansible-text-section')).not.toBeNull();
-
-    expect(getAllByTestId('loading-placeholder').length).toEqual(NUMBER_ITEMS);
+    expect(elements.sectionTitle(component)).not.toBeNull();
+    expect(elements.sectionTitle(component).children[0]).toEqual(SECTION_TITLE);
+    expect(elements.description(component)).not.toBeNull();
+    expect(elements.description(component).children[0]).toEqual(TEXT);
+    expect(elements.mediaItemDescriptionWrapper(component)).not.toBeNull();
+    expect(elements.loadingTextSection(component)).toBeNull();
+    expect(elements.loadingPlaceholder(component).length).toEqual(0);
+    await waitFor(() => {});
   });
 });
