@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {FamousNavigationProp} from '@components/screens/famous/routes/route-params-types';
+import {FamousNavigationProp} from '../../../../famous/routes/route-params-types';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 import {Routes} from '@routes/routes';
@@ -28,12 +28,10 @@ const useNavigateProperScreenDetails = (
 
   const navigate = useCallback(
     (item: Types.ResentSearchItem) => {
-      switch (props.searchType) {
-        case SchemaTypes.SearchType.PERSON:
-          return handleNavigateFamousDetails(item);
-        default:
-          return;
-      }
+      const searchTypeMapping = {
+        [SchemaTypes.SearchType.PERSON]: handleNavigateFamousDetails,
+      };
+      searchTypeMapping[props.searchType](item);
     },
     [props.searchType],
   );
