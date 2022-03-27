@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 
 import {TMDBImage} from '@components';
 import {ImageType} from '@local-types';
@@ -7,71 +6,49 @@ import {ImageType} from '@local-types';
 import {useProgressiveImage} from './useProgressiveImage';
 import * as Styles from './ProgressiveImage.styles';
 
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-  },
-
-  imageOverlay: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-  },
-});
-
 type ProgressiveImageProps = {
   imageType: ImageType;
   borderRadius?: number;
   image: string;
 };
 
-export const ProgressiveImage = ({
-  borderRadius = 0,
-  imageType,
-  image,
-}: ProgressiveImageProps) => {
-  const {
-    thumbnailOpacity,
-    onLoadThumbnail,
-    isImageLoaded,
-    imageOpacity,
-    onLoadImage,
-  } = useProgressiveImage();
-
+export const ProgressiveImage = (props: ProgressiveImageProps) => {
+  const progressiveImage = useProgressiveImage();
   return (
-    <Styles.ForegroundLayer borderRadius={borderRadius}>
-      {!isImageLoaded && (
+    <Styles.ForegroundLayer
+      borderRadius={props.borderRadius || 0}
+      testID="progressive-image-wrapper">
+      {!progressiveImage.isImageLoaded && (
         <TMDBImage
-          onLoad={onLoadThumbnail}
-          imageType={imageType}
+          onLoad={progressiveImage.onLoadThumbnail}
+          imageType={props.imageType}
           blurRadius={1}
-          image={image}
+          image={props.image}
           isThumbnail
           isAnimated
+          testID="progressive-thumbnail"
           style={[
-            styles.container,
+            Styles.styles.container,
             {
-              opacity: thumbnailOpacity,
-              borderRadius: Number(borderRadius),
+              opacity: progressiveImage.thumbnailOpacity,
+              borderRadius: Number(props.borderRadius),
             },
           ]}
         />
       )}
       <TMDBImage
-        onLoad={onLoadImage}
-        imageType={imageType}
-        image={image}
+        onLoad={progressiveImage.onLoadImage}
+        imageType={props.imageType}
+        image={props.image}
         isAnimated
+        testID="progressive-image"
         style={[
-          styles.imageOverlay,
+          Styles.styles.imageOverlay,
           {
-            opacity: imageOpacity,
-            borderRadius: Number(borderRadius),
+            opacity: progressiveImage.imageOpacity,
+            borderRadius: Number(props.borderRadius),
           },
-          styles.container,
+          Styles.styles.container,
         ]}
       />
     </Styles.ForegroundLayer>
