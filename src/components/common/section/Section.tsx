@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 
 import * as Styles from './Section.styles';
 
-type SectionProps = {
+export type SectionProps = {
   withHorizontalPadding?: boolean;
   noMarginBottom?: boolean;
   noMarginTop?: boolean;
@@ -14,7 +14,8 @@ export const Section = (props: SectionProps) => (
   <Styles.Wrapper
     withHorizontalPadding={props.withHorizontalPadding}
     noMarginBottom={props.noMarginBottom}
-    noMarginTop={props.noMarginTop}>
+    noMarginTop={props.noMarginTop}
+    testID="section-wrapper">
     <Styles.Title
       withMarginLeft={!props.withHorizontalPadding}
       testID="section-title">
