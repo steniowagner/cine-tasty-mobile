@@ -108,6 +108,8 @@ export namespace Translations {
     FAMOUS_DETAIL_ERROR_TITLE = 'translations:famousDetail:errorTitle',
 
     MONTHS = 'translations:months',
+
+    HOME_VIEW_ALL = 'translations:home:viewAll',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -182,7 +184,6 @@ export const TABS_FAMOUS = 'translations:tabs:famous';
 export const HOME_LEARN_MORE = 'translations:home:learMoreButtonText';
 export const HOME_SETTINGS = 'translations:home:settings';
 export const HOME_TV_SHOWS = 'translations:home:tvShows';
-export const HOME_VIEW_ALL = 'translations:home:viewAll';
 export const HOME_MOVIES = 'translations:home:movies';
 export const HOME_TRENDING_MOVIES_ERROR =
   'translations:home:trendingMovies:error';

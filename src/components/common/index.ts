@@ -1,5 +1,4 @@
 export {Advise} from './advise/Advise';
-export {CustomRefreshControl} from './CustomRefreshControl';
 export {ExpansibleTextSection} from './expansible-text-section/ExpansibleTextSection';
 export {FullMediaListItem} from './full-media-list-item/FullMediaListItem';
 export {HeaderBackButton} from './header-back-button/HeaderBackButton';

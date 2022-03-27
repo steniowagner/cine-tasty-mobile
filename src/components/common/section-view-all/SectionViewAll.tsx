@@ -1,10 +1,9 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 
-import {SVGIcon} from '@components';
-import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
+import {SVGIcon} from '@components';
 
+import {useSectionViewAll} from './useSectionViewAll';
 import * as Styles from './SectionViewAll.styles';
 
 type SectionViewAllProps = {
@@ -14,25 +13,19 @@ type SectionViewAllProps = {
   id: string;
 };
 
-export const SectionViewAll = ({
-  onPressViewAll,
-  sectionTitle,
-  withViewAll = true,
-  id,
-}: SectionViewAllProps) => {
-  const {t} = useTranslation();
-
+export const SectionViewAll = (props: SectionViewAllProps) => {
+  const sectionViewAll = useSectionViewAll({withViewAll: props.withViewAll});
   return (
     <Styles.SectionTextContentWrapper>
       <Styles.SectionTitle testID="section-title">
-        {sectionTitle}
+        {props.sectionTitle}
       </Styles.SectionTitle>
-      {withViewAll && (
+      {sectionViewAll.shouldShowViewAllButton && (
         <Styles.ViewAllWrapper
-          testID={`view-all-button-${id}`}
-          onPress={onPressViewAll}>
-          <Styles.ViewAllText>
-            {t(TRANSLATIONS.HOME_VIEW_ALL)}
+          testID={`view-all-button-${props.id}`}
+          onPress={props.onPressViewAll}>
+          <Styles.ViewAllText testID="view-all-text">
+            {sectionViewAll.texts.viewAll}
           </Styles.ViewAllText>
           <SVGIcon
             size={metrics.getWidthFromDP('7%')}
