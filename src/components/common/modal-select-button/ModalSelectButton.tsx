@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as Styles from './ModalSelectButton.styles';
 
-type ModalSelectButtonProps = {
+export type ModalSelectButtonProps = {
   borderBottomRightRadius?: number;
   borderBottomLeftRadius?: number;
   isDisabled?: boolean;
