@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {renderSVGIconConditionally, TMDBImage, SVGIcon} from '@components';
+import {renderSVGIconConditionally, SVGIcon} from '@components';
 import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
@@ -9,6 +9,7 @@ import * as Styles from './SimplifiedMediaListItem.styles';
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type SimplifiedMediaListItemProps = {
+  withLargeLayout?: boolean;
   onPress: () => void;
   voteAverage: number;
   voteCount: number;
@@ -24,29 +25,23 @@ export const SimplifiedMediaListItem = (
   });
   return (
     <Styles.Wrapper
+      onPress={props.onPress}
       testID="simplified-media-list-button"
-      onPress={props.onPress}>
+      withLargeLayout={props.withLargeLayout}>
       <>
-        <TMDBImage
+        <Styles.CustomTMDBImage
           imageType="poster"
+          withLargeLayout={props.withLargeLayout}
           onError={loadListImage.onError}
           onLoad={loadListImage.onLoad}
           image={props.image}
           testID="simplified-media-list-image"
-          style={{
-            width: Styles.MEDIA_IMAGE_DEFAULT_WIDTH,
-            height: Styles.MEDIA_IMAGE_DEFAULT_HEIGHT,
-            marginBottom: metrics.getWidthFromDP(
-              Styles.MEDIA_IMAGE_DEFAULT_MARGIN_BOTTOM,
-            ),
-            borderRadius: metrics.getWidthFromDP(
-              Styles.MEDIA_IMAGE_DEFAULT_BORDER_RADIUS,
-            ),
-          }}
+          style={{}}
         />
         {loadListImage.isFallbackImageVisible && (
           <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
+            withLargeLayout={props.withLargeLayout}
             style={[
               {
                 opacity: loadListImage.opacity,
@@ -68,7 +63,9 @@ export const SimplifiedMediaListItem = (
           </Styles.FallbackImageWrapper>
         )}
       </>
-      <Styles.DefaultText testID="simplified-media-list-title">
+      <Styles.DefaultText
+        withLargeLayout={props.withLargeLayout}
+        testID="simplified-media-list-title">
         {props.title}
       </Styles.DefaultText>
       <Styles.StarsContentWrapper>
@@ -77,7 +74,10 @@ export const SimplifiedMediaListItem = (
           size={metrics.getWidthFromDP('6%')}
           colorThemeRef="primary"
         />
-        <Styles.DefaultText testID="simplified-media-list-votes" withMarginLeft>
+        <Styles.DefaultText
+          withLargeLayout={props.withLargeLayout}
+          testID="simplified-media-list-votes"
+          withMarginLeft>
           {`${props.voteAverage.toFixed(1)} (${props.voteCount})`}
         </Styles.DefaultText>
       </Styles.StarsContentWrapper>

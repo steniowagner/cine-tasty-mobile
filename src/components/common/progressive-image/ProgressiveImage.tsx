@@ -31,7 +31,7 @@ export const ProgressiveImage = (props: ProgressiveImageProps) => {
             Styles.styles.container,
             {
               opacity: progressiveImage.thumbnailOpacity,
-              borderRadius: Number(props.borderRadius),
+              borderRadius: Number(props.borderRadius || 0),
             },
           ]}
         />
@@ -46,7 +46,7 @@ export const ProgressiveImage = (props: ProgressiveImageProps) => {
           Styles.styles.imageOverlay,
           {
             opacity: progressiveImage.imageOpacity,
-            borderRadius: Number(props.borderRadius),
+            borderRadius: Number(props.borderRadius || 0),
           },
           Styles.styles.container,
         ]}
