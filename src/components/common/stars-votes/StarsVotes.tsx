@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {SVGIcon} from '@components';
 import metrics from '@styles/metrics';
+import {SVGIcon} from '@components';
 
 import * as Styles from './StarsVotes.styles';
 import {useStarsVotes} from './useStarsVotes';
@@ -13,29 +13,23 @@ type StarsVotesProps = {
   votes: number;
 };
 
-export const StarsVotes = ({
-  textColor,
-  voteCount,
-  withText,
-  votes,
-}: StarsVotesProps) => {
-  const {numberEmptyStars, numberFullStars, numberHalfStars} =
-    useStarsVotes(votes);
-
-  const shouldShowVoteCount = withText && !!voteCount;
-  const shouldShowVotes = withText && !!votes;
-
+export const StarsVotes = (props: StarsVotesProps) => {
+  const starsVotes = useStarsVotes({
+    voteCount: props.voteCount,
+    withText: props.withText,
+    votes: props.votes,
+  });
   return (
     <Styles.Wrapper>
-      {shouldShowVotes && (
-        <Styles.VotesText textColor={textColor}>
-          {`${votes.toFixed(1)} `}
+      {starsVotes.shouldShowVotes && (
+        <Styles.VotesText testID="votes-text" textColor={props.textColor}>
+          {starsVotes.votes}
         </Styles.VotesText>
       )}
       <Styles.Wrapper testID="stars-wrapper">
-        {numberFullStars > 0 && (
+        {starsVotes.numberFullStars > 0 && (
           <Styles.Wrapper testID="full-stars-wrapper">
-            {Array(numberFullStars)
+            {Array(starsVotes.numberFullStars)
               .fill({})
               .map((_, index) => (
                 <SVGIcon
@@ -50,9 +44,9 @@ export const StarsVotes = ({
               ))}
           </Styles.Wrapper>
         )}
-        {numberHalfStars > 0 && (
+        {starsVotes.numberHalfStars > 0 && (
           <Styles.Wrapper testID="half-stars-wrapper">
-            {Array(numberHalfStars)
+            {Array(starsVotes.numberHalfStars)
               .fill({})
               .map((_, index) => (
                 <SVGIcon
@@ -67,9 +61,9 @@ export const StarsVotes = ({
               ))}
           </Styles.Wrapper>
         )}
-        {numberEmptyStars > 0 && (
+        {starsVotes.numberEmptyStars > 0 && (
           <Styles.Wrapper testID="empty-stars-wrapper">
-            {Array(numberEmptyStars)
+            {Array(starsVotes.numberEmptyStars)
               .fill({})
               .map((_, index) => (
                 <SVGIcon
@@ -85,9 +79,9 @@ export const StarsVotes = ({
           </Styles.Wrapper>
         )}
       </Styles.Wrapper>
-      {shouldShowVoteCount && (
-        <Styles.VotesText textColor={textColor}>
-          {` (${voteCount})`}
+      {starsVotes.shouldShowVoteCount && (
+        <Styles.VotesText testID="vote-count" textColor={props.textColor}>
+          {` (${props.voteCount})`}
         </Styles.VotesText>
       )}
     </Styles.Wrapper>
