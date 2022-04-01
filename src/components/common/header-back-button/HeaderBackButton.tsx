@@ -11,11 +11,11 @@ type HeaderBackButtonProps = {
 };
 
 export const HeaderBackButton = (props: HeaderBackButtonProps) => (
-  <Styles.IconWrapper onPress={props.onPress}>
+  <Styles.IconWrapper testID="header-back-button" onPress={props.onPress}>
     <SVGIcon
       size={Platform.select({
         android: metrics.getWidthFromDP('6.5%'),
-        ios: metrics.getWidthFromDP('9%'),
+        ios: metrics.getWidthFromDP('8.7%'),
       })}
       id={Platform.select({
         android: 'arrow-back',
