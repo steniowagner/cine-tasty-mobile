@@ -1,28 +1,27 @@
 import React, {memo} from 'react';
 
-import {useTMDBImage, TMDBImage, SVGIcon} from '@components';
-import metrics from '@styles/metrics';
+import {useTMDBImage} from '@components';
 
 import useImagesGalleryListItem from './useImagesGalleryListItem';
 import * as Styles from './ImagesGalleryListItem.styles';
 
 type ImagesGalleryListItemProps = {
+  isAllowedToBeShowed: boolean;
   imageURL: string;
 };
 
-const ImagesGalleryListItem = ({imageURL}: ImagesGalleryListItemProps) => {
-  const {uri} = useTMDBImage({
+const ImagesGalleryListItem = (props: ImagesGalleryListItemProps) => {
+  const tmdbImage = useTMDBImage({
     imageType: 'backdrop',
     isThumbnail: false,
-    image: imageURL,
+    image: props.imageURL,
   });
 
-  const {isLandscape, isPortrait, isLoading, hasError} =
-    useImagesGalleryListItem({
-      imageURL: uri,
-    });
+  const imagesGalleryListItem = useImagesGalleryListItem({
+    imageURL: tmdbImage.uri,
+  });
 
-  if (isLoading) {
+  if (imagesGalleryListItem.isLoading) {
     return (
       <Styles.Wrapper testID="images-gallery-list-item-loading">
         <Styles.CustomActivityIndicator />
@@ -30,41 +29,32 @@ const ImagesGalleryListItem = ({imageURL}: ImagesGalleryListItemProps) => {
     );
   }
 
-  if (hasError) {
+  if (imagesGalleryListItem.hasError) {
     return (
-      <Styles.ImageOffWrapper testID="image-error-wrapper">
-        <SVGIcon
-          size={metrics.getWidthFromDP('25%')}
-          colorThemeRef="white"
-          id="image-off"
-        />
-      </Styles.ImageOffWrapper>
-    );
-  }
-
-  if (isLandscape || isPortrait) {
-    let height = '0%';
-
-    if (isLandscape) {
-      height = '50%';
-    }
-
-    if (isPortrait) {
-      height = '65%';
-    }
-
-    return (
-      <Styles.Wrapper testID="images-gallery-list-item">
-        <TMDBImage
-          image={imageURL}
-          style={{width: '100%', height}}
-          imageType="backdrop"
-        />
+      <Styles.Wrapper testID="image-error-wrapper">
+        <Styles.ImageOffIcon />
       </Styles.Wrapper>
     );
   }
 
-  return null;
+  return (
+    <Styles.Wrapper testID="images-gallery-list-item">
+      <Styles.Image
+        height={imagesGalleryListItem.imageHeight}
+        testID="image-gallery-item"
+        image={props.imageURL}
+        imageType="backdrop"
+        style={{}}
+      />
+    </Styles.Wrapper>
+  );
 };
 
-export default memo(ImagesGalleryListItem, (): boolean => true);
+const shouldComponentUpdate = (
+  previousState: ImagesGalleryListItemProps,
+  nextState: ImagesGalleryListItemProps,
+): boolean =>
+  (previousState.isAllowedToBeShowed || !nextState.isAllowedToBeShowed) &&
+  (!previousState.isAllowedToBeShowed || nextState.isAllowedToBeShowed);
+
+export default memo(ImagesGalleryListItem, shouldComponentUpdate);
