@@ -4,7 +4,7 @@ import React, {useLayoutEffect} from 'react';
 import {ImagesGalleryStackProps} from '@screens/common/images-gallery/routes/route-params-types';
 import {HeaderIconButton} from '@components';
 
-import ImagesGalleryList from './images-gallery-list/ImagesGalleryList';
+import {ImagesGalleryList} from './images-gallery-list/ImagesGalleryList';
 // @ts-ignore
 // eslint-disable-next-line import/extensions
 import ThumbsGalleryList from './thumbs-gallery-list/ThumbsGalleryList';

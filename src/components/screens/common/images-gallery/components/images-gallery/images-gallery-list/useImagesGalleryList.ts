@@ -1,30 +1,48 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { FlatList } from 'react-native';
+import {useCallback, useEffect, useState, useRef} from 'react';
+import {FlatList} from 'react-native';
 
 type UseImagesGalleryListProps = {
   indexImageSelected: number;
+  datasetSize: number;
 };
 
-const useImagesGalleryList = ({ indexImageSelected }: UseImagesGalleryListProps) => {
-  const galleryListRef = useRef<FlatList>();
+export const useImagesGalleryList = (props: UseImagesGalleryListProps) => {
+  const [imagesAllowedToBeShown, setImagesAllowedToBeShown] = useState(
+    Array(props.datasetSize)
+      .fill(false)
+      .map((_, index) => index === props.indexImageSelected),
+  );
 
-  const handleMoveTopList = useCallback(() => {
-    galleryListRef.current.scrollToIndex({
-      index: indexImageSelected,
+  const imagesGalleryListRef = useRef<FlatList>();
+
+  const moveList = useCallback(() => {
+    imagesGalleryListRef.current.scrollToIndex({
+      index: props.indexImageSelected,
       animated: true,
     });
-  }, [indexImageSelected]);
+  }, [props.indexImageSelected]);
+
+  const handleAllowImageToBeShown = useCallback(() => {
+    setImagesAllowedToBeShown((previousImagesAllowedToBeShown: boolean[]) => {
+      previousImagesAllowedToBeShown[props.indexImageSelected] = true;
+      return previousImagesAllowedToBeShown;
+    });
+  }, [props.indexImageSelected]);
 
   useEffect(() => {
-    if (galleryListRef && galleryListRef.current) {
-      handleMoveTopList();
+    if (
+      !props.datasetSize ||
+      !imagesGalleryListRef ||
+      !imagesGalleryListRef.current
+    ) {
+      return;
     }
-  }, [indexImageSelected]);
+    handleAllowImageToBeShown();
+    moveList();
+  }, [props.indexImageSelected]);
 
   return {
-    handleMoveTopList,
-    galleryListRef,
+    refList: imagesGalleryListRef,
+    imagesAllowedToBeShown,
   };
 };
-
-export default useImagesGalleryList;
