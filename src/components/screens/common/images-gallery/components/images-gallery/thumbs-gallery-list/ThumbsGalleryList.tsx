@@ -20,6 +20,7 @@ export const ThumbsGalleryList = (props: ThumbsGalleryListProps) => {
       contentContainerStyle={listStyles}
       ref={thumbsGalleryList.thumbsListRef}
       showsHorizontalScrollIndicator={false}
+      testID="thumbs-gallery-list"
       horizontal>
       {props.thumbs.map((thumb, index) => (
         <ThumbsGalleryListItem

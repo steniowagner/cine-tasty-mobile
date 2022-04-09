@@ -114,7 +114,7 @@ describe('<ImagesGalleryList />', () => {
 
   describe('Fires events correctly', () => {
     it('should call "onFlatlistMomentumScrollEnd" when the "onFlatlistMomentumScrollEnd" event is fired', async () => {
-      const imageSelected = randomPositiveNumber(imagesArray.length - 1, 5);
+      const imageSelected = randomPositiveNumber(imagesArray.length - 1, 0);
       const onFlatlistMomentumScrollEnd = jest.fn();
       const component = render(
         renderImagesGalleryList(

@@ -47,7 +47,7 @@ const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
 
   useEffect(() => {
     setTimeout(() => {
-      // for some reason, the ScrollView doesn't scroll properly on the first render immediatly
+      // for some reason, the ScrollView doesn't scroll properly on the first render
       handleMoveThumbsGalleryList();
     }, 100);
   }, []);
