@@ -1,63 +1,59 @@
-import {
-  useCallback, useEffect, useMemo, useRef,
-} from 'react';
-import { Platform, FlatList } from 'react-native';
+import {useCallback, useEffect, useRef} from 'react';
+import {FlatList} from 'react-native';
 
 import metrics from '@styles/metrics';
 
-import { THUMB_SPACING, THUMB_SIZE } from './ThumbsGalleryListItem.styles';
+import {
+  THUMB_TOTAL_SIZE,
+  listStyles,
+} from './thumbs-gallery-list-item/ThumbsGalleryListItem.styles';
 
 type UseThumbsGalleryListProps = {
   indexImageSelected: number;
 };
 
-export const INITIAL_NUMBER_ITEMS_LIST = Math.ceil(metrics.width / THUMB_SIZE);
+export const INITIAL_NUMBER_ITEMS_LIST = Math.ceil(
+  metrics.width / THUMB_TOTAL_SIZE,
+);
 
-const useThumbsGalleryList = ({ indexImageSelected }: UseThumbsGalleryListProps) => {
+const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
   const thumbsListRef = useRef<FlatList>();
 
-  const handleMoveThumbsGalleryList = useCallback(() => {
-    const isThumbBeyondHalfScreen = indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
-        - THUMB_SIZE / 2
-        - metrics.extraLargeSize
-      > metrics.width / 2;
-
-    const middleScreenOffset = indexImageSelected * (THUMB_SIZE + THUMB_SPACING)
-      + metrics.extraLargeSize
-      - (metrics.width / 2 - THUMB_SIZE / 2);
-
+  const moveList = useCallback(() => {
+    const basePixelsToScroll =
+      props.indexImageSelected * THUMB_TOTAL_SIZE +
+      listStyles.paddingHorizontal;
+    const middleOfTheScreen = (metrics.width - THUMB_TOTAL_SIZE) / 2;
+    const isThumbBeyondHalfScreen = basePixelsToScroll >= metrics.width / 2;
+    const middleScreenOffset = basePixelsToScroll - middleOfTheScreen;
     const offset = isThumbBeyondHalfScreen ? middleScreenOffset : 0;
-
     thumbsListRef.current.scrollToOffset({
-      animated: true,
       offset,
+      animated: true,
     });
-  }, [indexImageSelected]);
+  }, [props.indexImageSelected]);
 
-  const moveThumbGalleryList = useCallback(() => {
-    if (thumbsListRef && thumbsListRef.current) {
-      handleMoveThumbsGalleryList();
+  const handleMoveThumbsGalleryList = useCallback(() => {
+    if (!thumbsListRef || !thumbsListRef.current) {
+      return;
     }
-  }, [thumbsListRef, handleMoveThumbsGalleryList]);
+    moveList();
+  }, [thumbsListRef, moveList]);
 
   useEffect(() => {
-    moveThumbGalleryList();
-  }, [indexImageSelected]);
+    handleMoveThumbsGalleryList();
+  }, [props.indexImageSelected]);
 
-  const listStyle = useMemo(
-    () => ({
-      height: Platform.select({
-        android: metrics.getWidthFromDP('42%'),
-        ios: metrics.getWidthFromDP('36%'),
-      }),
-    }),
-    [],
-  );
+  useEffect(() => {
+    setTimeout(() => {
+      // for some reason, the flatlist doesn't scroll on the first render immediatly
+      handleMoveThumbsGalleryList();
+    }, 100);
+  }, []);
 
   return {
-    onContentSizeChange: moveThumbGalleryList,
+    onContentSizeChange: handleMoveThumbsGalleryList,
     thumbsListRef,
-    listStyle,
   };
 };
 
