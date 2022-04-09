@@ -1,11 +1,8 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {ScrollView} from 'react-native';
 
-import {
-  THUMB_TOTAL_SIZE,
-  listStyles,
-} from './thumbs-gallery-list-item/ThumbsGalleryListItem.styles';
 import ThumbsGalleryListItem from './thumbs-gallery-list-item/ThumbsGalleryListItem';
+import {listStyles} from './thumbs-gallery-list-item/ThumbsGalleryListItem.styles';
 import useThumbsGalleryList from './useThumbsGalleryList';
 
 type ThumbsGalleryListProps = {
@@ -19,27 +16,19 @@ export const ThumbsGalleryList = (props: ThumbsGalleryListProps) => {
     indexImageSelected: props.indexImageSelected,
   });
   return (
-    <FlatList
-      renderItem={({item, index}) => (
+    <ScrollView
+      contentContainerStyle={listStyles}
+      ref={thumbsGalleryList.thumbsListRef}
+      showsHorizontalScrollIndicator={false}
+      horizontal>
+      {props.thumbs.map((thumb, index) => (
         <ThumbsGalleryListItem
           onPress={() => props.onPressBottomListItem(index)}
           isSelected={props.indexImageSelected === index}
-          image={item}
+          image={thumb}
+          key={thumb}
         />
-      )}
-      getItemLayout={(_data, index) => ({
-        offset: THUMB_TOTAL_SIZE * index,
-        length: THUMB_TOTAL_SIZE,
-        index,
-      })}
-      initialScrollIndex={props.indexImageSelected}
-      showsHorizontalScrollIndicator={false}
-      ref={thumbsGalleryList.thumbsListRef}
-      contentContainerStyle={listStyles}
-      keyExtractor={item => item}
-      testID="thumb-list"
-      data={props.thumbs}
-      horizontal
-    />
+      ))}
+    </ScrollView>
   );
 };

@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useRef} from 'react';
-import {FlatList} from 'react-native';
+import {ScrollView} from 'react-native';
 
 import metrics from '@styles/metrics';
 
@@ -17,7 +17,7 @@ export const INITIAL_NUMBER_ITEMS_LIST = Math.ceil(
 );
 
 const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
-  const thumbsListRef = useRef<FlatList>();
+  const thumbsListRef = useRef<ScrollView>();
 
   const moveList = useCallback(() => {
     const basePixelsToScroll =
@@ -27,9 +27,10 @@ const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
     const isThumbBeyondHalfScreen = basePixelsToScroll >= metrics.width / 2;
     const middleScreenOffset = basePixelsToScroll - middleOfTheScreen;
     const offset = isThumbBeyondHalfScreen ? middleScreenOffset : 0;
-    thumbsListRef.current.scrollToOffset({
-      offset,
+    thumbsListRef.current.scrollTo({
       animated: true,
+      x: offset,
+      y: 0,
     });
   }, [props.indexImageSelected]);
 
@@ -46,7 +47,7 @@ const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
 
   useEffect(() => {
     setTimeout(() => {
-      // for some reason, the flatlist doesn't scroll on the first render immediatly
+      // for some reason, the ScrollView doesn't scroll properly on the first render immediatly
       handleMoveThumbsGalleryList();
     }, 100);
   }, []);

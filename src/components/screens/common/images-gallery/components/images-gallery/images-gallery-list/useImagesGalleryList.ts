@@ -30,11 +30,9 @@ export const useImagesGalleryList = (props: UseImagesGalleryListProps) => {
   }, [props.indexImageSelected]);
 
   useEffect(() => {
-    if (
-      !props.datasetSize ||
-      !imagesGalleryListRef ||
-      !imagesGalleryListRef.current
-    ) {
+    const imagesGalleryListRefNotInitialized =
+      !imagesGalleryListRef || !imagesGalleryListRef.current;
+    if (imagesGalleryListRefNotInitialized || !props.datasetSize) {
       return;
     }
     handleAllowImageToBeShown();
