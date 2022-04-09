@@ -40,7 +40,8 @@ describe('<ImagesGalleryListItem />', () => {
     errorState: (api: RenderAPI) => api.queryByTestId('image-error-wrapper'),
     imageOffIcon: (api: RenderAPI) => api.queryByTestId('icon-image-off'),
     listItem: (api: RenderAPI) => api.queryByTestId('images-gallery-list-item'),
-    image: (api: RenderAPI) => api.queryByTestId('image-gallery-item'),
+    image: (api: RenderAPI) => api.queryByTestId('progressive-image'),
+    thumbnail: (api: RenderAPI) => api.queryByTestId('progressive-thumbnail'),
   };
 
   describe('"isAllowedToBeShowed" is "true"', () => {
@@ -59,7 +60,10 @@ describe('<ImagesGalleryListItem />', () => {
           },
         );
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
-        expect(elements.image(component).props.style[0].height).toEqual(
+        expect(elements.image(component).props.style.height).toEqual(
+          LANDSCAPE_HEIGHT,
+        );
+        expect(elements.thumbnail(component).props.style.height).toEqual(
           LANDSCAPE_HEIGHT,
         );
         await waitFor(() => {});
@@ -125,7 +129,10 @@ describe('<ImagesGalleryListItem />', () => {
           },
         );
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
-        expect(elements.image(component).props.style[0].height).toEqual(
+        expect(elements.image(component).props.style.height).toEqual(
+          PORTRAIT_HEIGHT,
+        );
+        expect(elements.thumbnail(component).props.style.height).toEqual(
           PORTRAIT_HEIGHT,
         );
         await waitFor(() => {});
@@ -223,7 +230,10 @@ describe('<ImagesGalleryListItem />', () => {
         );
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
         component.rerender(renderImagesGalleryListItem(IMAGE_URL, false));
-        expect(elements.image(component).props.style[0].height).toEqual(
+        expect(elements.image(component).props.style.height).toEqual(
+          LANDSCAPE_HEIGHT,
+        );
+        expect(elements.thumbnail(component).props.style.height).toEqual(
           LANDSCAPE_HEIGHT,
         );
         await waitFor(() => {});
@@ -292,7 +302,10 @@ describe('<ImagesGalleryListItem />', () => {
         );
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
         component.rerender(renderImagesGalleryListItem(IMAGE_URL, false));
-        expect(elements.image(component).props.style[0].height).toEqual(
+        expect(elements.image(component).props.style.height).toEqual(
+          PORTRAIT_HEIGHT,
+        );
+        expect(elements.thumbnail(component).props.style.height).toEqual(
           PORTRAIT_HEIGHT,
         );
         await waitFor(() => {});

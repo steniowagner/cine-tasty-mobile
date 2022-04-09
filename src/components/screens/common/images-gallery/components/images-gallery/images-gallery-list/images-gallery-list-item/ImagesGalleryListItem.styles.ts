@@ -1,21 +1,12 @@
-import {ActivityIndicator, Animated, View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import styled from 'styled-components/native';
 
-import {TMDBImage, SVGIcon} from '@components';
+import {SVGIcon} from '@components';
 
 import metrics from '@styles/metrics';
 
 export const LANDSCAPE_HEIGHT = metrics.getWidthFromDP('50%');
-export const PORTRAIT_HEIGHT = metrics.getWidthFromDP('80%');
-
-type ImageStyleProps = {
-  height: number;
-};
-
-export const Image = styled(TMDBImage)<ImageStyleProps>`
-  width: 100%;
-  height: ${({height}) => height}px;
-`;
+export const PORTRAIT_HEIGHT = metrics.getWidthFromDP('100%');
 
 export const Wrapper = styled(View)`
   width: ${({theme}) => theme.metrics.width}px;
@@ -27,16 +18,9 @@ export const Wrapper = styled(View)`
 export const CustomActivityIndicator = styled(ActivityIndicator).attrs(
   ({theme}) => ({
     color: theme.colors.text,
-    size: 'large',
+    size: 'small',
   }),
 )``;
-
-export const FallbackImageWrapper = styled(Animated.View)`
-  width: ${({theme}) => theme.metrics.width}px;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('60%')}px;
-  justify-content: center;
-  align-items: center;
-`;
 
 export const ImageOffIcon = styled(SVGIcon).attrs(({theme}) => ({
   size: theme.metrics.getWidthFromDP('25%'),

@@ -1,13 +1,10 @@
-/* eslint-disable react/display-name */
 import React, {useLayoutEffect} from 'react';
 
-import {ImagesGalleryStackProps} from '@screens/common/images-gallery/routes/route-params-types';
 import {HeaderIconButton} from '@components';
 
 import {ImagesGalleryList} from './images-gallery-list/ImagesGalleryList';
-// @ts-ignore
-// eslint-disable-next-line import/extensions
-import ThumbsGalleryList from './thumbs-gallery-list/ThumbsGalleryList';
+import {ImagesGalleryStackProps} from '../../routes/route-params-types';
+import {ThumbsGalleryList} from './thumbs-gallery-list/ThumbsGalleryList';
 import useImageGallery from './useImagesGallery';
 import * as Styles from './ImagesGallery.styles';
 
@@ -43,7 +40,6 @@ export const ImagesGallery = ({navigation, route}: ImagesGalleryStackProps) => {
   return (
     <Styles.Wrapper>
       <ImagesGalleryList
-        isIndexesAllowedToRenderImage={isIndexesAllowedToRenderImage}
         onFlatlistMomentumScrollEnd={onFlatlistMomentumScrollEnd}
         indexImageSelected={indexImageSelected}
         images={route.params.images}

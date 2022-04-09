@@ -24,15 +24,15 @@ export const ImagesGalleryList = (props: ImagesGalleryListProps) => {
     <FlatList
       onMomentumScrollEnd={props.onFlatlistMomentumScrollEnd}
       renderItem={({item, index}) => {
-        if (imagesGalleryList.imagesAllowedToBeShown[index]) {
-          return (
-            <ImagesGalleryListItem
-              isAllowedToBeShowed={props.indexImageSelected === index}
-              imageURL={item}
-            />
-          );
+        if (!imagesGalleryList.imagesAllowedToBeShown[index]) {
+          return <Styles.PlaceholderListItem testID="placeholder-list-item" />;
         }
-        return <Styles.PlaceholderListItem testID="placeholder-list-item" />;
+        return (
+          <ImagesGalleryListItem
+            isAllowedToBeShowed={props.indexImageSelected === index}
+            imageURL={item}
+          />
+        );
       }}
       initialScrollIndex={props.indexImageSelected}
       showsHorizontalScrollIndicator={false}

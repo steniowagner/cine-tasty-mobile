@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 
-import {useTMDBImage} from '@components';
+import {useTMDBImage, ProgressiveImage} from '@components';
 
 import useImagesGalleryListItem from './useImagesGalleryListItem';
 import * as Styles from './ImagesGalleryListItem.styles';
@@ -39,12 +39,11 @@ const ImagesGalleryListItem = (props: ImagesGalleryListItemProps) => {
 
   return (
     <Styles.Wrapper testID="images-gallery-list-item">
-      <Styles.Image
+      <ProgressiveImage
         height={imagesGalleryListItem.imageHeight}
-        testID="image-gallery-item"
-        image={props.imageURL}
+        removeBackgroundColor
         imageType="backdrop"
-        style={{}}
+        image={props.imageURL}
       />
     </Styles.Wrapper>
   );

@@ -7,8 +7,10 @@ import {useProgressiveImage} from './useProgressiveImage';
 import * as Styles from './ProgressiveImage.styles';
 
 type ProgressiveImageProps = {
+  removeBackgroundColor?: boolean;
   imageType: ImageType;
   borderRadius?: number;
+  height?: number;
   image: string;
 };
 
@@ -17,6 +19,7 @@ export const ProgressiveImage = (props: ProgressiveImageProps) => {
   return (
     <Styles.ForegroundLayer
       borderRadius={props.borderRadius || 0}
+      removeBackgroundColor={props.removeBackgroundColor}
       testID="progressive-image-wrapper">
       {!progressiveImage.isImageLoaded && (
         <TMDBImage
@@ -27,13 +30,12 @@ export const ProgressiveImage = (props: ProgressiveImageProps) => {
           isThumbnail
           isAnimated
           testID="progressive-thumbnail"
-          style={[
-            Styles.styles.container,
-            {
-              opacity: progressiveImage.thumbnailOpacity,
-              borderRadius: Number(props.borderRadius || 0),
-            },
-          ]}
+          style={{
+            width: Styles.styles.container.width,
+            height: props.height || Styles.styles.container.height,
+            opacity: progressiveImage.thumbnailOpacity,
+            borderRadius: Number(props.borderRadius || 0),
+          }}
         />
       )}
       <TMDBImage
@@ -45,10 +47,11 @@ export const ProgressiveImage = (props: ProgressiveImageProps) => {
         style={[
           Styles.styles.imageOverlay,
           {
+            width: Styles.styles.container.width,
+            height: props.height || Styles.styles.container.height,
             opacity: progressiveImage.imageOpacity,
             borderRadius: Number(props.borderRadius || 0),
           },
-          Styles.styles.container,
         ]}
       />
     </Styles.ForegroundLayer>
