@@ -16,12 +16,12 @@ import {ThumbsGalleryList} from './ThumbsGalleryList';
 const renderThumbsGalleryList = (
   thumbs = [],
   indexImageSelected = 0,
-  onPressBottomListItem = jest.fn(),
+  onPressThumbListItem = jest.fn(),
 ) => (
   <TMDBImageQualityProvider>
     <ThemeProvider theme={theme}>
       <ThumbsGalleryList
-        onPressBottomListItem={onPressBottomListItem}
+        onPressThumbListItem={onPressThumbListItem}
         indexImageSelected={indexImageSelected}
         thumbs={thumbs}
       />
@@ -56,34 +56,34 @@ describe('<ThumbsGalleryList />', () => {
   });
 
   describe('Pressing list-items', () => {
-    it('should call "onPressBottomListItem" when the user press the selected item', async () => {
-      const onPressBottomListItem = jest.fn();
+    it('should call "onPressThumbListItem" when the user press the selected item', async () => {
+      const onPressThumbListItem = jest.fn();
       const thumbs = Array(randomPositiveNumber(10, 1))
         .fill('')
         .map((_, index) => `THUMB_${index}`);
       const indexSelected = randomPositiveNumber(thumbs.length - 1, 0);
       const component = render(
-        renderThumbsGalleryList(thumbs, indexSelected, onPressBottomListItem),
+        renderThumbsGalleryList(thumbs, indexSelected, onPressThumbListItem),
       );
-      expect(onPressBottomListItem).toHaveBeenCalledTimes(0);
+      expect(onPressThumbListItem).toHaveBeenCalledTimes(0);
       fireEvent.press(elements.thumbsItems(component)[indexSelected]);
-      expect(onPressBottomListItem).toHaveBeenCalledTimes(1);
-      expect(onPressBottomListItem).toHaveBeenCalledWith(indexSelected);
+      expect(onPressThumbListItem).toHaveBeenCalledTimes(1);
+      expect(onPressThumbListItem).toHaveBeenCalledWith(indexSelected);
       await waitFor(() => {});
     });
 
-    it('should call "onPressBottomListItem" when the user press some unselected item', async () => {
-      const onPressBottomListItem = jest.fn();
+    it('should call "onPressThumbListItem" when the user press some unselected item', async () => {
+      const onPressThumbListItem = jest.fn();
       const thumbs = Array(randomPositiveNumber(10, 2))
         .fill('')
         .map((_, index) => `THUMB_${index}`);
       const component = render(
-        renderThumbsGalleryList(thumbs, 0, onPressBottomListItem),
+        renderThumbsGalleryList(thumbs, 0, onPressThumbListItem),
       );
-      expect(onPressBottomListItem).toHaveBeenCalledTimes(0);
+      expect(onPressThumbListItem).toHaveBeenCalledTimes(0);
       fireEvent.press(elements.thumbsItems(component)[1]);
-      expect(onPressBottomListItem).toHaveBeenCalledTimes(1);
-      expect(onPressBottomListItem).toHaveBeenCalledWith(1);
+      expect(onPressThumbListItem).toHaveBeenCalledTimes(1);
+      expect(onPressThumbListItem).toHaveBeenCalledWith(1);
       await waitFor(() => {});
     });
   });

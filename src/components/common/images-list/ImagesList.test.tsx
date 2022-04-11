@@ -88,7 +88,6 @@ describe('<ImagesList />', () => {
       expect(mockNavigation.navigate).toHaveBeenCalledWith(
         Routes.ImagesGallery.IMAGES_GALLERY,
         {
-          gallerySize: numberOfImages,
           indexSelected: indexImageSelected,
           images: images,
         },

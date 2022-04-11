@@ -14,7 +14,6 @@ export const useImagesList = (props: UseImagesListProps) => {
   const handlePressImage = useCallback(
     (index: number) => {
       navigation.navigate(Routes.ImagesGallery.IMAGES_GALLERY, {
-        gallerySize: props.images.length,
         indexSelected: index,
         images: props.images,
       });

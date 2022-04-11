@@ -6,7 +6,7 @@ import {listStyles} from './thumbs-gallery-list-item/ThumbsGalleryListItem.style
 import useThumbsGalleryList from './useThumbsGalleryList';
 
 type ThumbsGalleryListProps = {
-  onPressBottomListItem: (indexThumbSelected: number) => void;
+  onPressThumbListItem: (indexThumbSelected: number) => void;
   indexImageSelected: number;
   thumbs: string[];
 };
@@ -24,7 +24,7 @@ export const ThumbsGalleryList = (props: ThumbsGalleryListProps) => {
       horizontal>
       {props.thumbs.map((thumb, index) => (
         <ThumbsGalleryListItem
-          onPress={() => props.onPressBottomListItem(index)}
+          onPress={() => props.onPressThumbListItem(index)}
           isSelected={props.indexImageSelected === index}
           image={thumb}
           key={thumb}

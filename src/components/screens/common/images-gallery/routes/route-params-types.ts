@@ -9,7 +9,6 @@ type ImagesGalleryStackParams = {
 
 type ImagesGalleryParams = {
   indexSelected: number;
-  gallerySize: number;
   images: string[];
 };
 
