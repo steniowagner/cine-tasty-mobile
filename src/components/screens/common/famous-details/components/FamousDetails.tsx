@@ -16,8 +16,8 @@ import metrics from '@styles/metrics';
 
 import {FamousDetailStackProps} from '../routes/route-params-types';
 import HeaderInfo from './header/header-info/HeaderInfo';
-import useFamousDetail from './useFamousDetail';
-import * as Styles from './FamousDetail.styles';
+import useFamousDetail from './useFamousDetails';
+import * as Styles from './FamousDetails.styles';
 import DeathDay from './death-day/DeathDay';
 
 export const FamousDetails = withTheme((props: FamousDetailStackProps) => {

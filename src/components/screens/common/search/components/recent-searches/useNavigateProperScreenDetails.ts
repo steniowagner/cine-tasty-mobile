@@ -1,10 +1,11 @@
 import {useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {FamousNavigationProp} from '../../../../famous/routes/route-params-types';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 import {Routes} from '@routes/routes';
+
+import {FamousNavigationProp} from '../../../../famous/routes/route-params-types';
 
 type UseNavigationProperScreenDetails = {
   searchType: SchemaTypes.SearchType;

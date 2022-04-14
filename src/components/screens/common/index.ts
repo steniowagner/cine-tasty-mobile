@@ -1,5 +1,5 @@
 export {CustomizedModal} from './customized-modal/components/CustomizedModal';
-export {FamousDetails} from './famous-detail/components/FamousDetail';
+export {FamousDetails} from './famous-details/components/FamousDetails';
 export {ImagesGallery} from './images-gallery/components/images-gallery/ImagesGallery';
 export {MovieDetail} from './media-detail/movie-detail/components/MovieDetail';
 export {Search} from './search/components/search/Search';

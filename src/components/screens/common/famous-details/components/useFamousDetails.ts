@@ -46,7 +46,7 @@ const useFamousDetail = (props: UseFamousDetailProps) => {
       return '';
     }
     return getRandomImage();
-  }, [query.data]);
+  }, [getRandomImage, query.data]);
 
   const handleShowLanguageAlert = useCallback(() => {
     const shouldShowLanguageAlert =

@@ -8,11 +8,11 @@ import {Routes} from '@routes/routes';
 
 type FamousDetailStackParams = {
   [Routes.TVShow.DETAILS]: TVShowDetailParams;
-  [Routes.Famous.DETAILS]: FamousDetailParams;
+  [Routes.Famous.DETAILS]: FamousDetailsParams;
   [Routes.Movie.DETAILS]: MovieDetailParams;
 };
 
-export type FamousDetailParams = {
+export type FamousDetailsParams = {
   profileImage: string;
   name: string;
   id: number;

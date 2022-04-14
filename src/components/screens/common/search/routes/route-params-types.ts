@@ -4,14 +4,14 @@ import {DefaultTheme} from 'styled-components/native';
 
 import {TVShowDetailParams} from '@src/components/screens/common/media-detail/tv-show-detail/routes/route-params-types';
 import {MovieDetailParams} from '@src/components/screens/common/media-detail/movie-detail/routes/route-params-types';
-import {FamousDetailParams} from '@src/components/screens/common/famous-detail/routes/route-params-types';
+import {FamousDetailsParams} from '@src/components/screens/common/famous-details/routes/route-params-types';
 import * as SchemaTypes from '@schema-types';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
 type SearchStackParams = {
   [Routes.TVShow.DETAILS]: TVShowDetailParams;
-  [Routes.Famous.DETAILS]: FamousDetailParams;
+  [Routes.Famous.DETAILS]: FamousDetailsParams;
   [Routes.Movie.DETAILS]: MovieDetailParams;
   [Routes.Search.SEARCH]: SearchParams;
 };

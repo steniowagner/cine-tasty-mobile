@@ -52,7 +52,7 @@ const RouteNavigation = () => {
           initialParams={{onFinishShowOnboarding}}
           name={Routes.Onboarding.ONBOARDING}
           options={{headerShown: false}}
-          component={Onboarding}
+          component={Tabs}
         />
       )}
       {currentStack === 'tabs' && (
