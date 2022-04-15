@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {renderSVGIconConditionally, TMDBImage} from '@components';
+import {renderSVGIconConditionally} from '@components';
 import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
@@ -12,36 +12,30 @@ type PosterImageProps = {
   image: string;
 };
 
-const PosterImage = ({image}: PosterImageProps) => {
-  const {isFallbackImageVisible, hasError, onError, opacity, onLoad} =
-    useLoadListItemImage({
-      image,
-    });
-
+export const PosterImage = (props: PosterImageProps) => {
+  const loadListItemImage = useLoadListItemImage({
+    image: props.image,
+  });
   return (
     <>
-      <TMDBImage
-        onError={onError}
-        onLoad={onLoad}
-        image={image}
-        imageType="poster"
+      <Styles.TMDBImageStyled
+        onError={loadListItemImage.onError}
+        onLoad={loadListItemImage.onLoad}
         testID="poster-image"
-        style={{
-          width: metrics.getWidthFromDP('30%'),
-          height: '100%',
-          borderRadius: metrics.extraSmallSize,
-        }}
+        image={props.image}
+        imageType="poster"
+        style={{}}
       />
-      {isFallbackImageVisible && (
+      {loadListItemImage.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity,
+              opacity: loadListItemImage.opacity,
             },
           ]}>
           {renderSVGIconConditionally({
-            condition: hasError,
+            condition: loadListItemImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,
@@ -58,5 +52,3 @@ const PosterImage = ({image}: PosterImageProps) => {
     </>
   );
 };
-
-export default PosterImage;

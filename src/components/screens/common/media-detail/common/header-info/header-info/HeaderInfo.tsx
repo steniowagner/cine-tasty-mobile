@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {StarsVotes} from '@components';
 
 import BackgroundImage from '../background-image/BackgroundImage';
-import PosterImage from '../poster-image/PosterImage';
+import {PosterImage} from '../poster-image/PosterImage';
 import * as Styles from './HeaderInfo.styles';
 import {useHeaderInfo} from './useHeaderInfo';
 
