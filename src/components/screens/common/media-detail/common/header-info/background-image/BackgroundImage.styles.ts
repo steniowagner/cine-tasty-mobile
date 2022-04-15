@@ -42,3 +42,8 @@ export const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
   height: 100%;
   position: absolute;
 `;
+
+export const LoadingPlaceholderStyle = {
+  width: '100%',
+  height: '100%',
+};

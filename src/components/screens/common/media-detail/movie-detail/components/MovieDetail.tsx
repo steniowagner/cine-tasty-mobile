@@ -4,7 +4,7 @@ import {ScrollView, StatusBar} from 'react-native';
 import {withTheme} from 'styled-components/native';
 
 import {HeaderBackButton, ImagesList} from '@components';
-import {useShowLanguageAlert, useStatusBarStyle} from '@hooks';
+import {useStatusBarStyle} from '@hooks';
 import {Section} from '@components';
 import * as TRANSLATIONS from '@i18n/tags';
 
@@ -21,10 +21,10 @@ import Tags from '../../common/sections/tags/Tags';
 import useMovieDetail from './useMovieDetail';
 import DetailsSection from './MovieDetailsSection';
 import SimilarSection from './SimilarSection';
+import {showLanguageAlert} from '@utils';
 
 export const MovieDetail = withTheme(
   ({navigation, theme, route}: MovieDetailStackProps) => {
-    const {handleShowLanguageAlert} = useShowLanguageAlert();
     const {onPressSimilarItem, onPressCrew, onPressReviews, onPressCast} =
       useMovieDetailPressHandlers({
         navigation,
@@ -48,10 +48,11 @@ export const MovieDetail = withTheme(
 
     useEffect(() => {
       if (!isLoading && movie && !movie.overview) {
-        handleShowLanguageAlert({
-          descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_DESCRIPTION,
-          positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION,
-          titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_TITLE,
+        showLanguageAlert({
+          description: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_DESCRIPTION,
+          positiveActionTitle:
+            TRANSLATIONS.LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION,
+          title: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_TITLE,
           onPressPositiveAction: () => {},
           singleAction: true,
         });
