@@ -11,7 +11,7 @@ import {ThemeContextProvider} from '@providers';
 import * as SchemaTypes from '@schema-types';
 
 import {STORAGE_SEARCH_SECTION} from './useRecentSearches';
-import RecentSearches from './RecentSearches';
+import {RecentSearches} from './RecentSearches';
 
 const renderRecentSearchMovies = (onPressItem: typeof jest.fn) => (
   <TMDBImageQualityProvider>

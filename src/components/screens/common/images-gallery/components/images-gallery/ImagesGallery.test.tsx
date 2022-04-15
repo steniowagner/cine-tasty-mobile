@@ -60,11 +60,6 @@ describe('<ImagesGallery />', () => {
       );
   });
 
-  beforeEach(() => {
-    jest.useFakeTimers();
-    jest.clearAllMocks();
-  });
-
   const elements = {
     imagesList: (api: RenderAPI) => api.queryByTestId('images-list'),
     imagesItems: (api: RenderAPI) =>
@@ -92,115 +87,141 @@ describe('<ImagesGallery />', () => {
       expect(elements.thumbsItems(component).length).toEqual(datasetLength);
       expect(elements.headerIconButton(component)).not.toBeNull();
       expect(
-        component.findByText(`${indexSelected + 1}/${datasetLength}`),
+        component.getByText(`${indexSelected + 1}/${datasetLength}`),
       ).not.toBeNull();
       await waitFor(() => {});
     });
   });
 
   describe('Interacting with the "Images-List"', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
     it('should update the "index-marker" when the user swipe the "images-list" to the right', async () => {
-      const eventData = {
-        nativeEvent: {
-          contentOffset: {
-            x: 101,
-          },
-        },
-      };
       const datasetLength = randomPositiveNumber(10, 5);
-      const indexSelected = randomPositiveNumber(datasetLength - 1, 0);
+      const indexSelected = Math.floor(datasetLength / 2);
       const images = Array(datasetLength)
         .fill('')
         .map((_, index) => `IMAGE_${index}`);
       const component = render(renderImagesGallery(indexSelected, images));
-      expect(
-        component.findByText(`${indexSelected + 1}/${datasetLength}`),
-      ).not.toBeNull();
       act(() => {
         jest.runAllTimers();
       });
-      fireEvent(
-        elements.imagesList(component),
-        'onMomentumScrollEnd',
-        eventData,
-      );
+      await waitFor(() => {
+        expect(
+          component.queryByText(`${indexSelected + 1}/${datasetLength}`),
+        ).not.toBeNull();
+      });
       act(() => {
         jest.runAllTimers();
       });
-      expect(
-        component.findByText(`${indexSelected + 2}/${datasetLength}`),
-      ).not.toBeNull();
+      fireEvent(elements.imagesList(component), 'onMomentumScrollEnd', {
+        nativeEvent: {
+          contentOffset: {
+            x: 100 * (indexSelected + 1),
+          },
+        },
+      });
+      act(() => {
+        jest.runAllTimers();
+      });
+      await waitFor(() => {
+        expect(
+          component.queryByText(`${indexSelected + 2}/${datasetLength}`),
+        ).not.toBeNull();
+      });
       await waitFor(() => {});
     });
 
     it('should update the "index-marker" when the user swipe the "images-list" to the left', async () => {
-      const eventData = {
-        nativeEvent: {
-          contentOffset: {
-            x: -101,
-          },
-        },
-      };
       const datasetLength = randomPositiveNumber(10, 5);
-      const indexSelected = randomPositiveNumber(datasetLength - 1, 0);
+      const indexSelected = Math.floor(datasetLength / 2);
       const images = Array(datasetLength)
         .fill('')
         .map((_, index) => `IMAGE_${index}`);
       const component = render(renderImagesGallery(indexSelected, images));
-      expect(
-        component.findByText(`${indexSelected + 1}/${datasetLength}`),
-      ).not.toBeNull();
       act(() => {
         jest.runAllTimers();
       });
-      fireEvent(
-        elements.imagesList(component),
-        'onMomentumScrollEnd',
-        eventData,
-      );
+      await waitFor(() => {
+        expect(
+          component.queryByText(`${indexSelected + 1}/${datasetLength}`),
+        ).not.toBeNull();
+      });
       act(() => {
         jest.runAllTimers();
       });
-      expect(
-        component.findByText(`${indexSelected}/${datasetLength}`),
-      ).not.toBeNull();
+      fireEvent(elements.imagesList(component), 'onMomentumScrollEnd', {
+        nativeEvent: {
+          contentOffset: {
+            x: 100 * (indexSelected - 1),
+          },
+        },
+      });
+      act(() => {
+        jest.runAllTimers();
+      });
+      await waitFor(() => {
+        expect(
+          component.queryByText(`${indexSelected}/${datasetLength}`),
+        ).not.toBeNull();
+      });
       await waitFor(() => {});
     });
   });
 
   describe('Interacting with the "Thumbs-List"', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
     it('should update the "index-marker" when the user selects some item from "thumbs-list" that are on the right of the current-selected-item', async () => {
-      const datasetLength = 10;
-      const indexSelected = 4;
+      const datasetLength = randomPositiveNumber(10, 5);
+      const indexSelected = Math.floor(datasetLength / 2);
       const images = Array(datasetLength)
         .fill('')
         .map((_, index) => `IMAGE_${index}`);
       const component = render(renderImagesGallery(indexSelected, images));
-      expect(
-        component.findByText(`${indexSelected + 1}/${datasetLength}`),
-      ).not.toBeNull();
-      const nextIndexSelected = 6;
+      act(() => {
+        jest.runAllTimers();
+      });
+      await waitFor(() => {
+        expect(
+          component.queryByText(`${indexSelected + 1}/${datasetLength}`),
+        ).not.toBeNull();
+      });
+      const nextIndexSelected = indexSelected + 1;
       fireEvent.press(elements.thumbsItems(component)[nextIndexSelected]);
-      expect(
-        component.findByText(`${nextIndexSelected}/${datasetLength}`),
-      ).not.toBeNull();
+      await waitFor(() => {
+        expect(
+          component.queryByText(`${nextIndexSelected + 1}/${datasetLength}`),
+        ).not.toBeNull();
+      });
     });
 
     it('should update the "index-marker" when the user selects some item from "thumbs-list" that are on the left of the current-selected-item', async () => {
-      const datasetLength = 10;
-      const indexSelected = 4;
+      const datasetLength = randomPositiveNumber(10, 5);
+      const indexSelected = Math.floor(datasetLength / 2);
       const images = Array(datasetLength)
         .fill('')
         .map((_, index) => `IMAGE_${index}`);
       const component = render(renderImagesGallery(indexSelected, images));
-      expect(
-        component.findByText(`${indexSelected + 1}/${datasetLength}`),
-      ).not.toBeNull();
-      const nextIndexSelected = 2;
+      act(() => {
+        jest.runAllTimers();
+      });
+      await waitFor(() => {
+        expect(
+          component.queryByText(`${indexSelected + 1}/${datasetLength}`),
+        ).not.toBeNull();
+      });
+      const nextIndexSelected = indexSelected - 1;
       fireEvent.press(elements.thumbsItems(component)[nextIndexSelected]);
-      expect(
-        component.findByText(`${nextIndexSelected}/${datasetLength}`),
-      ).not.toBeNull();
+      await waitFor(() => {
+        expect(
+          component.queryByText(`${nextIndexSelected + 1}/${datasetLength}`),
+        ).not.toBeNull();
+      });
     });
   });
 

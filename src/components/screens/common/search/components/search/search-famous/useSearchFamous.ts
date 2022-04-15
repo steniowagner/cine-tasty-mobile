@@ -3,7 +3,7 @@ import {useCallback, useMemo} from 'react';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
-import useRecentSearches from '../../recent-searches/useRecentSearches';
+import {useRecentSearches} from '../../recent-searches/useRecentSearches';
 
 type UseSearchFamous = {
   dataset: SchemaTypes.SearchPerson_search_items_BasePerson[];

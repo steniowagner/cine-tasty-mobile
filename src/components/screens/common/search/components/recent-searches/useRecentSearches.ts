@@ -16,7 +16,7 @@ type UseRecentSearchesProps = {
   searchType: SchemaTypes.SearchType;
 };
 
-const useRecentSearches = (props: UseRecentSearchesProps) => {
+export const useRecentSearches = (props: UseRecentSearchesProps) => {
   const [recentSearches, setRecentSearches] = useState<
     Types.ResentSearchItem[]
   >([]);
@@ -123,5 +123,3 @@ const useRecentSearches = (props: UseRecentSearchesProps) => {
     add,
   };
 };
-
-export default useRecentSearches;

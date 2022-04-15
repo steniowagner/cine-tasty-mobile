@@ -12,7 +12,6 @@ export const ImagesGallery = (props: ImagesGalleryStackProps) => {
   const imagesGallery = useImageGallery({
     indexFirstItemSelected: props.route.params.indexSelected,
   });
-
   useLayoutEffect(() => {
     props.navigation.setOptions({
       title: `${imagesGallery.indexImageSelected + 1}/${

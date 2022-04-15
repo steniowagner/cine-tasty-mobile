@@ -31,8 +31,6 @@ const renderImagesGalleryList = (
   </TMDBImageQualityProvider>
 );
 
-let imagesArray = [];
-
 describe('<ImagesGalleryList />', () => {
   beforeAll(() => {
     jest
@@ -46,9 +44,6 @@ describe('<ImagesGalleryList />', () => {
 
   beforeEach(() => {
     jest.useFakeTimers();
-    imagesArray = Array(randomPositiveNumber(10, 5))
-      .fill('')
-      .map((_, index) => `IMAGE_${index}`);
   });
 
   const elements = {
@@ -61,7 +56,10 @@ describe('<ImagesGalleryList />', () => {
 
   describe('Renders correctly', () => {
     it('should render all items correctly with the selected-image selected', async () => {
-      const imageSelected = randomPositiveNumber(imagesArray.length - 1, 5);
+      const imagesArray = Array(randomPositiveNumber(10, 5))
+        .fill('')
+        .map((_, index) => `IMAGE_${index}`);
+      const imageSelected = randomPositiveNumber(imagesArray.length - 1, 0);
       const component = render(
         renderImagesGalleryList(imagesArray, imageSelected),
       );
@@ -82,6 +80,9 @@ describe('<ImagesGalleryList />', () => {
     });
 
     it('should allow a new image to be shown when a new item is selected', async () => {
+      const imagesArray = Array(randomPositiveNumber(10, 5))
+        .fill('')
+        .map((_, index) => `IMAGE_${index}`);
       const component = render(renderImagesGalleryList(imagesArray));
       expect(elements.imagesList(component)).not.toBeNull();
       expect(elements.placeholders(component).length).toEqual(
@@ -114,6 +115,9 @@ describe('<ImagesGalleryList />', () => {
 
   describe('Fires events correctly', () => {
     it('should call "onFlatlistMomentumScrollEnd" when the "onFlatlistMomentumScrollEnd" event is fired', async () => {
+      const imagesArray = Array(randomPositiveNumber(10, 5))
+        .fill('')
+        .map((_, index) => `IMAGE_${index}`);
       const imageSelected = randomPositiveNumber(imagesArray.length - 1, 0);
       const onFlatlistMomentumScrollEnd = jest.fn();
       const component = render(

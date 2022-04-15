@@ -3,7 +3,7 @@ import React, {useLayoutEffect} from 'react';
 import * as SchemaTypes from '@schema-types';
 
 import {SearchStackProps} from '../../routes/route-params-types';
-import RecentSearches from '../recent-searches/RecentSearches';
+import {RecentSearches} from '../recent-searches/RecentSearches';
 import SearchFamous from './search-famous/SearchFamous';
 // @ts-ignore
 import SearchBar from './searchbar/SearchBar';

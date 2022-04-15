@@ -13,7 +13,7 @@ type RecentSearchesListItemProps = {
   onPressItem: () => void;
 };
 
-const RecentSearchesListItem = (props: RecentSearchesListItemProps) => {
+export const RecentSearchesListItem = (props: RecentSearchesListItemProps) => {
   const loadListImage = useLoadListItemImage({
     image: props.item.image,
   });
@@ -68,5 +68,3 @@ const RecentSearchesListItem = (props: RecentSearchesListItemProps) => {
     </Styles.Wrapper>
   );
 };
-
-export default RecentSearchesListItem;

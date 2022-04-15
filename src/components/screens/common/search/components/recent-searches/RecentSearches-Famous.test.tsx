@@ -17,7 +17,7 @@ import {Routes} from '@routes/routes';
 import {storage} from '@utils';
 
 import {STORAGE_SEARCH_SECTION} from './useRecentSearches';
-import RecentSearches from './RecentSearches';
+import {RecentSearches} from './RecentSearches';
 
 jest.mock('@utils');
 
