@@ -1,12 +1,12 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {Section} from '@components';
 import * as TRANSLATIONS from '@i18n/tags';
+import {Section} from '@components';
 
 import * as Styles from './GeneralInfo.styles';
 
-type InfoItem = {
+export type InfoItem = {
   title: string;
   value: string;
 };
@@ -15,23 +15,29 @@ type GeneralInfoProps = {
   infoItems: InfoItem[];
 };
 
-const GeneralInfo = ({infoItems}: GeneralInfoProps) => {
+export const GeneralInfo = ({infoItems}: GeneralInfoProps) => {
   const {t} = useTranslation();
 
+  if (!infoItems.length) {
+    return null;
+  }
+
   return (
-    !!infoItems.length && (
-      <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_DETAILS)}>
-        <Styles.Wrapper testID="general-info-wrapper">
-          {infoItems.map(infoItem => (
-            <Styles.InfoCellWrapper key={infoItem.title}>
-              <Styles.InfoTitleText>{infoItem.title}</Styles.InfoTitleText>
-              <Styles.InfoValueText>{infoItem.value}</Styles.InfoValueText>
-            </Styles.InfoCellWrapper>
-          ))}
-        </Styles.Wrapper>
-      </Section>
-    )
+    <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_DETAILS)}>
+      <Styles.Wrapper testID="general-info-wrapper">
+        {infoItems.map((infoItem, index) => (
+          <Styles.InfoCellWrapper
+            testID={`general-info-wrapper-${index}`}
+            key={infoItem.title}>
+            <Styles.InfoTitleText testID={`general-info-title-${index}`}>
+              {infoItem.title}
+            </Styles.InfoTitleText>
+            <Styles.InfoValueText testID={`general-info-value-${index}`}>
+              {infoItem.value}
+            </Styles.InfoValueText>
+          </Styles.InfoCellWrapper>
+        ))}
+      </Styles.Wrapper>
+    </Section>
   );
 };
-
-export default GeneralInfo;
