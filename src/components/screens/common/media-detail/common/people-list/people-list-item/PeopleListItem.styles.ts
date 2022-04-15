@@ -2,18 +2,13 @@ import {TouchableOpacity, Animated, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 
+import {TMDBImage} from '@components';
 import {CONSTANTS} from '@utils';
 
-type WrapperStyleProps = {
-  isFirst: boolean;
-};
-
-export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
+export const Wrapper = styled(TouchableOpacity)`
   width: ${({theme}) => theme.metrics.getWidthFromDP('40%')}px;
   height: ${({theme}) => theme.metrics.getWidthFromDP('55%')}px;
   margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  margin-left: ${({isFirst}) =>
-    isFirst ? CONSTANTS.VALUES.DEFAULT_SPACING : 0}px;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;
 
@@ -73,4 +68,10 @@ export const FallbackImageWrapper = styled(Animated.View)`
   position: absolute;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
   background-color: ${({theme}) => theme.colors.fallbackImageBackground};
+`;
+
+export const TMDBImageStyled = styled(TMDBImage)`
+  width: 100%;
+  height: 100%;
+  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;

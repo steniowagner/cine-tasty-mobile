@@ -1,12 +1,11 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import {FlatList} from 'react-native';
 
-import {Section} from '@components';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
+import {Section} from '@components';
 
-import PeopleListItem from './people-list-item/PeopleListItem';
+import {PeopleListItem} from './people-list-item/PeopleListItem';
 import usePeopleList from './usePeopleList';
 
 type PeopleListProps = {
