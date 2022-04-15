@@ -1,11 +1,11 @@
 import React from 'react';
-import {FlatList} from 'react-native';
 
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 import {Section} from '@components';
 
 import {PeopleListItem} from './people-list-item/PeopleListItem';
+import * as Styles from './PeopleList.styles';
 import usePeopleList from './usePeopleList';
 
 type PeopleListProps = {
@@ -16,40 +16,34 @@ type PeopleListProps = {
     | SchemaTypes.TVShowDetail_tvShow_createdBy[];
   type: 'cast' | 'crew' | 'creator';
   sectionTitle: string;
-  noSubtext?: boolean;
 };
 
-const PeopleList = ({
-  sectionTitle,
-  onPressItem,
-  noSubtext,
-  dataset,
-  type,
-}: PeopleListProps) => {
-  const {items} = usePeopleList({dataset, type});
-
+export const PeopleList = (props: PeopleListProps) => {
+  const peopleList = usePeopleList({dataset: props.dataset, type: props.type});
   return (
-    <Section title={sectionTitle}>
-      <FlatList
-        keyExtractor={({id}, index) => `${id}-${index}`}
+    <Section title={props.sectionTitle}>
+      <Styles.Wrapper
         showsHorizontalScrollIndicator={false}
-        renderItem={({index, item}) => (
+        testID={`people-list-${props.type}`}
+        horizontal>
+        {peopleList.items.map((peopleListItem, index) => (
           <PeopleListItem
-            onPress={() => onPressItem(item.id, item.name, item.image)}
-            withSubtext={noSubtext}
-            subText={item.subText}
-            isFirst={index === 0}
-            image={item.image}
-            name={item.name}
-            type={type}
+            onPress={() =>
+              props.onPressItem(
+                peopleListItem.id,
+                peopleListItem.name,
+                peopleListItem.image,
+              )
+            }
+            withSubtext={props.type !== 'creator'}
+            key={`${peopleListItem.id}-${index}`}
+            subText={peopleListItem.subText}
+            image={peopleListItem.image}
+            name={peopleListItem.name}
+            type={props.type}
           />
-        )}
-        testID={`people-list-${type}`}
-        data={items}
-        horizontal
-      />
+        ))}
+      </Styles.Wrapper>
     </Section>
   );
 };
-
-export default PeopleList;

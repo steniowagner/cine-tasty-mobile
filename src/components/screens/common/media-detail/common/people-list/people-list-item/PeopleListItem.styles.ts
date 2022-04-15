@@ -6,8 +6,8 @@ import {TMDBImage} from '@components';
 import {CONSTANTS} from '@utils';
 
 export const Wrapper = styled(TouchableOpacity)`
-  width: ${({theme}) => theme.metrics.getWidthFromDP('40%')}px;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('55%')}px;
+  width: ${({theme}) => theme.metrics.getWidthFromDP('42%')}px;
+  height: ${({theme}) => theme.metrics.getWidthFromDP('62')}px;
   margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;

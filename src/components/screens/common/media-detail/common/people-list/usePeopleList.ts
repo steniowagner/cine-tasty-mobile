@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
@@ -13,29 +12,25 @@ type PeopleListItem = {
 
 type UsePeopleListProps = {
   dataset:
+    | SchemaTypes.TVShowDetail_tvShow_createdBy[]
     | Types.CrewDataset
-    | Types.CastDataset
-    | SchemaTypes.TVShowDetail_tvShow_createdBy[];
+    | Types.CastDataset;
   type: 'cast' | 'crew' | 'creator';
 };
 
-const usePeopleList = ({ dataset, type }: UsePeopleListProps) => {
+const usePeopleList = (props: UsePeopleListProps) => {
   const mergeCrewMemebersBySimilarJobs = useCallback(
     (crew: PeopleListItem[]): PeopleListItem[] => {
       const repeatedItemsMap = {};
-
-      const repeatedCrewItems = crew.filter(({ subText, id }) => {
+      const repeatedCrewItems = crew.filter(({subText, id}) => {
         if (!repeatedItemsMap[id]) {
           repeatedItemsMap[id] = [subText];
           return true;
         }
-
         repeatedItemsMap[id] = [...repeatedItemsMap[id], subText];
-
         return false;
       });
-
-      return repeatedCrewItems.map((repeatedCrewItem) => ({
+      return repeatedCrewItems.map(repeatedCrewItem => ({
         ...repeatedCrewItem,
         subText: repeatedItemsMap[repeatedCrewItem.id].join('/'),
       }));
@@ -45,43 +40,34 @@ const usePeopleList = ({ dataset, type }: UsePeopleListProps) => {
 
   const parseCrewToPeopleListItem = useCallback(
     (crew: Types.CrewDataset): PeopleListItem[] => {
-      const crewParsedToPeople = crew.map(({
-        job, profilePath, name, id,
-      }) => ({
+      const crewParsedToPeople = crew.map(({job, profilePath, name, id}) => ({
         subText: job || '-',
         image: profilePath,
         name,
         id,
       }));
-
       return mergeCrewMemebersBySimilarJobs(crewParsedToPeople);
     },
     [],
   );
 
   const parseCastToPeopleListItem = useCallback(
-    (cast: Types.CastDataset): PeopleListItem[] => cast.map(({
-      character, profilePath, name, id,
-    }) => ({
-      subText: character || '-',
-      image: profilePath,
-      name,
-      id,
-    })),
+    (cast: Types.CastDataset): PeopleListItem[] =>
+      cast.map(({character, profilePath, name, id}) => ({
+        subText: character || '-',
+        image: profilePath,
+        name,
+        id,
+      })),
     [],
   );
 
   const parseDatasetToPeopleListItemDataset = useCallback(() => {
-    if (type === 'cast') {
-      const cast = dataset as Types.CastDataset;
-
-      return parseCastToPeopleListItem(cast);
+    if (props.type === 'cast') {
+      return parseCastToPeopleListItem(props.dataset as Types.CastDataset);
     }
-
-    const crew = dataset as Types.CrewDataset;
-
-    return parseCrewToPeopleListItem(crew);
-  }, [dataset, type]);
+    return parseCrewToPeopleListItem(props.dataset as Types.CrewDataset);
+  }, [props.dataset, props.type]);
 
   return {
     items: parseDatasetToPeopleListItemDataset(),
