@@ -62,6 +62,7 @@ describe('<ImagesGallery />', () => {
 
   beforeEach(() => {
     jest.useFakeTimers();
+    jest.clearAllMocks();
   });
 
   const elements = {

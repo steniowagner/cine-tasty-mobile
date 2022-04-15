@@ -6,3 +6,4 @@ export * from './media';
 export * from './movie';
 export * from './quiz';
 export * from './news';
+export * from './famous-details';

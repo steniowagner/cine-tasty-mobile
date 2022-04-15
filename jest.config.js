@@ -3,11 +3,11 @@ const dependenciesToBeTranspiled = [
   'react-native',
   '@react-native-community',
   '@react-navigation',
+  'react-native-linear-gradient',
   /* 'react-navigation',
   'react-native-screens',
   'react-native-gesture-handler',
   'react-native-iphone-x-helper',
-  'react-native-linear-gradient',
   'react-native-shimmer-placeholder',
   'react-native-status-bar-height', */
 ].join('|');

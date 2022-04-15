@@ -2,7 +2,7 @@ import {Animated, View} from 'react-native';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import * as Types from '@local-types';
+import {ThemeId} from '@local-types';
 
 export const BackgroundImageWrapper = styled(Animated.View)`
   width: 100%;
@@ -11,12 +11,12 @@ export const BackgroundImageWrapper = styled(Animated.View)`
 `;
 
 type SmokeShadowStyleProps = {
-  currentTheme: Types.ThemeId;
+  currentTheme: ThemeId;
 };
 
 export const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
   ({currentTheme, theme}) => {
-    const backgroundAlphax4Count = currentTheme === Types.ThemeId.DARK ? 1 : 5;
+    const backgroundAlphax4Count = currentTheme === ThemeId.DARK ? 1 : 5;
 
     return {
       colors: [

@@ -30,7 +30,7 @@ const ProfileImage = (props: ProfileImageProps) => {
       />
       {loadListImage.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
-          testID="fallback-image-wrapper"
+          testID="fallback-profile-image-wrapper"
           style={[
             {
               opacity: loadListImage.opacity,

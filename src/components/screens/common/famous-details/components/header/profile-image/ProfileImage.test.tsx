@@ -28,7 +28,7 @@ describe('<ProfileImage />', () => {
   const elements = {
     profileImage: (api: RenderAPI) => api.queryByTestId('profile-image'),
     fallbackImageWrapper: (api: RenderAPI) =>
-      api.queryByTestId('fallback-image-wrapper'),
+      api.queryByTestId('fallback-profile-image-wrapper'),
     iconAccount: (api: RenderAPI) => api.queryByTestId('icon-account'),
     iconImageOff: (api: RenderAPI) => api.queryByTestId('icon-image-off'),
   };

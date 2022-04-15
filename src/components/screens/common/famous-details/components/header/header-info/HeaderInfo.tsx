@@ -17,7 +17,7 @@ export type HeaderInfoProps = {
 };
 
 const HeaderInfo = (props: HeaderInfoProps) => (
-  <Styles.Wrapper>
+  <Styles.Wrapper testID="header-info">
     <Styles.NameText testID="name-text">{props.name}</Styles.NameText>
     <Styles.InfoWrapper>
       <ProfileImage profileImage={props.profileImage} />

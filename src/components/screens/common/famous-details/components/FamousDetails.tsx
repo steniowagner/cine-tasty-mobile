@@ -21,8 +21,11 @@ import * as Styles from './FamousDetails.styles';
 import DeathDay from './death-day/DeathDay';
 
 export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
-  const {currentTheme} = useGetCurrentTheme({theme: props.theme});
-  const {barStyle} = useStatusBarStyle({theme: props.theme});
+  const getCurrentTheme = useGetCurrentTheme({theme: props.theme});
+  const statusBarStyle = useStatusBarStyle({theme: props.theme});
+  const famousDetail = useFamousDetail({
+    id: props.route.params.id,
+  });
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -31,10 +34,6 @@ export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
       ),
     });
   }, [props.navigation]);
-
-  const famousDetail = useFamousDetail({
-    id: props.route.params.id,
-  });
 
   if (famousDetail.hasError) {
     return (
@@ -51,7 +50,7 @@ export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
     <>
       <StatusBar
         backgroundColor={props.theme.colors.secondary}
-        barStyle={barStyle}
+        barStyle={statusBarStyle.barStyle}
         animated
       />
       <Styles.BackgroundImageWrapper testID="background-image-wrapper">
@@ -68,10 +67,8 @@ export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
             imageType="backdrop"
           />
         </Animated.View>
-        <Styles.SmokeShadow
-          // @ts-ignore
-          currentTheme={currentTheme}
-        />
+        {/* @ts-ignore */}
+        <Styles.SmokeShadow currentTheme={getCurrentTheme.currentTheme} />
       </Styles.BackgroundImageWrapper>
       <Animated.ScrollView
         scrollEventThrottle={16}
