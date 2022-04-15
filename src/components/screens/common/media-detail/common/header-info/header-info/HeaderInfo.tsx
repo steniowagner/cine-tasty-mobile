@@ -1,13 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
-import {useTranslation} from 'react-i18next';
 
 import {StarsVotes} from '@components';
-import * as TRANSLATIONS from '@i18n/tags';
 
 import BackgroundImage from '../background-image/BackgroundImage';
 import PosterImage from '../poster-image/PosterImage';
 import * as Styles from './HeaderInfo.styles';
+import {useHeaderInfo} from './useHeaderInfo';
 
 type HeaderInfoProps = {
   votesAverage: number;
@@ -18,38 +17,38 @@ type HeaderInfoProps = {
   title: string;
 };
 
-const HeaderInfo = ({
-  votesAverage,
-  isLoading,
-  voteCount,
-  posterURL,
-  imageURL,
-  title,
-}: HeaderInfoProps) => {
-  const {t} = useTranslation();
-
+export const HeaderInfo = (props: HeaderInfoProps) => {
+  const headerInfo = useHeaderInfo({
+    votesAverage: props.votesAverage,
+    voteCount: props.voteCount,
+  });
   return (
     <Styles.Wrapper>
-      <BackgroundImage isLoading={isLoading} imageURL={imageURL} />
+      <BackgroundImage isLoading={props.isLoading} imageURL={props.imageURL} />
       <Styles.MediaInfoWrapper testID="media-info-wrapper">
-        <PosterImage image={posterURL} />
+        <PosterImage image={props.posterURL} />
         <Styles.TextContentWrapper>
-          <Styles.MediaTitleText>{title}</Styles.MediaTitleText>
-          {!!votesAverage && !!voteCount && (
+          <Styles.MediaTitleText testID="media-title">
+            {props.title}
+          </Styles.MediaTitleText>
+          {headerInfo.shouldShowVotesContent && (
             <Styles.VotesWrapper>
               <View>
-                <StarsVotes voteCount={voteCount} votes={votesAverage} />
+                <StarsVotes
+                  voteCount={props.voteCount}
+                  votes={props.votesAverage}
+                />
                 <Styles.Row>
-                  <Styles.NumberOfVotesText>
-                    {voteCount}
+                  <Styles.NumberOfVotesText testID="media-votes-count">
+                    {props.voteCount}
                   </Styles.NumberOfVotesText>
-                  <Styles.VotesText>
-                    {t(TRANSLATIONS.MEDIA_DETAIL_VOTES)}
+                  <Styles.VotesText testID="media-votes-text">
+                    {headerInfo.texts.votes}
                   </Styles.VotesText>
                 </Styles.Row>
               </View>
-              <Styles.VotesValueText>
-                {votesAverage.toFixed(1)}
+              <Styles.VotesValueText testID="media-votes-average">
+                {props.votesAverage.toFixed(1)}
               </Styles.VotesValueText>
             </Styles.VotesWrapper>
           )}
@@ -58,5 +57,3 @@ const HeaderInfo = ({
     </Styles.Wrapper>
   );
 };
-
-export default HeaderInfo;

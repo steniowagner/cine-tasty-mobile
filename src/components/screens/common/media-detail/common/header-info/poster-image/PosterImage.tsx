@@ -25,6 +25,7 @@ const PosterImage = ({image}: PosterImageProps) => {
         onLoad={onLoad}
         image={image}
         imageType="poster"
+        testID="poster-image"
         style={{
           width: metrics.getWidthFromDP('30%'),
           height: '100%',

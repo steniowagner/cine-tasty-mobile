@@ -20,7 +20,7 @@ const renderBackgroundImage = (isLoading: boolean, theme = dark) => (
   </TMDBImageQualityProvider>
 );
 
-describe('<ProfileImage />', () => {
+describe('<BackgroundImage />', () => {
   const elements = {
     image: (api: RenderAPI) => api.queryByTestId('progressive-image-wrapper'),
     wrapper: (api: RenderAPI) => api.queryByTestId('background-image-wrapper'),

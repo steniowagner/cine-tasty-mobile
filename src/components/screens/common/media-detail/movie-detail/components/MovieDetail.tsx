@@ -10,7 +10,7 @@ import * as TRANSLATIONS from '@i18n/tags';
 
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
 import useMovieDetailPressHandlers from './useMovieDetailPressHandlers';
-import Header from '../../common/header-info/header-info/HeaderInfo';
+import {HeaderInfo} from '../../common/header-info/header-info/HeaderInfo';
 import {MovieDetailStackProps} from '../routes/route-params-types';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
@@ -76,7 +76,7 @@ export const MovieDetail = withTheme(
           animated
         />
         <ScrollView bounces={false}>
-          <Header
+          <HeaderInfo
             votesAverage={route.params.voteAverage || movie?.voteAverage}
             voteCount={route.params.voteCount || movie?.voteCount}
             imageURL={movie?.backdropPath || ''}

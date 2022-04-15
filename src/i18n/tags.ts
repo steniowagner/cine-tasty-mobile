@@ -110,6 +110,7 @@ export namespace Translations {
     MONTHS = 'translations:months',
 
     HOME_VIEW_ALL = 'translations:home:viewAll',
+    MEDIA_DETAIL_VOTES = 'translations:mediaDetail:votes',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -277,7 +278,6 @@ export const MEDIA_DETAIL_ERROR_DESCRIPTION =
 export const MEDIA_DETAIL_ERROR_SUGGESTION =
   'translations:mediaDetail:errorSuggestion';
 export const MEDIA_DETAIL_ERROR_TITLE = 'translations:mediaDetail:errorTitle';
-export const MEDIA_DETAIL_VOTES = 'translations:mediaDetail:votes';
 export const MEDIA_DETAIL_TV_SHOWS_TITLE =
   'translations:mediaDetail:tvShow:tvShow';
 export const MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_READ_MORE_SEASON_OVERVIEW =
