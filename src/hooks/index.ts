@@ -3,6 +3,5 @@ export {usePaginatedQuery} from './use-paginated-query/usePaginatedQuery';
 export {useSystemThemePreference} from './useSystemThemePreference';
 export {useLoadListItemImage} from './useLoadListItemImage';
 export {useGetCurrentTheme} from './useGetCurrentTheme';
-export {useStatusBarStyle} from './useStatusBarStyle';
 export {useTranslations} from './useTranslations';
 export {usePagination} from './usePagination';

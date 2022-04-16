@@ -4,11 +4,12 @@ import {withTheme} from 'styled-components/native';
 
 import {
   HeaderBackButton,
+  StatusBarStyled,
   RoundedButton,
   ImagesList,
   Section,
 } from '@components';
-import {useShowLanguageAlert, useStatusBarStyle} from '@hooks';
+import {useShowLanguageAlert} from '@hooks';
 import * as TRANSLATIONS from '@i18n/tags';
 
 import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
@@ -39,7 +40,6 @@ export const TVShowDetail = withTheme(
     } = useTVShowDetailPressHandlers({
       navigation,
     });
-    const {barStyle} = useStatusBarStyle({theme});
 
     useLayoutEffect(() => {
       navigation.setOptions({
@@ -74,16 +74,12 @@ export const TVShowDetail = withTheme(
     );
 
     if (hasError) {
-      return <MediaDetailError barStyle={barStyle} theme={theme} />;
+      return <MediaDetailError />;
     }
 
     return (
       <>
-        <StatusBar
-          backgroundColor={theme.colors.secondary}
-          barStyle={barStyle}
-          animated
-        />
+        <StatusBarStyled />
         <ScrollView bounces={false}>
           <Header
             votesAverage={route.params.voteAverage || tvShow?.voteAverage}

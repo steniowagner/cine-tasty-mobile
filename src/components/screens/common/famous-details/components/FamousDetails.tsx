@@ -1,5 +1,5 @@
 import React, {useLayoutEffect} from 'react';
-import {StatusBar, Animated} from 'react-native';
+import {Animated} from 'react-native';
 import {withTheme} from 'styled-components/native';
 
 import {
@@ -9,8 +9,9 @@ import {
   ImagesList,
   HeaderBackButton,
   Advise,
+  StatusBarStyled,
 } from '@components';
-import {useGetCurrentTheme, useStatusBarStyle} from '@hooks';
+import {useGetCurrentTheme} from '@hooks';
 
 import metrics from '@styles/metrics';
 
@@ -22,7 +23,6 @@ import DeathDay from './death-day/DeathDay';
 
 export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
   const getCurrentTheme = useGetCurrentTheme({theme: props.theme});
-  const statusBarStyle = useStatusBarStyle({theme: props.theme});
   const famousDetail = useFamousDetail({
     id: props.route.params.id,
   });
@@ -48,11 +48,7 @@ export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
 
   return (
     <>
-      <StatusBar
-        backgroundColor={props.theme.colors.secondary}
-        barStyle={statusBarStyle.barStyle}
-        animated
-      />
+      <StatusBarStyled />
       <Styles.BackgroundImageWrapper testID="background-image-wrapper">
         <Animated.View
           style={{

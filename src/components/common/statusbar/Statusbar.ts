@@ -6,4 +6,5 @@ import {ThemeId} from '@local-types';
 export const StatusBarStyled = styled(StatusBar).attrs(({theme}) => ({
   barStyle: theme.id === ThemeId.LIGHT ? 'dark-content' : 'light-content',
   backgroundColor: theme.colors.secondary,
+  animated: true,
 }))``;

@@ -7,7 +7,7 @@ import {
 } from '@providers';
 
 import {RouteSuspenseWrapper} from './components/common/route-suspense-wrapper/RouteSuspenseWrapper';
-import Navigation from './routes/Navigation';
+import {Navigation} from './routes/Navigation';
 import makeClient from './graphql/client';
 
 const client = makeClient();

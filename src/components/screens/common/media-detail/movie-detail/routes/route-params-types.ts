@@ -1,5 +1,4 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import {DefaultTheme} from 'styled-components/native';
 import {RouteProp} from '@react-navigation/native';
 
 import {FamousDetailsParams} from '@src/components/screens/common/famous-details/routes/route-params-types';
@@ -35,5 +34,4 @@ export type MovieDetailRouteProp = RouteProp<
 export type MovieDetailStackProps = {
   navigation: MovieDetailNavigationProp;
   route: MovieDetailRouteProp;
-  theme: DefaultTheme;
 };

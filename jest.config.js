@@ -22,4 +22,5 @@ module.exports = {
   setupFiles: ['./jest.setup.js'],
   testMatch: ['**/*.test.(ts|tsx)'],
   moduleNameMapper: {'^@mocks/(.*)$': '<rootDir>/__mocks__/$1'},
+  testEnvironment: 'jsdom',
 };
