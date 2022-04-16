@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SeasonPosterImage from '@src/components/screens/common/media-detail/common/header-info/poster-image/PosterImage';
+import SeasonPosterImage from '@src/components/screens/common/media-details/common/header-info/poster-image/PosterImage';
 
 import SeasonOverviewText from './overview-text/season-overview-text/SeasonOverviewText';
 import * as Styles from './Header.styles';

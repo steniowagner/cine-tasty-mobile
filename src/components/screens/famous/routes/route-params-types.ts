@@ -1,8 +1,8 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
-import {TVShowDetailParams} from '@src/components/screens/common/media-detail/tv-show-detail/routes/route-params-types';
-import {MovieDetailParams} from '@src/components/screens/common/media-detail/movie-detail/routes/route-params-types';
+import {TVShowDetailParams} from '@src/components/screens/common/media-details/tv-show-detail/routes/route-params-types';
+import {MovieDetailParams} from '@src/components/screens/common/media-details/movie-details/routes/route-params-types';
 import {ImagesGalleryRouteProp} from '@src/components/screens/common/images-gallery/routes/route-params-types';
 import {FamousDetailsParams} from '@src/components/screens/common/famous-details/routes/route-params-types';
 import {SearchParams} from '@src/components/screens/common/search/routes/route-params-types';

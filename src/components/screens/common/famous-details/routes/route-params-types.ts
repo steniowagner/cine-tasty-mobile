@@ -2,8 +2,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {DefaultTheme} from 'styled-components/native';
 
-import {MovieDetailParams} from '@src/components/screens/common/media-detail/movie-detail/routes/route-params-types';
-import {TVShowDetailParams} from '@src/components/screens/common/media-detail/tv-show-detail/routes/route-params-types';
+import {MovieDetailParams} from '@src/components/screens/common/media-details/movie-details/routes/route-params-types';
+import {TVShowDetailParams} from '@src/components/screens/common/media-details/tv-show-detail/routes/route-params-types';
 import {Routes} from '@routes/routes';
 
 type FamousDetailStackParams = {
