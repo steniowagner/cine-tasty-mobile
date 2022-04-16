@@ -1,29 +1,15 @@
 import React from 'react';
 
-import {LoadingPlaceholder} from '@components';
-import metrics from '@styles/metrics';
-
 import * as Styles from './LoadingOverview.styles';
 
 export const NUMBER_ITEMS = 4;
 
-const LoadingOverview = () => (
+export const LoadingOverview = () => (
   <Styles.Wrapper testID="loading-overview">
     {Array(NUMBER_ITEMS)
       .fill({})
       .map((_, index) => (
-        <LoadingPlaceholder
-          // eslint-disable-next-line react/no-array-index-key
-          key={index}
-          style={{
-            width: '100%',
-            height: metrics.largeSize,
-            marginBottom: metrics.mediumSize,
-            borderRadius: metrics.extraLargeSize / 2,
-          }}
-        />
+        <Styles.Loading testID="loading-item" key={index} style={{}} />
       ))}
   </Styles.Wrapper>
 );
-
-export default LoadingOverview;

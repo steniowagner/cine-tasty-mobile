@@ -1,31 +1,27 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 
 import {MediaItemDescription, Section} from '@components';
-import * as TRANSLATIONS from '@i18n/tags';
 
-import LoadingOverview from './loading-overview/LoadingOverview';
+import {LoadingOverview} from './loading-overview/LoadingOverview';
 import * as Styles from './Overview.styles';
+import {useOverview} from './useOverview';
 
 type OverviewProps = {
   isLoading: boolean;
   overview: string;
 };
 
-const Overview = ({isLoading, overview}: OverviewProps) => {
-  const {t} = useTranslation();
-
+export const Overview = (props: OverviewProps) => {
+  const overview = useOverview();
   return (
-    <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)}>
-      {isLoading ? (
+    <Section title={overview.texts.sectionTitle}>
+      {props.isLoading ? (
         <LoadingOverview />
       ) : (
         <Styles.MediaItemDescriptionWrapper testID="media-item-description-wrapper">
-          <MediaItemDescription description={overview} />
+          <MediaItemDescription description={props.overview} />
         </Styles.MediaItemDescriptionWrapper>
       )}
     </Section>
   );
 };
-
-export default Overview;

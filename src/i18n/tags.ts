@@ -111,6 +111,7 @@ export namespace Translations {
 
     HOME_VIEW_ALL = 'translations:home:viewAll',
     MEDIA_DETAIL_VOTES = 'translations:mediaDetail:votes',
+    MEDIA_DETAIL_SECTIONS_OVERVIEW = 'translations:mediaDetail:sections:overview',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -295,8 +296,6 @@ export const MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION =
 export const MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE =
   'translations:mediaDetail:tvShow:errors:title';
 export const MEDIA_DETAIL_MOVIE_TITLE = 'translations:mediaDetail:movie:movie';
-export const MEDIA_DETAIL_SECTIONS_OVERVIEW =
-  'translations:mediaDetail:sections:overview';
 export const MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES =
   'translations:mediaDetail:sections:productionCompanies';
 export const MEDIA_DETAIL_SECTIONS_PRODUCTION_COUNTRIES =
