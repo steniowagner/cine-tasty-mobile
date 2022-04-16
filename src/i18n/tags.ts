@@ -117,6 +117,7 @@ export namespace Translations {
     MEDIA_DETAIL_ERROR_DESCRIPTION = 'translations:mediaDetail:errorDescription',
     MEDIA_DETAIL_ERROR_SUGGESTION = 'translations:mediaDetail:errorSuggestion',
     MEDIA_DETAIL_ERROR_TITLE = 'translations:mediaDetail:errorTitle',
+    MEDIA_DETAIL_SECTIONS_SIMILAR = 'translations:mediaDetail:sections:similar',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -319,8 +320,7 @@ export const MEDIA_DETAIL_SECTIONS_CREW =
   'translations:mediaDetail:sections:crew';
 export const MEDIA_DETAIL_SECTIONS_IMAGES =
   'translations:mediaDetail:sections:images';
-export const MEDIA_DETAIL_SECTIONS_SIMILAR =
-  'translations:mediaDetail:sections:similar';
+
 export const MEDIA_DETAIL_SECTIONS_NUMBER_OF_EPISODES =
   'translations:mediaDetail:sections:numberOfEpisodes';
 export const MEDIA_DETAIL_SECTIONS_NUMBER_OF_SEASONS =

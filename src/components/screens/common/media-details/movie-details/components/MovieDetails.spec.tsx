@@ -1,18 +1,18 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { IMocks } from 'graphql-tools';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
+import {IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
-import { setupTimeTravel } from '@mocks/timeTravel';
-import { navigation } from '@mocks/navigationMock';
-import { ThemeContextProvider } from '@providers';
+import {setupTimeTravel} from '@mocks/timeTravel';
+import {navigation} from '@mocks/navigationMock';
+import {ThemeContextProvider} from '@providers';
 import * as fixtures from '@mocks/fixtures';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
-import { NUMBER_ITEMS } from '../../common/sections/tags/Tags';
+import {NUMBER_ITEMS} from '../../common/sections/tags/Tags';
 import MovieDetail from './MovieDetail';
 
 const baseParams = {
@@ -31,7 +31,7 @@ type RenderMovieDetailProps = {
 };
 
 const renderMovieDetail = ({
-  route = { params: baseParams },
+  route = {params: baseParams},
   navigate = jest.fn(),
   push = jest.fn(),
   mockResolvers,
@@ -41,7 +41,7 @@ const renderMovieDetail = ({
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={mockResolvers}>
           <MovieDetail
-            navigation={{ ...navigation, navigate, push }}
+            navigation={{...navigation, navigate, push}}
             route={{
               name: Routes.Movie.DETAILS,
               key: `${Routes.Movie.DETAILS}-key`,
@@ -73,7 +73,7 @@ describe('Testing <MovieDetail />', () => {
       },
     };
 
-    const { getByTestId, getByText } = render(renderMovieDetail({ route }));
+    const {getByTestId, getByText} = render(renderMovieDetail({route}));
 
     expect(getByTestId('background-image-loading')).not.toBeNull();
 
@@ -81,7 +81,9 @@ describe('Testing <MovieDetail />', () => {
 
     expect(getByTestId('media-info-wrapper')).not.toBeNull();
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW),
+    ).not.toBeNull();
 
     expect(getByTestId('tags')).not.toBeNull();
 
@@ -101,8 +103,8 @@ describe('Testing <MovieDetail />', () => {
       },
     };
 
-    const { queryByTestId, getByTestId, getByText } = render(
-      renderMovieDetail({ route }),
+    const {queryByTestId, getByTestId, getByText} = render(
+      renderMovieDetail({route}),
     );
 
     expect(getByTestId('background-image-loading')).not.toBeNull();
@@ -111,7 +113,9 @@ describe('Testing <MovieDetail />', () => {
 
     expect(getByTestId('media-info-wrapper')).not.toBeNull();
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW),
+    ).not.toBeNull();
 
     expect(queryByTestId('tags')).toBeNull();
 
@@ -136,8 +140,8 @@ describe('Testing <MovieDetail />', () => {
       },
     };
 
-    const { queryByTestId, getByText, getByTestId } = render(
-      renderMovieDetail({ route }),
+    const {queryByTestId, getByText, getByTestId} = render(
+      renderMovieDetail({route}),
     );
 
     act(() => {
@@ -164,31 +168,43 @@ describe('Testing <MovieDetail />', () => {
 
     // Overview section
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_OVERVIEW),
+    ).not.toBeNull();
 
     expect(getByTestId('media-item-description-wrapper')).not.toBeNull();
 
     // General-info section
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_DETAILS)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_DETAILS),
+    ).not.toBeNull();
 
     expect(getByTestId('general-info-wrapper')).not.toBeNull();
 
     expect(getByTestId('general-info-wrapper').children.length).toEqual(6);
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE),
+    ).not.toBeNull();
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_RELEASE_DATE)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_RELEASE_DATE),
+    ).not.toBeNull();
 
     expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_BUDGET)).not.toBeNull();
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_REVENUE)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_REVENUE),
+    ).not.toBeNull();
 
     expect(
       getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COUNTRIES),
     ).not.toBeNull();
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES),
+    ).not.toBeNull();
 
     // Cast section
 
@@ -226,7 +242,9 @@ describe('Testing <MovieDetail />', () => {
 
     // Similar section
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SIMILAR),
+    ).not.toBeNull();
   });
 
   it('should render the Advise component when some error occur', () => {
@@ -234,7 +252,7 @@ describe('Testing <MovieDetail />', () => {
       Movie: () => new Error(),
     };
 
-    const { getByTestId, getByText } = render(
+    const {getByTestId, getByText} = render(
       renderMovieDetail({
         mockResolvers: mockResolverErrorMovie,
         route: {
@@ -249,9 +267,13 @@ describe('Testing <MovieDetail />', () => {
 
     expect(getByTestId('advise-wrapper')).not.toBeNull();
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_ERROR_DESCRIPTION)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_ERROR_DESCRIPTION),
+    ).not.toBeNull();
 
-    expect(getByText(TRANSLATIONS.MEDIA_DETAIL_ERROR_SUGGESTION)).not.toBeNull();
+    expect(
+      getByText(TRANSLATIONS.MEDIA_DETAIL_ERROR_SUGGESTION),
+    ).not.toBeNull();
 
     expect(getByText(TRANSLATIONS.MEDIA_DETAIL_ERROR_TITLE)).not.toBeNull();
   });
@@ -267,7 +289,7 @@ describe('Testing <MovieDetail />', () => {
 
     const push = jest.fn();
 
-    const { getAllByTestId } = render(
+    const {getAllByTestId} = render(
       renderMovieDetail({
         mockResolvers,
         push,
@@ -278,7 +300,9 @@ describe('Testing <MovieDetail />', () => {
       jest.runAllTimers();
     });
 
-    fireEvent.press(getAllByTestId('button-wrapper-cast')[INDEX_CAST_ITEM_SELECTED]);
+    fireEvent.press(
+      getAllByTestId('button-wrapper-cast')[INDEX_CAST_ITEM_SELECTED],
+    );
 
     expect(push).toHaveBeenCalledTimes(1);
 
@@ -300,7 +324,7 @@ describe('Testing <MovieDetail />', () => {
 
     const push = jest.fn();
 
-    const { getAllByTestId } = render(
+    const {getAllByTestId} = render(
       renderMovieDetail({
         mockResolvers,
         push,
@@ -311,7 +335,9 @@ describe('Testing <MovieDetail />', () => {
       jest.runAllTimers();
     });
 
-    fireEvent.press(getAllByTestId('button-wrapper-crew')[INDEX_CREW_ITEM_SELECTED]);
+    fireEvent.press(
+      getAllByTestId('button-wrapper-crew')[INDEX_CREW_ITEM_SELECTED],
+    );
 
     expect(push).toHaveBeenCalledTimes(1);
 
@@ -333,7 +359,7 @@ describe('Testing <MovieDetail />', () => {
 
     const push = jest.fn();
 
-    const { getAllByTestId } = render(
+    const {getAllByTestId} = render(
       renderMovieDetail({
         mockResolvers,
         push,
@@ -345,14 +371,18 @@ describe('Testing <MovieDetail />', () => {
     });
 
     fireEvent.press(
-      getAllByTestId('simplified-media-list-button')[INDEX_SIMILAR_ITEM_SELECTED],
+      getAllByTestId('simplified-media-list-button')[
+        INDEX_SIMILAR_ITEM_SELECTED
+      ],
     );
 
     expect(push).toHaveBeenCalledTimes(1);
 
     expect(push).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
-      voteAverage: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].voteAverage,
-      posterPath: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].posterPath,
+      voteAverage:
+        fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].voteAverage,
+      posterPath:
+        fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].posterPath,
       voteCount: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].voteCount,
       title: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].title,
       id: fixtures.similarMovies[INDEX_SIMILAR_ITEM_SELECTED].id,
@@ -371,7 +401,7 @@ describe('Testing <MovieDetail />', () => {
 
     const navigate = jest.fn();
 
-    const { getByTestId } = render(
+    const {getByTestId} = render(
       renderMovieDetail({
         mockResolvers,
         navigate,

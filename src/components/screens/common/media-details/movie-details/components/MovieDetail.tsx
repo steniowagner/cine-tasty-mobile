@@ -18,7 +18,7 @@ import {Videos} from '../../common/sections/videos/Videos';
 import {Tags} from '../../common/sections/tags/Tags';
 import useMovieDetail from './useMovieDetail';
 import DetailsSection from './MovieDetailsSection';
-import SimilarSection from './SimilarSection';
+import {Similar} from '../../common/sections/similar/Similar';
 
 export const MovieDetail = ({navigation, route}: MovieDetailStackProps) => {
   const {onPressSimilarItem, onPressCrew, onPressReviews, onPressCast} =
@@ -120,7 +120,7 @@ export const MovieDetail = ({navigation, route}: MovieDetailStackProps) => {
               onPressViewAll={() => onPressReviews(movie)}
               reviews={movie.reviews}
             />
-            <SimilarSection movie={movie} onPressItem={onPressSimilarItem} />
+            <Similar movie={movie} onPressItem={onPressSimilarItem} />
           </>
         )}
       </ScrollView>
