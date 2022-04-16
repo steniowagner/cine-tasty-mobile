@@ -1,29 +1,33 @@
-/* eslint-disable camelcase */
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 
 import * as SchemaTypes from '@schema-types';
 
 import * as Styles from './ProductionNetworkCompanies.styles';
 
-type ProductionsListProps = {
-  productionsList: (
-    | SchemaTypes.TVShowDetail_tvShow_productionCompanies
-    | SchemaTypes.MovieDetail_movie_productionCompanies
-    | SchemaTypes.TVShowDetail_tvShow_networks
-  )[];
+export type ProductionNetworkCompaniesList =
+  | SchemaTypes.TVShowDetail_tvShow_productionCompanies
+  | SchemaTypes.MovieDetail_movie_productionCompanies
+  | SchemaTypes.TVShowDetail_tvShow_networks;
+
+type ProductionNetworkCompaniesProps = {
+  productionNetworkCompaniesList: ProductionNetworkCompaniesList[];
 };
 
-const ProductionsList = ({ productionsList }: ProductionsListProps) => {
+export const ProductionNetworkCompanies = (
+  props: ProductionNetworkCompaniesProps,
+) => {
   const productionCompanies = useMemo(
-    () => productionsList.map((productionCompany) => productionCompany.name).join(', '),
-    [productionsList],
+    () =>
+      props.productionNetworkCompaniesList
+        .map(productionCompany => productionCompany.name)
+        .join(', '),
+    [props.productionNetworkCompaniesList],
   );
-
   return (
     <Styles.Wrapper>
-      <Styles.ItemText>{productionCompanies}</Styles.ItemText>
+      <Styles.ItemText testID="production-companies-text">
+        {productionCompanies}
+      </Styles.ItemText>
     </Styles.Wrapper>
   );
 };
-
-export default ProductionsList;
