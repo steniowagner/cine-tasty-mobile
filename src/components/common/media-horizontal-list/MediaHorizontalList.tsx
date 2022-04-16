@@ -2,7 +2,7 @@ import React from 'react';
 
 import {SimplifiedMediaListItem, Section} from '@components';
 
-import * as Styles from './MediaHorizontalList.styles';
+import {ScrollViewSection} from '..';
 import {
   UseMediaHorizontalListProps,
   useMediaHorizontalList,
@@ -16,7 +16,7 @@ export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
   const mediaHorizontalList = useMediaHorizontalList(props);
   return (
     <Section title={props.title}>
-      <Styles.Wrapper
+      <ScrollViewSection
         showsHorizontalScrollIndicator={false}
         testID={`media-horizontal-list-${props.type}`}
         horizontal>
@@ -30,7 +30,7 @@ export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
             key={item.id}
           />
         ))}
-      </Styles.Wrapper>
+      </ScrollViewSection>
     </Section>
   );
 };

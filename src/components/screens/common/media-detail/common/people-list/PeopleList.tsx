@@ -2,10 +2,9 @@ import React from 'react';
 
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
-import {Section} from '@components';
+import {ScrollViewSection, Section} from '@components';
 
 import {PeopleListItem} from './people-list-item/PeopleListItem';
-import * as Styles from './PeopleList.styles';
 import usePeopleList from './usePeopleList';
 
 type PeopleListProps = {
@@ -22,7 +21,7 @@ export const PeopleList = (props: PeopleListProps) => {
   const peopleList = usePeopleList({dataset: props.dataset, type: props.type});
   return (
     <Section title={props.sectionTitle}>
-      <Styles.Wrapper
+      <ScrollViewSection
         showsHorizontalScrollIndicator={false}
         testID={`people-list-${props.type}`}
         horizontal>
@@ -43,7 +42,7 @@ export const PeopleList = (props: PeopleListProps) => {
             type={props.type}
           />
         ))}
-      </Styles.Wrapper>
+      </ScrollViewSection>
     </Section>
   );
 };
