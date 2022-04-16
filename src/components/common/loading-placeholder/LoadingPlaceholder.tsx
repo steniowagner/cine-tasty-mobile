@@ -16,7 +16,6 @@ export const LoadingPlaceholder = withTheme(
     const loadingPlaceholder = useLoadingPlaceholder({
       indexToDelayAnimation: props.indexToDelayAnimation || 0,
     });
-
     return (
       <Animated.View
         style={{

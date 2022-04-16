@@ -1,9 +1,5 @@
 import React from 'react';
 
-import {LoadingPlaceholder} from '@components';
-import {CONSTANTS} from '@utils';
-import metrics from '@styles/metrics';
-
 import * as Styles from './Tags.styles';
 
 export const NUMBER_ITEMS = 4;
@@ -14,40 +10,29 @@ type TagsProps = {
   tags: string[];
 };
 
-const Tags = ({extraTags, isLoading, tags}: TagsProps) => {
-  if (isLoading) {
+export const Tags = (props: TagsProps) => {
+  if (props.isLoading) {
     return (
       <Styles.Wrapper testID="tags-loading">
         {Array(NUMBER_ITEMS)
           .fill({})
           .map((_, index) => (
-            <LoadingPlaceholder
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              style={{
-                marginTop: CONSTANTS.VALUES.DEFAULT_SPACING,
-                width: metrics.getWidthFromDP('20%'),
-                height: metrics.getWidthFromDP('10%'),
-                borderRadius: metrics.extraSmallSize,
-                marginRight: metrics.smallSize,
-              }}
-            />
+            <Styles.LoadingPlaceholderStylde key={index} style={{}} />
           ))}
       </Styles.Wrapper>
     );
   }
-
   return (
     <Styles.Wrapper testID="tags">
-      {[...extraTags, ...tags].map(
+      {[...props.extraTags, ...props.tags].map(
         (tag, index) =>
           !!tag && (
             <Styles.TagWrapper
-              isExtra={index < extraTags.length}
+              isExtra={index < props.extraTags.length}
               testID="tag-wrapper"
               key={tag}>
               <Styles.TagText
-                isExtra={index < extraTags.length}
+                isExtra={index < props.extraTags.length}
                 testID="tag-text">
                 {tag}
               </Styles.TagText>
@@ -57,5 +42,3 @@ const Tags = ({extraTags, isLoading, tags}: TagsProps) => {
     </Styles.Wrapper>
   );
 };
-
-export default Tags;
