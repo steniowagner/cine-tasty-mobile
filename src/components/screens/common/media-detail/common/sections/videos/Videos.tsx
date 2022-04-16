@@ -1,47 +1,36 @@
-/* eslint-disable camelcase */
 import React from 'react';
-import {FlatList, Linking} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {useTranslation} from 'react-i18next';
 
-import {SVGIcon, Section} from '@components';
+import {ScrollViewSection, SVGIcon, Section} from '@components';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
 import * as Styles from './Videos.styles';
+import {useVideos} from './useVideos';
 
-const YOUTUBE_BASE_URL = 'https://www.youtube.com/watch?v=';
+export type Video =
+  | SchemaTypes.TVShowDetail_tvShow_videos
+  | SchemaTypes.MovieDetail_movie_videos;
 
 type VideosProps = {
-  videos: (
-    | SchemaTypes.TVShowDetail_tvShow_videos
-    | SchemaTypes.MovieDetail_movie_videos
-  )[];
+  videos: Video[];
 };
 
-const Videos = ({videos}: VideosProps) => {
-  const {t} = useTranslation();
-
+export const Videos = (props: VideosProps) => {
+  const videos = useVideos();
   return (
-    <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_VIDEOS)}>
-      <FlatList
+    <Section title={videos.texts.section}>
+      <ScrollViewSection
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingHorizontal: metrics.mediumSize,
-        }}
-        keyExtractor={({id}) => id}
-        renderItem={({item}) => (
+        testID="videos-list"
+        horizontal>
+        {props.videos.map(video => (
           <Styles.VideoListItemWrapper
-            onPress={() => Linking.openURL(`${YOUTUBE_BASE_URL}${item.key}`)}>
-            <FastImage
+            onPress={() => videos.onPressVideo(video.key)}
+            key={video.key}
+            testID="video-button">
+            <Styles.Image
               source={{
-                uri: item.thumbnail.extraSmall,
-              }}
-              style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: metrics.smallSize,
+                uri: video.thumbnail.extraSmall,
               }}
             />
             <Styles.IconWrapper>
@@ -52,13 +41,8 @@ const Videos = ({videos}: VideosProps) => {
               />
             </Styles.IconWrapper>
           </Styles.VideoListItemWrapper>
-        )}
-        testID="videos-list"
-        data={videos}
-        horizontal
-      />
+        ))}
+      </ScrollViewSection>
     </Section>
   );
 };
-
-export default Videos;

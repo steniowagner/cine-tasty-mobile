@@ -2,7 +2,7 @@ import React from 'react';
 
 import {SimplifiedMediaListItem, Section} from '@components';
 
-import {ScrollViewSection} from '..';
+import {ScrollViewSection} from '../scroll-view-section/ScrollViewSection.styles';
 import {
   UseMediaHorizontalListProps,
   useMediaHorizontalList,

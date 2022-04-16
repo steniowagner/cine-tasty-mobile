@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image} from 'react-native';
-import {RenderAPI, render, act, waitFor} from '@testing-library/react-native';
+import {RenderAPI, render, waitFor} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import {randomPositiveNumber} from '@mocks/utils';
