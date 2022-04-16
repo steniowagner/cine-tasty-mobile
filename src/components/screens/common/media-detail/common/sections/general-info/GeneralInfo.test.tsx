@@ -1,8 +1,8 @@
 import React from 'react';
 import {render, RenderAPI} from '@testing-library/react-native';
+import {ThemeProvider} from 'styled-components/native';
 
 import {randomPositiveNumber} from '@mocks/utils';
-import {ThemeProvider} from 'styled-components/native';
 import {dark} from '@styles/themes/dark';
 
 import {GeneralInfo, InfoItem} from './GeneralInfo';

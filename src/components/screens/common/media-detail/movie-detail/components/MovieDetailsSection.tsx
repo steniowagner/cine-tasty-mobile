@@ -5,7 +5,7 @@ import {formatCurrency, formatDate} from '@utils';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 
-import GeneralInfo from '../../common/sections/general-info/GeneralInfo';
+import {GeneralInfo} from '../../common/sections/general-info/GeneralInfo';
 
 type DetailsSection = {
   // eslint-disable-next-line camelcase

@@ -7,11 +7,13 @@ type ReviewSectionListItemProps = {
   author: string;
 };
 
-const ReviewSectionListItem = ({ review, author }: ReviewSectionListItemProps) => (
-  <Styles.Wrapper>
-    <Styles.AuthorText>{author}</Styles.AuthorText>
-    <Styles.ReviewText>{review}</Styles.ReviewText>
+export const ReviewSectionListItem = (props: ReviewSectionListItemProps) => (
+  <Styles.Wrapper testID="reviews-section-list-item-wrapper">
+    <Styles.AuthorText testID="reviews-section-list-item-author">
+      {props.author}
+    </Styles.AuthorText>
+    <Styles.ReviewText testID="reviews-section-list-item-review">
+      {props.review}
+    </Styles.ReviewText>
   </Styles.Wrapper>
 );
-
-export default ReviewSectionListItem;

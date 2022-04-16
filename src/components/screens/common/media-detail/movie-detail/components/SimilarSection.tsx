@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import {FlatList} from 'react-native';
 import {useTranslation} from 'react-i18next';
@@ -24,13 +23,12 @@ const SimilarSection = ({onPressItem, movie}: SimilarSectionProps) => {
       }>
       <FlatList
         keyExtractor={(item, index) => `${item.id}-${index}`}
-        renderItem={({item, index}) => (
+        renderItem={({item}) => (
           <SimplifiedMediaListItem
             onPress={() => onPressItem(item)}
             voteAverage={item.voteAverage}
             voteCount={item.voteCount}
             image={item.posterPath}
-            isFirst={index === 0}
             title={item.title}
           />
         )}

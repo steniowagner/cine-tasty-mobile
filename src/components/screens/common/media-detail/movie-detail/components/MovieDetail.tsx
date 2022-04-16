@@ -1,19 +1,19 @@
-/* eslint-disable react/display-name */
 import React, {useEffect, useLayoutEffect, useMemo} from 'react';
 import {ScrollView, StatusBar} from 'react-native';
 import {withTheme} from 'styled-components/native';
 
 import {HeaderBackButton, ImagesList} from '@components';
 import {useStatusBarStyle} from '@hooks';
-import {Section} from '@components';
 import * as TRANSLATIONS from '@i18n/tags';
+import {showLanguageAlert} from '@utils';
+import {Section} from '@components';
 
-import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
+import {ProductionNetworkCompanies} from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
 import useMovieDetailPressHandlers from './useMovieDetailPressHandlers';
 import {HeaderInfo} from '../../common/header-info/header-info/HeaderInfo';
 import {MovieDetailStackProps} from '../routes/route-params-types';
-import Reviews from '../../common/sections/reviews/ReviewsSection';
-import Overview from '../../common/sections/overview/Overview';
+import {ReviewsSection} from '../../common/sections/reviews/ReviewsSection';
+import {Overview} from '../../common/sections/overview/Overview';
 import MediaDetailError from '../../common/MediaDetailError';
 import {PeopleList} from '../../common/people-list/PeopleList';
 import Videos from '../../common/sections/videos/Videos';
@@ -21,7 +21,6 @@ import Tags from '../../common/sections/tags/Tags';
 import useMovieDetail from './useMovieDetail';
 import DetailsSection from './MovieDetailsSection';
 import SimilarSection from './SimilarSection';
-import {showLanguageAlert} from '@utils';
 
 export const MovieDetail = withTheme(
   ({navigation, theme, route}: MovieDetailStackProps) => {
@@ -120,12 +119,12 @@ export const MovieDetail = withTheme(
                   title={t(
                     TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
                   )}>
-                  <ProductionCompanies
-                    productionsList={movie.productionCompanies}
+                  <ProductionNetworkCompanies
+                    productionNetworkCompaniesList={movie.productionCompanies}
                   />
                 </Section>
               )}
-              <Reviews
+              <ReviewsSection
                 onPressViewAll={() => onPressReviews(movie)}
                 reviews={movie.reviews}
               />
