@@ -14,7 +14,7 @@ import {HeaderInfo} from '../../common/header-info/header-info/HeaderInfo';
 import {MovieDetailStackProps} from '../routes/route-params-types';
 import {ReviewsSection} from '../../common/sections/reviews/ReviewsSection';
 import {Overview} from '../../common/sections/overview/Overview';
-import MediaDetailError from '../../common/MediaDetailError';
+import {MediaDetailsError} from '../../common/media-details-error/MediaDetailsError';
 import {PeopleList} from '../../common/people-list/PeopleList';
 import {Videos} from '../../common/sections/videos/Videos';
 import {Tags} from '../../common/sections/tags/Tags';
@@ -64,7 +64,7 @@ export const MovieDetail = withTheme(
     );
 
     if (hasError) {
-      return <MediaDetailError barStyle={barStyle} theme={theme} />;
+      return <MediaDetailsError barStyle={barStyle} theme={theme} />;
     }
 
     return (

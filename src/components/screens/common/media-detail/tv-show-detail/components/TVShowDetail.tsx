@@ -18,7 +18,7 @@ import Header from '../../common/header-info/header-info/HeaderInfo';
 import Reviews from '../../common/sections/reviews/ReviewsSection';
 import Overview from '../../common/sections/overview/Overview';
 import PeopleList from '../../common/people-list/PeopleList';
-import MediaDetailError from '../../common/MediaDetailError';
+import MediaDetailError from '../../common/media-details-error/MediaDetailsError';
 import TVShowDetailsSection from './TVShowDetailsSection';
 import Videos from '../../common/sections/videos/Videos';
 import Tags from '../../common/sections/tags/Tags';

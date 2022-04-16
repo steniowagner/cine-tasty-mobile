@@ -114,6 +114,9 @@ export namespace Translations {
     MEDIA_DETAIL_SECTIONS_OVERVIEW = 'translations:mediaDetail:sections:overview',
     MEDIA_DETAIL_SECTIONS_REVIEW = 'translations:mediaDetail:sections:reviews',
     MEDIA_DETAIL_SECTIONS_VIDEOS = 'translations:mediaDetail:sections:videos',
+    MEDIA_DETAIL_ERROR_DESCRIPTION = 'translations:mediaDetail:errorDescription',
+    MEDIA_DETAIL_ERROR_SUGGESTION = 'translations:mediaDetail:errorSuggestion',
+    MEDIA_DETAIL_ERROR_TITLE = 'translations:mediaDetail:errorTitle',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -276,11 +279,6 @@ export const SETTINGS_THEME_HEADER_TITLE =
 
 // MEDIA-DETAIL
 
-export const MEDIA_DETAIL_ERROR_DESCRIPTION =
-  'translations:mediaDetail:errorDescription';
-export const MEDIA_DETAIL_ERROR_SUGGESTION =
-  'translations:mediaDetail:errorSuggestion';
-export const MEDIA_DETAIL_ERROR_TITLE = 'translations:mediaDetail:errorTitle';
 export const MEDIA_DETAIL_TV_SHOWS_TITLE =
   'translations:mediaDetail:tvShow:tvShow';
 export const MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_READ_MORE_SEASON_OVERVIEW =
