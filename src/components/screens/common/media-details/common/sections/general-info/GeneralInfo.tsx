@@ -1,9 +1,8 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 
-import * as TRANSLATIONS from '@i18n/tags';
 import {Section} from '@components';
 
+import {useGeneralInfo} from './useGeneralInfo';
 import * as Styles from './GeneralInfo.styles';
 
 export type InfoItem = {
@@ -15,17 +14,17 @@ type GeneralInfoProps = {
   infoItems: InfoItem[];
 };
 
-export const GeneralInfo = ({infoItems}: GeneralInfoProps) => {
-  const {t} = useTranslation();
+export const GeneralInfo = (props: GeneralInfoProps) => {
+  const generalInfo = useGeneralInfo();
 
-  if (!infoItems.length) {
+  if (!props.infoItems.length) {
     return null;
   }
 
   return (
-    <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_DETAILS)}>
+    <Section title={generalInfo.texts.sectionTitle}>
       <Styles.Wrapper testID="general-info-wrapper">
-        {infoItems.map((infoItem, index) => (
+        {props.infoItems.map((infoItem, index) => (
           <Styles.InfoCellWrapper
             testID={`general-info-wrapper-${index}`}
             key={infoItem.title}>
