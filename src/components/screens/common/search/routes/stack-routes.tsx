@@ -5,7 +5,7 @@ import {withTheme} from 'styled-components/native';
 import {TVShowSeasonsStackProps} from '@src/components/screens/common/tv-show-seasons/routes/route-params-types';
 import {ReviewsStackProps} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
 import {TVShowDetail} from '@src/components/screens/common/media-details/tv-show-detail/components/TVShowDetail';
-import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetail';
+import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetails';
 import {TVShowSeasonsDetailStack} from '@src/components/screens/common/tv-show-seasons/routes/stack-routes';
 import {FamousDetails} from '@src/components/screens/common/famous-details/components/FamousDetails';
 import Reviews from '@src/components/screens/common/media-details/reviews/components/Reviews';

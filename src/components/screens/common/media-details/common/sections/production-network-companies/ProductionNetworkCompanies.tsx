@@ -24,7 +24,7 @@ export const ProductionNetworkCompanies = (
     [props.productionNetworkCompaniesList],
   );
   return (
-    <Styles.Wrapper>
+    <Styles.Wrapper testID="production-network-companies">
       <Styles.ItemText testID="production-companies-text">
         {productionCompanies}
       </Styles.ItemText>

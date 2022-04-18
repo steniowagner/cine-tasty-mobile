@@ -11,7 +11,6 @@ import {randomPositiveNumber, randomArrayIndex} from '@mocks/utils';
 import {castTVshows} from '@mocks/fixtures/tv-shows';
 import {TMDBImageQualityProvider} from '@providers';
 import {dark as theme} from '@styles/themes/dark';
-import {castMovies} from '@mocks/fixtures/movie';
 import {Routes} from '@routes/routes';
 
 import {MediaHorizontalList} from './MediaHorizontalList';
@@ -24,6 +23,18 @@ const SECTION_TITLE = 'SECTION_TITLE';
 const mockNavigation = {
   push: jest.fn(),
 };
+const castMovies = (size: number) =>
+  Array(size)
+    .fill({})
+    .map((_, index) => ({
+      __typename: 'CastMovie',
+      profilePath: `POSTER_PATH_${index}`,
+      character: `CHARACTER_${index}`,
+      id: index,
+      voteAverage: index,
+      voteCount: index,
+      title: `TITLE_${index}`,
+    }));
 
 jest.mock('@react-navigation/native', () => {
   const actualReactNavigationNative = jest.requireActual(

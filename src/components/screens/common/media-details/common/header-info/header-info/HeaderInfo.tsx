@@ -23,7 +23,7 @@ export const HeaderInfo = (props: HeaderInfoProps) => {
     voteCount: props.voteCount,
   });
   return (
-    <Styles.Wrapper>
+    <Styles.Wrapper testID="header-info-wrapper">
       <BackgroundImage isLoading={props.isLoading} imageURL={props.imageURL} />
       <Styles.MediaInfoWrapper testID="media-info-wrapper">
         <PosterImage image={props.posterURL} />

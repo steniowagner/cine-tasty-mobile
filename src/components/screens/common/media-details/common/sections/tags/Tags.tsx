@@ -22,6 +22,7 @@ export const Tags = (props: TagsProps) => {
       </Styles.Wrapper>
     );
   }
+
   return (
     <Styles.Wrapper testID="tags">
       {[...props.extraTags, ...props.tags].map(

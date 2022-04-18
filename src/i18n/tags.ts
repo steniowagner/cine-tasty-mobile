@@ -118,6 +118,31 @@ export namespace Translations {
     MEDIA_DETAIL_ERROR_SUGGESTION = 'translations:mediaDetail:errorSuggestion',
     MEDIA_DETAIL_ERROR_TITLE = 'translations:mediaDetail:errorTitle',
     MEDIA_DETAIL_SECTIONS_SIMILAR = 'translations:mediaDetail:sections:similar',
+    MEDIA_DETAIL_TV_SHOWS_TITLE = 'translations:mediaDetail:tvShow:tvShow',
+    MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_READ_MORE_SEASON_OVERVIEW = 'translations:mediaDetail:tvShow:seasonEpisode:readMoreSeasonOverview',
+    MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_EPISODE = 'translations:mediaDetail:tvShow:seasonEpisode:episodes',
+    MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE = 'translations:mediaDetail:tvShow:seasonEpisode:airDate',
+    MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON = 'translations:mediaDetail:tvShow:seasonEpisode:season',
+    MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION = 'translations:mediaDetail:tvShow:errors:description',
+    MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION = 'translations:mediaDetail:tvShow:errors:suggestion',
+    MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE = 'translations:mediaDetail:tvShow:errors:title',
+    MEDIA_DETAIL_MOVIE_TITLE = 'translations:mediaDetail:movie:movie',
+    MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES = 'translations:mediaDetail:sections:productionCompanies',
+    MEDIA_DETAIL_SECTIONS_PRODUCTION_COUNTRIES = 'translations:mediaDetail:sections:productionCountries',
+    MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES = 'translations:mediaDetail:sections:spokenLanguages',
+    MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE = 'translations:mediaDetail:sections:originalTitle',
+    MEDIA_DETAIL_SECTIONS_RELEASE_DATE = 'translations:mediaDetail:sections:releaseDate',
+    MEDIA_DETAIL_SECTIONS_BUDGET = 'translations:mediaDetail:sections:budget',
+    MEDIA_DETAIL_SECTIONS_REVENUE = 'translations:mediaDetail:sections:revenue',
+    MEDIA_DETAIL_SECTIONS_DETAILS = 'translations:mediaDetail:sections:details',
+    MEDIA_DETAIL_SECTIONS_CAST = 'translations:mediaDetail:sections:cast',
+    MEDIA_DETAIL_SECTIONS_CREW = 'translations:mediaDetail:sections:crew',
+    MEDIA_DETAIL_SECTIONS_IMAGES = 'translations:mediaDetail:sections:images',
+
+    // LANGUAGE WARNING
+    LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION = 'translations:languageWarning:media:positiveAction',
+    LANGUAGE_WARNING_MEDIA_TITLE = 'translations:languageWarning:media:title',
+    LANGUAGE_WARNING_MEDIA_DESCRIPTION = 'translations:languageWarning:media:description',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -280,47 +305,6 @@ export const SETTINGS_THEME_HEADER_TITLE =
 
 // MEDIA-DETAIL
 
-export const MEDIA_DETAIL_TV_SHOWS_TITLE =
-  'translations:mediaDetail:tvShow:tvShow';
-export const MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_READ_MORE_SEASON_OVERVIEW =
-  'translations:mediaDetail:tvShow:seasonEpisode:readMoreSeasonOverview';
-export const MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_EPISODE =
-  'translations:mediaDetail:tvShow:seasonEpisode:episodes';
-export const MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE =
-  'translations:mediaDetail:tvShow:seasonEpisode:airDate';
-export const MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON =
-  'translations:mediaDetail:tvShow:seasonEpisode:season';
-export const MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION =
-  'translations:mediaDetail:tvShow:errors:description';
-export const MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION =
-  'translations:mediaDetail:tvShow:errors:suggestion';
-export const MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE =
-  'translations:mediaDetail:tvShow:errors:title';
-export const MEDIA_DETAIL_MOVIE_TITLE = 'translations:mediaDetail:movie:movie';
-export const MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES =
-  'translations:mediaDetail:sections:productionCompanies';
-export const MEDIA_DETAIL_SECTIONS_PRODUCTION_COUNTRIES =
-  'translations:mediaDetail:sections:productionCountries';
-export const MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES =
-  'translations:mediaDetail:sections:spokenLanguages';
-export const MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE =
-  'translations:mediaDetail:sections:originalTitle';
-export const MEDIA_DETAIL_SECTIONS_RELEASE_DATE =
-  'translations:mediaDetail:sections:releaseDate';
-export const MEDIA_DETAIL_SECTIONS_BUDGET =
-  'translations:mediaDetail:sections:budget';
-export const MEDIA_DETAIL_SECTIONS_REVENUE =
-  'translations:mediaDetail:sections:revenue';
-
-export const MEDIA_DETAIL_SECTIONS_DETAILS =
-  'translations:mediaDetail:sections:details';
-export const MEDIA_DETAIL_SECTIONS_CAST =
-  'translations:mediaDetail:sections:cast';
-export const MEDIA_DETAIL_SECTIONS_CREW =
-  'translations:mediaDetail:sections:crew';
-export const MEDIA_DETAIL_SECTIONS_IMAGES =
-  'translations:mediaDetail:sections:images';
-
 export const MEDIA_DETAIL_SECTIONS_NUMBER_OF_EPISODES =
   'translations:mediaDetail:sections:numberOfEpisodes';
 export const MEDIA_DETAIL_SECTIONS_NUMBER_OF_SEASONS =
@@ -341,11 +325,3 @@ export const MEDIA_DETAIL_SECTIONS_SEASONS =
   'translations:mediaDetail:sections:seasons';
 export const MEDIA_DETAIL_SECTIONS_NETWORKS =
   'translations:mediaDetail:sections:networks';
-
-// LANGUAGE WARNING
-export const LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION =
-  'translations:languageWarning:media:positiveAction';
-export const LANGUAGE_WARNING_MEDIA_TITLE =
-  'translations:languageWarning:media:title';
-export const LANGUAGE_WARNING_MEDIA_DESCRIPTION =
-  'translations:languageWarning:media:description';
