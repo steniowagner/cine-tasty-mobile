@@ -1,11 +1,11 @@
 import React from 'react';
 
+import {ScrollViewSection, FlatListSection, Section} from '@components';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
-import {ScrollViewSection, Section} from '@components';
 
+import {usePeopleList, PeopleListItemType} from './usePeopleList';
 import {PeopleListItem} from './people-list-item/PeopleListItem';
-import usePeopleList from './usePeopleList';
 
 type PeopleListProps = {
   onPressItem: (id: string, name: string, image: string) => void;
@@ -17,32 +17,63 @@ type PeopleListProps = {
   sectionTitle: string;
 };
 
+export const LIST_BATCH_ITEMS_COUNT = 25;
+
 export const PeopleList = (props: PeopleListProps) => {
   const peopleList = usePeopleList({dataset: props.dataset, type: props.type});
+
+  if (props.dataset.length <= LIST_BATCH_ITEMS_COUNT) {
+    return (
+      <Section title={props.sectionTitle}>
+        <ScrollViewSection
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          testID={`people-list-${props.type}`}>
+          {peopleList.items.map((item, index) => (
+            <PeopleListItem
+              onPress={() => props.onPressItem(item.id, item.name, item.image)}
+              withSubtext={props.type !== 'creator'}
+              key={`${item.id}-${index}`}
+              subText={item.subText}
+              image={item.image}
+              name={item.name}
+              type={props.type}
+            />
+          ))}
+        </ScrollViewSection>
+      </Section>
+    );
+  }
+
   return (
     <Section title={props.sectionTitle}>
-      <ScrollViewSection
+      <FlatListSection
         showsHorizontalScrollIndicator={false}
         testID={`people-list-${props.type}`}
-        horizontal>
-        {peopleList.items.map((peopleListItem, index) => (
-          <PeopleListItem
-            onPress={() =>
-              props.onPressItem(
-                peopleListItem.id,
-                peopleListItem.name,
-                peopleListItem.image,
-              )
-            }
-            withSubtext={props.type !== 'creator'}
-            key={`${peopleListItem.id}-${index}`}
-            subText={peopleListItem.subText}
-            image={peopleListItem.image}
-            name={peopleListItem.name}
-            type={props.type}
-          />
-        ))}
-      </ScrollViewSection>
+        data={peopleList.items}
+        horizontal
+        initialNumToRender={LIST_BATCH_ITEMS_COUNT}
+        renderItem={({item, index}) => {
+          const peopleListItem = item as PeopleListItemType;
+          return (
+            <PeopleListItem
+              onPress={() =>
+                props.onPressItem(
+                  peopleListItem.id,
+                  peopleListItem.name,
+                  peopleListItem.image,
+                )
+              }
+              withSubtext={props.type !== 'creator'}
+              key={`${peopleListItem.id}-${index}`}
+              subText={peopleListItem.subText}
+              image={peopleListItem.image}
+              name={peopleListItem.name}
+              type={props.type}
+            />
+          );
+        }}
+      />
     </Section>
   );
 };

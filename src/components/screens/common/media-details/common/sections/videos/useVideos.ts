@@ -15,7 +15,9 @@ export const useVideos = () => {
 
   const texts = useMemo(
     () => ({
-      section: Translations.Tags.MEDIA_DETAIL_SECTIONS_VIDEOS,
+      section: translations.translate(
+        Translations.Tags.MEDIA_DETAIL_SECTIONS_VIDEOS,
+      ),
     }),
     [translations.translate],
   );

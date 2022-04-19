@@ -3,7 +3,7 @@ import {useCallback} from 'react';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
-type PeopleListItem = {
+export type PeopleListItemType = {
   subText: string;
   image: string;
   name: string;
@@ -18,9 +18,9 @@ type UsePeopleListProps = {
   type: 'cast' | 'crew' | 'creator';
 };
 
-const usePeopleList = (props: UsePeopleListProps) => {
+export const usePeopleList = (props: UsePeopleListProps) => {
   const mergeCrewMemebersBySimilarJobs = useCallback(
-    (crew: PeopleListItem[]): PeopleListItem[] => {
+    (crew: PeopleListItemType[]): PeopleListItemType[] => {
       const repeatedItemsMap = {};
       const repeatedCrewItems = crew.filter(({subText, id}) => {
         if (!repeatedItemsMap[id]) {
@@ -39,7 +39,7 @@ const usePeopleList = (props: UsePeopleListProps) => {
   );
 
   const parseCrewToPeopleListItem = useCallback(
-    (crew: Types.CrewDataset): PeopleListItem[] => {
+    (crew: Types.CrewDataset): PeopleListItemType[] => {
       const crewParsedToPeople = crew.map(({job, profilePath, name, id}) => ({
         subText: job || '-',
         image: profilePath,
@@ -52,7 +52,7 @@ const usePeopleList = (props: UsePeopleListProps) => {
   );
 
   const parseCastToPeopleListItem = useCallback(
-    (cast: Types.CastDataset): PeopleListItem[] =>
+    (cast: Types.CastDataset): PeopleListItemType[] =>
       cast.map(({character, profilePath, name, id}) => ({
         subText: character || '-',
         image: profilePath,
@@ -73,5 +73,3 @@ const usePeopleList = (props: UsePeopleListProps) => {
     items: parseDatasetToPeopleListItemDataset(),
   };
 };
-
-export default usePeopleList;

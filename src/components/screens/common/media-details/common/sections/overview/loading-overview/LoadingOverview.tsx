@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {LoadingPlaceholder} from '@components';
+
 import * as Styles from './LoadingOverview.styles';
 
 export const NUMBER_ITEMS = 4;
@@ -9,7 +11,12 @@ export const LoadingOverview = () => (
     {Array(NUMBER_ITEMS)
       .fill({})
       .map((_, index) => (
-        <Styles.Loading testID="loading-item" key={index} style={{}} />
+        <LoadingPlaceholder
+          style={Styles.loadinhPlaceholderStyle}
+          indexToDelayAnimation={index}
+          testID="loading-item"
+          key={index}
+        />
       ))}
   </Styles.Wrapper>
 );

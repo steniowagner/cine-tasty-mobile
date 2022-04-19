@@ -14,7 +14,10 @@ export {PaginationFooter} from './pagination-footer/PaginationFooter';
 export {ProgressiveImage} from './progressive-image/ProgressiveImage';
 export {RoundedButton} from './rounded-button/RoundedButton';
 export {RouteSuspenseWrapper} from './route-suspense-wrapper/RouteSuspenseWrapper';
-export {ScrollViewSection} from './scroll-view-section/ScrollViewSection.styles';
+export {
+  ScrollViewSection,
+  FlatListSection,
+} from './scrollable-section/ScrollableSection.styles';
 export {Section} from './section/Section';
 export {SectionViewAll} from './section-view-all/SectionViewAll';
 export {SimplifiedMediaListItem} from './simplified-media-list-item/SimplifiedMediaListItem';
