@@ -1,7 +1,7 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {useQuery} from '@apollo/client';
 
-import {formatCurrency, formatDate} from '@utils';
+import {showLanguageAlert, formatCurrency, formatDate} from '@utils';
 import {GET_MOVIE_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
@@ -175,6 +175,20 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     },
     [props.navigation],
   );
+
+  useEffect(() => {
+    const shouldShowLanguageAlert =
+      !query.loading && query.data?.movie && !query.data?.movie.overview;
+    if (shouldShowLanguageAlert) {
+      showLanguageAlert({
+        description: texts.languageAlert.description,
+        positiveActionTitle: texts.languageAlert.positiveActionTitle,
+        title: texts.languageAlert.title,
+        onPressPositiveAction: () => {},
+        singleAction: true,
+      });
+    }
+  }, [query.loading, query.data?.movie]);
 
   return {
     movie: query.data?.movie,

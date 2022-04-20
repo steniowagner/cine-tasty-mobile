@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {ScrollView} from 'react-native';
 
 import {
@@ -7,7 +7,6 @@ import {
   ImagesList,
   Section,
 } from '@components';
-import {showLanguageAlert} from '@utils';
 
 import {ProductionNetworkCompanies} from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
 import {MediaDetailsError} from '../../common/media-details-error/MediaDetailsError';
@@ -38,23 +37,6 @@ export const MovieDetail = (props: MovieDetailStackProps) => {
     navigation: props.navigation,
     id: props.route.params.id,
   });
-
-  useEffect(() => {
-    const shouldShowLanguageAlert =
-      !movieDetails.isLoading &&
-      movieDetails.movie &&
-      !movieDetails.movie.overview;
-    if (shouldShowLanguageAlert) {
-      showLanguageAlert({
-        description: movieDetails.texts.languageAlert.description,
-        positiveActionTitle:
-          movieDetails.texts.languageAlert.positiveActionTitle,
-        title: movieDetails.texts.languageAlert.title,
-        onPressPositiveAction: () => {},
-        singleAction: true,
-      });
-    }
-  }, [movieDetails.isLoading, movieDetails.movie]);
 
   if (movieDetails.hasError) {
     return <MediaDetailsError />;
