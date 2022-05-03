@@ -8,7 +8,7 @@ import {
 } from '@testing-library/react-native';
 
 import {randomPositiveNumber, randomArrayIndex} from '@mocks/utils';
-import {castTVshows} from '@mocks/fixtures/tv-shows';
+import {castTVShows} from '@mocks/fixtures/tv-shows';
 import {TMDBImageQualityProvider} from '@providers';
 import {dark as theme} from '@styles/themes/dark';
 import {Routes} from '@routes/routes';
@@ -31,8 +31,8 @@ const castMovies = (size: number) =>
       profilePath: `POSTER_PATH_${index}`,
       character: `CHARACTER_${index}`,
       id: index,
-      voteAverage: index,
-      voteCount: index,
+      voteAverage: index + 1,
+      voteCount: index + 1,
       title: `TITLE_${index}`,
     }));
 
@@ -148,7 +148,7 @@ describe('<MediaHorizontalList />', () => {
         const numberOfItems = randomPositiveNumber(20, 1);
         const component = render(
           renderMediaHorizontalList({
-            dataset: castTVshows(numberOfItems) as MediaHorizontalItem[],
+            dataset: castTVShows(numberOfItems) as MediaHorizontalItem[],
             title: SECTION_TITLE,
             type: 'TV_SHOW',
           }),
@@ -183,7 +183,7 @@ describe('<MediaHorizontalList />', () => {
     describe('Touch-press correctly', () => {
       it('should call navigate to the correct screen when the user press on of the list-items', async () => {
         const numberOfItems = randomPositiveNumber(20, 1);
-        const dataset = castTVshows(numberOfItems) as MediaHorizontalItem[];
+        const dataset = castTVShows(numberOfItems) as MediaHorizontalItem[];
         const itemSelected = randomArrayIndex(dataset);
         const component = render(
           renderMediaHorizontalList({

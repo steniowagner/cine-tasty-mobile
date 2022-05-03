@@ -1,6 +1,5 @@
-import React, {useEffect, useLayoutEffect, useMemo} from 'react';
-import {ScrollView, StatusBar} from 'react-native';
-import {withTheme} from 'styled-components/native';
+import React, {useLayoutEffect} from 'react';
+import {ScrollView} from 'react-native';
 
 import {
   HeaderBackButton,
@@ -9,166 +8,139 @@ import {
   ImagesList,
   Section,
 } from '@components';
-import {useShowLanguageAlert} from '@hooks';
-import * as TRANSLATIONS from '@i18n/tags';
 
-import ProductionCompanies from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
-import useTVShowDetailPressHandlers from './useTVShowDetailPressHandlers';
+import {ProductionNetworkCompanies} from '../../common/sections/production-network-companies/ProductionNetworkCompanies';
+import {MediaDetailsError} from '../../common/media-details-error/MediaDetailsError';
+import {ReviewsSection} from '../../common/sections/reviews/ReviewsSection';
+import {GeneralInfo} from '../../common/sections/general-info/GeneralInfo';
+import {HeaderInfo} from '../../common/header-info/header-info/HeaderInfo';
 import {TVShowDetailStackProps} from '../routes/route-params-types';
-import Header from '../../common/header-info/header-info/HeaderInfo';
-import Reviews from '../../common/sections/reviews/ReviewsSection';
-import Overview from '../../common/sections/overview/Overview';
-import PeopleList from '../../common/people-list/PeopleList';
-import MediaDetailError from '../../common/media-details-error/MediaDetailsError';
-import TVShowDetailsSection from './TVShowDetailsSection';
-import Videos from '../../common/sections/videos/Videos';
-import Tags from '../../common/sections/tags/Tags';
-import useTVShowDetail from './useTVShowDetail';
+import {Overview} from '../../common/sections/overview/Overview';
+import {PeopleList} from '../../common/people-list/PeopleList';
+import {Similar} from '../../common/sections/similar/Similar';
+import {Videos} from '../../common/sections/videos/Videos';
+import {Tags} from '../../common/sections/tags/Tags';
+import {useTVShowDetails} from './useTVShowDetails';
 import * as Styles from './TVShowDetail.styles';
-import SimilarSection from './SimilarSection';
 
-export const TVShowDetail = withTheme(
-  ({navigation, theme, route}: TVShowDetailStackProps) => {
-    const {handleShowLanguageAlert} = useShowLanguageAlert();
-    const {
-      onPressSimilarItem,
-      onPressSeeSeasons,
-      onPressCreatedBy,
-      onPressReviews,
-      onPressCrew,
-      onPressCast,
-    } = useTVShowDetailPressHandlers({
-      navigation,
+export const TVShowDetail = (props: TVShowDetailStackProps) => {
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerLeft: () => (
+        <HeaderBackButton onPress={() => props.navigation.goBack()} />
+      ),
     });
+  }, []);
 
-    useLayoutEffect(() => {
-      navigation.setOptions({
-        headerLeft: () => (
-          <HeaderBackButton onPress={() => navigation.goBack()} />
-        ),
-      });
-    }, []);
+  const tvShowDetails = useTVShowDetails({
+    hasVoteAverage: !!props.route.params.voteAverage,
+    hasVoteCount: !!props.route.params.voteCount,
+    hasGenresIds: !!props.route.params.genreIds,
+    navigation: props.navigation,
+    id: props.route.params.id,
+  });
 
-    const {isLoading, hasError, tvShow, t} = useTVShowDetail({
-      hasVoteAverage: !!route.params.voteAverage,
-      hasVoteCount: !!route.params.voteCount,
-      hasGenresIds: !!route.params.genreIds,
-      id: route.params.id,
-    });
+  if (tvShowDetails.hasError) {
+    return <MediaDetailsError />;
+  }
 
-    useEffect(() => {
-      if (!isLoading && tvShow && !tvShow.overview) {
-        handleShowLanguageAlert({
-          descriptioni18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_DESCRIPTION,
-          positive18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION,
-          titlei18nRef: TRANSLATIONS.LANGUAGE_WARNING_MEDIA_TITLE,
-          onPressPositiveAction: () => {},
-          singleAction: true,
-        });
-      }
-    }, [isLoading, tvShow]);
-
-    const firstAirDate = useMemo(
-      (): string => (tvShow?.firstAirDate || '-').split('-')[0],
-      [tvShow],
-    );
-
-    if (hasError) {
-      return <MediaDetailError />;
-    }
-
-    return (
-      <>
-        <StatusBarStyled />
-        <ScrollView bounces={false}>
-          <Header
-            votesAverage={route.params.voteAverage || tvShow?.voteAverage}
-            voteCount={route.params.voteCount || tvShow?.voteCount}
-            imageURL={tvShow?.backdropPath || ''}
-            posterURL={route.params.posterPath}
-            title={route.params.title}
-            isLoading={isLoading}
-          />
-          <Tags
-            extraTags={[
-              firstAirDate,
-              t(TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_TITLE),
-            ]}
-            tags={route.params.genreIds || tvShow?.genres || []}
-            isLoading={!route.params.genreIds && isLoading}
-          />
-          <Overview overview={tvShow?.overview} isLoading={isLoading} />
-          {!!tvShow && (
-            <>
-              <TVShowDetailsSection tvShow={tvShow} />
-              {tvShow?.numberOfSeasons > 0 && (
-                <Styles.SeeSeasonsButtonWrapper>
-                  <RoundedButton
-                    text={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_SEASONS)}
-                    onPress={() => onPressSeeSeasons(tvShow)}
-                  />
-                </Styles.SeeSeasonsButtonWrapper>
-              )}
-              {!!tvShow?.createdBy.length && (
-                <PeopleList
-                  onPressItem={onPressCreatedBy}
-                  sectionTitle={t(
-                    TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREATED_BY,
-                  )}
-                  dataset={tvShow.createdBy}
-                  noSubtext={false}
-                  type="creator"
+  return (
+    <>
+      <StatusBarStyled />
+      <ScrollView bounces={false}>
+        <HeaderInfo
+          votesAverage={
+            props.route.params.voteAverage || tvShowDetails.tvShow?.voteAverage
+          }
+          voteCount={
+            props.route.params.voteCount || tvShowDetails.tvShow?.voteCount
+          }
+          imageURL={tvShowDetails.tvShow?.backdropPath || ''}
+          posterURL={props.route.params.posterPath}
+          isLoading={tvShowDetails.isLoading}
+          title={props.route.params.title}
+        />
+        <Tags
+          extraTags={[tvShowDetails.firstAirDate, tvShowDetails.texts.tvTag]}
+          tags={
+            props.route.params.genreIds || tvShowDetails.tvShow?.genres || []
+          }
+          isLoading={!props.route.params.genreIds && tvShowDetails.isLoading}
+        />
+        <Overview
+          overview={tvShowDetails.tvShow?.overview}
+          isLoading={tvShowDetails.isLoading}
+        />
+        {tvShowDetails?.tvShow && (
+          <>
+            <GeneralInfo infoItems={tvShowDetails.infoItems} />
+            {!!tvShowDetails.tvShow.numberOfSeasons && (
+              <Styles.SeeSeasonsButtonWrapper>
+                <RoundedButton
+                  text={tvShowDetails.texts.seeSeasons}
+                  onPress={tvShowDetails.onPressSeeSeasons}
                 />
-              )}
-              {!!tvShow?.cast.length && (
-                <PeopleList
-                  onPressItem={onPressCast}
-                  sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CAST)}
-                  dataset={tvShow.cast}
-                  type="cast"
-                />
-              )}
-              {!!tvShow?.crew.length && (
-                <PeopleList
-                  sectionTitle={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_CREW)}
-                  onPressItem={onPressCrew}
-                  dataset={tvShow.crew}
-                  type="crew"
-                />
-              )}
-              {!!tvShow?.images.length && (
-                <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_IMAGES)}>
-                  <ImagesList images={tvShow.images} />
-                </Section>
-              )}
-              {!!tvShow?.videos.length && <Videos videos={tvShow.videos} />}
-              {!!tvShow?.networks.length && (
-                <Section title={t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_NETWORKS)}>
-                  <ProductionCompanies productionsList={tvShow.networks} />
-                </Section>
-              )}
-              {!!tvShow?.productionCompanies.length && (
-                <Section
-                  title={t(
-                    TRANSLATIONS.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
-                  )}>
-                  <ProductionCompanies
-                    productionsList={tvShow.productionCompanies}
-                  />
-                </Section>
-              )}
-              <Reviews
-                onPressViewAll={() => onPressReviews(tvShow)}
-                reviews={tvShow.reviews}
+              </Styles.SeeSeasonsButtonWrapper>
+            )}
+            {!!tvShowDetails.tvShow.createdBy.length && (
+              <PeopleList
+                sectionTitle={tvShowDetails.texts.sections.createdBy}
+                onPressItem={tvShowDetails.onPressCreatedBy}
+                dataset={tvShowDetails.tvShow.createdBy}
+                type="creator"
               />
-              <SimilarSection
-                onPressItem={onPressSimilarItem}
-                tvShow={tvShow}
+            )}
+            {!!tvShowDetails.tvShow.cast.length && (
+              <PeopleList
+                sectionTitle={tvShowDetails.texts.sections.cast}
+                onPressItem={tvShowDetails.onPressCast}
+                dataset={tvShowDetails.tvShow.cast}
+                type="cast"
               />
-            </>
-          )}
-        </ScrollView>
-      </>
-    );
-  },
-);
+            )}
+            {!!tvShowDetails.tvShow.crew.length && (
+              <PeopleList
+                sectionTitle={tvShowDetails.texts.sections.crew}
+                onPressItem={tvShowDetails.onPressCrew}
+                dataset={tvShowDetails.tvShow.crew}
+                type="crew"
+              />
+            )}
+            {!!tvShowDetails.tvShow.images.length && (
+              <Section title={tvShowDetails.texts.sections.images}>
+                <ImagesList images={tvShowDetails.tvShow.images} />
+              </Section>
+            )}
+            {!!tvShowDetails.tvShow.videos.length && (
+              <Videos videos={tvShowDetails.tvShow.videos} />
+            )}
+            {!!tvShowDetails.tvShow.networks.length && (
+              <Section title={tvShowDetails.texts.sections.networks}>
+                <ProductionNetworkCompanies
+                  productionNetworkCompaniesList={tvShowDetails.tvShow.networks}
+                />
+              </Section>
+            )}
+            {!!tvShowDetails.tvShow.productionCompanies.length && (
+              <Section title={tvShowDetails.texts.sections.productionCompanies}>
+                <ProductionNetworkCompanies
+                  productionNetworkCompaniesList={
+                    tvShowDetails.tvShow.productionCompanies
+                  }
+                />
+              </Section>
+            )}
+            <ReviewsSection
+              onPressViewAll={tvShowDetails.onPressReviews}
+              reviews={tvShowDetails.tvShow.reviews}
+            />
+            <Similar
+              similar={tvShowDetails.tvShow.similar}
+              onPressItem={tvShowDetails.onPressSimilarItem}
+            />
+          </>
+        )}
+      </ScrollView>
+    </>
+  );
+};

@@ -337,7 +337,7 @@ const ptBR: Locale = {
       numberOfEpisodes: 'Número de episódios',
       numberOfSeasons: 'Número de temporadas',
       firstAirDate: 'Primeira exibição',
-      lastAirDate: 'Última exibição`',
+      lastAirDate: 'Última exibição',
       originalLanguage: 'Idioma original',
       episodeRunTime: 'Tamanho do episódio',
       originCountry: 'País de origem',

@@ -1,6 +1,5 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
-import {DefaultTheme} from 'styled-components/native';
 
 import {TVShowSeasonsParams} from '@src/components/screens/common/tv-show-seasons/routes/route-params-types';
 import {ReviewsParams} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
@@ -37,5 +36,4 @@ export type TVShowDetailRouteProp = RouteProp<
 export type TVShowDetailStackProps = {
   navigation: TVShowDetailNavigationProp;
   route: TVShowDetailRouteProp;
-  theme: DefaultTheme;
 };
