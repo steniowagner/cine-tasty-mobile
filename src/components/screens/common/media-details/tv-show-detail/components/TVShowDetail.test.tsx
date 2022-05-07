@@ -15,7 +15,6 @@ import * as mockTVShowDetails from '@mocks/fixtures/tv-shows';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
 import {randomPositiveNumber} from '@mocks/utils';
-import {formatCurrency, formatDate} from '@utils';
 import {AlertMessageProvider} from '@providers';
 import {InMemoryCache} from '@apollo/client';
 import {Translations} from '@i18n/tags';

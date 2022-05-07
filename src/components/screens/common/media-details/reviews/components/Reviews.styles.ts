@@ -1,5 +1,13 @@
-import {Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import styled from 'styled-components/native';
+
+import {CONSTANTS} from '@utils';
+
+export const ScrollWrapper = styled(ScrollView).attrs(() => ({
+  contentContainerStyle: {
+    padding: CONSTANTS.VALUES.DEFAULT_SPACING,
+  },
+}))``;
 
 export const ContentWrapper = styled(View)`
   width: 100%;

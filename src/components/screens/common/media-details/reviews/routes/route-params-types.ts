@@ -1,13 +1,13 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
 type ReviewsStackParams = {
   [Routes.MediaDetail.REVIEWS]: ReviewsParams;
 };
 
-type Review = {
+export type Review = {
   content: string;
   author: string;
 };

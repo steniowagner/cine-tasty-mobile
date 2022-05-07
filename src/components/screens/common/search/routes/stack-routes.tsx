@@ -8,7 +8,7 @@ import {TVShowDetail} from '@src/components/screens/common/media-details/tv-show
 import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetails';
 import {TVShowSeasonsDetailStack} from '@src/components/screens/common/tv-show-seasons/routes/stack-routes';
 import {FamousDetails} from '@src/components/screens/common/famous-details/components/FamousDetails';
-import Reviews from '@src/components/screens/common/media-details/reviews/components/Reviews';
+import {Reviews} from '@src/components/screens/common/media-details/reviews/components/Reviews';
 import {Search} from '@src/components/screens/common/search/components/search/Search';
 import {
   getTransparentHeaderOptions,

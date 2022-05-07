@@ -1,37 +1,43 @@
 import React from 'react';
-import {FlatList} from 'react-native';
-import {useTranslation} from 'react-i18next';
+import {View} from 'react-native';
 
 import {MediaItemDescription} from '@components';
-import * as TRANSLATIONS from '@i18n/tags';
-import metrics from '@styles/metrics';
 
 import {ReviewsStackProps} from '../routes/route-params-types';
 import * as Styles from './Reviews.styles';
+import {useReviews} from './useReviews';
 
-const Reviews = ({route}: ReviewsStackProps) => {
-  const {t} = useTranslation();
+export const Reviews = (props: ReviewsStackProps) => {
+  const reviews = useReviews();
+
+  if (!props.route.params) {
+    return (
+      <Styles.ScrollWrapper>
+        <Styles.ReviewsText testID="reviews-text">
+          {reviews.texts.reviews}
+        </Styles.ReviewsText>
+      </Styles.ScrollWrapper>
+    );
+  }
 
   return (
-    <FlatList
-      renderItem={({item}) => (
-        <Styles.ContentWrapper>
-          <Styles.AuthorText>{item.author}</Styles.AuthorText>
-          <MediaItemDescription description={item.content} />
-        </Styles.ContentWrapper>
-      )}
-      contentContainerStyle={{
-        padding: metrics.mediumSize,
-      }}
-      ListHeaderComponent={() => (
-        <Styles.ReviewsText>
-          {t(TRANSLATIONS.MEDIA_DETAIL_SECTIONS_REVIEW)}
-        </Styles.ReviewsText>
-      )}
-      ItemSeparatorComponent={() => <Styles.Separator />}
-      data={route.params.reviews}
-    />
+    <Styles.ScrollWrapper>
+      <Styles.ReviewsText testID="reviews-text">
+        {reviews.texts.reviews}
+      </Styles.ReviewsText>
+      {props.route.params.reviews.map((review, index) => (
+        <View testID="review-wrapper" key={`${review.author}-${index}`}>
+          <Styles.ContentWrapper>
+            <Styles.AuthorText testID="review-author">
+              {review.author}
+            </Styles.AuthorText>
+            <MediaItemDescription description={review.content} />
+          </Styles.ContentWrapper>
+          {index < props.route.params.reviews.length - 1 && (
+            <Styles.Separator testID="separator" />
+          )}
+        </View>
+      ))}
+    </Styles.ScrollWrapper>
   );
 };
-
-export default Reviews;
