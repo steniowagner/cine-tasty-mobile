@@ -16,13 +16,7 @@ const useTVShowSeasonsListItem = ({episode}: UseTVShowSeasonsListItemProps) => {
   const navigation = useNavigation<TVShowSeasonsNavigationProp>();
 
   const onPressListItem = useCallback(() => {
-    navigation.navigate(Routes.CustomModal.CUSTOM_MODAL_STACK, {
-      type: Types.CustomizedModalChildrenType.TV_SHOW_EPISODE_DETAILS,
-      modalHeight: metrics.getHeightFromDP('50%'),
-      extraData: {
-        dataset: [episode],
-      },
-    });
+    console.warn('TODO');
   }, [episode]);
 
   return {

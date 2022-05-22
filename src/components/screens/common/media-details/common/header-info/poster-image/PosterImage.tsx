@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {renderSVGIconConditionally} from '@components';
+import {renderSVGIconConditionally, Icons} from '@components';
 import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
@@ -9,6 +9,7 @@ import * as Styles from './PosterImage.styles';
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type PosterImageProps = {
+  loadingIcon?: Icons;
   image: string;
 };
 
@@ -44,7 +45,7 @@ export const PosterImage = (props: PosterImageProps) => {
             ifFalse: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,
-              id: 'account',
+              id: props.loadingIcon || 'account',
             },
           })}
         </Styles.FallbackImageWrapper>

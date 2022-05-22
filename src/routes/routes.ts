@@ -46,7 +46,6 @@ export namespace Routes {
   export enum TVShow {
     DETAILS = 'APP/TV_SHOW/DETAILS',
     SEASONS = 'APP/TV_SHOW/SEASONS',
-    SEASONS_TABS = 'APP/TV_SHOW/SEASONS_TABS',
   }
 
   export enum Movie {

@@ -2,12 +2,10 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 
-import {TVShowSeasonsStackProps} from '@src/components/screens/common/tv-show-seasons/routes/route-params-types';
 import {ReviewsStackProps} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
 import {ImagesGallery} from '@src/components/screens/common/images-gallery/components/images-gallery/ImagesGallery';
-import {TVShowDetail} from '@src/components/screens/common/media-details/tv-show-detail/components/TVShowDetail';
+import {TVShowStack} from '@src/components/screens/common/media-details/tv-show-detail/routes/stack-routes';
 import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetails';
-import {TVShowSeasonsDetailStack} from '@src/components/screens/common/tv-show-seasons/routes/stack-routes';
 import {FamousDetails} from '@src/components/screens/common/famous-details/components/FamousDetails';
 import {Reviews} from '@src/components/screens/common/media-details/reviews/components/Reviews';
 import {
@@ -19,7 +17,6 @@ import {Routes} from '@routes/routes';
 
 import MediaSectionViewAll from '../components/media-section-view-all/MediaSectionViewAll';
 import {MediaSectionViewAllStackProps} from './route-params-types';
-import SettingsScreen from '../../settings/routes/stack-routes';
 import {Home} from '../components/Home';
 
 const Stack = createStackNavigator();
@@ -73,7 +70,7 @@ export const HomeStack = withTheme(({theme}: HomeStackProps) => {
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
         })}
-        component={TVShowDetail}
+        component={TVShowStack}
       />
       <Stack.Screen
         name={Routes.MediaDetail.REVIEWS}
@@ -93,26 +90,10 @@ export const HomeStack = withTheme(({theme}: HomeStackProps) => {
         })}
       />
       <Stack.Screen
-        name={Routes.TVShow.SEASONS}
-        options={({route}: TVShowSeasonsStackProps) => ({
-          ...DEFAULT_HEADER_OPTIONS,
-          headerTintColor: theme.colors.buttonText,
-          headerStyle: {
-            backgroundColor: theme.colors.primary,
-            shadowColor: 'transparent',
-            elevation: 0,
-          },
-          headerTitle: route.params.title,
-          headerTitleAlign: 'center',
-        })}
-        component={TVShowSeasonsDetailStack}
-      />
-      <Stack.Screen
         options={{headerShown: false}}
         component={SearchStack}
         name={Routes.Search.SEARCH_STACK}
       />
-      {SettingsScreen(Stack)}
     </Stack.Navigator>
   );
 });

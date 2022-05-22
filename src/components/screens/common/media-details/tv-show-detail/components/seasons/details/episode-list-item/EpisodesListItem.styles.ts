@@ -9,6 +9,7 @@ export const ListItemWrapper = styled(TouchableOpacity)`
   justify-content: space-between;
   align-items: center;
   padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
+  margin-bottom: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
 `;
 
 export const EpisodeNameText = styled(Text).attrs({

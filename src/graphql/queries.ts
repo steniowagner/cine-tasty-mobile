@@ -375,16 +375,10 @@ export const TV_SHOW_SEASONS_DETAIL = gql`
     $language: ISO6391Language
   ) {
     tvShowSeason(id: $id, season: $season, language: $language) {
-      seasonNumber
       posterPath
       overview
       id
       episodes {
-        voteAverage
-        stillPath
-        voteCount
-        overview
-        airDate
         name
         id
       }

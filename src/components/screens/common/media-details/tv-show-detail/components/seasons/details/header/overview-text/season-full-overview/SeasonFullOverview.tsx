@@ -7,10 +7,10 @@ type SeasonFullOverviewProps = {
   overview: string;
 };
 
-const SeasonFullOverview = ({overview}: SeasonFullOverviewProps) => (
+const SeasonFullOverview = (props: SeasonFullOverviewProps) => (
   <ScrollView testID="season-full-overview-wrapper" bounces={false}>
     <SeasonFullOverviewStyles.FullOverviewText testID="overview-text">
-      {overview}
+      {props.overview}
     </SeasonFullOverviewStyles.FullOverviewText>
   </ScrollView>
 );

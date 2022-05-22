@@ -2,8 +2,7 @@ import React from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 
-import SeasonFullOverview from '@src/components/screens/common/tv-show-seasons/components/tv-show-seasons-detail/header/overview-text/season-full-overview/SeasonFullOverview';
-import EpisodeDetail from '@src/components/screens/common/tv-show-seasons/components/tv-show-seasons-detail/tv-show-list-item/episode-detail/EpisodeDetail';
+import SeasonFullOverview from '@src/components/screens/common/media-details/tv-show-detail/components/seasons/details/header/overview-text/season-full-overview/SeasonFullOverview';
 import SetupQuestionsOptionsList from '@src/components/screens/quiz/components/setup-questions/setup-options-list/SetupQuestionsOptionsList';
 import LanguageFilter from '@src/components/screens/news/components/language-filter/LanguageFilter';
 import * as Types from '@local-types';
@@ -83,10 +82,6 @@ export const CustomizedModal = ({navigation, route}: CustomModalStackProps) => {
               <SeasonFullOverview
                 overview={route.params.extraData.dataset[0].overview}
               />
-            )}
-            {route.params.type ===
-              Types.CustomizedModalChildrenType.TV_SHOW_EPISODE_DETAILS && (
-              <EpisodeDetail episode={route.params.extraData.dataset[0]} />
             )}
           </Styles.CardWrapper>
         </PanGestureHandler>

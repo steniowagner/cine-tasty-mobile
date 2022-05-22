@@ -17,12 +17,7 @@ const Tabs = () => (
   <>
     <Tab.Navigator
       initialRouteName={Routes.Tabs.FAMOUS}
-      tabBar={(props: BottomTabBarProps) => (
-        <TabNavigator
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...props}
-        />
-      )}
+      tabBar={(props: BottomTabBarProps) => <TabNavigator {...props} />}
       screenOptions={{
         headerShown: false,
       }}>

@@ -2,11 +2,9 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {withTheme} from 'styled-components/native';
 
-import {TVShowSeasonsStackProps} from '@src/components/screens/common/tv-show-seasons/routes/route-params-types';
 import {ReviewsStackProps} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
-import {TVShowDetail} from '@src/components/screens/common/media-details/tv-show-detail/components/TVShowDetail';
+import {TVShowStack} from '@src/components/screens/common/media-details/tv-show-detail/routes/stack-routes';
 import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetails';
-import {TVShowSeasonsDetailStack} from '@src/components/screens/common/tv-show-seasons/routes/stack-routes';
 import {FamousDetails} from '@src/components/screens/common/famous-details/components/FamousDetails';
 import {Reviews} from '@src/components/screens/common/media-details/reviews/components/Reviews';
 import {Search} from '@src/components/screens/common/search/components/search/Search';
@@ -64,27 +62,8 @@ const SearchStack = ({route, theme}: SearchStackProps) => {
       />
       <Stack.Screen
         name={Routes.TVShow.DETAILS}
-        options={() => ({
-          ...TRANSPARENT_HEADER_OPTIONS,
-        })}
-        component={TVShowDetail}
-      />
-      <Stack.Screen
-        name={Routes.TVShow.SEASONS}
-        options={({
-          route: tvShowSeasonsStackProps,
-        }: TVShowSeasonsStackProps) => ({
-          ...DEFAULT_HEADER_OPTIONS,
-          headerTintColor: theme.colors.buttonText,
-          headerStyle: {
-            backgroundColor: theme.colors.primary,
-            shadowColor: 'transparent',
-            elevation: 0,
-          },
-          headerTitle: tvShowSeasonsStackProps.params.title,
-          headerTitleAlign: 'center',
-        })}
-        component={TVShowSeasonsDetailStack}
+        options={{headerShown: false}}
+        component={TVShowStack}
       />
     </Stack.Navigator>
   );
