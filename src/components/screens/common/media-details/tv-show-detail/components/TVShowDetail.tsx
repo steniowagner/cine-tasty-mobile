@@ -108,7 +108,10 @@ export const TVShowDetail = (props: TVShowDetailStackProps) => {
             )}
             {!!tvShowDetails.tvShow.images.length && (
               <Section title={tvShowDetails.texts.sections.images}>
-                <ImagesList images={tvShowDetails.tvShow.images} />
+                <ImagesList
+                  images={tvShowDetails.tvShow.images}
+                  orientation="LANDSCAPE"
+                />
               </Section>
             )}
             {!!tvShowDetails.tvShow.videos.length && (

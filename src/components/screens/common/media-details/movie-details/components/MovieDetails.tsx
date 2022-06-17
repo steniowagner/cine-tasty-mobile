@@ -88,7 +88,10 @@ export const MovieDetail = (props: MovieDetailStackProps) => {
             )}
             {!!movieDetails.movie.images.length && (
               <Section title={movieDetails.texts.sections.images}>
-                <ImagesList images={movieDetails.movie.images} />
+                <ImagesList
+                  images={movieDetails.movie.images}
+                  orientation="LANDSCAPE"
+                />
               </Section>
             )}
             {!!movieDetails.movie.videos.length && (

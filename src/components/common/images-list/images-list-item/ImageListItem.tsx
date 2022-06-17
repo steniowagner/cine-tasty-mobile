@@ -8,7 +8,7 @@ import * as Styles from './ImageListItem.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
-type ImageListItemProps = {
+type ImageListItemProps = Styles.ImageOrientation & {
   onPress: () => void;
   image: string;
 };
@@ -18,12 +18,15 @@ export const ImageListItem = (props: ImageListItemProps) => {
     image: props.image,
   });
   return (
-    <Styles.Wrapper testID="image-list-item-button" onPress={props.onPress}>
+    <Styles.Wrapper
+      orientation={props.orientation}
+      testID="image-list-item-button"
+      onPress={props.onPress}>
       <TMDBImage
+        imageType={props.orientation === 'PORTRAIT' ? 'profile' : 'still'}
         onError={loadListItemImage.onError}
         onLoad={loadListItemImage.onLoad}
         style={Styles.TMDBImageStyle}
-        imageType="profile"
         image={props.image}
       />
       {loadListItemImage.isFallbackImageVisible && (

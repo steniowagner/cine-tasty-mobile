@@ -1,10 +1,11 @@
 import React from 'react';
 
+import {ImageOrientation} from './images-list-item/ImageListItem.styles';
 import {ImageListItem} from './images-list-item/ImageListItem';
 import * as Styles from './ImagesList.styles';
 import {useImagesList} from './useImagesList';
 
-type ImagesListProps = {
+type ImagesListProps = ImageOrientation & {
   images: string[];
 };
 
@@ -23,6 +24,7 @@ export const ImagesList = (props: ImagesListProps) => {
       {props.images.map((image, index) => (
         <ImageListItem
           onPress={() => imagesList.onPressImage(index)}
+          orientation={props.orientation}
           image={image}
           key={image}
         />

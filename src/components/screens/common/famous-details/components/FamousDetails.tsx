@@ -102,7 +102,10 @@ export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
         {!!famousDetail.famous && (
           <>
             {!!famousDetail.famous.images && (
-              <ImagesList images={famousDetail.famous.images} />
+              <ImagesList
+                images={famousDetail.famous.images}
+                orientation="PORTRAIT"
+              />
             )}
             {!!famousDetail.famous.moviesCast && (
               <MediaHorizontalList

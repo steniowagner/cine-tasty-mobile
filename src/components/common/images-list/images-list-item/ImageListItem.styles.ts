@@ -4,9 +4,19 @@ import styled from 'styled-components/native';
 import metrics from '@styles/metrics';
 import {CONSTANTS} from '@utils';
 
-export const Wrapper = styled(TouchableOpacity)`
-  width: ${({theme}) => theme.metrics.getWidthFromDP('35%')}px;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('45%')}px;
+export type ImageOrientation = {
+  orientation: 'PORTRAIT' | 'LANDSCAPE';
+};
+
+export const Wrapper = styled(TouchableOpacity)<ImageOrientation>`
+  width: ${({orientation, theme}) => {
+    const percentage = orientation === 'PORTRAIT' ? '35%' : '60%';
+    return theme.metrics.getWidthFromDP(percentage);
+  }}px;
+  height: ${({orientation, theme}) => {
+    const percentage = orientation === 'PORTRAIT' ? '45%' : '38%';
+    return theme.metrics.getWidthFromDP(percentage);
+  }}px;
   margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;

@@ -28,13 +28,17 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
-const renderImagesList = (images?: string[]) => (
-  <ThemeProvider theme={theme}>
-    <TMDBImageQualityProvider>
-      <ImagesList images={images} />
-    </TMDBImageQualityProvider>
-  </ThemeProvider>
-);
+const renderImagesList = (images?: string[]) => {
+  const orientation =
+    randomPositiveNumber(10, 1) % 2 === 0 ? 'LANDSCAPE' : 'PORTRAIT';
+  return (
+    <ThemeProvider theme={theme}>
+      <TMDBImageQualityProvider>
+        <ImagesList orientation={orientation} images={images} />
+      </TMDBImageQualityProvider>
+    </ThemeProvider>
+  );
+};
 
 describe('<ImagesList />', () => {
   const elements = {
