@@ -13,7 +13,7 @@ export type MediaHorizontalItem = MovieItem | TVShowItem;
 
 type MediaType = 'MOVIE' | 'TV_SHOW';
 
-type MediaItem = {
+export type MediaItem = {
   voteAverage: number;
   posterPath: string;
   voteCount: number;
