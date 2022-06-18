@@ -8,7 +8,7 @@ import metrics from '@styles/metrics';
 import useMediaSwitcherAnimation from './useMediaSwitcherAnimation';
 
 export type SwitchItem = {
-  titlei18nRef: string;
+  title: string;
   onPress: () => void;
 };
 
@@ -77,14 +77,14 @@ const useMediaSwitcher = ({
         textColor:
           indexSelected === 0 ? theme.colors.buttonText : theme.colors.text,
         onPress: () => onAniamateSwitch(0, items[0].onPress),
-        title: t(items[0].titlei18nRef),
+        title: items[0].title,
       },
       {
         onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 1),
         textColor:
           indexSelected === 1 ? theme.colors.buttonText : theme.colors.text,
         onPress: () => onAniamateSwitch(1, items[1].onPress),
-        title: t(items[1].titlei18nRef),
+        title: items[1].title,
       },
     ],
     [onSwitchItemLayout, switchItemWidth, indexSelected, theme, items],
