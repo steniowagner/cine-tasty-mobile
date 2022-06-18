@@ -155,6 +155,38 @@ export namespace Translations {
     LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION = 'translations:languageWarning:media:positiveAction',
     LANGUAGE_WARNING_MEDIA_TITLE = 'translations:languageWarning:media:title',
     LANGUAGE_WARNING_MEDIA_DESCRIPTION = 'translations:languageWarning:media:description',
+
+    // HOME
+    HOME_LEARN_MORE = 'translations:home:learMoreButtonText',
+    HOME_SETTINGS = 'translations:home:settings',
+    HOME_TV_SHOWS = 'translations:home:tvShows',
+    HOME_MOVIES = 'translations:home:movies',
+    HOME_TRENDING_MOVIES_ERROR = 'translations:home:trendingMovies:error',
+    HOME_TRENDING_MOVIES_NOW_PLAYING_VIEW_ALL = 'translations:home:trendingMovies:nowPlayingViewAllTitle',
+    HOME_TRENDING_MOVIES_NOW_PLAYING = 'translations:home:trendingMovies:nowPlaying',
+    HOME_TRENDING_MOVIES_POPULAR_VIEW_ALL = 'translations:home:trendingMovies:popularViewAllTitle',
+    HOME_TRENDING_MOVIES_POPULAR = 'translations:home:trendingMovies:popular',
+    HOME_TRENDING_MOVIES_TOP_RATED_VIEW_ALL = 'translations:home:trendingMovies:topRatedViewAllTitle',
+    HOME_TRENDING_MOVIES_TOP_RATED = 'translations:home:trendingMovies:topRated',
+    HOME_TRENDING_MOVIES_UPCOMING_VIEW_ALL = 'translations:home:trendingMovies:upcomingViewAllTitle',
+    HOME_TRENDING_MOVIES_UPCOMING = 'translations:home:trendingMovies:upcoming',
+    HOME_TRENDING_TV_SHOWS_ERROR = 'translations:home:trendingTvShows:error',
+    HOME_TRENDING_TV_SHOWS_ON_THE_AIR_VIEW_ALL = 'translations:home:trendingTvShows:onTheAirViewAllTitle',
+    HOME_TRENDING_TV_SHOWS_ON_THE_AIR = 'translations:home:trendingTvShows:onTheAir',
+    HOME_TRENDING_TV_SHOWS_POPULAR_VIEW_ALL = 'translations:home:trendingTvShows:popularViewAllTitle',
+    HOME_TRENDING_TV_SHOWS_POPULAR = 'translations:home:trendingTvShows:popular',
+    HOME_TRENDING_TV_SHOWS_TOP_RATED_VIEW_ALL = 'translations:home:trendingTvShows:topRatedViewAllTitle',
+    HOME_TRENDING_TV_SHOWS_TOP_RATED = 'translations:home:trendingTvShows:topRated',
+    HOME_TRENDING_TV_SHOWS_AIRING_TODAY_VIEW_ALL = 'translations:home:trendingTvShows:airingTodayViewAllTitle',
+    HOME_TRENDING_TV_SHOWS_AIRING_TODAY = 'translations:home:trendingTvShows:airingToday',
+    HOME_TV_SHOWS_PAGINATION_ERROR = 'translations:home:tvShowsPaginationError',
+    HOME_MOVIES_PAGINATION_ERROR = 'translations:home:moviesPaginationError',
+    HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR = 'translations:home:search:movie:queryByTextError',
+    HOME_SEARCH_MOVIE_PAGINATION_ERROR = 'translations:home:search:movie:paginationError',
+    HOME_SEARCH_MOVIE_PLACEHOLDER = 'translations:home:search:movie:placeholder',
+    HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR = 'translations:home:search:tvShows:queryByTextError',
+    HOME_SEARCH_TV_SHOW_PAGINATION_ERROR = 'translations:home:search:tvShows:paginationError',
+    HOME_SEARCH_TV_SHOW_PLACEHOLDER = 'translations:home:search:tvShows:placeholder',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -226,62 +258,6 @@ export const TABS_NEWS = 'translations:tabs:news';
 export const TABS_FAMOUS = 'translations:tabs:famous';
 
 // HOME
-export const HOME_LEARN_MORE = 'translations:home:learMoreButtonText';
-export const HOME_SETTINGS = 'translations:home:settings';
-export const HOME_TV_SHOWS = 'translations:home:tvShows';
-export const HOME_MOVIES = 'translations:home:movies';
-export const HOME_TRENDING_MOVIES_ERROR =
-  'translations:home:trendingMovies:error';
-export const HOME_TRENDING_MOVIES_NOW_PLAYING_VIEW_ALL =
-  'translations:home:trendingMovies:nowPlayingViewAllTitle';
-export const HOME_TRENDING_MOVIES_NOW_PLAYING =
-  'translations:home:trendingMovies:nowPlaying';
-export const HOME_TRENDING_MOVIES_POPULAR_VIEW_ALL =
-  'translations:home:trendingMovies:popularViewAllTitle';
-export const HOME_TRENDING_MOVIES_POPULAR =
-  'translations:home:trendingMovies:popular';
-export const HOME_TRENDING_MOVIES_TOP_RATED_VIEW_ALL =
-  'translations:home:trendingMovies:topRatedViewAllTitle';
-export const HOME_TRENDING_MOVIES_TOP_RATED =
-  'translations:home:trendingMovies:topRated';
-export const HOME_TRENDING_MOVIES_UPCOMING_VIEW_ALL =
-  'translations:home:trendingMovies:upcomingViewAllTitle';
-export const HOME_TRENDING_MOVIES_UPCOMING =
-  'translations:home:trendingMovies:upcoming';
-export const HOME_TRENDING_TV_SHOWS_ERROR =
-  'translations:home:trendingTvShows:error';
-export const HOME_TRENDING_TV_SHOWS_ON_THE_AIR_VIEW_ALL =
-  'translations:home:trendingTvShows:onTheAirViewAllTitle';
-export const HOME_TRENDING_TV_SHOWS_ON_THE_AIR =
-  'translations:home:trendingTvShows:onTheAir';
-export const HOME_TRENDING_TV_SHOWS_POPULAR_VIEW_ALL =
-  'translations:home:trendingTvShows:popularViewAllTitle';
-export const HOME_TRENDING_TV_SHOWS_POPULAR =
-  'translations:home:trendingTvShows:popular';
-export const HOME_TRENDING_TV_SHOWS_TOP_RATED_VIEW_ALL =
-  'translations:home:trendingTvShows:topRatedViewAllTitle';
-export const HOME_TRENDING_TV_SHOWS_TOP_RATED =
-  'translations:home:trendingTvShows:topRated';
-export const HOME_TRENDING_TV_SHOWS_AIRING_TODAY_VIEW_ALL =
-  'translations:home:trendingTvShows:airingTodayViewAllTitle';
-export const HOME_TRENDING_TV_SHOWS_AIRING_TODAY =
-  'translations:home:trendingTvShows:airingToday';
-export const HOME_TV_SHOWS_PAGINATION_ERROR =
-  'translations:home:tvShowsPaginationError';
-export const HOME_MOVIES_PAGINATION_ERROR =
-  'translations:home:moviesPaginationError';
-export const HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR =
-  'translations:home:search:movie:queryByTextError';
-export const HOME_SEARCH_MOVIE_PAGINATION_ERROR =
-  'translations:home:search:movie:paginationError';
-export const HOME_SEARCH_MOVIE_PLACEHOLDER =
-  'translations:home:search:movie:placeholder';
-export const HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR =
-  'translations:home:search:tvShows:queryByTextError';
-export const HOME_SEARCH_TV_SHOW_PAGINATION_ERROR =
-  'translations:home:search:tvShows:paginationError';
-export const HOME_SEARCH_TV_SHOW_PLACEHOLDER =
-  'translations:home:search:tvShows:placeholder';
 
 // SETTINGS
 export const SETTINGS_OPEN_SOURCE_DESCRIPTION =

@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => (
   <>
     <Tab.Navigator
-      initialRouteName={Routes.Tabs.FAMOUS}
+      initialRouteName={Routes.Tabs.HOME}
       tabBar={(props: BottomTabBarProps) => <TabNavigator {...props} />}
       screenOptions={{
         headerShown: false,
