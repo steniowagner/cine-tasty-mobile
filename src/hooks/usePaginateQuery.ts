@@ -3,7 +3,7 @@ import {ApolloQueryResult} from '@apollo/client';
 import {DocumentNode} from '@apollo/client';
 import {FetchPolicy} from 'apollo-client';
 
-import {useImperativeQuery} from '@utils';
+import {useImperativeQuery} from '@hooks';
 
 type UsePaginateQueryProps<TResult, TVariables> = {
   onCompleted: (result: ApolloQueryResult<TResult>) => void;
