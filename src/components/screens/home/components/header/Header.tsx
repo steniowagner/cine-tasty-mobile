@@ -2,7 +2,7 @@ import React from 'react';
 
 import {HeaderIconButton} from '@components';
 
-import MediaSwitcher from './media-switcher/MediaSwitcher';
+import {MediaSwitcher} from './media-switcher/MediaSwitcher';
 import * as Styles from './Header.styles';
 import {useHeader} from './useHeader';
 
