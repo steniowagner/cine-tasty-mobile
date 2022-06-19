@@ -4,14 +4,14 @@ import {Animated} from 'react-native';
 import * as Types from '@local-types';
 
 import * as Top3ListItemStyles from './top-3-list-item/Top3ListItem.styles';
-import Top3ListItem from './top-3-list-item/Top3ListItem';
+import {Top3ListItem} from './top-3-list-item/Top3ListItem';
 import * as Styles from './Top3.styles';
 
-type Top3Props = {
+export type Top3Props = {
   items: Types.HomeTop3Item[];
 };
 
-const Top3 = (props: Top3Props) => {
+export const Top3 = (props: Top3Props) => {
   const scrollX = useRef(
     new Animated.Value(Styles.INITIAL_SCROLL_POSITION),
   ).current;
@@ -55,7 +55,6 @@ const Top3 = (props: Top3Props) => {
             ],
             extrapolate: 'clamp',
           });
-
           return (
             <Fragment key={item.id}>
               {index === 0 && <Styles.ListGap />}
@@ -77,5 +76,3 @@ const Top3 = (props: Top3Props) => {
     </Styles.ListWrapper>
   );
 };
-
-export default Top3;

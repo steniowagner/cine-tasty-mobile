@@ -8,14 +8,10 @@ export const ITEM_HEIGHT = metrics.getHeightFromDP('58%');
 export const ITEM_MARGING = metrics.getWidthFromDP('12.5%');
 export const ITEM_WIDTH = metrics.getWidthFromDP('75%');
 export const ITEM_BORDER_RADIUS = metrics.mediumSize;
-export const ITEM_MARGING_TOP = metrics.getWidthFromDP('15%');
+export const ITEM_MARGING_TOP = metrics.getWidthFromDP('16%');
 
 type ItemWrapperStyleProps = {
   index: number;
-};
-
-type StarsWrapperStyleProps = {
-  currentTheme: Types.ThemeId;
 };
 
 export const Wrapper = styled(Animated.View)<ItemWrapperStyleProps>`
@@ -34,15 +30,13 @@ export const TextContentWrapper = styled(View)`
   bottom: 0;
 `;
 
-export const StarsWrapper = styled(View)<StarsWrapperStyleProps>`
+export const StarsWrapper = styled(View)`
   justify-content: center;
   align-items: center;
-  background-color: ${({currentTheme, theme}) =>
-    currentTheme === Types.ThemeId.LIGHT
-      ? theme.colors.buttonText
-      : 'transparent'};
-  padding: ${({currentTheme, theme}) =>
-    currentTheme === Types.ThemeId.LIGHT ? theme.metrics.mediumSize : 0}px;
+  background-color: ${({theme}) =>
+    theme.id === Types.ThemeId.LIGHT ? theme.colors.buttonText : 'transparent'};
+  padding: ${({theme}) =>
+    theme.id === Types.ThemeId.LIGHT ? theme.metrics.mediumSize : 0}px;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;
 
