@@ -7,15 +7,15 @@ import * as Types from '@local-types';
 import {HomeStackProps} from '../routes/route-params-types';
 import LoadingHome from './top3/loading-top3/LoadingTop3';
 import HomeSection from './home-section/HomeSection';
-import {useHome} from './useHome';
 import {Header} from './header/Header';
+import {useHome} from './useHome';
 import {Top3} from './top3/Top3';
 
-export const Home = ({navigation}: HomeStackProps) => {
-  const home = useHome({navigation});
+export const Home = (props: HomeStackProps) => {
+  const home = useHome({navigation: props.navigation});
 
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       header: () => (
         <>
           <Header
