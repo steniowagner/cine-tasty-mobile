@@ -1,85 +1,54 @@
-/* eslint-disable react/display-name */
 import React, {useLayoutEffect} from 'react';
 import {ScrollView} from 'react-native';
 
-import {PaginatedListHeader, PopupAdvice} from '@components';
-import {Routes} from '@routes/routes';
+import {PaginatedListHeader} from '@components';
 import * as Types from '@local-types';
 
 import {HomeStackProps} from '../routes/route-params-types';
 import LoadingHome from './top3/loading-top3/LoadingTop3';
 import HomeSection from './home-section/HomeSection';
-import * as Styles from './Home.styles';
-import useHome from './hooks/useHome';
-import Header from './header/Header';
+import {useHome} from './useHome';
+import {Header} from './header/Header';
 import Top3 from './top3/Top3';
 
 export const Home = ({navigation}: HomeStackProps) => {
-  const {
-    shouldDisableHeaderActions,
-    onPressTop3LearnMore,
-    onPressTrendingItem,
-    onSelectTVShows,
-    onSelectMovies,
-    onPressViewAll,
-    onPressReload,
-    onPressSearch,
-    errorMessage,
-    isLoading,
-    trendings,
-    top3,
-  } = useHome({navigation});
+  const home = useHome({navigation});
 
   useLayoutEffect(() => {
-    const shouldShowReload = !!errorMessage && !isLoading;
-
     navigation.setOptions({
       header: () => (
         <>
           <Header
-            onPressSettings={() =>
-              navigation.navigate(Routes.Settings.SETTINGS)
-            }
-            shouldDisableActions={shouldDisableHeaderActions}
-            onPresSwitchTVShows={onSelectTVShows}
-            onPressSwitchMovies={onSelectMovies}
-            onPressSearch={onPressSearch}
+            onPressSettings={home.onPressSettings}
+            onPresSwitchTVShows={home.onSelectTVShows}
+            onPressSwitchMovies={home.onSelectMovies}
+            shouldDisableActions={home.isLoading}
+            onPressSearch={home.onPressSearch}
           />
-          {shouldShowReload && <PaginatedListHeader onPress={onPressReload} />}
+          {home.shouldShowReload && (
+            <PaginatedListHeader onPress={home.onPressReload} />
+          )}
         </>
       ),
     });
-  }, [shouldDisableHeaderActions, onPressSearch, isLoading, errorMessage]);
+  }, [home.shouldShowReload, home.onPressSearch, home.isLoading]);
 
-  if (isLoading) {
+  if (home.isLoading) {
     return <LoadingHome />;
-  }
-
-  if (errorMessage) {
-    return (
-      <>
-        <Styles.PopupAdviceWrapper>
-          <PopupAdvice text={errorMessage} />
-        </Styles.PopupAdviceWrapper>
-      </>
-    );
   }
 
   return (
     <ScrollView testID="scrollview-content">
-      <Top3 onPressLearnMore={onPressTop3LearnMore} top3Items={top3} />
-      {trendings.map(trending => (
+      <Top3
+        onPressLearnMore={home.onPressTop3LearnMore}
+        top3Items={home.top3}
+      />
+      {home.trendings.map(trending => (
         <HomeSection
           onPressItem={(mediaItem: Types.SimplifiedMedia) =>
-            onPressTrendingItem(mediaItem)
+            trending.onPressItem(mediaItem)
           }
-          onPressViewAll={() =>
-            onPressViewAll({
-              viewAllTitle: trending.viewAllTitle,
-              sectionItems: trending.data,
-              sectionID: trending.id,
-            })
-          }
+          onPressViewAll={trending.onPressViewAll}
           sectionTitle={trending.sectionTitle}
           key={trending.sectionTitle}
           items={trending.data}

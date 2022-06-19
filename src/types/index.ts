@@ -130,14 +130,7 @@ export enum CustomizedModalChildrenType {
 
 export type SimplifiedMedia = OnTheAirTVShows | TopRatedTVShows | PopuarTVShows | NowPlayingMovies | PopularMovies | TopRatedMovies | UpcomingMovies;
 
-export type HomeTop3Item = {
-  voteAverage: number;
-  voteCount: number;
-  genres: string[];
-  image: string;
-  title: string;
-  id: number;
-};
+export type HomeTop3Item = OnTheAirTVShows | NowPlayingMovies;
 
 export type TrendingTVShowsKeys = keyof Omit<TrendingTVShows, '__typename'>;
 
@@ -146,6 +139,8 @@ export type TrendingMoviesKeys = keyof Omit<TrendingMovies, '__typename'>;
 export type TrendingMediaItemKey = TrendingTVShowsKeys | TrendingMoviesKeys;
 
 export type HomeSection = {
+  onPressViewAll: () => void
+  onPressItem: (item: SimplifiedMedia) => void
   id: TrendingMediaItemKey;
   data: SimplifiedMedia[];
   viewAllTitle: string;
