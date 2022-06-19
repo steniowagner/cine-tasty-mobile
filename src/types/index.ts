@@ -130,7 +130,7 @@ export enum CustomizedModalChildrenType {
 
 export type SimplifiedMedia = OnTheAirTVShows | TopRatedTVShows | PopuarTVShows | NowPlayingMovies | PopularMovies | TopRatedMovies | UpcomingMovies;
 
-export type HomeTop3Item = OnTheAirTVShows | NowPlayingMovies;
+export type HomeTop3Item = (OnTheAirTVShows | NowPlayingMovies) & { onPress: () => void };
 
 export type TrendingTVShowsKeys = keyof Omit<TrendingTVShows, '__typename'>;
 

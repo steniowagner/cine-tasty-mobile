@@ -143,7 +143,6 @@ export const useTrendingMovies = (props: UseTrendingMoviesProps) => {
   }, [fetchTrendingMovies.hasError]);
 
   return {
-    handlePressTop3LearnMore: handlePressMediaItem,
     isLoading: fetchTrendingMovies.isLoading,
     hasError: fetchTrendingMovies.hasError,
     exec: fetchTrendingMovies.exec,

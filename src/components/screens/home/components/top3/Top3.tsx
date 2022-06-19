@@ -8,17 +8,13 @@ import Top3ListItem from './top-3-list-item/Top3ListItem';
 import * as Styles from './Top3.styles';
 
 type Top3Props = {
-  onPressLearnMore: (
-    mediaItem: Omit<Types.SimplifiedMedia, '__typename'>,
-  ) => void;
-  top3Items: Types.HomeTop3Item[];
+  items: Types.HomeTop3Item[];
 };
 
-const Top3 = ({onPressLearnMore, top3Items}: Top3Props) => {
+const Top3 = (props: Top3Props) => {
   const scrollX = useRef(
     new Animated.Value(Styles.INITIAL_SCROLL_POSITION),
   ).current;
-
   return (
     <Styles.ListWrapper>
       <Animated.ScrollView
@@ -45,7 +41,7 @@ const Top3 = ({onPressLearnMore, top3Items}: Top3Props) => {
         bounces={false}
         pagingEnabled
         horizontal>
-        {top3Items.map((item, index) => {
+        {props.items.map((item, index) => {
           const translateY = scrollX.interpolate({
             inputRange: [
               (index - 1) * Top3ListItemStyles.ITEM_WIDTH,
@@ -64,7 +60,7 @@ const Top3 = ({onPressLearnMore, top3Items}: Top3Props) => {
             <Fragment key={item.id}>
               {index === 0 && <Styles.ListGap />}
               <Top3ListItem
-                onPress={() => onPressLearnMore(item)}
+                onPress={item.onPress}
                 voteAverage={item.voteAverage}
                 voteCount={item.voteCount}
                 translateY={translateY}

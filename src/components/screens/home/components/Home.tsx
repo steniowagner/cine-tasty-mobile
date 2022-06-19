@@ -39,10 +39,7 @@ export const Home = ({navigation}: HomeStackProps) => {
 
   return (
     <ScrollView testID="scrollview-content">
-      <Top3
-        onPressLearnMore={home.onPressTop3LearnMore}
-        top3Items={home.top3}
-      />
+      <Top3 items={home.top3} />
       {home.trendings.map(trending => (
         <HomeSection
           onPressItem={(mediaItem: Types.SimplifiedMedia) =>

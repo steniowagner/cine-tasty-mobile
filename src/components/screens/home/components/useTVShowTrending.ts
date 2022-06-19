@@ -142,7 +142,6 @@ export const useTrendingTVShows = (props: UseTrendingTVShowsProps) => {
   }, [fetchTrendingTVShows.hasError]);
 
   return {
-    handlePressTop3LearnMore: handlePressMediaItem,
     isLoading: fetchTrendingTVShows.isLoading,
     hasError: fetchTrendingTVShows.hasError,
     exec: fetchTrendingTVShows.exec,

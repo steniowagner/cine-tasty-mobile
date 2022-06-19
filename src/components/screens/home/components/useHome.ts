@@ -1,7 +1,5 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 
-import * as Types from '@local-types';
-
 import {HomeStackNavigationProp} from '../routes/route-params-types';
 import {useTrendingMovies} from './useTrendingMovies';
 import {useTrendingTVShows} from './useTVShowTrending';
@@ -47,20 +45,6 @@ export const useHome = (props: UseHomeProps) => {
     return !trendings.length && hasError && !isLoading;
   }, [trendingMovies.hasError, trendingTVShows.hasError, isLoading, trendings]);
 
-  const handlePressTop3LearnMore = useCallback(
-    (top3Item: Types.HomeTop3Item) => {
-      const handler = isMoviesSelected
-        ? trendingMovies.handlePressTop3LearnMore
-        : trendingTVShows.handlePressTop3LearnMore;
-      handler(top3Item);
-    },
-    [
-      trendingTVShows.handlePressTop3LearnMore,
-      trendingMovies.handlePressTop3LearnMore,
-      isMoviesSelected,
-    ],
-  );
-
   const handleSelectTVShows = useCallback(() => {
     setIsTransitioning(true);
     setIsMoviesSelected(false);
@@ -87,7 +71,6 @@ export const useHome = (props: UseHomeProps) => {
   }, [isTransitioning]);
 
   return {
-    onPressTop3LearnMore: handlePressTop3LearnMore,
     onSelectTVShows: handleSelectTVShows,
     onSelectMovies: handleSelectMovies,
     onPressReload: handleOnPresReload,
