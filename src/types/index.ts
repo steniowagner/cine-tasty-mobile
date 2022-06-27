@@ -143,8 +143,14 @@ export type HomeSection = {
   onPressItem: (item: SimplifiedMedia) => void
   id: TrendingMediaItemKey;
   data: SimplifiedMedia[];
-  viewAllTitle: string;
   sectionTitle: string;
+};
+
+export type PressViewAllParams = {
+  id: TrendingMediaItemKey;
+  data: SimplifiedMedia[];
+  viewAllTitle: string;
+  isMovie: boolean;
 };
 
 export type CrewDataset = (TVShowCrew | MovieCrew)[];

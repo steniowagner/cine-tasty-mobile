@@ -1,8 +1,11 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 
+import {Routes} from '@routes/routes';
+import * as Types from '@local-types';
+
 import {HomeStackNavigationProp} from '../routes/route-params-types';
 import {useTrendingMovies} from './useTrendingMovies';
-import {useTrendingTVShows} from './useTVShowTrending';
+import {useTrendingTVShows} from './useTrendingTVShow';
 
 export const TRANSITIONING_DURATION = 500;
 
@@ -14,14 +17,28 @@ export const useHome = (props: UseHomeProps) => {
   const [isMoviesSelected, setIsMoviesSelected] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  const handlePressViewAll = useCallback(
+    (params: Types.PressViewAllParams) => {
+      props.navigation.navigate(Routes.Home.MEDIA_DETAILS_VIEW_ALL, {
+        initialDataset: params.data,
+        headerTitle: params.viewAllTitle,
+        sectionKey: params.id,
+        isMovie: params.isMovie,
+      });
+    },
+    [props.navigation],
+  );
+
   const trendingMovies = useTrendingMovies({
     navigation: props.navigation,
     isSelected: isMoviesSelected,
+    onPressViewAll: handlePressViewAll,
   });
 
   const trendingTVShows = useTrendingTVShows({
     navigation: props.navigation,
     isSelected: !isMoviesSelected,
+    onPressViewAll: handlePressViewAll,
   });
 
   const trendings = useMemo(
@@ -74,6 +91,7 @@ export const useHome = (props: UseHomeProps) => {
     onSelectTVShows: handleSelectTVShows,
     onSelectMovies: handleSelectMovies,
     onPressReload: handleOnPresReload,
+    isMoviesSelected,
     shouldShowReload,
     isLoading,
     trendings,

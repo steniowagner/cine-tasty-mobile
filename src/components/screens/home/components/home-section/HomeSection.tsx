@@ -14,6 +14,7 @@ type HomeSectionProps = {
   onPressViewAll: () => void;
   items: Types.SimplifiedMedia[];
   sectionTitle: string;
+  id: string;
 };
 
 const HomeSection = (props: HomeSectionProps) => (
@@ -21,7 +22,7 @@ const HomeSection = (props: HomeSectionProps) => (
     <SectionViewAll
       onPressViewAll={props.onPressViewAll}
       sectionTitle={props.sectionTitle}
-      id={props.sectionTitle}
+      id={props.id}
     />
     <FlatListSection
       renderItem={({item}) => {
@@ -33,6 +34,7 @@ const HomeSection = (props: HomeSectionProps) => (
             voteCount={simplifiedMediaListItem.voteCount}
             image={simplifiedMediaListItem.posterPath}
             title={simplifiedMediaListItem.title}
+            testID={props.sectionTitle}
           />
         );
       }}

@@ -11,6 +11,7 @@ const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 type SimplifiedMediaListItemProps = {
   withLargeLayout?: boolean;
   onPress: () => void;
+  testID?: string;
   voteAverage: number;
   voteCount: number;
   image: string;
@@ -25,8 +26,8 @@ export const SimplifiedMediaListItem = (
   });
   return (
     <Styles.Wrapper
+      testID={props.testID || 'simplified-media-list-button'}
       onPress={props.onPress}
-      testID="simplified-media-list-button"
       withLargeLayout={props.withLargeLayout}>
       <>
         <Styles.CustomTMDBImage

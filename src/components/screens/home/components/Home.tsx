@@ -48,6 +48,9 @@ export const Home = (props: HomeStackProps) => {
           onPressViewAll={trending.onPressViewAll}
           sectionTitle={trending.sectionTitle}
           key={trending.sectionTitle}
+          id={`${home.isMoviesSelected ? 'MOVIES' : 'TV_SHOWS'}-${
+            trending.sectionTitle
+          }`}
           items={trending.data}
         />
       ))}

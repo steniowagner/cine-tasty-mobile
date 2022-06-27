@@ -22,7 +22,7 @@ export const Header = (props: HeaderProps) => {
   });
   return (
     <>
-      <Styles.Wrapper style={{opacity: header.opacity}}>
+      <Styles.Wrapper testID="header-wrapper" style={{opacity: header.opacity}}>
         <HeaderIconButton
           disabled={props.shouldDisableActions}
           onPress={props.onPressSettings}
