@@ -1,5 +1,5 @@
-import { Platform, View } from 'react-native';
-import styled from 'styled-components';
+import {Platform, View} from 'react-native';
+import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';
 

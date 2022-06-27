@@ -1,10 +1,10 @@
-import React, { useState, memo } from 'react';
-import { FlatList } from 'react-native';
+import React, {memo} from 'react';
 
-import metrics from '@styles/metrics';
+import {ModalSelectButton} from '@components';
 
 import MultiChoiceQuestionListItem from './multi-choice-question-list-item/MultiChoiceQuestionListItem';
-import NextButton from '../next-button/NextButton';
+import {DEFAULT_BORDER_RADIUS} from '../question-wrapper/QuestionWrapper.styles';
+import useMultiChoiceQuestion from './useMultiChoiceQuestion';
 
 type MultiChoiceQuestionProps = {
   onPressNext: (answerSelected: string) => void;
@@ -12,30 +12,26 @@ type MultiChoiceQuestionProps = {
   answers: string[];
 };
 
-const MultiChoiceQuestion = ({ onPressNext, answers }: MultiChoiceQuestionProps) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('');
-
+const MultiChoiceQuestion = (props: MultiChoiceQuestionProps) => {
+  const multiChoiceQuestion = useMultiChoiceQuestion({
+    onPressNext: props.onPressNext,
+  });
   return (
     <>
-      <FlatList
-        alwaysBounceVertical={false}
-        contentContainerStyle={{
-          paddingHorizontal: metrics.smallSize,
-        }}
-        testID="multi-choice-options"
-        renderItem={({ item }) => (
-          <MultiChoiceQuestionListItem
-            onSelectAnswer={() => setSelectedAnswer(item)}
-            isSelected={selectedAnswer === item}
-            answer={item}
-          />
-        )}
-        keyExtractor={(item) => item}
-        data={answers}
-      />
-      <NextButton
-        onPress={() => onPressNext(selectedAnswer)}
-        isDisabled={!selectedAnswer}
+      {props.answers.map(answer => (
+        <MultiChoiceQuestionListItem
+          onSelectAnswer={() => multiChoiceQuestion.onSelectOption(answer)}
+          isSelected={multiChoiceQuestion.selectedOption === answer}
+          answer={answer}
+          key={answer}
+        />
+      ))}
+      <ModalSelectButton
+        isDisabled={multiChoiceQuestion.isNextButtonDisabled}
+        borderBottomRightRadius={DEFAULT_BORDER_RADIUS}
+        borderBottomLeftRadius={DEFAULT_BORDER_RADIUS}
+        title={multiChoiceQuestion.texts.nextButton}
+        onPress={multiChoiceQuestion.onPressNext}
       />
     </>
   );
@@ -44,7 +40,8 @@ const MultiChoiceQuestion = ({ onPressNext, answers }: MultiChoiceQuestionProps)
 const shouldComponentUpdate = (
   previousState: MultiChoiceQuestionProps,
   nextState: MultiChoiceQuestionProps,
-): boolean => (previousState.isFocused || !nextState.isFocused)
-  && (!previousState.isFocused || nextState.isFocused);
+): boolean =>
+  (previousState.isFocused || !nextState.isFocused) &&
+  (!previousState.isFocused || nextState.isFocused);
 
 export default memo(MultiChoiceQuestion, shouldComponentUpdate);

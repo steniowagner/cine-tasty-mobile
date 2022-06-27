@@ -1,24 +1,24 @@
-import { TouchableOpacity, Animated } from 'react-native';
-import styled from 'styled-components';
+import {TouchableOpacity, Animated} from 'react-native';
+import styled from 'styled-components/native';
 
-import CONSTANTS from '@utils/constants';
+import metrics from '@styles/metrics';
+import {CONSTANTS} from '@utils';
 
-type WrapperStyleProps = {
-  isFirst?: boolean;
+export type ImageOrientation = {
+  orientation: 'PORTRAIT' | 'LANDSCAPE';
 };
 
-export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('45%')}px;
-  height: ${({ theme }) => theme.metrics.getWidthFromDP('32%')}px;
-  margin-left: ${({ isFirst }) => {
-    if (isFirst) {
-      return CONSTANTS.VALUES.DEFAULT_SPACING;
-    }
-
-    return 0;
+export const Wrapper = styled(TouchableOpacity)<ImageOrientation>`
+  width: ${({orientation, theme}) => {
+    const percentage = orientation === 'PORTRAIT' ? '35%' : '60%';
+    return theme.metrics.getWidthFromDP(percentage);
   }}px;
-  margin-right: ${({ theme }) => theme.metrics.largeSize}px;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
+  height: ${({orientation, theme}) => {
+    const percentage = orientation === 'PORTRAIT' ? '45%' : '38%';
+    return theme.metrics.getWidthFromDP(percentage);
+  }}px;
+  margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
+  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;
 
 export const FallbackImageWrapper = styled(Animated.View)`
@@ -27,6 +27,12 @@ export const FallbackImageWrapper = styled(Animated.View)`
   justify-content: center;
   align-items: center;
   position: absolute;
-  border-radius: ${({ theme }) => theme.metrics.extraSmallSize}px;
-  background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
+  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
+  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;
+
+export const TMDBImageStyle = {
+  width: '100%',
+  height: '100%',
+  borderRadius: metrics.extraSmallSize,
+};

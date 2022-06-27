@@ -1,46 +1,86 @@
-import { useCallback, useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useState, useMemo, useRef, useEffect} from 'react';
+import {ScrollView} from 'react-native';
 
 import * as SchemaTypes from '@schema-types';
+import {Translations} from '@i18n/tags';
+import {useTranslations} from '@hooks';
+import * as Types from '@local-types';
 
+import {ITEM_LIST_HEIGHT} from './list-item/LanguageListItem.styles';
 import languages from './languages';
 
 type UseLanguageFilterProps = {
-  onSelectLanguage: (language: string) => void;
   lastLanguageSelected: SchemaTypes.ArticleLanguage;
+  onSelectLanguage: (language: string) => void;
   closeModal: () => void;
 };
 
-const useLanguageFilter = ({
-  lastLanguageSelected,
-  onSelectLanguage,
-  closeModal,
-}: UseLanguageFilterProps) => {
-  const [languageSelected, setLanguageSelected] = useState<SchemaTypes.ArticleLanguage>(
-    lastLanguageSelected,
+const useLanguageFilter = (props: UseLanguageFilterProps) => {
+  const [language, setLanguage] = useState<SchemaTypes.ArticleLanguage>(
+    props.lastLanguageSelected,
   );
+  const scrollViewRef = useRef<ScrollView>(null);
 
-  const { t } = useTranslation();
+  const translations = useTranslations();
+
+  const modalSelectButtonTitle = useMemo(
+    () => translations.translate(Translations.Tags.SELECT),
+    [translations.translate],
+  );
 
   const initialFlatListIndex = useMemo(
-    () => languages.findIndex((language) => language.id === lastLanguageSelected),
-    [lastLanguageSelected],
+    () =>
+      languages.findIndex(
+        languageItem => languageItem.id === props.lastLanguageSelected,
+      ),
+    [props.lastLanguageSelected],
   );
 
-  const onPressSelectButton = useCallback((): void => {
-    if (lastLanguageSelected !== languageSelected) {
-      onSelectLanguage(languageSelected);
+  useEffect(() => {
+    if (scrollViewRef && scrollViewRef.current) {
+      const y = initialFlatListIndex * ITEM_LIST_HEIGHT;
+      scrollViewRef.current.scrollTo({x: 0, y, animated: true});
     }
+  }, [initialFlatListIndex]);
 
-    closeModal();
-  }, [lastLanguageSelected, languageSelected]);
+  const onPressSelectButton = useCallback((): void => {
+    if (props.lastLanguageSelected !== language) {
+      props.onSelectLanguage(language);
+    }
+    props.closeModal();
+  }, [
+    props.lastLanguageSelected,
+    props.onSelectLanguage,
+    props.closeModal,
+    language,
+  ]);
+
+  const handleSetScrollViewRef = useCallback(
+    (ref: ScrollView) => {
+      if (scrollViewRef.current) {
+        return;
+      }
+      scrollViewRef.current = ref;
+    },
+    [scrollViewRef.current],
+  );
+
+  const languageName = useCallback(
+    (name: Types.NewsFilterLanguage) =>
+      translations.translate(
+        `${Translations.Tags.NEWS_LANGUAGES}:${name}` as Translations.Tags,
+      ),
+    [translations.translate],
+  );
 
   return {
-    initialFlatListIndex,
+    modalSelectButtonTitle,
+    handleSetScrollViewRef,
     onPressSelectButton,
-    setLanguageSelected,
-    languageSelected,
-    t,
+    scrollViewRef,
+    languageName,
+    setLanguage,
+    language,
   };
 };
 

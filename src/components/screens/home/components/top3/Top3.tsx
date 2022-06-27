@@ -1,20 +1,20 @@
-import React, { Fragment, useRef } from 'react';
-import { Animated } from 'react-native';
+import React, {Fragment, useRef} from 'react';
+import {Animated} from 'react-native';
 
 import * as Types from '@local-types';
 
 import * as Top3ListItemStyles from './top-3-list-item/Top3ListItem.styles';
-import Top3ListItem from './top-3-list-item/Top3ListItem';
+import {Top3ListItem} from './top-3-list-item/Top3ListItem';
 import * as Styles from './Top3.styles';
 
-type Top3Props = {
-  onPressLearnMore: (mediaItem: Omit<Types.SimplifiedMedia, '__typename'>) => void;
-  top3Items: Types.HomeTop3Item[];
+export type Top3Props = {
+  items: Types.HomeTop3Item[];
 };
 
-const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
-  const scrollX = useRef(new Animated.Value(Styles.INITIAL_SCROLL_POSITION)).current;
-
+export const Top3 = (props: Top3Props) => {
+  const scrollX = useRef(
+    new Animated.Value(Styles.INITIAL_SCROLL_POSITION),
+  ).current;
   return (
     <Styles.ListWrapper>
       <Animated.ScrollView
@@ -24,7 +24,7 @@ const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
           [
             {
               nativeEvent: {
-                contentOffset: { x: scrollX },
+                contentOffset: {x: scrollX},
               },
             },
           ],
@@ -32,7 +32,7 @@ const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
             useNativeDriver: true,
           },
         )}
-        contentOffset={{ x: Styles.SCROLL_CONTENT_OFFSET, y: 0 }}
+        contentOffset={{x: Styles.SCROLL_CONTENT_OFFSET, y: 0}}
         snapToInterval={Styles.SNAP_INTERVAL}
         removeClippedSubviews={false}
         scrollEventThrottle={16}
@@ -40,9 +40,8 @@ const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
         testID="top3-list"
         bounces={false}
         pagingEnabled
-        horizontal
-      >
-        {top3Items.map((item, index) => {
+        horizontal>
+        {props.items.map((item, index) => {
           const translateY = scrollX.interpolate({
             inputRange: [
               (index - 1) * Top3ListItemStyles.ITEM_WIDTH,
@@ -56,26 +55,16 @@ const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
             ],
             extrapolate: 'clamp',
           });
-
           return (
-            <Fragment
-              key={item.id}
-            >
+            <Fragment key={item.id}>
               {index === 0 && <Styles.ListGap />}
               <Top3ListItem
-                onPress={() => onPressLearnMore({
-                  voteAverage: item.voteAverage,
-                  voteCount: item.voteCount,
-                  posterPath: item.image,
-                  genreIds: item.genres,
-                  title: item.title,
-                  id: item.id,
-                })}
+                onPress={item.onPress}
                 voteAverage={item.voteAverage}
                 voteCount={item.voteCount}
                 translateY={translateY}
-                genres={item.genres}
-                image={item.image}
+                genres={item.genreIds}
+                image={item.posterPath}
                 title={item.title}
                 index={index}
               />
@@ -87,5 +76,3 @@ const Top3 = ({ onPressLearnMore, top3Items }: Top3Props) => {
     </Styles.ListWrapper>
   );
 };
-
-export default Top3;

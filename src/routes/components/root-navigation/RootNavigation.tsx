@@ -1,9 +1,9 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
-import CustomModal from '@components/screens/shared/customized-modal/routes/stack-routes';
-import Onboarding from '@components/screens/onboarding/routes/stack-routes';
-import { Routes } from '@routes/routes';
+import {CustomizedModal} from '@screens/common';
+import {Onboarding} from '@screens';
+import {Routes} from '@routes/routes';
 
 import CheckingInitialScreen from './checking-initial-screen/CheckingInitialScreen';
 import useRouteNavigation from './useRouteNavigation';
@@ -12,12 +12,12 @@ import Tabs from '../Tabs';
 const RootStack = createStackNavigator();
 
 const RouteNavigation = () => {
-  const { onFinishShowOnboarding, currentStack } = useRouteNavigation();
+  const {onFinishShowOnboarding, currentStack} = useRouteNavigation();
 
   return (
     <RootStack.Navigator
       screenOptions={{
-        cardStyleInterpolator: ({ current: { progress } }) => ({
+        cardStyleInterpolator: ({current: {progress}}) => ({
           cardStyle: {
             opacity: progress.interpolate({
               inputRange: [0, 0.5, 0.9, 1],
@@ -32,39 +32,40 @@ const RouteNavigation = () => {
             }),
           },
         }),
-        cardStyle: { backgroundColor: 'transparent' },
+        cardStyle: {backgroundColor: 'transparent'},
         cardOverlayEnabled: true,
         animationEnabled: false,
         headerShown: false,
       }}
-      mode="modal"
-    >
+      defaultScreenOptions={{
+        presentation: 'modal',
+      }}>
       {currentStack === 'checking-initial-screen' && (
         <RootStack.Screen
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
           component={CheckingInitialScreen}
           name={Routes.InitialScreenChecking.INITIAL_SCREEN}
         />
       )}
       {currentStack === 'onboarding' && (
         <RootStack.Screen
-          initialParams={{ onFinishShowOnboarding }}
+          initialParams={{onFinishShowOnboarding}}
           name={Routes.Onboarding.ONBOARDING}
-          options={{ headerShown: false }}
-          component={Onboarding}
+          options={{headerShown: false}}
+          component={Tabs}
         />
       )}
       {currentStack === 'tabs' && (
         <>
           <RootStack.Screen
-            options={{ headerShown: false }}
+            options={{headerShown: false}}
             name={Routes.Tabs.TABS}
             component={Tabs}
           />
           <RootStack.Screen
-            options={{ headerShown: false, animationEnabled: true }}
-            component={CustomModal}
-            name={Routes.CustomModal.CUSTOM_MODAL}
+            options={{headerShown: false, animationEnabled: true}}
+            component={CustomizedModal}
+            name={Routes.CustomModal.CUSTOM_MODAL_STACK}
           />
         </>
       )}

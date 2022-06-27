@@ -1,12 +1,12 @@
 import React from 'react';
-import { Animated, StyleProp, ImageStyle } from 'react-native';
+import {Animated, StyleProp, ImageStyle} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import * as Types from '@local-types';
 
-import useTMDBImage from './useTMDBImage';
+import {useTMDBImage} from './useTMDBImage';
 
-type Style = StyleProp<ImageStyle> | { opacity: Animated.Value };
+type Style = StyleProp<ImageStyle> | {opacity: Animated.Value};
 
 type TMDBImageProps = {
   style: Style | Style[];
@@ -20,30 +20,24 @@ type TMDBImageProps = {
   image: string;
 };
 
-const TMDBImage = ({
-  isThumbnail = false,
-  isAnimated = false,
-  blurRadius = 0,
-  imageType,
-  onError,
-  testID,
-  onLoad,
-  style,
-  image,
-}: TMDBImageProps) => {
-  const { uri } = useTMDBImage({ isThumbnail, imageType, image });
+export const TMDBImage = (props: TMDBImageProps) => {
+  const tmdbImage = useTMDBImage({
+    isThumbnail: props.isThumbnail,
+    imageType: props.imageType,
+    image: props.image,
+  });
 
-  if (isAnimated) {
+  if (props.isAnimated) {
     return (
       <Animated.Image
-        blurRadius={blurRadius}
+        blurRadius={props.blurRadius || 0}
         resizeMode="cover"
-        onError={onError}
-        onLoad={onLoad}
-        testID={testID}
-        style={style}
+        onError={props.onError}
+        onLoad={props.onLoad}
+        testID={props.testID}
+        style={props.style}
         source={{
-          uri,
+          uri: tmdbImage.uri,
         }}
       />
     );
@@ -52,16 +46,14 @@ const TMDBImage = ({
   return (
     <FastImage
       // @ts-ignore
-      style={style as StyleProp<ImageStyle> | StyleProp<ImageStyle>[]}
-      source={{
-        uri,
-      }}
+      style={props.style as StyleProp<ImageStyle> | StyleProp<ImageStyle>[]}
       resizeMode={FastImage.resizeMode.cover}
-      onError={onError}
-      onLoad={onLoad}
-      testID={testID}
+      source={{
+        uri: tmdbImage.uri,
+      }}
+      onError={props.onError}
+      onLoad={props.onLoad}
+      testID={props.testID}
     />
   );
 };
-
-export default TMDBImage;

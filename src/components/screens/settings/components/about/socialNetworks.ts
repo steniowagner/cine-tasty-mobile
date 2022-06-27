@@ -1,7 +1,7 @@
-import { SupportedIcons } from '@components/common/svg-icon/getXML';
+import {Icons} from '@components';
 
 type SocialNetwork = {
-  icon: SupportedIcons;
+  icon: Icons;
   url: string;
   color: string;
 };

@@ -1,46 +1,34 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 
 import metrics from '@styles/metrics';
 
 import * as Styles from './PaginationFooter.styles';
-import SVGIcon from '../svg-icon/SVGIcon';
+import {SVGIcon} from '../svg-icon/SVGIcon';
 
 type PaginationFooterProps = {
-  onPressReloadButton?: () => void;
+  onPressReloadButton: () => void;
   isPaginating: boolean;
   hasError: boolean;
 };
 
-const PaginationFooter = ({
-  onPressReloadButton,
-  isPaginating,
-  hasError,
-}: PaginationFooterProps) => (
-  <Styles.Wrapper
-    testID="pagination-footer-wrapper"
-  >
-    {isPaginating && (
+export const PaginationFooter = (props: PaginationFooterProps) => (
+  <Styles.Wrapper testID="pagination-footer-wrapper">
+    {props.isPaginating && (
       <Styles.CustomActivityIndicator
-        testID="loading-footer-wrapper"
+        testID="pagination-loading-footer-wrapper"
         size={Platform.select({
           android: 'large',
           ios: 'small',
         })}
       />
     )}
-    {hasError && (
+    {props.hasError && (
       <Styles.LoadButton
         testID="pagination-footer-reload-button"
-        onPress={onPressReloadButton}
-      >
-        <SVGIcon
-          size={metrics.getWidthFromDP('10%')}
-          id="restart"
-        />
+        onPress={props.onPressReloadButton}>
+        <SVGIcon size={metrics.getWidthFromDP('10%')} id="restart" />
       </Styles.LoadButton>
     )}
   </Styles.Wrapper>
 );
-
-export default PaginationFooter;

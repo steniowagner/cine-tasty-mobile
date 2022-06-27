@@ -1,8 +1,7 @@
 import React from 'react';
-import { Colors } from 'styled-components';
+import {Colors} from 'styled-components/native';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import { Icons } from '@components/common/svg-icon/icons';
+import {SVGIcon, Icons} from '@components';
 import metrics from '@styles/metrics';
 
 import * as Styles from './HeaderIconButton.styles';
@@ -16,27 +15,17 @@ type HeaderIconButtonProps = {
   iconName: Icons;
 };
 
-const HeaderIconButton = ({
-  withMarginRight,
-  withMarginLeft,
-  disabled,
-  iconName,
-  onPress,
-  color,
-}: HeaderIconButtonProps) => (
+export const HeaderIconButton = (props: HeaderIconButtonProps) => (
   <Styles.Wrapper
-    testID={`header-icon-button-wrapper-${iconName}`}
-    withMarginRight={withMarginRight}
-    withMarginLeft={withMarginLeft}
-    disabled={disabled}
-    onPress={onPress}
-  >
+    testID={`header-icon-button-wrapper-${props.iconName}`}
+    withMarginRight={props.withMarginRight}
+    withMarginLeft={props.withMarginLeft}
+    disabled={props.disabled}
+    onPress={props.onPress}>
     <SVGIcon
       size={metrics.getWidthFromDP('7%')}
-      colorThemeRef={color}
-      id={iconName}
+      colorThemeRef={props.color}
+      id={props.iconName}
     />
   </Styles.Wrapper>
 );
-
-export default HeaderIconButton;

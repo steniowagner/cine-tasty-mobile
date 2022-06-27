@@ -1,49 +1,44 @@
-import React, { useState, memo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {memo} from 'react';
 
-import * as TRANSLATIONS from '@i18n/tags';
+import {ModalSelectButton} from '@components';
 
+import {DEFAULT_BORDER_RADIUS} from '../question-wrapper/QuestionWrapper.styles';
+import useBooleanQuestion from './useBooleanQuestion';
 import * as Styles from './BooleanQuestion.styles';
-import NextButton from '../next-button/NextButton';
 
 type BooleanQuestionProps = {
   onPressNext: (answerSelected: string) => void;
   isFocused: boolean;
 };
 
-const BooleanQuestion = ({ onPressNext }: BooleanQuestionProps) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<boolean | undefined>(undefined);
-  const { t } = useTranslation();
-
+const BooleanQuestion = (props: BooleanQuestionProps) => {
+  const booleanQuestion = useBooleanQuestion({onPressNext: props.onPressNext});
   return (
     <>
-      <Styles.Wrapper
-        testID="boolean-question"
-      >
+      <Styles.Wrapper>
         <Styles.OptionButton
-          onPress={() => setSelectedAnswer(true)}
-          isSelected={selectedAnswer === true}
-          testID={
-            selectedAnswer === true ? 'true-option-button-selected' : 'true-option-button'
-          }
-        >
-          <Styles.OptionText>{t(TRANSLATIONS.QUIZ_TRUE)}</Styles.OptionText>
+          isSelected={booleanQuestion.selectedAnswer === true}
+          onPress={booleanQuestion.onPressTrueOption}
+          testID="true-option-button">
+          <Styles.OptionText testID="true-option-text">
+            {booleanQuestion.texts.trueOption}
+          </Styles.OptionText>
         </Styles.OptionButton>
         <Styles.OptionButton
-          onPress={() => setSelectedAnswer(false)}
-          isSelected={selectedAnswer === false}
-          testID={
-            selectedAnswer === false
-              ? 'false-option-button-selected'
-              : 'false-option-button'
-          }
-        >
-          <Styles.OptionText>{t(TRANSLATIONS.QUIZ_FALSE)}</Styles.OptionText>
+          isSelected={booleanQuestion.selectedAnswer === false}
+          onPress={booleanQuestion.onPressFalseOption}
+          testID="false-option-button">
+          <Styles.OptionText testID="false-option-text">
+            {booleanQuestion.texts.falseOption}
+          </Styles.OptionText>
         </Styles.OptionButton>
       </Styles.Wrapper>
-      <NextButton
-        onPress={() => onPressNext(String(selectedAnswer))}
-        isDisabled={selectedAnswer === undefined}
+      <ModalSelectButton
+        isDisabled={booleanQuestion.selectedAnswer === undefined}
+        borderBottomRightRadius={DEFAULT_BORDER_RADIUS}
+        borderBottomLeftRadius={DEFAULT_BORDER_RADIUS}
+        title={booleanQuestion.texts.nextOption}
+        onPress={booleanQuestion.onPressNext}
       />
     </>
   );
@@ -52,7 +47,8 @@ const BooleanQuestion = ({ onPressNext }: BooleanQuestionProps) => {
 const shouldComponentUpdate = (
   previousState: BooleanQuestionProps,
   nextState: BooleanQuestionProps,
-): boolean => (previousState.isFocused || !nextState.isFocused)
-  && (!previousState.isFocused || nextState.isFocused);
+): boolean =>
+  (previousState.isFocused || !nextState.isFocused) &&
+  (!previousState.isFocused || nextState.isFocused);
 
 export default memo(BooleanQuestion, shouldComponentUpdate);

@@ -1,22 +1,21 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import * as TRANSLATIONS from '@i18n/tags';
+import {SVGIcon} from '@components';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
+import useResultListItem from './useResultListItem';
 import * as Styles from './ResultListItem.styles';
 
 type ResultListItemProps = {
   result: Types.QuizResult;
 };
 
-const ResultListItem = ({ result }: ResultListItemProps) => {
-  const { t } = useTranslation();
-
+const ResultListItem = (props: ResultListItemProps) => {
+  const resultListItem = useResultListItem(props);
   return (
     <Styles.Wrapper
+      // eslint-disable-next-line react-native/no-inline-styles
       style={{
         shadowColor: '#000',
         shadowOffset: {
@@ -27,22 +26,24 @@ const ResultListItem = ({ result }: ResultListItemProps) => {
         shadowRadius: 2.62,
         elevation: 4,
       }}
-    >
+      testID="result-list-item-wrapper">
       <Styles.IconWrapper>
         <SVGIcon
-          id={result.isCorrect ? 'checkbox-circle' : 'close-circle'}
-          colorThemeRef={result.isCorrect ? 'green' : 'red'}
+          colorThemeRef={resultListItem.icon.colorThemeRef}
           size={metrics.getWidthFromDP('14%')}
+          id={resultListItem.icon.id}
         />
       </Styles.IconWrapper>
       <Styles.TextContentWrapper>
-        <Styles.QuestionText>{result.question}</Styles.QuestionText>
-        <Styles.AnswerText>
-          {`${t(TRANSLATIONS.QUIZ_ANSWER)}: ${result.answer}`}
+        <Styles.QuestionText testID="question-text">
+          {props.result.question}
+        </Styles.QuestionText>
+        <Styles.AnswerText testID="correct-answer-text">
+          {resultListItem.texts.correctAnswer}
         </Styles.AnswerText>
         <Styles.LineDivider />
-        <Styles.AnswerText>
-          {`${t(TRANSLATIONS.QUIZ_YOUR_ANSWER)}: ${result.userAnswer}`}
+        <Styles.AnswerText testID="user-answer-text">
+          {resultListItem.texts.userAnswer}
         </Styles.AnswerText>
       </Styles.TextContentWrapper>
     </Styles.Wrapper>

@@ -1,25 +1,19 @@
-import {
-  useCallback, useEffect, useState, useMemo,
-} from 'react';
+import {useCallback, useEffect, useState, useMemo} from 'react';
 
-import {
-  getItemFromStorage,
-  persistItemInStorage,
-} from '@utils/async-storage-adapter/AsyncStorageAdapter';
-import { useSystemThemePreference } from '@hooks';
-import { dark, light } from '@styles/themes';
-import CONSTANTS from '@utils/constants';
+import {useSystemThemePreference} from '@hooks';
+import {dark, light} from '@styles/themes';
+import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
 
-const undefinedTheme = { ...dark, id: undefined };
+const undefinedTheme = {...dark, id: undefined};
 
 const useTheme = () => {
   const [theme, setTheme] = useState<Types.ThemeId>(null);
 
-  const { systemTheme } = useSystemThemePreference();
+  const {systemTheme} = useSystemThemePreference();
 
   const handleInitialThemeSelection = useCallback(async (): Promise<void> => {
-    const themeFromStorage = await getItemFromStorage<Types.ThemeId, null>(
+    const themeFromStorage = await storage.get<Types.ThemeId, null>(
       CONSTANTS.KEYS.APP_THEME,
       null,
     );
@@ -47,19 +41,19 @@ const useTheme = () => {
   const onSetLightTheme = useCallback(async () => {
     setTheme(Types.ThemeId.LIGHT);
 
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.LIGHT);
+    await storage.set(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.LIGHT);
   }, []);
 
   const onSetDarkTheme = useCallback(async () => {
     setTheme(Types.ThemeId.DARK);
 
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.DARK);
+    await storage.set(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.DARK);
   }, []);
 
   const onSetSystemTheme = useCallback(async () => {
     setTheme(Types.ThemeId.SYSTEM);
 
-    await persistItemInStorage(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.SYSTEM);
+    await storage.set(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.SYSTEM);
   }, []);
 
   const themeSelected = useMemo(() => {
@@ -69,8 +63,8 @@ const useTheme = () => {
 
     if (theme === Types.ThemeId.SYSTEM) {
       return systemTheme === Types.ThemeId.DARK
-        ? { ...dark, id: Types.ThemeId.SYSTEM }
-        : { ...light, id: Types.ThemeId.SYSTEM };
+        ? {...dark, id: Types.ThemeId.SYSTEM}
+        : {...light, id: Types.ThemeId.SYSTEM};
     }
 
     return theme === Types.ThemeId.DARK ? dark : light;

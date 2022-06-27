@@ -1,11 +1,10 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
 import metrics from '@styles/metrics';
+import {SVGIcon} from '@components';
 
 import * as Styles from './StarsVotes.styles';
-import useStarsVotes from './useStarsVotes';
+import {useStarsVotes} from './useStarsVotes';
 
 type StarsVotesProps = {
   textColor?: string;
@@ -14,31 +13,23 @@ type StarsVotesProps = {
   votes: number;
 };
 
-const StarsVotes = ({
-  textColor, voteCount, withText, votes,
-}: StarsVotesProps) => {
-  const { numberEmptyStars, numberFullStars, numberHalfStars } = useStarsVotes(votes);
-
-  const shouldShowVoteCount = withText && !!voteCount;
-  const shouldShowVotes = withText && !!votes;
-
+export const StarsVotes = (props: StarsVotesProps) => {
+  const starsVotes = useStarsVotes({
+    voteCount: props.voteCount,
+    withText: props.withText,
+    votes: props.votes,
+  });
   return (
     <Styles.Wrapper>
-      {shouldShowVotes && (
-        <Styles.VotesText
-          textColor={textColor}
-        >
-          {`${votes.toFixed(1)} `}
+      {starsVotes.shouldShowVotes && (
+        <Styles.VotesText testID="votes-text" textColor={props.textColor}>
+          {starsVotes.votes}
         </Styles.VotesText>
       )}
-      <Styles.Wrapper
-        testID="stars-wrapper"
-      >
-        {numberFullStars > 0 && (
-          <Styles.Wrapper
-            testID="full-stars-wrapper"
-          >
-            {Array(numberFullStars)
+      <Styles.Wrapper testID="stars-wrapper">
+        {starsVotes.numberFullStars > 0 && (
+          <Styles.Wrapper testID="full-stars-wrapper">
+            {Array(starsVotes.numberFullStars)
               .fill({})
               .map((_, index) => (
                 <SVGIcon
@@ -53,11 +44,9 @@ const StarsVotes = ({
               ))}
           </Styles.Wrapper>
         )}
-        {numberHalfStars > 0 && (
-          <Styles.Wrapper
-            testID="half-stars-wrapper"
-          >
-            {Array(numberHalfStars)
+        {starsVotes.numberHalfStars > 0 && (
+          <Styles.Wrapper testID="half-stars-wrapper">
+            {Array(starsVotes.numberHalfStars)
               .fill({})
               .map((_, index) => (
                 <SVGIcon
@@ -72,11 +61,9 @@ const StarsVotes = ({
               ))}
           </Styles.Wrapper>
         )}
-        {numberEmptyStars > 0 && (
-          <Styles.Wrapper
-            testID="empty-stars-wrapper"
-          >
-            {Array(numberEmptyStars)
+        {starsVotes.numberEmptyStars > 0 && (
+          <Styles.Wrapper testID="empty-stars-wrapper">
+            {Array(starsVotes.numberEmptyStars)
               .fill({})
               .map((_, index) => (
                 <SVGIcon
@@ -92,15 +79,11 @@ const StarsVotes = ({
           </Styles.Wrapper>
         )}
       </Styles.Wrapper>
-      {shouldShowVoteCount && (
-        <Styles.VotesText
-          textColor={textColor}
-        >
-          {` (${voteCount})`}
+      {starsVotes.shouldShowVoteCount && (
+        <Styles.VotesText testID="vote-count" textColor={props.textColor}>
+          {` (${props.voteCount})`}
         </Styles.VotesText>
       )}
     </Styles.Wrapper>
   );
 };
-
-export default StarsVotes;

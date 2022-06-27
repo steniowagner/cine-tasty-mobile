@@ -9,20 +9,27 @@
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "paths": {
+      "@screens/common": ["./components/screens/common/index.ts"],
+      "@screens": ["./components/screens/index.ts"],
+      "@components": ["./components/common/index.ts"],
       "@providers": ["./providers/index.ts"],
       "@schema-types": ["./types/schema.ts"],
       "@local-types": ["./types/index.ts"],
-      "@components/*": ["./components/*"],
       "@hooks": ["./hooks/index.ts"],
       "@graphql/*": ["./graphql/*"],
       "@mocks/*": ["../__mocks__/*"],
       "@routes/*": ["./routes/*"],
       "@styles/*": ["./styles/*"],
-      "@utils/*": ["./utils/*"],
+      "@utils": ["./utils/index"],
       "@i18n/*": ["./i18n/*"],
       "@src/*": ["./*"]
     }
   },
   "include": ["src/**/*", "schema.json"],
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
 }

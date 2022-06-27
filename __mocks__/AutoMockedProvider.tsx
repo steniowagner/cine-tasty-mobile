@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { IntrospectionFragmentMatcher, InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/client';
 import { ApolloClient } from 'apollo-client';
 import { SchemaLink } from 'apollo-link-schema';
 import { makeExecutableSchema, addMockFunctionsToSchema, IMocks } from 'graphql-tools';

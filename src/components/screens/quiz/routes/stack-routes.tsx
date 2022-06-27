@@ -1,21 +1,20 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useTranslation } from 'react-i18next';
+import {createStackNavigator} from '@react-navigation/stack';
 
-import { DEFAULT_HEADER_OPTIONS } from '@routes/constants';
-import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {DEFAULT_HEADER_OPTIONS} from '@routes/constants';
+import {Translations} from '@i18n/tags';
+import {useTranslations} from '@hooks';
+import {Routes} from '@routes/routes';
 
 import SetupQuestions from '../components/setup-questions/SetupQuestions';
 import Questions from '../components/questions/Questions';
 import Results from '../components/results/Results';
-import Quiz from '../components/Quiz';
+import {Quiz} from '../components/Quiz';
 
 const Stack = createStackNavigator();
 
-const QuizStack = () => {
-  const { t } = useTranslation();
-
+export const QuizStack = () => {
+  const translations = useTranslations();
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -28,7 +27,7 @@ const QuizStack = () => {
       <Stack.Screen
         options={{
           ...DEFAULT_HEADER_OPTIONS,
-          headerTitle: t(TRANSLATIONS.TABS_QUIZ),
+          headerTitle: translations.translate(Translations.Tags.TABS_QUIZ),
           headerTitleAlign: 'center',
         }}
         name={Routes.Quiz.SETUP_QUESTIONS}
@@ -55,5 +54,3 @@ const QuizStack = () => {
     </Stack.Navigator>
   );
 };
-
-export default QuizStack;

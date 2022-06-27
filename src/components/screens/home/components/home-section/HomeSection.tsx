@@ -1,9 +1,11 @@
 import React from 'react';
-import { FlatList } from 'react-native';
 
-import SimplifiedMediaListItem from '@components/common/simplified-media-list-item/SimplifiedMediaListItem';
-import SectionViewAll from '@components/common/section-view-all/SectionViewAll';
 import * as Types from '@local-types';
+import {
+  SimplifiedMediaListItem,
+  SectionViewAll,
+  FlatListSection,
+} from '@components';
 
 import * as Styles from './HomeSection.styles';
 
@@ -12,37 +14,36 @@ type HomeSectionProps = {
   onPressViewAll: () => void;
   items: Types.SimplifiedMedia[];
   sectionTitle: string;
+  id: string;
 };
 
-const HomeSection = ({
-  onPressViewAll,
-  sectionTitle,
-  onPressItem,
-  items,
-}: HomeSectionProps) => (
-  <Styles.Wrapper
-    testID="section-wrapper"
-  >
+const HomeSection = (props: HomeSectionProps) => (
+  <Styles.Wrapper testID="section-wrapper">
     <SectionViewAll
-      onPressViewAll={onPressViewAll}
-      sectionTitle={sectionTitle}
-      id={sectionTitle}
+      onPressViewAll={props.onPressViewAll}
+      sectionTitle={props.sectionTitle}
+      id={props.id}
     />
-    <FlatList
-      renderItem={({ item, index }) => (
-        <SimplifiedMediaListItem
-          onPress={() => onPressItem(item)}
-          voteAverage={item.voteAverage}
-          voteCount={item.voteCount}
-          image={item.posterPath}
-          isFirst={index === 0}
-          title={item.title}
-        />
-      )}
-      keyExtractor={(item, index) => `${item.id}-${index}`}
-      testID={`home-section-${sectionTitle}`}
+    <FlatListSection
+      renderItem={({item}) => {
+        const simplifiedMediaListItem = item as Types.SimplifiedMedia;
+        return (
+          <SimplifiedMediaListItem
+            onPress={() => props.onPressItem(simplifiedMediaListItem)}
+            voteAverage={simplifiedMediaListItem.voteAverage}
+            voteCount={simplifiedMediaListItem.voteCount}
+            image={simplifiedMediaListItem.posterPath}
+            title={simplifiedMediaListItem.title}
+            testID={props.sectionTitle}
+          />
+        );
+      }}
+      keyExtractor={(item, index) =>
+        `${(item as Types.SimplifiedMedia).id}-${index}`
+      }
+      testID={`home-section-${props.sectionTitle}`}
       showsHorizontalScrollIndicator={false}
-      data={items}
+      data={props.items}
       horizontal
     />
   </Styles.Wrapper>

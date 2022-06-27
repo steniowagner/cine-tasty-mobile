@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
-import { DefaultTheme, withTheme } from 'styled-components';
+import React from 'react';
+import {DefaultTheme, withTheme} from 'styled-components/native';
 import Slider from '@react-native-community/slider';
 
+import useNumberOfQuestions from './useNumberOfQuestions';
 import * as Styles from './NumberOfQuestionts.styles';
 
-const MAX_VALUE = 50;
-const MIN_VALUE = 1;
+export const MAX_VALUE = 50;
+export const MIN_VALUE = 1;
 
 type NumberOfQuestionsProps = {
   onSetNumberQuestions: (value: number) => void;
@@ -13,40 +14,35 @@ type NumberOfQuestionsProps = {
   theme: DefaultTheme;
 };
 
-const NumberOfQuestions = ({
-  onSetNumberQuestions,
-  numberOfQuestions,
-  theme,
-}: NumberOfQuestionsProps) => {
-  const numberQuestionsSliderRef = useRef(null);
-
+const NumberOfQuestions = (props: NumberOfQuestionsProps) => {
+  const numberOfQuestions = useNumberOfQuestions({
+    onSetNumberQuestions: props.onSetNumberQuestions,
+    numberOfQuestions: props.numberOfQuestions,
+  });
   return (
     <>
-      <Styles.DefaultText
-        style={{
-          textAlign: 'center',
-        }}
-        testID="default-text"
-      >
-        {numberOfQuestions}
+      <Styles.DefaultText testID="number-questions-text">
+        {props.numberOfQuestions}
       </Styles.DefaultText>
       <Slider
-        onLayout={() => numberQuestionsSliderRef.current.setNativeProps({
-          value: numberOfQuestions,
-        })}
-        onValueChange={(distance) => onSetNumberQuestions(distance)}
-        maximumTrackTintColor={theme.colors.contrast}
-        minimumTrackTintColor={theme.colors.text}
-        thumbTintColor={theme.colors.text}
-        ref={numberQuestionsSliderRef}
+        maximumTrackTintColor={props.theme.colors.contrast}
+        minimumTrackTintColor={props.theme.colors.text}
+        onValueChange={numberOfQuestions.onValueChange}
+        thumbTintColor={props.theme.colors.text}
+        onLayout={numberOfQuestions.onLayout}
+        ref={numberOfQuestions.ref}
         maximumValue={MAX_VALUE}
         minimumValue={MIN_VALUE}
         testID="slider"
         step={1}
       />
       <Styles.NumberQuestionsWrapper>
-        <Styles.DefaultText>{MIN_VALUE}</Styles.DefaultText>
-        <Styles.DefaultText>{MAX_VALUE}</Styles.DefaultText>
+        <Styles.DefaultText testID="min-value-text">
+          {MIN_VALUE}
+        </Styles.DefaultText>
+        <Styles.DefaultText testID="max-value-text">
+          {MAX_VALUE}
+        </Styles.DefaultText>
       </Styles.NumberQuestionsWrapper>
     </>
   );

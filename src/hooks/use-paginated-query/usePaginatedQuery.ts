@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useCallback } from 'react';
-import { FetchPolicy } from 'apollo-client';
-import { DocumentNode } from 'graphql';
+import {useEffect, useMemo, useCallback} from 'react';
+import {FetchPolicy} from 'apollo-client';
+import {DocumentNode} from 'graphql';
 
-import useImperativeQuery from '@utils/useImperativeQuery';
+import {useImperativeQuery} from '@hooks';
 
 import useQueryWithPagination from './useQueryWithPagination';
 import useEntryQuery from './useEntryQuery';
@@ -54,7 +54,7 @@ export const usePaginatedQuery = <TData, TVariables>({
     onError: () => onPaginationQueryError(),
   });
 
-  const { exec: execEntryQuery, isLoading } = useEntryQuery<
+  const {exec: execEntryQuery, isLoading} = useEntryQuery<
     TData,
     Omit<TVariables, 'page'>
   >({

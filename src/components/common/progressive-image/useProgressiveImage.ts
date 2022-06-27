@@ -1,9 +1,10 @@
-import { useCallback, useState, useRef } from 'react';
-import { Animated } from 'react-native';
+import {useCallback, useState, useRef} from 'react';
+import {Animated} from 'react-native';
 
-const useProgressiveImage = () => {
-  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
+export const LOAD_PROGRESSIVE_IMAGE_TIMEOUT = 500;
 
+export const useProgressiveImage = () => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const thumbnailOpacity = useRef(new Animated.Value(0)).current;
   const imageOpacity = useRef(new Animated.Value(0)).current;
 
@@ -20,7 +21,7 @@ const useProgressiveImage = () => {
         useNativeDriver: true,
         toValue: 1,
       }).start(() => setIsImageLoaded(true));
-    }, 500);
+    }, LOAD_PROGRESSIVE_IMAGE_TIMEOUT);
   }, []);
 
   return {
@@ -31,5 +32,3 @@ const useProgressiveImage = () => {
     onLoadImage,
   };
 };
-
-export default useProgressiveImage;

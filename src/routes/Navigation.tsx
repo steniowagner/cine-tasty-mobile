@@ -1,42 +1,34 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { DefaultTheme, withTheme } from 'styled-components';
-import { AppearanceProvider } from 'react-native-appearance';
+import {DefaultTheme, withTheme} from 'styled-components/native';
+import {NavigationContainer} from '@react-navigation/native';
+
+import {StatusBarStyled} from '@components';
 
 import useNavigation from './useNavigation';
 
-type RoutesProps = {
+type NavigationProps = {
   theme: DefaultTheme;
 };
 
-const Routes = ({ theme }: RoutesProps) => {
-  const { renderContent, barStyle } = useNavigation({ theme });
-
+export const Navigation = withTheme((props: NavigationProps) => {
+  const navigation = useNavigation();
   return (
-    <AppearanceProvider>
-      <StatusBar
-        backgroundColor={theme.colors.secondary}
-        barStyle={barStyle}
-        animated
-      />
+    <>
+      <StatusBarStyled />
       <NavigationContainer
         theme={{
           dark: false,
           colors: {
-            background: theme.colors.background,
-            card: theme.colors.secondary,
-            primary: theme.colors.text,
+            background: props.theme.colors.background,
+            card: props.theme.colors.secondary,
+            primary: props.theme.colors.text,
             notification: 'transparent',
-            border: theme.colors.text,
-            text: theme.colors.text,
+            border: props.theme.colors.text,
+            text: props.theme.colors.text,
           },
-        }}
-      >
-        {renderContent()}
+        }}>
+        {navigation.renderContent()}
       </NavigationContainer>
-    </AppearanceProvider>
+    </>
   );
-};
-
-export default withTheme(Routes);
+});

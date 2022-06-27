@@ -1,7 +1,7 @@
-import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useMemo} from 'react';
 
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
+import {useTranslations} from '@hooks';
 
 const ONE_MINUTE_IN_SECONDS = 60;
 const ONE_HOUR_IN_SECONDS = ONE_MINUTE_IN_SECONDS * 60;
@@ -14,84 +14,96 @@ type UseDateDiffProps = {
   now: Date;
 };
 
-const useDateDiff = ({ date, now }: UseDateDiffProps) => {
-  const { t } = useTranslation();
+const useDateDiff = (props: UseDateDiffProps) => {
+  const translations = useTranslations();
 
   const handleYearsPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_YEAR, { value }),
-    [],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_YEAR, {value}),
+    [translations.translate],
   );
 
   const handleMonthsPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_MONTH, { value }),
-    [],
+    (value: number) => {
+      if (value % 12 === 0) {
+        return handleYearsPassed(value / 12);
+      }
+      return translations.translate(Translations.Tags.TIME_MONTH, {value});
+    },
+    [translations.translate],
   );
 
   const handleDaysPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_DAY, { value }),
-    [],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_DAY, {value}),
+    [translations.translate],
   );
 
   const handleHoursPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_HOUR, { value }),
-    [],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_HOUR, {value}),
+    [translations.translate],
   );
 
   const handleMinutesPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_MINUTE, { value }),
-    [],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_MINUTE, {value}),
+    [translations.translate],
   );
 
   const handleSecondsPassed = useCallback(
-    (value: number): string => t(TRANSLATIONS.TIME_SECOND, { value }),
-    [],
+    (value: number) =>
+      translations.translate(Translations.Tags.TIME_SECOND, {value}),
+    [translations.translate],
   );
 
-  const getDateDiffInSeconds = useCallback((): number => {
-    const peaceNewsDate = new Date(date);
+  const getDateDiffInSeconds = useCallback(() => {
+    const past = new Date(props.date);
+    return Math.abs(props.now.getTime() - past.getTime()) / 1000;
+  }, [props.date, props.now]);
 
-    return Math.abs(now.getTime() - peaceNewsDate.getTime()) / 1000;
-  }, [date, now]);
-
-  const getDateDiffText = useCallback((): string => {
+  const getDateDiffText = useCallback(() => {
     const diffValue = getDateDiffInSeconds();
-    const yearsPassed = Math.floor(diffValue / ONE_YEAR_IN_SECONDS);
-
-    if (yearsPassed > 0) {
-      return handleYearsPassed(yearsPassed);
+    const yearsPassed = diffValue / ONE_YEAR_IN_SECONDS;
+    if (yearsPassed >= 1) {
+      return handleYearsPassed(Math.round(yearsPassed));
     }
 
-    const monthsPassed = Math.floor(diffValue / ONE_MONTH_IN_SECONDS);
-
-    if (monthsPassed > 0) {
-      return handleMonthsPassed(monthsPassed);
+    const monthsPassed = diffValue / ONE_MONTH_IN_SECONDS;
+    if (monthsPassed >= 1) {
+      return handleMonthsPassed(Math.round(monthsPassed));
     }
 
-    const daysPassed = Math.floor(diffValue / ONE_DAY_IN_SECONDS);
-
-    if (daysPassed > 0) {
-      return handleDaysPassed(daysPassed);
+    const daysPassed = diffValue / ONE_DAY_IN_SECONDS;
+    if (daysPassed >= 1) {
+      return handleDaysPassed(Math.round(daysPassed));
     }
 
-    const hoursPassed = Math.floor(diffValue / ONE_HOUR_IN_SECONDS);
-
-    if (hoursPassed > 0) {
-      return handleHoursPassed(hoursPassed);
+    const hoursPassed = diffValue / ONE_HOUR_IN_SECONDS;
+    if (hoursPassed >= 1) {
+      return handleHoursPassed(Math.round(hoursPassed));
     }
 
-    const minutesPassed = Math.floor(diffValue / ONE_MINUTE_IN_SECONDS);
-
-    if (minutesPassed > 0) {
-      return handleMinutesPassed(minutesPassed);
+    const minutesPassed = diffValue / ONE_MINUTE_IN_SECONDS;
+    if (minutesPassed >= 1) {
+      return handleMinutesPassed(Math.round(minutesPassed));
     }
 
     return handleSecondsPassed(diffValue);
-  }, [getDateDiffInSeconds]);
+  }, [
+    getDateDiffInSeconds,
+    handleDaysPassed,
+    handleHoursPassed,
+    handleMinutesPassed,
+    handleMonthsPassed,
+    handleSecondsPassed,
+    handleYearsPassed,
+  ]);
 
-  const dateDiffText = useMemo(() => getDateDiffText(), [getDateDiffText]);
+  const text = useMemo(() => getDateDiffText(), [getDateDiffText]);
 
   return {
-    dateDiffText,
+    text,
   };
 };
 

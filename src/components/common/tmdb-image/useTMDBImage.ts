@@ -1,31 +1,30 @@
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 
-import { useTMDBImageQuality } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import CONSTANTS from '@utils/constants';
+import {useTMDBImageQuality} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
 import * as Types from '@local-types';
-
-type UseTMDBImageProps = {
-  imageType: Types.ImageType;
-  isThumbnail: boolean;
-  image: string;
-};
+import {CONSTANTS} from '@utils';
 
 const THUMBNAIL_URL = `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${CONSTANTS.VALUES.IMAGES.THUMBNAIL_SIZE_CODE}`;
 
-const useTMDBImage = ({ isThumbnail, imageType, image }: UseTMDBImageProps) => {
+type UseTMDBImageProps = {
+  imageType: Types.ImageType;
+  isThumbnail?: boolean;
+  image: string;
+};
+
+export const useTMDBImage = (props: UseTMDBImageProps) => {
   const imagesQualities = useTMDBImageQuality();
 
   const uri = useMemo(() => {
-    if (isThumbnail) {
-      return `${THUMBNAIL_URL}${image}`;
+    if (!props.isThumbnail) {
+      return `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${
+        imagesQualities[props.imageType]
+      }${props.image}`;
     }
-
-    return `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${imagesQualities[imageType]}${image}`;
-  }, [isThumbnail, imageType, image]);
+    return `${THUMBNAIL_URL}${props.image}`;
+  }, [props.isThumbnail, props.imageType, props.image]);
 
   return {
     uri,
   };
 };
-
-export default useTMDBImage;

@@ -1,6 +1,4 @@
-import {
-  useCallback, useEffect, useMemo, useRef, useState,
-} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   NativeSyntheticEvent,
   NativeScrollEvent,
@@ -8,14 +6,14 @@ import {
   FlatList,
 } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
-import { useTranslation } from 'react-i18next';
-import { useTheme } from 'styled-components';
+import {useTranslation} from 'react-i18next';
+import {useTheme} from 'styled-components/native';
 
-import { Icons } from '@components/common/svg-icon/icons';
 import * as TRANSLATIONS from '@i18n/tags';
+import {Icons} from '@components';
 import metrics from '@styles/metrics';
 
-import { OnboardingStackRouteProp } from '../routes/route-params-types';
+import {OnboardingStackRouteProp} from '../routes/route-params-types';
 
 type OnboardingItem = {
   description: string;
@@ -29,11 +27,11 @@ type UseOnboardingProps = {
   route: OnboardingStackRouteProp;
 };
 
-const useOnboarding = ({ route }: UseOnboardingProps) => {
+const useOnboarding = ({route}: UseOnboardingProps) => {
   const [indexSelected, setIndexSelected] = useState<number>(0);
   const flatlistRef = useRef<FlatList>(null);
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const theme = useTheme();
 
   useEffect(() => {
@@ -55,7 +53,7 @@ const useOnboarding = ({ route }: UseOnboardingProps) => {
 
   const onMomentumScrollEnd = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const { contentOffset } = event.nativeEvent;
+      const {contentOffset} = event.nativeEvent;
 
       const isHorizontalSwipeMovement = contentOffset.x > 0;
 

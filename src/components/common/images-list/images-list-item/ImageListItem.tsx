@@ -1,58 +1,44 @@
 import React from 'react';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import { useLoadListItemImage } from '@hooks';
+import {renderSVGIconConditionally, TMDBImage} from '@components';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './ImageListItem.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
-type ImageListItemProps = {
+type ImageListItemProps = Styles.ImageOrientation & {
   onPress: () => void;
-  isFirst: boolean;
   image: string;
 };
 
-const ImageListItem = ({ onPress, isFirst, image }: ImageListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
+export const ImageListItem = (props: ImageListItemProps) => {
+  const loadListItemImage = useLoadListItemImage({
+    image: props.image,
   });
-
   return (
     <Styles.Wrapper
-      onPress={onPress}
-      isFirst={isFirst}
-    >
+      orientation={props.orientation}
+      testID="image-list-item-button"
+      onPress={props.onPress}>
       <TMDBImage
-        imageType="profile"
-        onError={onError}
-        onLoad={onLoad}
-        image={image}
-        style={{
-          width: '100%',
-          height: '100%',
-          borderRadius: metrics.extraSmallSize,
-        }}
+        imageType={props.orientation === 'PORTRAIT' ? 'profile' : 'still'}
+        onError={loadListItemImage.onError}
+        onLoad={loadListItemImage.onLoad}
+        style={Styles.TMDBImageStyle}
+        image={props.image}
       />
-      {isFallbackImageVisible && (
+      {loadListItemImage.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity,
+              opacity: loadListItemImage.opacity,
             },
-          ]}
-        >
+          ]}>
           {renderSVGIconConditionally({
-            condition: hasError,
+            condition: loadListItemImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,

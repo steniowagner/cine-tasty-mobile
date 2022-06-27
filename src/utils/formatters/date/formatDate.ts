@@ -1,4 +1,4 @@
-import { getI18n } from 'react-i18next';
+import {getI18n} from 'react-i18next';
 
 export const formatDate = (date: string) => {
   if (!date) {
@@ -7,7 +7,7 @@ export const formatDate = (date: string) => {
 
   const [year, month, day] = date.split('-');
 
-  const { language } = getI18n();
+  const {language} = getI18n();
 
   if (language === 'en') {
     return `${year}-${month}-${day}`;

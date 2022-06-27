@@ -1,6 +1,7 @@
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   plugins: [
+    'react-native-reanimated/plugin',
     [
       'module:react-native-dotenv',
       {
@@ -28,15 +29,17 @@ module.exports = {
           '.json',
         ],
         alias: {
+          '@screens/common': './src/components/screens/common/index.ts',
+          '@screens': './src/components/screens/index.ts',
+          '@components': './src/components/common/index.ts',
           '@schema-types': './src/types/schema.ts',
           '@providers': './src/providers/index.ts',
           '@local-types': './src/types/index.ts',
-          '@components': './src/components',
           '@hooks': './src/hooks/index.ts',
+          '@utils': './src/utils/index.ts',
           '@graphql': './src/graphql',
           '@routes': './src/routes',
           '@styles': './src/styles',
-          '@utils': './src/utils',
           '@i18n': './src/i18n',
           '@src': './src',
         },

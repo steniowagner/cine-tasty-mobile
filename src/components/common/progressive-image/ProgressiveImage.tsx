@@ -1,83 +1,59 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import { ImageType } from '@local-types';
+import {TMDBImage} from '@components';
+import {ImageType} from '@local-types';
 
-import useProgressiveImage from './useProgressiveImage';
+import {useProgressiveImage} from './useProgressiveImage';
 import * as Styles from './ProgressiveImage.styles';
 
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-  },
-
-  imageOverlay: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-  },
-});
-
 type ProgressiveImageProps = {
+  removeBackgroundColor?: boolean;
   imageType: ImageType;
   borderRadius?: number;
+  height?: number;
   image: string;
 };
 
-const ProgressiveImage = ({
-  borderRadius = 0,
-  imageType,
-  image,
-}: ProgressiveImageProps) => {
-  const {
-    thumbnailOpacity,
-    onLoadThumbnail,
-    isImageLoaded,
-    imageOpacity,
-    onLoadImage,
-  } = useProgressiveImage();
-
+export const ProgressiveImage = (props: ProgressiveImageProps) => {
+  const progressiveImage = useProgressiveImage();
   return (
     <Styles.ForegroundLayer
-      borderRadius={borderRadius}
-    >
-      {!isImageLoaded && (
+      borderRadius={props.borderRadius || 0}
+      removeBackgroundColor={props.removeBackgroundColor}
+      testID="progressive-image-wrapper">
+      {!progressiveImage.isImageLoaded && (
         <TMDBImage
-          onLoad={onLoadThumbnail}
-          imageType={imageType}
+          onLoad={progressiveImage.onLoadThumbnail}
+          imageType={props.imageType}
           blurRadius={1}
-          image={image}
+          image={props.image}
           isThumbnail
           isAnimated
-          style={[
-            styles.container,
-            {
-              opacity: thumbnailOpacity,
-              borderRadius: Number(borderRadius),
-            },
-          ]}
+          testID="progressive-thumbnail"
+          style={{
+            width: Styles.styles.container.width,
+            height: props.height || Styles.styles.container.height,
+            opacity: progressiveImage.thumbnailOpacity,
+            borderRadius: Number(props.borderRadius || 0),
+          }}
         />
       )}
       <TMDBImage
-        onLoad={onLoadImage}
-        imageType={imageType}
-        image={image}
+        onLoad={progressiveImage.onLoadImage}
+        imageType={props.imageType}
+        image={props.image}
         isAnimated
+        testID="progressive-image"
         style={[
-          styles.imageOverlay,
+          Styles.styles.imageOverlay,
           {
-            opacity: imageOpacity,
-            borderRadius: Number(borderRadius),
+            width: Styles.styles.container.width,
+            height: props.height || Styles.styles.container.height,
+            opacity: progressiveImage.imageOpacity,
+            borderRadius: Number(props.borderRadius || 0),
           },
-          styles.container,
         ]}
       />
     </Styles.ForegroundLayer>
   );
 };
-
-export default ProgressiveImage;

@@ -3,8 +3,11 @@ import {
   ApolloQueryResult,
   FetchMoreOptions,
 } from 'apollo-client';
-import { SupportedIcons } from '@components/common/svg-icon/getXML';
+
+import * as SchemaTypes from '@schema-types';
+import { Icons } from '@components';
 import { Routes } from '@routes/routes';
+
 import {
   SearchTVShow_search_items_BaseTVShow as SearchTVShowResult,
   SearchPerson_search_items_BasePerson as SearchPersonResult,
@@ -29,9 +32,6 @@ import {
   MovieDetail_movie_crew as MovieCrew,
 
   GetArticlesVariables,
-  QuestionDifficulty,
-  QuestionCategory,
-  QuestionType,
   GetArticles,
 } from './schema';
 
@@ -40,9 +40,9 @@ export type LocalStackRoute<T> = {
 };
 
 export type TabNavigatorItem = {
-  id: Routes.Home.HOME | Routes.Famous.FAMOUS | Routes.Quiz.QUIZ | Routes.News.NEWS;
-  inactiveIcon: SupportedIcons;
-  activeIcon: SupportedIcons;
+  id: Routes.Tabs.HOME | Routes.Tabs.FAMOUS | Routes.Tabs.QUIZ | Routes.Tabs.NEWS;
+  inactiveIcon: Icons;
+  activeIcon: Icons;
 };
 
 export type NewsFilterLanguage =
@@ -65,11 +65,26 @@ export type FetchMoreArticles = <K extends keyof GetArticlesVariables>(
     FetchMoreOptions<GetArticles, GetArticlesVariables>,
 ) => Promise<ApolloQueryResult<GetArticles>>;
 
-export type QuizOption = 'DIFFICULTY' | 'CATEGORY' | 'TYPE';
+export type QuizOption = 'difficulty' | 'category' | 'type';
 
-export type QuestionOption<T> = {
-  id: string;
-  value: T;
+export type QuizFilterOption = QuestionDifficulty | QuestionCategory | QuestionType
+
+export type QuestionDifficulty = {
+  id: 'mixed' | 'easy' | 'medium' | 'hard';
+  value: SchemaTypes.QuestionDifficulty;
+  option: 'difficulty';
+};
+
+export type QuestionCategory = {
+  value: SchemaTypes.QuestionCategory;
+  id: 'mixed' | 'movie' | 'tv';
+  option: 'category';
+};
+
+export type QuestionType = {
+  id: 'mixed' | 'multiple' | 'boolean';
+  value: SchemaTypes.QuestionType;
+  option: 'type';
 };
 
 export type QuizResult = {
@@ -106,8 +121,6 @@ export type BaseSearchProps = {
   isLoading: boolean;
 }
 
-export type QuizFilterOption = QuestionOption<QuestionDifficulty | QuestionCategory | QuestionType>;
-
 export enum CustomizedModalChildrenType {
   TV_SHOW_READ_MORE_DETAILS = 'TV_SHOW_READ_MORE_DETAILS',
   TV_SHOW_EPISODE_DETAILS = 'TV_SHOW_EPISODE_DETAILS',
@@ -117,14 +130,7 @@ export enum CustomizedModalChildrenType {
 
 export type SimplifiedMedia = OnTheAirTVShows | TopRatedTVShows | PopuarTVShows | NowPlayingMovies | PopularMovies | TopRatedMovies | UpcomingMovies;
 
-export type HomeTop3Item = {
-  voteAverage: number;
-  voteCount: number;
-  genres: string[];
-  image: string;
-  title: string;
-  id: number;
-};
+export type HomeTop3Item = (OnTheAirTVShows | NowPlayingMovies) & { onPress: () => void };
 
 export type TrendingTVShowsKeys = keyof Omit<TrendingTVShows, '__typename'>;
 
@@ -133,10 +139,18 @@ export type TrendingMoviesKeys = keyof Omit<TrendingMovies, '__typename'>;
 export type TrendingMediaItemKey = TrendingTVShowsKeys | TrendingMoviesKeys;
 
 export type HomeSection = {
+  onPressViewAll: () => void
+  onPressItem: (item: SimplifiedMedia) => void
+  id: TrendingMediaItemKey;
+  data: SimplifiedMedia[];
+  sectionTitle: string;
+};
+
+export type PressViewAllParams = {
   id: TrendingMediaItemKey;
   data: SimplifiedMedia[];
   viewAllTitle: string;
-  sectionTitle: string;
+  isMovie: boolean;
 };
 
 export type CrewDataset = (TVShowCrew | MovieCrew)[];
@@ -165,3 +179,33 @@ export enum ThemeId {
 }
 
 export type CineTastyQuery = 'search_movie' | 'search_tv' | 'search_famous' | 'get_famous' | 'now_playing_movies' | 'popular_movies' | 'top_rated_movies' | 'upcoming_movies' | 'airing_today_tv_shows' | 'on_the_air_tv_shows' | 'popular_tv_shows' | 'top_rated_tv_shows' | 'get_trending_movies' | 'get_trending_tv_shows' | 'get_articles' | 'get_quiz_questions' | 'get_famous_detail' | 'tv_show_seasons_detail' | 'get_tv_show_detail' | 'get_movie_detail';
+
+export type FamousSearchItems = SchemaTypes.SearchPerson_search_items_BasePerson[];
+
+export type FamousSearchPress = (
+  item: SchemaTypes.SearchPerson_search_items_BasePerson,
+) => void;
+
+export type TVShowSearchItems = SchemaTypes.SearchTVShow_search_items_BaseTVShow[];
+
+export type TVShowSearchPress = (
+  item: SchemaTypes.SearchTVShow_search_items_BaseTVShow,
+) => void;
+
+export type MovieSearchItems = SchemaTypes.SearchMovie_search_items_BaseMovie[];
+
+export type MovieSearchPress = (
+  item: SchemaTypes.SearchMovie_search_items_BaseMovie,
+) => void;
+
+export type Famous = {
+  profileImage: string | null;
+  name: string | null;
+  id: number | null;
+};
+
+export type ResentSearchItem = {
+  image: string;
+  title: string;
+  id: number;
+};

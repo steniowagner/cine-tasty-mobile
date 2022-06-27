@@ -1,10 +1,6 @@
-import { Platform, NativeModules } from 'react-native';
+import {Platform, NativeModules} from 'react-native';
 
-import {
-  getItemFromStorage,
-  persistItemInStorage,
-} from '@utils/async-storage-adapter/AsyncStorageAdapter';
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS, storage} from '@utils';
 
 // Android format: x_Y
 // iOS format: x-Y
@@ -40,20 +36,24 @@ const fallbackLanguagesMapping = {
 const handleGetLanguageFallbackMapping = (language: string): string => {
   const [languageSuffix] = language.split('_');
 
-  return fallbackLanguagesMapping[languageSuffix] || CONSTANTS.VALUES.FALLBACK_LANGUAGE;
+  return (
+    fallbackLanguagesMapping[languageSuffix] ||
+    CONSTANTS.VALUES.FALLBACK_LANGUAGE
+  );
 };
 
 const detectDeviceLanguage = (): string => {
-  const deviceLanguage = Platform.OS === 'ios'
-    ? NativeModules.SettingsManager.settings.AppleLocale
-        || NativeModules.SettingsManager.settings.AppleLanguages[0]
-    : NativeModules.I18nManager.localeIdentifier;
+  const deviceLanguage =
+    Platform.OS === 'ios'
+      ? NativeModules.SettingsManager.settings.AppleLocale ||
+        NativeModules.SettingsManager.settings.AppleLanguages[0]
+      : NativeModules.I18nManager.localeIdentifier;
 
   return deviceLanguage;
 };
 
 const handleLanguageDetection = async (): Promise<string> => {
-  const languagePreviouslySet = await getItemFromStorage<string, string>(
+  const languagePreviouslySet = await storage.get<string, string>(
     CONSTANTS.KEYS.LANGUAGE,
     '',
   );
@@ -64,10 +64,11 @@ const handleLanguageDetection = async (): Promise<string> => {
 
   const deviceLanguage = detectDeviceLanguage();
 
-  const languageToUse = defaultLanguagesMapping[deviceLanguage]
-    || handleGetLanguageFallbackMapping(deviceLanguage);
+  const languageToUse =
+    defaultLanguagesMapping[deviceLanguage] ||
+    handleGetLanguageFallbackMapping(deviceLanguage);
 
-  await persistItemInStorage(CONSTANTS.KEYS.LANGUAGE, languageToUse);
+  await storage.set(CONSTANTS.KEYS.LANGUAGE, languageToUse);
 
   return languageToUse;
 };

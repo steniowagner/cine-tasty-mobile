@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import {LoadingPlaceholder} from '@components';
 
 import * as Top3ListItemStyles from '../top-3-list-item/Top3ListItem.styles';
 import * as Styles from './LoadingTop3.styles';
@@ -13,27 +13,25 @@ const DEFAULT_STYLE = {
 };
 
 const LoadingTop3 = () => (
-  <Top3Styles.ListWrapper
-    testID="loading-home"
-  >
+  <Top3Styles.ListWrapper testID="loading-home">
     <Styles.RightItemWrapper>
       <LoadingPlaceholder
         indexToDelayAnimation={0}
-        style={{ ...DEFAULT_STYLE }}
+        style={{...DEFAULT_STYLE}}
       />
       <Styles.LoadingSmokeShadow />
     </Styles.RightItemWrapper>
     <Styles.CenterItemWrapper>
       <LoadingPlaceholder
         indexToDelayAnimation={1}
-        style={{ ...DEFAULT_STYLE }}
+        style={{...DEFAULT_STYLE}}
       />
       <Styles.LoadingSmokeShadow />
     </Styles.CenterItemWrapper>
     <Styles.LeftItemWrapper>
       <LoadingPlaceholder
         indexToDelayAnimation={2}
-        style={{ ...DEFAULT_STYLE }}
+        style={{...DEFAULT_STYLE}}
       />
       <Styles.LoadingSmokeShadow />
     </Styles.LeftItemWrapper>

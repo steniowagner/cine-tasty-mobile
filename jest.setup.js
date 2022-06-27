@@ -1,22 +1,12 @@
-/* eslint-disable global-require */
-
-import mockAsyncStorage from '@react-native-community/async-storage/jest/async-storage-mock';
-
-jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
-
-jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
-
-jest.mock('react-native-appearance', () => ({
-  useColorScheme: jest.fn(),
-}));
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key) => key, i18n: { language: 'en' } }),
-  getI18n: () => ({ language: 'en' }),
+  useTranslation: () => ({t: key => key, i18n: {language: 'en'}}),
+  getI18n: () => ({language: 'en'}),
 }));
 
 jest.mock('react-native-fast-image', () => {
-  const { View } = require('react-native');
+  const {View} = require('react-native');
 
   const FastImageComponent = View;
 
@@ -35,7 +25,7 @@ jest.mock('react-native-fast-image', () => {
 });
 
 jest.mock('react-native-reanimated', () => {
-  const { View } = require('react-native');
+  const {View} = require('react-native');
   return {
     Value: jest.fn(),
     event: jest.fn(),
@@ -45,7 +35,7 @@ jest.mock('react-native-reanimated', () => {
     cond: jest.fn(),
     interpolate: jest.fn(),
     View,
-    Extrapolate: { CLAMP: jest.fn() },
+    Extrapolate: {CLAMP: jest.fn()},
     Transition: {
       Together: 'Together',
       Out: 'Out',
@@ -87,14 +77,28 @@ jest.mock('react-native-gesture-handler', () => {
     BaseButton: View,
     RectButton: View,
     BorderlessButton: View,
-    gestureHandlerRootHOC: (c) => c,
+    gestureHandlerRootHOC: c => c,
     Directions: {},
     FlatList,
   };
 });
 
+const MockDate = require('mockdate');
 const FRAME_TIME = 10;
 
-global.requestAnimationFrame = (callback) => {
-  setTimeout(callback, FRAME_TIME);
+global.requestAnimationFrame = cb => {
+  setTimeout(cb, FRAME_TIME);
+};
+
+global.timeTravel = (time = FRAME_TIME) => {
+  const tickTravel = () => {
+    const now = Date.now();
+    MockDate.set(new Date(now + FRAME_TIME));
+    jest.advanceTimersByTime(FRAME_TIME);
+  };
+  const frames = time / FRAME_TIME;
+  let framesEllapsed;
+  for (framesEllapsed = 0; framesEllapsed < frames; framesEllapsed++) {
+    tickTravel();
+  }
 };

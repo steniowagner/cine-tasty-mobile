@@ -1,40 +1,33 @@
-import React, { useMemo } from 'react';
-import { StyleProp } from 'react-native';
-import { withTheme, DefaultTheme, Colors } from 'styled-components';
-import { SvgXml } from 'react-native-svg';
+import React, {useMemo} from 'react';
+import {StyleProp} from 'react-native';
+import {withTheme, DefaultTheme, Colors} from 'styled-components/native';
+import {SvgXml} from 'react-native-svg';
 
-import getXML, { SupportedIcons } from './getXML';
+import {Icons, getXML} from '.';
 
 export type SVGIconProps = {
   colorThemeRef?: keyof Colors;
   style?: StyleProp<any>;
   theme: DefaultTheme;
-  id: SupportedIcons;
+  id: Icons;
   size: number;
 };
 
-const SVGIcon = ({
-  colorThemeRef, style, theme, size, id,
-}: SVGIconProps) => {
+export const SVGIcon = withTheme((props: SVGIconProps) => {
   const xml = useMemo(() => {
-    let color: string = theme.colors.text;
-
-    if (colorThemeRef) {
-      color = theme.colors[colorThemeRef];
+    if (!props.colorThemeRef) {
+      return getXML(props.id, props.theme.colors.text);
     }
-
-    return getXML(id, color);
-  }, [colorThemeRef, theme]);
+    return getXML(props.id, props.theme.colors[props.colorThemeRef]);
+  }, [props.theme, props.colorThemeRef, props.id]);
 
   return (
     <SvgXml
+      testID={`icon-${props.id}`}
+      style={props.style || {}}
+      height={props.size}
+      width={props.size}
       xml={xml}
-      width={size}
-      height={size}
-      testID={`icon-${id}`}
-      style={style || {}}
     />
   );
-};
-
-export default withTheme(SVGIcon);
+});

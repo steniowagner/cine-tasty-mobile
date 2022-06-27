@@ -1,50 +1,83 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {Alert} from 'react-native';
 
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
+import {useTranslations} from '@hooks';
 import * as Types from '@local-types';
 
-import { ResultsStackProps as UseResultsProps } from '../../routes/route-params-types';
+import {ResultsStackProps as UseResultsProps} from '../../routes/route-params-types';
 
-const useResults = ({ navigation, route }: UseResultsProps) => {
+const useResults = (props: UseResultsProps) => {
   const [results, setResults] = useState<Types.QuizResult[]>([]);
 
-  const { t } = useTranslation();
+  const translations = useTranslations();
 
-  useEffect(() => {
-    const { questions, answers } = route.params;
+  const resultsMapping = useMemo(
+    () =>
+      props.route.params.questions.map((dataItem, index) => ({
+        isCorrect:
+          dataItem.correctAnswer?.toLowerCase() ===
+          props.route.params.answers[index].toLowerCase(),
+        userAnswer: props.route.params.answers[index],
+        answer: dataItem.correctAnswer,
+        question: dataItem.question,
+      })),
+    [props.route.params],
+  );
 
-    const result = questions.map((dataItem, index) => ({
-      isCorrect: dataItem.correctAnswer?.toLowerCase() === answers[index].toLowerCase(),
-      answer: dataItem.correctAnswer,
-      userAnswer: answers[index],
-      question: dataItem.question,
-    }));
+  const setQuizResults = useCallback(() => {
+    setResults(resultsMapping);
+  }, [resultsMapping]);
 
-    setResults(result);
-  }, []);
+  const score = useMemo(
+    () =>
+      results.reduce((total, current) => total + Number(current.isCorrect), 0),
+    [results],
+  );
 
-  const onPressPlayAgain = useCallback((): void => {
+  const texts = useMemo(
+    () => ({
+      modalTitle: translations.translate(Translations.Tags.QUIZ_PLAY_AGAIN),
+      modalNegativeOption: translations.translate(Translations.Tags.QUIZ_NO),
+      modalPositiveOption: translations.translate(Translations.Tags.QUIZ_YES),
+      playAgain: translations.translate(Translations.Tags.QUIZ_PLAY_AGAIN),
+      modalDescription: translations.translate(
+        Translations.Tags.QUIZ_PLAY_AGAIN_DESCRIPTION,
+      ),
+      headerText: `${translations.translate(
+        Translations.Tags.QUIZ_SCORES,
+      )} ${score}/${results.length}!`,
+    }),
+    [translations.translate, results, score],
+  );
+
+  const handlePressPlayAgain = useCallback((): void => {
     Alert.alert(
-      t(TRANSLATIONS.QUIZ_PLAY_AGAIN),
-      t(TRANSLATIONS.QUIZ_PLAY_AGAIN_DESCRIPTION),
+      texts.playAgain,
+      texts.modalDescription,
       [
         {
-          text: t(TRANSLATIONS.QUIZ_NO),
+          text: texts.modalNegativeOption,
           style: 'cancel',
-          onPress: () => navigation.pop(3),
+          onPress: () => props.navigation.pop(3),
         },
-        { text: t(TRANSLATIONS.QUIZ_YES), onPress: () => navigation.pop(2) },
+        {
+          text: texts.modalPositiveOption,
+          onPress: () => props.navigation.pop(2),
+        },
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
+  }, [props.navigation.pop, texts]);
+
+  useEffect(() => {
+    setQuizResults();
   }, []);
 
   return {
-    onPressPlayAgain,
-    results,
-    t,
+    onPressPlayAgain: handlePressPlayAgain,
+    quizResults: results,
+    texts,
   };
 };
 

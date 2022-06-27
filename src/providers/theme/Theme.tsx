@@ -1,5 +1,5 @@
-import React, { createContext, useContext } from 'react';
-import { ThemeProvider } from 'styled-components';
+import React, {createContext, useContext} from 'react';
+import {ThemeProvider} from 'styled-components/native';
 
 import * as Types from '@local-types';
 
@@ -17,7 +17,7 @@ type ThemeContextProviderProps = {
   children: JSX.Element;
 };
 
-const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
+const ThemeContextProvider = ({children}: ThemeContextProviderProps) => {
   const {
     handleInitialThemeSelection,
     onSetSystemTheme,
@@ -34,21 +34,16 @@ const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
         themeId: theme.id,
         onSetLightTheme,
         onSetDarkTheme,
-      }}
-    >
-      <ThemeProvider
-        theme={theme}
-      >
-        {children}
-      </ThemeProvider>
+      }}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </ThemeContext.Provider>
   );
 };
 
-export { ThemeContextProvider };
+export {ThemeContextProvider};
 
 const ThemeContext = createContext<ThemeContextProps>({
-  handleInitialThemeSelection: () => new Promise((resolve) => resolve()),
+  handleInitialThemeSelection: () => new Promise(resolve => resolve()),
   onSetSystemTheme: () => {},
   onSetLightTheme: () => {},
   onSetDarkTheme: () => {},

@@ -1,13 +1,12 @@
-/* eslint-disable camelcase */
-import { CustomModalParams } from '@components/screens/shared/customized-modal/routes/route-params-types';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import {CustomModalParams} from '@src/components/screens/common/customized-modal/routes/route-params-types';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 import * as SchemaTypes from '@schema-types';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
 type QuizStackParams = {
   [Routes.Quiz.QUIZ]: undefined;
-  [Routes.CustomModal.CUSTOM_MODAL]: CustomModalParams;
+  [Routes.CustomModal.CUSTOM_MODAL_STACK]: CustomModalParams;
   [Routes.Quiz.SETUP_QUESTIONS]: undefined;
   [Routes.Quiz.QUESTIONS]: QuestionsProps;
   [Routes.Quiz.RESULTS]: ResultsProps;
@@ -30,7 +29,10 @@ export type QuizStackPropsNavigationProp = StackNavigationProp<
   QuizStackParams,
   Routes.Quiz.QUIZ
 >;
-export type QuizStackPropsRouteProp = RouteProp<QuizStackParams, Routes.Quiz.QUIZ>;
+export type QuizStackPropsRouteProp = RouteProp<
+  QuizStackParams,
+  Routes.Quiz.QUIZ
+>;
 
 export type QuizStackProps = {
   navigation: QuizStackPropsNavigationProp;
@@ -57,7 +59,10 @@ export type QuestionsStackNavigationProp = StackNavigationProp<
   QuizStackParams,
   Routes.Quiz.QUESTIONS
 >;
-export type QuestionsStackRouteProp = RouteProp<QuizStackParams, Routes.Quiz.QUESTIONS>;
+export type QuestionsStackRouteProp = RouteProp<
+  QuizStackParams,
+  Routes.Quiz.QUESTIONS
+>;
 
 export type QuestionsStackProps = {
   navigation: QuestionsStackNavigationProp;
@@ -69,7 +74,10 @@ export type ResultsStackNavigationProp = StackNavigationProp<
   QuizStackParams,
   Routes.Quiz.RESULTS
 >;
-export type ResultsStackRouteProp = RouteProp<QuizStackParams, Routes.Quiz.RESULTS>;
+export type ResultsStackRouteProp = RouteProp<
+  QuizStackParams,
+  Routes.Quiz.RESULTS
+>;
 
 export type ResultsStackProps = {
   navigation: ResultsStackNavigationProp;

@@ -1,142 +1,99 @@
-/* eslint-disable camelcase */
-import {
-  useCallback, useEffect, useMemo, useState,
-} from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useMemo, useState} from 'react';
 
-import { GET_ARTICLES } from '@graphql/queries';
+import {useTranslations, usePagination} from '@hooks';
+import {GET_ARTICLES} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
-import { usePaginatedQuery } from '@hooks';
-import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Translations} from '@i18n/tags';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
-import metrics from '@styles/metrics';
 
-import { NewsStackNavigationProp } from '../routes/route-params-types';
-import { imageWrapper } from './list-item/NewsListItem.styles';
-
-export const INITIAL_ITEMS_TO_RENDER = Math.floor(metrics.height / imageWrapper.height) - 1;
+import {NewsStackNavigationProp} from '../routes/route-params-types';
 
 type UseNewsProps = {
   navigation: NewsStackNavigationProp;
 };
 
-const useNews = ({ navigation }: UseNewsProps) => {
-  const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [articleLanguage, setArticleLanguage] = useState<SchemaTypes.ArticleLanguage>(
+const useNews = (props: UseNewsProps) => {
+  const [language, setLanguage] = useState<SchemaTypes.ArticleLanguage>(
     SchemaTypes.ArticleLanguage.EN,
   );
-  const [articles, setArticles] = useState<SchemaTypes.GetArticles_articles_items[]>([]);
-  const [error, setError] = useState<string>('');
+  const translations = useTranslations();
 
-  const { t } = useTranslation();
-
-  const handleOnGetData = useCallback((data: SchemaTypes.GetArticles): boolean => {
-    setArticles((previousPeople: SchemaTypes.GetArticles_articles_items[]) => [
-      ...previousPeople,
-      ...data.articles.items,
-    ]);
-
-    return data.articles.hasMore;
-  }, []);
-
-  const {
-    onPaginateQuery, onReloadData, isPaginating, isLoading,
-  } = usePaginatedQuery<
-    SchemaTypes.GetArticles,
-    SchemaTypes.GetArticlesVariables
-  >({
-    onPaginationQueryError: () => {
-      setError(t(TRANSLATIONS.NEWS_QUERY_BY_PAGINATION_ERROR));
-      setHasPaginationError(true);
-    },
-    onEntryQueryError: () => {
-      setError(t(TRANSLATIONS.NEWS_ENTRY_QUERY_ERROR));
-
-      if (hasPaginationError) {
-        setHasPaginationError(false);
-      }
-    },
-    fireEntryQueryWhenMounted: false,
-    variables: {
-      language: articleLanguage,
-    },
-    onGetData: handleOnGetData,
-    fetchPolicy: 'no-cache',
-    query: GET_ARTICLES,
-  });
-
-  const onPressFooterReloadButton = useCallback(() => {
-    setHasPaginationError(false);
-    setError('');
-    onPaginateQuery();
-  }, []);
-
-  useEffect(() => {
-    if (error) {
-      setError('');
-    }
-
-    onReloadData();
-  }, [articleLanguage]);
-
-  const onSelectArticleLanguage = useCallback(
-    (language: SchemaTypes.ArticleLanguage): void => {
-      if (error) {
-        setError('');
-      }
-      setArticles([]);
-      setArticleLanguage(language);
-    },
+  const handleOnGetData = useCallback(
+    (result: SchemaTypes.GetArticles) => ({
+      hasMore: result?.articles.hasMore || false,
+      dataset: result?.articles.items || [],
+    }),
     [],
   );
 
-  const onPressTopReloadButton = useCallback(async (): Promise<void> => {
-    setHasPaginationError(false);
-    setError('');
-    await onReloadData();
-  }, []);
-
-  const shouldShowEmptyListAdvice = useMemo(
-    () => !isLoading && !error && !articles.length,
-    [isLoading, error, articles],
+  const variables = useMemo(
+    () => ({
+      language,
+    }),
+    [language],
   );
 
-  const shouldShowListTopReloadButton = useMemo(
-    () => !articles.length && !!error && !isLoading,
-    [isLoading, error, articles],
-  );
+  const pagination = usePagination<
+    SchemaTypes.GetArticles,
+    SchemaTypes.GetArticles_articles_items,
+    SchemaTypes.GetArticlesVariables
+  >({
+    paginationError: translations.translate(
+      Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+    ),
+    entryQueryError: translations.translate(
+      Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+    ),
+    onGetData: handleOnGetData,
+    query: GET_ARTICLES,
+    skipFirstRun: false,
+    variables,
+  });
 
-  const shouldShowListBottomReloadButton = useMemo(
-    () => !!articles.length && (hasPaginationError || isPaginating),
-    [articles, hasPaginationError, isPaginating],
-  );
-
-  const onPressHeaderIconButton = useCallback(() => {
-    navigation.navigate(Routes.CustomModal.CUSTOM_MODAL, {
+  const handlePressHeaderIconButton = useCallback(() => {
+    props.navigation.navigate(Routes.CustomModal.CUSTOM_MODAL_STACK, {
       type: Types.CustomizedModalChildrenType.LANGUAGE,
-      headerText: t(TRANSLATIONS.NEWS_FILTER_MESSAGE),
+      headerText: translations.translate(Translations.Tags.NEWS_FILTER_MESSAGE),
       extraData: {
-        onPressSelect: onSelectArticleLanguage,
-        lastItemSelected: articleLanguage,
+        onPressSelect: setLanguage,
+        lastItemSelected: language,
       },
     });
-  }, [onSelectArticleLanguage, articleLanguage]);
+  }, [props.navigation, language, translations.translate]);
+
+  const adviseTexts = useMemo(
+    () => ({
+      description: translations.translate(
+        Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION,
+      ),
+      suggestion: translations.translate(
+        Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION,
+      ),
+      title: translations.translate(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
+    }),
+    [],
+  );
 
   return {
-    shouldShowListBottomReloadButton,
-    shouldShowListTopReloadButton,
-    onEndReached: onPaginateQuery,
-    shouldShowEmptyListAdvice,
-    onPressFooterReloadButton,
-    onPressHeaderIconButton,
-    onPressTopReloadButton,
-    hasPaginationError,
-    articleLanguage,
-    isPaginating,
-    articles,
-    isLoading,
-    error,
+    shouldShowPaginationFooter:
+      !!pagination.dataset.length &&
+      (pagination.hasPaginationError || pagination.isPaginating),
+    shouldShowListTopReloadButton:
+      !pagination.dataset.length && !!pagination.error && !pagination.isLoading,
+    shouldShowEmptyListAdvice:
+      !pagination.isLoading && !pagination.error && !pagination.dataset.length,
+    onPressHeaderIconButton: handlePressHeaderIconButton,
+    onPressFooterReloadButton: pagination.paginate,
+    onPressTopReloadButton: pagination.reset,
+    onEndReached: pagination.paginate,
+    articles: pagination.dataset,
+    hasPaginationError: pagination.hasPaginationError,
+    isPaginating: pagination.isPaginating,
+    isLoading: pagination.isLoading,
+    error: pagination.error,
+    adviseTexts,
+    language,
   };
 };
 

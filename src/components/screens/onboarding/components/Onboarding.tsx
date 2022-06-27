@@ -1,11 +1,11 @@
 import React from 'react';
-import { StatusBar, FlatList } from 'react-native';
-import { withTheme, DefaultTheme } from 'styled-components';
+import {StatusBar, FlatList} from 'react-native';
+import {withTheme, DefaultTheme} from 'styled-components/native';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {SVGIcon} from '@components';
 import metrics from '@styles/metrics';
 
-import { OnboardingStackProps } from '../routes/route-params-types';
+import {OnboardingStackProps} from '../routes/route-params-types';
 import BottomNavigation from './bottom-navigation/BottomNavigation';
 import * as Styles from './Onboarding.styles';
 import useOnboarding from './useOnboarding';
@@ -14,12 +14,11 @@ type OnboardingProps = {
   theme: DefaultTheme;
 } & OnboardingStackProps;
 
-const Onboarding = ({ route, theme }: OnboardingProps) => {
-  const {
-    onMomentumScrollEnd, indexSelected, flatlistRef, items,
-  } = useOnboarding({
-    route,
-  });
+export const Onboarding = withTheme(({route, theme}: OnboardingProps) => {
+  const {onMomentumScrollEnd, indexSelected, flatlistRef, items} =
+    useOnboarding({
+      route,
+    });
 
   return (
     <Styles.Wrapper>
@@ -41,7 +40,7 @@ const Onboarding = ({ route, theme }: OnboardingProps) => {
           length: metrics.width,
           index,
         })}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <Styles.ItemWrapper>
             <Styles.IconSection>
               <SVGIcon
@@ -56,7 +55,7 @@ const Onboarding = ({ route, theme }: OnboardingProps) => {
             </Styles.TextSection>
           </Styles.ItemWrapper>
         )}
-        keyExtractor={(item) => item.title}
+        keyExtractor={item => item.title}
         data={items}
       />
       <BottomNavigation
@@ -66,6 +65,4 @@ const Onboarding = ({ route, theme }: OnboardingProps) => {
       />
     </Styles.Wrapper>
   );
-};
-
-export default withTheme(Onboarding);
+});

@@ -1,15 +1,13 @@
 import React from 'react';
-import { fireEvent, cleanup, render } from '@testing-library/react-native';
+import {fireEvent, cleanup, render} from '@testing-library/react-native';
 
-import { ThemeContextProvider } from '@providers';
+import {ThemeContextProvider} from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
 import CONSTANTS from '@utils/constants';
 
-jest.mock('utils/async-storage-adapter/AsyncStorageAdapter');
+jest.mock('utils/storage');
 
-const {
-  persistItemInStorage,
-} = require('utils/async-storage-adapter/AsyncStorageAdapter');
+const storage = require('utils/storage');
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -43,7 +41,7 @@ describe('Testing <Languages />', () => {
   afterEach(cleanup);
 
   it('should render all items correctly', () => {
-    const { getAllByTestId, getByText } = render(renderLanguageSettings());
+    const {getAllByTestId, getByText} = render(renderLanguageSettings());
 
     expect(getAllByTestId('option-settings').length).toEqual(5);
 
@@ -59,13 +57,13 @@ describe('Testing <Languages />', () => {
   });
 
   it('should call "onPress" with the correct params when the user press on the list-item', () => {
-    const { getAllByTestId } = render(renderLanguageSettings());
+    const {getAllByTestId} = render(renderLanguageSettings());
     const languages = ['en', 'es', 'ptBR'];
 
     for (let i = 0; i < languages.length; i++) {
       fireEvent.press(getAllByTestId('option-settings')[i]);
 
-      expect(persistItemInStorage).toHaveBeenCalledWith(
+      expect(storage.set).toHaveBeenCalledWith(
         CONSTANTS.KEYS.LANGUAGE,
         languages[i],
       );

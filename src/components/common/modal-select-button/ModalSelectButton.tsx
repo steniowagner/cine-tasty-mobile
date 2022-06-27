@@ -2,18 +2,23 @@ import React from 'react';
 
 import * as Styles from './ModalSelectButton.styles';
 
-type ModalSelectButtonProps = {
+export type ModalSelectButtonProps = {
+  borderBottomRightRadius?: number;
+  borderBottomLeftRadius?: number;
+  isDisabled?: boolean;
   onPress: () => void;
   title: string;
 };
 
-const ModalSelectButton = ({ onPress, title }: ModalSelectButtonProps) => (
+export const ModalSelectButton = (props: ModalSelectButtonProps) => (
   <Styles.SelectButton
-    onPress={onPress}
-    testID="select-button"
-  >
-    <Styles.SelectButtonText>{title}</Styles.SelectButtonText>
+    borderBottomRightRadius={props.borderBottomRightRadius}
+    borderBottomLeftRadius={props.borderBottomLeftRadius}
+    disabled={props.isDisabled}
+    onPress={props.onPress}
+    testID="select-button">
+    <Styles.SelectButtonText testID="select-button-text">
+      {props.title}
+    </Styles.SelectButtonText>
   </Styles.SelectButton>
 );
-
-export default ModalSelectButton;

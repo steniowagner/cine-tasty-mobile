@@ -1,9 +1,7 @@
 import React from 'react';
 
-import renderSVGIconConditionally from '@components/common/svg-icon/renderSVGIconConditionally';
-import TMDBImage from '@components/common/tmdb-image/TMDBImage';
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import { useLoadListItemImage } from '@hooks';
+import {renderSVGIconConditionally, SVGIcon} from '@components';
+import {useLoadListItemImage} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './SimplifiedMediaListItem.styles';
@@ -11,66 +9,47 @@ import * as Styles from './SimplifiedMediaListItem.styles';
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type SimplifiedMediaListItemProps = {
+  withLargeLayout?: boolean;
   onPress: () => void;
+  testID?: string;
   voteAverage: number;
   voteCount: number;
-  isFirst: boolean;
   image: string;
   title: string;
 };
 
-const SimplifiedMediaListItem = ({
-  voteAverage,
-  voteCount,
-  isFirst,
-  onPress,
-  image,
-  title,
-}: SimplifiedMediaListItemProps) => {
-  const {
-    isFallbackImageVisible,
-    hasError,
-    onError,
-    opacity,
-    onLoad,
-  } = useLoadListItemImage({
-    image,
+export const SimplifiedMediaListItem = (
+  props: SimplifiedMediaListItemProps,
+) => {
+  const loadListImage = useLoadListItemImage({
+    image: props.image,
   });
-
   return (
     <Styles.Wrapper
-      testID="simplified-media-list-button"
-      onPress={onPress}
-      isFirst={isFirst}
-    >
+      testID={props.testID || 'simplified-media-list-button'}
+      onPress={props.onPress}
+      withLargeLayout={props.withLargeLayout}>
       <>
-        <TMDBImage
+        <Styles.CustomTMDBImage
           imageType="poster"
-          onError={onError}
-          onLoad={onLoad}
-          image={image}
-          style={{
-            width: Styles.MEDIA_IMAGE_DEFAULT_WIDTH,
-            height: Styles.MEDIA_IMAGE_DEFAULT_HEIGHT,
-            marginBottom: metrics.getWidthFromDP(
-              Styles.MEDIA_IMAGE_DEFAULT_MARGIN_BOTTOM,
-            ),
-            borderRadius: metrics.getWidthFromDP(
-              Styles.MEDIA_IMAGE_DEFAULT_BORDER_RADIUS,
-            ),
-          }}
+          withLargeLayout={props.withLargeLayout}
+          onError={loadListImage.onError}
+          onLoad={loadListImage.onLoad}
+          image={props.image}
+          testID="simplified-media-list-image"
+          style={{}}
         />
-        {isFallbackImageVisible && (
+        {loadListImage.isFallbackImageVisible && (
           <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
+            withLargeLayout={props.withLargeLayout}
             style={[
               {
-                opacity,
+                opacity: loadListImage.opacity,
               },
-            ]}
-          >
+            ]}>
             {renderSVGIconConditionally({
-              condition: hasError,
+              condition: loadListImage.hasError,
               ifTrue: {
                 colorThemeRef: 'fallbackImageIcon',
                 size: DEFAULT_ICON_SIZE,
@@ -85,7 +64,11 @@ const SimplifiedMediaListItem = ({
           </Styles.FallbackImageWrapper>
         )}
       </>
-      <Styles.DefaultText>{title}</Styles.DefaultText>
+      <Styles.DefaultText
+        withLargeLayout={props.withLargeLayout}
+        testID="simplified-media-list-title">
+        {props.title}
+      </Styles.DefaultText>
       <Styles.StarsContentWrapper>
         <SVGIcon
           id="star-full"
@@ -93,13 +76,12 @@ const SimplifiedMediaListItem = ({
           colorThemeRef="primary"
         />
         <Styles.DefaultText
-          withMarginLeft
-        >
-          {`${voteAverage.toFixed(1)} (${voteCount})`}
+          withLargeLayout={props.withLargeLayout}
+          testID="simplified-media-list-votes"
+          withMarginLeft>
+          {`${props.voteAverage.toFixed(1)} (${props.voteCount})`}
         </Styles.DefaultText>
       </Styles.StarsContentWrapper>
     </Styles.Wrapper>
   );
 };
-
-export default SimplifiedMediaListItem;

@@ -1,8 +1,8 @@
-import i18next, { Module } from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import i18next, {Module} from 'i18next';
+import {initReactI18next} from 'react-i18next';
 
 import handleLanguageDetection from './handleLanguageDetection';
-import CONSTANTS from '../utils/constants';
+import {CONSTANTS} from '../utils';
 
 import ptBR from './locale/ptBR';
 import es from './locale/es';
@@ -15,7 +15,7 @@ const languageDetectorType: Module = {
 const languageDetector = {
   type: languageDetectorType.type,
   async: true,
-  detect: async (callback) => {
+  detect: async callback => {
     const language = await handleLanguageDetection();
     console.log('>>> language: ', language);
     callback(language);
@@ -29,6 +29,7 @@ i18next
   .use(initReactI18next)
   .init({
     fallbackLng: CONSTANTS.VALUES.FALLBACK_LANGUAGE,
+    compatibilityJSON: 'v3',
     debug: true,
     resources: {
       en: {

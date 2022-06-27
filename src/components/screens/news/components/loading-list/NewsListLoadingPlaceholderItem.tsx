@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoadingPlaceholder from '@components/common/loading-placeholder/LoadingPlaceholder';
+import {LoadingPlaceholder} from '@components';
 import metrics from '@styles/metrics';
 
 import * as NewsListItemStyles from '../list-item/NewsListItem.styles';
@@ -10,13 +10,11 @@ type NewsListItemPlaceholderProps = {
   index: number;
 };
 
-const NewsListItemPlaceholder = ({ index }: NewsListItemPlaceholderProps) => (
-  <NewsListItemStyles.LoadingWrapper
-    testID="news-list-item"
-  >
+const NewsListItemPlaceholder = (props: NewsListItemPlaceholderProps) => (
+  <NewsListItemStyles.LoadingWrapper testID="news-loading-list-item">
     <LoadingPlaceholder
       style={NewsListItemStyles.imageWrapper}
-      indexToDelayAnimation={index}
+      indexToDelayAnimation={props.index}
     />
     <NewsListItemStyles.TextWrapper>
       <LoadingPlaceholder
@@ -24,11 +22,9 @@ const NewsListItemPlaceholder = ({ index }: NewsListItemPlaceholderProps) => (
           marginBottom: metrics.mediumSize,
           ...Styles.textPlaceholderStyle,
         }}
-        indexToDelayAnimation={index}
+        indexToDelayAnimation={props.index}
       />
-      <LoadingPlaceholder
-        style={Styles.textPlaceholderStyle}
-      />
+      <LoadingPlaceholder style={Styles.textPlaceholderStyle} />
     </NewsListItemStyles.TextWrapper>
   </NewsListItemStyles.LoadingWrapper>
 );

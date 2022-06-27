@@ -1,34 +1,26 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 import * as Styles from './Section.styles';
 
-type SectionProps = {
+export type SectionProps = {
   withHorizontalPadding?: boolean;
   noMarginBottom?: boolean;
   noMarginTop?: boolean;
-  children: JSX.Element;
+  children: ReactNode;
   title: string;
 };
 
-const Section = ({
-  withHorizontalPadding,
-  noMarginBottom,
-  noMarginTop,
-  children,
-  title,
-}: SectionProps) => (
+export const Section = (props: SectionProps) => (
   <Styles.Wrapper
-    withHorizontalPadding={withHorizontalPadding}
-    noMarginBottom={noMarginBottom}
-    noMarginTop={noMarginTop}
-  >
+    withHorizontalPadding={props.withHorizontalPadding}
+    noMarginBottom={props.noMarginBottom}
+    noMarginTop={props.noMarginTop}
+    testID="section-wrapper">
     <Styles.Title
-      withMarginLeft={!withHorizontalPadding}
-    >
-      {title}
+      withMarginLeft={!props.withHorizontalPadding}
+      testID="section-title">
+      {props.title}
     </Styles.Title>
-    {children}
+    {props.children}
   </Styles.Wrapper>
 );
-
-export default Section;

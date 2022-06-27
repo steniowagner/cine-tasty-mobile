@@ -1,5 +1,5 @@
-import { ActivityIndicator, View } from 'react-native';
-import styled from 'styled-components';
+import {ActivityIndicator, View} from 'react-native';
+import styled from 'styled-components/native';
 
 export const Wrapper = styled(View)`
   width: 100%;
@@ -8,7 +8,7 @@ export const Wrapper = styled(View)`
   align-items: center;
 `;
 
-export const Indicator = styled(ActivityIndicator).attrs(({ theme }) => ({
+export const Indicator = styled(ActivityIndicator).attrs(({theme}) => ({
   color: theme.colors.text,
   size: 'large',
 }))``;

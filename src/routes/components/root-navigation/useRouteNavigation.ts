@@ -1,10 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
-import {
-  persistItemInStorage,
-  getItemFromStorage,
-} from '@utils/async-storage-adapter/AsyncStorageAdapter';
-import CONSTANTS from '@utils/constants';
+import {CONSTANTS, storage} from '@utils';
 
 type CurrentStack = 'checking-initial-screen' | 'onboarding' | 'tabs';
 
@@ -14,12 +10,12 @@ const useRouteNavigation = () => {
   );
 
   const onFinishShowOnboarding = useCallback(async () => {
-    await persistItemInStorage(CONSTANTS.KEYS.ONBOARDING_SHOWED, 'true');
+    await storage.set(CONSTANTS.KEYS.ONBOARDING_SHOWED, 'true');
     setCurrentStack('tabs');
   }, []);
 
   const handleInitialScreenSelection = useCallback(async () => {
-    const isOnboardingAlreadyShown = await getItemFromStorage<boolean, boolean>(
+    const isOnboardingAlreadyShown = await storage.get<boolean, boolean>(
       CONSTANTS.KEYS.ONBOARDING_SHOWED,
       false,
     );

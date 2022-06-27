@@ -1,98 +1,59 @@
-/* eslint-disable react/display-name */
-import React, { useLayoutEffect } from 'react';
-import { ScrollView } from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {ScrollView} from 'react-native';
 
-import PaginatedListHeader from '@components/common/paginated-list-header/PaginatedListHeader';
-import PopupAdvice from '@components/common/popup-advice/PopupAdvice';
-import { Routes } from '@routes/routes';
+import {PaginatedListHeader} from '@components';
 import * as Types from '@local-types';
 
-import { HomeStackProps } from '../routes/route-params-types';
+import {HomeStackProps} from '../routes/route-params-types';
 import LoadingHome from './top3/loading-top3/LoadingTop3';
 import HomeSection from './home-section/HomeSection';
-import * as Styles from './Home.styles';
-import useHome from './hooks/useHome';
-import Header from './header/Header';
-import Top3 from './top3/Top3';
+import {Header} from './header/Header';
+import {useHome} from './useHome';
+import {Top3} from './top3/Top3';
 
-const Home = ({ navigation }: HomeStackProps) => {
-  const {
-    shouldDisableHeaderActions,
-    onPressTop3LearnMore,
-    onPressTrendingItem,
-    onSelectTVShows,
-    onSelectMovies,
-    onPressViewAll,
-    onPressReload,
-    onPressSearch,
-    errorMessage,
-    isLoading,
-    trendings,
-    top3,
-  } = useHome({ navigation });
+export const Home = (props: HomeStackProps) => {
+  const home = useHome({navigation: props.navigation});
 
   useLayoutEffect(() => {
-    const shouldShowReload = !!errorMessage && !isLoading;
-
-    navigation.setOptions({
+    props.navigation.setOptions({
       header: () => (
         <>
           <Header
-            onPressSettings={() => navigation.navigate(Routes.Settings.SETTINGS)}
-            shouldDisableActions={shouldDisableHeaderActions}
-            onPresSwitchTVShows={onSelectTVShows}
-            onPressSwitchMovies={onSelectMovies}
-            onPressSearch={onPressSearch}
+            onPressSettings={home.onPressSettings}
+            onPresSwitchTVShows={home.onSelectTVShows}
+            onPressSwitchMovies={home.onSelectMovies}
+            shouldDisableActions={home.isLoading}
+            onPressSearch={home.onPressSearch}
           />
-          {shouldShowReload && (
-          <PaginatedListHeader
-            onPress={onPressReload}
-          />
+          {home.shouldShowReload && (
+            <PaginatedListHeader onPress={home.onPressReload} />
           )}
         </>
       ),
     });
-  }, [shouldDisableHeaderActions, onPressSearch, isLoading, errorMessage]);
+  }, [home.shouldShowReload, home.onPressSearch, home.isLoading]);
 
-  if (isLoading) {
+  if (home.isLoading) {
     return <LoadingHome />;
   }
 
-  if (errorMessage) {
-    return (
-      <>
-        <Styles.PopupAdviceWrapper>
-          <PopupAdvice
-            text={errorMessage}
-          />
-        </Styles.PopupAdviceWrapper>
-      </>
-    );
-  }
-
   return (
-    <ScrollView
-      testID="scrollview-content"
-    >
-      <Top3
-        onPressLearnMore={onPressTop3LearnMore}
-        top3Items={top3}
-      />
-      {trendings.map((trending) => (
+    <ScrollView testID="scrollview-content">
+      <Top3 items={home.top3} />
+      {home.trendings.map(trending => (
         <HomeSection
-          onPressItem={(mediaItem: Types.SimplifiedMedia) => onPressTrendingItem(mediaItem)}
-          onPressViewAll={() => onPressViewAll({
-            viewAllTitle: trending.viewAllTitle,
-            sectionItems: trending.data,
-            sectionID: trending.id,
-          })}
+          onPressItem={(mediaItem: Types.SimplifiedMedia) =>
+            trending.onPressItem(mediaItem)
+          }
+          onPressViewAll={trending.onPressViewAll}
           sectionTitle={trending.sectionTitle}
           key={trending.sectionTitle}
+          id={`${home.isMoviesSelected ? 'MOVIES' : 'TV_SHOWS'}-${
+            trending.sectionTitle
+          }`}
           items={trending.data}
         />
       ))}
     </ScrollView>
   );
 };
-
-export default Home;

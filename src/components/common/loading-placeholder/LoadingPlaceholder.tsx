@@ -1,6 +1,6 @@
 import React from 'react';
-import { Animated } from 'react-native';
-import { withTheme, DefaultTheme } from 'styled-components';
+import {Animated} from 'react-native';
+import {withTheme, DefaultTheme} from 'styled-components/native';
 
 import useLoadingPlaceholder from './useLoadingPlaceholder';
 
@@ -11,22 +11,20 @@ type LoadingPlaceholderProps = {
   style: object;
 };
 
-const LoadingPlaceholder = ({
-  indexToDelayAnimation = 0,
-  testID,
-  style,
-  theme,
-}: LoadingPlaceholderProps) => {
-  const { opacity } = useLoadingPlaceholder({
-    indexToDelayAnimation,
-  });
-
-  return (
-    <Animated.View
-      style={{ ...style, backgroundColor: theme.colors.loadingColor, opacity }}
-      testID={testID || 'loading-placeholder'}
-    />
-  );
-};
-
-export default withTheme(LoadingPlaceholder);
+export const LoadingPlaceholder = withTheme(
+  (props: LoadingPlaceholderProps) => {
+    const loadingPlaceholder = useLoadingPlaceholder({
+      indexToDelayAnimation: props.indexToDelayAnimation || 0,
+    });
+    return (
+      <Animated.View
+        style={{
+          ...props.style,
+          backgroundColor: props.theme.colors.loadingColor,
+          opacity: loadingPlaceholder.opacity,
+        }}
+        testID={props.testID || 'loading-placeholder'}
+      />
+    );
+  },
+);

@@ -1,5 +1,5 @@
-import { View } from 'react-native';
-import styled from 'styled-components';
+import {View} from 'react-native';
+import styled from 'styled-components/native';
 
 export const Wrapper = styled(View)`
   width: 100%;
@@ -9,5 +9,5 @@ export const Wrapper = styled(View)`
 
 export const PlayAgainButtonWrapper = styled(View)`
   position: absolute;
-  bottom: ${({ theme }) => theme.metrics.getWidthFromDP('8%')}px;
+  bottom: ${({theme}) => theme.metrics.getWidthFromDP('8%')}px;
 `;

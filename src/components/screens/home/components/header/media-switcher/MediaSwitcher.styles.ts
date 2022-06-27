@@ -1,7 +1,5 @@
-import {
-  TouchableOpacity, Animated, View, Text,
-} from 'react-native';
-import styled from 'styled-components';
+import {TouchableOpacity, Animated, View, Text} from 'react-native';
+import styled from 'styled-components/native';
 
 type WrapperStyleProps = {
   width: number;
@@ -11,27 +9,33 @@ type DynamicWidthStyleProps = {
   width: number;
 };
 
+type SwitcherIndicatorProps = DynamicWidthStyleProps & {
+  isDisabled: boolean;
+};
+
 export const Wrapper = styled(View)<WrapperStyleProps>`
-  width: ${({ width }) => width}px;
-  border-radius: ${({ theme }) => theme.metrics.height}px;
+  width: ${({width}) => width}px;
+  border-radius: ${({theme}) => theme.metrics.height}px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({theme}) => theme.colors.secondary};
 `;
 
-export const SwitcherIndicator = styled(Animated.View)<DynamicWidthStyleProps>`
-  width: ${({ width }) => width}px;
+export const SwitcherIndicator = styled(Animated.View)<SwitcherIndicatorProps>`
+  width: ${({width}) => width}px;
   height: 100%;
-  border-radius: ${({ theme }) => theme.metrics.height}px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  border: ${({ theme }) => `${theme.metrics.extraSmallSize}px solid ${theme.colors.secondary}`};
+  border-radius: ${({theme}) => theme.metrics.height}px;
+  background-color: ${({theme}) => theme.colors.primary};
+  border: ${({theme}) =>
+    `${theme.metrics.extraSmallSize}px solid ${theme.colors.secondary}`};
+    opacity: ${({isDisabled}) => (isDisabled ? 0.5 : 1)}
   position: absolute;
 `;
 
 export const OptionText = styled(Text)`
-  padding-horizontal: ${({ theme }) => theme.metrics.extraLargeSize}px;
-  padding-vertical: ${({ theme }) => theme.metrics.mediumSize}px;
+  padding-horizontal: ${({theme}) => theme.metrics.extraLargeSize}px;
+  padding-vertical: ${({theme}) => theme.metrics.mediumSize}px;
   font-family: CircularStd-Black;
-  font-size: ${({ theme }) => theme.metrics.largeSize}px;
+  font-size: ${({theme}) => theme.metrics.largeSize}px;
 `;
 
 export const Row = styled(View)`
@@ -40,7 +44,7 @@ export const Row = styled(View)`
 `;
 
 export const OptionButton = styled(TouchableOpacity)<DynamicWidthStyleProps>`
-  width: ${({ width }) => width}px;
+  width: ${({width}) => width}px;
   justify-content: center;
   align-items: center;
 `;

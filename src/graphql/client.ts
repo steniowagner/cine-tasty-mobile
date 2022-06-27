@@ -1,17 +1,14 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-underscore-dangle */
-import { IntrospectionFragmentMatcher, InMemoryCache } from 'apollo-cache-inmemory';
-import { SERVER_URL } from '@env';
-import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
-import { onError } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
+import {ApolloClient, InMemoryCache} from '@apollo/client';
+import {HttpLink} from 'apollo-link-http';
+import {onError} from 'apollo-link-error';
+import {ApolloLink} from 'apollo-link';
 
-import introspectionQueryResultData from '../../fragmentTypes.json';
+import possibleTypes from '@graphql/possibleTypes.json';
+import {SERVER_URL} from '@env';
 
-const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
+const errorLink = onError(({graphQLErrors, networkError, operation}) => {
   if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, path }) => {
+    graphQLErrors.forEach(({message, path}) => {
       console.log(`[GraphQL error]: Message: ${message}, Path: ${path}`);
     });
   }
@@ -23,18 +20,20 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   }
 });
 
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData,
-});
-
 const makeClient = () => {
   const cache = new InMemoryCache({
-    // @ts-ignore
-    dataIdFromObject: (obj) => {
-      // @ts-ignore
-      obj.id ? `${obj.__typename}-${obj.id}` : `${obj.__typename}-${obj.cursor}`;
+    possibleTypes,
+    typePolicies: {
+      SearchQueryResult: {
+        fields: {
+          items: {
+            merge(_, incoming) {
+              return incoming;
+            },
+          },
+        },
+      },
     },
-    fragmentMatcher,
   });
 
   const httpLink = new HttpLink({
@@ -42,7 +41,7 @@ const makeClient = () => {
   });
 
   const client = new ApolloClient({
-    link: ApolloLink.from([errorLink, httpLink]),
+    link: ApolloLink.from([errorLink, httpLink]) as any,
     cache,
   });
 

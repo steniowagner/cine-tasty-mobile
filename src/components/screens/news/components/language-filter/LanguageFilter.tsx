@@ -1,11 +1,9 @@
 import React from 'react';
-import { FlatList } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native';
 
-import ModalSelectButton from '@components/common/modal-select-button/ModalSelectButton';
+import {ModalSelectButton} from '@components';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
 
-import { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem.styles';
 import LanguageListItem from './list-item/LanguageListItem';
 import useLanguageFilter from './useLanguageFilter';
 import languages from './languages';
@@ -18,49 +16,30 @@ type LanguageFilterProps = {
   closeModal: () => void;
 };
 
-const LanguageFilter = ({
-  lastLanguageSelected,
-  onSelectLanguage,
-  closeModal,
-}: LanguageFilterProps) => {
-  const {
-    initialFlatListIndex,
-    onPressSelectButton,
-    setLanguageSelected,
-    languageSelected,
-    t,
-  } = useLanguageFilter({
-    lastLanguageSelected,
-    onSelectLanguage,
-    closeModal,
+const LanguageFilter = (props: LanguageFilterProps) => {
+  const languageFilter = useLanguageFilter({
+    lastLanguageSelected: props.lastLanguageSelected,
+    onSelectLanguage: props.onSelectLanguage,
+    closeModal: props.closeModal,
   });
-
   return (
     <>
-      <FlatList
-        renderItem={({ item }) => (
-          <LanguageListItem
-            name={t(`${TRANSLATIONS.NEWS_LANGUAGES}:${item.name}`)}
-            isSelected={languageSelected === item.id}
-            onPress={() => {
-              setLanguageSelected(item.id);
-            }}
-            flag={item.flag}
-          />
-        )}
-        initialScrollIndex={initialFlatListIndex}
-        getItemLayout={(_, index) => ({
-          offset: ITEM_LIST_HEIGHT * index,
-          length: ITEM_LIST_HEIGHT,
-          index,
-        })}
-        keyExtractor={(item) => item.id}
+      <ScrollView
         testID="languages-list"
-        data={languages}
-      />
+        ref={languageFilter.handleSetScrollViewRef}>
+        {languages.map(language => (
+          <LanguageListItem
+            isSelected={languageFilter.language === language.id}
+            onPress={() => languageFilter.setLanguage(language.id)}
+            name={languageFilter.languageName(language.name)}
+            flag={language.flag}
+            key={language.id}
+          />
+        ))}
+      </ScrollView>
       <ModalSelectButton
-        title={t(TRANSLATIONS.SELECT)}
-        onPress={onPressSelectButton}
+        title={languageFilter.modalSelectButtonTitle}
+        onPress={languageFilter.onPressSelectButton}
       />
     </>
   );

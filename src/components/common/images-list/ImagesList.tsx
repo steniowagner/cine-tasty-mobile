@@ -1,39 +1,34 @@
 import React from 'react';
-import { FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-import { ImagesGalleryNavigationProp } from '@components/screens/shared/images-gallery/routes/route-params-types';
-import { Routes } from '@routes/routes';
+import {ImageOrientation} from './images-list-item/ImageListItem.styles';
+import {ImageListItem} from './images-list-item/ImageListItem';
+import * as Styles from './ImagesList.styles';
+import {useImagesList} from './useImagesList';
 
-import ImageListItem from './images-list-item/ImageListItem';
-
-type ImagesListProps = {
+type ImagesListProps = ImageOrientation & {
   images: string[];
 };
 
-const ImagesList = ({ images }: ImagesListProps) => {
-  const navigation = useNavigation<ImagesGalleryNavigationProp>();
+export const ImagesList = (props: ImagesListProps) => {
+  const imagesList = useImagesList({images: props.images});
+
+  if (!props.images || !props.images.length) {
+    return null;
+  }
 
   return (
-    <FlatList
-      renderItem={({ item, index }) => (
-        <ImageListItem
-          onPress={() => navigation.navigate(Routes.ImagesGallery.IMAGES_GALLERY, {
-            gallerySize: images.length,
-            indexSelected: index,
-            images,
-          })}
-          isFirst={index === 0}
-          image={item}
-        />
-      )}
-      keyExtractor={(image) => image}
+    <Styles.Wrapper
       showsHorizontalScrollIndicator={false}
       testID="images-list"
-      data={images}
-      horizontal
-    />
+      horizontal>
+      {props.images.map((image, index) => (
+        <ImageListItem
+          onPress={() => imagesList.onPressImage(index)}
+          orientation={props.orientation}
+          image={image}
+          key={image}
+        />
+      ))}
+    </Styles.Wrapper>
   );
 };
-
-export default ImagesList;

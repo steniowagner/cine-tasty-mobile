@@ -1,4 +1,4 @@
-import { Locale } from './Locale';
+import {Locale} from './Locale';
 
 const en: Locale = {
   softwareEngineer: 'Software Engineer',
@@ -31,15 +31,18 @@ const en: Locale = {
       title: 'Cinema/TV',
     },
     famous: {
-      description: 'See who are the actors and actresses that are in the trends today',
+      description:
+        'See who are the actors and actresses that are in the trends today',
       title: 'Famous',
     },
     quiz: {
-      description: 'Test your cinema knowledge with exciting and challenging questions',
+      description:
+        'Test your cinema knowledge with exciting and challenging questions',
       title: 'Quiz',
     },
     news: {
-      description: 'Stay up to date with the latest news of the movies/tv world',
+      description:
+        'Stay up to date with the latest news of the movies/tv world',
       title: 'News',
     },
   },
@@ -156,16 +159,16 @@ const en: Locale = {
     setCategory: 'Category of the questions',
     setType: 'Type of questions',
     modalSelectText: 'select',
-    categoryMixed: 'Mixed',
-    categoryMovie: 'Movies',
-    categoryTv: 'Tv',
-    difficultyEasy: 'Easy',
-    difficultyMedium: 'Medium',
-    difficultyHard: 'Hard',
-    difficultyMixed: 'Mixed',
-    typeMultiple: 'Multiple',
-    typeBoolean: 'True/False',
-    typeMixed: 'Mixed',
+    category_mixed: 'Mixed',
+    category_movie: 'Movies',
+    category_tv: 'Tv',
+    difficulty_easy: 'Easy',
+    difficulty_medium: 'Medium',
+    difficulty_hard: 'Hard',
+    difficulty_mixed: 'Mixed',
+    type_multiple: 'Multiple',
+    type_boolean: 'True/False',
+    type_mixed: 'Mixed',
     playAgain: 'Play Again',
     playAgainDescription: 'Do you want to play the Quiz again?',
     answer: 'Answer',

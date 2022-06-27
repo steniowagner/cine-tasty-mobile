@@ -1,27 +1,28 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
-import RoundedButton from '@components/common/rounded-button/RoundedButton';
-import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {RoundedButton} from '@components';
 
-import { QuizStackProps } from '../routes/route-params-types';
+import {QuizStackProps} from '../routes/route-params-types';
 import * as Styles from './Quiz.styles';
+import useQuiz from './useQuiz';
 
-const Quiz = ({ navigation }: QuizStackProps) => {
-  const { t } = useTranslation();
-
+export const Quiz = (props: QuizStackProps) => {
+  const quiz = useQuiz({navigation: props.navigation});
   return (
     <Styles.Wrapper>
-      <Styles.LargeText>{t(TRANSLATIONS.QUIZ_WELCOME)}</Styles.LargeText>
-      <Styles.SubText>{t(TRANSLATIONS.QUIZ_DESCRIPTION)}</Styles.SubText>
-      <Styles.LargeText>{t(TRANSLATIONS.QUIZ_CHALLENGE)}</Styles.LargeText>
+      <Styles.LargeText testID="quiz-welcome-text">
+        {quiz.texts.welcome}
+      </Styles.LargeText>
+      <Styles.SubText testID="quiz-description-text">
+        {quiz.texts.description}
+      </Styles.SubText>
+      <Styles.LargeText testID="quiz-challenge-text">
+        {quiz.texts.challenge}
+      </Styles.LargeText>
       <RoundedButton
-        onPress={() => navigation.navigate(Routes.Quiz.SETUP_QUESTIONS)}
-        text={t(TRANSLATIONS.QUIZ_CHOOSE_QUESTIONS)}
+        onPress={quiz.handlePressChooseQuestions}
+        text={quiz.texts.chooseQuestions}
       />
     </Styles.Wrapper>
   );
 };
-
-export default Quiz;

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Linking } from 'react-native';
+import {Linking} from 'react-native';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
-import { Icons } from '@components/common/svg-icon/icons';
-import { useTheme } from 'styled-components';
+import {SVGIcon, Icons} from '@components';
+import {useTheme} from 'styled-components/native';
 
 import * as Styles from './TextIconButton.styles';
 
@@ -13,13 +12,11 @@ type TextIconButtonProps = {
   url: string;
 };
 
-const TextIconButton = ({ icon, text, url }: TextIconButtonProps) => {
+const TextIconButton = ({icon, text, url}: TextIconButtonProps) => {
   const theme = useTheme();
 
   return (
-    <Styles.Wrapper
-      onPress={() => Linking.openURL(url)}
-    >
+    <Styles.Wrapper onPress={() => Linking.openURL(url)}>
       <Styles.DefaultText>{text}</Styles.DefaultText>
       {icon && (
         <>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Icons } from '@components/common/svg-icon/icons';
+import {Icons} from '@components';
 
 import TextIconButton from './text-icon-button/TextIconButton';
 import * as Styles from './OpenSource.styles';
@@ -26,11 +26,7 @@ const DefaultOpenSourceItem = ({
     <Styles.SectionTitle>{title}</Styles.SectionTitle>
     <Styles.SectionDescrpition>{description}</Styles.SectionDescrpition>
     {children && <>{children}</>}
-    <TextIconButton
-      icon={icon}
-      text={buttonText}
-      url={url}
-    />
+    <TextIconButton icon={icon} text={buttonText} url={url} />
   </>
 );
 

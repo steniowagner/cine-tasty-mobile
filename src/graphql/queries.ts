@@ -94,7 +94,7 @@ export const NOW_PLAYING_MOVIES = gql`
 
   query TrendingNowPlayingMovies($page: Int!, $language: ISO6391Language) {
     trendingMovies {
-      nowPlaying(args: { page: $page, language: $language }) {
+      nowPlaying(args: {page: $page, language: $language}) {
         hasMore
         items {
           ...TrendingMovieFragment
@@ -110,7 +110,7 @@ export const POPULAR_MOVIES = gql`
 
   query TrendingPopularMovies($page: Int!, $language: ISO6391Language) {
     trendingMovies {
-      popular(args: { page: $page, language: $language }) {
+      popular(args: {page: $page, language: $language}) {
         hasMore
         items {
           ...TrendingMovieFragment
@@ -126,7 +126,7 @@ export const TOP_RATED_MOVIES = gql`
 
   query TrendingTopRatedMovies($page: Int!, $language: ISO6391Language) {
     trendingMovies {
-      topRated(args: { page: $page, language: $language }) {
+      topRated(args: {page: $page, language: $language}) {
         hasMore
         items {
           ...TrendingMovieFragment
@@ -142,7 +142,7 @@ export const UPCOMING_MOVIES = gql`
 
   query TrendingUpcomingMovies($page: Int!, $language: ISO6391Language) {
     trendingMovies {
-      upcoming(args: { page: $page, language: $language }) {
+      upcoming(args: {page: $page, language: $language}) {
         hasMore
         items {
           ...TrendingMovieFragment
@@ -158,7 +158,7 @@ export const AIRING_TODAY_TV_SHOWS = gql`
 
   query TrendingAiringTodayTVShows($page: Int!, $language: ISO6391Language) {
     trendingTvShows {
-      airingToday(args: { page: $page, language: $language }) {
+      airingToday(args: {page: $page, language: $language}) {
         hasMore
         items {
           ...TrendingTVShowFragment
@@ -174,7 +174,7 @@ export const ON_THE_AIR_TV_SHOWS = gql`
 
   query TrendingOnTheAirTVShows($page: Int!, $language: ISO6391Language) {
     trendingTvShows {
-      onTheAir(args: { page: $page, language: $language }) {
+      onTheAir(args: {page: $page, language: $language}) {
         hasMore
         items {
           ...TrendingTVShowFragment
@@ -190,7 +190,7 @@ export const POPULAR_TV_SHOWS = gql`
 
   query TrendingPopularTVShows($page: Int!, $language: ISO6391Language) {
     trendingTvShows {
-      popular(args: { page: $page, language: $language }) {
+      popular(args: {page: $page, language: $language}) {
         hasMore
         items {
           ...TrendingTVShowFragment
@@ -206,7 +206,7 @@ export const TOP_RATED_TV_SHOWS = gql`
 
   query TrendingTopRatedTVShows($page: Int!, $language: ISO6391Language) {
     trendingTvShows {
-      topRated(args: { page: $page, language: $language }) {
+      topRated(args: {page: $page, language: $language}) {
         hasMore
         items {
           ...TrendingTVShowFragment
@@ -228,7 +228,7 @@ export const GET_TRENDING_MOVIES = gql`
 
   query TrendingMovies($page: Int!, $language: ISO6391Language) {
     trendingMovies {
-      nowPlaying(args: { page: $page, language: $language }) {
+      nowPlaying(args: {page: $page, language: $language}) {
         totalResults
         totalPages
         hasMore
@@ -237,7 +237,7 @@ export const GET_TRENDING_MOVIES = gql`
           genreIds(language: $language)
         }
       }
-      popular(args: { page: $page, language: $language }) {
+      popular(args: {page: $page, language: $language}) {
         totalResults
         totalPages
         hasMore
@@ -246,7 +246,7 @@ export const GET_TRENDING_MOVIES = gql`
           genreIds(language: $language)
         }
       }
-      topRated(args: { page: $page, language: $language }) {
+      topRated(args: {page: $page, language: $language}) {
         totalResults
         totalPages
         hasMore
@@ -255,7 +255,7 @@ export const GET_TRENDING_MOVIES = gql`
           genreIds(language: $language)
         }
       }
-      upcoming(args: { page: $page, language: $language }) {
+      upcoming(args: {page: $page, language: $language}) {
         totalResults
         totalPages
         hasMore
@@ -273,7 +273,7 @@ export const GET_TRENDING_TV_SHOWS = gql`
 
   query TrendingTVShows($page: Int!, $language: ISO6391Language) {
     trendingTvShows {
-      onTheAir(args: { page: $page, language: $language }) {
+      onTheAir(args: {page: $page, language: $language}) {
         totalResults
         totalPages
         hasMore
@@ -282,7 +282,7 @@ export const GET_TRENDING_TV_SHOWS = gql`
           genreIds(language: $language)
         }
       }
-      airingToday(args: { page: $page, language: $language }) {
+      airingToday(args: {page: $page, language: $language}) {
         totalResults
         totalPages
         hasMore
@@ -291,7 +291,7 @@ export const GET_TRENDING_TV_SHOWS = gql`
           genreIds(language: $language)
         }
       }
-      popular(args: { page: $page, language: $language }) {
+      popular(args: {page: $page, language: $language}) {
         totalResults
         totalPages
         hasMore
@@ -300,7 +300,7 @@ export const GET_TRENDING_TV_SHOWS = gql`
           genreIds(language: $language)
         }
       }
-      topRated(args: { page: $page, language: $language }) {
+      topRated(args: {page: $page, language: $language}) {
         totalResults
         totalPages
         hasMore
@@ -318,9 +318,7 @@ export const GET_ARTICLES = gql`
     articles(page: $page, language: $language) {
       items {
         publishedAt
-        content
         source
-        author
         title
         image
         url
@@ -371,18 +369,16 @@ export const GET_FAMOUS_DETAIL = gql`
 `;
 
 export const TV_SHOW_SEASONS_DETAIL = gql`
-  query TVShowSeasonsDetail($id: ID!, $season: Int!, $language: ISO6391Language) {
+  query TVShowSeasonsDetail(
+    $id: ID!
+    $season: Int!
+    $language: ISO6391Language
+  ) {
     tvShowSeason(id: $id, season: $season, language: $language) {
-      seasonNumber
       posterPath
       overview
       id
       episodes {
-        voteAverage
-        stillPath
-        voteCount
-        overview
-        airDate
         name
         id
       }

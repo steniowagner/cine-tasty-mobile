@@ -1,7 +1,7 @@
-import { TouchableOpacity, View } from 'react-native';
-import styled from 'styled-components';
+import {TouchableOpacity, View} from 'react-native';
+import styled from 'styled-components/native';
 
-export const RestartQuizButton = styled(TouchableOpacity).attrs(({ theme }) => ({
+export const RestartQuizButton = styled(TouchableOpacity).attrs(({theme}) => ({
   hitSlop: {
     top: theme.metrics.largeSize,
     bottom: theme.metrics.largeSize,
@@ -9,7 +9,7 @@ export const RestartQuizButton = styled(TouchableOpacity).attrs(({ theme }) => (
     right: theme.metrics.largeSize,
   },
 }))`
-  margin-right: ${({ theme }) => theme.metrics.smallSize}px;
+  margin-right: ${({theme}) => theme.metrics.smallSize}px;
 `;
 
 export const ErrorWrapper = styled(View)`

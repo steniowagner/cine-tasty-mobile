@@ -1,15 +1,15 @@
-import { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useCallback, useMemo, useState} from 'react';
 
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
+import {useTranslations} from '@hooks';
 
 export const DEFAULT_NUMBER_OF_LINES = 5;
 
-const useMediaItemDescription = () => {
-  const [numberOfLines, setNumberOfLines] = useState<number | undefined>(undefined);
-  const [textNumberOfLines, setTextNumberOfLines] = useState<number>(0);
+export const useMediaItemDescription = () => {
+  const [numberOfLines, setNumberOfLines] = useState<number | undefined>();
+  const [textNumberOfLines, setTextNumberOfLines] = useState(0);
 
-  const { t } = useTranslation();
+  const translations = useTranslations();
 
   const onGetTextLayout = useCallback(
     (linesLength: number) => {
@@ -17,7 +17,6 @@ const useMediaItemDescription = () => {
         setNumberOfLines(DEFAULT_NUMBER_OF_LINES);
         setTextNumberOfLines(linesLength);
       }
-
       if (textNumberOfLines === 0 && linesLength <= DEFAULT_NUMBER_OF_LINES) {
         setNumberOfLines(linesLength);
       }
@@ -29,7 +28,6 @@ const useMediaItemDescription = () => {
     if (numberOfLines === DEFAULT_NUMBER_OF_LINES) {
       setNumberOfLines(textNumberOfLines);
     }
-
     if (numberOfLines !== DEFAULT_NUMBER_OF_LINES) {
       setNumberOfLines(DEFAULT_NUMBER_OF_LINES);
     }
@@ -37,12 +35,14 @@ const useMediaItemDescription = () => {
 
   const expandableReadButtonText = useMemo(() => {
     const isReadMoreActive = numberOfLines === DEFAULT_NUMBER_OF_LINES;
-
     if (isReadMoreActive) {
-      return t(TRANSLATIONS.FAMOUS_DETAIL_READ_MORE);
+      return translations.translate(
+        translations.translate(Translations.Tags.FAMOUS_DETAIL_READ_MORE),
+      );
     }
-
-    return t(TRANSLATIONS.FAMOUS_DETAIL_READ_LESS);
+    return translations.translate(
+      translations.translate(Translations.Tags.FAMOUS_DETAIL_READ_LESS),
+    );
   }, [numberOfLines]);
 
   return {
@@ -53,5 +53,3 @@ const useMediaItemDescription = () => {
     numberOfLines,
   };
 };
-
-export default useMediaItemDescription;

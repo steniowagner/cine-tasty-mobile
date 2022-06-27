@@ -1,18 +1,21 @@
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
-const types: Types.QuestionOption<SchemaTypes.QuestionType>[] = [
+const types: Types.QuestionType[] = [
   {
     value: SchemaTypes.QuestionType.MIXED,
-    id: 'typeMixed',
+    option: 'type',
+    id: 'mixed',
   },
   {
     value: SchemaTypes.QuestionType.MULTIPLE,
-    id: 'typeMultiple',
+    option: 'type',
+    id: 'multiple',
   },
   {
     value: SchemaTypes.QuestionType.BOOLEAN,
-    id: 'typeBoolean',
+    option: 'type',
+    id: 'boolean',
   },
 ];
 

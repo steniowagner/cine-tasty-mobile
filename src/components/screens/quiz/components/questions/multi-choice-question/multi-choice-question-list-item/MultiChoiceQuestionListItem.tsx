@@ -1,49 +1,40 @@
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 
-import SVGIcon from '@components/common/svg-icon/SVGIcon';
+import {renderSVGIconConditionally} from '@components';
 import metrics from '@styles/metrics';
 
 import * as Styles from './MultiChoiceQuestionListItem.styles';
 
-const CloseIcon = () => (
-  <SVGIcon
-    size={metrics.getWidthFromDP('8%')}
-    id="checkbox-circle"
-    colorThemeRef="buttonText"
-  />
-);
-
-const EmptyCheckbox = () => (
-  <SVGIcon
-    size={metrics.getWidthFromDP('8%')}
-    id="checkbox-blank-circle-outline"
-    colorThemeRef="buttonText"
-  />
-);
-
 type MultiChoiceListItemProps = {
-  onSelectAnswer: (answer: string) => void;
+  onSelectAnswer: () => void;
   isSelected: boolean;
   answer: string;
 };
 
-const MultiChoiceListItem = ({
-  onSelectAnswer,
-  isSelected,
-  answer,
-}: MultiChoiceListItemProps) => (
+const MultiChoiceQuestionListItem = (props: MultiChoiceListItemProps) => (
   <Styles.ListItemWrapper
-    onPress={() => onSelectAnswer(answer)}
-    testID="multi-choice-answer"
-    isSelected={isSelected}
-    key={answer}
-  >
-    {isSelected ? <CloseIcon /> : <EmptyCheckbox />}
+    testID="multi-choice-option-button"
+    onPress={props.onSelectAnswer}
+    isSelected={props.isSelected}
+    key={props.answer}>
+    {renderSVGIconConditionally({
+      condition: props.isSelected,
+      ifTrue: {
+        size: metrics.getWidthFromDP('8%'),
+        colorThemeRef: 'buttonText',
+        id: 'checkbox-circle',
+      },
+      ifFalse: {
+        size: metrics.getWidthFromDP('8%'),
+        colorThemeRef: 'buttonText',
+        id: 'checkbox-blank-circle-outline',
+      },
+    })}
     <Styles.AnswerTextWrapper>
       <Styles.QuestionsIndicatorText
-        isSelected={isSelected}
-      >
-        {answer}
+        testID="multi-choice-option-text"
+        isSelected={props.isSelected}>
+        {props.answer}
       </Styles.QuestionsIndicatorText>
     </Styles.AnswerTextWrapper>
   </Styles.ListItemWrapper>
@@ -52,7 +43,8 @@ const MultiChoiceListItem = ({
 const shouldComponentUpdate = (
   previousState: MultiChoiceListItemProps,
   nextState: MultiChoiceListItemProps,
-): boolean => (previousState.isSelected || !nextState.isSelected)
-  && (!previousState.isSelected || nextState.isSelected);
+): boolean =>
+  (previousState.isSelected || !nextState.isSelected) &&
+  (!previousState.isSelected || nextState.isSelected);
 
-export default memo(MultiChoiceListItem, shouldComponentUpdate);
+export default memo(MultiChoiceQuestionListItem, shouldComponentUpdate);

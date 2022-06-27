@@ -1,4 +1,4 @@
-import { DefaultTheme, withTheme } from 'styled-components';
+import {DefaultTheme, withTheme} from 'styled-components/native';
 
 import useSplashScreen from './useSplashScreen';
 
@@ -7,8 +7,8 @@ type SplashScreenProps = {
   onLoad: () => void;
 };
 
-const SplashScreen = ({ onLoad, theme }: SplashScreenProps) => {
-  useSplashScreen({ onLoad, theme });
+const SplashScreen = ({onLoad, theme}: SplashScreenProps) => {
+  useSplashScreen({onLoad, theme});
 
   return null;
 };
