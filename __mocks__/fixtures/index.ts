@@ -7,3 +7,5 @@ export * from './movie';
 export * from './quiz';
 export * from './news';
 export * from './famous-details';
+export * from './home-trending-movies';
+export * from './home-trending-tv-shows';

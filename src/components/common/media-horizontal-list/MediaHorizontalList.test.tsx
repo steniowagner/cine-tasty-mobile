@@ -76,7 +76,7 @@ describe('<MediaHorizontalList />', () => {
 
     describe('Renders correctly', () => {
       it('should render correctly when it has some movies to show', async () => {
-        const numberOfItems = randomPositiveNumber(20, 1);
+        const numberOfItems = randomPositiveNumber(10, 1);
         const component = render(
           renderMediaHorizontalList({
             dataset: castMovies(numberOfItems) as MediaHorizontalItem[],
@@ -113,7 +113,7 @@ describe('<MediaHorizontalList />', () => {
 
     describe('Touch-press correctly', () => {
       it('should call navigate to the correct screen when the user press on of the list-items', async () => {
-        const numberOfItems = randomPositiveNumber(20, 1);
+        const numberOfItems = randomPositiveNumber(10, 1);
         const dataset = castMovies(numberOfItems) as MediaHorizontalItem[];
         const itemSelected = randomArrayIndex(dataset);
         const component = render(
@@ -145,7 +145,7 @@ describe('<MediaHorizontalList />', () => {
 
     describe('Renders correctly', () => {
       it('should render correctly when it has some tv-shows to show', async () => {
-        const numberOfItems = randomPositiveNumber(20, 1);
+        const numberOfItems = randomPositiveNumber(10, 1);
         const component = render(
           renderMediaHorizontalList({
             dataset: castTVShows(numberOfItems) as MediaHorizontalItem[],
@@ -182,7 +182,7 @@ describe('<MediaHorizontalList />', () => {
 
     describe('Touch-press correctly', () => {
       it('should call navigate to the correct screen when the user press on of the list-items', async () => {
-        const numberOfItems = randomPositiveNumber(20, 1);
+        const numberOfItems = randomPositiveNumber(10, 1);
         const dataset = castTVShows(numberOfItems) as MediaHorizontalItem[];
         const itemSelected = randomArrayIndex(dataset);
         const component = render(
