@@ -7,10 +7,13 @@ import {
   useAnimatedGestureHandler,
   runOnJS,
   withSpring,
+  interpolate,
+  Extrapolate,
+  withTiming,
 } from 'react-native-reanimated';
 
-export const MAX_CLAMPING = -50;
-
+export const MAX_CLAMPING = 50;
+const DARK_LAYER_OPACITY_ANIMATION_DURATION = 50;
 const SPRING_CONFIG = {
   damping: 80,
   overshootClamping: true,
@@ -43,6 +46,21 @@ export const useAnimateModalDistanceFromTop = (
     top: withSpring(distanceFromTop.value, SPRING_CONFIG),
   }));
 
+  const darkLayerAnimatedStyle = useAnimatedStyle(() => {
+    const opacity = withTiming(
+      interpolate(
+        distanceFromTop.value,
+        [dimensions.height - 2 * MAX_CLAMPING, cardInitialPosition],
+        [0, 1],
+        Extrapolate.CLAMP,
+      ),
+      {duration: DARK_LAYER_OPACITY_ANIMATION_DURATION},
+    );
+    return {
+      opacity,
+    };
+  });
+
   const handleGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     HandleGestureEventProps
@@ -51,7 +69,7 @@ export const useAnimateModalDistanceFromTop = (
       context.startY = distanceFromTop.value;
     },
     onActive(event, context) {
-      if (event.translationY >= MAX_CLAMPING) {
+      if (event.translationY >= -MAX_CLAMPING) {
         distanceFromTop.value = context.startY + event.translationY;
       }
     },
@@ -80,6 +98,7 @@ export const useAnimateModalDistanceFromTop = (
 
   return {
     animatedStyle: distanceFromTopAnimatedStyle,
+    darkLayerAnimatedStyle,
     handleGestureEvent,
   };
 };
