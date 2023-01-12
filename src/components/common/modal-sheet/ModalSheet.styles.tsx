@@ -44,11 +44,9 @@ export const AnimatedStyles = StyleSheet.create({
     backgroundColor: dark.colors.darkLayer,
   },
   card: {
-    width: '100%',
     borderTopLeftRadius: metrics.mediumSize,
     borderTopRightRadius: metrics.mediumSize,
     backgroundColor: 'white',
-    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
