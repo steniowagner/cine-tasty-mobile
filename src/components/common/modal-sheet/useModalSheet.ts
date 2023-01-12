@@ -12,6 +12,8 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import {DEFAULT_MODAL_SHEET_HEIGHT} from './ModalSheet.styles';
+
 export const MAX_CLAMPING = 50;
 const DARK_LAYER_OPACITY_ANIMATION_DURATION = 50;
 const SPRING_CONFIG = {
@@ -24,22 +26,25 @@ type HandleGestureEventProps = {
   startY: number;
 };
 
-type UseAnimateModalDistanceFromTopProps = {
-  cardHeight: number;
-  closeModal: () => void;
+type UseModalSheetProps = {
+  height?: number;
+  onClose: () => void;
   isOpen?: boolean;
 };
 
-export const useAnimateModalDistanceFromTop = (
-  props: UseAnimateModalDistanceFromTopProps,
-) => {
+export const useModalSheet = (props: UseModalSheetProps) => {
   const dimensions = useWindowDimensions();
 
   const distanceFromTop = useSharedValue(dimensions.height);
 
+  const cardHeight = useMemo(
+    () => props.height ?? DEFAULT_MODAL_SHEET_HEIGHT,
+    [props.height],
+  );
+
   const cardInitialPosition = useMemo(
-    () => dimensions.height - props.cardHeight,
-    [props.cardHeight],
+    () => dimensions.height - cardHeight,
+    [cardHeight],
   );
 
   const distanceFromTopAnimatedStyle = useAnimatedStyle(() => ({
@@ -50,7 +55,7 @@ export const useAnimateModalDistanceFromTop = (
     const opacity = withTiming(
       interpolate(
         distanceFromTop.value,
-        [dimensions.height - 2 * MAX_CLAMPING, cardInitialPosition],
+        [dimensions.height - 1.5 * MAX_CLAMPING, cardInitialPosition],
         [0, 1],
         Extrapolate.CLAMP,
       ),
@@ -74,13 +79,13 @@ export const useAnimateModalDistanceFromTop = (
       }
     },
     onEnd() {
-      const shouldCloseModal = distanceFromTop.value > props.cardHeight;
+      const shouldCloseModal = distanceFromTop.value > cardHeight;
       const nextDistanceFromTopValue = shouldCloseModal
         ? dimensions.height
         : cardInitialPosition;
       distanceFromTop.value = nextDistanceFromTopValue;
       if (shouldCloseModal) {
-        runOnJS(props.closeModal)();
+        runOnJS(props.onClose)();
       }
     },
   });
@@ -97,8 +102,9 @@ export const useAnimateModalDistanceFromTop = (
   }, [props.isOpen]);
 
   return {
-    animatedStyle: distanceFromTopAnimatedStyle,
+    cardAnimatedStyle: distanceFromTopAnimatedStyle,
     darkLayerAnimatedStyle,
     handleGestureEvent,
+    cardHeight,
   };
 };

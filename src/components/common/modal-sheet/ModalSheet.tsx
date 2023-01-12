@@ -32,7 +32,7 @@ export const ModalSheet = (props: ModalSheetProps) => {
         <Animated.View
           style={[
             {
-              height: modalSheet.height,
+              height: modalSheet.cardHeight,
               ...Styles.AnimatedStyles.card,
             },
             modalSheet.cardAnimatedStyle,
