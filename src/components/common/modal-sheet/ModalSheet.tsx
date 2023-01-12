@@ -29,6 +29,7 @@ export const ModalSheet = (props: ModalSheetProps) => {
           modalSheet.darkLayerAnimatedStyle,
         ]}
       />
+      <Styles.BottomGapSection height={modalSheet.bottomGapSectionHeight} />
       <PanGestureHandler onGestureEvent={modalSheet.handleGestureEvent}>
         <Animated.View
           style={[
