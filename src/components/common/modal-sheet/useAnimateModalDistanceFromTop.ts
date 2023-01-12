@@ -9,12 +9,13 @@ import {
   withSpring,
 } from 'react-native-reanimated';
 
+export const MAX_CLAMPING = -50;
+
 const SPRING_CONFIG = {
   damping: 80,
   overshootClamping: true,
   stiffness: 500,
 };
-const MAX_CLAMPING = -50;
 
 type HandleGestureEventProps = {
   startY: number;
