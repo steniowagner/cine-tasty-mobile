@@ -6,6 +6,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import {useAnimateDarkLayerOpacity} from './useAnimateDarkLayerOpacity';
 import {DEFAULT_MODAL_SHEET_HEIGHT} from './ModalSheet.styles';
 
 type UseModalSheetProps = {
@@ -15,28 +16,14 @@ type UseModalSheetProps = {
 };
 
 export const useModalSheet = (props: UseModalSheetProps) => {
-  const darkLayerOpacity = useSharedValue(0);
-
-  const darkLayerAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: darkLayerOpacity.value,
-  }));
-
-  const handlePressBackgroundLayer = useCallback(() => {
-    props.onClose();
-  }, [props.onClose]);
-
-  const handleAnimateDarkLayerOpacity = useCallback(() => {
-    const nextDarkLayerOpacity = props.isOpen ? 1 : 0;
-    darkLayerOpacity.value = withTiming(nextDarkLayerOpacity, {duration: 700});
-  }, [props.isOpen]);
-
-  useEffect(() => {
-    handleAnimateDarkLayerOpacity();
-  }, [props.isOpen]);
+  const animateDarkLayerOpacity = useAnimateDarkLayerOpacity({
+    onClose: props.onClose,
+    isOpen: props.isOpen,
+  });
 
   return {
     height: props.height ?? DEFAULT_MODAL_SHEET_HEIGHT,
-    onPressBackgroundLayer: handlePressBackgroundLayer,
-    darkLayerAnimatedStyle,
+    onPressBackgroundLayer: animateDarkLayerOpacity.onPressBackgroundLayer,
+    darkLayerAnimatedStyle: animateDarkLayerOpacity.darkLayerAnimatedStyle,
   };
 };
