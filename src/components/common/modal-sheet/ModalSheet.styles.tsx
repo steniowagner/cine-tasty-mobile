@@ -6,6 +6,10 @@ import metrics from '@styles/metrics';
 
 export const DEFAULT_MODAL_SHEET_HEIGHT = metrics.getHeightFromDP('60%');
 
+type BottomGapSectionStyleProps = {
+  height: number;
+};
+
 export const GripWrapper = styled(View)`
   width: 100%;
   align-items: center;
@@ -36,6 +40,16 @@ export const LineDivider = styled(View)`
 
 export const ListHeaderWrapper = styled(View)`
   margin-top: ${({theme}) => theme.metrics.smallSize}px;
+`;
+
+export const BottomGapSection = styled(View)<BottomGapSectionStyleProps>`
+  width: 100%;
+  height: ${({height}) => height}px;
+  background-color: ${({theme}) => theme.colors.primary};
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 export const AnimatedStyles = StyleSheet.create({

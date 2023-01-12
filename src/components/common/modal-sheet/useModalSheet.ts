@@ -12,10 +12,14 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import metrics from '@styles/metrics';
+
 import {DEFAULT_MODAL_SHEET_HEIGHT} from './ModalSheet.styles';
 
-export const MAX_CLAMPING = 50;
+export const MAX_CLAMPING = metrics.getWidthFromDP('8%');
+
 const DARK_LAYER_OPACITY_ANIMATION_DURATION = 50;
+
 const SPRING_CONFIG = {
   damping: 80,
   overshootClamping: true,
@@ -38,7 +42,10 @@ export const useModalSheet = (props: UseModalSheetProps) => {
   const distanceFromTop = useSharedValue(dimensions.height);
 
   const cardHeight = useMemo(
-    () => props.height ?? DEFAULT_MODAL_SHEET_HEIGHT,
+    () =>
+      props.height
+        ? props.height + MAX_CLAMPING
+        : DEFAULT_MODAL_SHEET_HEIGHT + MAX_CLAMPING,
     [props.height],
   );
 
@@ -103,6 +110,7 @@ export const useModalSheet = (props: UseModalSheetProps) => {
 
   return {
     cardAnimatedStyle: distanceFromTopAnimatedStyle,
+    bottomGapSectionHeight: MAX_CLAMPING,
     darkLayerAnimatedStyle,
     handleGestureEvent,
     cardHeight,
