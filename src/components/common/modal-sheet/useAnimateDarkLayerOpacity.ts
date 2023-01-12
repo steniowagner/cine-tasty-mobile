@@ -33,6 +33,6 @@ export const useAnimateDarkLayerOpacity = (
   }, [props.isOpen]);
 
   return {
-    darkLayerAnimatedStyle,
+    animatedStyle: darkLayerAnimatedStyle,
   };
 };
