@@ -7,9 +7,10 @@ import {
 } from 'react-native-reanimated';
 
 type UseAnimateDarkLayerOpacityProps = {
-  onClose: () => void;
   isOpen: boolean;
 };
+
+const ANIMATION_DURATION = 700;
 
 export const useAnimateDarkLayerOpacity = (
   props: UseAnimateDarkLayerOpacityProps,
@@ -20,13 +21,11 @@ export const useAnimateDarkLayerOpacity = (
     opacity: darkLayerOpacity.value,
   }));
 
-  const handlePressBackgroundLayer = useCallback(() => {
-    props.onClose();
-  }, [props.onClose]);
-
   const handleAnimateDarkLayerOpacity = useCallback(() => {
     const nextDarkLayerOpacity = props.isOpen ? 1 : 0;
-    darkLayerOpacity.value = withTiming(nextDarkLayerOpacity, {duration: 700});
+    darkLayerOpacity.value = withTiming(nextDarkLayerOpacity, {
+      duration: ANIMATION_DURATION,
+    });
   }, [props.isOpen]);
 
   useEffect(() => {
@@ -34,7 +33,6 @@ export const useAnimateDarkLayerOpacity = (
   }, [props.isOpen]);
 
   return {
-    onPressBackgroundLayer: handlePressBackgroundLayer,
     darkLayerAnimatedStyle,
   };
 };

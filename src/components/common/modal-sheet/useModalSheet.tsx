@@ -17,13 +17,12 @@ type UseModalSheetProps = {
 
 export const useModalSheet = (props: UseModalSheetProps) => {
   const animateDarkLayerOpacity = useAnimateDarkLayerOpacity({
-    onClose: props.onClose,
     isOpen: props.isOpen,
   });
 
   return {
     height: props.height ?? DEFAULT_MODAL_SHEET_HEIGHT,
-    onPressBackgroundLayer: animateDarkLayerOpacity.onPressBackgroundLayer,
+    onPressBackgroundLayer: () => props.onClose(),
     darkLayerAnimatedStyle: animateDarkLayerOpacity.darkLayerAnimatedStyle,
   };
 };
