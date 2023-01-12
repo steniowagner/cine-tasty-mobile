@@ -21,7 +21,7 @@ export const dark: DefaultTheme = {
     androidToolbar: '#222',
     inactiveWhite: '#AAAAAA',
     loadingColor: '#4A4A4A',
-    darkLayer: 'rgba(0, 0, 0, 0.4)',
+    darkLayer: 'rgba(0, 0, 0, 0.7)',
     popup: 'rgba(0, 0, 0, 0.9)',
     fallbackImageBackground: '#cfcfcf',
     fallbackImageIcon: '#4d4d4d',
