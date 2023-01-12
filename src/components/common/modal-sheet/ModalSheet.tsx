@@ -7,6 +7,7 @@ import * as Styles from './ModalSheet.styles';
 import {useModalSheet} from './useModalSheet';
 
 type ModalSheetProps = {
+  children: React.ReactNode;
   title?: string;
   isOpen: boolean;
   onClose: () => void;
@@ -46,6 +47,7 @@ export const ModalSheet = (props: ModalSheetProps) => {
               <Styles.LineDivider />
             </Styles.ListHeaderWrapper>
           )}
+          {props.children}
         </Animated.View>
       </PanGestureHandler>
     </Modal>
