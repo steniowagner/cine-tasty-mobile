@@ -39,3 +39,4 @@ export {
   SVGIcon,
   SVGIconProps,
 } from './svg-icon';
+export {ModalSheet} from './modal-sheet/ModalSheet';
