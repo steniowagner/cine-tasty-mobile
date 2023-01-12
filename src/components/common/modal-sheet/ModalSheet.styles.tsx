@@ -1,24 +1,10 @@
-import {StyleSheet, Animated, View, Text} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
+import {dark, light} from '@styles/themes';
 import metrics from '@styles/metrics';
-import {dark} from '@styles/themes';
 
 export const DEFAULT_MODAL_SHEET_HEIGHT = metrics.getHeightFromDP('60%');
-
-export const Wrapper = styled(View)`
-  width: 100%;
-  height: 100%;
-  justify-content: flex-end;
-  background-color: ${({theme}) => theme.colors.darkLayer};
-`;
-
-export const CardWrapper = styled(Animated.View)`
-  width: 100%;
-  border-top-left-radius: ${({theme}) => theme.metrics.mediumSize}px;
-  border-top-right-radius: ${({theme}) => theme.metrics.mediumSize}px;
-  background-color: white;
-`;
 
 export const GripWrapper = styled(View)`
   width: 100%;
@@ -27,25 +13,25 @@ export const GripWrapper = styled(View)`
 `;
 
 export const Grip = styled(View)`
-  width: ${({theme}) => theme.metrics.getWidthFromDP('15%')}px;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('1.2%')}px;
+  width: ${({theme}) => theme.metrics.getWidthFromDP('16%')}px;
+  height: ${({theme}) => theme.metrics.getWidthFromDP('1.5%')}px;
   border-radius: ${({theme}) => theme.metrics.extraLargeSize}px;
   background-color: ${({theme}) => theme.colors.inactiveWhite};
 `;
 
-export const HeadLineText = styled(Text)`
+export const Title = styled(Text)`
   margin-horizontal: ${({theme}) => theme.metrics.largeSize}px;
   margin-bottom: ${({theme}) => theme.metrics.largeSize}px;
   font-family: CircularStd-Bold;
   font-size: ${({theme}) => theme.metrics.extraLargeSize * 1.1}px;
   text-align: center;
-  color: rgba(0, 0, 0, 0.8);
+  color: ${light.colors.text};
 `;
 
 export const LineDivider = styled(View)`
   width: 100%;
-  height: 1.8px;
-  background-color: #f2f2f2;
+  height: ${({theme}) => theme.metrics.getWidthFromDP('0.5%')}px;
+  background-color: ${light.colors.androidToolbar};
 `;
 
 export const ListHeaderWrapper = styled(View)`
@@ -54,8 +40,17 @@ export const ListHeaderWrapper = styled(View)`
 
 export const AnimatedStyles = StyleSheet.create({
   backgroundDarkLayer: {
-    width: '100%',
-    height: '100%',
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: dark.colors.darkLayer,
+  },
+  card: {
+    width: '100%',
+    borderTopLeftRadius: metrics.mediumSize,
+    borderTopRightRadius: metrics.mediumSize,
+    backgroundColor: 'white',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
