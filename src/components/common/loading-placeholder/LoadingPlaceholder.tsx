@@ -1,30 +1,38 @@
 import React from 'react';
-import {Animated} from 'react-native';
-import {withTheme, DefaultTheme} from 'styled-components/native';
+import Animated from 'react-native-reanimated';
+import {useTheme} from 'styled-components/native';
 
-import useLoadingPlaceholder from './useLoadingPlaceholder';
+import {useLoadingPlaceholder, Style} from './useLoadingPlaceholder';
 
 type LoadingPlaceholderProps = {
   indexToDelayAnimation?: number;
-  theme: DefaultTheme;
   testID?: string;
-  style: object;
+  style: Style;
 };
 
-export const LoadingPlaceholder = withTheme(
-  (props: LoadingPlaceholderProps) => {
-    const loadingPlaceholder = useLoadingPlaceholder({
-      indexToDelayAnimation: props.indexToDelayAnimation || 0,
-    });
-    return (
-      <Animated.View
-        style={{
-          ...props.style,
-          backgroundColor: props.theme.colors.loadingColor,
-          opacity: loadingPlaceholder.opacity,
-        }}
-        testID={props.testID || 'loading-placeholder'}
-      />
-    );
-  },
-);
+export const LoadingPlaceholder = (props: LoadingPlaceholderProps) => {
+  const loadingPlaceholder = useLoadingPlaceholder({
+    indexToDelayAnimation: props.indexToDelayAnimation || 0,
+    style: props.style,
+  });
+
+  const theme = useTheme();
+
+  return (
+    <Animated.View
+      style={[
+        {
+          borderRadius: props.style.borderRadius,
+          width: props.style.width,
+          height: props.style.height,
+          marginBottom: props.style.marginBottom,
+          backgroundColor: theme.colors.loadingColor,
+        },
+        {
+          ...loadingPlaceholder.style,
+        },
+      ]}
+      testID={props.testID || 'loading-placeholder'}
+    />
+  );
+};
