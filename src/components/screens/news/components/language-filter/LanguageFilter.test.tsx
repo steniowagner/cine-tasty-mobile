@@ -30,6 +30,9 @@ const renderLanguageFilter = (
   </ThemeProvider>
 );
 
+const makeSelectedLanguageIndex = () =>
+  Math.floor(Math.random() * (languages.length - 1));
+
 describe('<LanguageFilter />', () => {
   const elements = {
     languageList: (api: RenderAPI) => api.queryByTestId('languages-list'),
@@ -49,10 +52,9 @@ describe('<LanguageFilter />', () => {
   });
 
   it('should render the list of items correctly', () => {
-    const INDEX_SELECTED =
-      (Math.random() * (languages.length - 1 - 0 + 1)) << 0;
+    const indexLanguageSelected = makeSelectedLanguageIndex();
     const component = render(
-      renderLanguageFilter(languages[INDEX_SELECTED].id),
+      renderLanguageFilter(languages[indexLanguageSelected].id),
     );
     act(() => {
       jest.runAllTimers();
@@ -83,16 +85,15 @@ describe('<LanguageFilter />', () => {
     jest.spyOn(React, 'useRef').mockReturnValue({
       current: {scrollTo: mockScrollTo},
     });
-    const INDEX_SELECTED =
-      (Math.random() * (languages.length - 1 - 0 + 1)) << 0;
-    render(renderLanguageFilter(languages[INDEX_SELECTED].id));
+    const indexLanguageSelected = makeSelectedLanguageIndex();
+    render(renderLanguageFilter(languages[indexLanguageSelected].id));
     act(() => {
       jest.runAllTimers();
     });
     expect(mockScrollTo).toHaveBeenCalledTimes(1);
     expect(mockScrollTo).toHaveBeenCalledWith({
       x: 0,
-      y: INDEX_SELECTED * ITEM_LIST_HEIGHT,
+      y: indexLanguageSelected * ITEM_LIST_HEIGHT,
       animated: true,
     });
   });
