@@ -5,24 +5,20 @@ import {
   PaginatedListHeader,
   PaginationFooter,
   HeaderIconButton,
+  ModalSheet,
   Advise,
 } from '@components';
 import * as SchemaTypes from '@schema-types';
-import metrics from '@styles/metrics';
 
-import {imageWrapper} from './list-item/NewsListItem.styles';
+import {LIST_ITEM_HEIGHT, INITIAL_ITEMS_TO_RENDER} from './News.style';
 import {NewsStackProps} from '../routes/route-params-types';
 import NewsLoading from './loading-list/NewsLoading';
 import NewsListItem from './list-item/NewsListItem';
-import useNews from './useNews';
-
-const LIST_ITEM_HEIGHT = imageWrapper.height + 2 * metrics.mediumSize;
-
-export const INITIAL_ITEMS_TO_RENDER =
-  Math.floor(metrics.height / LIST_ITEM_HEIGHT) - 1;
+import {LanguageFilter} from './language-filter/LanguageFilter';
+import {useNews} from './useNews';
 
 export const News = (props: NewsStackProps) => {
-  const news = useNews({navigation: props.navigation});
+  const news = useNews();
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -35,11 +31,7 @@ export const News = (props: NewsStackProps) => {
         />
       ),
     });
-  }, [
-    news.onPressHeaderIconButton,
-    props.navigation.setOptions,
-    news.isLoading,
-  ]);
+  }, [news.onPressHeaderIconButton, news.isLoading]);
 
   if (news.isLoading) {
     return <NewsLoading />;
@@ -48,55 +40,67 @@ export const News = (props: NewsStackProps) => {
   if (news.shouldShowEmptyListAdvice) {
     return (
       <Advise
-        description={news.adviseTexts.description}
-        suggestion={news.adviseTexts.suggestion}
-        title={news.adviseTexts.title}
+        description={news.texts.description}
+        suggestion={news.texts.suggestion}
+        title={news.texts.title}
         icon="alert-box"
       />
     );
   }
 
   return (
-    <FlatList
-      ListHeaderComponent={() =>
-        news.shouldShowListTopReloadButton && (
-          <PaginatedListHeader onPress={news.onPressTopReloadButton} />
-        )
-      }
-      ListFooterComponent={() =>
-        news.shouldShowPaginationFooter && (
-          <PaginationFooter
-            onPressReloadButton={news.onPressFooterReloadButton}
-            hasError={news.hasPaginationError}
-            isPaginating={news.isPaginating}
-          />
-        )
-      }
-      renderItem={({item}) => (
-        <NewsListItem
-          withRTL={news.language === SchemaTypes.ArticleLanguage.AR}
-          date={item.publishedAt}
-          source={item.source}
-          image={item.image}
-          text={item.title}
-          url={item.url}
+    <>
+      <ModalSheet
+        title={news.texts.modalTitle}
+        isOpen={news.isLanguageModalOpen}
+        onClose={news.onCloseModal}>
+        <LanguageFilter
+          onSelectLanguage={news.handleSelectLanguage}
+          lastLanguageSelected={news.language}
+          closeModal={news.onCloseModal}
         />
-      )}
-      keyExtractor={(item, index) => `${item.id}-${index}`}
-      initialNumToRender={INITIAL_ITEMS_TO_RENDER + 1}
-      onEndReachedThreshold={Platform.select({
-        android: 0.5,
-        ios: 0.1,
-      })}
-      getItemLayout={(_, index) => ({
-        offset: LIST_ITEM_HEIGHT * index,
-        length: LIST_ITEM_HEIGHT,
-        index,
-      })}
-      bounces={!!news.articles.length}
-      onEndReached={news.onEndReached}
-      data={news.articles}
-      testID="news-list"
-    />
+      </ModalSheet>
+      <FlatList
+        ListHeaderComponent={() =>
+          news.shouldShowListTopReloadButton && (
+            <PaginatedListHeader onPress={news.onPressTopReloadButton} />
+          )
+        }
+        ListFooterComponent={() =>
+          news.shouldShowPaginationFooter && (
+            <PaginationFooter
+              onPressReloadButton={news.onPressFooterReloadButton}
+              hasError={news.hasPaginationError}
+              isPaginating={news.isPaginating}
+            />
+          )
+        }
+        renderItem={({item}) => (
+          <NewsListItem
+            withRTL={news.language === SchemaTypes.ArticleLanguage.AR}
+            date={item.publishedAt}
+            source={item.source}
+            image={item.image}
+            text={item.title}
+            url={item.url}
+          />
+        )}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
+        initialNumToRender={INITIAL_ITEMS_TO_RENDER + 1}
+        onEndReachedThreshold={Platform.select({
+          android: 0.5,
+          ios: 0.1,
+        })}
+        getItemLayout={(_, index) => ({
+          offset: LIST_ITEM_HEIGHT * index,
+          length: LIST_ITEM_HEIGHT,
+          index,
+        })}
+        bounces={!!news.articles.length}
+        onEndReached={news.onEndReached}
+        data={news.articles}
+        testID="news-list"
+      />
+    </>
   );
 };

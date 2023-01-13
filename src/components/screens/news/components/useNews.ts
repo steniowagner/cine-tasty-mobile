@@ -4,19 +4,13 @@ import {useTranslations, usePagination} from '@hooks';
 import {GET_ARTICLES} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
-import {Routes} from '@routes/routes';
-import * as Types from '@local-types';
 
-import {NewsStackNavigationProp} from '../routes/route-params-types';
-
-type UseNewsProps = {
-  navigation: NewsStackNavigationProp;
-};
-
-const useNews = (props: UseNewsProps) => {
+export const useNews = () => {
   const [language, setLanguage] = useState<SchemaTypes.ArticleLanguage>(
     SchemaTypes.ArticleLanguage.EN,
   );
+  const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
+
   const translations = useTranslations();
 
   const handleOnGetData = useCallback(
@@ -51,18 +45,7 @@ const useNews = (props: UseNewsProps) => {
     variables,
   });
 
-  const handlePressHeaderIconButton = useCallback(() => {
-    props.navigation.navigate(Routes.CustomModal.CUSTOM_MODAL_STACK, {
-      type: Types.CustomizedModalChildrenType.LANGUAGE,
-      headerText: translations.translate(Translations.Tags.NEWS_FILTER_MESSAGE),
-      extraData: {
-        onPressSelect: setLanguage,
-        lastItemSelected: language,
-      },
-    });
-  }, [props.navigation, language, translations.translate]);
-
-  const adviseTexts = useMemo(
+  const texts = useMemo(
     () => ({
       description: translations.translate(
         Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION,
@@ -71,6 +54,7 @@ const useNews = (props: UseNewsProps) => {
         Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION,
       ),
       title: translations.translate(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
+      modalTitle: translations.translate(Translations.Tags.NEWS_FILTER_MESSAGE),
     }),
     [],
   );
@@ -83,7 +67,10 @@ const useNews = (props: UseNewsProps) => {
       !pagination.dataset.length && !!pagination.error && !pagination.isLoading,
     shouldShowEmptyListAdvice:
       !pagination.isLoading && !pagination.error && !pagination.dataset.length,
-    onPressHeaderIconButton: handlePressHeaderIconButton,
+    onPressHeaderIconButton: () => setIsLanguageModalOpen(true),
+    onCloseModal: () => setIsLanguageModalOpen(false),
+    handleSelectLanguage: (languageSelected: SchemaTypes.ArticleLanguage) =>
+      setLanguage(languageSelected),
     onPressFooterReloadButton: pagination.paginate,
     onPressTopReloadButton: pagination.reset,
     onEndReached: pagination.paginate,
@@ -92,9 +79,8 @@ const useNews = (props: UseNewsProps) => {
     isPaginating: pagination.isPaginating,
     isLoading: pagination.isLoading,
     error: pagination.error,
-    adviseTexts,
+    isLanguageModalOpen,
+    texts,
     language,
   };
 };
-
-export default useNews;
