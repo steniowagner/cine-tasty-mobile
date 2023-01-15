@@ -1,14 +1,14 @@
 import React from 'react';
 
 import * as Styles from './DateDiff.styles';
-import useDateDiff from './useDateDiff';
+import {useDateDiff} from './useDateDiff';
 
 type DateDiffProps = {
   date: string;
   now: Date;
 };
 
-const DateDiff = (props: DateDiffProps) => {
+export const DateDiff = (props: DateDiffProps) => {
   const dateDiff = useDateDiff({date: props.date, now: props.now});
   return (
     <Styles.DefaultText testID="date-diff-text">
@@ -16,5 +16,3 @@ const DateDiff = (props: DateDiffProps) => {
     </Styles.DefaultText>
   );
 };
-
-export default DateDiff;

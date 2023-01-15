@@ -8,13 +8,14 @@ const ONE_HOUR_IN_SECONDS = ONE_MINUTE_IN_SECONDS * 60;
 const ONE_DAY_IN_SECONDS = ONE_HOUR_IN_SECONDS * 24;
 const ONE_MONTH_IN_SECONDS = ONE_DAY_IN_SECONDS * 31;
 const ONE_YEAR_IN_SECONDS = ONE_MONTH_IN_SECONDS * 12;
+const MONTHS_IN_ONE_YEAR = 12;
 
 type UseDateDiffProps = {
   date: string;
   now: Date;
 };
 
-const useDateDiff = (props: UseDateDiffProps) => {
+export const useDateDiff = (props: UseDateDiffProps) => {
   const translations = useTranslations();
 
   const handleYearsPassed = useCallback(
@@ -25,8 +26,8 @@ const useDateDiff = (props: UseDateDiffProps) => {
 
   const handleMonthsPassed = useCallback(
     (value: number) => {
-      if (value % 12 === 0) {
-        return handleYearsPassed(value / 12);
+      if (value % MONTHS_IN_ONE_YEAR === 0) {
+        return handleYearsPassed(value / MONTHS_IN_ONE_YEAR);
       }
       return translations.translate(Translations.Tags.TIME_MONTH, {value});
     },
@@ -106,5 +107,3 @@ const useDateDiff = (props: UseDateDiffProps) => {
     text,
   };
 };
-
-export default useDateDiff;
