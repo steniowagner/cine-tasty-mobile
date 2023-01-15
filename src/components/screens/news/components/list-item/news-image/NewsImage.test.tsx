@@ -1,17 +1,23 @@
+jest.unmock('react-native-reanimated');
+
 import React from 'react';
 import {
   RenderAPI,
   fireEvent,
   cleanup,
   render,
-  act,
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {dark as theme} from '@styles/themes/dark';
 
-import NewsImage, {ANIMATION_DURATION} from './NewsImage';
+import {NewsImage} from './NewsImage';
+
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock');
+  Reanimated.default.call = () => {};
+  return Reanimated;
+});
 
 const renderNewsImage = (imageURL = 'image') => (
   <ThemeProvider theme={theme}>
@@ -22,7 +28,6 @@ const renderNewsImage = (imageURL = 'image') => (
 describe('<NewsImage />', () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    setupTimeTravel();
   });
 
   afterEach(cleanup);
@@ -42,15 +47,9 @@ describe('<NewsImage />', () => {
     expect(elements.iconImage(component)).not.toBeNull();
   });
 
-  it('should render only the image after the image be loaded', () => {
+  it('should render only the image after the image being loaded', () => {
     const component = render(renderNewsImage());
-    act(() => {
-      jest.runAllTimers();
-    });
     fireEvent(elements.newsImage(component), 'onLoad');
-    act(() => {
-      timeTravel(ANIMATION_DURATION);
-    });
     expect(elements.newsImage(component)).not.toBeNull();
     expect(elements.fallbackImageWrapper(component)).toBeNull();
     expect(elements.iconImage(component)).toBeNull();

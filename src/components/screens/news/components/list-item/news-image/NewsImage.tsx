@@ -1,21 +1,19 @@
 import React from 'react';
 import {View} from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import {renderSVGIconConditionally} from '@components';
-import metrics from '@styles/metrics';
 
 import * as Styles from './NewsImage.styles';
 import useNewsImage from './useNewsImage';
-
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
-export const ANIMATION_DURATION = 400;
 
 type NewsImageProps = {
   image: string;
 };
 
-const NewsImage = (props: NewsImageProps) => {
+export const NewsImage = (props: NewsImageProps) => {
   const newsImage = useNewsImage({image: props.image});
+
   return (
     <View>
       <Styles.ImageContent
@@ -25,30 +23,27 @@ const NewsImage = (props: NewsImageProps) => {
         testID="news-image"
       />
       {newsImage.isFallbackImageVisible && (
-        <Styles.FallbackImageWrapper
+        <Animated.View
           testID="fallback-image-wrapper"
           style={[
-            {
-              opacity: newsImage.fallbackImageWrapperOpacity,
-            },
+            Styles.AnimatedViewStlyes.fallbackImageWrapper,
+            newsImage.fallbackImageOpacityAnimatedStyle,
           ]}>
           {renderSVGIconConditionally({
             condition: newsImage.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
-              size: DEFAULT_ICON_SIZE,
+              size: Styles.DEFAULT_ICON_SIZE,
               id: 'image-off',
             },
             ifFalse: {
               colorThemeRef: 'fallbackImageIcon',
-              size: DEFAULT_ICON_SIZE,
+              size: Styles.DEFAULT_ICON_SIZE,
               id: 'image',
             },
           })}
-        </Styles.FallbackImageWrapper>
+        </Animated.View>
       )}
     </View>
   );
 };
-
-export default NewsImage;
