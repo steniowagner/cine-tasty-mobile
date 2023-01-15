@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, Platform} from 'react-native';
 
 import {
@@ -9,18 +9,22 @@ import {
   Advise,
 } from '@components';
 import * as SchemaTypes from '@schema-types';
+import metrics from '@styles/metrics';
 
-import {LIST_ITEM_HEIGHT, INITIAL_ITEMS_TO_RENDER} from './News.style';
+import {LIST_ITEM_HEIGHT} from './News.style';
 import {NewsStackProps} from '../routes/route-params-types';
 import NewsLoading from './loading-list/NewsLoading';
 import NewsListItem from './list-item/NewsListItem';
 import {LanguageFilter} from './language-filter/LanguageFilter';
 import {useNews} from './useNews';
 
+export const INITIAL_ITEMS_TO_RENDER =
+  Math.floor(metrics.height / LIST_ITEM_HEIGHT) - 1;
+
 export const News = (props: NewsStackProps) => {
   const news = useNews();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton
@@ -31,7 +35,7 @@ export const News = (props: NewsStackProps) => {
         />
       ),
     });
-  }, [news.onPressHeaderIconButton, news.isLoading]);
+  }, [news.isLoading]);
 
   if (news.isLoading) {
     return <NewsLoading />;
@@ -39,12 +43,24 @@ export const News = (props: NewsStackProps) => {
 
   if (news.shouldShowEmptyListAdvice) {
     return (
-      <Advise
-        description={news.texts.description}
-        suggestion={news.texts.suggestion}
-        title={news.texts.title}
-        icon="alert-box"
-      />
+      <>
+        <ModalSheet
+          title={news.texts.modalTitle}
+          isOpen={news.isLanguageModalOpen}
+          onClose={news.onCloseModal}>
+          <LanguageFilter
+            onSelectLanguage={news.handleSelectLanguage}
+            lastLanguageSelected={news.language}
+            closeModal={news.onCloseModal}
+          />
+        </ModalSheet>
+        <Advise
+          description={news.texts.description}
+          suggestion={news.texts.suggestion}
+          title={news.texts.title}
+          icon="alert-box"
+        />
+      </>
     );
   }
 
