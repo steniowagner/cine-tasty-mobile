@@ -1,3 +1,5 @@
+jest.unmock('react-native-reanimated');
+
 import React from 'react';
 import {
   RenderAPI,
@@ -10,21 +12,60 @@ import {
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
 import {InMemoryCache} from '@apollo/client';
 
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
 import {flatListScrollEventData} from '@mocks/utils';
 import * as mockNews from '@mocks/fixtures/news';
 import {AlertMessageProvider} from '@providers';
-import * as SchemaTypes from '@schema-types';
+import {HIDE_POPUP_DELAY} from '@providers';
 import {Translations} from '@i18n/tags';
-import {Routes} from '@routes/routes';
-import * as Types from '@local-types';
 
-import {INITIAL_ITEMS_TO_RENDER, News} from './News';
+import {INITIAL_ITEMS_TO_RENDER} from './News';
+import {News} from './News';
+
+type Elements = Record<string, any>;
+
+type CheckHasItemsFromPageParams = {
+  elements: Elements;
+  component: RenderAPI;
+  page: number;
+};
+
+const scrollToEndOfList = async (component: RenderAPI, elements: Elements) => {
+  await waitFor(() => {
+    expect(elements.newsList(component)).not.toBeNull();
+    expect(elements.articlesListItems(component).length).toBeGreaterThan(0);
+  });
+  fireEvent(elements.newsList(component), 'onEndReached');
+  await waitFor(() => {
+    expect(elements.paginationFooter(component)).not.toBeNull();
+    expect(elements.paginationReloadButton(component)).not.toBeNull();
+  });
+};
+
+const checkHasItemsFromPage = (params: CheckHasItemsFromPageParams) =>
+  params.elements
+    .textNewsListItem(params.component)
+    .some(
+      textNewsListItem =>
+        textNewsListItem.children[0].split('-')[0] === `page${params.page}`,
+    );
+
+const paginateToSecondPage = async (
+  component: RenderAPI,
+  elements: Elements,
+) => {
+  fireEvent.press(elements.paginationReloadButton(component));
+  await waitFor(() => {
+    expect(elements.paginationLoading(component)).toBeNull();
+    expect(elements.paginationReloadButton(component)).toBeNull();
+  });
+  fireEvent.scroll(elements.newsList(component), flatListScrollEventData);
+};
 
 const renderNews = (
   mockResolvers?: readonly MockedResponse<Record<string, any>>[],
-  navigate = jest.fn(),
 ) => {
   const NewsComponent = ({navigation}) => (
     <MockedProvider
@@ -39,13 +80,7 @@ const renderNews = (
         })
       }>
       <AlertMessageProvider>
-        <News
-          navigation={{...navigation, navigate}}
-          route={{
-            key: `${Routes.News.NEWS}-key`,
-            name: Routes.News.NEWS,
-          }}
-        />
+        <News navigation={navigation} />
       </AlertMessageProvider>
     </MockedProvider>
   );
@@ -76,834 +111,737 @@ describe('<News />', () => {
       api.queryByTestId('alert-message-text'),
     alertMessageWrapper: (api: RenderAPI) =>
       api.queryByTestId('alert-message-wrapper'),
+    modalSheet: (api: RenderAPI) => api.queryByTestId('modal-sheet'),
+    loadingItems: (api: RenderAPI) =>
+      api.queryAllByTestId('news-loading-list-item'),
   };
 
-  describe('Change Language', () => {
+  describe('When it is loading data', () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
 
     afterEach(cleanup);
 
-    it('should opens the language-filter modal when the user presses the "header-right-filter-button"', () => {
-      const navigate = jest.fn();
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
+    it('should show the Loading-items list', () => {
+      const component = render(
+        renderNews(mockNews.makeEntryQuerySuccessResolvers()),
       );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers, navigate));
-
-      act(() => {
-        jest.runAllTimers();
-      });
-
-      expect(elements.headerIconButton(component)).not.toBeNull();
-      fireEvent.press(elements.headerIconButton(component));
-      expect(navigate).toHaveBeenCalledTimes(1);
-      expect(navigate.mock.calls[0][0]).toEqual(
-        Routes.CustomModal.CUSTOM_MODAL_STACK,
-      );
-      expect(navigate.mock.calls[0][1].headerText).toEqual(
-        Translations.Tags.NEWS_FILTER_MESSAGE,
-      );
-      expect(navigate.mock.calls[0][1].type).toEqual(
-        Types.CustomizedModalChildrenType.LANGUAGE,
-      );
-      expect(typeof navigate.mock.calls[0][1].extraData.onPressSelect).toEqual(
-        'function',
-      );
-      expect(navigate.mock.calls[0][1].extraData.lastItemSelected).toEqual(
-        SchemaTypes.ArticleLanguage.EN,
-      );
+      expect(elements.newsLoadingList(component)).not.toBeNull();
     });
 
-    it('should disable the "header-right-filter-button"-press while is loading', () => {
-      const navigate = jest.fn();
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
+    it('should show the correct number of loading-items', () => {
+      const component = render(
+        renderNews(mockNews.makeEntryQuerySuccessResolvers()),
       );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers, navigate));
-      expect(elements.headerIconButton(component)).not.toBeNull();
-      fireEvent.press(elements.headerIconButton(component));
-      expect(navigate).toHaveBeenCalledTimes(0);
-    });
-  });
-
-  describe('Entry Query - success', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
-    it('should only render a pre-defined number of "news-list-items" when the list receive the data on the "entry-query"', () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsListItem(component).length).toEqual(
+      expect(elements.loadingItems(component).length).toEqual(
         INITIAL_ITEMS_TO_RENDER + 1,
       );
     });
 
-    it('should only render the loading-state when the component mounts', () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
+    it('should disable the "header-right-filter-button"-press while is loading', () => {
+      const component = render(
+        renderNews(mockNews.makeEntryQuerySuccessResolvers()),
       );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      expect(elements.newsLoadingList(component)).not.toBeNull();
-      expect(elements.newsList(component)).toBeNull();
-      expect(elements.adviseWrapper(component)).toBeNull();
-      expect(elements.alertMessageWrapper(component)).toBeNull();
-      expect(elements.alertMessageText(component)).toBeNull();
-    });
-
-    it('should render the "news-list" correctly when the user receives the articles', () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toBeGreaterThan(0);
-      expect(elements.alertMessageWrapper(component)).toBeNull();
-      expect(elements.alertMessageText(component)).toBeNull();
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.adviseWrapper(component)).toBeNull();
-    });
-
-    it('should only renders the "empty-list-state" when the query returns an empty array of articles', () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        [],
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.adviseWrapper(component)).not.toBeNull();
-      expect(
-        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION),
-      ).not.toBeNull();
-      expect(
-        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION),
-      ).not.toBeNull();
-      expect(
-        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
-      ).not.toBeNull();
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.newsList(component)).toBeNull();
-      expect(elements.alertMessageWrapper(component)).toBeNull();
-      expect(elements.alertMessageText(component)).toBeNull();
-    });
-
-    it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button" after a network-error', async () => {
-      const entryQueryFirstResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const entryQuerySecondResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQuerySecondResult.request,
-          ...entryQuerySecondResult.responseWithNetworkError,
-        },
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      expect(elements.newsLoadingList(component)).not.toBeNull();
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).not.toBeNull();
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toEqual(0);
-      fireEvent.press(elements.topReloadButton(component));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).toBeNull();
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toBeGreaterThan(0);
-    });
-
-    it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button" after a graphql-error', async () => {
-      const entryQueryFirstResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const entryQuerySecondResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQuerySecondResult.request,
-          ...entryQuerySecondResult.responseWithGraphQLError,
-        },
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      expect(elements.newsLoadingList(component)).not.toBeNull();
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).not.toBeNull();
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toEqual(0);
-      fireEvent.press(elements.topReloadButton(component));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.alertMessageWrapper(component)).toBeNull();
-      expect(elements.alertMessageText(component)).toBeNull();
-      expect(elements.topReloadButton(component)).toBeNull();
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toBeGreaterThan(0);
+      expect(elements.headerIconButton(component)).not.toBeNull();
+      fireEvent.press(elements.headerIconButton(component));
+      expect(elements.modalSheet(component)).toBeNull();
+      expect(elements.languagesList(component)).toBeNull();
     });
   });
 
-  describe('Entry Query - Network error', () => {
+  describe('Opening the Change-Language-Modal', () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
 
     afterEach(cleanup);
 
-    it('should show the "entry-query-error-message" when the user receives some network-error during the entry-query', async () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
+    it('should open the language-filter modal when the user presses the "header-right-filter-button"', async () => {
+      const component = render(
+        renderNews(mockNews.makeEntryQuerySuccessResolvers()),
       );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
+      fireEvent.press(elements.headerIconButton(component));
       await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-        );
+        expect(elements.modalSheet(component)).not.toBeNull();
       });
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.topReloadButton(component)).not.toBeNull();
+      expect(elements.languagesList(component)).not.toBeNull();
     });
 
-    it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a network-error', async () => {
-      const entryQueryFirstResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
+    it('should be able to open the modal when the returned results are empty', async () => {
+      const component = render(
+        renderNews(mockNews.makeEntryQuerySuccessResolvers(0)),
       );
-      const entryQuerySecondResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.responseWithNetworkError,
-        },
-        {
-          ...entryQuerySecondResult.request,
-          ...entryQuerySecondResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      expect(elements.newsLoadingList(component)).not.toBeNull();
       await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-        );
+        expect(elements.adviseWrapper(component)).not.toBeNull();
       });
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).not.toBeNull();
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toEqual(0);
-      fireEvent.press(elements.topReloadButton(component));
+      fireEvent.press(elements.headerIconButton(component));
       await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-        );
+        expect(elements.modalSheet(component)).not.toBeNull();
       });
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).not.toBeNull();
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toEqual(0);
     });
   });
 
-  describe('Entry Query - GraphQL error', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
+  describe('Entry Query', () => {
+    describe('Success', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+
+      afterEach(cleanup);
+
+      it('should render the "news-list" correctly when the user receives the articles', async () => {
+        const component = render(
+          renderNews(mockNews.makeEntryQuerySuccessResolvers()),
+        );
+        await waitFor(() => {
+          expect(elements.newsList(component)).not.toBeNull();
+          expect(elements.articlesListItems(component).length).toBeGreaterThan(
+            0,
+          );
+        });
+      });
+
+      it('should only renders the "empty-list-state" when the query returns an empty array of articles', async () => {
+        const component = render(
+          renderNews(mockNews.makeEntryQuerySuccessResolvers(0)),
+        );
+        await waitFor(() => {
+          expect(elements.adviseWrapper(component)).not.toBeNull();
+        });
+        expect(
+          component.getByText(Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION),
+        ).not.toBeNull();
+        expect(
+          component.getByText(Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION),
+        ).not.toBeNull();
+        expect(
+          component.getByText(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
+        ).not.toBeNull();
+      });
     });
 
-    afterEach(cleanup);
+    describe('Error', () => {
+      describe('Network', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
 
-    it('should show the "entry-query-error-message" when the user receives some GraphQL-error during the entry-query', async () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-        );
-      });
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.topReloadButton(component)).not.toBeNull();
-    });
+        afterEach(cleanup);
 
-    it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a Graphql-error', async () => {
-      const entryQueryFirstResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const entryQuerySecondResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.responseWithGraphQLError,
-        },
-        {
-          ...entryQuerySecondResult.request,
-          ...entryQuerySecondResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      expect(elements.newsLoadingList(component)).not.toBeNull();
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-        );
+        it('should show the "entry-query-error-message"', async () => {
+          const component = render(
+            renderNews(mockNews.makeEntryQueryErrorResolvers('network')),
+          );
+          await waitFor(() => {
+            expect(elements.alertMessageWrapper(component)).not.toBeNull();
+            expect(elements.alertMessageText(component)).not.toBeNull();
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+        });
       });
-      act(() => {
-        jest.runAllTimers();
+
+      describe('GraphQL', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should show the "entry-query-error-message"', async () => {
+          const component = render(
+            renderNews(mockNews.makeEntryQueryErrorResolvers('graphql')),
+          );
+          await waitFor(() => {
+            expect(elements.alertMessageWrapper(component)).not.toBeNull();
+            expect(elements.alertMessageText(component)).not.toBeNull();
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+        });
       });
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).not.toBeNull();
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toEqual(0);
-      fireEvent.press(elements.topReloadButton(component));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
-        );
+
+      describe('Network-error > Refetch > Success', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
+          const component = render(
+            renderNews(mockNews.makeEntryQueryErrorResolvers('network')),
+          );
+          await waitFor(() => {
+            expect(elements.topReloadButton(component)).not.toBeNull();
+          });
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.newsList(component)).not.toBeNull();
+            expect(
+              elements.articlesListItems(component).length,
+            ).toBeGreaterThan(0);
+          });
+        });
       });
-      act(() => {
-        jest.runAllTimers();
+
+      describe('GraphQL-error > Refetch > Success', () => {
+        it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
+          const component = render(
+            renderNews(mockNews.makeEntryQueryErrorResolvers('graphql')),
+          );
+          await waitFor(() => {
+            expect(elements.topReloadButton(component)).not.toBeNull();
+          });
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.newsList(component)).not.toBeNull();
+            expect(
+              elements.articlesListItems(component).length,
+            ).toBeGreaterThan(0);
+          });
+        });
       });
-      expect(elements.newsLoadingList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).not.toBeNull();
-      expect(elements.newsList(component)).not.toBeNull();
-      expect(elements.articlesListItems(component).length).toEqual(0);
+
+      describe('Network-error > Refetch > Network-error', () => {
+        beforeEach(() => {
+          setupTimeTravel();
+        });
+
+        afterEach(cleanup);
+
+        it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
+          const component = render(
+            renderNews(
+              mockNews.makeEntryQueryWithRefetchError('network', 'network'),
+            ),
+          );
+          await waitFor(() => {
+            expect(elements.topReloadButton(component)).not.toBeNull();
+          });
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.newsList(component)).not.toBeNull();
+            expect(elements.articlesListItems(component).length).toEqual(0);
+          });
+        });
+
+        it('should show the error message correctly when the refetch-error happens', async () => {
+          const component = render(
+            renderNews(
+              mockNews.makeEntryQueryWithRefetchError('network', 'network'),
+            ),
+          );
+          expect(elements.alertMessageWrapper(component)).toBeNull();
+          await waitFor(() => {
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+          act(() => {
+            timeTravel(2 * HIDE_POPUP_DELAY);
+          });
+          expect(elements.alertMessageWrapper(component)).toBeNull();
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+        });
+      });
+
+      describe('Network-error > Refetch > GraphQL-error', () => {
+        beforeEach(() => {
+          setupTimeTravel();
+        });
+
+        afterEach(cleanup);
+
+        it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
+          const component = render(
+            renderNews(
+              mockNews.makeEntryQueryWithRefetchError('network', 'graphql'),
+            ),
+          );
+          await waitFor(() => {
+            expect(elements.topReloadButton(component)).not.toBeNull();
+          });
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.newsList(component)).not.toBeNull();
+            expect(elements.articlesListItems(component).length).toEqual(0);
+          });
+        });
+
+        it('should show the error message correctly when the refetch-error happens', async () => {
+          const component = render(
+            renderNews(
+              mockNews.makeEntryQueryWithRefetchError('network', 'graphql'),
+            ),
+          );
+          expect(elements.alertMessageWrapper(component)).toBeNull();
+          await waitFor(() => {
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+          act(() => {
+            timeTravel(2 * HIDE_POPUP_DELAY);
+          });
+          expect(elements.alertMessageWrapper(component)).toBeNull();
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+        });
+      });
+
+      describe('GraphQL-error > Refetch > Network-error', () => {
+        beforeEach(() => {
+          setupTimeTravel();
+        });
+
+        afterEach(cleanup);
+
+        it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
+          const component = render(
+            renderNews(
+              mockNews.makeEntryQueryWithRefetchError('graphql', 'network'),
+            ),
+          );
+          await waitFor(() => {
+            expect(elements.topReloadButton(component)).not.toBeNull();
+          });
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.newsList(component)).not.toBeNull();
+            expect(elements.articlesListItems(component).length).toEqual(0);
+          });
+        });
+
+        it('should show the error message correctly when the refetch-error happens', async () => {
+          const component = render(
+            renderNews(
+              mockNews.makeEntryQueryWithRefetchError('graphql', 'network'),
+            ),
+          );
+          expect(elements.alertMessageWrapper(component)).toBeNull();
+          await waitFor(() => {
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+          act(() => {
+            timeTravel(2 * HIDE_POPUP_DELAY);
+          });
+          expect(elements.alertMessageWrapper(component)).toBeNull();
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+        });
+      });
+
+      describe('GraphQL-error > Refetch > GraphQL-error', () => {
+        beforeEach(() => {
+          setupTimeTravel();
+        });
+
+        afterEach(cleanup);
+
+        it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
+          const component = render(
+            renderNews(
+              mockNews.makeEntryQueryWithRefetchError('graphql', 'graphql'),
+            ),
+          );
+          await waitFor(() => {
+            expect(elements.topReloadButton(component)).not.toBeNull();
+          });
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.newsList(component)).not.toBeNull();
+            expect(elements.articlesListItems(component).length).toEqual(0);
+          });
+        });
+
+        it('should show the error message correctly when the refetch-error happens', async () => {
+          const component = render(
+            renderNews(
+              mockNews.makeEntryQueryWithRefetchError('graphql', 'graphql'),
+            ),
+          );
+          expect(elements.alertMessageWrapper(component)).toBeNull();
+          await waitFor(() => {
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+          act(() => {
+            timeTravel(2 * HIDE_POPUP_DELAY);
+          });
+          expect(elements.alertMessageWrapper(component)).toBeNull();
+          fireEvent.press(elements.topReloadButton(component));
+          await waitFor(() => {
+            expect(elements.alertMessageText(component).children[0]).toEqual(
+              Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
+            );
+          });
+        });
+      });
     });
   });
 
-  describe('Pagination - success', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
+  describe('Pagination', () => {
+    describe('Success', () => {
+      beforeEach(() => {
+        setupTimeTravel();
+      });
 
-    afterEach(cleanup);
+      afterEach(cleanup);
 
-    it('should show the "pagination-loading" when the user start to paginate the "news-list"', () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const paginationQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 2},
-        mockNews.dataset(2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
+      it('should show the "pagination-loading" when the user start to paginate the "news-list"', async () => {
+        const component = render(
+          renderNews(mockNews.makePaginationSuccess(true)),
+        );
+        expect(elements.paginationFooter(component)).toBeNull();
+        expect(elements.paginationLoading(component)).toBeNull();
+        await waitFor(() => {
+          expect(elements.newsList(component)).not.toBeNull();
+        });
+        fireEvent(elements.newsList(component), 'onEndReached');
+        expect(elements.paginationFooter(component)).not.toBeNull();
+        expect(elements.paginationLoading(component)).not.toBeNull();
       });
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-      fireEvent(elements.newsList(component), 'onEndReached');
-      expect(elements.paginationFooter(component)).not.toBeNull();
-      expect(elements.paginationLoading(component)).not.toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-      act(() => {
-        jest.runAllTimers();
-      });
-    });
 
-    it('should not show the "pagination-loading" when the pagination-process is finished', () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const paginationQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 2},
-        mockNews.dataset(2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
+      it('should not show the "pagination-loading" when the pagination-process is finished', async () => {
+        const component = render(
+          renderNews(mockNews.makePaginationSuccess(true)),
+        );
+        await waitFor(() => {
+          expect(elements.newsList(component)).not.toBeNull();
+        });
+        fireEvent(elements.newsList(component), 'onEndReached');
+        await waitFor(() => {
+          expect(elements.paginationFooter(component)).toBeNull();
+          expect(elements.paginationLoading(component)).toBeNull();
+        });
       });
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-      fireEvent(elements.newsList(component), 'onEndReached');
-      expect(elements.paginationFooter(component)).not.toBeNull();
-      expect(elements.paginationLoading(component)).not.toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-      act(() => {
-        jest.runAllTimers();
-      });
-      component.rerender(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-    });
 
-    it('should paginate to the next page when the user reaches the bottom of the "news-list" and "hasMore" is true', () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const paginationQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 2},
-        mockNews.dataset(2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
+      it('should render all the items correctly after the pagination', async () => {
+        const component = render(
+          renderNews(mockNews.makePaginationSuccess(true)),
+        );
+        await waitFor(() => {
+          expect(checkHasItemsFromPage({component, elements, page: 1})).toEqual(
+            true,
+          );
+        });
+        fireEvent(elements.newsList(component), 'onEndReached');
+        await waitFor(() => {
+          expect(elements.paginationFooter(component)).toBeNull();
+        });
+        await waitFor(() => {
+          expect(checkHasItemsFromPage({component, elements, page: 1})).toEqual(
+            true,
+          );
+          expect(checkHasItemsFromPage({component, elements, page: 2})).toEqual(
+            true,
+          );
+        });
       });
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-      fireEvent.scroll(elements.newsList(component), flatListScrollEventData);
-      expect(elements.newsListItem(component).length).toEqual(
-        mockNews.DATASET_LENGTH,
-      );
-      expect(
-        elements
-          .textNewsListItem(component)
-          .every(
-            textNewsListItem =>
-              (textNewsListItem.children[0] as string).split('-')[0] ===
-              'page1',
-          ),
-      ).toEqual(true);
-      fireEvent(elements.newsList(component), 'onEndReached');
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsListItem(component).length).toEqual(
-        mockNews.DATASET_LENGTH * 2,
-      );
-      const textNewsListItems = elements.textNewsListItem(component);
-      expect(
-        textNewsListItems.reduce((previous, _, index) => {
-          const expectedPage = index < mockNews.DATASET_LENGTH ? 1 : 2;
-          const newsTextPagePreffix = (
-            textNewsListItems[index].children[0] as string
-          ).split('-')[0];
-          return previous && newsTextPagePreffix === `page${expectedPage}`;
-        }),
-      ).toEqual(true);
-    });
 
-    it('should not paginate to the next page when the user reaches the bottom of the "news-list" and "hasMore" is false', () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        false,
-      );
-      const paginationQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 2},
-        mockNews.dataset(2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.result,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-      fireEvent.scroll(elements.newsList(component), flatListScrollEventData);
-      expect(elements.newsListItem(component).length).toEqual(
-        mockNews.DATASET_LENGTH,
-      );
-      expect(
-        elements
-          .textNewsListItem(component)
-          .every(
-            textNewsListItem =>
-              (textNewsListItem.children[0] as string).split('-')[0] ===
-              'page1',
-          ),
-      ).toEqual(true);
-      fireEvent(elements.newsList(component), 'onEndReached');
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.newsListItem(component).length).toEqual(
-        mockNews.DATASET_LENGTH,
-      );
-    });
-  });
-
-  describe('Pagination - Network error', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
-    it('should show the "pagination-reload-button" and an "error-message" when the user paginate the "news-list" and a networking error occurs', async () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const paginationQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 2},
-        mockNews.dataset(2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.alertMessageText(component)).toBeNull();
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-      fireEvent(elements.newsList(component), 'onEndReached');
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+      it('should not paginate to the next page when the user reaches the bottom of the "news-list" and "hasMore" is "false"', async () => {
+        const component = render(
+          renderNews(mockNews.makePaginationSuccess(false)),
+        );
+        await waitFor(() => {
+          expect(elements.newsList(component)).not.toBeNull();
+        });
+        fireEvent.scroll(elements.newsList(component), flatListScrollEventData);
+        expect(elements.newsListItem(component).length).toEqual(
+          mockNews.DATASET_LENGTH,
+        );
+        fireEvent(elements.newsList(component), 'onEndReached');
+        await waitFor(() => {
+          expect(elements.paginationFooter(component)).toBeNull();
+          expect(elements.paginationLoading(component)).toBeNull();
+        });
+        expect(elements.newsListItem(component).length).toEqual(
+          mockNews.DATASET_LENGTH,
         );
       });
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.paginationFooter(component)).not.toBeNull();
-      expect(elements.paginationReloadButton(component)).not.toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-    });
 
-    it('should show the "pagination-loading-state" and then the "pagination-reload-button" and an "error-message" when the user press the "pagiantion-reload-button" and a networking error occurs', async () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const paginationQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 2},
-        mockNews.dataset(2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      fireEvent(elements.newsList(component), 'onEndReached');
-      act(() => {
-        jest.runAllTimers();
-      });
-      fireEvent.press(elements.paginationReloadButton(component));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+      it('should only show the items corresponding to the first page when the user reaches the bottom of the "news-list" and "hasMore" is "false"', async () => {
+        const component = render(
+          renderNews(mockNews.makePaginationSuccess(false)),
+        );
+        await waitFor(() => {
+          expect(elements.newsList(component)).not.toBeNull();
+        });
+        fireEvent.scroll(elements.newsList(component), flatListScrollEventData);
+        fireEvent(elements.newsList(component), 'onEndReached');
+        await waitFor(() => {
+          expect(elements.paginationFooter(component)).toBeNull();
+          expect(elements.paginationLoading(component)).toBeNull();
+        });
+        expect(checkHasItemsFromPage({component, elements, page: 1})).toEqual(
+          true,
         );
       });
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.paginationFooter(component)).not.toBeNull();
-      expect(elements.paginationReloadButton(component)).not.toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-    });
-  });
-
-  describe('Pagination - GraphQL error', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
     });
 
-    afterEach(cleanup);
+    describe('Error', () => {
+      describe('Network', () => {
+        describe('Scroll > Error', () => {
+          beforeEach(() => {
+            setupTimeTravel();
+          });
 
-    it('should show the "pagination-reload-button" and an "error-message" when the user paginate the "news-list" and a GraphQL error occurs', async () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const paginationQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 2},
-        mockNews.dataset(2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.alertMessageText(component)).toBeNull();
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-      expect(elements.paginationReloadButton(component)).toBeNull();
-      fireEvent(elements.newsList(component), 'onEndReached');
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
-        );
-      });
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.paginationFooter(component)).not.toBeNull();
-      expect(elements.paginationReloadButton(component)).not.toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
-    });
+          afterEach(cleanup);
 
-    it('should show the "pagination-loading-state" and then the "pagination-reload-button" and an "error-message" when the user press the "pagiantion-reload-button" and a GraphQL error occurs', async () => {
-      const entryQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 1},
-        mockNews.dataset(1),
-        true,
-      );
-      const paginationQueryResult = mockNews.newsRresolvers(
-        {language: 'EN', page: 2},
-        mockNews.dataset(2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithGraphQLError,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderNews(resolvers));
-      act(() => {
-        jest.runAllTimers();
+          it('should show the "pagination-reload-button" after the "pagination-error"', async () => {
+            const component = render(
+              renderNews(mockNews.mockPaginationError('network')),
+            );
+            expect(elements.paginationFooter(component)).toBeNull();
+            expect(elements.paginationLoading(component)).toBeNull();
+            await scrollToEndOfList(component, elements);
+            await waitFor(() => {
+              expect(elements.paginationFooter(component)).not.toBeNull();
+              expect(elements.paginationReloadButton(component)).not.toBeNull();
+            });
+          });
+
+          it('should show the correct "error-message" after the "pagination-error"', async () => {
+            const component = render(
+              renderNews(mockNews.mockPaginationError('network')),
+            );
+            await scrollToEndOfList(component, elements);
+            await waitFor(() => {
+              expect(elements.alertMessageWrapper(component)).not.toBeNull();
+              expect(elements.alertMessageText(component)).not.toBeNull();
+              expect(elements.alertMessageText(component).children[0]).toEqual(
+                Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+              );
+            });
+          });
+        });
+
+        describe('Scroll > Error > Success', () => {
+          beforeEach(() => {
+            jest.useFakeTimers();
+          });
+
+          afterEach(cleanup);
+
+          it('should paginate to the next page after an error', async () => {
+            const component = render(
+              renderNews(mockNews.mockPaginationErrorSuccess('network')),
+            );
+            await scrollToEndOfList(component, elements);
+            await paginateToSecondPage(component, elements);
+            expect(
+              checkHasItemsFromPage({component, elements, page: 1}),
+            ).toEqual(true);
+            expect(
+              checkHasItemsFromPage({component, elements, page: 2}),
+            ).toEqual(true);
+          });
+        });
+
+        describe('Scroll > Network-error > Network-error', () => {
+          beforeEach(() => {
+            jest.useFakeTimers();
+          });
+
+          afterEach(cleanup);
+
+          it('should show the "error-message" when had a "Network-error" when tried to refetch for the first time and another "Network-error" when tried to refetch for the second time', async () => {
+            const component = render(
+              renderNews(
+                mockNews.mockPaginationErrorAndError('network', 'network'),
+              ),
+            );
+            await scrollToEndOfList(component, elements);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await waitFor(() => {
+              expect(elements.paginationReloadButton(component)).not.toBeNull();
+              expect(elements.alertMessageWrapper(component)).not.toBeNull();
+              expect(elements.alertMessageText(component)).not.toBeNull();
+              expect(elements.alertMessageText(component).children[0]).toEqual(
+                Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+              );
+            });
+            expect(
+              checkHasItemsFromPage({component, elements, page: 1}),
+            ).toEqual(true);
+            expect(
+              checkHasItemsFromPage({component, elements, page: 2}),
+            ).toEqual(false);
+          });
+        });
+
+        describe('Scroll > Network-error > GraphQL-error', () => {
+          beforeEach(() => {
+            jest.useFakeTimers();
+          });
+
+          afterEach(cleanup);
+
+          it('should show the "error-message" when had a "Network-error" when tried to refetch for the first time and a "GraphQL-error" when tried to refetch for the second time', async () => {
+            const component = render(
+              renderNews(
+                mockNews.mockPaginationErrorAndError('network', 'graphql'),
+              ),
+            );
+            await scrollToEndOfList(component, elements);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await waitFor(() => {
+              expect(elements.paginationReloadButton(component)).not.toBeNull();
+              expect(elements.alertMessageWrapper(component)).not.toBeNull();
+              expect(elements.alertMessageText(component)).not.toBeNull();
+              expect(elements.alertMessageText(component).children[0]).toEqual(
+                Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+              );
+            });
+            expect(
+              checkHasItemsFromPage({component, elements, page: 1}),
+            ).toEqual(true);
+            expect(
+              checkHasItemsFromPage({component, elements, page: 2}),
+            ).toEqual(false);
+          });
+        });
       });
-      fireEvent(elements.newsList(component), 'onEndReached');
-      act(() => {
-        jest.runAllTimers();
+
+      describe('GraphQL', () => {
+        describe('Scroll > Error', () => {
+          beforeEach(() => {
+            setupTimeTravel();
+          });
+
+          afterEach(cleanup);
+
+          it('should show the "pagination-reload-button" after the "pagination-error"', async () => {
+            const component = render(
+              renderNews(mockNews.mockPaginationError('graphql')),
+            );
+            expect(elements.paginationFooter(component)).toBeNull();
+            expect(elements.paginationLoading(component)).toBeNull();
+            await scrollToEndOfList(component, elements);
+            await waitFor(() => {
+              expect(elements.paginationFooter(component)).not.toBeNull();
+              expect(elements.paginationReloadButton(component)).not.toBeNull();
+            });
+          });
+
+          it('should show the correct "error-message" after the "pagination-error"', async () => {
+            const component = render(
+              renderNews(mockNews.mockPaginationError('graphql')),
+            );
+            await scrollToEndOfList(component, elements);
+            await waitFor(() => {
+              expect(elements.alertMessageWrapper(component)).not.toBeNull();
+              expect(elements.alertMessageText(component)).not.toBeNull();
+              expect(elements.alertMessageText(component).children[0]).toEqual(
+                Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+              );
+            });
+          });
+        });
+
+        describe('Scroll > Error > Success', () => {
+          beforeEach(() => {
+            jest.useFakeTimers();
+          });
+
+          afterEach(cleanup);
+
+          it('should paginate to the next page after an error', async () => {
+            const component = render(
+              renderNews(mockNews.mockPaginationErrorSuccess('graphql')),
+            );
+            await scrollToEndOfList(component, elements);
+            await paginateToSecondPage(component, elements);
+            expect(
+              checkHasItemsFromPage({component, elements, page: 1}),
+            ).toEqual(true);
+            expect(
+              checkHasItemsFromPage({component, elements, page: 2}),
+            ).toEqual(true);
+          });
+        });
+
+        describe('Scroll > GraphQL-error > GraphQL-error', () => {
+          beforeEach(() => {
+            jest.useFakeTimers();
+          });
+
+          afterEach(cleanup);
+
+          it('should show the "error-message" when had a "GraphQL-error" when tried to refetch for the first time and another "GraphQL-error" when tried to refetch for the second time', async () => {
+            const component = render(
+              renderNews(
+                mockNews.mockPaginationErrorAndError('graphql', 'graphql'),
+              ),
+            );
+            await scrollToEndOfList(component, elements);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await waitFor(() => {
+              expect(elements.paginationReloadButton(component)).not.toBeNull();
+              expect(elements.alertMessageWrapper(component)).not.toBeNull();
+              expect(elements.alertMessageText(component)).not.toBeNull();
+              expect(elements.alertMessageText(component).children[0]).toEqual(
+                Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+              );
+            });
+            expect(
+              checkHasItemsFromPage({component, elements, page: 1}),
+            ).toEqual(true);
+            expect(
+              checkHasItemsFromPage({component, elements, page: 2}),
+            ).toEqual(false);
+          });
+        });
+
+        describe('Scroll > GraphQL-error > Network-error', () => {
+          beforeEach(() => {
+            jest.useFakeTimers();
+          });
+
+          afterEach(cleanup);
+
+          it('should show the "error-message" when had a "GraphQL-error" when tried to refetch for the first time and a "Network-error" when tried to refetch for the second time', async () => {
+            const component = render(
+              renderNews(
+                mockNews.mockPaginationErrorAndError('graphql', 'network'),
+              ),
+            );
+            await scrollToEndOfList(component, elements);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await waitFor(() => {
+              expect(elements.paginationReloadButton(component)).not.toBeNull();
+              expect(elements.alertMessageWrapper(component)).not.toBeNull();
+              expect(elements.alertMessageText(component)).not.toBeNull();
+              expect(elements.alertMessageText(component).children[0]).toEqual(
+                Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
+              );
+            });
+            expect(
+              checkHasItemsFromPage({component, elements, page: 1}),
+            ).toEqual(true);
+          });
+        });
       });
-      fireEvent.press(elements.paginationReloadButton(component));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
-        );
-      });
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.paginationFooter(component)).not.toBeNull();
-      expect(elements.paginationReloadButton(component)).not.toBeNull();
-      expect(elements.paginationLoading(component)).toBeNull();
     });
   });
 });
