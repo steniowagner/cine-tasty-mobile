@@ -16,7 +16,7 @@ type LanguageFilterProps = {
   closeModal: () => void;
 };
 
-const LanguageFilter = (props: LanguageFilterProps) => {
+export const LanguageFilter = (props: LanguageFilterProps) => {
   const languageFilter = useLanguageFilter({
     lastLanguageSelected: props.lastLanguageSelected,
     onSelectLanguage: props.onSelectLanguage,
@@ -44,5 +44,3 @@ const LanguageFilter = (props: LanguageFilterProps) => {
     </>
   );
 };
-
-export default LanguageFilter;

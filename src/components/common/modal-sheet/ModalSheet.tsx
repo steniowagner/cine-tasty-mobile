@@ -22,7 +22,11 @@ export const ModalSheet = (props: ModalSheetProps) => {
   });
 
   return (
-    <Modal visible={props.isOpen} transparent animationType="none">
+    <Modal
+      testID="modal-sheet"
+      visible={props.isOpen}
+      transparent
+      animationType="none">
       <Animated.View
         style={[
           Styles.AnimatedStyles.backgroundDarkLayer,

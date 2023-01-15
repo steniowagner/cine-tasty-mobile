@@ -4,6 +4,7 @@ const dependenciesToBeTranspiled = [
   '@react-native-community',
   '@react-navigation',
   'react-native-linear-gradient',
+  'react-native-reanimated',
   /* 'react-navigation',
   'react-native-screens',
   'react-native-gesture-handler',
@@ -23,4 +24,7 @@ module.exports = {
   testMatch: ['**/*.test.(ts|tsx)'],
   moduleNameMapper: {'^@mocks/(.*)$': '<rootDir>/__mocks__/$1'},
   testEnvironment: 'jsdom',
+  transform: {
+    '\\.js?$': 'babel-jest',
+  },
 };
