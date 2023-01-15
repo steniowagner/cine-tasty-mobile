@@ -1,3 +1,8 @@
+global.ReanimatedDataMock = {
+  now: () => 0,
+};
+require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
+
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 jest.mock('react-i18next', () => ({
