@@ -1,9 +1,9 @@
 import React, {memo} from 'react';
 import {Linking} from 'react-native';
 
-import NewsImage from './news-image/NewsImage';
+import {NewsImage} from './news-image/NewsImage';
 import * as Styles from './NewsListItem.styles';
-import DateDiff from './date-diff/DateDiff';
+import {DateDiff} from './date-diff/DateDiff';
 
 type NewsListItemProps = {
   withRTL: boolean;

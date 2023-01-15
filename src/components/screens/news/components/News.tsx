@@ -55,9 +55,9 @@ export const News = (props: NewsStackProps) => {
           />
         </ModalSheet>
         <Advise
-          description={news.texts.description}
-          suggestion={news.texts.suggestion}
-          title={news.texts.title}
+          description={news.texts.advice.description}
+          suggestion={news.texts.advice.suggestion}
+          title={news.texts.advice.title}
           icon="alert-box"
         />
       </>

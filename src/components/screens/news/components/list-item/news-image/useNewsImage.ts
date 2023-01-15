@@ -1,7 +1,12 @@
-import {useState, useEffect, useRef} from 'react';
-import {Animated} from 'react-native';
+import {useState, useEffect} from 'react';
+import {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-export const ANIMATION_DURATION = 400;
+export const ANIMATION_DURATION = 500;
 
 type NewsListItemImageProps = {
   image: string;
@@ -12,17 +17,31 @@ const useNewsImage = (props: NewsListItemImageProps) => {
   const [hasError, setHasError] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
-  const fallbackImageWrapperOpacity = useRef(new Animated.Value(1)).current;
+  const fallbackImageWrapperOpacity = useSharedValue(1);
+
+  const animateFallbackImageOpacity = () => {
+    fallbackImageWrapperOpacity.value = withTiming(
+      0,
+      {
+        duration: ANIMATION_DURATION,
+      },
+      (isFinished: boolean) => {
+        if (isFinished) {
+          runOnJS(setIsFallbackImageVisible)(false);
+        }
+      },
+    );
+  };
+
+  const fallbackImageOpacityAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: fallbackImageWrapperOpacity.value,
+  }));
 
   useEffect(() => {
     if (isImageLoaded && !hasError) {
-      Animated.timing(fallbackImageWrapperOpacity, {
-        duration: ANIMATION_DURATION,
-        useNativeDriver: true,
-        toValue: 0,
-      }).start(() => setIsFallbackImageVisible(false));
+      animateFallbackImageOpacity();
     }
-  }, [fallbackImageWrapperOpacity, isImageLoaded, hasError]);
+  }, [isImageLoaded, hasError]);
 
   useEffect(() => {
     if (!props.image) {
@@ -33,7 +52,7 @@ const useNewsImage = (props: NewsListItemImageProps) => {
   return {
     onError: () => setHasError(true),
     onLoad: () => setIsImageLoaded(true),
-    fallbackImageWrapperOpacity,
+    fallbackImageOpacityAnimatedStyle,
     isFallbackImageVisible,
     hasError,
   };
