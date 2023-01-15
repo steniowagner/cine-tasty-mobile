@@ -42,13 +42,15 @@ export const useNews = () => {
 
   const texts = useMemo(
     () => ({
-      description: translations.translate(
-        Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION,
-      ),
-      suggestion: translations.translate(
-        Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION,
-      ),
-      title: translations.translate(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
+      advice: {
+        description: translations.translate(
+          Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION,
+        ),
+        suggestion: translations.translate(
+          Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION,
+        ),
+        title: translations.translate(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
+      },
       modalTitle: translations.translate(Translations.Tags.NEWS_FILTER_MESSAGE),
     }),
     [translations.translate],
