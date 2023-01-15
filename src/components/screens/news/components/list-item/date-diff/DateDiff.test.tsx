@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import DateDiff from './DateDiff';
+import {DateDiff} from './DateDiff';
 
 type Options = {
   value: number;
