@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 
 import {useTranslations, usePagination} from '@hooks';
 import {GET_ARTICLES} from '@graphql/queries';
@@ -12,14 +12,6 @@ export const useNews = () => {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
 
   const translations = useTranslations();
-
-  const handleOnGetData = useCallback(
-    (result: SchemaTypes.GetArticles) => ({
-      hasMore: result?.articles.hasMore || false,
-      dataset: result?.articles.items || [],
-    }),
-    [],
-  );
 
   const variables = useMemo(
     () => ({
@@ -39,7 +31,10 @@ export const useNews = () => {
     entryQueryError: translations.translate(
       Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
     ),
-    onGetData: handleOnGetData,
+    onGetData: (result: SchemaTypes.GetArticles) => ({
+      hasMore: result?.articles.hasMore || false,
+      dataset: result?.articles.items || [],
+    }),
     query: GET_ARTICLES,
     skipFirstRun: false,
     variables,
@@ -56,7 +51,7 @@ export const useNews = () => {
       title: translations.translate(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
       modalTitle: translations.translate(Translations.Tags.NEWS_FILTER_MESSAGE),
     }),
-    [],
+    [translations.translate],
   );
 
   return {
