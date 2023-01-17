@@ -12,7 +12,10 @@ type LanguageListItemProps = {
 };
 
 const LanguageListItem = (props: LanguageListItemProps) => (
-  <Styles.Wrapper testID="language-filter-list-item" onPress={props.onPress}>
+  <Styles.Wrapper
+    isSelected={props.isSelected}
+    testID="language-filter-list-item"
+    onPress={props.onPress}>
     <Styles.ContentWrapper>
       <Styles.OutterFlagWrapper
         testID="outter-flag-wrapper"
@@ -21,7 +24,7 @@ const LanguageListItem = (props: LanguageListItemProps) => (
           <SVGIcon size={Styles.DEFAULT_ICON_SIZE} id={props.flag} />
         </Styles.InnerFlagWrapper>
       </Styles.OutterFlagWrapper>
-      <Styles.LanguageText testID="language-text">
+      <Styles.LanguageText isSelected={props.isSelected} testID="language-text">
         {props.name}
       </Styles.LanguageText>
     </Styles.ContentWrapper>
