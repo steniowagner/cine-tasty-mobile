@@ -3,13 +3,14 @@ import {StyleProp} from 'react-native';
 import {withTheme, DefaultTheme, Colors} from 'styled-components/native';
 import {SvgXml} from 'react-native-svg';
 
-import {Icons, getXML} from '.';
+import {SupportedIcons} from './getXML';
+import {getXML} from '.';
 
 export type SVGIconProps = {
   colorThemeRef?: keyof Colors;
   style?: StyleProp<any>;
   theme: DefaultTheme;
-  id: Icons;
+  id: SupportedIcons;
   size: number;
 };
 

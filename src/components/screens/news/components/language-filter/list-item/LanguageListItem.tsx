@@ -1,11 +1,11 @@
 import React, {memo} from 'react';
 
-import {SVGIcon, Icons} from '@components';
+import {SVGIcon, FlagsIcons} from '@components';
 
 import * as Styles from './LanguageListItem.styles';
 
 type LanguageListItemProps = {
-  flag: Icons;
+  flag: FlagsIcons;
   onPress: () => void;
   isSelected: boolean;
   name: string;
