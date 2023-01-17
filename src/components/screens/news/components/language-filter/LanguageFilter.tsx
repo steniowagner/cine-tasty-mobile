@@ -22,6 +22,7 @@ export const LanguageFilter = (props: LanguageFilterProps) => {
     onSelectLanguage: props.onSelectLanguage,
     closeModal: props.closeModal,
   });
+
   return (
     <>
       <ScrollView

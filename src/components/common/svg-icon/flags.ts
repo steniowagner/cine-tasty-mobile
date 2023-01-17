@@ -7,7 +7,7 @@ export type FlagsIcons =
   | 'italy'
   | 'nederlands'
   | 'norway'
-  | 'portugal'
+  | 'brazil'
   | 'russia'
   | 'saudi-arabia'
   | 'spain'
@@ -30,8 +30,8 @@ export const flags: Record<FlagsIcons, string> = {
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="#eee"/><path fill="#a2001d" d="M256 0A256 256 0 0 0 16 167h480A256 256 0 0 0 256 0z"/><path fill="#0052b4" d="M256 512a256 256 0 0 0 240-167H16a256 256 0 0 0 240 167z"/></svg>',
   norway:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="#eee"/><path fill="#d80027" d="M8.8 322.8A256.2 256.2 0 0 0 100.2 459V322.8H8.8zm225 188.2a259.3 259.3 0 0 0 22.2 1 256 256 0 0 0 247.2-189.2H233.7V511zm269.4-321.8A256 256 0 0 0 233.7 1v188.2h269.5zM100.2 53A256.2 256.2 0 0 0 8.8 189.2h91.4V53z"/><path fill="#0052b4" d="M509.8 222.6H200.3V6.1a254.3 254.3 0 0 0-66.7 25v191.5H2.2a258.2 258.2 0 0 0 0 66.8h131.4v191.5a254.3 254.3 0 0 0 66.7 25V289.4h309.5a258.6 258.6 0 0 0 0-66.8z"/></svg>',
-  portugal:
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#6da544" d="M0 256a256 256 0 0 0 167 240l22.2-240L167 16A256 256 0 0 0 0 256z"/><path fill="#d80027" d="M512 256A256 256 0 0 0 167 16v480a256 256 0 0 0 345-240z"/><circle cx="167" cy="256" r="89" fill="#ffda44"/><path fill="#d80027" d="M116.9 211.5V267a50 50 0 1 0 100.1 0v-55.6H117z"/><path fill="#eee" d="M167 283.8c-9.2 0-16.7-7.5-16.7-16.7V245h33.4v22c0 9.2-7.5 16.7-16.7 16.7z"/></svg>',
+  brazil:
+    '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><mask id="a"><circle cx="256" cy="256" r="256" fill="#fff"/></mask><g mask="url(#a)"><path fill="#6da544" d="M0 0h512v512H0z"/><path fill="#ffda44" d="M256 100.2 467.5 256 256 411.8 44.5 256z"/><path fill="#eee" d="M174.2 221a87 87 0 0 0-7.2 36.3l162 49.8a88.5 88.5 0 0 0 14.4-34c-40.6-65.3-119.7-80.3-169.1-52z"/><path fill="#0052b4" d="M255.7 167a89 89 0 0 0-41.9 10.6 89 89 0 0 0-39.6 43.4 181.7 181.7 0 0 1 169.1 52.2 89 89 0 0 0-9-59.4 89 89 0 0 0-78.6-46.8zM212 250.5a149 149 0 0 0-45 6.8 89 89 0 0 0 10.5 40.9 89 89 0 0 0 120.6 36.2 89 89 0 0 0 30.7-27.3A151 151 0 0 0 212 250.5z"/></g></svg>',
   russia:
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="#eee"/><path fill="#0052b4" d="M496 345a255.4 255.4 0 0 0 0-178H16a255.5 255.5 0 0 0 0 178l240 22.3L496 345z"/><path fill="#d80027" d="M256 512a256 256 0 0 0 240-167H16a256 256 0 0 0 240 167z"/></svg>',
   'saudi-arabia':

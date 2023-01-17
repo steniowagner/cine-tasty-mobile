@@ -56,7 +56,7 @@ const langauges: Language[] = [
     id: SchemaTypes.ArticleLanguage.NO,
   },
   {
-    flag: 'portugal',
+    flag: 'brazil',
     name: 'portuguese',
     id: SchemaTypes.ArticleLanguage.PT,
   },
