@@ -135,7 +135,7 @@ const ptBR: Locale = {
       norwegian: 'Norueguês',
       portuguese: 'Português',
       russian: 'Russo',
-      sami: 'Finlandês',
+      finnish: 'Finlandês',
       spanish: 'Espanhol',
     },
     filterMessage: 'Escolha uma linguagem para filtras as notícias',

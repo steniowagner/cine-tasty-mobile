@@ -67,7 +67,7 @@ export const languages: Language[] = [
   },
   {
     flag: 'finland',
-    name: 'sami',
+    name: 'finnish',
     id: SchemaTypes.ArticleLanguage.SE,
   },
   {
