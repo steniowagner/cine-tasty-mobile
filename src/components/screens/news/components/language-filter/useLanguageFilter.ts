@@ -4,10 +4,9 @@ import {ScrollView} from 'react-native';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
-import * as Types from '@local-types';
 
 import {ITEM_LIST_HEIGHT} from './list-item/LanguageListItem.styles';
-import languages from './languages';
+import {useLanguages} from './languages/useLanguages';
 
 type UseLanguageFilterProps = {
   lastLanguageSelected: SchemaTypes.ArticleLanguage;
@@ -16,17 +15,14 @@ type UseLanguageFilterProps = {
 };
 
 const useLanguageFilter = (props: UseLanguageFilterProps) => {
-  const [language, setLanguage] = useState<SchemaTypes.ArticleLanguage>(
-    props.lastLanguageSelected,
-  );
+  const [languageSelected, setLanguageSelected] =
+    useState<SchemaTypes.ArticleLanguage>(props.lastLanguageSelected);
+
   const scrollViewRef = useRef<ScrollView>(null);
 
   const translations = useTranslations();
 
-  const modalSelectButtonTitle = useMemo(
-    () => translations.translate(Translations.Tags.SELECT),
-    [translations.translate],
-  );
+  const languages = useLanguages();
 
   const initialFlatListIndex = useMemo(
     () =>
@@ -44,43 +40,34 @@ const useLanguageFilter = (props: UseLanguageFilterProps) => {
   }, [initialFlatListIndex]);
 
   const onPressSelectButton = useCallback((): void => {
-    if (props.lastLanguageSelected !== language) {
-      props.onSelectLanguage(language);
+    if (props.lastLanguageSelected !== languageSelected) {
+      props.onSelectLanguage(languageSelected);
     }
     props.closeModal();
   }, [
     props.lastLanguageSelected,
     props.onSelectLanguage,
     props.closeModal,
-    language,
+    languageSelected,
   ]);
 
   const handleSetScrollViewRef = useCallback(
     (ref: ScrollView) => {
-      if (scrollViewRef.current) {
-        return;
+      if (!scrollViewRef.current) {
+        scrollViewRef.current = ref;
       }
-      scrollViewRef.current = ref;
     },
     [scrollViewRef.current],
   );
 
-  const languageName = useCallback(
-    (name: Types.NewsFilterLanguage) =>
-      translations.translate(
-        `${Translations.Tags.NEWS_LANGUAGES}:${name}` as Translations.Tags,
-      ),
-    [translations.translate],
-  );
-
   return {
-    modalSelectButtonTitle,
+    modalSelectButtonTitle: translations.translate(Translations.Tags.SELECT),
     handleSetScrollViewRef,
     onPressSelectButton,
     scrollViewRef,
-    languageName,
-    setLanguage,
-    language,
+    setLanguageSelected,
+    languageSelected,
+    languages,
   };
 };
 

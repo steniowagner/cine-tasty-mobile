@@ -3,13 +3,13 @@ import * as Types from '@local-types';
 
 import {FlagsIcons} from '@components';
 
-type Language = {
+export type Language = {
   id: SchemaTypes.ArticleLanguage;
   name: Types.NewsFilterLanguage;
   flag: FlagsIcons;
 };
 
-const langauges: Language[] = [
+export const languages: Language[] = [
   {
     flag: 'uk',
     name: 'english',
@@ -76,5 +76,3 @@ const langauges: Language[] = [
     id: SchemaTypes.ArticleLanguage.ES,
   },
 ];
-
-export default langauges;
