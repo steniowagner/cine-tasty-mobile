@@ -8,13 +8,13 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {dark as theme} from '@styles/themes/dark';
+import {dark} from '@styles/themes/dark';
 
 import LanguageListItem from './LanguageListItem';
 import languages from '../languages';
 
 const renderLanguageFilter = (isSelected: boolean, onPress = jest.fn()) => (
-  <ThemeProvider theme={theme}>
+  <ThemeProvider theme={dark}>
     <LanguageListItem
       name={languages[0].name}
       flag={languages[0].flag}
@@ -31,6 +31,7 @@ describe('<LangugeListItem />', () => {
     outterFlagWrapper: (api: RenderAPI) =>
       api.queryByTestId('outter-flag-wrapper'),
     wrapper: (api: RenderAPI) => api.queryByTestId('language-filter-list-item'),
+    languageText: (api: RenderAPI) => api.queryByTestId('language-text'),
   };
 
   beforeEach(() => {
@@ -43,12 +44,24 @@ describe('<LangugeListItem />', () => {
     const component = render(renderLanguageFilter(true));
     expect(elements.iconCheckboxCircle(component)).not.toBeNull();
     expect(elements.outterFlagWrapper(component)).not.toBeNull();
+    expect(elements.languageText(component).props.style[0].color).toEqual(
+      dark.colors.text,
+    );
+    expect(elements.wrapper(component).props.style.backgroundColor).toEqual(
+      dark.colors.background,
+    );
   });
 
   it('should render correctly when is not selected', () => {
     const component = render(renderLanguageFilter(false));
     expect(elements.iconCheckboxCircle(component)).toBeNull();
     expect(elements.outterFlagWrapper(component)).not.toBeNull();
+    expect(elements.languageText(component).props.style[0].color).toEqual(
+      dark.colors.background,
+    );
+    expect(elements.wrapper(component).props.style.backgroundColor).toEqual(
+      dark.colors.text,
+    );
   });
 
   it('should render correctly when is selected and then the user unselects', () => {
