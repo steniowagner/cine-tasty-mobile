@@ -8,6 +8,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import {WRAPPER_HEIGHT as TAB_NAVIGATOR_HEIGHT} from '@routes/components/tab-navigator/TabNavigator.styles';
 import metrics from '@styles/metrics';
 
 import {DEFAULT_MODAL_SHEET_HEIGHT} from './ModalSheet.styles';
@@ -32,6 +33,8 @@ type UseModalSheetProps = {
 };
 
 export const useModalSheet = (props: UseModalSheetProps) => {
+  const [bottomGapSectionHeight, setBottomGapSectionHeight] =
+    useState(MAX_CLAMPING);
   const [isOpen, setIsOpen] = useState(false);
 
   const dimensions = useWindowDimensions();
@@ -71,26 +74,25 @@ export const useModalSheet = (props: UseModalSheetProps) => {
     top: withSpring(distanceFromTop.value, SPRING_CONFIG),
   }));
 
+  const handlePressCTAButton = useCallback(() => {
+    setBottomGapSectionHeight(0);
+    distanceFromTop.value = withTiming(
+      dimensions.height + TAB_NAVIGATOR_HEIGHT,
+      {duration: CLOSE_MODAL_ANIMATION_DURATION},
+      () => runOnJS(props.ctaButtonCallback)(),
+    );
+  }, [props.ctaButtonCallback]);
+
   const openModalSheetWithAnimation = useCallback(() => {
-    distanceFromTop.value = withSpring(cardInitialPosition, SPRING_CONFIG);
+    distanceFromTop.value = withSpring(cardInitialPosition, SPRING_CONFIG, () =>
+      runOnJS(setBottomGapSectionHeight)(MAX_CLAMPING),
+    );
   }, [cardInitialPosition]);
 
-  const closeModalSheetWithAnimation = useCallback(() => {
-    distanceFromTop.value = withTiming(
-      dimensions.height,
-      {duration: CLOSE_MODAL_ANIMATION_DURATION},
-      () => runOnJS(props.onClose)(),
-    );
-  }, [props.onClose]);
-
-  const handleAnimateDistanceFromTop = useCallback(
-    () =>
-      isOpen ? openModalSheetWithAnimation() : closeModalSheetWithAnimation(),
-    [openModalSheetWithAnimation, closeModalSheetWithAnimation, isOpen],
-  );
-
   useEffect(() => {
-    handleAnimateDistanceFromTop();
+    if (isOpen) {
+      openModalSheetWithAnimation();
+    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -99,9 +101,9 @@ export const useModalSheet = (props: UseModalSheetProps) => {
 
   return {
     cardAnimatedStyle: distanceFromTopAnimatedStyle,
-    bottomGapSectionHeight: MAX_CLAMPING,
+    bottomGapSectionHeight,
     darkLayerAnimatedStyle,
-    onPressCTAButton: () => setIsOpen(false),
+    onPressCTAButton: handlePressCTAButton,
     handleGestureEvent,
     cardHeight,
     isOpen,
