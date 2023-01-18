@@ -11,7 +11,7 @@ import {ThemeProvider} from 'styled-components/native';
 import {dark} from '@styles/themes/dark';
 
 import LanguageListItem from './LanguageListItem';
-import languages from '../languages';
+import {languages} from '../languages/languages';
 
 const renderLanguageFilter = (isSelected: boolean, onPress = jest.fn()) => (
   <ThemeProvider theme={dark}>

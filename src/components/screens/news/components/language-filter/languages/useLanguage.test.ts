@@ -2,11 +2,11 @@ import {renderHook} from '@testing-library/react-hooks';
 
 import * as SchemaTypes from '@schema-types';
 import PORTUGUESE from '@i18n/locale/ptBR';
+import * as mockNews from '@mocks/fixtures/news';
 import SPANISH from '@i18n/locale/es';
 import ENGLISH from '@i18n/locale/en';
 
 import {useLanguages} from './useLanguages';
-import {languages} from './languages';
 
 const languageMock = {language: ''};
 
@@ -21,22 +21,6 @@ jest.mock('@hooks', () => ({
 
 describe('useLanguage', () => {
   describe('When the selected language is Portuguese', () => {
-    const expecetedSequence = [
-      languages[5],
-      languages[1],
-      languages[12],
-      languages[11],
-      languages[4],
-      languages[6],
-      languages[3],
-      languages[0],
-      languages[7],
-      languages[2],
-      languages[8],
-      languages[9],
-      languages[10],
-    ];
-
     beforeAll(() => {
       jest.resetAllMocks();
       languageMock.language = SchemaTypes.ISO6391Language.PTBR;
@@ -51,30 +35,15 @@ describe('useLanguage', () => {
       expect(
         result.current.every(
           (language, index) =>
-            language.flag === expecetedSequence[index].flag &&
-            language.id === expecetedSequence[index].id,
+            language.flag ===
+              mockNews.languagesSortedInPortuguese[index].flag &&
+            language.id === mockNews.languagesSortedInPortuguese[index].id,
         ),
       ).toEqual(true);
     });
   });
 
   describe('When the selected language is Spanish', () => {
-    const expecetedSequence = [
-      languages[5],
-      languages[1],
-      languages[12],
-      languages[11],
-      languages[4],
-      languages[6],
-      languages[3],
-      languages[0],
-      languages[7],
-      languages[2],
-      languages[8],
-      languages[9],
-      languages[10],
-    ];
-
     beforeAll(() => {
       jest.resetAllMocks();
       languageMock.language = SchemaTypes.ISO6391Language.ES;
@@ -89,30 +58,14 @@ describe('useLanguage', () => {
       expect(
         result.current.every(
           (language, index) =>
-            language.flag === expecetedSequence[index].flag &&
-            language.id === expecetedSequence[index].id,
+            language.flag === mockNews.languagesSortedInSpanish[index].flag &&
+            language.id === mockNews.languagesSortedInSpanish[index].id,
         ),
       ).toEqual(true);
     });
   });
 
   describe('When the selected language is English', () => {
-    const expecetedSequence = [
-      languages[1],
-      languages[3],
-      languages[0],
-      languages[11],
-      languages[4],
-      languages[5],
-      languages[6],
-      languages[7],
-      languages[2],
-      languages[8],
-      languages[9],
-      languages[10],
-      languages[12],
-    ];
-
     beforeAll(() => {
       jest.resetAllMocks();
       languageMock.language = SchemaTypes.ISO6391Language.EN;
@@ -127,8 +80,8 @@ describe('useLanguage', () => {
       expect(
         result.current.every(
           (language, index) =>
-            language.flag === expecetedSequence[index].flag &&
-            language.id === expecetedSequence[index].id,
+            language.flag === mockNews.languagesSortedInEnglish[index].flag &&
+            language.id === mockNews.languagesSortedInEnglish[index].id,
         ),
       ).toEqual(true);
     });
