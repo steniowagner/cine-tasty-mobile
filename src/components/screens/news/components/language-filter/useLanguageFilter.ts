@@ -1,4 +1,4 @@
-import {useCallback, useState, useMemo, useRef, useEffect} from 'react';
+import {useCallback, useState, useRef, useEffect} from 'react';
 import {ScrollView} from 'react-native';
 
 import * as SchemaTypes from '@schema-types';
@@ -18,26 +18,9 @@ const useLanguageFilter = (props: UseLanguageFilterProps) => {
   const [languageSelected, setLanguageSelected] =
     useState<SchemaTypes.ArticleLanguage>(props.lastLanguageSelected);
 
-  const scrollViewRef = useRef<ScrollView>(null);
-
   const translations = useTranslations();
 
   const languages = useLanguages();
-
-  const initialFlatListIndex = useMemo(
-    () =>
-      languages.findIndex(
-        languageItem => languageItem.id === props.lastLanguageSelected,
-      ),
-    [props.lastLanguageSelected],
-  );
-
-  useEffect(() => {
-    if (scrollViewRef && scrollViewRef.current) {
-      const y = initialFlatListIndex * ITEM_LIST_HEIGHT;
-      scrollViewRef.current.scrollTo({x: 0, y, animated: true});
-    }
-  }, [initialFlatListIndex]);
 
   const onPressSelectButton = useCallback((): void => {
     if (props.lastLanguageSelected !== languageSelected) {
@@ -51,14 +34,39 @@ const useLanguageFilter = (props: UseLanguageFilterProps) => {
     languageSelected,
   ]);
 
-  const handleSetScrollViewRef = useCallback(
-    (ref: ScrollView) => {
-      if (!scrollViewRef.current) {
-        scrollViewRef.current = ref;
-      }
-    },
-    [scrollViewRef.current],
+  const getIndexLanguageSelected = useCallback(
+    () =>
+      languages.findIndex(
+        languageItem => languageItem.id === props.lastLanguageSelected,
+      ),
+    [languages],
   );
+
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  const handleMoveListToSelectedLanguage = useCallback(() => {
+    const indexLanguageSelected = getIndexLanguageSelected();
+    scrollViewRef.current?.scrollTo({
+      x: 0,
+      y: indexLanguageSelected * ITEM_LIST_HEIGHT,
+      animated: true,
+    });
+  }, [getIndexLanguageSelected, languages]);
+
+  // For some reason, Jest was always overriding my mock
+  // So I needed to add this workaround to properly spy the useRef hook
+  const handleSetScrollViewRef = (ref: ScrollView) => {
+    if (scrollViewRef.current) {
+      return;
+    }
+    scrollViewRef.current = ref;
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      handleMoveListToSelectedLanguage();
+    }, 0);
+  }, []);
 
   return {
     modalSelectButtonTitle: translations.translate(Translations.Tags.SELECT),
