@@ -5,17 +5,16 @@ import {
   PaginatedListHeader,
   PaginationFooter,
   HeaderIconButton,
-  ModalSheet,
   Advise,
 } from '@components';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 
+import {LanguagesFilterModal} from './language-filter-modal/LanguagesFilterModal';
 import {LIST_ITEM_HEIGHT} from './News.style';
 import {NewsStackProps} from '../routes/route-params-types';
 import NewsLoading from './loading-list/NewsLoading';
 import NewsListItem from './list-item/NewsListItem';
-import {LanguageFilter} from './language-filter/LanguageFilter';
 import {useNews} from './useNews';
 
 export const INITIAL_ITEMS_TO_RENDER =
@@ -44,16 +43,12 @@ export const News = (props: NewsStackProps) => {
   if (news.shouldShowEmptyListAdvice) {
     return (
       <>
-        <ModalSheet
-          title={news.texts.modalTitle}
+        <LanguagesFilterModal
+          onSelectLanguage={news.setLanguageSelected}
           isOpen={news.isLanguageModalOpen}
-          onClose={news.onCloseModal}>
-          <LanguageFilter
-            onSelectLanguage={news.handleSelectLanguage}
-            lastLanguageSelected={news.language}
-            closeModal={news.onCloseModal}
-          />
-        </ModalSheet>
+          onCloseModal={news.onCloseModal}
+          languageSelected={news.languageSelected}
+        />
         <Advise
           description={news.texts.advice.description}
           suggestion={news.texts.advice.suggestion}
@@ -66,16 +61,12 @@ export const News = (props: NewsStackProps) => {
 
   return (
     <>
-      <ModalSheet
-        title={news.texts.modalTitle}
+      <LanguagesFilterModal
+        onSelectLanguage={news.setLanguageSelected}
         isOpen={news.isLanguageModalOpen}
-        onClose={news.onCloseModal}>
-        <LanguageFilter
-          onSelectLanguage={news.handleSelectLanguage}
-          lastLanguageSelected={news.language}
-          closeModal={news.onCloseModal}
-        />
-      </ModalSheet>
+        onCloseModal={news.onCloseModal}
+        languageSelected={news.languageSelected}
+      />
       <FlatList
         ListHeaderComponent={() =>
           news.shouldShowListTopReloadButton && (
@@ -93,7 +84,7 @@ export const News = (props: NewsStackProps) => {
         }
         renderItem={({item}) => (
           <NewsListItem
-            withRTL={news.language === SchemaTypes.ArticleLanguage.AR}
+            withRTL={news.languageSelected === SchemaTypes.ArticleLanguage.AR}
             date={item.publishedAt}
             source={item.source}
             image={item.image}

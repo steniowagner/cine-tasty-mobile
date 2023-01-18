@@ -1,24 +1,22 @@
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useWindowDimensions} from 'react-native';
-import {PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import {
   useSharedValue,
   useAnimatedStyle,
-  useAnimatedGestureHandler,
   runOnJS,
   withSpring,
-  interpolate,
-  Extrapolate,
   withTiming,
 } from 'react-native-reanimated';
 
 import metrics from '@styles/metrics';
 
 import {DEFAULT_MODAL_SHEET_HEIGHT} from './ModalSheet.styles';
+import {useGestureEvents} from './useGestureEvents';
+import {useDarkLayerAnimatedStyle} from './useDarkLayerAnimatedStyle';
 
 export const MAX_CLAMPING = metrics.getWidthFromDP('8%');
 
-const DARK_LAYER_OPACITY_ANIMATION_DURATION = 50;
+const CLOSE_MODAL_ANIMATION_DURATION = 300;
 
 const SPRING_CONFIG = {
   damping: 80,
@@ -26,17 +24,16 @@ const SPRING_CONFIG = {
   stiffness: 500,
 };
 
-type HandleGestureEventProps = {
-  startY: number;
-};
-
 type UseModalSheetProps = {
+  ctaButtonCallback?: () => unknown;
   height?: number;
   onClose: () => void;
   isOpen?: boolean;
 };
 
 export const useModalSheet = (props: UseModalSheetProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const dimensions = useWindowDimensions();
 
   const distanceFromTop = useSharedValue(dimensions.height);
@@ -54,65 +51,59 @@ export const useModalSheet = (props: UseModalSheetProps) => {
     [cardHeight],
   );
 
+  const darkLayerAnimatedStyle = useDarkLayerAnimatedStyle({
+    distanceFromTop,
+    cardInitialPosition,
+    windowHeight: dimensions.height,
+    maxClamping: MAX_CLAMPING,
+  });
+
+  const handleGestureEvent = useGestureEvents({
+    distanceFromTop,
+    cardInitialPosition,
+    cardHeight,
+    windowHeight: dimensions.height,
+    onClose: props.onClose,
+    maxClamping: MAX_CLAMPING,
+  });
+
   const distanceFromTopAnimatedStyle = useAnimatedStyle(() => ({
     top: withSpring(distanceFromTop.value, SPRING_CONFIG),
   }));
 
-  const darkLayerAnimatedStyle = useAnimatedStyle(() => {
-    const opacity = withTiming(
-      interpolate(
-        distanceFromTop.value,
-        [dimensions.height - 1.5 * MAX_CLAMPING, cardInitialPosition],
-        [0, 1],
-        Extrapolate.CLAMP,
-      ),
-      {duration: DARK_LAYER_OPACITY_ANIMATION_DURATION},
+  const openModalSheetWithAnimation = useCallback(() => {
+    distanceFromTop.value = withSpring(cardInitialPosition, SPRING_CONFIG);
+  }, [cardInitialPosition]);
+
+  const closeModalSheetWithAnimation = useCallback(() => {
+    distanceFromTop.value = withTiming(
+      dimensions.height,
+      {duration: CLOSE_MODAL_ANIMATION_DURATION},
+      () => runOnJS(props.onClose)(),
     );
-    return {
-      opacity,
-    };
-  });
+  }, [props.onClose]);
 
-  const handleGestureEvent = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    HandleGestureEventProps
-  >({
-    onStart(_, context) {
-      context.startY = distanceFromTop.value;
-    },
-    onActive(event, context) {
-      if (event.translationY >= -MAX_CLAMPING) {
-        distanceFromTop.value = context.startY + event.translationY;
-      }
-    },
-    onEnd() {
-      const shouldCloseModal = distanceFromTop.value > cardHeight;
-      const nextDistanceFromTopValue = shouldCloseModal
-        ? dimensions.height
-        : cardInitialPosition;
-      distanceFromTop.value = nextDistanceFromTopValue;
-      if (shouldCloseModal) {
-        runOnJS(props.onClose)();
-      }
-    },
-  });
-
-  const handleAnimateDistanceFromTop = useCallback(() => {
-    const nextDistanceFromTopValue = props.isOpen
-      ? cardInitialPosition
-      : dimensions.height;
-    distanceFromTop.value = withSpring(nextDistanceFromTopValue, SPRING_CONFIG);
-  }, [cardInitialPosition, props.isOpen]);
+  const handleAnimateDistanceFromTop = useCallback(
+    () =>
+      isOpen ? openModalSheetWithAnimation() : closeModalSheetWithAnimation(),
+    [openModalSheetWithAnimation, closeModalSheetWithAnimation, isOpen],
+  );
 
   useEffect(() => {
     handleAnimateDistanceFromTop();
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(props.isOpen);
   }, [props.isOpen]);
 
   return {
     cardAnimatedStyle: distanceFromTopAnimatedStyle,
     bottomGapSectionHeight: MAX_CLAMPING,
     darkLayerAnimatedStyle,
+    onPressCTAButton: () => setIsOpen(false),
     handleGestureEvent,
     cardHeight,
+    isOpen,
   };
 };
