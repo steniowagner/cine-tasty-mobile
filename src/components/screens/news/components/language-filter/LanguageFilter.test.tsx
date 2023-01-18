@@ -8,14 +8,14 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {dark as theme} from '@styles/themes/dark';
 import * as SchemaTypes from '@schema-types';
-import {Translations} from '@i18n/tags';
 
 import {ITEM_LIST_HEIGHT} from './list-item/LanguageListItem.styles';
-import LanguageFilter, {ANIMATION_TIMING} from './LanguageFilter';
-import languages from './languages';
+import {LanguageFilter} from './LanguageFilter';
+import {languages} from './languages/languages';
+import {Translations} from '@i18n/tags';
+import * as mockNews from '@mocks/fixtures/news';
 
 const renderLanguageFilter = (
   lastFilterSelected: SchemaTypes.ArticleLanguage,
@@ -39,17 +39,16 @@ describe('<LanguageFilter />', () => {
     selectButton: (api: RenderAPI) => api.queryByTestId('select-button'),
     languageListItems: (api: RenderAPI) =>
       api.queryAllByTestId('language-filter-list-item'),
-    languageFlagsIcons: (api: RenderAPI) => api.queryAllByTestId(/icon-/),
+    languageFlagsIcons: (api: RenderAPI) => api.queryAllByTestId(/flag-svg-/),
     languageFlagsTexts: (api: RenderAPI) =>
       api.queryAllByTestId('language-text'),
   };
 
-  afterEach(cleanup);
-
   beforeEach(() => {
-    setupTimeTravel();
     jest.useFakeTimers();
   });
+
+  afterEach(cleanup);
 
   it('should render the list of items correctly', () => {
     const indexLanguageSelected = makeSelectedLanguageIndex();
@@ -66,27 +65,34 @@ describe('<LanguageFilter />', () => {
   });
 
   it('should render the list on the correct sequence', () => {
-    const component = render(renderLanguageFilter(undefined));
+    const indexLanguageSelected = makeSelectedLanguageIndex();
+    const component = render(
+      renderLanguageFilter(languages[indexLanguageSelected].id),
+    );
     act(() => {
       jest.runAllTimers();
     });
-    for (let i = 0; i < languages.length; i++) {
+    for (let i = 0; i < elements.languageFlagsIcons(component).length; i++) {
       expect(elements.languageFlagsIcons(component)[i].props.testID).toEqual(
-        `icon-${languages[i].flag}`,
+        `flag-svg-${mockNews.languagesSortedInEnglish[i].flag}`,
       );
       expect(elements.languageFlagsTexts(component)[i].children[0]).toEqual(
-        `${Translations.Tags.NEWS_LANGUAGES}:${languages[i].name}`,
+        `${Translations.Tags.NEWS_LANGUAGES}:${mockNews.languagesSortedInEnglish[i].name}`,
       );
     }
   });
 
-  it('should render the "language-list" on the position of the "language-selected"', () => {
+  it('should scroll the "language-list" to the "language-selected" position', () => {
     const mockScrollTo = jest.fn();
     jest.spyOn(React, 'useRef').mockReturnValue({
       current: {scrollTo: mockScrollTo},
     });
     const indexLanguageSelected = makeSelectedLanguageIndex();
-    render(renderLanguageFilter(languages[indexLanguageSelected].id));
+    render(
+      renderLanguageFilter(
+        mockNews.languagesSortedInEnglish[indexLanguageSelected].id,
+      ),
+    );
     act(() => {
       jest.runAllTimers();
     });
@@ -103,30 +109,38 @@ describe('<LanguageFilter />', () => {
     const nextItemSelected = initialIndexSelected + 1;
     const onSelect = jest.fn();
     const component = render(
-      renderLanguageFilter(languages[initialIndexSelected].id, onSelect),
+      renderLanguageFilter(
+        mockNews.languagesSortedInEnglish[initialIndexSelected].id,
+        onSelect,
+      ),
     );
     expect(onSelect).toHaveBeenCalledTimes(0);
     fireEvent.press(elements.languageListItems(component)[nextItemSelected]);
     fireEvent.press(elements.selectButton(component));
     act(() => {
-      timeTravel(ANIMATION_TIMING);
+      jest.runAllTimers();
     });
     expect(onSelect).toHaveBeenCalledTimes(1);
-    expect(onSelect).toHaveBeenCalledWith(languages[nextItemSelected].id);
+    expect(onSelect).toHaveBeenCalledWith(
+      mockNews.languagesSortedInEnglish[nextItemSelected].id,
+    );
   });
 
   it('should not call "onSelectLanguage" when press "select-button" when the language selected is the same of the one received as "lastLanguageSelected"', () => {
-    const initialIndexSelected = 0;
+    const initialIndexSelected = makeSelectedLanguageIndex();
     const onSelect = jest.fn();
     const component = render(
-      renderLanguageFilter(languages[initialIndexSelected].id, onSelect),
+      renderLanguageFilter(
+        mockNews.languagesSortedInEnglish[initialIndexSelected].id,
+        onSelect,
+      ),
     );
     fireEvent.press(
       elements.languageListItems(component)[initialIndexSelected],
     );
     fireEvent.press(elements.selectButton(component));
     act(() => {
-      timeTravel(ANIMATION_TIMING);
+      jest.runAllTimers();
     });
     expect(onSelect).toHaveBeenCalledTimes(0);
   });

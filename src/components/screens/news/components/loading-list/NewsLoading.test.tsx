@@ -1,3 +1,5 @@
+jest.unmock('react-native-reanimated');
+
 import React from 'react';
 import {RenderAPI, cleanup, render} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
