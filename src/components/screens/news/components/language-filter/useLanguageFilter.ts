@@ -1,43 +1,23 @@
-import {useCallback, useState, useRef, useEffect} from 'react';
+import {useCallback, useRef, useEffect} from 'react';
 import {ScrollView} from 'react-native';
 
 import * as SchemaTypes from '@schema-types';
-import {Translations} from '@i18n/tags';
-import {useTranslations} from '@hooks';
 
 import {ITEM_LIST_HEIGHT} from './list-item/LanguageListItem.styles';
 import {useLanguages} from './languages/useLanguages';
 
 type UseLanguageFilterProps = {
-  lastLanguageSelected: SchemaTypes.ArticleLanguage;
+  languageSelected: SchemaTypes.ArticleLanguage;
   onSelectLanguage: (language: string) => void;
-  closeModal: () => void;
 };
 
 const useLanguageFilter = (props: UseLanguageFilterProps) => {
-  const [languageSelected, setLanguageSelected] =
-    useState<SchemaTypes.ArticleLanguage>(props.lastLanguageSelected);
-
-  const translations = useTranslations();
-
   const languages = useLanguages();
-
-  const onPressSelectButton = useCallback((): void => {
-    if (props.lastLanguageSelected !== languageSelected) {
-      props.onSelectLanguage(languageSelected);
-    }
-    props.closeModal();
-  }, [
-    props.lastLanguageSelected,
-    props.onSelectLanguage,
-    props.closeModal,
-    languageSelected,
-  ]);
 
   const getIndexLanguageSelected = useCallback(
     () =>
       languages.findIndex(
-        languageItem => languageItem.id === props.lastLanguageSelected,
+        languageItem => languageItem.id === props.languageSelected,
       ),
     [languages],
   );
@@ -69,12 +49,8 @@ const useLanguageFilter = (props: UseLanguageFilterProps) => {
   }, []);
 
   return {
-    modalSelectButtonTitle: translations.translate(Translations.Tags.SELECT),
     handleSetScrollViewRef,
-    onPressSelectButton,
     scrollViewRef,
-    setLanguageSelected,
-    languageSelected,
     languages,
   };
 };
