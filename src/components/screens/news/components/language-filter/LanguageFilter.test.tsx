@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  RenderAPI,
-  fireEvent,
-  cleanup,
-  render,
-  act,
-} from '@testing-library/react-native';
+import {RenderAPI, cleanup, render, act} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
@@ -36,7 +30,6 @@ const makeSelectedLanguageIndex = () =>
 describe('<LanguageFilter />', () => {
   const elements = {
     languageList: (api: RenderAPI) => api.queryByTestId('languages-list'),
-    selectButton: (api: RenderAPI) => api.queryByTestId('select-button'),
     languageListItems: (api: RenderAPI) =>
       api.queryAllByTestId('language-filter-list-item'),
     languageFlagsIcons: (api: RenderAPI) => api.queryAllByTestId(/flag-svg-/),
@@ -102,46 +95,5 @@ describe('<LanguageFilter />', () => {
       y: indexLanguageSelected * ITEM_LIST_HEIGHT,
       animated: true,
     });
-  });
-
-  it('should call "onSelectLanguage" when the "select-button" is pressed with a different language than the one received', () => {
-    const initialIndexSelected = 0;
-    const nextItemSelected = initialIndexSelected + 1;
-    const onSelect = jest.fn();
-    const component = render(
-      renderLanguageFilter(
-        mockNews.languagesSortedInEnglish[initialIndexSelected].id,
-        onSelect,
-      ),
-    );
-    expect(onSelect).toHaveBeenCalledTimes(0);
-    fireEvent.press(elements.languageListItems(component)[nextItemSelected]);
-    fireEvent.press(elements.selectButton(component));
-    act(() => {
-      jest.runAllTimers();
-    });
-    expect(onSelect).toHaveBeenCalledTimes(1);
-    expect(onSelect).toHaveBeenCalledWith(
-      mockNews.languagesSortedInEnglish[nextItemSelected].id,
-    );
-  });
-
-  it('should not call "onSelectLanguage" when press "select-button" when the language selected is the same of the one received as "lastLanguageSelected"', () => {
-    const initialIndexSelected = makeSelectedLanguageIndex();
-    const onSelect = jest.fn();
-    const component = render(
-      renderLanguageFilter(
-        mockNews.languagesSortedInEnglish[initialIndexSelected].id,
-        onSelect,
-      ),
-    );
-    fireEvent.press(
-      elements.languageListItems(component)[initialIndexSelected],
-    );
-    fireEvent.press(elements.selectButton(component));
-    act(() => {
-      jest.runAllTimers();
-    });
-    expect(onSelect).toHaveBeenCalledTimes(0);
   });
 });
