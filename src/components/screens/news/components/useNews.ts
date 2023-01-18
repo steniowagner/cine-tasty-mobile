@@ -6,18 +6,17 @@ import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 
 export const useNews = () => {
-  const [language, setLanguage] = useState<SchemaTypes.ArticleLanguage>(
-    SchemaTypes.ArticleLanguage.EN,
-  );
+  const [languageSelected, setLanguageSelected] =
+    useState<SchemaTypes.ArticleLanguage>(SchemaTypes.ArticleLanguage.EN);
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
 
   const translations = useTranslations();
 
   const variables = useMemo(
     () => ({
-      language,
+      language: languageSelected,
     }),
-    [language],
+    [languageSelected],
   );
 
   const pagination = usePagination<
@@ -51,7 +50,6 @@ export const useNews = () => {
         ),
         title: translations.translate(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
       },
-      modalTitle: translations.translate(Translations.Tags.NEWS_FILTER_MESSAGE),
     }),
     [translations.translate],
   );
@@ -66,8 +64,6 @@ export const useNews = () => {
       !pagination.isLoading && !pagination.error && !pagination.dataset.length,
     onPressHeaderIconButton: () => setIsLanguageModalOpen(true),
     onCloseModal: () => setIsLanguageModalOpen(false),
-    handleSelectLanguage: (languageSelected: SchemaTypes.ArticleLanguage) =>
-      setLanguage(languageSelected),
     onPressFooterReloadButton: pagination.paginate,
     onPressTopReloadButton: pagination.reset,
     onEndReached: pagination.paginate,
@@ -77,7 +73,8 @@ export const useNews = () => {
     isLoading: pagination.isLoading,
     error: pagination.error,
     isLanguageModalOpen,
+    languageSelected,
+    setLanguageSelected,
     texts,
-    language,
   };
 };
