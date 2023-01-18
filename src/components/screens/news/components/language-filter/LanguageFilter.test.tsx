@@ -17,9 +17,8 @@ const renderLanguageFilter = (
 ) => (
   <ThemeProvider theme={theme}>
     <LanguageFilter
-      lastLanguageSelected={lastFilterSelected}
       onSelectLanguage={onSelect}
-      closeModal={jest.fn()}
+      languageSelected={lastFilterSelected}
     />
   </ThemeProvider>
 );
