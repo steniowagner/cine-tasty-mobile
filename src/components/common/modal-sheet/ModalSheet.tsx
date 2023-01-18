@@ -20,6 +20,7 @@ type ModalSheetProps = {
 
 export const ModalSheet = (props: ModalSheetProps) => {
   const modalSheet = useModalSheet({
+    ctaButtonCallback: props.ctaButtonCallback,
     height: props.height,
     onClose: props.onClose,
     isOpen: props.isOpen,
@@ -64,9 +65,7 @@ export const ModalSheet = (props: ModalSheetProps) => {
             {props.ctaButtonTitle && (
               <ModalSelectButton
                 title={props.ctaButtonTitle}
-                onPress={() =>
-                  props.ctaButtonCallback && props.ctaButtonCallback()
-                }
+                onPress={modalSheet.onPressCTAButton}
               />
             )}
           </>
