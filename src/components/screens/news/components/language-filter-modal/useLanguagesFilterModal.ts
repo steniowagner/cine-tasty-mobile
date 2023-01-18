@@ -31,8 +31,14 @@ export const useLanguagesFilterModal = (
     props.onCloseModal();
   }, [props.onCloseModal, props.onSelectLanguage, languageSelected]);
 
+  const handleCloseModal = useCallback(() => {
+    setLanguageSelected(props.lastLanguageSelected);
+    props.onCloseModal();
+  }, [props.onCloseModal, props.lastLanguageSelected]);
+
   return {
     languageSelected,
+    onCloseModal: handleCloseModal,
     onPressSelect: handlePressSelect,
     setLanguageSelected,
     texts,
