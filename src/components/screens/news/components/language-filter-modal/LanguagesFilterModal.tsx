@@ -24,7 +24,7 @@ export const LanguagesFilterModal = (props: LanguagesFilterModalProps) => {
     <ModalSheet
       title={languagesFilterModal.texts.modalTitle}
       isOpen={props.isOpen}
-      onClose={props.onCloseModal}
+      onClose={languagesFilterModal.onCloseModal}
       ctaButtonTitle={languagesFilterModal.texts.modalCtaButton}
       ctaButtonCallback={languagesFilterModal.onPressSelect}>
       <LanguageFilter

@@ -8,7 +8,6 @@ import {useLanguages} from './languages/useLanguages';
 
 type UseLanguageFilterProps = {
   languageSelected: SchemaTypes.ArticleLanguage;
-  onSelectLanguage: (language: string) => void;
 };
 
 const useLanguageFilter = (props: UseLanguageFilterProps) => {
@@ -31,10 +30,10 @@ const useLanguageFilter = (props: UseLanguageFilterProps) => {
       y: indexLanguageSelected * ITEM_LIST_HEIGHT,
       animated: true,
     });
-  }, [getIndexLanguageSelected, languages]);
+  }, [getIndexLanguageSelected]);
 
   // For some reason, Jest was always overriding my mock
-  // So I needed to add this workaround to properly spy the useRef hook
+  // So I needed to add this workaround to properly spy the useRef hook during the tests
   const handleSetScrollViewRef = (ref: ScrollView) => {
     if (scrollViewRef.current) {
       return;
