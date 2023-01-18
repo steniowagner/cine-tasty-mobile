@@ -3,11 +3,15 @@ import {Modal} from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
+import {ModalSelectButton} from '@components';
+
 import * as Styles from './ModalSheet.styles';
 import {useModalSheet} from './useModalSheet';
 
 type ModalSheetProps = {
   children: React.ReactNode;
+  ctaButtonTitle?: string;
+  ctaButtonCallback?: () => unknown;
   title?: string;
   isOpen: boolean;
   onClose: () => void;
@@ -33,7 +37,10 @@ export const ModalSheet = (props: ModalSheetProps) => {
           modalSheet.darkLayerAnimatedStyle,
         ]}
       />
-      <Styles.BottomGapSection height={modalSheet.bottomGapSectionHeight} />
+      <Styles.BottomGapSection
+        height={modalSheet.bottomGapSectionHeight}
+        hasCtaButton={!!props.ctaButtonTitle}
+      />
       <PanGestureHandler onGestureEvent={modalSheet.handleGestureEvent}>
         <Animated.View
           style={[
@@ -52,7 +59,17 @@ export const ModalSheet = (props: ModalSheetProps) => {
               <Styles.LineDivider />
             </Styles.ListHeaderWrapper>
           )}
-          {props.children}
+          <>
+            {props.children}
+            {props.ctaButtonTitle && (
+              <ModalSelectButton
+                title={props.ctaButtonTitle}
+                onPress={() =>
+                  props.ctaButtonCallback && props.ctaButtonCallback()
+                }
+              />
+            )}
+          </>
         </Animated.View>
       </PanGestureHandler>
     </Modal>

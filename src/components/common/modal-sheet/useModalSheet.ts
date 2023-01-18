@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useWindowDimensions} from 'react-native';
 import {PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import {
@@ -37,6 +37,8 @@ type UseModalSheetProps = {
 };
 
 export const useModalSheet = (props: UseModalSheetProps) => {
+  const [isOpen, setIsOpen] = useState(props.isOpen);
+
   const dimensions = useWindowDimensions();
 
   const distanceFromTop = useSharedValue(dimensions.height);
@@ -92,7 +94,7 @@ export const useModalSheet = (props: UseModalSheetProps) => {
         : cardInitialPosition;
       distanceFromTop.value = nextDistanceFromTopValue;
       if (shouldCloseModal) {
-        runOnJS(props.onClose)();
+        runOnJS(setIsOpen)(false);
       }
     },
   });
@@ -108,11 +110,18 @@ export const useModalSheet = (props: UseModalSheetProps) => {
     handleAnimateDistanceFromTop();
   }, [props.isOpen]);
 
+  useEffect(() => {
+    if (!isOpen && props.isOpen) {
+      props.onClose();
+    }
+  }, [isOpen]);
+
   return {
     cardAnimatedStyle: distanceFromTopAnimatedStyle,
     bottomGapSectionHeight: MAX_CLAMPING,
     darkLayerAnimatedStyle,
     handleGestureEvent,
     cardHeight,
+    isOpen,
   };
 };

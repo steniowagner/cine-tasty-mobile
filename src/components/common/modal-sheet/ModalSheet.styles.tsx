@@ -6,8 +6,11 @@ import metrics from '@styles/metrics';
 
 export const DEFAULT_MODAL_SHEET_HEIGHT = metrics.getHeightFromDP('60%');
 
+const DEFAULT_BACKGROUND_WHITE = dark.colors.text;
+
 type BottomGapSectionStyleProps = {
   height: number;
+  hasCtaButton: boolean;
 };
 
 export const GripWrapper = styled(View)`
@@ -45,7 +48,8 @@ export const ListHeaderWrapper = styled(View)`
 export const BottomGapSection = styled(View)<BottomGapSectionStyleProps>`
   width: 100%;
   height: ${({height}) => height}px;
-  background-color: ${({theme}) => theme.colors.primary};
+  background-color: ${({hasCtaButton, theme}) =>
+    hasCtaButton ? theme.colors.primary : DEFAULT_BACKGROUND_WHITE};
   position: absolute;
   bottom: 0;
   left: 0;
@@ -60,7 +64,7 @@ export const AnimatedStyles = StyleSheet.create({
   card: {
     borderTopLeftRadius: metrics.mediumSize,
     borderTopRightRadius: metrics.mediumSize,
-    backgroundColor: 'white',
+    backgroundColor: DEFAULT_BACKGROUND_WHITE,
     bottom: 0,
     left: 0,
     right: 0,
