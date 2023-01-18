@@ -14,7 +14,6 @@ type LanguageFilterProps = {
 export const LanguageFilter = (props: LanguageFilterProps) => {
   const languageFilter = useLanguageFilter({
     languageSelected: props.languageSelected,
-    onSelectLanguage: props.onSelectLanguage,
   });
 
   return (
