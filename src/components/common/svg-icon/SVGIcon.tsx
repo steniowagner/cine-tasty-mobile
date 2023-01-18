@@ -11,6 +11,7 @@ export type SVGIconProps = {
   style?: StyleProp<any>;
   theme: DefaultTheme;
   id: SupportedIcons;
+  testID?: string;
   size: number;
 };
 
@@ -24,7 +25,7 @@ export const SVGIcon = withTheme((props: SVGIconProps) => {
 
   return (
     <SvgXml
-      testID={`icon-${props.id}`}
+      testID={props.testID || `icon-${props.id}`}
       style={props.style || {}}
       height={props.size}
       width={props.size}

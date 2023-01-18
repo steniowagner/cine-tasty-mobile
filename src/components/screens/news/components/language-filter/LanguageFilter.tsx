@@ -7,8 +7,6 @@ import * as SchemaTypes from '@schema-types';
 import LanguageListItem from './list-item/LanguageListItem';
 import useLanguageFilter from './useLanguageFilter';
 
-export const ANIMATION_TIMING = 400;
-
 type LanguageFilterProps = {
   onSelectLanguage: (language: SchemaTypes.ArticleLanguage) => void;
   lastLanguageSelected: SchemaTypes.ArticleLanguage;
