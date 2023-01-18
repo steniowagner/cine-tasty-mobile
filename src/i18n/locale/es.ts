@@ -135,7 +135,7 @@ const es: Locale = {
       norwegian: 'Noruego',
       portuguese: 'Portugués',
       russian: 'Ruso',
-      sami: 'Finlandés',
+      finnish: 'Finlandés',
       spanish: 'Español',
     },
     filterMessage: 'Elija un idioma para filtrar las noticias',

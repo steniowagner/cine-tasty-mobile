@@ -6,9 +6,6 @@ import * as SchemaTypes from '@schema-types';
 
 import LanguageListItem from './list-item/LanguageListItem';
 import useLanguageFilter from './useLanguageFilter';
-import languages from './languages';
-
-export const ANIMATION_TIMING = 400;
 
 type LanguageFilterProps = {
   onSelectLanguage: (language: SchemaTypes.ArticleLanguage) => void;
@@ -22,16 +19,17 @@ export const LanguageFilter = (props: LanguageFilterProps) => {
     onSelectLanguage: props.onSelectLanguage,
     closeModal: props.closeModal,
   });
+
   return (
     <>
       <ScrollView
         testID="languages-list"
         ref={languageFilter.handleSetScrollViewRef}>
-        {languages.map(language => (
+        {languageFilter.languages.map(language => (
           <LanguageListItem
-            isSelected={languageFilter.language === language.id}
-            onPress={() => languageFilter.setLanguage(language.id)}
-            name={languageFilter.languageName(language.name)}
+            isSelected={languageFilter.languageSelected === language.id}
+            onPress={() => languageFilter.setLanguageSelected(language.id)}
+            name={language.name}
             flag={language.flag}
             key={language.id}
           />

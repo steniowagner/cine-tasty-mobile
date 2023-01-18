@@ -57,7 +57,7 @@ export type NewsFilterLanguage =
   | 'norwegian'
   | 'portuguese'
   | 'russian'
-  | 'sami'
+  | 'finnish'
   | 'spanish';
 
 export type FetchMoreArticles = <K extends keyof GetArticlesVariables>(

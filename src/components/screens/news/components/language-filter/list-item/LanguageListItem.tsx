@@ -1,27 +1,34 @@
 import React, {memo} from 'react';
 
-import {SVGIcon, Icons} from '@components';
+import {SVGIcon, FlagsIcons} from '@components';
 
 import * as Styles from './LanguageListItem.styles';
 
 type LanguageListItemProps = {
-  flag: Icons;
+  flag: FlagsIcons;
   onPress: () => void;
   isSelected: boolean;
   name: string;
 };
 
 const LanguageListItem = (props: LanguageListItemProps) => (
-  <Styles.Wrapper testID="language-filter-list-item" onPress={props.onPress}>
+  <Styles.Wrapper
+    isSelected={props.isSelected}
+    testID="language-filter-list-item"
+    onPress={props.onPress}>
     <Styles.ContentWrapper>
       <Styles.OutterFlagWrapper
         testID="outter-flag-wrapper"
         isSelected={props.isSelected}>
         <Styles.InnerFlagWrapper>
-          <SVGIcon size={Styles.DEFAULT_ICON_SIZE} id={props.flag} />
+          <SVGIcon
+            size={Styles.DEFAULT_ICON_SIZE}
+            id={props.flag}
+            testID={`flag-svg-${props.flag}`}
+          />
         </Styles.InnerFlagWrapper>
       </Styles.OutterFlagWrapper>
-      <Styles.LanguageText testID="language-text">
+      <Styles.LanguageText isSelected={props.isSelected} testID="language-text">
         {props.name}
       </Styles.LanguageText>
     </Styles.ContentWrapper>

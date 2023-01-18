@@ -3,13 +3,15 @@ import {StyleProp} from 'react-native';
 import {withTheme, DefaultTheme, Colors} from 'styled-components/native';
 import {SvgXml} from 'react-native-svg';
 
-import {Icons, getXML} from '.';
+import {SupportedIcons} from './getXML';
+import {getXML} from '.';
 
 export type SVGIconProps = {
   colorThemeRef?: keyof Colors;
   style?: StyleProp<any>;
   theme: DefaultTheme;
-  id: Icons;
+  id: SupportedIcons;
+  testID?: string;
   size: number;
 };
 
@@ -23,7 +25,7 @@ export const SVGIcon = withTheme((props: SVGIconProps) => {
 
   return (
     <SvgXml
-      testID={`icon-${props.id}`}
+      testID={props.testID || `icon-${props.id}`}
       style={props.style || {}}
       height={props.size}
       width={props.size}

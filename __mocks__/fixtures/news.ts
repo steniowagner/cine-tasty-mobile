@@ -4,6 +4,7 @@ import { GraphQLError } from 'graphql';
 import {GET_ARTICLES} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import { INITIAL_ITEMS_TO_RENDER } from '@src/components/screens/news/components/News';
+import {languages} from '@src/components/screens/news/components/language-filter/languages/languages';
 
 type PossibleErrors = 'network' | 'graphql';
 
@@ -234,4 +235,52 @@ const secondErrorResponse = getError(secondError);
      ...secondErrorResponse,
     },
   ];
-}
+};
+
+export const languagesSortedInPortuguese = [
+  languages[5],
+  languages[1],
+  languages[12],
+  languages[11],
+  languages[4],
+  languages[6],
+  languages[3],
+  languages[0],
+  languages[7],
+  languages[2],
+  languages[8],
+  languages[9],
+  languages[10],
+];
+
+export const languagesSortedInSpanish = [
+  languages[5],
+  languages[1],
+  languages[12],
+  languages[11],
+  languages[4],
+  languages[6],
+  languages[3],
+  languages[0],
+  languages[7],
+  languages[2],
+  languages[8],
+  languages[9],
+  languages[10],
+];
+
+export const languagesSortedInEnglish = [
+  languages[1],
+  languages[3],
+  languages[0],
+  languages[11],
+  languages[4],
+  languages[5],
+  languages[6],
+  languages[7],
+  languages[2],
+  languages[8],
+  languages[9],
+  languages[10],
+  languages[12],
+];
