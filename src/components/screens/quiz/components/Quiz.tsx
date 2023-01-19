@@ -8,6 +8,7 @@ import useQuiz from './useQuiz';
 
 export const Quiz = (props: QuizStackProps) => {
   const quiz = useQuiz({navigation: props.navigation});
+
   return (
     <Styles.Wrapper>
       <Styles.LargeText testID="quiz-welcome-text">
@@ -20,7 +21,7 @@ export const Quiz = (props: QuizStackProps) => {
         {quiz.texts.challenge}
       </Styles.LargeText>
       <RoundedButton
-        onPress={quiz.handlePressChooseQuestions}
+        onPress={quiz.onPressChooseQuestions}
         text={quiz.texts.chooseQuestions}
       />
     </Styles.Wrapper>
