@@ -21,10 +21,13 @@ const checkIsProperlySelected = (
   expect(elements.optionListItemButton(component)).not.toBeNull();
   expect(elements.optionListItemText(component)).not.toBeNull();
   expect(elements.optionListItemText(component).children[0]).toEqual(TITLE);
+  expect(elements.optionListItemText(component).props.style[0].color).toEqual(
+    theme.colors.text,
+  );
   expect(elements.checkboxCircle(component)).not.toBeNull();
   expect(
     elements.optionListItemButton(component).props.style.backgroundColor,
-  ).toEqual(theme.colors.primary);
+  ).toEqual(theme.colors.background);
 };
 
 const checkIsProperlyUnselected = (
@@ -34,10 +37,13 @@ const checkIsProperlyUnselected = (
   expect(elements.optionListItemButton(component)).not.toBeNull();
   expect(elements.optionListItemText(component)).not.toBeNull();
   expect(elements.optionListItemText(component).children[0]).toEqual(TITLE);
+  expect(elements.optionListItemText(component).props.style[0].color).toEqual(
+    theme.colors.background,
+  );
   expect(elements.checkboxCircle(component)).toBeNull();
   expect(
     elements.optionListItemButton(component).props.style.backgroundColor,
-  ).toEqual('transparent');
+  ).toEqual(theme.colors.text);
 };
 
 const renderOptionListItem = (isSelected = true, onPress = jest.fn()) => (
