@@ -11,7 +11,7 @@ import {randomArrayElement} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 import * as Types from '@local-types';
 
-import DropdownOption from './DropdownOption';
+import {DropdownOption} from './DropdownOption';
 import * as options from '../options';
 
 const renderDropdownOption = (
@@ -79,92 +79,100 @@ describe('<DropdownOption />', () => {
   });
 
   describe('Render Options', () => {
-    it('should render correctly for the "difficulty-mixed" option', () => {
-      const component = render(renderDropdownOption('difficulty', 'mixed'));
-      expect(elements.dropdownDifficultyButton(component)).not.toBeNull();
-      expect(elements.dropdownDifficultyText(component)).not.toBeNull();
-      expect(elements.dropdownDifficultyText(component).children[0]).toEqual(
-        'mixed',
-      );
+    describe('Difficulty', () => {
+      it('should render correctly for the "difficulty-mixed" option', () => {
+        const component = render(renderDropdownOption('difficulty', 'mixed'));
+        expect(elements.dropdownDifficultyButton(component)).not.toBeNull();
+        expect(elements.dropdownDifficultyText(component)).not.toBeNull();
+        expect(elements.dropdownDifficultyText(component).children[0]).toEqual(
+          'mixed',
+        );
+      });
+
+      it('should render correctly for the "difficulty-easy" option', () => {
+        const component = render(renderDropdownOption('difficulty', 'easy'));
+        expect(elements.dropdownDifficultyButton(component)).not.toBeNull();
+        expect(elements.dropdownDifficultyText(component)).not.toBeNull();
+        expect(elements.dropdownDifficultyText(component).children[0]).toEqual(
+          'easy',
+        );
+      });
+
+      it('should render correctly for the "difficulty-medium" option', () => {
+        const component = render(renderDropdownOption('difficulty', 'medium'));
+        expect(elements.dropdownDifficultyButton(component)).not.toBeNull();
+        expect(elements.dropdownDifficultyText(component)).not.toBeNull();
+        expect(elements.dropdownDifficultyText(component).children[0]).toEqual(
+          'medium',
+        );
+      });
+
+      it('should render correctly for the "difficulty-hard" option', () => {
+        const component = render(renderDropdownOption('difficulty', 'hard'));
+        expect(elements.dropdownDifficultyButton(component)).not.toBeNull();
+        expect(elements.dropdownDifficultyText(component)).not.toBeNull();
+        expect(elements.dropdownDifficultyText(component).children[0]).toEqual(
+          'hard',
+        );
+      });
     });
 
-    it('should render correctly for the "difficulty-easy" option', () => {
-      const component = render(renderDropdownOption('difficulty', 'easy'));
-      expect(elements.dropdownDifficultyButton(component)).not.toBeNull();
-      expect(elements.dropdownDifficultyText(component)).not.toBeNull();
-      expect(elements.dropdownDifficultyText(component).children[0]).toEqual(
-        'easy',
-      );
+    describe('Category', () => {
+      it('should render correctly for the "category-mixed" option', () => {
+        const component = render(renderDropdownOption('category', 'mixed'));
+        expect(elements.dropdownCategoryButton(component)).not.toBeNull();
+        expect(elements.dropdownCategoryText(component)).not.toBeNull();
+        expect(elements.dropdownCategoryText(component).children[0]).toEqual(
+          'mixed',
+        );
+      });
+
+      it('should render correctly for the "category-movies" option', () => {
+        const component = render(renderDropdownOption('category', 'movies'));
+        expect(elements.dropdownCategoryButton(component)).not.toBeNull();
+        expect(elements.dropdownCategoryText(component)).not.toBeNull();
+        expect(elements.dropdownCategoryText(component).children[0]).toEqual(
+          'movies',
+        );
+      });
+
+      it('should render correctly for the "category-tv" option', () => {
+        const component = render(renderDropdownOption('category', 'tv'));
+        expect(elements.dropdownCategoryButton(component)).not.toBeNull();
+        expect(elements.dropdownCategoryText(component)).not.toBeNull();
+        expect(elements.dropdownCategoryText(component).children[0]).toEqual(
+          'tv',
+        );
+      });
     });
 
-    it('should render correctly for the "difficulty-medium" option', () => {
-      const component = render(renderDropdownOption('difficulty', 'medium'));
-      expect(elements.dropdownDifficultyButton(component)).not.toBeNull();
-      expect(elements.dropdownDifficultyText(component)).not.toBeNull();
-      expect(elements.dropdownDifficultyText(component).children[0]).toEqual(
-        'medium',
-      );
-    });
+    describe('Type', () => {
+      it('should render correctly for the "type-mixed" option', () => {
+        const component = render(renderDropdownOption('type', 'mixed'));
+        expect(elements.dropdownTypeButton(component)).not.toBeNull();
+        expect(elements.dropdownTypeText(component)).not.toBeNull();
+        expect(elements.dropdownTypeText(component).children[0]).toEqual(
+          'mixed',
+        );
+      });
 
-    it('should render correctly for the "difficulty-hard" option', () => {
-      const component = render(renderDropdownOption('difficulty', 'hard'));
-      expect(elements.dropdownDifficultyButton(component)).not.toBeNull();
-      expect(elements.dropdownDifficultyText(component)).not.toBeNull();
-      expect(elements.dropdownDifficultyText(component).children[0]).toEqual(
-        'hard',
-      );
-    });
+      it('should render correctly for the "type-movies" option', () => {
+        const component = render(renderDropdownOption('type', 'multiple'));
+        expect(elements.dropdownTypeButton(component)).not.toBeNull();
+        expect(elements.dropdownTypeText(component)).not.toBeNull();
+        expect(elements.dropdownTypeText(component).children[0]).toEqual(
+          'multiple',
+        );
+      });
 
-    it('should render correctly for the "category-mixed" option', () => {
-      const component = render(renderDropdownOption('category', 'mixed'));
-      expect(elements.dropdownCategoryButton(component)).not.toBeNull();
-      expect(elements.dropdownCategoryText(component)).not.toBeNull();
-      expect(elements.dropdownCategoryText(component).children[0]).toEqual(
-        'mixed',
-      );
-    });
-
-    it('should render correctly for the "category-movies" option', () => {
-      const component = render(renderDropdownOption('category', 'movies'));
-      expect(elements.dropdownCategoryButton(component)).not.toBeNull();
-      expect(elements.dropdownCategoryText(component)).not.toBeNull();
-      expect(elements.dropdownCategoryText(component).children[0]).toEqual(
-        'movies',
-      );
-    });
-
-    it('should render correctly for the "category-tv" option', () => {
-      const component = render(renderDropdownOption('category', 'tv'));
-      expect(elements.dropdownCategoryButton(component)).not.toBeNull();
-      expect(elements.dropdownCategoryText(component)).not.toBeNull();
-      expect(elements.dropdownCategoryText(component).children[0]).toEqual(
-        'tv',
-      );
-    });
-
-    it('should render correctly for the "type-mixed" option', () => {
-      const component = render(renderDropdownOption('type', 'mixed'));
-      expect(elements.dropdownTypeButton(component)).not.toBeNull();
-      expect(elements.dropdownTypeText(component)).not.toBeNull();
-      expect(elements.dropdownTypeText(component).children[0]).toEqual('mixed');
-    });
-
-    it('should render correctly for the "type-movies" option', () => {
-      const component = render(renderDropdownOption('type', 'multiple'));
-      expect(elements.dropdownTypeButton(component)).not.toBeNull();
-      expect(elements.dropdownTypeText(component)).not.toBeNull();
-      expect(elements.dropdownTypeText(component).children[0]).toEqual(
-        'multiple',
-      );
-    });
-
-    it('should render correctly for the "type-boolean" option', () => {
-      const component = render(renderDropdownOption('type', 'boolean'));
-      expect(elements.dropdownTypeButton(component)).not.toBeNull();
-      expect(elements.dropdownTypeText(component)).not.toBeNull();
-      expect(elements.dropdownTypeText(component).children[0]).toEqual(
-        'boolean',
-      );
+      it('should render correctly for the "type-boolean" option', () => {
+        const component = render(renderDropdownOption('type', 'boolean'));
+        expect(elements.dropdownTypeButton(component)).not.toBeNull();
+        expect(elements.dropdownTypeText(component)).not.toBeNull();
+        expect(elements.dropdownTypeText(component).children[0]).toEqual(
+          'boolean',
+        );
+      });
     });
   });
 });
