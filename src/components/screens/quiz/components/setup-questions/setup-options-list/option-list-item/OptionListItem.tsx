@@ -13,11 +13,13 @@ const OptionListItem = (props: OptionListItemProps) => (
     isSelected={props.isSelected}
     onPress={props.onPress}
     testID="option-list-item-button">
-    <Styles.ListItemText testID="option-list-item-text">
+    <Styles.ListItemText
+      testID="option-list-item-text"
+      isSelected={props.isSelected}>
       {props.title}
     </Styles.ListItemText>
     {props.isSelected && (
-      <Styles.CheckboxIcon colorThemeRef="buttonText" id="checkbox-circle" />
+      <Styles.CheckboxIcon id="checkbox-circle" colorThemeRef="primary" />
     )}
   </Styles.ListItemWrapper>
 );
