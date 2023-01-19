@@ -8,18 +8,19 @@ import {
 import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
+import {randomPositiveNumber} from '@mocks/utils';
 
-import NumberOfQuestionts, {MAX_VALUE, MIN_VALUE} from './NumberOfQuestionts';
+import {SLIDER_MAX_VALUE, SLIDER_MIN_VALUE} from './useNumberOfQuestions';
+import {NumberOfQuestions} from './NumberOfQuestionts';
 
 const renderNumberOfQuestions = (
   numberOfQuestions: number,
   onSetNumberQuestions = jest.fn(),
 ) => (
   <ThemeProvider theme={theme}>
-    <NumberOfQuestionts
+    <NumberOfQuestions
       onSetNumberQuestions={onSetNumberQuestions}
       numberOfQuestions={numberOfQuestions}
-      theme={theme}
     />
   </ThemeProvider>
 );
@@ -36,7 +37,10 @@ describe('<NumberOfQuestions />', () => {
   afterEach(cleanup);
 
   it('should render correctly', () => {
-    const numberOfQuestions = 10;
+    const numberOfQuestions = randomPositiveNumber(
+      SLIDER_MIN_VALUE,
+      SLIDER_MAX_VALUE,
+    );
     const component = render(renderNumberOfQuestions(numberOfQuestions));
     fireEvent(elements.slider(component), 'onLayout');
     expect(elements.numberQuestionsText(component)).not.toBeNull();
@@ -46,24 +50,26 @@ describe('<NumberOfQuestions />', () => {
     expect(elements.slider(component)).not.toBeNull();
     expect(elements.minValueText(component)).not.toBeNull();
     expect(elements.minValueText(component).children[0]).toEqual(
-      `${MIN_VALUE}`,
+      `${SLIDER_MIN_VALUE}`,
     );
     expect(elements.maxValueText(component)).not.toBeNull();
     expect(elements.maxValueText(component).children[0]).toEqual(
-      `${MAX_VALUE}`,
+      `${SLIDER_MAX_VALUE}`,
     );
   });
 
-  it('should call the "onSetNumberQuestions" when the user move the slider', () => {
+  it('should call the "onSetNumberQuestions" when the user moves the slider', () => {
     const onSetNumberQuestions = jest.fn();
-    const numberOfQuestions = 10;
-    const distanceMoved = 12;
+    const numberOfQuestions = randomPositiveNumber(
+      SLIDER_MIN_VALUE,
+      SLIDER_MAX_VALUE,
+    );
+    const distanceMoved = randomPositiveNumber(
+      SLIDER_MIN_VALUE,
+      SLIDER_MAX_VALUE,
+    );
     const component = render(
       renderNumberOfQuestions(numberOfQuestions, onSetNumberQuestions),
-    );
-    expect(elements.numberQuestionsText(component)).not.toBeNull();
-    expect(elements.numberQuestionsText(component).children[0]).toEqual(
-      `${numberOfQuestions}`,
     );
     fireEvent(elements.slider(component), 'onValueChange', distanceMoved);
     expect(onSetNumberQuestions).toHaveBeenCalledTimes(1);
