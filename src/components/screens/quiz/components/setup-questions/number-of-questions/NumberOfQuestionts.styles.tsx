@@ -1,5 +1,6 @@
 import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
+import Slider from '@react-native-community/slider';
 
 export const DefaultText = styled(Text)`
   color: ${({theme}) => theme.colors.text};
@@ -14,3 +15,9 @@ export const NumberQuestionsWrapper = styled(View)`
   justify-content: space-between;
   align-items: center;
 `;
+
+export const SliderStyled = styled(Slider).attrs(({theme}) => ({
+  maximumTrackTintColor: theme.colors.contrast,
+  minimumTrackTintColor: theme.colors.text,
+  thumbTintColor: theme.colors.text,
+}))``;
