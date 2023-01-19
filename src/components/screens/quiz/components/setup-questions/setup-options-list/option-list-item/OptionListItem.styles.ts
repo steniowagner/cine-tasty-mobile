@@ -1,6 +1,8 @@
 import {TouchableOpacity, Text} from 'react-native';
 import styled from 'styled-components/native';
 
+import {SVGIcon} from '@components';
+
 type ListItemWrapperStyleProps = {
   isSelected: boolean;
 };
@@ -23,3 +25,7 @@ export const ListItemText = styled(Text)`
   font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
   color: ${({theme}) => theme.colors.buttonText};
 `;
+
+export const CheckboxIcon = styled(SVGIcon).attrs(({theme}) => ({
+  size: theme.metrics.getWidthFromDP('8%'),
+}))``;

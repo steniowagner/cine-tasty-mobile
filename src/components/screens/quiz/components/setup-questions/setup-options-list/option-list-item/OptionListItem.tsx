@@ -1,8 +1,5 @@
 import React, {memo} from 'react';
 
-import {SVGIcon} from '@components';
-import metrics from '@styles/metrics';
-
 import * as Styles from './OptionListItem.styles';
 
 type OptionListItemProps = {
@@ -20,11 +17,7 @@ const OptionListItem = (props: OptionListItemProps) => (
       {props.title}
     </Styles.ListItemText>
     {props.isSelected && (
-      <SVGIcon
-        size={metrics.getWidthFromDP('8%')}
-        colorThemeRef="buttonText"
-        id="checkbox-circle"
-      />
+      <Styles.CheckboxIcon colorThemeRef="buttonText" id="checkbox-circle" />
     )}
   </Styles.ListItemWrapper>
 );
