@@ -1,43 +1,32 @@
-import {useCallback, useState} from 'react';
+import {useMemo} from 'react';
 
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
+import * as Types from '@local-types';
 
 type UseSetupQuestionsOptionsListProps = {
-  onPressSelect: (indexOptionSelected: number) => void;
-  indexLastOptionSelected: number;
-  closeModal: () => void;
+  options: Types.QuizFilterOption[];
 };
 
-const useSetupQuestionsOptionsList = (
+export const useSetupQuestionsOptionsList = (
   props: UseSetupQuestionsOptionsListProps,
 ) => {
-  const [indexOptionSelected, setIndexOptionSelected] = useState<number>(
-    props.indexLastOptionSelected,
-  );
-
   const translations = useTranslations();
 
-  const makeItemTitle = useCallback(
-    (id: string) =>
-      translations.translate(
-        `${Translations.Tags.QUIZ}:${id}` as Translations.Tags,
-      ),
-    [translations.translate],
+  const options = useMemo(
+    () =>
+      props.options.map(option => ({
+        ...option,
+        title: translations.translate(
+          `${
+            Translations.Tags.QUIZ
+          }:${`${option.option}_${option.id}`}` as Translations.Tags,
+        ),
+      })),
+    [translations.translate, props.options],
   );
 
-  const handlePressSelectButton = useCallback(() => {
-    props.onPressSelect(indexOptionSelected);
-    props.closeModal();
-  }, [indexOptionSelected, props.onPressSelect, props.closeModal]);
-
   return {
-    selectText: translations.translate(Translations.Tags.SELECT),
-    onSelectOption: setIndexOptionSelected,
-    handlePressSelectButton,
-    indexOptionSelected,
-    makeItemTitle,
+    options,
   };
 };
-
-export default useSetupQuestionsOptionsList;
