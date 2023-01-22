@@ -12,7 +12,7 @@ import {dark as theme} from '@styles/themes/dark';
 import * as Types from '@local-types';
 
 import {DropdownOption} from './DropdownOption';
-import * as options from '../options';
+import * as options from '../../options-selected-provider/options';
 
 const renderDropdownOption = (
   option: Types.QuizOption,
