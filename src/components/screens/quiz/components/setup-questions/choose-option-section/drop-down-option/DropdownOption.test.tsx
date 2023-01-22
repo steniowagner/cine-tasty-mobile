@@ -22,7 +22,7 @@ const renderDropdownOption = (
   <ThemeProvider theme={theme}>
     <DropdownOption
       selectedOption={selectedOption}
-      option={option}
+      section={option}
       onPress={onPress}
     />
   </ThemeProvider>
