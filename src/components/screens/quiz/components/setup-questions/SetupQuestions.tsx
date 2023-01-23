@@ -6,7 +6,7 @@ import {RoundedButton} from '@components';
 import {NumberOfQuestions} from './components/number-of-questions/NumberOfQuestionts';
 import {SetupQuestionsStackProps} from '../../routes/route-params-types';
 import {ChooseOptionSection} from './components/choose-option-section/ChooseOptionSection';
-import {SetupQuestionsOptionsList} from './components/selectable-options-modal/SelectableOptionsModal';
+import {SelectableOptionsModal} from './components/selectable-options-modal/SelectableOptionsModal';
 import {useSetupQuestions} from './useSetupQuestions';
 import * as Styles from './SetupQuestions.styles';
 
@@ -15,7 +15,7 @@ export const SetupQuestions = (props: SetupQuestionsStackProps) => {
 
   return (
     <Styles.Wrapper>
-      <SetupQuestionsOptionsList
+      <SelectableOptionsModal
         onCloseSetupQuestionModal={setupQuestions.onCloseSetupQuestionsModal}
         isSetupQuestionModalOpen={setupQuestions.isModalOptionsListOpen}
       />

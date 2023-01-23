@@ -6,14 +6,12 @@ import OptionListItem from './option-list-item/OptionListItem';
 import {useSelectableOptionsModal} from './useSelectableOptionsModal';
 import * as Styles from './SelectableOptionsModal.styles';
 
-type SetupQuestionsOptionsListProps = {
+type SelectableOptionsModalProps = {
   onCloseSetupQuestionModal: () => void;
   isSetupQuestionModalOpen: boolean;
 };
 
-export const SetupQuestionsOptionsList = (
-  props: SetupQuestionsOptionsListProps,
-) => {
+export const SelectableOptionsModal = (props: SelectableOptionsModalProps) => {
   const setupOptionsList = useSelectableOptionsModal({
     onCloseSetupQuestionModal: props.onCloseSetupQuestionModal,
     isSetupQuestionModalOpen: props.isSetupQuestionModalOpen,
