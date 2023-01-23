@@ -31,13 +31,13 @@ export const useSelectableOptionsModal = (
 
   const handleResetSelectedOption = useCallback(() => {
     if (!props.isSetupQuestionModalOpen) {
-      setSelectedOption(optionsSelected.activeOptionSection);
+      setSelectedOption(optionsSelected.activeOption);
     }
-  }, [props.isSetupQuestionModalOpen, optionsSelected.activeOptionSection]);
+  }, [props.isSetupQuestionModalOpen, optionsSelected.activeOption]);
 
   useEffect(() => {
-    setSelectedOption(optionsSelected.activeOptionSection);
-  }, [optionsSelected.activeOptionSection]);
+    setSelectedOption(optionsSelected.activeOption);
+  }, [optionsSelected.activeOption]);
 
   useEffect(() => {
     handleResetSelectedOption();

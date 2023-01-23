@@ -25,7 +25,7 @@ type OptionsSelectedContextProps = {
   onPressOptionSection: (optionSection: Types.QuizOption) => void;
   selectedOptions: OptionsSelected;
   onPressModalOptionsCta: (optionSelected: ModalOptionsListItem) => void;
-  activeOptionSection: ModalOptionsListItem;
+  activeOption: ModalOptionsListItem;
 };
 
 const OPTIONS_SELECTED_CONTEXT: OptionsSelectedContextProps = {
@@ -36,7 +36,7 @@ const OPTIONS_SELECTED_CONTEXT: OptionsSelectedContextProps = {
     category: options.categories[0],
     type: options.types[0],
   },
-  activeOptionSection: undefined,
+  activeOption: undefined,
 };
 
 export const OptionsSelectedContext: Context<OptionsSelectedContextProps> =
@@ -77,7 +77,7 @@ export const OptionsSelectedProvider = (
         setSectionSelected(optionSection),
       selectedOptions,
       onPressModalOptionsCta: handlePressModalOptionsCta,
-      activeOptionSection: selectedOptions[sectionSelected],
+      activeOption: selectedOptions[sectionSelected],
     }),
     [selectedOptions, sectionSelected],
   );

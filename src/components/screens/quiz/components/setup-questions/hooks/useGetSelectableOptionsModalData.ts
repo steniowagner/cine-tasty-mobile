@@ -14,7 +14,7 @@ export const useGetSelectableOptionsModalData = () => {
   const optionsSelected = useOptionsSelected();
 
   const title = useMemo(() => {
-    switch (optionsSelected.activeOptionSection?.option) {
+    switch (optionsSelected.activeOption?.option) {
       case 'difficulty':
         return translations.translate(Translations.Tags.QUIZ_SET_DIFFICULTY);
       case 'category':
@@ -27,7 +27,7 @@ export const useGetSelectableOptionsModalData = () => {
   }, [optionsSelected, translations.translate]);
 
   const options = useMemo(() => {
-    switch (optionsSelected.activeOptionSection?.option) {
+    switch (optionsSelected.activeOption?.option) {
       case 'difficulty':
         return selectableOptionsDatasets.difficulties;
       case 'category':
@@ -38,10 +38,7 @@ export const useGetSelectableOptionsModalData = () => {
         return [];
     }
   }, [optionsSelected, selectableOptionsDatasets]);
-  console.log(
-    'optionsSelected.activeOptionSection: ',
-    optionsSelected.activeOptionSection,
-  );
+  console.log('optionsSelected.activeOption: ', optionsSelected.activeOption);
   const texts = useMemo(
     () => ({
       modalCtaTitle: translations.translate(Translations.Tags.SELECT),
