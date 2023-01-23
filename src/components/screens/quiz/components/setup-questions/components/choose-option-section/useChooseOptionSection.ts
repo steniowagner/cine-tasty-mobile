@@ -4,7 +4,7 @@ import * as Types from '@local-types';
 import {useTranslations} from '@hooks';
 import {Translations} from '@i18n/tags';
 
-import {useOptionsSelected} from '../options-selected-provider/OptionsSelectedProvider';
+import {useOptionsSelected} from '../../provider/OptionsSelectedProvider';
 
 type UseChooseOptionSectionProps = {
   onOpenSetupQuestionsModal: () => void;

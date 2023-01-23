@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
 export const Wrapper = styled(View)`
@@ -13,8 +13,11 @@ export const RoundedButtonWrapper = styled(View)`
   align-items: center;
 `;
 
-export const Label = styled(Text)`
-  margin-top: ${({theme}) => theme.metrics.getWidthFromDP('6.5%')}px;
+export const SectionWrapper = styled(View)`
+  margin-top: ${({theme}) => theme.metrics.getWidthFromDP('8%')}px;
+`;
+
+export const SectionTitle = styled(Text)`
   margin-bottom: ${({theme}) => theme.metrics.mediumSize}px;
   font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
   font-family: CircularStd-Bold;

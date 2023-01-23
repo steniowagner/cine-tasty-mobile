@@ -6,8 +6,8 @@ import {dark as theme} from '@styles/themes/dark';
 import {randomArrayIndex} from '@mocks/utils';
 import * as Types from '@local-types';
 
-import {SetupQuestionsOptionsList} from './SetupQuestionsOptionsList';
-import * as options from '../options';
+import {SetupQuestionsOptionsList} from './SelectableOptionsModal';
+import * as options from '../../hooks/make-selectable-options-datasets/options';
 
 type RenderSetupQuestionsCategoriesOptionsListParams = {
   indexOptionSelected: number;

@@ -1,3 +1,5 @@
+jest.unmock('react-native-reanimated');
+
 import React from 'react';
 import {Alert} from 'react-native';
 import {
@@ -14,7 +16,11 @@ import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
 import {INITIAL_NUMBER_QUESTIONS} from './useSetupQuestions';
-import {difficulties, categories, types} from './options';
+import {
+  difficulties,
+  categories,
+  types,
+} from './make-selectable-options-datasets/options';
 import SetupQuestions from './SetupQuestions';
 
 jest.spyOn(Alert, 'alert');

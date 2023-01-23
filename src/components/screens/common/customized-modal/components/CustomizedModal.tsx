@@ -3,7 +3,6 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 
 import SeasonFullOverview from '@src/components/screens/common/media-details/tv-show-detail/components/seasons/details/header/overview-text/season-full-overview/SeasonFullOverview';
-import SetupQuestionsOptionsList from '@src/components/screens/quiz/components/setup-questions/setup-options-list/SetupQuestionsOptionsList';
 import LanguageFilter from '@src/components/screens/news/components/language-filter/LanguageFilter';
 import * as Types from '@local-types';
 
@@ -63,17 +62,6 @@ export const CustomizedModal = ({navigation, route}: CustomModalStackProps) => {
               <LanguageFilter
                 lastLanguageSelected={route.params.extraData.lastItemSelected}
                 onSelectLanguage={route.params.extraData.onPressSelect}
-                closeModal={onCloseModal}
-              />
-            )}
-            {route.params.type ===
-              Types.CustomizedModalChildrenType.MEDIA_FILTER && (
-              <SetupQuestionsOptionsList
-                indexLastOptionSelected={
-                  route.params.extraData.lastItemSelected
-                }
-                onPressSelect={route.params.extraData.onPressSelect}
-                options={route.params.extraData.dataset}
                 closeModal={onCloseModal}
               />
             )}

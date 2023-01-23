@@ -3,7 +3,7 @@ import React from 'react';
 import * as Types from '@local-types';
 
 import {DropdownOption} from './drop-down-option/DropdownOption';
-import * as Styles from '../SetupQuestions.styles';
+import * as Styles from '../../SetupQuestions.styles';
 import {useChooseOptionSection} from './useChooseOptionSection';
 
 type ChooseOptionSectionProps = {

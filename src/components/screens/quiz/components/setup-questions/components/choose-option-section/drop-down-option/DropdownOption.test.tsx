@@ -11,8 +11,8 @@ import {randomArrayElement} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 import * as Types from '@local-types';
 
+import * as options from '../../../hooks/make-selectable-options-datasets/options';
 import {DropdownOption} from './DropdownOption';
-import * as options from '../../options-selected-provider/options';
 
 const renderDropdownOption = (
   option: Types.QuizOption,

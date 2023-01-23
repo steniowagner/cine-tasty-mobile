@@ -1,4 +1,3 @@
-import {CustomModalParams} from '@src/components/screens/common/customized-modal/routes/route-params-types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import * as SchemaTypes from '@schema-types';
@@ -6,7 +5,6 @@ import {Routes} from '@routes/routes';
 
 type QuizStackParams = {
   [Routes.Quiz.QUIZ]: undefined;
-  [Routes.CustomModal.CUSTOM_MODAL_STACK]: CustomModalParams;
   [Routes.Quiz.SETUP_QUESTIONS]: undefined;
   [Routes.Quiz.QUESTIONS]: QuestionsProps;
   [Routes.Quiz.RESULTS]: ResultsProps;
@@ -50,7 +48,7 @@ export type SetupQuestionsStackRouteProp = RouteProp<
 >;
 
 export type SetupQuestionsStackProps = {
-  navigation: StackNavigationProp<QuizStackParams, Routes.Quiz.SETUP_QUESTIONS>;
+  navigation: SetupQuestionsStackNavigationProp;
   route: SetupQuestionsStackRouteProp;
 };
 
