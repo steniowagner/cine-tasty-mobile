@@ -38,7 +38,7 @@ export const useGetSelectableOptionsModalData = () => {
         return [];
     }
   }, [optionsSelected, selectableOptionsDatasets]);
-  console.log('optionsSelected.activeOption: ', optionsSelected.activeOption);
+
   const texts = useMemo(
     () => ({
       modalCtaTitle: translations.translate(Translations.Tags.SELECT),

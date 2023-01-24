@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {ModalSheet} from '@components';
 
 import OptionListItem from './option-list-item/OptionListItem';
