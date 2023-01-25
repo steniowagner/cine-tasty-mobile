@@ -35,7 +35,7 @@ export const useHandlePressStartQuizButton = (
   }, [translations.translate, props.navigateToQuestionsScreen]);
 
   const handlePressStartQuiz = useCallback(() => {
-    if (translations.language === SchemaTypes.ISO6391Language.EN) {
+    if (translations.language !== SchemaTypes.ISO6391Language.EN) {
       return handleShowLanguageAlert();
     }
     props.navigateToQuestionsScreen();
