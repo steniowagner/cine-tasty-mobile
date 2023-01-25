@@ -6,20 +6,12 @@ import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
 
-import {OptionsSelectedProvider} from '../components/setup-questions/provider/OptionsSelectedProvider';
 import {SetupQuestions} from '../components/setup-questions/SetupQuestions';
 import Questions from '../components/questions/Questions';
 import Results from '../components/results/Results';
 import {Quiz} from '../components/Quiz';
-import {SetupQuestionsStackProps} from './route-params-types';
 
 const Stack = createStackNavigator();
-
-const SetupQuestionsWrapper = (props: SetupQuestionsStackProps) => (
-  <OptionsSelectedProvider>
-    <SetupQuestions {...props} />
-  </OptionsSelectedProvider>
-);
 
 export const QuizStack = () => {
   const translations = useTranslations();
@@ -40,7 +32,7 @@ export const QuizStack = () => {
           headerTitleAlign: 'center',
         }}
         name={Routes.Quiz.SETUP_QUESTIONS}
-        component={SetupQuestionsWrapper}
+        component={SetupQuestions}
       />
       <Stack.Screen
         options={{

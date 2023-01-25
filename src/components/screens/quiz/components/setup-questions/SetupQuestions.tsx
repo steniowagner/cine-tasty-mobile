@@ -10,7 +10,9 @@ import {SelectableOptionsModal} from './components/selectable-options-modal/Sele
 import {useSetupQuestions} from './useSetupQuestions';
 import * as Styles from './SetupQuestions.styles';
 
-export const SetupQuestions = (props: SetupQuestionsStackProps) => {
+import {OptionsSelectedProvider} from './provider/OptionsSelectedProvider';
+
+const SetupQuestions = (props: SetupQuestionsStackProps) => {
   const setupQuestions = useSetupQuestions({navigation: props.navigation});
 
   return (
@@ -57,3 +59,11 @@ export const SetupQuestions = (props: SetupQuestionsStackProps) => {
     </Styles.Wrapper>
   );
 };
+
+const SetupQuestionsWrapper = (props: SetupQuestionsStackProps) => (
+  <OptionsSelectedProvider>
+    <SetupQuestions {...props} />
+  </OptionsSelectedProvider>
+);
+
+export {SetupQuestionsWrapper as SetupQuestions};
