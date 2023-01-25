@@ -12,14 +12,6 @@ const useBooleanQuestion = (props: UseBooleanQuestionProps) => {
 
   const translations = useTranslations();
 
-  const handlePressTrueOption = useCallback(() => {
-    setSelectedAnswer(true);
-  }, []);
-
-  const handlePressFalseOption = useCallback(() => {
-    setSelectedAnswer(false);
-  }, []);
-
   const handlePressNext = useCallback(() => {
     props.onPressNext(String(selectedAnswer));
   }, [selectedAnswer, props.onPressNext]);
@@ -34,8 +26,8 @@ const useBooleanQuestion = (props: UseBooleanQuestionProps) => {
   );
 
   return {
-    onPressFalseOption: handlePressFalseOption,
-    onPressTrueOption: handlePressTrueOption,
+    onPressFalseOption: () => setSelectedAnswer(false),
+    onPressTrueOption: () => setSelectedAnswer(true),
     onPressNext: handlePressNext,
     selectedAnswer,
     texts,
