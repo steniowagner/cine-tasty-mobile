@@ -19,7 +19,7 @@ export const ChooseOptionSection = (props: ChooseOptionSectionProps) => {
 
   return (
     <>
-      <Styles.SectionTitle>
+      <Styles.SectionTitle testID="section-title">
         {chooseOptionSection.texts.sectionTitle}
       </Styles.SectionTitle>
       <DropdownOption

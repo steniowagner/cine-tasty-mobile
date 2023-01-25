@@ -41,7 +41,7 @@ const SetupQuestions = (props: SetupQuestionsStackProps) => {
           />
         </Styles.SectionWrapper>
         <Styles.SectionWrapper>
-          <Styles.SectionTitle>
+          <Styles.SectionTitle testID="section-title">
             {setupQuestions.texts.numberOfQuestions}
           </Styles.SectionTitle>
           <NumberOfQuestions
