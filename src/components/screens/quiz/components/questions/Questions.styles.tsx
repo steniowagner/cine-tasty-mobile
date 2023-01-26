@@ -1,6 +1,8 @@
 import {TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
 
+import {SVGIcon} from '@components';
+
 export const RestartQuizButton = styled(TouchableOpacity).attrs(({theme}) => ({
   hitSlop: {
     top: theme.metrics.largeSize,
@@ -17,3 +19,7 @@ export const ErrorWrapper = styled(View)`
   height: 90%;
   justify-content: center;
 `;
+
+export const RestartIcon = styled(SVGIcon).attrs(({theme}) => ({
+  size: theme.metrics.getWidthFromDP('8%'),
+}))``;
