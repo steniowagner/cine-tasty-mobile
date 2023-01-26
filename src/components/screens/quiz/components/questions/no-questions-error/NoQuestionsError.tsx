@@ -6,8 +6,9 @@ import useNoQuestionsError from './useNoQuestionsError';
 
 import * as Styles from '../Questions.styles';
 
-const NoQuestionError = () => {
+export const NoQuestionsError = () => {
   const noQuestionsError = useNoQuestionsError();
+
   return (
     <Styles.ErrorWrapper testID="no-questions-error-wrapper">
       <Advise
@@ -19,5 +20,3 @@ const NoQuestionError = () => {
     </Styles.ErrorWrapper>
   );
 };
-
-export default NoQuestionError;
