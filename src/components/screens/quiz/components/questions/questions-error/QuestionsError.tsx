@@ -2,11 +2,12 @@ import React from 'react';
 
 import {Advise} from '@components';
 
-import useQuestionsError from './useQuestionsError';
+import {useQuestionsError} from './useQuestionsError';
 import * as Styles from '../Questions.styles';
 
-const QuestionError = () => {
+export const QuestionsError = () => {
   const noQuestionsError = useQuestionsError();
+
   return (
     <Styles.ErrorWrapper testID="network-error-wrapper">
       <Advise
@@ -18,5 +19,3 @@ const QuestionError = () => {
     </Styles.ErrorWrapper>
   );
 };
-
-export default QuestionError;

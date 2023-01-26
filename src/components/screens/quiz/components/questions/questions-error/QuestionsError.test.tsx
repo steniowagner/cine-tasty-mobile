@@ -5,7 +5,7 @@ import {ThemeProvider} from 'styled-components/native';
 import {dark as theme} from '@styles/themes/dark';
 import {Translations} from '@i18n/tags';
 
-import QuestionsError from './QuestionsError';
+import {QuestionsError} from './QuestionsError';
 
 const renderQuestionsError = () => (
   <ThemeProvider theme={theme}>
