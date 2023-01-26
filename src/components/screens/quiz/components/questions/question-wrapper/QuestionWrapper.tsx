@@ -9,7 +9,7 @@ type ListItemWrapperProps = {
   question: string;
 };
 
-const ListItemWrapper = (props: ListItemWrapperProps) => (
+export const QuestionWrapper = (props: ListItemWrapperProps) => (
   <Styles.Wrapper>
     <Styles.CardWrapper
       // eslint-disable-next-line react-native/no-inline-styles
@@ -36,5 +36,3 @@ const ListItemWrapper = (props: ListItemWrapperProps) => (
     </Styles.CardWrapper>
   </Styles.Wrapper>
 );
-
-export default ListItemWrapper;
