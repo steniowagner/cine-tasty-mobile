@@ -26,6 +26,34 @@ const renderMultiChoiceQuestionListItem = (
   </ThemeProvider>
 );
 
+const checkIsRenderingTheUnselectedStateCorrectly = (
+  elements: Record<string, any>,
+  component: RenderAPI,
+) => {
+  expect(elements.circleIcon(component)).not.toBeNull();
+  expect(elements.checkIcon(component)).toBeNull();
+  expect(elements.multiChoiseAnswerText(component).children[0]).toEqual(
+    DEFAULT_ANSWER,
+  );
+  expect(
+    elements.multiChoiseAnswer(component).props.style.backgroundColor,
+  ).toEqual('white');
+};
+
+const checkIsRenderingTheSelectedStateCorrectly = (
+  elements: Record<string, any>,
+  component: RenderAPI,
+) => {
+  expect(elements.circleIcon(component)).toBeNull();
+  expect(elements.checkIcon(component)).not.toBeNull();
+  expect(elements.multiChoiseAnswerText(component).children[0]).toEqual(
+    DEFAULT_ANSWER,
+  );
+  expect(
+    elements.multiChoiseAnswer(component).props.style.backgroundColor,
+  ).toEqual(theme.colors.primary);
+};
+
 describe('<MultiChoiceQuestionListItem />', () => {
   const elements = {
     multiChoiseAnswer: (api: RenderAPI) =>
@@ -42,75 +70,33 @@ describe('<MultiChoiceQuestionListItem />', () => {
   describe('Renders correctly', () => {
     it('should render correctly when "isSelected" is "false"', () => {
       const component = render(renderMultiChoiceQuestionListItem(false));
-      expect(elements.circleIcon(component)).not.toBeNull();
-      expect(elements.checkIcon(component)).toBeNull();
-      expect(elements.multiChoiseAnswerText(component).children[0]).toEqual(
-        DEFAULT_ANSWER,
-      );
-      expect(
-        elements.multiChoiseAnswer(component).props.style.backgroundColor,
-      ).toEqual('white');
+      checkIsRenderingTheUnselectedStateCorrectly(elements, component);
     });
 
     it('should render correctly when "isSelected" is "true"', () => {
       const component = render(renderMultiChoiceQuestionListItem());
-      expect(elements.circleIcon(component)).toBeNull();
-      expect(elements.checkIcon(component)).not.toBeNull();
-      expect(elements.multiChoiseAnswerText(component).children[0]).toEqual(
-        DEFAULT_ANSWER,
-      );
-      expect(
-        elements.multiChoiseAnswer(component).props.style.backgroundColor,
-      ).toEqual(theme.colors.primary);
+      checkIsRenderingTheSelectedStateCorrectly(elements, component);
     });
   });
 
   describe('Re-renders correctly', () => {
     it('should re-render correctly when "isSelected" was "false" and now it is "true"', () => {
       const component = render(renderMultiChoiceQuestionListItem(false));
-      expect(elements.circleIcon(component)).not.toBeNull();
-      expect(elements.checkIcon(component)).toBeNull();
-      expect(elements.multiChoiseAnswerText(component).children[0]).toEqual(
-        DEFAULT_ANSWER,
-      );
-      expect(
-        elements.multiChoiseAnswer(component).props.style.backgroundColor,
-      ).toEqual('white');
+      checkIsRenderingTheUnselectedStateCorrectly(elements, component);
       component.rerender(renderMultiChoiceQuestionListItem());
-      expect(elements.circleIcon(component)).toBeNull();
-      expect(elements.checkIcon(component)).not.toBeNull();
-      expect(elements.multiChoiseAnswerText(component).children[0]).toEqual(
-        DEFAULT_ANSWER,
-      );
-      expect(
-        elements.multiChoiseAnswer(component).props.style.backgroundColor,
-      ).toEqual(theme.colors.primary);
+      checkIsRenderingTheSelectedStateCorrectly(elements, component);
     });
 
     it('should re-render correctly when "isSelected" was "true" and now it is "false"', () => {
       const component = render(renderMultiChoiceQuestionListItem());
-      expect(elements.circleIcon(component)).toBeNull();
-      expect(elements.checkIcon(component)).not.toBeNull();
-      expect(elements.multiChoiseAnswerText(component).children[0]).toEqual(
-        DEFAULT_ANSWER,
-      );
-      expect(
-        elements.multiChoiseAnswer(component).props.style.backgroundColor,
-      ).toEqual(theme.colors.primary);
+      checkIsRenderingTheSelectedStateCorrectly(elements, component);
       component.rerender(renderMultiChoiceQuestionListItem(false));
-      expect(elements.circleIcon(component)).not.toBeNull();
-      expect(elements.checkIcon(component)).toBeNull();
-      expect(elements.multiChoiseAnswerText(component).children[0]).toEqual(
-        DEFAULT_ANSWER,
-      );
-      expect(
-        elements.multiChoiseAnswer(component).props.style.backgroundColor,
-      ).toEqual('white');
+      checkIsRenderingTheUnselectedStateCorrectly(elements, component);
     });
   });
 
-  describe('Press item', () => {
-    it('should call the "onSelectAnswer" with the answer provided when user presses the item and "isSelected" is "true"', () => {
+  describe('Pressing the item', () => {
+    it('should call the "onSelectAnswer" correctly when the user presses the item and "isSelected" is "true"', () => {
       const onSelectAnswer = jest.fn();
       const component = render(
         renderMultiChoiceQuestionListItem(true, onSelectAnswer),
@@ -121,7 +107,7 @@ describe('<MultiChoiceQuestionListItem />', () => {
       expect(onSelectAnswer).toHaveBeenCalledWith();
     });
 
-    it('should call the "onSelectAnswer" with the answer provided when user presses the item and "isSelected" is "false"', () => {
+    it('should call the "onSelectAnswer" correctly when user presses the item and "isSelected" is "false"', () => {
       const onSelectAnswer = jest.fn();
       const component = render(
         renderMultiChoiceQuestionListItem(false, onSelectAnswer),
