@@ -7,14 +7,10 @@ type UseMultiChoiceQuestionProps = {
   onPressNext: (answerSelected: string) => void;
 };
 
-const useMultiChoiceQuestion = (props: UseMultiChoiceQuestionProps) => {
+export const useMultiChoiceQuestion = (props: UseMultiChoiceQuestionProps) => {
   const [selectedOption, setSelectedOption] = useState('');
 
   const translations = useTranslations();
-
-  const handleSelectOption = useCallback((option: string) => {
-    setSelectedOption(option);
-  }, []);
 
   const handlePressNext = useCallback(() => {
     props.onPressNext(selectedOption);
@@ -29,11 +25,9 @@ const useMultiChoiceQuestion = (props: UseMultiChoiceQuestionProps) => {
 
   return {
     isNextButtonDisabled: !selectedOption,
-    onSelectOption: handleSelectOption,
+    onSelectOption: (option: string) => setSelectedOption(option),
     onPressNext: handlePressNext,
     selectedOption,
     texts,
   };
 };
-
-export default useMultiChoiceQuestion;

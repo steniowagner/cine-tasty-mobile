@@ -4,7 +4,7 @@ import {ModalSelectButton} from '@components';
 
 import MultiChoiceQuestionListItem from './multi-choice-question-list-item/MultiChoiceQuestionListItem';
 import {DEFAULT_BORDER_RADIUS} from '../question-wrapper/QuestionWrapper.styles';
-import useMultiChoiceQuestion from './useMultiChoiceQuestion';
+import {useMultiChoiceQuestion} from './useMultiChoiceQuestion';
 
 type MultiChoiceQuestionProps = {
   onPressNext: (answerSelected: string) => void;
@@ -16,6 +16,7 @@ const MultiChoiceQuestion = (props: MultiChoiceQuestionProps) => {
   const multiChoiceQuestion = useMultiChoiceQuestion({
     onPressNext: props.onPressNext,
   });
+
   return (
     <>
       {props.answers.map(answer => (
