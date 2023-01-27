@@ -52,24 +52,27 @@ export const Questions = (props: QuestionsStackProps) => {
         <QuestionWrapper
           numberOfQuestions={props.route.params.numberOfQuestions}
           currentQuestionIndex={index + 1}
-          question={item.question}>
-          <>
-            {item.type.toLowerCase() ===
-              SchemaTypes.QuestionType.BOOLEAN.toLowerCase() && (
-              <BooleanQuestion
-                isFocused={questions.currentQuestionIndex === index}
-                onPressNext={questions.onPressNext}
-              />
-            )}
-            {item.type.toLowerCase() ===
-              SchemaTypes.QuestionType.MULTIPLE.toLowerCase() && (
-              <MultiChoiceQuestion
-                isFocused={questions.currentQuestionIndex === index}
-                onPressNext={questions.onPressNext}
-                answers={item.options}
-              />
-            )}
-          </>
+          question={item.question}
+          testID={
+            questions.currentQuestionIndex === index
+              ? 'question-item-focused'
+              : 'question-item-unfocused'
+          }>
+          {item.type.toLowerCase() ===
+            SchemaTypes.QuestionType.BOOLEAN.toLowerCase() && (
+            <BooleanQuestion
+              isFocused={questions.currentQuestionIndex === index}
+              onPressNext={questions.onPressNext}
+            />
+          )}
+          {item.type.toLowerCase() ===
+            SchemaTypes.QuestionType.MULTIPLE.toLowerCase() && (
+            <MultiChoiceQuestion
+              isFocused={questions.currentQuestionIndex === index}
+              onPressNext={questions.onPressNext}
+              answers={item.options}
+            />
+          )}
         </QuestionWrapper>
       )}
       keyExtractor={(item, index) => `${item.question}${index}`}

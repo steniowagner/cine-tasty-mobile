@@ -7,10 +7,11 @@ type ListItemWrapperProps = {
   numberOfQuestions: number;
   children: ReactNode;
   question: string;
+  testID: string;
 };
 
 export const QuestionWrapper = (props: ListItemWrapperProps) => (
-  <Styles.Wrapper>
+  <Styles.Wrapper testID={props.testID}>
     <Styles.CardWrapper
       // eslint-disable-next-line react-native/no-inline-styles
       style={{
@@ -22,8 +23,7 @@ export const QuestionWrapper = (props: ListItemWrapperProps) => (
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
         elevation: 4,
-      }}
-      testID="card-wrapper">
+      }}>
       <Styles.TextWrapper>
         <Styles.QuestionsIndicatorText testID="question-indicator-text">
           {props.currentQuestionIndex}/{props.numberOfQuestions}
