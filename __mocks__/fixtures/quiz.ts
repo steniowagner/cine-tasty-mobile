@@ -5,7 +5,7 @@ import {GET_QUIZ_QUESTIONS} from '@graphql/queries';
 import {shuffleDataset} from '@utils';
 import * as SchemaTypes from '@schema-types';
 
-export const mockQuiz = () => {
+export const quizFixtures = () => {
   const multiChoiceOptions = Array(4).fill('').map((_, index) => `OPTION_${index}`);
   const correctAnswerResult = {
     userAnswer: 'USER_ANSWER',
@@ -91,24 +91,65 @@ export const mockQuiz = () => {
       numberOfQuestions % 2 === 0
         ? numberOfQuestions / 2
         : numberOfQuestions - Math.floor(numberOfQuestions / 2);
-    const multipleChoiceQuestions = mockQuiz().multiChoiceQuestions(
+    const multipleChoiceQuestions = multiChoiceQuestions(
       multiChoiceQuestionsLength,
     );
-    const trueOrFlaseQuestions = mockQuiz().booleanQuestions(booleaneQuestionsLength);
+    const trueOrFlaseQuestions = booleanQuestions(booleaneQuestionsLength);
     return shuffleDataset<SchemaTypes.GetQuizQuestions_quiz>([
       ...multipleChoiceQuestions,
       ...trueOrFlaseQuestions,
     ]);
   };
 
+  const getSuccessResolver = (numberOfQuestions: number, questions: SchemaTypes.GetQuizQuestions_quiz[]) => {
+    const resolver = resolvers(numberOfQuestions, questions);
+    return [{
+      ...resolver.request,
+      ...resolver.result,
+    }];
+  };
+
+  const getNetworkErrorResolver = (numberOfQuestions: number, questions: SchemaTypes.GetQuizQuestions_quiz[]) => {
+    const resolver = resolvers(numberOfQuestions, questions);
+    return [{
+      ...resolver.request,
+      ...resolver.responseWithNetworkError,
+    }];
+  };
+
+  const getGraphQLErrorResolver = (numberOfQuestions: number, questions: SchemaTypes.GetQuizQuestions_quiz[]) => {
+    const resolver = resolvers(numberOfQuestions, questions);
+    return [{
+      ...resolver.request,
+      ...resolver.responseWithGraphQLError,
+    }];
+  };
+
+  const makeBooleanAnswer = () => randomPositiveNumber(3) % 2 === 0 ? 'true' : 'false';
+
+  const makeMultiChoiceAnswer = (options: string[]) => {
+    const indexAnswer = randomPositiveNumber(options.length - 1, 0);
+    return options[indexAnswer];
+  };
+
+  const makeQuestionsAnswers = (questions: SchemaTypes.GetQuizQuestions_quiz[]) => questions.map((question, index) => {
+    const isBooleanQuestion =
+      questions[index].type === SchemaTypes.QuestionType.BOOLEAN.toLowerCase();
+      return isBooleanQuestion ? makeBooleanAnswer() : makeMultiChoiceAnswer(questions[index].options);
+  });
+
   return {
+    makeQuestionsAnswers,
+    getNetworkErrorResolver,
     multiChoiceQuestions,
     correctAnswerResult,
     multiChoiceOptions,
+    getGraphQLErrorResolver,
     wrongAnswerResult,
     booleanQuestions,
     defaultOptions,
     mixedQuestions,
+    getSuccessResolver,
     resolvers,
   };
 };
