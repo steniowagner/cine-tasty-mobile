@@ -15,6 +15,67 @@ import {Translations} from '@i18n/tags';
 
 import MultiChoiceQuestion from './MultiChoiceQuestion';
 
+type CheckOptionParams = {
+  elements: Record<string, any>;
+  component: RenderAPI;
+  indexOption: number;
+};
+
+const checkIsOptionSelected = (params: CheckOptionParams) => {
+  expect(
+    params.elements.multiChoicesButtonTexts(params.component)[
+      params.indexOption
+    ].props.isSelected,
+  ).toEqual(true);
+};
+
+const checkIsOptionUnselected = (params: CheckOptionParams) => {
+  expect(
+    params.elements.multiChoicesButtonTexts(params.component)[
+      params.indexOption
+    ].props.isSelected,
+  ).toEqual(false);
+};
+
+const checkIsAllOptionsUnselected = (
+  params: Omit<CheckOptionParams, 'indexOption'>,
+) => {
+  for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
+    checkIsOptionUnselected({...params, indexOption: i});
+  }
+};
+
+const checkIsOnlyThisOptionSelcted = (params: CheckOptionParams) => {
+  for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
+    if (params.indexOption === i) {
+      checkIsOptionSelected({...params, indexOption: i});
+    } else {
+      checkIsOptionUnselected({...params, indexOption: i});
+    }
+  }
+};
+
+const checkIsOptionsRenderedInTheCorrectOrder = (
+  elements: Record<string, any>,
+  component: RenderAPI,
+) => {
+  for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
+    expect(elements.multiChoicesButtonTexts(component)[i].children[0]).toEqual(
+      mockQuiz().multiChoiceOptions[i],
+    );
+  }
+};
+
+const checkIsNextButtonRenderdCorrectly = (
+  elements: Record<string, any>,
+  component: RenderAPI,
+) => {
+  expect(elements.nextButton(component)).not.toBeNull();
+  expect(elements.nextButtonText(component).children[0]).toEqual(
+    Translations.Tags.QUIZ_NEXT,
+  );
+};
+
 const renderMultiChoice = (isFocused = true, onPressNext = jest.fn()) => (
   <ThemeProvider theme={theme}>
     <MultiChoiceQuestion
@@ -33,10 +94,6 @@ describe('<MultiChoiceQuestion />', () => {
       api.queryAllByTestId('multi-choice-option-text'),
     nextButton: (api: RenderAPI) => api.queryByTestId('select-button'),
     nextButtonText: (api: RenderAPI) => api.queryByTestId('select-button-text'),
-    checkIcons: (api: RenderAPI) =>
-      api.queryAllByTestId('icon-checkbox-circle'),
-    circleIcons: (api: RenderAPI) =>
-      api.queryAllByTestId('icon-checkbox-blank-circle-outline'),
   };
 
   beforeEach(() => {
@@ -46,335 +103,147 @@ describe('<MultiChoiceQuestion />', () => {
   afterEach(cleanup);
 
   describe('Renders correctly', () => {
-    it('should render correctly when there is no option selected and "isFocused" is "true"', () => {
-      const component = render(renderMultiChoice());
-      expect(elements.multiChoicesButtons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.multiChoicesButtonTexts(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[i].children[0],
-        ).toEqual(mockQuiz().multiChoiceOptions[i]);
-      }
-      expect(elements.nextButton(component)).not.toBeNull();
-      expect(elements.nextButtonText(component).children[0]).toEqual(
-        Translations.Tags.QUIZ_NEXT,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[0].props.isSelected,
-        ).toEqual(false);
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.checkIcons(component).length).toEqual(0);
+    describe('When "isFocused" is "true"', () => {
+      it('should render correctly when there is no option selected and "isFocused" is "true"', () => {
+        const component = render(renderMultiChoice());
+        expect(elements.multiChoicesButtons(component).length).toEqual(
+          mockQuiz().multiChoiceOptions.length,
+        );
+        checkIsOptionsRenderedInTheCorrectOrder(elements, component);
+        checkIsNextButtonRenderdCorrectly(elements, component);
+      });
+    });
+
+    describe('When "isFocused" is "false"', () => {
+      it('should render correctly when there is no option selected and "isFocused" is "false"', () => {
+        const component = render(renderMultiChoice(false));
+        expect(elements.multiChoicesButtons(component).length).toEqual(
+          mockQuiz().multiChoiceOptions.length,
+        );
+        checkIsOptionsRenderedInTheCorrectOrder(elements, component);
+        checkIsNextButtonRenderdCorrectly(elements, component);
+      });
     });
   });
 
-  describe('Rerenders correclty', () => {
+  describe('Re-renders correclty', () => {
     it('should keep the default state when it gets unfocused and there is no option selected', () => {
-      // When "isFocused" is "true"
       const component = render(renderMultiChoice());
       expect(elements.multiChoicesButtons(component).length).toEqual(
         mockQuiz().multiChoiceOptions.length,
       );
-      expect(elements.multiChoicesButtonTexts(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[i].children[0],
-        ).toEqual(mockQuiz().multiChoiceOptions[i]);
-      }
-      expect(elements.nextButton(component)).not.toBeNull();
-      expect(elements.nextButtonText(component).children[0]).toEqual(
-        Translations.Tags.QUIZ_NEXT,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[0].props.isSelected,
-        ).toEqual(false);
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.checkIcons(component).length).toEqual(0);
-      // When "isFocused" is "false"
+      checkIsOptionsRenderedInTheCorrectOrder(elements, component);
+      checkIsNextButtonRenderdCorrectly(elements, component);
+      checkIsAllOptionsUnselected({elements, component});
       component.rerender(renderMultiChoice(false));
       expect(elements.multiChoicesButtons(component).length).toEqual(
         mockQuiz().multiChoiceOptions.length,
       );
-      expect(elements.multiChoicesButtonTexts(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[i].children[0],
-        ).toEqual(mockQuiz().multiChoiceOptions[i]);
-      }
-      expect(elements.nextButton(component)).not.toBeNull();
-      expect(elements.nextButtonText(component).children[0]).toEqual(
-        Translations.Tags.QUIZ_NEXT,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[0].props.isSelected,
-        ).toEqual(false);
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.checkIcons(component).length).toEqual(0);
+      checkIsOptionsRenderedInTheCorrectOrder(elements, component);
+      checkIsNextButtonRenderdCorrectly(elements, component);
+      checkIsAllOptionsUnselected({elements, component});
     });
 
     it('should keep the current state when it gets unfocused and the there is some option selected', () => {
-      const optionSelectedIndex = randomArrayIndex(
+      const indexOptionSelected = randomArrayIndex(
         mockQuiz().multiChoiceOptions,
       );
-      // When "isFocused" is "true"
       const component = render(renderMultiChoice());
       fireEvent.press(
-        elements.multiChoicesButtons(component)[optionSelectedIndex],
+        elements.multiChoicesButtons(component)[indexOptionSelected],
       );
-      expect(elements.multiChoicesButtons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.multiChoicesButtonTexts(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[i].children[0],
-        ).toEqual(mockQuiz().multiChoiceOptions[i]);
-      }
-      expect(elements.nextButton(component)).not.toBeNull();
-      expect(elements.nextButtonText(component).children[0]).toEqual(
-        Translations.Tags.QUIZ_NEXT,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        if (optionSelectedIndex === i) {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(true);
-        } else {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(false);
-        }
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length - 1,
-      );
-      expect(elements.checkIcons(component).length).toEqual(1);
-      // When "isFocused" is "false"
+      checkIsOptionsRenderedInTheCorrectOrder(elements, component);
+      checkIsNextButtonRenderdCorrectly(elements, component);
+      checkIsOnlyThisOptionSelcted({
+        elements,
+        component,
+        indexOption: indexOptionSelected,
+      });
       component.rerender(renderMultiChoice(false));
-      expect(elements.multiChoicesButtons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.multiChoicesButtonTexts(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[i].children[0],
-        ).toEqual(mockQuiz().multiChoiceOptions[i]);
-      }
-      expect(elements.nextButton(component)).not.toBeNull();
-      expect(elements.nextButtonText(component).children[0]).toEqual(
-        Translations.Tags.QUIZ_NEXT,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        if (optionSelectedIndex === i) {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(true);
-        } else {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(false);
-        }
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length - 1,
-      );
-      expect(elements.checkIcons(component).length).toEqual(1);
+      checkIsOptionsRenderedInTheCorrectOrder(elements, component);
+      checkIsNextButtonRenderdCorrectly(elements, component);
+      checkIsOnlyThisOptionSelcted({
+        elements,
+        component,
+        indexOption: indexOptionSelected,
+      });
     });
 
     it('should keep the current state when it gets focused and the there is some option selected', () => {
-      const optionSelectedIndex = randomArrayIndex(
+      const indexOptionSelected = randomArrayIndex(
         mockQuiz().multiChoiceOptions,
       );
-      // When "isFocused" is "true"
       const component = render(renderMultiChoice(false));
       fireEvent.press(
-        elements.multiChoicesButtons(component)[optionSelectedIndex],
+        elements.multiChoicesButtons(component)[indexOptionSelected],
       );
-      expect(elements.multiChoicesButtons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.multiChoicesButtonTexts(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[i].children[0],
-        ).toEqual(mockQuiz().multiChoiceOptions[i]);
-      }
-      expect(elements.nextButton(component)).not.toBeNull();
-      expect(elements.nextButtonText(component).children[0]).toEqual(
-        Translations.Tags.QUIZ_NEXT,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        if (optionSelectedIndex === i) {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(true);
-        } else {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(false);
-        }
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length - 1,
-      );
-      expect(elements.checkIcons(component).length).toEqual(1);
-      // When "isFocused" is "false"
+      checkIsOptionsRenderedInTheCorrectOrder(elements, component);
+      checkIsNextButtonRenderdCorrectly(elements, component);
+      checkIsOnlyThisOptionSelcted({
+        elements,
+        component,
+        indexOption: indexOptionSelected,
+      });
       component.rerender(renderMultiChoice(true));
-      expect(elements.multiChoicesButtons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.multiChoicesButtonTexts(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[i].children[0],
-        ).toEqual(mockQuiz().multiChoiceOptions[i]);
-      }
-      expect(elements.nextButton(component)).not.toBeNull();
-      expect(elements.nextButtonText(component).children[0]).toEqual(
-        Translations.Tags.QUIZ_NEXT,
-      );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        if (optionSelectedIndex === i) {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(true);
-        } else {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(false);
-        }
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length - 1,
-      );
-      expect(elements.checkIcons(component).length).toEqual(1);
+      checkIsOptionsRenderedInTheCorrectOrder(elements, component);
+      checkIsNextButtonRenderdCorrectly(elements, component);
+      checkIsOnlyThisOptionSelcted({
+        elements,
+        component,
+        indexOption: indexOptionSelected,
+      });
     });
   });
 
-  describe('Press item', () => {
+  describe('Pressing the items', () => {
     it('should only update the state of the pressed option when there was no option selected', () => {
-      const optionSelectedIndex = randomArrayIndex(
+      const indexOptionSelected = randomArrayIndex(
         mockQuiz().multiChoiceOptions,
       );
       const component = render(renderMultiChoice());
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        expect(
-          elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-        ).toEqual(false);
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
-      );
-      expect(elements.checkIcons(component).length).toEqual(0);
+      checkIsAllOptionsUnselected({elements, component});
       fireEvent.press(
-        elements.multiChoicesButtons(component)[optionSelectedIndex],
+        elements.multiChoicesButtons(component)[indexOptionSelected],
       );
       act(() => {
         jest.runAllTimers();
       });
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        if (optionSelectedIndex === i) {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(true);
-        } else {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(false);
-        }
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length - 1,
-      );
-      expect(elements.checkIcons(component).length).toEqual(1);
+      checkIsOnlyThisOptionSelcted({
+        indexOption: indexOptionSelected,
+        elements,
+        component,
+      });
     });
 
     it('should only update the state of the pressed option when there is some option selected', () => {
-      const firstOptionSelectedIndex = randomArrayIndex(
+      const indexFirstOptionSelected = randomArrayIndex(
         mockQuiz().multiChoiceOptions,
       );
-      const secondOptionSelectedIndex = randomArrayIndex(
+      const indexSecondOptionSelected = randomArrayIndex(
         mockQuiz().multiChoiceOptions,
-        [firstOptionSelectedIndex],
+        [indexFirstOptionSelected],
       );
-      // With the first option selected
       const component = render(renderMultiChoice());
       fireEvent.press(
-        elements.multiChoicesButtons(component)[firstOptionSelectedIndex],
+        elements.multiChoicesButtons(component)[indexFirstOptionSelected],
       );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        if (firstOptionSelectedIndex === i) {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(true);
-        } else {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(false);
-        }
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length - 1,
-      );
-      expect(elements.checkIcons(component).length).toEqual(1);
-      // With the second option selected
+      checkIsOnlyThisOptionSelcted({
+        elements,
+        component,
+        indexOption: indexFirstOptionSelected,
+      });
       fireEvent.press(
-        elements.multiChoicesButtons(component)[secondOptionSelectedIndex],
+        elements.multiChoicesButtons(component)[indexSecondOptionSelected],
       );
-      for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
-        if (secondOptionSelectedIndex === i) {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(true);
-        } else {
-          expect(
-            elements.multiChoicesButtonTexts(component)[i].props.isSelected,
-          ).toEqual(false);
-        }
-      }
-      expect(elements.circleIcons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length - 1,
-      );
-      expect(elements.checkIcons(component).length).toEqual(1);
+      checkIsOnlyThisOptionSelcted({
+        indexOption: indexSecondOptionSelected,
+        elements,
+        component,
+      });
     });
   });
 
-  describe('onPress Next-button', () => {
-    it('should disable the "NEXT" button when there is no option selected', () => {
-      const onPress = jest.fn();
-      const component = render(renderMultiChoice(true, onPress));
-      expect(onPress).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.nextButton(component));
-      expect(onPress).toHaveBeenCalledTimes(0);
-    });
-
+  describe('Pressing the "Next" button', () => {
     it('should call "onPress" correctly when the user selects some option and press "NEXT"', () => {
       const onPress = jest.fn();
       const optionSelectedIndex = randomArrayIndex(

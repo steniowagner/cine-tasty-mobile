@@ -1,5 +1,5 @@
 import {useTranslations} from '@hooks';
-import {useCallback, useMemo} from 'react';
+import {useMemo} from 'react';
 
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
@@ -12,10 +12,6 @@ type UseQuizProps = {
 
 const useQuiz = (props: UseQuizProps) => {
   const translations = useTranslations();
-
-  const handlePressChooseQuestions = useCallback(() => {
-    props.navigation.navigate(Routes.Quiz.SETUP_QUESTIONS);
-  }, [props.navigation]);
 
   const texts = useMemo(
     () => ({
@@ -30,7 +26,8 @@ const useQuiz = (props: UseQuizProps) => {
   );
 
   return {
-    handlePressChooseQuestions,
+    onPressChooseQuestions: () =>
+      props.navigation.navigate(Routes.Quiz.SETUP_QUESTIONS),
     texts,
   };
 };

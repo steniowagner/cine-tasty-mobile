@@ -1,26 +1,23 @@
 import React from 'react';
 
 import {SVGIcon} from '@components';
-import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
 import * as Styles from './DropdownOption.styles';
 
 type DropdownOptionProps = {
-  option: Types.QuizOption;
+  section: Types.QuizOption;
   selectedOption: string;
   onPress: () => void;
 };
 
-const DropdownOption = (props: DropdownOptionProps) => (
+export const DropdownOption = (props: DropdownOptionProps) => (
   <Styles.InnerContentWrapper
     onPress={props.onPress}
-    testID={`dropdown-button-${props.option}`}>
-    <Styles.OptionText testID={`dropdown-value-${props.option}`}>
+    testID={`dropdown-button-${props.section}`}>
+    <Styles.OptionText testID={`dropdown-value-${props.section}`}>
       {props.selectedOption}
     </Styles.OptionText>
-    <SVGIcon size={metrics.getWidthFromDP('7%')} id="chevron-down-box" />
+    <SVGIcon size={Styles.ICON_SIZE} id="chevron-down-box" />
   </Styles.InnerContentWrapper>
 );
-
-export default DropdownOption;

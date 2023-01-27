@@ -6,7 +6,7 @@ import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
 
-import SetupQuestions from '../components/setup-questions/SetupQuestions';
+import {SetupQuestions} from '../components/setup-questions/SetupQuestions';
 import Questions from '../components/questions/Questions';
 import Results from '../components/results/Results';
 import {Quiz} from '../components/Quiz';
@@ -15,8 +15,9 @@ const Stack = createStackNavigator();
 
 export const QuizStack = () => {
   const translations = useTranslations();
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={Routes.Quiz.SETUP_QUESTIONS}>
       <Stack.Screen
         options={{
           headerShown: false,
@@ -41,7 +42,6 @@ export const QuizStack = () => {
         name={Routes.Quiz.QUESTIONS}
         component={Questions}
       />
-
       <Stack.Screen
         options={{
           ...DEFAULT_HEADER_OPTIONS,

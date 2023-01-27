@@ -8,12 +8,12 @@ import {Routes} from '@routes/routes';
 
 import {QuestionsStackProps} from '../../routes/route-params-types';
 
-const useQuestions = (props: QuestionsStackProps) => {
+export const useQuestions = (props: QuestionsStackProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const questionsListRef = useRef<FlatList>(null);
 
-  const {data, error, loading} = useQuery<
+  const query = useQuery<
     SchemaTypes.GetQuizQuestions,
     SchemaTypes.GetQuizQuestionsVariables
   >(GET_QUIZ_QUESTIONS, {
@@ -35,22 +35,22 @@ const useQuestions = (props: QuestionsStackProps) => {
 
   const navigateToResultsScreen = useCallback(() => {
     props.navigation.navigate(Routes.Quiz.RESULTS, {
-      questions: data?.quiz,
+      questions: query.data?.quiz,
       answers,
     });
-  }, [props.navigation, answers, data]);
+  }, [props.navigation, answers, query.data]);
 
   const setListIndex = useCallback((): void => {
-    if (!data?.quiz.length) {
+    if (!query.data?.quiz.length) {
       return;
     }
     const nextIndex = currentQuestionIndex + 1;
-    const isLastQuestion = nextIndex === data.quiz.length;
+    const isLastQuestion = nextIndex === query.data.quiz.length;
     if (isLastQuestion) {
       return navigateToResultsScreen();
     }
     setCurrentQuestionIndex(nextIndex);
-  }, [currentQuestionIndex, navigateToResultsScreen, data]);
+  }, [currentQuestionIndex, navigateToResultsScreen, query.data]);
 
   const changeListPosition = useCallback(() => {
     if (!questionsListRef || !questionsListRef.current) {
@@ -62,30 +62,24 @@ const useQuestions = (props: QuestionsStackProps) => {
     });
   }, [currentQuestionIndex]);
 
-  const handlePressNext = useCallback(
-    (currentAnswer: string) =>
-      setAnswers(prevAnswers => [...prevAnswers, currentAnswer]),
-    [],
-  );
-
   const shouldHideRestarButton = useMemo(
     () =>
-      ((loading || !!error) && !!data?.quiz.length) ||
+      ((query.loading || query.error) && query.data?.quiz.length) ||
       currentQuestionIndex === 0,
-    [currentQuestionIndex, loading, data, error],
+    [currentQuestionIndex, query.loading, query.data, query.error],
   );
 
   const noQuestions = useMemo(
-    () => !loading && !error && !data?.quiz.length,
-    [data, loading, error],
+    () => !query.loading && !query.error && !query.data?.quiz.length,
+    [query.data, query.loading, query.error],
   );
 
   const headerTitle = useMemo(() => {
-    if (!data || !data.quiz[currentQuestionIndex]) {
+    if (!query.data || !query.data.quiz[currentQuestionIndex]) {
       return '';
     }
-    return data.quiz[currentQuestionIndex].category.split(':')[1].trim();
-  }, [currentQuestionIndex, data]);
+    return query.data.quiz[currentQuestionIndex].category.split(':')[1].trim();
+  }, [currentQuestionIndex, query.data]);
 
   useEffect(() => {
     changeListPosition();
@@ -96,18 +90,17 @@ const useQuestions = (props: QuestionsStackProps) => {
   }, [answers]);
 
   return {
-    questions: data ? data.quiz : [],
-    onPressNext: handlePressNext,
+    questions: query.data ? query.data.quiz : [],
+    onPressNext: (answer: string) =>
+      setAnswers(prevAnswers => [...prevAnswers, answer]),
     shouldHideRestarButton,
     currentQuestionIndex,
-    hasError: !!error,
+    hasError: !!query.error,
     questionsListRef,
     headerTitle,
     noQuestions,
     restart,
-    loading,
+    loading: query.loading,
     answers,
   };
 };
-
-export default useQuestions;

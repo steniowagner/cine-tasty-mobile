@@ -13,6 +13,7 @@ type BooleanQuestionProps = {
 
 const BooleanQuestion = (props: BooleanQuestionProps) => {
   const booleanQuestion = useBooleanQuestion({onPressNext: props.onPressNext});
+
   return (
     <>
       <Styles.Wrapper>

@@ -3,7 +3,7 @@ import {useMemo} from 'react';
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 
-const useQuestionsError = () => {
+export const useQuestionsError = () => {
   const translations = useTranslations();
 
   const texts = useMemo(
@@ -25,5 +25,3 @@ const useQuestionsError = () => {
     texts,
   };
 };
-
-export default useQuestionsError;

@@ -1,26 +1,26 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect} from 'react';
 import {FlatList} from 'react-native';
 
-import {LoadingIndicator, SVGIcon} from '@components';
+import {LoadingIndicator} from '@components';
 import * as SchemaTypes from '@schema-types';
 import metrics from '@styles/metrics';
 
 import MultiChoiceQuestion from './multi-choice-question/MultiChoiceQuestion';
-import NoQuestionsError from './no-questions-error/NoQuestionsError';
+import {NoQuestionsError} from './no-questions-error/NoQuestionsError';
 import {QuestionsStackProps} from '../../routes/route-params-types';
-import QuestionWrapper from './question-wrapper/QuestionWrapper';
+import {QuestionWrapper} from './question-wrapper/QuestionWrapper';
 import BooleanQuestion from './boolean-question/BooleanQuestion';
-import QuestionError from './questions-error/QuestionsError';
+import {QuestionsError} from './questions-error/QuestionsError';
 import * as Styles from './Questions.styles';
-import useQuestions from './useQuestions';
+import {useQuestions} from './useQuestions';
 
-const Questions = (props: QuestionsStackProps) => {
+export const Questions = (props: QuestionsStackProps) => {
   const questions = useQuestions({
     navigation: props.navigation,
     route: props.route,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     props.navigation.setOptions({
       title: questions.headerTitle,
       headerRight: () =>
@@ -28,7 +28,7 @@ const Questions = (props: QuestionsStackProps) => {
           <Styles.RestartQuizButton
             onPress={questions.restart}
             testID="restart-quiz-button">
-            <SVGIcon size={metrics.getWidthFromDP('8%')} id="restart" />
+            <Styles.RestartIcon id="restart" />
           </Styles.RestartQuizButton>
         ),
     });
@@ -39,7 +39,7 @@ const Questions = (props: QuestionsStackProps) => {
   }
 
   if (questions.hasError) {
-    return <QuestionError />;
+    return <QuestionsError />;
   }
 
   if (questions.noQuestions) {
@@ -52,24 +52,27 @@ const Questions = (props: QuestionsStackProps) => {
         <QuestionWrapper
           numberOfQuestions={props.route.params.numberOfQuestions}
           currentQuestionIndex={index + 1}
-          question={item.question}>
-          <>
-            {item.type.toLowerCase() ===
-              SchemaTypes.QuestionType.BOOLEAN.toLowerCase() && (
-              <BooleanQuestion
-                isFocused={questions.currentQuestionIndex === index}
-                onPressNext={questions.onPressNext}
-              />
-            )}
-            {item.type.toLowerCase() ===
-              SchemaTypes.QuestionType.MULTIPLE.toLowerCase() && (
-              <MultiChoiceQuestion
-                isFocused={questions.currentQuestionIndex === index}
-                onPressNext={questions.onPressNext}
-                answers={item.options}
-              />
-            )}
-          </>
+          question={item.question}
+          testID={
+            questions.currentQuestionIndex === index
+              ? 'question-item-focused'
+              : 'question-item-unfocused'
+          }>
+          {item.type.toLowerCase() ===
+            SchemaTypes.QuestionType.BOOLEAN.toLowerCase() && (
+            <BooleanQuestion
+              isFocused={questions.currentQuestionIndex === index}
+              onPressNext={questions.onPressNext}
+            />
+          )}
+          {item.type.toLowerCase() ===
+            SchemaTypes.QuestionType.MULTIPLE.toLowerCase() && (
+            <MultiChoiceQuestion
+              isFocused={questions.currentQuestionIndex === index}
+              onPressNext={questions.onPressNext}
+              answers={item.options}
+            />
+          )}
         </QuestionWrapper>
       )}
       keyExtractor={(item, index) => `${item.question}${index}`}
@@ -88,5 +91,3 @@ const Questions = (props: QuestionsStackProps) => {
     />
   );
 };
-
-export default Questions;
