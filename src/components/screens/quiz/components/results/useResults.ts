@@ -7,20 +7,20 @@ import * as Types from '@local-types';
 
 import {ResultsStackProps as UseResultsProps} from '../../routes/route-params-types';
 
-const useResults = (props: UseResultsProps) => {
+export const useResults = (props: UseResultsProps) => {
   const [results, setResults] = useState<Types.QuizResult[]>([]);
 
   const translations = useTranslations();
 
   const resultsMapping = useMemo(
     () =>
-      props.route.params.questions.map((dataItem, index) => ({
+      props.route.params.questions.map((question, index) => ({
         isCorrect:
-          dataItem.correctAnswer?.toLowerCase() ===
+          question.correctAnswer?.toLowerCase() ===
           props.route.params.answers[index].toLowerCase(),
         userAnswer: props.route.params.answers[index],
-        answer: dataItem.correctAnswer,
-        question: dataItem.question,
+        answer: question.correctAnswer,
+        question: question.question,
       })),
     [props.route.params],
   );
@@ -51,7 +51,17 @@ const useResults = (props: UseResultsProps) => {
     [translations.translate, results, score],
   );
 
-  const handlePressPlayAgain = useCallback((): void => {
+  const navigateToFirstQuizScreen = useCallback(
+    () => props.navigation.pop(3),
+    [],
+  );
+
+  const navigateToSetupQuizScreen = useCallback(
+    () => props.navigation.pop(2),
+    [],
+  );
+
+  const handlePressPlayAgain = useCallback(() => {
     Alert.alert(
       texts.playAgain,
       texts.modalDescription,
@@ -59,11 +69,11 @@ const useResults = (props: UseResultsProps) => {
         {
           text: texts.modalNegativeOption,
           style: 'cancel',
-          onPress: () => props.navigation.pop(3),
+          onPress: navigateToFirstQuizScreen,
         },
         {
           text: texts.modalPositiveOption,
-          onPress: () => props.navigation.pop(2),
+          onPress: navigateToSetupQuizScreen,
         },
       ],
       {cancelable: false},
@@ -80,5 +90,3 @@ const useResults = (props: UseResultsProps) => {
     texts,
   };
 };
-
-export default useResults;

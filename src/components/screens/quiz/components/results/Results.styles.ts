@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import styled from 'styled-components/native';
 
 export const Wrapper = styled(View)`
@@ -9,5 +9,13 @@ export const Wrapper = styled(View)`
 
 export const PlayAgainButtonWrapper = styled(View)`
   position: absolute;
-  bottom: ${({theme}) => theme.metrics.getWidthFromDP('8%')}px;
+  bottom: ${({theme}) => theme.metrics.largeSize * 2}px;
 `;
+
+export const ResultsList = styled(ScrollView).attrs(({theme}) => ({
+  contentContainerStyle: {
+    paddingBottom: theme.metrics.largeSize * 4,
+    paddingHorizontal: theme.metrics.largeSize,
+    paddingTop: theme.metrics.largeSize,
+  },
+}))``;
