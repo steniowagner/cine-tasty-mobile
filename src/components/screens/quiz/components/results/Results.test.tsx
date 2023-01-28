@@ -12,10 +12,10 @@ import MockedNavigation from '@mocks/MockedNavigator';
 import {randomPositiveNumber} from '@mocks/utils';
 import {randomArrayElement} from '@mocks/utils';
 import * as SchemaTypes from '@schema-types';
-import {mockQuiz} from '@mocks/fixtures';
+import {quizFixtures} from '@mocks/fixtures';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
-import Results from './Results';
+import {Results} from './Results';
 
 jest.spyOn(Alert, 'alert');
 
@@ -60,7 +60,7 @@ describe('<Results />', () => {
   describe('Renders correctly', () => {
     it('should render correctly', () => {
       const numberOfQuestions = randomPositiveNumber(10, 1);
-      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
+      const questions = quizFixtures().mixedQuestions(numberOfQuestions);
       const answers = answerQuiz(questions);
       const component = render(renderResults(questions, answers));
       expect(elements.roundedButton(component)).not.toBeNull();
@@ -74,9 +74,9 @@ describe('<Results />', () => {
       );
     });
 
-    it('should render the "Results-list" with the correct sequence', () => {
+    it('should render the "Results-list" in the correct sequence', () => {
       const numberOfQuestions = randomPositiveNumber(10, 1);
-      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
+      const questions = quizFixtures().mixedQuestions(numberOfQuestions);
       const answers = answerQuiz(questions);
       const component = render(renderResults(questions, answers));
       for (let i = 0; i < questions.length; i++) {
@@ -88,7 +88,7 @@ describe('<Results />', () => {
 
     it('should render the "Correct/Incorrect"-icons on the correct sequence on the "Results-list"', () => {
       const numberOfQuestions = randomPositiveNumber(10, 1);
-      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
+      const questions = quizFixtures().mixedQuestions(numberOfQuestions);
       const answers = answerQuiz(questions);
       const component = render(renderResults(questions, answers));
       for (let i = 0; i < questions.length; i++) {
@@ -106,7 +106,7 @@ describe('<Results />', () => {
   describe('Header title', () => {
     it('should render the header-title correctly', () => {
       const numberOfQuestions = randomPositiveNumber(10, 1);
-      const questions = mockQuiz().mixedQuestions(numberOfQuestions);
+      const questions = quizFixtures().mixedQuestions(numberOfQuestions);
       const answers = answerQuiz(questions);
       const component = render(renderResults(questions, answers));
       let numberCorrectAnswers = 0;
@@ -124,16 +124,15 @@ describe('<Results />', () => {
     });
   });
 
-  describe('Press "Play Again" button', () => {
-    const numberOfQuestions = randomPositiveNumber(10, 1);
-    const questions = mockQuiz().mixedQuestions(numberOfQuestions);
-    const answers = answerQuiz(questions);
-
+  describe('Pressing the "Play Again" button', () => {
     beforeEach(() => {
       jest.resetAllMocks();
     });
 
     it('should show the "Alert-modal" correctly when the user presses the "Play Again" button', () => {
+      const numberOfQuestions = randomPositiveNumber(10, 1);
+      const questions = quizFixtures().mixedQuestions(numberOfQuestions);
+      const answers = answerQuiz(questions);
       const component = render(renderResults(questions, answers));
       expect(Alert.alert).toHaveBeenCalledTimes(0);
       fireEvent.press(elements.roundedButton(component));
@@ -158,7 +157,10 @@ describe('<Results />', () => {
       );
     });
 
-    it('should call the "navigation.pop" with the correct parans when the user press the "No" option on the Alert', () => {
+    it('should call the "navigation.pop" with the correct parans when the user press the "No" option on the "Alert"', () => {
+      const numberOfQuestions = randomPositiveNumber(10, 1);
+      const questions = quizFixtures().mixedQuestions(numberOfQuestions);
+      const answers = answerQuiz(questions);
       const pop = jest.fn();
       const component = render(renderResults(questions, answers, pop));
       fireEvent.press(elements.roundedButton(component));
@@ -170,7 +172,10 @@ describe('<Results />', () => {
       expect(pop).toHaveBeenCalledWith(3);
     });
 
-    it('should call the "navigation.pop" with the correct parans when  the user press the "Yes" option on the Alert', () => {
+    it('should call the "navigation.pop" with the correct params when the user presses the "Yes" option on the "Alert"', () => {
+      const numberOfQuestions = randomPositiveNumber(10, 1);
+      const questions = quizFixtures().mixedQuestions(numberOfQuestions);
+      const answers = answerQuiz(questions);
       const pop = jest.fn();
       const component = render(renderResults(questions, answers, pop));
       fireEvent.press(elements.roundedButton(component));
