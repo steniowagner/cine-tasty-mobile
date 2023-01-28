@@ -11,7 +11,7 @@ type UseResultListItemProps = {
   result: Omit<Types.QuizResult, 'question'>;
 };
 
-const useResultListItem = (props: UseResultListItemProps) => {
+export const useResultListItem = (props: UseResultListItemProps) => {
   const translations = useTranslations();
 
   const texts = useMemo(
@@ -40,5 +40,3 @@ const useResultListItem = (props: UseResultListItemProps) => {
 
   return {texts, icon};
 };
-
-export default useResultListItem;

@@ -1,6 +1,12 @@
 import {StyleSheet, View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
+import {SVGIcon} from '@components';
+
+export const QuestionResultIcon = styled(SVGIcon).attrs(({theme}) => ({
+  size: theme.metrics.getWidthFromDP('14%'),
+}))``;
+
 export const Wrapper = styled(View)`
   width: 100%;
   margin-vertical: ${({theme}) => theme.metrics.getWidthFromDP('7%')}px;

@@ -1,36 +1,28 @@
-import React, {useLayoutEffect} from 'react';
-import {ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
 
 import {RoundedButton} from '@components';
-import metrics from '@styles/metrics';
 
 import {ResultsStackProps} from '../../routes/route-params-types';
-import ResultListItem from './result-list-item/ResultListItem';
+import {ResultListItem} from './result-list-item/ResultListItem';
 import * as Styles from './Results.styles';
-import useResults from './useResults';
+import {useResults} from './useResults';
 
-const Results = (props: ResultsStackProps) => {
+export const Results = (props: ResultsStackProps) => {
   const results = useResults(props);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     props.navigation.setOptions({
       title: results.texts.headerText,
     });
-  }, [results.texts.headerText, props.navigation]);
+  }, [results.texts.headerText]);
 
   return (
     <Styles.Wrapper>
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: metrics.getWidthFromDP('20%'),
-          paddingHorizontal: metrics.largeSize,
-          paddingTop: metrics.largeSize,
-        }}
-        testID="results-list">
+      <Styles.ResultsList testID="results-list">
         {results.quizResults.map((result, index) => (
           <ResultListItem key={`${index}`} result={result} />
         ))}
-      </ScrollView>
+      </Styles.ResultsList>
       <Styles.PlayAgainButtonWrapper>
         <RoundedButton
           onPress={results.onPressPlayAgain}
@@ -40,5 +32,3 @@ const Results = (props: ResultsStackProps) => {
     </Styles.Wrapper>
   );
 };
-
-export default Results;

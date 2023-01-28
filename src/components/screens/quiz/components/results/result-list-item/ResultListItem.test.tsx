@@ -3,11 +3,11 @@ import {RenderAPI, cleanup, render} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
-import {mockQuiz} from '@mocks/fixtures';
+import {quizFixtures} from '@mocks/fixtures';
 import {Translations} from '@i18n/tags';
 import * as Types from '@local-types';
 
-import ResultListItem from './ResultListItem';
+import {ResultListItem} from './ResultListItem';
 
 const renderResultListItem = (result: Types.QuizResult) => (
   <ThemeProvider theme={theme}>
@@ -29,7 +29,7 @@ describe('<ResultListItem />', () => {
   afterEach(cleanup);
 
   it('should render correctly when the user got the answer right', () => {
-    const result = mockQuiz().correctAnswerResult;
+    const result = quizFixtures().correctAnswerResult;
     const component = render(renderResultListItem(result));
     expect(elements.correctAnswerIcon(component)).not.toBeNull();
     expect(elements.wrongAnswerIcon(component)).toBeNull();
@@ -45,7 +45,7 @@ describe('<ResultListItem />', () => {
   });
 
   it('should render correctly when the user got the wrong answer', () => {
-    const result = mockQuiz().wrongAnswerResult;
+    const result = quizFixtures().wrongAnswerResult;
     const component = render(renderResultListItem(result));
     expect(elements.correctAnswerIcon(component)).toBeNull();
     expect(elements.wrongAnswerIcon(component)).not.toBeNull();
