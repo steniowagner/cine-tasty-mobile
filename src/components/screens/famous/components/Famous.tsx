@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 
-import {HeaderIconButton, FamousList, Advise} from '@components';
+import {HeaderIconButton, FamousList} from '@components';
 
 import {FamousStackProps} from '../routes/route-params-types';
-import useFamous from './useFamous';
+import {useFamous} from './useFamous';
 
 export const Famous = (props: FamousStackProps) => {
   const famous = useFamous({navigation: props.navigation});
@@ -19,17 +19,6 @@ export const Famous = (props: FamousStackProps) => {
       ),
     });
   }, [famous.onPressHeaderIconButton]);
-
-  if (famous.isFamousListEmpty) {
-    return (
-      <Advise
-        description={famous.texts.advice.description}
-        suggestion={famous.texts.advice.suggestion}
-        title={famous.texts.advice.title}
-        icon="alert-box"
-      />
-    );
-  }
 
   return (
     <FamousList

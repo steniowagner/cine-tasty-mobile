@@ -186,11 +186,6 @@ export type Locale = {
     i18nQueryByTextErrorRef: string;
     i18EntryQueryErrorRef: string;
     searchBarPlaceholder: string;
-    emptyList: {
-      description: string;
-      suggestion: string;
-      title: string;
-    };
   };
   search: {
     recent: string;
