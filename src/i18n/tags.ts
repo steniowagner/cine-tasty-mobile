@@ -34,6 +34,9 @@ export namespace Translations {
     FAMOUS_QUERY_BY_PAGINATION_ERROR = 'translations:famous:i18nQueryByPaginationErrorRef',
     FAMOUS_QUERY_BY_TEXT_ERROR = 'translations:famous:i18nQueryByTextErrorRef',
     FAMOUS_ENTRY_QUERY_ERROR = 'translations:famous:i18EntryQueryErrorRef',
+    FAMOUS_EMPTY_LIST_DESCRIPTION = 'translations:famous:emptyList:description',
+    FAMOUS_EMPTY_LIST_SUGGESTION = 'translations:famous:emptyList:suggestion',
+    FAMOUS_EMPTY_LIST_TITLE = 'translations:famous:emptyList:title',
 
     // QUIZ
     QUIZ = 'translations:quiz',

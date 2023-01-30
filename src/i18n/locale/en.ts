@@ -189,6 +189,11 @@ const en: Locale = {
     i18nQueryByPaginationErrorRef: "Couldn't load more famous",
     i18nQueryByTextErrorRef: "Couldn't for this famous",
     i18EntryQueryErrorRef: "Couldn't load the famous",
+    emptyList: {
+      description: 'Famous Empty List Description',
+      suggestion: 'Famous Empty List Suggestion',
+      title: 'Famous Empty List Title',
+    },
   },
   search: {
     recent: 'Recent',

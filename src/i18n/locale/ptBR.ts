@@ -191,6 +191,11 @@ const ptBR: Locale = {
     i18nQueryByPaginationErrorRef: 'Não foi possível carregar mais famosos',
     i18nQueryByTextErrorRef: 'Não foi possível carregar este famoso(a)',
     i18EntryQueryErrorRef: 'Não foi possível carregar os famosos',
+    emptyList: {
+      description: 'Famous Empty List Description',
+      suggestion: 'Famous Empty List Suggestion',
+      title: 'Famous Empty List Title',
+    },
   },
   search: {
     recent: 'Recentes',

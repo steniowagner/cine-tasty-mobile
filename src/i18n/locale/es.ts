@@ -191,6 +191,11 @@ const es: Locale = {
     i18nQueryByPaginationErrorRef: 'No se pudo cargar más famoso',
     i18nQueryByTextErrorRef: 'No podría por este famoso',
     i18EntryQueryErrorRef: 'No se pudo cargar el famoso',
+    emptyList: {
+      description: 'Famous Empty List Description',
+      suggestion: 'Famous Empty List Suggestion',
+      title: 'Famous Empty List Title',
+    },
   },
   search: {
     recent: 'Reciente',
