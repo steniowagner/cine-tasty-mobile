@@ -1,14 +1,14 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect} from 'react';
 
 import {HeaderIconButton, FamousList} from '@components';
 
 import {FamousStackProps} from '../routes/route-params-types';
-import useFamous from './useFamous';
+import {useFamous} from './useFamous';
 
 export const Famous = (props: FamousStackProps) => {
   const famous = useFamous({navigation: props.navigation});
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
         <HeaderIconButton

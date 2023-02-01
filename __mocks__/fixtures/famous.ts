@@ -49,3 +49,415 @@ export const famousResolvers = (variables: OperationVariables, items: SchemaType
     result,
   };
 };
+
+export const makeEntryQuerySuccessResolver = (page: number, numberOfFamous: number) => {
+  const baseResolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...baseResolver.request,
+      ...baseResolver.result,
+    },
+  ];
+};
+
+export const makeEntryQueryNetworkResolver = (page: number, numberOfFamous: number) => {
+  const baseResolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...baseResolver.request,
+      ...baseResolver.responseWithNetworkError,
+    },
+  ];
+};
+
+export const makeEntryQueryGraphQLResolver = (page: number, numberOfFamous: number) => {
+  const baseResolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...baseResolver.request,
+      ...baseResolver.responseWithGraphQLError,
+    },
+  ];
+};
+
+export const makeEntryQueryWithNetworkErrorResolver = (page: number, numberOfFamous: number) => {
+  const resolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...resolver.request,
+      ...resolver.responseWithNetworkError,
+    },
+    {
+      ...resolver.request,
+      ...resolver.result,
+    },
+  ];
+};
+
+export const makeEntryQueryWithGraphQLErrorResolver = (page: number, numberOfFamous: number) => {
+  const resolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...resolver.request,
+      ...resolver.responseWithGraphQLError,
+    },
+    {
+      ...resolver.request,
+      ...resolver.result,
+    },
+  ];
+};
+
+export const makeRefetchQueryWithDoubleNetworkError = (page: number, numberOfFamous: number) => {
+  const resolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...resolver.request,
+      ...resolver.responseWithNetworkError,
+    },
+    {
+      ...resolver.request,
+      ...resolver.responseWithNetworkError,
+    },
+  ];
+};
+
+export const makeRefetchQueryWithDoubleGraphQLError = (page: number, numberOfFamous: number) => {
+  const resolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...resolver.request,
+      ...resolver.responseWithGraphQLError,
+    },
+    {
+      ...resolver.request,
+      ...resolver.responseWithGraphQLError,
+    },
+  ];
+};
+
+export const makeRefetchQueryWithNetworkAndGraphQLError = (page: number, numberOfFamous: number) => {
+  const resolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...resolver.request,
+      ...resolver.responseWithNetworkError,
+    },
+    {
+      ...resolver.request,
+      ...resolver.responseWithGraphQLError,
+    },
+  ];
+};
+
+export const makeRefetchQueryWitdGraphQLAndhNetworkError = (page: number, numberOfFamous: number) => {
+  const resolver = famousResolvers(
+    {page},
+    famousList(numberOfFamous),
+    true,
+  );
+  return [
+    {
+      ...resolver.request,
+      ...resolver.responseWithGraphQLError,
+    },
+    {
+      ...resolver.request,
+      ...resolver.responseWithNetworkError,
+    },
+  ];
+};
+
+
+export const makePaginationSuccessQuery = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.result,
+    },
+  ];
+};
+
+export const makePaginationNetworkErrorQuery = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.responseWithNetworkError,
+    },
+  ];
+};
+
+export const makePaginationGraphQLErrorQuery = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.responseWithGraphQLError,
+    },
+  ];
+};
+
+export const makePaginationNetworkErrorRefetchSuccess = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  const thirdQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.responseWithNetworkError,
+    },
+    {
+      ...thirdQueryResolver.request,
+      ...thirdQueryResolver.result,
+    },
+  ];
+};
+
+export const makePaginationNetworkErrorRefetchNetworkError = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  const thirdQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.responseWithNetworkError,
+    },
+    {
+      ...thirdQueryResolver.request,
+      ...thirdQueryResolver.responseWithGraphQLError,
+    },
+  ];
+};
+
+export const makePaginationNetworkErrorRefetchGraphQLError = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  const thirdQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.responseWithNetworkError,
+    },
+    {
+      ...thirdQueryResolver.request,
+      ...thirdQueryResolver.responseWithGraphQLError,
+    },
+  ];
+};
+
+export const makePaginationGraphQLRefetchSuccess = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  const thirdQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.responseWithGraphQLError,
+    },
+    {
+      ...thirdQueryResolver.request,
+      ...thirdQueryResolver.result,
+    },
+  ];
+};
+
+export const makePaginationGraphQLErrorRefetchGraphQLError = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  const thirdQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.responseWithGraphQLError,
+    },
+    {
+      ...thirdQueryResolver.request,
+      ...thirdQueryResolver.responseWithGraphQLError,
+    },
+  ];
+};
+
+export const makePaginationGraphQLErrorRefetchNetworkError = (numberOfFamous: number, hasMoreAfterFirstPage: boolean = true) => {
+  const firstQueryResolver = famousResolvers(
+    {page: 1},
+    famousList(numberOfFamous),
+    hasMoreAfterFirstPage,
+  );
+  const secondQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  const thirdQueryResolver = famousResolvers(
+    {page: 2},
+    famousList(numberOfFamous, 2),
+    true,
+  );
+  return [
+    {
+      ...firstQueryResolver.request,
+      ...firstQueryResolver.result,
+    },
+    {
+      ...secondQueryResolver.request,
+      ...secondQueryResolver.responseWithGraphQLError,
+    },
+    {
+      ...thirdQueryResolver.request,
+      ...thirdQueryResolver.responseWithNetworkError,
+    },
+  ];
+};
