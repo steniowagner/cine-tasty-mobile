@@ -1,6 +1,8 @@
 import React from 'react';
 
-import {useFamousListItemMeasures, LoadingPlaceholder} from '@components';
+import {LoadingPlaceholder} from '@components';
+
+import {getFamousListItemMeasures} from '../../get-famous-list-item-measures/getFamousListItemMeasures';
 import Styles from './LoadingFamousItem.styles';
 
 type LoadingFamousItemProps = {
@@ -8,11 +10,12 @@ type LoadingFamousItemProps = {
 };
 
 const LoadingFamousItem = (props: LoadingFamousItemProps) => {
-  const famousListItemMeasures = useFamousListItemMeasures(props);
+  const famousListItemMeasures = getFamousListItemMeasures(props.index);
+
   return (
     <LoadingPlaceholder
       style={{
-        ...famousListItemMeasures.measures,
+        ...famousListItemMeasures,
         ...Styles.placeholder,
       }}
       indexToDelayAnimation={props.index}
