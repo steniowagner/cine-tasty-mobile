@@ -12,7 +12,7 @@ type UseFamousProps = {
   navigation: FamousNavigationProp;
 };
 
-const useFamous = (props: UseFamousProps) => {
+export const useFamous = (props: UseFamousProps) => {
   const translations = useTranslations();
 
   const handleOnGetData = useCallback(
@@ -23,17 +23,33 @@ const useFamous = (props: UseFamousProps) => {
     [],
   );
 
+  const texts = useMemo(
+    () => ({
+      errors: {
+        pagination: translations.translate(
+          Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
+        ),
+        entryQuery: translations.translate(
+          Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
+        ),
+        queryByText: translations.translate(
+          Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
+        ),
+      },
+      searchBarPlaceholder: translations.translate(
+        Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER,
+      ),
+    }),
+    [translations.translate],
+  );
+
   const pagination = usePagination<
     SchemaTypes.GetFamous,
     SchemaTypes.GetFamous_people_items,
     SchemaTypes.GetFamousVariables
   >({
-    paginationError: translations.translate(
-      Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-    ),
-    entryQueryError: translations.translate(
-      Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
-    ),
+    paginationError: texts.errors.pagination,
+    entryQueryError: texts.errors.entryQuery,
     onGetData: handleOnGetData,
     fetchPolicy: 'no-cache',
     skipFirstRun: false,
@@ -42,19 +58,13 @@ const useFamous = (props: UseFamousProps) => {
 
   const onPressHeaderIconButton = useCallback(() => {
     props.navigation.navigate(Routes.Search.SEARCH_STACK, {
-      paginationError: translations.translate(
-        Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-      ),
-      placeholder: translations.translate(
-        Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER,
-      ),
-      searchByTextError: translations.translate(
-        Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
-      ),
+      paginationError: texts.errors.pagination,
+      placeholder: texts.searchBarPlaceholder,
+      searchByTextError: texts.errors.queryByText,
       searchType: SchemaTypes.SearchType.PERSON,
       queryId: 'search_famous',
     });
-  }, [translations.translate]);
+  }, [texts]);
 
   const dataset = useMemo(
     () =>
@@ -76,7 +86,6 @@ const useFamous = (props: UseFamousProps) => {
     error: pagination.error,
     onPressHeaderIconButton,
     dataset,
+    texts,
   };
 };
-
-export default useFamous;
