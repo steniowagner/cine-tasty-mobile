@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   fireEvent,
@@ -10,14 +11,13 @@ import {
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
 
 import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import {DEFAULT_ANIMATION_DURATION, AlertMessageProvider} from '@providers';
-import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
+import {AlertMessageProvider} from '@providers';
+import {setupTimeTravel} from '@mocks/timeTravel';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
-import * as mockFamous from '@mocks/fixtures/famous';
+import * as famousFixtures from '@mocks/fixtures/famous';
 import {randomPositiveNumber} from '@mocks/utils';
 import {InMemoryCache} from '@apollo/client';
-import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 
@@ -36,6 +36,80 @@ jest.mock('@react-navigation/native', () => {
     useNavigation: () => mockNavigation,
   };
 });
+
+type CheckHasItemsFromFirstAndSecondPageParams = {
+  elements: Record<string, any>;
+  component: RenderAPI;
+  numberOfFamous: number;
+};
+
+const checkHasItemsFromFirstAndSecondPage = async (
+  params: CheckHasItemsFromFirstAndSecondPageParams,
+) => {
+  await waitFor(() => {
+    expect(
+      params.elements.famousListItems(params.component).length,
+    ).toBeGreaterThan(params.numberOfFamous);
+  });
+  for (
+    let i = 0;
+    i < params.elements.famousListItems(params.component).length;
+    i++
+  ) {
+    if (i < params.numberOfFamous) {
+      expect(
+        params.elements.famousListItemNames(params.component)[i].children[0],
+      ).toEqual(`page1-name-${i}-1`);
+    } else {
+      expect(
+        params.elements.famousListItemNames(params.component)[i].children[0],
+      ).toEqual(`page2-name-${Math.abs(params.numberOfFamous - i)}-2`);
+    }
+  }
+};
+
+const checkIsRenderingErrorCorrectly = async (
+  elements: Record<string, any>,
+  component: RenderAPI,
+) => {
+  expect(elements.topReloadButton(component)).toBeNull();
+  expect(elements.famousLoadingList(component)).not.toBeNull();
+  await waitFor(() => {
+    expect(elements.topReloadButton(component)).not.toBeNull();
+    expect(elements.famousListItem(component).length).toEqual(0);
+    expect(elements.famousLoadingList(component)).toBeNull();
+    expect(elements.alertMessageText(component).children[0]).toEqual(
+      Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
+    );
+  });
+};
+
+const checkIsRenderingPaginationErrorCorrect = async (
+  elements: Record<string, any>,
+  component: RenderAPI,
+) => {
+  await waitFor(() => {
+    expect(elements.alertMessageWrapper(component)).not.toBeNull();
+    expect(elements.alertMessageText(component)).not.toBeNull();
+    expect(elements.alertMessageText(component).children[0]).toEqual(
+      Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
+    );
+    expect(elements.paginationFooter(component)).not.toBeNull();
+    expect(elements.paginationReloadButton(component)).not.toBeNull();
+    expect(elements.paginationLoading(component)).toBeNull();
+  });
+};
+
+const scrollFamousListToBottom = async (
+  elements: Record<string, any>,
+  component: RenderAPI,
+) => {
+  await waitFor(() => {
+    expect(elements.famousListItem(component).length).toBeGreaterThan(0);
+  });
+  expect(elements.famousLoadingList(component)).toBeNull();
+  fireEvent(elements.famousList(component), 'onEndReached');
+};
 
 const renderFamous = (
   mockResolvers?: readonly MockedResponse<Record<string, any>>[],
@@ -98,818 +172,374 @@ describe('<Famous />', () => {
       api.queryAllByTestId('famous-list-item-button'),
   };
 
-  describe('Entry Query - Success', () => {
-    it('should show the "Loading-state" when is loading the data', async () => {
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        mockFamous.famousList(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      expect(elements.famousList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).toBeNull();
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.alertMessageWrapper(component)).toBeNull();
-      expect(elements.headerIconButton(component)).not.toBeNull();
-      expect(elements.famousLoadingList(component)).not.toBeNull();
-      await waitFor(() => {});
-    });
+  describe('Entry Query', () => {
+    describe('Success', () => {
+      afterEach(cleanup);
 
-    it('should show the "Famous-list" when the data is loaded', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await act(async () => {
+      it('should show the "Loading-state" when is loading the data', async () => {
+        const resolvers = famousFixtures.makeEntryQuerySuccessResolver(1, 1);
+        const component = render(renderFamous(resolvers));
+        expect(elements.famousList(component)).toBeNull();
+        expect(elements.topReloadButton(component)).toBeNull();
+        expect(elements.paginationFooter(component)).toBeNull();
+        expect(elements.alertMessageWrapper(component)).toBeNull();
+        expect(elements.headerIconButton(component)).not.toBeNull();
+        expect(elements.famousLoadingList(component)).not.toBeNull();
+        await waitFor(() => {});
+      });
+
+      it('should not show the "Famous-list" when the data is loaded', async () => {
+        const numberOfFamous = randomPositiveNumber(10, 1);
+        const resolvers = famousFixtures.makeEntryQuerySuccessResolver(
+          1,
+          numberOfFamous,
+        );
+        const component = render(renderFamous(resolvers));
+        act(() => {
+          jest.runAllTimers();
+        });
         await waitFor(() => {
-          expect(elements.famousList(component)).not.toBeNull();
-          expect(elements.famousListItem(component).length).toEqual(
-            famousList.length,
-          );
-          expect(elements.topReloadButton(component)).toBeNull();
-          expect(elements.paginationFooter(component)).toBeNull();
-          expect(elements.alertMessageWrapper(component)).toBeNull();
-          expect(elements.headerIconButton(component)).not.toBeNull();
           expect(elements.famousLoadingList(component)).toBeNull();
         });
-      });
-    });
-
-    it.skip('should renders the "empty-list-state" when the query returns an empty array of famous', () => {
-      const entryQueryResult = mockFamous.famousResolvers({page: 1}, [], true);
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(
-        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_DESCRIPTION),
-      ).not.toBeNull();
-      expect(
-        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_SUGGESTION),
-      ).not.toBeNull();
-      expect(
-        component.getByText(Translations.Tags.NEWS_EMPTY_LIST_TITLE),
-      ).not.toBeNull();
-      expect(elements.famousList(component)).toBeNull();
-      expect(elements.topReloadButton(component)).toBeNull();
-      expect(elements.paginationFooter(component)).toBeNull();
-      expect(elements.alertMessageWrapper(component)).toBeNull();
-      expect(elements.headerIconButton(component)).not.toBeNull();
-      expect(elements.famousLoadingList(component)).toBeNull();
-    });
-
-    it('should refetch the data and show the "famous-list" correctly when the user presses the "top-reload-button" after a network-error', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryFirstResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const entryQuerySecondResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQuerySecondResult.request,
-          ...entryQuerySecondResult.responseWithNetworkError,
-        },
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      expect(elements.famousLoadingList(component)).not.toBeNull();
-      expect(elements.headerIconButton(component)).not.toBeNull();
-      act(async () => {
-        await waitFor(() => {
-          expect(elements.famousLoadingList(component)).toBeNull();
-          expect(elements.famousList(component)).not.toBeNull();
-          expect(elements.famousListItem(component).length).toEqual(0);
-          expect(elements.topReloadButton(component)).not.toBeNull();
-          expect(elements.paginationFooter(component)).toBeNull();
-          fireEvent.press(elements.topReloadButton(component));
-        });
-        await waitFor(() => {
-          expect(elements.topReloadButton(component)).toBeNull();
-          expect(elements.famousList(component)).not.toBeNull();
-          expect(elements.famousListItem(component).length).toEqual(
-            famousList.length,
-          );
-        });
-      });
-    });
-
-    it('should refetch the data and show the "famous-list" correctly when the user presses the "top-reload-button" after a graphql-error', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryFirstResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const entryQuerySecondResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQuerySecondResult.request,
-          ...entryQuerySecondResult.responseWithGraphQLError,
-        },
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      expect(elements.famousLoadingList(component)).not.toBeNull();
-      expect(elements.headerIconButton(component)).not.toBeNull();
-      act(async () => {
-        await waitFor(() => {
-          expect(elements.famousLoadingList(component)).toBeNull();
-          expect(elements.famousList(component)).not.toBeNull();
-          expect(elements.famousListItem(component).length).toEqual(0);
-          expect(elements.topReloadButton(component)).not.toBeNull();
-          expect(elements.paginationFooter(component)).toBeNull();
-          fireEvent.press(elements.topReloadButton(component));
-        });
-        await waitFor(() => {
-          expect(elements.topReloadButton(component)).toBeNull();
-          expect(elements.famousList(component)).not.toBeNull();
-          expect(elements.famousListItem(component).length).toEqual(
-            famousList.length,
-          );
-        });
-      });
-    });
-  });
-
-  describe('Entry Query - Network Error', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
-    it('should show the "entry-query-error-message" when the user receives some network-error during the entry-query', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryFirstResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
-        );
-        expect(elements.topReloadButton(component)).not.toBeNull();
-      });
-    });
-
-    it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a network-error', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryFirstResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const entryQuerySecondResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.responseWithNetworkError,
-        },
-        {
-          ...entryQuerySecondResult.request,
-          ...entryQuerySecondResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
-        );
-        expect(elements.topReloadButton(component)).not.toBeNull();
-      });
-      await act(async () => {
-        expect(elements.famousLoadingList(component)).toBeNull();
-        expect(elements.topReloadButton(component)).not.toBeNull();
-        expect(elements.famousList(component)).not.toBeNull();
-        expect(elements.famousListItem(component).length).toEqual(0);
-        fireEvent.press(elements.topReloadButton(component));
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
-        );
-        expect(elements.famousLoadingList(component)).toBeNull();
-        expect(elements.topReloadButton(component)).not.toBeNull();
-        expect(elements.famousList(component)).not.toBeNull();
-        expect(elements.famousListItem(component).length).toEqual(0);
-      });
-    });
-  });
-
-  describe('Entry Query - GraphQL Error', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
-    it('should show the "entry-query-error-message" when the user receives some graphql-error during the entry-query', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryFirstResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
-        );
-        expect(elements.topReloadButton(component)).not.toBeNull();
-      });
-    });
-
-    it('should show the "entry-query-error-message" after the user presses the "top-reload-button" after a graphql-error', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryFirstResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const entryQuerySecondResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryFirstResult.request,
-          ...entryQueryFirstResult.responseWithGraphQLError,
-        },
-        {
-          ...entryQuerySecondResult.request,
-          ...entryQuerySecondResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
-        );
-        expect(elements.topReloadButton(component)).not.toBeNull();
-      });
-      await act(async () => {
-        expect(elements.famousLoadingList(component)).toBeNull();
-        expect(elements.topReloadButton(component)).not.toBeNull();
-        expect(elements.famousList(component)).not.toBeNull();
-        expect(elements.famousListItem(component).length).toEqual(0);
-        fireEvent.press(elements.topReloadButton(component));
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
-        );
-        expect(elements.famousLoadingList(component)).toBeNull();
-        expect(elements.topReloadButton(component)).not.toBeNull();
-        expect(elements.famousList(component)).not.toBeNull();
-        expect(elements.famousListItem(component).length).toEqual(0);
-      });
-    });
-  });
-
-  describe('Pagination - Success', () => {
-    beforeEach(setupTimeTravel);
-
-    afterEach(cleanup);
-
-    it('should show the "pagination-loading" when the user start to paginate the "news-list"', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const paginationQueryResult = mockFamous.famousResolvers(
-        {page: 2},
-        mockFamous.famousList(famousListLength, 2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await act(async () => {
-        await waitFor(() => {
-          expect(elements.paginationFooter(component)).toBeNull();
-          expect(elements.paginationLoading(component)).toBeNull();
-          expect(elements.paginationReloadButton(component)).toBeNull();
-          fireEvent(elements.famousList(component), 'onEndReached');
-          expect(elements.paginationFooter(component)).not.toBeNull();
-          expect(elements.paginationLoading(component)).not.toBeNull();
-          expect(elements.paginationReloadButton(component)).toBeNull();
-        });
-      });
-    });
-
-    it('should not show the "pagination-loading" when the pagination-process is finished', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const paginationQueryResult = mockFamous.famousResolvers(
-        {page: 2},
-        mockFamous.famousList(famousListLength, 2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await act(async () => {
-        await waitFor(() => {
-          expect(elements.paginationFooter(component)).toBeNull();
-          expect(elements.paginationLoading(component)).toBeNull();
-          expect(elements.paginationReloadButton(component)).toBeNull();
-          fireEvent(elements.famousList(component), 'onEndReached');
-          expect(elements.paginationFooter(component)).not.toBeNull();
-          expect(elements.paginationLoading(component)).not.toBeNull();
-          expect(elements.paginationReloadButton(component)).toBeNull();
-        });
-      });
-      component.rerender(renderFamous(resolvers));
-      await act(async () => {
-        await waitFor(() => {
-          expect(elements.paginationFooter(component)).toBeNull();
-          expect(elements.paginationLoading(component)).toBeNull();
-          expect(elements.paginationReloadButton(component)).toBeNull();
-        });
-      });
-    });
-
-    it('should paginate to the next page when the user reaches the bottom of the "famous-list" and "hasMore" is "true"', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const paginationQueryResult = mockFamous.famousResolvers(
-        {page: 2},
-        mockFamous.famousList(famousListLength, 2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await act(async () => {
-        await waitFor(() => {
-          expect(elements.famousList(component)).not.toBeNull();
-          expect(elements.famousListItem(component).length).toEqual(
-            famousList.length,
-          );
-          for (let i = 0; i < famousListLength; i++) {
-            expect(
-              elements
-                .famousListItemNames(component)
-                .every(
-                  famousListItemName =>
-                    (famousListItemName.children[0] as string).split('-')[0] ===
-                    'page1',
-                ),
-            ).toEqual(true);
-          }
-          fireEvent(elements.famousList(component), 'onEndReached');
-        });
-      });
-      act(() => {
-        timeTravel(DEFAULT_ANIMATION_DURATION);
-      });
-      await waitFor(() => {
         expect(elements.famousList(component)).not.toBeNull();
         expect(elements.famousListItem(component).length).toEqual(
-          famousList.length * 2,
+          numberOfFamous,
         );
-        for (let i = famousListLength; i < famousListLength * 2; i++) {
-          const famousName = elements.famousListItemNames(component)[i]
-            .children[0] as string;
-          expect(famousName.split('-')[0] === 'page2').toEqual(true);
-        }
+        expect(elements.topReloadButton(component)).toBeNull();
+        expect(elements.paginationFooter(component)).toBeNull();
+        expect(elements.alertMessageWrapper(component)).toBeNull();
+        expect(elements.headerIconButton(component)).not.toBeNull();
+        await waitFor(() => {});
       });
     });
 
-    it('should not paginate to the next page when the user reaches the bottom of the "news-list" and "hasMore" is false', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        false,
-      );
-      const paginationQueryResult = mockFamous.famousResolvers(
-        {page: 2},
-        mockFamous.famousList(famousListLength, 2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await act(async () => {
-        await waitFor(() => {
-          expect(elements.famousList(component)).not.toBeNull();
-          expect(elements.famousListItem(component).length).toEqual(
-            famousList.length,
+    describe('Error', () => {
+      describe('Network-error', () => {
+        it('should render correctly when had a "Network-error" during the "Entry-query"', async () => {
+          const numberOfFamous = randomPositiveNumber(10, 1);
+          const resolvers = famousFixtures.makeEntryQueryNetworkResolver(
+            1,
+            numberOfFamous,
           );
-          for (let i = 0; i < elements.famousListItem(component).length; i++) {
-            expect(
-              elements
-                .famousListItemNames(component)
-                .every(
-                  famousListItemName =>
-                    (famousListItemName.children[0] as string).split('-')[0] ===
-                    'page1',
-                ),
-            ).toEqual(true);
-          }
-          fireEvent(elements.famousList(component), 'onEndReached');
+          const component = render(renderFamous(resolvers));
+          await checkIsRenderingErrorCorrectly(elements, component);
+          await waitFor(() => {});
         });
       });
-      act(() => {
-        timeTravel(DEFAULT_ANIMATION_DURATION);
+
+      describe('GraphQL-error', () => {
+        it('should render correctly when had a "GraphQL-error" during the "Entry-query"', async () => {
+          const numberOfFamous = randomPositiveNumber(10, 1);
+          const resolvers = famousFixtures.makeEntryQueryGraphQLResolver(
+            1,
+            numberOfFamous,
+          );
+          const component = render(renderFamous(resolvers));
+          await checkIsRenderingErrorCorrectly(elements, component);
+          await waitFor(() => {});
+        });
       });
-      await waitFor(() => {
-        expect(elements.famousList(component)).not.toBeNull();
-        expect(elements.famousListItem(component).length).toEqual(
-          famousList.length,
+
+      describe('Error/Refetch/Success', () => {
+        describe('Network-error/Refetch/Success', () => {
+          it('should refetch the data and show the "famous-list" correctly when the user presses the "top-reload-button"', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makeEntryQueryWithNetworkErrorResolver(
+                1,
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            await waitFor(() => {
+              expect(elements.topReloadButton(component)).not.toBeNull();
+              expect(elements.famousListItem(component).length).toEqual(0);
+              expect(elements.famousLoadingList(component)).toBeNull();
+            });
+            fireEvent.press(elements.topReloadButton(component));
+            await waitFor(() => {
+              expect(elements.famousListItem(component).length).toEqual(
+                numberOfFamous,
+              );
+            });
+            await waitFor(() => {});
+          });
+        });
+
+        describe('GraphlQL-error/Refetch/Success', () => {
+          it('should refetch the data and show the "famous-list" correctly when the user presses the "top-reload-button"', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makeEntryQueryWithGraphQLErrorResolver(
+                1,
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            await waitFor(() => {
+              expect(elements.topReloadButton(component)).not.toBeNull();
+              expect(elements.famousListItem(component).length).toEqual(0);
+              expect(elements.famousLoadingList(component)).toBeNull();
+            });
+            fireEvent.press(elements.topReloadButton(component));
+            await waitFor(() => {
+              expect(elements.famousListItem(component).length).toEqual(
+                numberOfFamous,
+              );
+            });
+            await waitFor(() => {});
+          });
+        });
+      });
+
+      describe('Error/Refetch/Error', () => {
+        describe('Network-error/Refecth/Network-error', () => {
+          it('should render corretly when had an "Network-error", tried to "refetch" and then had another "Network-error"', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makeRefetchQueryWithDoubleNetworkError(
+                1,
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            expect(elements.alertMessageWrapper(component)).toBeNull();
+            await checkIsRenderingErrorCorrectly(elements, component);
+            fireEvent.press(elements.topReloadButton(component));
+            await checkIsRenderingErrorCorrectly(elements, component);
+            await waitFor(() => {});
+          });
+        });
+
+        describe('GraphlQL-error/Refecth/GraphlQL-error', () => {
+          it('should render corretly when had an "GraphQL-error", tried to "refetch" and then had another "GraphQL-error', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makeRefetchQueryWithDoubleGraphQLError(
+                1,
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            expect(elements.alertMessageWrapper(component)).toBeNull();
+            await checkIsRenderingErrorCorrectly(elements, component);
+            fireEvent.press(elements.topReloadButton(component));
+            await checkIsRenderingErrorCorrectly(elements, component);
+            await waitFor(() => {});
+          });
+        });
+      });
+    });
+  });
+
+  describe('Pagination', () => {
+    describe('Success', () => {
+      it('should show the "pagination-loading" when the user "scrolls" the "famous-list" to the bottom', async () => {
+        const numberOfFamous = randomPositiveNumber(10, 1);
+        const resolvers =
+          famousFixtures.makePaginationSuccessQuery(numberOfFamous);
+        const component = render(renderFamous(resolvers));
+        await scrollFamousListToBottom(elements, component);
+        await waitFor(() => {
+          expect(elements.paginationFooter(component)).not.toBeNull();
+          expect(elements.paginationLoading(component)).not.toBeNull();
+        });
+        await waitFor(() => {});
+      });
+
+      it('should "hide" the "pagination-loading" when the "pagination" process is "completed"', async () => {
+        const numberOfFamous = randomPositiveNumber(10, 1);
+        const resolvers =
+          famousFixtures.makePaginationSuccessQuery(numberOfFamous);
+        const component = render(renderFamous(resolvers));
+        await scrollFamousListToBottom(elements, component);
+        await waitFor(() => {
+          expect(elements.paginationFooter(component)).toBeNull();
+          expect(elements.paginationLoading(component)).toBeNull();
+          expect(elements.famousListItems(component).length).toBeGreaterThan(
+            numberOfFamous,
+          );
+        });
+        await waitFor(() => {});
+      });
+
+      it('should not "paginate" to the "next-page" when the "current-page.hasMore" is "false"', async () => {
+        const numberOfFamous = randomPositiveNumber(10, 1);
+        const resolvers = famousFixtures.makePaginationSuccessQuery(
+          numberOfFamous,
+          false,
         );
-        for (let i = 0; i < elements.famousListItem(component).length; i++) {
-          const famousName = elements.famousListItemNames(component)[i]
-            .children[0] as string;
-          expect(famousName.split('-')[0] === 'page1').toEqual(true);
+        const component = render(renderFamous(resolvers));
+        await scrollFamousListToBottom(elements, component);
+        await waitFor(() => {
+          expect(elements.paginationFooter(component)).toBeNull();
+          expect(elements.paginationLoading(component)).toBeNull();
+          expect(elements.famousListItems(component).length).toEqual(
+            numberOfFamous,
+          );
+        });
+        for (let i = 0; i < elements.famousListItems(component).length; i++) {
+          expect(
+            elements.famousListItemNames(component)[i].children[0],
+          ).toEqual(`page1-name-${i}-1`);
         }
+        await waitFor(() => {});
+      });
+
+      it('should "paginate" to the "next-page" when the "current-page.hasMore" is "true"', async () => {
+        const numberOfFamous = randomPositiveNumber(10, 1);
+        const resolvers =
+          famousFixtures.makePaginationSuccessQuery(numberOfFamous);
+        const component = render(renderFamous(resolvers));
+        await scrollFamousListToBottom(elements, component);
+        await checkHasItemsFromFirstAndSecondPage({
+          elements,
+          component,
+          numberOfFamous,
+        });
+        await waitFor(() => {});
+      });
+    });
+
+    describe('Error', () => {
+      describe('Network-error', () => {
+        it('should show the "pagination-reload-button" and the "error-message" when the user tries to "paginate" and a "Networking-error" occurs', async () => {
+          const numberOfFamous = randomPositiveNumber(10, 1);
+          const resolvers =
+            famousFixtures.makePaginationNetworkErrorQuery(numberOfFamous);
+          const component = render(renderFamous(resolvers));
+          await scrollFamousListToBottom(elements, component);
+          await checkIsRenderingPaginationErrorCorrect(elements, component);
+        });
+      });
+
+      describe('GraphQL-error', () => {
+        it('should show the "pagination-reload-button" and the "error-message" when the user tries to "paginate" and a "GraphQL-error" occurs', async () => {
+          const numberOfFamous = randomPositiveNumber(10, 1);
+          const resolvers =
+            famousFixtures.makePaginationGraphQLErrorQuery(numberOfFamous);
+          const component = render(renderFamous(resolvers));
+          await scrollFamousListToBottom(elements, component);
+          await checkIsRenderingPaginationErrorCorrect(elements, component);
+        });
+      });
+
+      describe('Paginate/Network-error/Refetch/*', () => {
+        describe('Success', () => {
+          it('should "paginate" to the "next-page" after a "Network-error" and a refetch', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makePaginationNetworkErrorRefetchSuccess(
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            await scrollFamousListToBottom(elements, component);
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await checkHasItemsFromFirstAndSecondPage({
+              elements,
+              component,
+              numberOfFamous,
+            });
+            await waitFor(() => {});
+          });
+        });
+
+        describe('Network-error', () => {
+          it('should show the "pagination-reload-button" and the "error-message" when the user tries to "paginate" and a "Network-error" occur, and then tries to "paginate again" and has another "Network-error"', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makePaginationNetworkErrorRefetchNetworkError(
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            await scrollFamousListToBottom(elements, component);
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            await waitFor(() => {});
+          });
+        });
+
+        describe('GraphQL-error', () => {
+          it('should show the "pagination-reload-button" and the "error-message" when the user tries to "paginate" and a "Network-error" occur, and then tries to "paginate again" and has another "GraphQL-error"', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makePaginationNetworkErrorRefetchGraphQLError(
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            await scrollFamousListToBottom(elements, component);
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            await waitFor(() => {});
+          });
+        });
+      });
+
+      describe('Paginate/GraphQL-error/Refetch/*', () => {
+        describe('Success', () => {
+          it('should "paginate" to the "next-page" after a "Network-error" and a refetch', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makePaginationGraphQLRefetchSuccess(
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            await scrollFamousListToBottom(elements, component);
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await checkHasItemsFromFirstAndSecondPage({
+              elements,
+              component,
+              numberOfFamous,
+            });
+            await waitFor(() => {});
+          });
+        });
+
+        describe('GraphQL-error', () => {
+          it('should show the "pagination-reload-button" and the "error-message" when the user tries to "paginate" and a "GraphQL-error" occur, and then tries to "paginate again" and has another "GraphQL-error"', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makePaginationGraphQLErrorRefetchGraphQLError(
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            await scrollFamousListToBottom(elements, component);
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            await waitFor(() => {});
+          });
+        });
+
+        describe('Network-error', () => {
+          it('should show the "pagination-reload-button" and the "error-message" when the user tries to "paginate" and a "GraphQL-error" occur, and then tries to "paginate again" and has another "Network-error"', async () => {
+            const numberOfFamous = randomPositiveNumber(10, 1);
+            const resolvers =
+              famousFixtures.makePaginationGraphQLErrorRefetchNetworkError(
+                numberOfFamous,
+              );
+            const component = render(renderFamous(resolvers));
+            await scrollFamousListToBottom(elements, component);
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            fireEvent.press(elements.paginationReloadButton(component));
+            await checkIsRenderingPaginationErrorCorrect(elements, component);
+            await waitFor(() => {});
+          });
+        });
       });
     });
   });
 
-  describe('Pagination - Network Error', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
-    it('should show the "pagination-reload-button" and an "error-message" when the user paginate the "famous-list" and a networking-error occurs', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const paginationQueryResult = mockFamous.famousResolvers(
-        {page: 2},
-        mockFamous.famousList(famousListLength, 2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageText(component)).toBeNull();
-        expect(elements.paginationFooter(component)).toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-        expect(elements.paginationReloadButton(component)).toBeNull();
-        fireEvent(elements.famousList(component), 'onEndReached');
-      });
-      act(() => {
-        timeTravel(DEFAULT_ANIMATION_DURATION);
-      });
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-        );
-        expect(elements.paginationFooter(component)).not.toBeNull();
-        expect(elements.paginationReloadButton(component)).not.toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-      });
-    });
-
-    it('should show the "pagination-loading-state" and then the "pagination-reload-button" and an "error-message" when the user press the "pagiantion-reload-button" and a networking-error occurs', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const paginationQueryResult = mockFamous.famousResolvers(
-        {page: 2},
-        mockFamous.famousList(famousListLength, 2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageText(component)).toBeNull();
-        expect(elements.paginationFooter(component)).toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-        expect(elements.paginationReloadButton(component)).toBeNull();
-        fireEvent(elements.famousList(component), 'onEndReached');
-      });
-      act(() => {
-        timeTravel(DEFAULT_ANIMATION_DURATION);
-      });
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-        );
-        expect(elements.paginationFooter(component)).not.toBeNull();
-        expect(elements.paginationReloadButton(component)).not.toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-      });
-      fireEvent.press(elements.paginationReloadButton(component));
-      act(() => {
-        timeTravel(DEFAULT_ANIMATION_DURATION);
-      });
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-        );
-        expect(elements.paginationFooter(component)).not.toBeNull();
-        expect(elements.paginationReloadButton(component)).not.toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-      });
-    });
-  });
-
-  describe('Pagination - GraphQL Error', () => {
-    it('should show the "pagination-reload-button" and an "error-message" when the user paginate the "famous-list" and a graphql-error occurs', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const paginationQueryResult = mockFamous.famousResolvers(
-        {page: 2},
-        mockFamous.famousList(famousListLength, 2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageText(component)).toBeNull();
-        expect(elements.paginationFooter(component)).toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-        expect(elements.paginationReloadButton(component)).toBeNull();
-        fireEvent(elements.famousList(component), 'onEndReached');
-      });
-      act(() => {
-        timeTravel(DEFAULT_ANIMATION_DURATION);
-      });
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-        );
-        expect(elements.paginationFooter(component)).not.toBeNull();
-        expect(elements.paginationReloadButton(component)).not.toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-      });
-    });
-
-    it('should show the "pagination-loading-state" and then the "pagination-reload-button" and an "error-message" when the user press the "pagiantion-reload-button" and a graphql-error occurs', async () => {
-      const famousListLength = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(famousListLength);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
-      );
-      const paginationQueryResult = mockFamous.famousResolvers(
-        {page: 2},
-        mockFamous.famousList(famousListLength, 2),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-        {
-          ...paginationQueryResult.request,
-          ...paginationQueryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderFamous(resolvers));
-      await waitFor(() => {
-        expect(elements.alertMessageText(component)).toBeNull();
-        expect(elements.paginationFooter(component)).toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-        expect(elements.paginationReloadButton(component)).toBeNull();
-        fireEvent(elements.famousList(component), 'onEndReached');
-      });
-      act(() => {
-        timeTravel(DEFAULT_ANIMATION_DURATION);
-      });
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-        );
-        expect(elements.paginationFooter(component)).not.toBeNull();
-        expect(elements.paginationReloadButton(component)).not.toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-      });
-      fireEvent.press(elements.paginationReloadButton(component));
-      act(() => {
-        timeTravel(DEFAULT_ANIMATION_DURATION);
-      });
-      await waitFor(() => {
-        expect(elements.alertMessageWrapper(component)).not.toBeNull();
-        expect(elements.alertMessageText(component)).not.toBeNull();
-        expect(elements.alertMessageText(component).children[0]).toEqual(
-          Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-        );
-        expect(elements.paginationFooter(component)).not.toBeNull();
-        expect(elements.paginationReloadButton(component)).not.toBeNull();
-        expect(elements.paginationLoading(component)).toBeNull();
-      });
-    });
-  });
-
-  describe('Press items', () => {
-    it('should navigate to the "Search"-screen when the user press the "magnify-icon-button"', () => {
-      const navigate = jest.fn();
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        mockFamous.famousList(1),
-        true,
-      );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
-      const component = render(renderFamous(resolvers, navigate));
-      expect(elements.headerIconButton(component)).not.toBeNull();
-      fireEvent.press(elements.headerIconButton(component));
-      expect(navigate).toHaveBeenCalledTimes(1);
-      expect(navigate).toHaveBeenCalledWith(Routes.Search.SEARCH_STACK, {
-        paginationError: Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
-        placeholder: Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER,
-        searchByTextError: Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
-        searchType: SchemaTypes.SearchType.PERSON,
-        queryId: 'search_famous',
-      });
-    });
-
+  describe('Pressing the famous-list-items', () => {
     it('should navigate to the "Famous-detail"-screen when the user press some item on the "famous-list"', async () => {
       const navigate = jest.fn();
       const numberOfItems = randomPositiveNumber(10, 1);
-      const famousList = mockFamous.famousList(numberOfItems);
       const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
-      const entryQueryResult = mockFamous.famousResolvers(
-        {page: 1},
-        famousList,
-        true,
+      const resolvers = famousFixtures.makeEntryQuerySuccessResolver(
+        1,
+        numberOfItems,
       );
-      const resolvers = [
-        {
-          ...entryQueryResult.request,
-          ...entryQueryResult.result,
-        },
-      ];
+      const famousList = famousFixtures.famousList(numberOfItems);
       const component = render(renderFamous(resolvers, navigate));
       await waitFor(() => {
         expect(elements.famousList(component)).not.toBeNull();
