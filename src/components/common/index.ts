@@ -24,7 +24,7 @@ export {SimplifiedMediaListItem} from './simplified-media-list-item/SimplifiedMe
 export {StarsVotes} from './stars-votes/StarsVotes';
 export {StatusBarStyled} from './statusbar/Statusbar';
 export {useTMDBImage, TMDBImage} from './tmdb-image';
-export {FamousList, FamousListItem} from './famous-list';
+export {FamousList} from './famous-list/FamousList';
 export {
   flags,
   FlagsIcons,
