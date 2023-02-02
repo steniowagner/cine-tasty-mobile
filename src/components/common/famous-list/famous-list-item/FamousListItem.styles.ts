@@ -2,6 +2,9 @@ import {Animated, Text} from 'react-native';
 import styled from 'styled-components/native';
 
 import {TMDBImage} from '@components';
+import metrics from '@styles/metrics';
+
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 export const TMDBImageStyled = styled(TMDBImage)`
   width: 100%;
