@@ -1,23 +1,22 @@
 import {useLoadListItemImage} from '@hooks';
+import {useMemo} from 'react';
 
-import {useFamousListItemMeasures} from '../useFamousListItemMeasures';
+import {getFamousListItemMeasures} from '../get-famous-list-item-measures/getFamousListItemMeasures';
 
-type UseFamousListItem = {
+type UseFamousListItemProps = {
   image?: string;
   index: number;
 };
 
-export const useFamousListItem = (props: UseFamousListItem) => {
+export const useFamousListItem = (props: UseFamousListItemProps) => {
   const loadingListItemImage = useLoadListItemImage({
     image: props.image,
   });
 
-  const famousListItemMeasures = useFamousListItemMeasures({
-    index: props.index,
-  });
+  const measures = useMemo(() => getFamousListItemMeasures(props.index), []);
 
   return {
     ...loadingListItemImage,
-    measures: famousListItemMeasures.measures,
+    measures,
   };
 };

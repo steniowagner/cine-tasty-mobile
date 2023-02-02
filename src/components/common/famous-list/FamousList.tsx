@@ -2,14 +2,11 @@ import React from 'react';
 import {Platform, FlatList} from 'react-native';
 
 import * as Types from '@local-types';
-import {
-  PaginatedListHeader,
-  PaginationFooter,
-  FamousListItem,
-} from '@components';
+import {PaginatedListHeader, PaginationFooter} from '@components';
 
 import {LoadingFamous} from './loading-famous/LoadingFamous';
 import {useFamousList} from './useFamousList';
+import {FamousListItem} from './famous-list-item/FamousListItem';
 import Styles from './FamousList.styles';
 
 export const NUMBER_OF_COLUMNS = 3;

@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   cleanup,
@@ -12,7 +13,6 @@ import {TMDBImageQualityProvider, AlertMessageProvider} from '@providers';
 import MockedNavigation from '@mocks/MockedNavigator';
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
-import {setupTimeTravel} from '@mocks/timeTravel';
 import {Routes} from '@routes/routes';
 
 const mockNavigate = jest.fn();
@@ -85,7 +85,6 @@ describe('<FamousList />', () => {
   };
 
   beforeEach(() => {
-    setupTimeTravel();
     jest.clearAllMocks();
   });
 
@@ -108,42 +107,84 @@ describe('<FamousList />', () => {
       });
     });
 
-    it('should render correctly when has some data to show', async () => {
+    describe('Success', () => {
+      it('should render correctly when has some data to show', async () => {
+        const numberOfItems = randomPositiveNumber(10, 1);
+        const famous = makeFamousList(numberOfItems);
+        const data = {
+          ...mockHandlersFunctions,
+          isPaginating: false,
+          isLoading: false,
+          famous,
+        };
+        const component = render(renderFamousList(data));
+        await waitFor(() => {
+          expect(elements.famousList(component)).not.toBeNull();
+          expect(elements.loadingFamousList(component)).toBeNull();
+          expect(elements.topReloadButton(component)).toBeNull();
+          expect(elements.paginationFooterWrapper(component)).toBeNull();
+          expect(elements.famousListItemButton(component).length).toEqual(
+            famous.length,
+          );
+        });
+      });
+
+      it('should render correctly when the data is an empty array', async () => {
+        const data = {
+          ...mockHandlersFunctions,
+          isPaginating: false,
+          isLoading: false,
+          famous: [],
+        };
+        const component = render(renderFamousList(data));
+        await waitFor(() => {
+          expect(elements.famousList(component)).not.toBeNull();
+          expect(elements.loadingFamousList(component)).toBeNull();
+          expect(elements.topReloadButton(component)).toBeNull();
+          expect(elements.paginationFooterWrapper(component)).toBeNull();
+          expect(elements.famousListItemButton(component).length).toEqual(0);
+        });
+      });
+    });
+
+    describe('Error', () => {
+      it('should call the "onPressTopReloadButton" when the user press the "Top-reload-button"', async () => {
+        const onPressTopReloadButton = jest.fn();
+        const data = {
+          ...mockHandlersFunctions,
+          onPressTopReloadButton,
+          isPaginating: false,
+          error: 'SOME_ERROR',
+          isLoading: false,
+          famous: [],
+        };
+        const component = render(renderFamousList(data));
+        expect(onPressTopReloadButton).toHaveBeenCalledTimes(0);
+        await waitFor(() => {
+          fireEvent.press(elements.topReloadButton(component));
+          expect(onPressTopReloadButton).toHaveBeenCalledTimes(1);
+        });
+      });
+    });
+  });
+
+  describe('Scrolling down the list', () => {
+    it('should call the "onEndReached" when the user scrolls down to the end of the list', async () => {
       const numberOfItems = randomPositiveNumber(10, 1);
       const famous = makeFamousList(numberOfItems);
+      const onEndReached = jest.fn();
       const data = {
         ...mockHandlersFunctions,
+        onEndReached,
         isPaginating: false,
         isLoading: false,
         famous,
       };
       const component = render(renderFamousList(data));
-      await waitFor(() => {
-        expect(elements.famousList(component)).not.toBeNull();
-        expect(elements.loadingFamousList(component)).toBeNull();
-        expect(elements.topReloadButton(component)).toBeNull();
-        expect(elements.paginationFooterWrapper(component)).toBeNull();
-        expect(elements.famousListItemButton(component).length).toEqual(
-          famous.length,
-        );
-      });
-    });
-
-    it('should render correctly when the data is an empty array', async () => {
-      const data = {
-        ...mockHandlersFunctions,
-        isPaginating: false,
-        isLoading: false,
-        famous: [],
-      };
-      const component = render(renderFamousList(data));
-      await waitFor(() => {
-        expect(elements.famousList(component)).not.toBeNull();
-        expect(elements.loadingFamousList(component)).toBeNull();
-        expect(elements.topReloadButton(component)).toBeNull();
-        expect(elements.paginationFooterWrapper(component)).toBeNull();
-        expect(elements.famousListItemButton(component).length).toEqual(0);
-      });
+      expect(onEndReached).toHaveBeenCalledTimes(0);
+      fireEvent(elements.famousList(component), 'onEndReached');
+      expect(onEndReached).toHaveBeenCalledTimes(1);
+      await waitFor(() => {});
     });
   });
 
@@ -210,55 +251,13 @@ describe('<FamousList />', () => {
         famous,
       };
       const component = render(renderFamousList(data));
-      await waitFor(() => {
-        expect(onPressBottomReloadButton).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.paginationFooterReloadButton(component));
-        expect(onPressBottomReloadButton).toHaveBeenCalledTimes(1);
-      });
+      expect(onPressBottomReloadButton).toHaveBeenCalledTimes(0);
+      fireEvent.press(elements.paginationFooterReloadButton(component));
+      expect(onPressBottomReloadButton).toHaveBeenCalledTimes(1);
+      await waitFor(() => {});
     });
 
-    describe('Entry Error', () => {
-      it('should call the "onPressTopReloadButton" when the user press the "Top-reload-button"', async () => {
-        const onPressTopReloadButton = jest.fn();
-        const data = {
-          ...mockHandlersFunctions,
-          onPressTopReloadButton,
-          isPaginating: false,
-          error: 'SOME_ERROR',
-          isLoading: false,
-          famous: [],
-        };
-        const component = render(renderFamousList(data));
-        expect(onPressTopReloadButton).toHaveBeenCalledTimes(0);
-        await waitFor(() => {
-          fireEvent.press(elements.topReloadButton(component));
-          expect(onPressTopReloadButton).toHaveBeenCalledTimes(1);
-        });
-      });
-    });
-
-    describe('Scrolling down the list', () => {
-      it('should call the "onEndReached" when the user scrolls down to the end of the list', async () => {
-        const numberOfItems = randomPositiveNumber(10, 1);
-        const famous = makeFamousList(numberOfItems);
-        const onEndReached = jest.fn();
-        const data = {
-          ...mockHandlersFunctions,
-          onEndReached,
-          isPaginating: false,
-          isLoading: false,
-          famous,
-        };
-        const component = render(renderFamousList(data));
-        await waitFor(() => {
-          expect(onEndReached).toHaveBeenCalledTimes(0);
-          fireEvent(elements.famousList(component), 'onEndReached');
-          expect(onEndReached).toHaveBeenCalledTimes(1);
-        });
-      });
-    });
-
-    describe('Press list-item', () => {
+    describe('Pressing some list-item', () => {
       it('should call "navigation.navigate" correctly when the user presses some list-item', async () => {
         const numberOfItems = randomPositiveNumber(10, 1);
         const indexItemSelected = randomPositiveNumber(numberOfItems - 1, 0);
@@ -270,18 +269,17 @@ describe('<FamousList />', () => {
           famous,
         };
         const component = render(renderFamousList(data));
-        await waitFor(() => {
-          expect(mockNavigate).toHaveBeenCalledTimes(0);
-          fireEvent.press(
-            elements.famousListItemButton(component)[indexItemSelected],
-          );
-          expect(mockNavigate).toHaveBeenCalledTimes(1);
-          expect(mockNavigate).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-            profileImage: famous[indexItemSelected].profileImage,
-            name: famous[indexItemSelected].name,
-            id: famous[indexItemSelected].id,
-          });
+        expect(mockNavigate).toHaveBeenCalledTimes(0);
+        fireEvent.press(
+          elements.famousListItemButton(component)[indexItemSelected],
+        );
+        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+          profileImage: famous[indexItemSelected].profileImage,
+          name: famous[indexItemSelected].name,
+          id: famous[indexItemSelected].id,
         });
+        await waitFor(() => {});
       });
     });
   });

@@ -48,7 +48,7 @@ describe('<FamousListItem />', () => {
 
   afterEach(cleanup);
 
-  describe('Render correctly', () => {
+  describe('Renders correctly', () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
@@ -95,7 +95,7 @@ describe('<FamousListItem />', () => {
       });
     });
 
-    it('should render correctly the "Error-state" when had some error during the image-loading', async () => {
+    it('should render correctly the "Error-state" when had some "error" during the "image-loading"', async () => {
       const component = render(renderFamousListItem('SOME_IMAGE_URI'));
       fireEvent(elements.tmdbImage(component), 'onError');
       act(() => {
@@ -125,15 +125,14 @@ describe('<FamousListItem />', () => {
     });
   });
 
-  describe('Press the wrapper', () => {
+  describe('Pressing the item', () => {
     it('should call the "onPress" when the user press the "Wrapper-button"', async () => {
       const onPress = jest.fn();
       const component = render(renderFamousListItem('SOME_IMAGE', onPress));
-      await waitFor(() => {
-        expect(onPress).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.famousListItemButton(component));
-        expect(onPress).toHaveBeenCalledTimes(1);
-      });
+      expect(onPress).toHaveBeenCalledTimes(0);
+      fireEvent.press(elements.famousListItemButton(component));
+      expect(onPress).toHaveBeenCalledTimes(1);
+      await waitFor(() => {});
     });
   });
 });

@@ -26,6 +26,7 @@ export const LoadingPlaceholder = (props: LoadingPlaceholderProps) => {
           width: props.style.width,
           height: props.style.height,
           marginBottom: props.style.marginBottom,
+          marginHorizontal: props.style.marginHorizontal,
           backgroundColor: theme.colors.loadingColor,
         },
         {

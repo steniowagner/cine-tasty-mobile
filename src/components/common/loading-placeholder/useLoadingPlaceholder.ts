@@ -11,6 +11,7 @@ export type Style = {
   width?: string | number;
   height?: string | number;
   marginBottom?: number;
+  marginHorizontal?: number;
 };
 
 type UseLoadingPlaceholderProps = {

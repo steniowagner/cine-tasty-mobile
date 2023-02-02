@@ -2,12 +2,9 @@ import React, {memo} from 'react';
 import {TouchableOpacity} from 'react-native';
 
 import {renderSVGIconConditionally} from '@components';
-import metrics from '@styles/metrics';
 
 import {useFamousListItem} from './useFamousListItem';
 import * as Styles from './FamousListItem.styles';
-
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 type FamousListItemProps = {
   onPress: () => void;
@@ -22,6 +19,7 @@ export const FamousListItem = memo(
       image: props.image,
       index: props.index,
     });
+
     return (
       <TouchableOpacity
         testID="famous-list-item-button"
@@ -48,12 +46,12 @@ export const FamousListItem = memo(
                 condition: famousListItem.hasError,
                 ifTrue: {
                   colorThemeRef: 'fallbackImageIcon',
-                  size: DEFAULT_ICON_SIZE,
+                  size: Styles.DEFAULT_ICON_SIZE,
                   id: 'image-off',
                 },
                 ifFalse: {
                   colorThemeRef: 'fallbackImageIcon',
-                  size: DEFAULT_ICON_SIZE,
+                  size: Styles.DEFAULT_ICON_SIZE,
                   id: 'account',
                 },
               })}
