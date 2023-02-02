@@ -9,11 +9,9 @@ import React, {
 import * as Types from '@local-types';
 
 import getQualitiesBasedScreenClassification from './qualities/getQualities';
-import useClassifyDeviceScreen from './useClassifyDeviceScreen';
+import {classifyDeviceScreen} from './classifyDeviceScreen';
 
-const TMDBImageQualityContext = createContext<Types.ImageQuailties | undefined>(
-  undefined,
-);
+const TMDBImageQualityContext = createContext<Types.ImageQuailties | {}>({});
 
 type TMDBImageQualityProviderProps = {
   children: JSX.Element;
@@ -26,7 +24,7 @@ export const TMDBImageQualityProvider = ({
     Types.ImageQuailties | {}
   >({});
 
-  const {screenClassification} = useClassifyDeviceScreen();
+  const screenClassification = classifyDeviceScreen();
 
   const handleSetImagesQualities = useCallback(async () => {
     const qualities = await getQualitiesBasedScreenClassification(
@@ -40,9 +38,7 @@ export const TMDBImageQualityProvider = ({
   }, []);
 
   return (
-    <TMDBImageQualityContext.Provider
-      // @ts-ignore
-      value={{...imagesQualities}}>
+    <TMDBImageQualityContext.Provider value={{...imagesQualities}}>
       {children}
     </TMDBImageQualityContext.Provider>
   );
