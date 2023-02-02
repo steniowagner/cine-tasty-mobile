@@ -9,7 +9,7 @@ type LoadingFamousItemProps = {
   index: number;
 };
 
-const LoadingFamousItem = (props: LoadingFamousItemProps) => {
+export const LoadingFamousItem = (props: LoadingFamousItemProps) => {
   const famousListItemMeasures = getFamousListItemMeasures(props.index);
 
   return (
@@ -22,5 +22,3 @@ const LoadingFamousItem = (props: LoadingFamousItemProps) => {
     />
   );
 };
-
-export default LoadingFamousItem;
