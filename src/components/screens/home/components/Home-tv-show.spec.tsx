@@ -2,7 +2,7 @@ import React from 'react';
 import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
 import {IMocks} from 'graphql-tools';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';

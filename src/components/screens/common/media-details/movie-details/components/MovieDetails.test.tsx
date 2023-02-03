@@ -10,7 +10,7 @@ import {
 } from '@testing-library/react-native';
 import {MockedProvider} from '@apollo/client/testing';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as mockMovieDetails from '@mocks/fixtures/movie';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';

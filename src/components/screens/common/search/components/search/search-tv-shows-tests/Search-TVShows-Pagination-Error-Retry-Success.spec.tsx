@@ -1,19 +1,20 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { MockList, IMocks } from 'graphql-tools';
+import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
+import {MockList, IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {DEFAULT_ANIMATION_DURATION} from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import * as SchemaTypes from '@schema-types';
 
-import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
+import {SEARCH_BY_QUERY_DELAY} from '../use-search/useSearchByQuery';
 import Search from '../Search';
 
-const I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF = 'i18nTVShowQueryByPaginationErrorRef';
+const I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF =
+  'i18nTVShowQueryByPaginationErrorRef';
 const I18N_TV_SHOWS_QUERY_BY_TEXT_ERROR_REF = 'i18nTVShowQueryByTextErrorRef';
 const SOME_TV_SHOW_NAME = 'SOME_TV_SHOW_NAME';
 const TV_SHOWS_COUNT = 10;
@@ -50,7 +51,7 @@ describe('Testing <Search /> - [TVShows-Pagination-Retry-Success]', () => {
   afterEach(cleanup);
 
   it('should paginate correctly when some error occurs and then the user press the reload-button and the error doesnt exist anymore', () => {
-    const { queryByTestId, rerender } = render(
+    const {queryByTestId, rerender} = render(
       renderSearchTVShows(getMockResolvers(true)),
     );
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
-import { IMocks } from 'graphql-tools';
+import {render} from '@testing-library/react-native';
+import {IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import { navigation } from '@mocks/navigationMock';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {navigation} from '@mocks/navigationMock';
 
 const mockUsePaginatedQuery = jest.fn();
 
@@ -22,7 +22,7 @@ import AutoMockProvider from '@mocks/AutoMockedProvider';
 import * as Queries from '@graphql/queries';
 
 import MediaSectionViewAll from './MediaSectionViewAll';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
 const renderMediaSectionViewAll = (
   {
@@ -60,7 +60,7 @@ describe('Testing the query selection for pagination on <MediaSectionViewAll /> 
   });
 
   it('shound select the NowPlaying-query', () => {
-    render(renderMediaSectionViewAll({ sectionKey: 'nowPlaying' }));
+    render(renderMediaSectionViewAll({sectionKey: 'nowPlaying'}));
 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
@@ -70,15 +70,17 @@ describe('Testing the query selection for pagination on <MediaSectionViewAll /> 
   });
 
   it('shound select the Popular-query', () => {
-    render(renderMediaSectionViewAll({ sectionKey: 'popular' }));
+    render(renderMediaSectionViewAll({sectionKey: 'popular'}));
 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
-    expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(Queries.POPULAR_MOVIES);
+    expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(
+      Queries.POPULAR_MOVIES,
+    );
   });
 
   it('shound select the TopRated-query', () => {
-    render(renderMediaSectionViewAll({ sectionKey: 'topRated' }));
+    render(renderMediaSectionViewAll({sectionKey: 'topRated'}));
 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
@@ -88,10 +90,12 @@ describe('Testing the query selection for pagination on <MediaSectionViewAll /> 
   });
 
   it('shound select the Upcoming-query', () => {
-    render(renderMediaSectionViewAll({ sectionKey: 'upcoming' }));
+    render(renderMediaSectionViewAll({sectionKey: 'upcoming'}));
 
     expect(mockUsePaginatedQuery).toHaveBeenCalledTimes(1);
 
-    expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(Queries.UPCOMING_MOVIES);
+    expect(mockUsePaginatedQuery.mock.calls[0][0].query).toEqual(
+      Queries.UPCOMING_MOVIES,
+    );
   });
 });

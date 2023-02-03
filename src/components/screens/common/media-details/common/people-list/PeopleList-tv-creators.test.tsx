@@ -6,7 +6,7 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {ThemeProvider} from 'styled-components/native';
 import {randomPositiveNumber} from '@mocks/utils';
 

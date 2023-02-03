@@ -4,7 +4,7 @@ import {render, act, RenderAPI} from '@testing-library/react-native';
 import {MockedProvider} from '@apollo/client/testing';
 import {InMemoryCache} from '@apollo/client';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as tvShowsDetailsResolvers from '@mocks/fixtures/tv-show-season';
 import possibleTypes from '@graphql/possibleTypes.json';
 import {randomPositiveNumber} from '@mocks/utils';

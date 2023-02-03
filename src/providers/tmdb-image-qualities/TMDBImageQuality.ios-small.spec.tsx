@@ -14,10 +14,10 @@ jest.mock('react-native', () => {
 
   return {
     Platform: {
-      select: ({android}) => android,
+      select: ({ios}) => ios,
     },
     Dimensions: {
-      get: jest.fn().mockReturnValue({width: 320, height: 426}),
+      get: jest.fn().mockReturnValue({width: 320, height: 568}),
     },
     PixelRatio: {
       roundToNearestPixel: () => 1,
@@ -31,9 +31,9 @@ const storage = require('../../utils/async-storage-adapter/storage');
 import {
   TMDBImageQualityProvider,
   useTMDBImageQuality,
-} from './TMDBImageQuality';
+} from './TMDBImageQualities';
 
-describe('Testing <TMDBImageQuality /> - [Android/Small-screen]', () => {
+describe('Testing <TMDBImageQuality /> - [iOS/Small-screen]', () => {
   const renderTMDBImageQualityProvider = () => {
     const ContextChildren = () => {
       const {backdrop, poster, still, profile} = useTMDBImageQuality();

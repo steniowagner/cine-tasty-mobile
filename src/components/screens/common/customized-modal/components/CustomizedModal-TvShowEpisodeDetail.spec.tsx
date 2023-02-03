@@ -1,7 +1,7 @@
 import React from 'react';
 import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {getMockedTVShowSeason} from '@mocks/fixtures';
 import {navigation} from '@mocks/navigationMock';

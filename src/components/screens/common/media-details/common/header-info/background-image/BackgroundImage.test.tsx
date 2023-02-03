@@ -2,7 +2,7 @@ import React from 'react';
 import {render, RenderAPI, waitFor} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {light} from '@styles/themes/light';
 import {dark} from '@styles/themes/dark';
 

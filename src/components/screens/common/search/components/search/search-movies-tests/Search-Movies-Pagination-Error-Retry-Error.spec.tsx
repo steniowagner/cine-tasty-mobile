@@ -1,20 +1,21 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { MockList, IMocks } from 'graphql-tools';
+import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
+import {MockList, IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as SchemaTypes from '@schema-types';
 
-import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
-import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import {DEFAULT_ANIMATION_DURATION} from '@components/common/popup-advice/PopupAdvice';
+import {SEARCH_BY_QUERY_DELAY} from '../use-search/useSearchByQuery';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 
 import Search from '../Search';
 
-const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF = 'i18nMoviesQueryByPaginationErrorRef';
+const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF =
+  'i18nMoviesQueryByPaginationErrorRef';
 const I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF = 'i18nMoviesQueryByTextErrorRef';
 const SOME_MOVIE_NAME = 'SOME_MOVIE_NAME';
 const MOVIES_COUNT = 10;
@@ -51,7 +52,7 @@ describe('Testing <Search /> - [Movies-Pagination-Error-Retry-Error]', () => {
   afterEach(cleanup);
 
   it('should paginate correctly when some error occurs and then the user press the reload-button and the error doesnt exist anymore', () => {
-    const { queryByTestId, rerender } = render(
+    const {queryByTestId, rerender} = render(
       renderSearchMovies(getMockResolvers(true)),
     );
 

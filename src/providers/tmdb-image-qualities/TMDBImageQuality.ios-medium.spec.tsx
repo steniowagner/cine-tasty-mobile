@@ -31,7 +31,7 @@ const storage = require('../../utils/async-storage-adapter/storage');
 import {
   TMDBImageQualityProvider,
   useTMDBImageQuality,
-} from './TMDBImageQuality';
+} from './TMDBImageQualities';
 
 describe('Testing <TMDBImageQuality /> - [iOS/Medium-screen]', () => {
   const renderTMDBImageQualityProvider = () => {

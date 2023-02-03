@@ -5,19 +5,19 @@ import {cleanup, render, act} from '@testing-library/react-native';
 
 import {ThemeContextProvider} from '@providers';
 
-import large from './qualities/large';
+import small from './qualities/small';
 
-jest.mock('../../utils/async-storage-adapter/s');
+jest.mock('../../utils/async-storage-adapter/storage');
 
 jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
 
   return {
     Platform: {
-      select: ({ios}) => ios,
+      select: ({android}) => android,
     },
     Dimensions: {
-      get: jest.fn().mockReturnValue({width: 414, height: 736}),
+      get: jest.fn().mockReturnValue({width: 320, height: 426}),
     },
     PixelRatio: {
       roundToNearestPixel: () => 1,
@@ -26,14 +26,14 @@ jest.mock('react-native', () => {
   };
 });
 
-const storage = require('../../utils/storage');
+const storage = require('../../utils/async-storage-adapter/storage');
 
 import {
   TMDBImageQualityProvider,
   useTMDBImageQuality,
-} from './TMDBImageQuality';
+} from './TMDBImageQualities';
 
-describe('Testing <TMDBImageQuality /> - [iOS/Large-screen]', () => {
+describe('Testing <TMDBImageQuality /> - [Android/Small-screen]', () => {
   const renderTMDBImageQualityProvider = () => {
     const ContextChildren = () => {
       const {backdrop, poster, still, profile} = useTMDBImageQuality();
@@ -64,7 +64,7 @@ describe('Testing <TMDBImageQuality /> - [iOS/Large-screen]', () => {
 
   afterEach(cleanup);
 
-  it('should return qualitites correctly when the screen-classification is "large" and the quality selected is "low"', () => {
+  it('should return qualitites correctly when the screen-classification is "small" and the quality selected is "low"', () => {
     storage.get.mockImplementationOnce(() => 'low');
 
     const {getByTestId, rerender} = render(renderTMDBImageQualityProvider());
@@ -75,13 +75,13 @@ describe('Testing <TMDBImageQuality /> - [iOS/Large-screen]', () => {
 
     rerender(renderTMDBImageQualityProvider());
 
-    expect(getByTestId('backdrop').children[0]).toEqual(large.low.backdrop);
-    expect(getByTestId('still').children[0]).toEqual(large.low.still);
-    expect(getByTestId('profile').children[0]).toEqual(large.low.profile);
-    expect(getByTestId('poster').children[0]).toEqual(large.low.poster);
+    expect(getByTestId('backdrop').children[0]).toEqual(small.low.backdrop);
+    expect(getByTestId('still').children[0]).toEqual(small.low.still);
+    expect(getByTestId('profile').children[0]).toEqual(small.low.profile);
+    expect(getByTestId('poster').children[0]).toEqual(small.low.poster);
   });
 
-  it('should return qualitites correctly when the screen-classification is "large" and the quality selected is "large"', () => {
+  it('should return qualitites correctly when the screen-classification is "small" and the quality selected is "medium"', () => {
     storage.get.mockImplementationOnce(() => 'medium');
 
     const {getByTestId, rerender} = render(renderTMDBImageQualityProvider());
@@ -92,13 +92,13 @@ describe('Testing <TMDBImageQuality /> - [iOS/Large-screen]', () => {
 
     rerender(renderTMDBImageQualityProvider());
 
-    expect(getByTestId('backdrop').children[0]).toEqual(large.medium.backdrop);
-    expect(getByTestId('still').children[0]).toEqual(large.medium.still);
-    expect(getByTestId('profile').children[0]).toEqual(large.medium.profile);
-    expect(getByTestId('poster').children[0]).toEqual(large.medium.poster);
+    expect(getByTestId('backdrop').children[0]).toEqual(small.medium.backdrop);
+    expect(getByTestId('still').children[0]).toEqual(small.medium.still);
+    expect(getByTestId('profile').children[0]).toEqual(small.medium.profile);
+    expect(getByTestId('poster').children[0]).toEqual(small.medium.poster);
   });
 
-  it('should return qualitites correctly when the screen-classification is "large" and the quality selected is "high"', () => {
+  it('should return qualitites correctly when the screen-classification is "small" and the quality selected is "high"', () => {
     storage.get.mockImplementationOnce(() => 'high');
 
     const {getByTestId, rerender} = render(renderTMDBImageQualityProvider());
@@ -109,13 +109,13 @@ describe('Testing <TMDBImageQuality /> - [iOS/Large-screen]', () => {
 
     rerender(renderTMDBImageQualityProvider());
 
-    expect(getByTestId('backdrop').children[0]).toEqual(large.high.backdrop);
-    expect(getByTestId('still').children[0]).toEqual(large.high.still);
-    expect(getByTestId('profile').children[0]).toEqual(large.high.profile);
-    expect(getByTestId('poster').children[0]).toEqual(large.high.poster);
+    expect(getByTestId('backdrop').children[0]).toEqual(small.high.backdrop);
+    expect(getByTestId('still').children[0]).toEqual(small.high.still);
+    expect(getByTestId('profile').children[0]).toEqual(small.high.profile);
+    expect(getByTestId('poster').children[0]).toEqual(small.high.poster);
   });
 
-  it('should return qualitites correctly when the screen-classification is "large" and the quality selected is "veryHigh"', () => {
+  it('should return qualitites correctly when the screen-classification is "small" and the quality selected is "veryHigh"', () => {
     storage.get.mockImplementationOnce(() => 'veryHigh');
 
     const {getByTestId, rerender} = render(renderTMDBImageQualityProvider());
@@ -127,10 +127,10 @@ describe('Testing <TMDBImageQuality /> - [iOS/Large-screen]', () => {
     rerender(renderTMDBImageQualityProvider());
 
     expect(getByTestId('backdrop').children[0]).toEqual(
-      large.veryHigh.backdrop,
+      small.veryHigh.backdrop,
     );
-    expect(getByTestId('still').children[0]).toEqual(large.veryHigh.still);
-    expect(getByTestId('profile').children[0]).toEqual(large.veryHigh.profile);
-    expect(getByTestId('poster').children[0]).toEqual(large.veryHigh.poster);
+    expect(getByTestId('still').children[0]).toEqual(small.veryHigh.still);
+    expect(getByTestId('profile').children[0]).toEqual(small.veryHigh.profile);
+    expect(getByTestId('poster').children[0]).toEqual(small.veryHigh.poster);
   });
 });
