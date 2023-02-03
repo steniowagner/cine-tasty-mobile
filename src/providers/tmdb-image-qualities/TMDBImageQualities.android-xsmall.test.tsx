@@ -17,11 +17,11 @@ jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
   return {
     Platform: {
-      select: ({ios}) => ios,
-      OS: 'ios',
+      select: ({android}) => android,
+      OS: 'android',
     },
     Dimensions: {
-      get: () => ({width: 320, height: 480}),
+      get: () => ({width: 100, height: 100}),
     },
     PixelRatio: {
       roundToNearestPixel: () => 1,

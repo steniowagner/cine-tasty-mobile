@@ -6,7 +6,7 @@ import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import xsmall from './qualities/xsmall';
+import large from './qualities/large';
 
 import {
   TMDBImageQualitiesProvider,
@@ -17,11 +17,11 @@ jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
   return {
     Platform: {
-      select: ({ios}) => ios,
-      OS: 'ios',
+      select: ({android}) => android,
+      OS: 'android',
     },
     Dimensions: {
-      get: () => ({width: 320, height: 480}),
+      get: () => ({width: 480, height: 640}),
     },
     PixelRatio: {
       roundToNearestPixel: () => 1,
@@ -68,7 +68,7 @@ describe('<TMDBImageQualities />', () => {
     profile: (api: RenderAPI) => api.getByTestId('profile'),
   };
 
-  describe('When the "OS" is "Android" and the "screen-classification" is "xsmall"', () => {
+  describe('When the "OS" is "Android" and the "screen-classification" is "large"', () => {
     describe('When the quality selected by the user is "low"', () => {
       const targetQuality = 'low';
 
@@ -86,22 +86,22 @@ describe('<TMDBImageQualities />', () => {
           jest.runAllTimers();
         });
         expect(elements.backdrop(component).children[0]).toEqual(
-          xsmall[targetQuality].backdrop,
+          large[targetQuality].backdrop,
         );
         expect(elements.still(component).children[0]).toEqual(
-          xsmall[targetQuality].still,
+          large[targetQuality].still,
         );
         expect(elements.profile(component).children[0]).toEqual(
-          xsmall[targetQuality].profile,
+          large[targetQuality].profile,
         );
         expect(elements.poster(component).children[0]).toEqual(
-          xsmall[targetQuality].poster,
+          large[targetQuality].poster,
         );
       });
     });
 
-    describe('When the quality selected by the user is "xsmall"', () => {
-      const targetQuality = 'low';
+    describe('When the quality selected by the user is "medium"', () => {
+      const targetQuality = 'medium';
 
       beforeEach(() => {
         jest.resetModules();
@@ -117,16 +117,16 @@ describe('<TMDBImageQualities />', () => {
           jest.runAllTimers();
         });
         expect(elements.backdrop(component).children[0]).toEqual(
-          xsmall[targetQuality].backdrop,
+          large[targetQuality].backdrop,
         );
         expect(elements.still(component).children[0]).toEqual(
-          xsmall[targetQuality].still,
+          large[targetQuality].still,
         );
         expect(elements.profile(component).children[0]).toEqual(
-          xsmall[targetQuality].profile,
+          large[targetQuality].profile,
         );
         expect(elements.poster(component).children[0]).toEqual(
-          xsmall[targetQuality].poster,
+          large[targetQuality].poster,
         );
       });
     });
@@ -148,16 +148,16 @@ describe('<TMDBImageQualities />', () => {
           jest.runAllTimers();
         });
         expect(elements.backdrop(component).children[0]).toEqual(
-          xsmall[targetQuality].backdrop,
+          large[targetQuality].backdrop,
         );
         expect(elements.still(component).children[0]).toEqual(
-          xsmall[targetQuality].still,
+          large[targetQuality].still,
         );
         expect(elements.profile(component).children[0]).toEqual(
-          xsmall[targetQuality].profile,
+          large[targetQuality].profile,
         );
         expect(elements.poster(component).children[0]).toEqual(
-          xsmall[targetQuality].poster,
+          large[targetQuality].poster,
         );
       });
     });
@@ -179,16 +179,16 @@ describe('<TMDBImageQualities />', () => {
           jest.runAllTimers();
         });
         expect(elements.backdrop(component).children[0]).toEqual(
-          xsmall[targetQuality].backdrop,
+          large[targetQuality].backdrop,
         );
         expect(elements.still(component).children[0]).toEqual(
-          xsmall[targetQuality].still,
+          large[targetQuality].still,
         );
         expect(elements.profile(component).children[0]).toEqual(
-          xsmall[targetQuality].profile,
+          large[targetQuality].profile,
         );
         expect(elements.poster(component).children[0]).toEqual(
-          xsmall[targetQuality].poster,
+          large[targetQuality].poster,
         );
       });
     });

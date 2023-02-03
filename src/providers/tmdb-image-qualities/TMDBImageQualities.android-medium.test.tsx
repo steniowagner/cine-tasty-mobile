@@ -1,22 +1,27 @@
 import React from 'react';
+
 import {Text} from 'react-native';
 import {RenderAPI, render, act, cleanup} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import large from './qualities/large';
+import medium from './qualities/medium';
 
-jest.mock('@utils');
+import {
+  TMDBImageQualitiesProvider,
+  useTMDBImageQualities,
+} from './TMDBImageQualities';
 
 jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
   return {
     Platform: {
       select: ({android}) => android,
+      OS: 'android',
     },
     Dimensions: {
-      get: jest.fn().mockReturnValue({width: 480, height: 640}),
+      get: () => ({width: 320, height: 470}),
     },
     PixelRatio: {
       roundToNearestPixel: () => 1,
@@ -28,12 +33,9 @@ jest.mock('react-native', () => {
   };
 });
 
-const utils = require('@utils');
+jest.mock('@utils');
 
-import {
-  TMDBImageQualitiesProvider,
-  useTMDBImageQualities,
-} from './TMDBImageQualities';
+const utils = require('@utils');
 
 const renderTMDBImageQuality = () => {
   const ContextChildren = () => {
@@ -66,7 +68,7 @@ describe('<TMDBImageQualities />', () => {
     profile: (api: RenderAPI) => api.getByTestId('profile'),
   };
 
-  describe('When the "OS" is "Android" and the "screen-classification" is "large"', () => {
+  describe('When the "OS" is "Android" and the "screen-classification" is "medium"', () => {
     describe('When the quality selected by the user is "low"', () => {
       const targetQuality = 'low';
 
@@ -84,16 +86,16 @@ describe('<TMDBImageQualities />', () => {
           jest.runAllTimers();
         });
         expect(elements.backdrop(component).children[0]).toEqual(
-          large[targetQuality].backdrop,
+          medium[targetQuality].backdrop,
         );
         expect(elements.still(component).children[0]).toEqual(
-          large[targetQuality].still,
+          medium[targetQuality].still,
         );
         expect(elements.profile(component).children[0]).toEqual(
-          large[targetQuality].profile,
+          medium[targetQuality].profile,
         );
         expect(elements.poster(component).children[0]).toEqual(
-          large[targetQuality].poster,
+          medium[targetQuality].poster,
         );
       });
     });
@@ -115,16 +117,16 @@ describe('<TMDBImageQualities />', () => {
           jest.runAllTimers();
         });
         expect(elements.backdrop(component).children[0]).toEqual(
-          large[targetQuality].backdrop,
+          medium[targetQuality].backdrop,
         );
         expect(elements.still(component).children[0]).toEqual(
-          large[targetQuality].still,
+          medium[targetQuality].still,
         );
         expect(elements.profile(component).children[0]).toEqual(
-          large[targetQuality].profile,
+          medium[targetQuality].profile,
         );
         expect(elements.poster(component).children[0]).toEqual(
-          large[targetQuality].poster,
+          medium[targetQuality].poster,
         );
       });
     });
@@ -146,16 +148,16 @@ describe('<TMDBImageQualities />', () => {
           jest.runAllTimers();
         });
         expect(elements.backdrop(component).children[0]).toEqual(
-          large[targetQuality].backdrop,
+          medium[targetQuality].backdrop,
         );
         expect(elements.still(component).children[0]).toEqual(
-          large[targetQuality].still,
+          medium[targetQuality].still,
         );
         expect(elements.profile(component).children[0]).toEqual(
-          large[targetQuality].profile,
+          medium[targetQuality].profile,
         );
         expect(elements.poster(component).children[0]).toEqual(
-          large[targetQuality].poster,
+          medium[targetQuality].poster,
         );
       });
     });
@@ -177,16 +179,16 @@ describe('<TMDBImageQualities />', () => {
           jest.runAllTimers();
         });
         expect(elements.backdrop(component).children[0]).toEqual(
-          large[targetQuality].backdrop,
+          medium[targetQuality].backdrop,
         );
         expect(elements.still(component).children[0]).toEqual(
-          large[targetQuality].still,
+          medium[targetQuality].still,
         );
         expect(elements.profile(component).children[0]).toEqual(
-          large[targetQuality].profile,
+          medium[targetQuality].profile,
         );
         expect(elements.poster(component).children[0]).toEqual(
-          large[targetQuality].poster,
+          medium[targetQuality].poster,
         );
       });
     });
