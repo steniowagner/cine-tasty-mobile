@@ -11,7 +11,7 @@ import {
 } from '@testing-library/react-native';
 import {InMemoryCache} from '@apollo/client';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as mockFamousDetails from '@mocks/fixtures/famous-details';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';

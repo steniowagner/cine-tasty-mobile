@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 
-import {useTMDBImageQuality} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {useTMDBImageQuality} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as Types from '@local-types';
 import {CONSTANTS} from '@utils';
 

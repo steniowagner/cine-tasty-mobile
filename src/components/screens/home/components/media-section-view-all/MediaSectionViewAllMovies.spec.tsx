@@ -1,17 +1,17 @@
 import React from 'react';
-import { fireEvent, cleanup, render, act } from '@testing-library/react-native';
-import { MockList, IMocks } from 'graphql-tools';
+import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
+import {MockList, IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import { PAGINATION_DELAY } from '@src/hooks/use-paginated-query/useQueryWithPagination';
-import { DEFAULT_ANIMATION_DURATION } from '@components/common/popup-advice/PopupAdvice';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
-import { moviesViewAllInitialDataset } from '@mocks/fixtures';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {PAGINATION_DELAY} from '@src/hooks/use-paginated-query/useQueryWithPagination';
+import {DEFAULT_ANIMATION_DURATION} from '@components/common/popup-advice/PopupAdvice';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
+import {moviesViewAllInitialDataset} from '@mocks/fixtures';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
-import { navigation } from '@mocks/navigationMock';
-import { ThemeContextProvider } from '@providers';
+import {navigation} from '@mocks/navigationMock';
+import {ThemeContextProvider} from '@providers';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
 import MediaSectionViewAll from './MediaSectionViewAll';
@@ -33,7 +33,7 @@ const renderMediaSectionViewAll = (
       <ThemeContextProvider>
         <AutoMockProvider mockResolvers={resolvers}>
           <MediaSectionViewAll
-            navigation={{ ...navigation, navigate }}
+            navigation={{...navigation, navigate}}
             route={{
               name: Routes.Home.MEDIA_DETAILS_VIEW_ALL,
               key: `${Routes.Home.MEDIA_DETAILS_VIEW_ALL}-key`,
@@ -69,7 +69,7 @@ describe('Testing <MediaSectionViewAll /> - [Movies]', () => {
   afterEach(cleanup);
 
   it('shound render the inital items correctly', () => {
-    const { getByTestId, queryAllByTestId } = render(
+    const {getByTestId, queryAllByTestId} = render(
       renderMediaSectionViewAll({}, getMockResolvers()),
     );
 
@@ -81,7 +81,7 @@ describe('Testing <MediaSectionViewAll /> - [Movies]', () => {
   });
 
   it('shound call the "onEndReached" when the user scrolls until the end of the "media-view-all-list"', () => {
-    const { queryAllByTestId, getByTestId, queryByTestId } = render(
+    const {queryAllByTestId, getByTestId, queryByTestId} = render(
       renderMediaSectionViewAll({}, getMockResolvers()),
     );
 
@@ -114,11 +114,13 @@ describe('Testing <MediaSectionViewAll /> - [Movies]', () => {
 
     const navigate = jest.fn();
 
-    const { queryAllByTestId } = render(
-      renderMediaSectionViewAll({ navigate }, getMockResolvers()),
+    const {queryAllByTestId} = render(
+      renderMediaSectionViewAll({navigate}, getMockResolvers()),
     );
 
-    fireEvent.press(queryAllByTestId('full-media-list-item')[INDEX_ITEM_PRESSED]);
+    fireEvent.press(
+      queryAllByTestId('full-media-list-item')[INDEX_ITEM_PRESSED],
+    );
 
     expect(navigate).toHaveBeenCalledTimes(1);
 
@@ -133,7 +135,9 @@ describe('Testing <MediaSectionViewAll /> - [Movies]', () => {
   });
 
   it('shound show an error message when the user scroll to the end of the list and some error occurs during the pagination', () => {
-    const { getByTestId } = render(renderMediaSectionViewAll({}, mockResolversWithError));
+    const {getByTestId} = render(
+      renderMediaSectionViewAll({}, mockResolversWithError),
+    );
 
     fireEvent(getByTestId('media-view-all-list'), 'onEndReached');
 
@@ -163,7 +167,7 @@ describe('Testing <MediaSectionViewAll /> - [Movies]', () => {
   });
 
   it('shound paginate correctly after the user have an error and then try it again without errors', () => {
-    const { queryAllByTestId, getByTestId, queryByTestId, rerender } = render(
+    const {queryAllByTestId, getByTestId, queryByTestId, rerender} = render(
       renderMediaSectionViewAll({}, mockResolversWithError),
     );
 

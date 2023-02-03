@@ -5,7 +5,7 @@ import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
 
 jest.mock('../../../../../../utils/storage');
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {setupTimeTravel} from '@mocks/timeTravel';
 import {ThemeContextProvider} from '@providers';
 import * as SchemaTypes from '@schema-types';

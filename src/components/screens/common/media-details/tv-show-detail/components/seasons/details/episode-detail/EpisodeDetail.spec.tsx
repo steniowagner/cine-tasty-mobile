@@ -1,8 +1,8 @@
 import React from 'react';
-import { cleanup, render } from '@testing-library/react-native';
+import {cleanup, render} from '@testing-library/react-native';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import { ThemeContextProvider } from '@providers';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {ThemeContextProvider} from '@providers';
 import * as SchemaTypes from '@schema-types';
 
 import EpisodeDetail from './EpisodeDetail';
@@ -32,7 +32,7 @@ describe('Testing <EpisodeDetail />', () => {
   afterEach(cleanup);
 
   it('should render the episode-detail-image correctly when the "stillPath" is provided', () => {
-    const { queryByTestId, getByTestId } = render(renderEpisodeDetail());
+    const {queryByTestId, getByTestId} = render(renderEpisodeDetail());
 
     expect(getByTestId('episode-image')).not.toBeNull();
 
@@ -40,7 +40,7 @@ describe('Testing <EpisodeDetail />', () => {
   });
 
   it('should render the episode-detail-image correctly when the "stillPath" is not provided', () => {
-    const { queryByTestId, getByTestId } = render(
+    const {queryByTestId, getByTestId} = render(
       renderEpisodeDetail({
         ...episodeMock,
         stillPath: undefined,

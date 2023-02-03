@@ -3,7 +3,7 @@ import {Image} from 'react-native';
 import {render, RenderAPI, waitFor} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark} from '@styles/themes/dark';
 import {Translations} from '@i18n/tags';

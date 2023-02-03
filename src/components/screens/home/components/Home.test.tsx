@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react-native';
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {AlertMessageProvider} from '@providers';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import possibleTypes from '@graphql/possibleTypes.json';

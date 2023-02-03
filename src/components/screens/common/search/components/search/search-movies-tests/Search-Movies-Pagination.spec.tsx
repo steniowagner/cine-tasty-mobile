@@ -1,18 +1,19 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { MockList, IMocks } from 'graphql-tools';
+import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
+import {MockList, IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import * as SchemaTypes from '@schema-types';
 
-import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
+import {SEARCH_BY_QUERY_DELAY} from '../use-search/useSearchByQuery';
 import Search from '../Search';
 
-const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF = 'i18nMoviesQueryByPaginationErrorRef';
+const I18N_MOVIES_QUERY_BY_PAGINATION_ERROR_REF =
+  'i18nMoviesQueryByPaginationErrorRef';
 const I18N_MOVIES_QUERY_BY_TEXT_ERROR_REF = 'i18nMoviesQueryByTextErrorRef';
 const SOME_MOVIES_NAME = 'SOME_MOVIES_NAME';
 const MOVIES_COUNT = 10;
@@ -45,7 +46,7 @@ describe('Testing <Search /> - [Movies-Pagination]', () => {
   afterEach(cleanup);
 
   it('should paginate to the next page when the previous query returned "hasMore" as "true"', () => {
-    const { queryByTestId } = render(renderSearchMovies(getMockResolvers(true)));
+    const {queryByTestId} = render(renderSearchMovies(getMockResolvers(true)));
 
     fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIES_NAME);
 
@@ -87,7 +88,7 @@ describe('Testing <Search /> - [Movies-Pagination]', () => {
   });
 
   it('should not paginate to the next page when the previous query returned "hasMore" as "false"', () => {
-    const { queryByTestId } = render(renderSearchMovies(getMockResolvers()));
+    const {queryByTestId} = render(renderSearchMovies(getMockResolvers()));
 
     fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_MOVIES_NAME);
 
@@ -109,7 +110,9 @@ describe('Testing <Search /> - [Movies-Pagination]', () => {
 
     expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
-    expect(queryByTestId('search-media-list').props.data.length).toEqual(MOVIES_COUNT);
+    expect(queryByTestId('search-media-list').props.data.length).toEqual(
+      MOVIES_COUNT,
+    );
 
     act(() => {
       jest.runAllTimers();

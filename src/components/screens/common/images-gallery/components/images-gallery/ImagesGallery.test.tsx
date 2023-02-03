@@ -9,7 +9,7 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import MockedNavigation from '@mocks/MockedNavigator';
 import {dark as theme} from '@styles/themes/dark';
 import {randomPositiveNumber} from '@mocks/utils';

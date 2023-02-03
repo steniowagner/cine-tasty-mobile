@@ -1,15 +1,15 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { cleanup, fireEvent, render, act } from '@testing-library/react-native';
-import { MockList, IMocks } from 'graphql-tools';
+import {cleanup, fireEvent, render, act} from '@testing-library/react-native';
+import {MockList, IMocks} from 'graphql-tools';
 
-import { TMDBImageQualityProvider } from '@src/providers/tmdb-image-quality/TMDBImageQuality';
-import timeTravel, { setupTimeTravel } from '@mocks/timeTravel';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import AutoMockProvider from '@mocks/AutoMockedProvider';
 import MockedNavigation from '@mocks/MockedNavigator';
 import * as SchemaTypes from '@schema-types';
 
-import { SEARCH_BY_QUERY_DELAY } from '../use-search/useSearchByQuery';
+import {SEARCH_BY_QUERY_DELAY} from '../use-search/useSearchByQuery';
 import Search from '../Search';
 
 const I18N_TV_SHOWS_QUERY_BY_PAGINATION_ERROR_REF =
@@ -46,9 +46,13 @@ describe('Testing <Search /> - [TVShows-Pagination]', () => {
   afterEach(cleanup);
 
   it('should paginate to the next page when the previous query returned "hasMore" as "true"', () => {
-    const { queryByTestId } = render(renderSearchTVShows(getMockResolvers(true)));
+    const {queryByTestId} = render(renderSearchTVShows(getMockResolvers(true)));
 
-    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_TV_SHOWS_NAME);
+    fireEvent(
+      queryByTestId('search-input'),
+      'onChangeText',
+      SOME_TV_SHOWS_NAME,
+    );
 
     act(() => {
       timeTravel(SEARCH_BY_QUERY_DELAY);
@@ -88,9 +92,13 @@ describe('Testing <Search /> - [TVShows-Pagination]', () => {
   });
 
   it('should not paginate to the next page when the previous query returned "hasMore" as "false"', () => {
-    const { queryByTestId } = render(renderSearchTVShows(getMockResolvers()));
+    const {queryByTestId} = render(renderSearchTVShows(getMockResolvers()));
 
-    fireEvent(queryByTestId('search-input'), 'onChangeText', SOME_TV_SHOWS_NAME);
+    fireEvent(
+      queryByTestId('search-input'),
+      'onChangeText',
+      SOME_TV_SHOWS_NAME,
+    );
 
     act(() => {
       timeTravel(SEARCH_BY_QUERY_DELAY);
@@ -110,7 +118,9 @@ describe('Testing <Search /> - [TVShows-Pagination]', () => {
 
     expect(queryByTestId('pagination-footer-reload-button')).toBeNull();
 
-    expect(queryByTestId('search-media-list').props.data.length).toEqual(TV_SHOWS_COUNT);
+    expect(queryByTestId('search-media-list').props.data.length).toEqual(
+      TV_SHOWS_COUNT,
+    );
 
     act(() => {
       jest.runAllTimers();

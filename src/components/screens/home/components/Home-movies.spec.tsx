@@ -2,7 +2,7 @@ import React from 'react';
 import {fireEvent, cleanup, render, act} from '@testing-library/react-native';
 import {IMocks} from 'graphql-tools';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-quality/TMDBImageQuality';
+import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as SchemaTypes from '@schema-types';
 import * as TRANSLATIONS from '@i18n/tags';
 import {Routes} from '@routes/routes';
