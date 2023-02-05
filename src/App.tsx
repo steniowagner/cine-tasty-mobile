@@ -1,7 +1,7 @@
 import React from 'react';
 import {ApolloProvider} from '@apollo/client';
 import {
-  TMDBImageQualityProvider,
+  TMDBImageQualitiesProvider,
   ThemeContextProvider,
   AlertMessageProvider,
 } from '@providers';
@@ -15,7 +15,7 @@ const client = makeClient();
 const App = () => (
   <ThemeContextProvider>
     <AlertMessageProvider>
-      <TMDBImageQualityProvider>
+      <TMDBImageQualitiesProvider>
         <>
           <ApolloProvider client={client}>
             <RouteSuspenseWrapper>
@@ -23,7 +23,7 @@ const App = () => (
             </RouteSuspenseWrapper>
           </ApolloProvider>
         </>
-      </TMDBImageQualityProvider>
+      </TMDBImageQualitiesProvider>
     </AlertMessageProvider>
   </ThemeContextProvider>
 );
