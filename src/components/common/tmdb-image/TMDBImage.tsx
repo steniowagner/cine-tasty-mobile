@@ -2,18 +2,11 @@ import React from 'react';
 import {StyleProp} from 'react-native';
 import FastImage, {ImageStyle} from 'react-native-fast-image';
 
-import * as Types from '@local-types';
-
+import {TMDBAImageProps} from './TMDBImagesProps';
 import {useTMDBImage} from './useTMDBImage';
 
-type TMDBImageProps = {
+type TMDBImageProps = TMDBAImageProps & {
   style: StyleProp<ImageStyle>;
-  imageType: Types.ImageType;
-  isThumbnail?: boolean;
-  onError?: () => void;
-  onLoad?: () => void;
-  testID?: string;
-  image: string;
 };
 
 export const TMDBImage = (props: TMDBImageProps) => {
