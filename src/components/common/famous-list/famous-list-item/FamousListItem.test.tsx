@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 
@@ -22,7 +22,7 @@ const renderFamousListItem = (
   onPress = jest.fn(),
   index = randomPositiveNumber(10),
 ) => (
-  <TMDBImageQualityProvider>
+  <TMDBImageQualitiesProvider>
     <ThemeProvider theme={theme}>
       <FamousListItem
         onPress={onPress}
@@ -31,7 +31,7 @@ const renderFamousListItem = (
         index={index}
       />
     </ThemeProvider>
-  </TMDBImageQualityProvider>
+  </TMDBImageQualitiesProvider>
 );
 
 describe('<FamousListItem />', () => {
