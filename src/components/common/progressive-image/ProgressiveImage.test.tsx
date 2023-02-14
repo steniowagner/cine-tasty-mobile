@@ -1,3 +1,5 @@
+jest.unmock('react-native-reanimated');
+
 import React from 'react';
 import {
   RenderAPI,
@@ -8,26 +10,38 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
+import {ImageType} from '@local-types';
 
-import {LOAD_PROGRESSIVE_IMAGE_TIMEOUT} from './useProgressiveImage';
+import {
+  ON_LOAD_PROGRESSIVE_IMAGE_TIMEOUT,
+  DEFAULT_TIMING,
+} from './useProgressiveImage';
 import {ProgressiveImage} from './ProgressiveImage';
 
-const IMAGE = 'IMAGE';
-let imageType;
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock');
+  Reanimated.default.call = () => {};
+  return Reanimated;
+});
 
-const renderProgressiveImage = (borderRadius?: number) => (
+const IMAGE = 'IMAGE';
+
+const renderProgressiveImage = (
+  imageType: ImageType,
+  borderRadius?: number,
+) => (
   <ThemeProvider theme={theme}>
-    <TMDBImageQualityProvider>
+    <TMDBImageQualitiesProvider>
       <ProgressiveImage
         borderRadius={borderRadius}
         imageType={imageType}
         image={IMAGE}
       />
-    </TMDBImageQualityProvider>
+    </TMDBImageQualitiesProvider>
   </ThemeProvider>
 );
 
@@ -41,18 +55,16 @@ describe('<ProgressiveImage />', () => {
       api.queryByTestId('progressive-image-wrapper'),
   };
 
-  beforeEach(() => {
-    setupTimeTravel();
-  });
-
   describe('When "imageType" is "profile"', () => {
-    beforeAll(() => {
-      imageType = 'profile';
+    const imageType = 'profile';
+
+    beforeEach(() => {
+      setupTimeTravel();
     });
 
     it('should render with the correct value for "borderRadius" when it is set', async () => {
       const borderRadius = randomPositiveNumber(10, 1);
-      const component = render(renderProgressiveImage(borderRadius));
+      const component = render(renderProgressiveImage(imageType, borderRadius));
       expect(
         elements.progressiveImageWrapper(component).props.style[0].borderRadius,
       ).toEqual(borderRadius);
@@ -60,7 +72,7 @@ describe('<ProgressiveImage />', () => {
     });
 
     it('should show the thumbnail-image and the image when the image did not load yet', async () => {
-      const component = render(renderProgressiveImage());
+      const component = render(renderProgressiveImage(imageType));
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
       expect(elements.progressiveThumbnail(component)).not.toBeNull();
       expect(elements.progressiveImage(component)).not.toBeNull();
@@ -68,14 +80,14 @@ describe('<ProgressiveImage />', () => {
     });
 
     it('should not show the thumbnail-image when the image is loaded', async () => {
-      const component = render(renderProgressiveImage());
+      const component = render(renderProgressiveImage(imageType));
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
       expect(elements.progressiveThumbnail(component)).not.toBeNull();
       expect(elements.progressiveImage(component)).not.toBeNull();
       fireEvent(elements.progressiveThumbnail(component), 'onLoad');
       fireEvent(elements.progressiveImage(component), 'onLoad');
       act(() => {
-        timeTravel(2 * LOAD_PROGRESSIVE_IMAGE_TIMEOUT);
+        timeTravel(ON_LOAD_PROGRESSIVE_IMAGE_TIMEOUT + DEFAULT_TIMING);
       });
       expect(elements.progressiveThumbnail(component)).toBeNull();
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
@@ -85,13 +97,15 @@ describe('<ProgressiveImage />', () => {
   });
 
   describe('When "imageType" is "poster"', () => {
-    beforeAll(() => {
-      imageType = 'poster';
+    const imageType = 'poster';
+
+    beforeEach(() => {
+      setupTimeTravel();
     });
 
     it('should render with the correct value for "borderRadius" when it is set', async () => {
       const borderRadius = randomPositiveNumber(10, 1);
-      const component = render(renderProgressiveImage(borderRadius));
+      const component = render(renderProgressiveImage(imageType, borderRadius));
       expect(
         elements.progressiveImageWrapper(component).props.style[0].borderRadius,
       ).toEqual(borderRadius);
@@ -99,7 +113,7 @@ describe('<ProgressiveImage />', () => {
     });
 
     it('should show the thumbnail-image and the image when the image did not load yet', async () => {
-      const component = render(renderProgressiveImage());
+      const component = render(renderProgressiveImage(imageType));
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
       expect(elements.progressiveThumbnail(component)).not.toBeNull();
       expect(elements.progressiveImage(component)).not.toBeNull();
@@ -107,14 +121,14 @@ describe('<ProgressiveImage />', () => {
     });
 
     it('should not show the thumbnail-image when the image is loaded', async () => {
-      const component = render(renderProgressiveImage());
+      const component = render(renderProgressiveImage(imageType));
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
       expect(elements.progressiveThumbnail(component)).not.toBeNull();
       expect(elements.progressiveImage(component)).not.toBeNull();
       fireEvent(elements.progressiveThumbnail(component), 'onLoad');
       fireEvent(elements.progressiveImage(component), 'onLoad');
       act(() => {
-        timeTravel(2 * LOAD_PROGRESSIVE_IMAGE_TIMEOUT);
+        timeTravel(ON_LOAD_PROGRESSIVE_IMAGE_TIMEOUT + DEFAULT_TIMING);
       });
       expect(elements.progressiveThumbnail(component)).toBeNull();
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
@@ -124,13 +138,15 @@ describe('<ProgressiveImage />', () => {
   });
 
   describe('When "imageType" is "still"', () => {
-    beforeAll(() => {
-      imageType = 'still';
+    const imageType = 'still';
+
+    beforeEach(() => {
+      setupTimeTravel();
     });
 
     it('should render with the correct value for "borderRadius" when it is set', async () => {
       const borderRadius = randomPositiveNumber(10, 1);
-      const component = render(renderProgressiveImage(borderRadius));
+      const component = render(renderProgressiveImage(imageType, borderRadius));
       expect(
         elements.progressiveImageWrapper(component).props.style[0].borderRadius,
       ).toEqual(borderRadius);
@@ -138,7 +154,7 @@ describe('<ProgressiveImage />', () => {
     });
 
     it('should show the thumbnail-image and the image when the image did not load yet', async () => {
-      const component = render(renderProgressiveImage());
+      const component = render(renderProgressiveImage(imageType));
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
       expect(elements.progressiveThumbnail(component)).not.toBeNull();
       expect(elements.progressiveImage(component)).not.toBeNull();
@@ -146,14 +162,14 @@ describe('<ProgressiveImage />', () => {
     });
 
     it('should not show the thumbnail-image when the image is loaded', async () => {
-      const component = render(renderProgressiveImage());
+      const component = render(renderProgressiveImage(imageType));
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
       expect(elements.progressiveThumbnail(component)).not.toBeNull();
       expect(elements.progressiveImage(component)).not.toBeNull();
       fireEvent(elements.progressiveThumbnail(component), 'onLoad');
       fireEvent(elements.progressiveImage(component), 'onLoad');
       act(() => {
-        timeTravel(2 * LOAD_PROGRESSIVE_IMAGE_TIMEOUT);
+        timeTravel(ON_LOAD_PROGRESSIVE_IMAGE_TIMEOUT + DEFAULT_TIMING);
       });
       expect(elements.progressiveThumbnail(component)).toBeNull();
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
@@ -163,13 +179,15 @@ describe('<ProgressiveImage />', () => {
   });
 
   describe('When "imageType" is "backdrop"', () => {
-    beforeAll(() => {
-      imageType = 'backdrop';
+    const imageType = 'backdrop';
+
+    beforeEach(() => {
+      setupTimeTravel();
     });
 
     it('should render with the correct value for "borderRadius" when it is set', async () => {
       const borderRadius = randomPositiveNumber(10, 1);
-      const component = render(renderProgressiveImage(borderRadius));
+      const component = render(renderProgressiveImage(imageType, borderRadius));
       expect(
         elements.progressiveImageWrapper(component).props.style[0].borderRadius,
       ).toEqual(borderRadius);
@@ -177,7 +195,7 @@ describe('<ProgressiveImage />', () => {
     });
 
     it('should show the thumbnail-image and the image when the image did not load yet', async () => {
-      const component = render(renderProgressiveImage());
+      const component = render(renderProgressiveImage(imageType));
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
       expect(elements.progressiveThumbnail(component)).not.toBeNull();
       expect(elements.progressiveImage(component)).not.toBeNull();
@@ -185,14 +203,14 @@ describe('<ProgressiveImage />', () => {
     });
 
     it('should not show the thumbnail-image when the image is loaded', async () => {
-      const component = render(renderProgressiveImage());
+      const component = render(renderProgressiveImage(imageType));
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();
       expect(elements.progressiveThumbnail(component)).not.toBeNull();
       expect(elements.progressiveImage(component)).not.toBeNull();
       fireEvent(elements.progressiveThumbnail(component), 'onLoad');
       fireEvent(elements.progressiveImage(component), 'onLoad');
       act(() => {
-        timeTravel(2 * LOAD_PROGRESSIVE_IMAGE_TIMEOUT);
+        timeTravel(ON_LOAD_PROGRESSIVE_IMAGE_TIMEOUT + DEFAULT_TIMING);
       });
       expect(elements.progressiveThumbnail(component)).toBeNull();
       expect(elements.progressiveImageWrapper(component)).not.toBeNull();

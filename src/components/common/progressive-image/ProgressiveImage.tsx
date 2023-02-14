@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {TMDBImage} from '@components';
+import {TMDBAnimatedImage} from '@components';
 import {ImageType} from '@local-types';
 
 import {useProgressiveImage} from './useProgressiveImage';
@@ -15,43 +15,38 @@ type ProgressiveImageProps = {
 };
 
 export const ProgressiveImage = (props: ProgressiveImageProps) => {
-  const progressiveImage = useProgressiveImage();
+  const progressiveImage = useProgressiveImage({
+    imageHeight: props.height,
+    imageBorderRadius: props.borderRadius,
+  });
+
   return (
     <Styles.ForegroundLayer
       borderRadius={props.borderRadius || 0}
       removeBackgroundColor={props.removeBackgroundColor}
       testID="progressive-image-wrapper">
       {!progressiveImage.isImageLoaded && (
-        <TMDBImage
+        <TMDBAnimatedImage
           onLoad={progressiveImage.onLoadThumbnail}
           imageType={props.imageType}
           blurRadius={1}
           image={props.image}
           isThumbnail
-          isAnimated
           testID="progressive-thumbnail"
-          style={{
-            width: Styles.styles.container.width,
-            height: props.height || Styles.styles.container.height,
-            opacity: progressiveImage.thumbnailOpacity,
-            borderRadius: Number(props.borderRadius || 0),
-          }}
+          style={[
+            progressiveImage.baseStyle,
+            progressiveImage.thumbnailAnimatedStyle,
+          ]}
         />
       )}
-      <TMDBImage
+      <TMDBAnimatedImage
         onLoad={progressiveImage.onLoadImage}
         imageType={props.imageType}
         image={props.image}
-        isAnimated
         testID="progressive-image"
         style={[
-          Styles.styles.imageOverlay,
-          {
-            width: Styles.styles.container.width,
-            height: props.height || Styles.styles.container.height,
-            opacity: progressiveImage.imageOpacity,
-            borderRadius: Number(props.borderRadius || 0),
-          },
+          progressiveImage.defaultImageBaseStyle,
+          progressiveImage.defaultImageAnimatedStyle,
         ]}
       />
     </Styles.ForegroundLayer>

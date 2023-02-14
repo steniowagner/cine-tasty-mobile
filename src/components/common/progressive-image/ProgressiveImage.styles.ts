@@ -9,12 +9,14 @@ type ForegroundLayerStyleProps = {
 export const ForegroundLayer = styled(View)<ForegroundLayerStyleProps>`
   height: 100%;
   width: 100%;
-  background-color: ${({removeBackgroundColor}) =>
-    removeBackgroundColor ? 'transparent' : 'rgba(242, 242, 242, 0.5)'};
+  background-color: ${({removeBackgroundColor, theme}) =>
+    removeBackgroundColor
+      ? 'transparent'
+      : theme.colors.progressiveImageBackground};
   border-radius: ${({borderRadius}) => Number(borderRadius)}px;
 `;
 
-export const styles = StyleSheet.create({
+export const sheet = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',

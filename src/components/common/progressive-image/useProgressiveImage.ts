@@ -1,34 +1,85 @@
-import {useCallback, useState, useRef} from 'react';
-import {Animated} from 'react-native';
+import {useCallback, useMemo, useState} from 'react';
+import {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS,
+} from 'react-native-reanimated';
 
-export const LOAD_PROGRESSIVE_IMAGE_TIMEOUT = 500;
+import * as Styles from './ProgressiveImage.styles';
 
-export const useProgressiveImage = () => {
+export const ON_LOAD_PROGRESSIVE_IMAGE_TIMEOUT = 500;
+export const DEFAULT_TIMING = 250;
+
+type UseProgressiveImageProps = {
+  imageHeight?: number;
+  imageBorderRadius?: number;
+};
+
+export const useProgressiveImage = (props: UseProgressiveImageProps) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const thumbnailOpacity = useRef(new Animated.Value(0)).current;
-  const imageOpacity = useRef(new Animated.Value(0)).current;
+
+  const thumbnailOpacity = useSharedValue(0);
+  const defaultImageOpacity = useSharedValue(0);
+
+  const baseStyle = useMemo(
+    () => ({
+      width: Styles.sheet.container.width,
+      height: props.imageHeight || Styles.sheet.container.height,
+      borderRadius: Number(props.imageBorderRadius || 0),
+    }),
+    [props.imageBorderRadius, props.imageHeight],
+  );
+
+  const defaultImageBaseStyle = useMemo(
+    () => ({
+      ...baseStyle,
+      ...Styles.sheet.imageOverlay,
+    }),
+    [baseStyle],
+  );
 
   const onLoadThumbnail = useCallback(() => {
-    Animated.timing(thumbnailOpacity, {
-      useNativeDriver: true,
-      toValue: 1,
-    }).start();
+    thumbnailOpacity.value = withTiming(1, {
+      duration: DEFAULT_TIMING,
+    });
   }, []);
 
   const onLoadImage = useCallback(() => {
     setTimeout(() => {
-      Animated.timing(imageOpacity, {
-        useNativeDriver: true,
-        toValue: 1,
-      }).start(() => setIsImageLoaded(true));
-    }, LOAD_PROGRESSIVE_IMAGE_TIMEOUT);
+      defaultImageOpacity.value = withTiming(
+        1,
+        {
+          duration: DEFAULT_TIMING,
+        },
+        (isFinished: boolean) => {
+          if (isFinished) {
+            runOnJS(setIsImageLoaded)(true);
+          }
+        },
+      );
+    }, ON_LOAD_PROGRESSIVE_IMAGE_TIMEOUT);
   }, []);
 
+  const thumbnailAnimatedStyle = useAnimatedStyle(
+    () => ({opacity: thumbnailOpacity.value}),
+    [thumbnailOpacity],
+  );
+
+  const defaultImageAnimatedStyle = useAnimatedStyle(
+    () => ({
+      opacity: defaultImageOpacity.value,
+    }),
+    [defaultImageOpacity],
+  );
+
   return {
-    thumbnailOpacity,
+    thumbnailAnimatedStyle,
     onLoadThumbnail,
+    baseStyle,
     isImageLoaded,
-    imageOpacity,
+    defaultImageAnimatedStyle,
+    defaultImageBaseStyle,
     onLoadImage,
   };
 };
