@@ -27,6 +27,7 @@ declare module 'styled-components/native' {
     red: string;
     green: string;
     white: string;
+    progressiveImageBackground: string;
   };
 
   export type Metrics = {

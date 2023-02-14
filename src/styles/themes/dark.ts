@@ -30,6 +30,7 @@ export const dark: DefaultTheme = {
     red: '#D5233B',
     green: '#32BE70',
     white: '#FFFFFF',
+    progressiveImageBackground: 'rgba(242, 242, 242, 0.5)',
   },
   metrics,
 };
