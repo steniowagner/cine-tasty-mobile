@@ -23,7 +23,7 @@ export {SectionViewAll} from './section-view-all/SectionViewAll';
 export {SimplifiedMediaListItem} from './simplified-media-list-item/SimplifiedMediaListItem';
 export {StarsVotes} from './stars-votes/StarsVotes';
 export {StatusBarStyled} from './statusbar/Statusbar';
-export {useTMDBImage, TMDBImage} from './tmdb-image';
+export * from './tmdb-image';
 export {FamousList} from './famous-list/FamousList';
 export {
   flags,
