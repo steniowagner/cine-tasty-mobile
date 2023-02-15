@@ -37,11 +37,7 @@ export const PeopleListItem = memo(
         {imageFallbackView.isFallbackImageVisible && (
           <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
-            style={[
-              {
-                opacity: imageFallbackView.opacity,
-              },
-            ]}>
+            style={imageFallbackView.imageFallbackViewStyle}>
             {renderSVGIconConditionally({
               condition: imageFallbackView.hasError,
               ifTrue: {

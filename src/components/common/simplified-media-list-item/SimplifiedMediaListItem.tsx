@@ -43,11 +43,7 @@ export const SimplifiedMediaListItem = (
           <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
             withLargeLayout={props.withLargeLayout}
-            style={[
-              {
-                opacity: imageFallbackView.opacity,
-              },
-            ]}>
+            style={imageFallbackView.imageFallbackViewStyle}>
             {renderSVGIconConditionally({
               condition: imageFallbackView.hasError,
               ifTrue: {

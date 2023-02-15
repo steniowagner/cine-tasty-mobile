@@ -1,5 +1,6 @@
-import {TouchableOpacity, Animated, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 import styled from 'styled-components/native';
+import Animated from 'react-native-reanimated';
 
 import metrics from '@styles/metrics';
 

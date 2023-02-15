@@ -31,11 +31,7 @@ const ProfileImage = (props: ProfileImageProps) => {
       {imageFallbackView.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-profile-image-wrapper"
-          style={[
-            {
-              opacity: imageFallbackView.opacity,
-            },
-          ]}>
+          style={imageFallbackView.imageFallbackViewStyle}>
           {renderSVGIconConditionally({
             condition: imageFallbackView.hasError,
             ifTrue: {

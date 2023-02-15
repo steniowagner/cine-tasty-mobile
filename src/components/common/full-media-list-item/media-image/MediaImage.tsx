@@ -15,10 +15,15 @@ type MediaImageProps = {
 };
 
 export const MediaImage = ({image}: MediaImageProps) => {
-  const {isFallbackImageVisible, hasError, onError, opacity, onLoad} =
-    useImageFallbackView({
-      image,
-    });
+  const {
+    isFallbackImageVisible,
+    hasError,
+    onError,
+    imageFallbackViewStyle,
+    onLoad,
+  } = useImageFallbackView({
+    image,
+  });
 
   return (
     <>
@@ -37,11 +42,7 @@ export const MediaImage = ({image}: MediaImageProps) => {
       {isFallbackImageVisible && (
         <Styles.FallbackMediaPosterImage
           testID="fallback-image-wrapper"
-          style={[
-            {
-              opacity,
-            },
-          ]}>
+          style={imageFallbackViewStyle}>
           {renderSVGIconConditionally({
             condition: hasError,
             ifTrue: {

@@ -1,5 +1,10 @@
-import {useState, useEffect, useRef, useCallback} from 'react';
-import {Animated} from 'react-native';
+import {useState, useEffect, useCallback} from 'react';
+import {
+  withTiming,
+  useAnimatedStyle,
+  useSharedValue,
+  runOnJS,
+} from 'react-native-reanimated';
 
 export const ANIMATION_DURATION = 400;
 
@@ -12,23 +17,30 @@ export const useImageFallbackView = (props: UseImageFallbackViewProps) => {
   const [hasError, setImageHasError] = useState(false);
   const [isLoaded, setIsImageLoaded] = useState(false);
 
-  const fallbackImageWrapperOpacity = useRef(new Animated.Value(1)).current;
+  const fallbackImageOpacity = useSharedValue(1);
 
-  const handleOnError = useCallback(() => {
-    setImageHasError(true);
+  const handleAnimateFallbackImageOpacity = useCallback(() => {
+    fallbackImageOpacity.value = withTiming(
+      0,
+      {duration: ANIMATION_DURATION},
+      (isFinished: boolean) => {
+        if (isFinished) {
+          runOnJS(setIsFallbackImageVisible)(false);
+        }
+      },
+    );
   }, []);
 
-  const handleOnLoad = useCallback(() => {
-    setIsImageLoaded(true);
-  }, []);
+  const imageFallbackViewStyle = useAnimatedStyle(
+    () => ({
+      opacity: fallbackImageOpacity.value,
+    }),
+    [],
+  );
 
   useEffect(() => {
     if (isLoaded && !hasError) {
-      Animated.timing(fallbackImageWrapperOpacity, {
-        duration: ANIMATION_DURATION,
-        useNativeDriver: true,
-        toValue: 0,
-      }).start(() => setIsFallbackImageVisible(false));
+      handleAnimateFallbackImageOpacity();
     }
   }, [isLoaded]);
 
@@ -39,10 +51,10 @@ export const useImageFallbackView = (props: UseImageFallbackViewProps) => {
   }, []);
 
   return {
-    opacity: fallbackImageWrapperOpacity,
-    onError: handleOnError,
+    imageFallbackViewStyle,
+    onError: () => setImageHasError(true),
     isFallbackImageVisible,
-    onLoad: handleOnLoad,
+    onLoad: () => setIsImageLoaded(true),
     hasError,
   };
 };
