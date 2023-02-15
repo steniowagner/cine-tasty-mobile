@@ -1,4 +1,4 @@
-import {useLoadListItemImage} from '@hooks';
+import {useImageFallbackView} from '@hooks';
 import {useMemo} from 'react';
 
 import {getFamousListItemMeasures} from '../get-famous-list-item-measures/getFamousListItemMeasures';
@@ -9,14 +9,14 @@ type UseFamousListItemProps = {
 };
 
 export const useFamousListItem = (props: UseFamousListItemProps) => {
-  const loadingListItemImage = useLoadListItemImage({
+  const imageFallbackView = useImageFallbackView({
     image: props.image,
   });
 
   const measures = useMemo(() => getFamousListItemMeasures(props.index), []);
 
   return {
-    ...loadingListItemImage,
+    ...imageFallbackView,
     measures,
   };
 };

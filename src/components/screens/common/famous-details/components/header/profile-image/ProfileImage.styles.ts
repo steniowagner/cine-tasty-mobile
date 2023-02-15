@@ -1,4 +1,4 @@
-import {Animated} from 'react-native';
+import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';

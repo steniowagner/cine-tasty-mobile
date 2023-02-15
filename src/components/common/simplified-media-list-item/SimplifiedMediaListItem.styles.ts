@@ -1,5 +1,6 @@
-import {TouchableOpacity, Animated, View, Text} from 'react-native';
+import {TouchableOpacity, View, Text} from 'react-native';
 import styled from 'styled-components/native';
+import Animated from 'react-native-reanimated';
 
 import {TMDBImage} from '../tmdb-image/TMDBImage';
 

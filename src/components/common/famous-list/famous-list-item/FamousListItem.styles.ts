@@ -1,5 +1,6 @@
-import {Animated, Text} from 'react-native';
+import {Text} from 'react-native';
 import styled from 'styled-components/native';
+import Animated from 'react-native-reanimated';
 
 import {TMDBImage} from '@components';
 import metrics from '@styles/metrics';

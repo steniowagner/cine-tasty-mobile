@@ -10,7 +10,7 @@ import {
 import {ThemeProvider} from 'styled-components/native';
 
 import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
-import {ANIMATION_DURATION} from '@src/hooks/useLoadListItemImage';
+import {ANIMATION_DURATION} from '@src/hooks/useImageFallbackView';
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {dark as theme} from '@styles/themes/dark';
 

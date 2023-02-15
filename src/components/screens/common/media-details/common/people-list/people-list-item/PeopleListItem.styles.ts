@@ -1,6 +1,7 @@
-import {TouchableOpacity, Animated, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
+import Animated from 'react-native-reanimated';
 
 import {TMDBImage} from '@components';
 import {CONSTANTS} from '@utils';

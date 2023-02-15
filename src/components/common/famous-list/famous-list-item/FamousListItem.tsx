@@ -37,11 +37,7 @@ export const FamousListItem = memo(
           {famousListItem.isFallbackImageVisible && (
             <Styles.FallbackImageWrapper
               testID="fallback-image-wrapper"
-              style={[
-                {
-                  opacity: famousListItem.opacity,
-                },
-              ]}>
+              style={famousListItem.imageFallbackViewStyle}>
               {renderSVGIconConditionally({
                 condition: famousListItem.hasError,
                 ifTrue: {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {renderSVGIconConditionally, TMDBImage, SVGIcon} from '@components';
-import {useLoadListItemImage} from '@hooks';
+import {useImageFallbackView} from '@hooks';
 import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
@@ -14,7 +14,7 @@ type RecentSearchesListItemProps = {
 };
 
 export const RecentSearchesListItem = (props: RecentSearchesListItemProps) => {
-  const loadListImage = useLoadListItemImage({
+  const imageFallbackView = useImageFallbackView({
     image: props.item.image,
   });
   return (
@@ -24,8 +24,8 @@ export const RecentSearchesListItem = (props: RecentSearchesListItemProps) => {
         testID="recent-searches-list-item-button">
         <>
           <TMDBImage
-            onError={loadListImage.onError}
-            onLoad={loadListImage.onLoad}
+            onError={imageFallbackView.onError}
+            onLoad={imageFallbackView.onLoad}
             image={props.item.image}
             imageType="profile"
             style={{
@@ -34,16 +34,16 @@ export const RecentSearchesListItem = (props: RecentSearchesListItemProps) => {
               borderRadius: metrics.smallSize,
             }}
           />
-          {loadListImage.isFallbackImageVisible && (
+          {imageFallbackView.isFallbackImageVisible && (
             <Styles.FallbackImageWrapper
               testID="fallback-image-wrapper"
               style={[
                 {
-                  opacity: loadListImage.opacity,
+                  opacity: imageFallbackView.opacity,
                 },
               ]}>
               {renderSVGIconConditionally({
-                condition: loadListImage.hasError,
+                condition: imageFallbackView.hasError,
                 ifTrue: {
                   colorThemeRef: 'fallbackImageIcon',
                   size: Styles.DEFAULT_ICON_SIZE,
