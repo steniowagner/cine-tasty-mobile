@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {renderSVGIconConditionally, TMDBImage} from '@components';
-import {useLoadListItemImage} from '@hooks';
+import {useImageFallbackView} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './ImageListItem.styles';
@@ -14,7 +14,7 @@ type ImageListItemProps = Styles.ImageOrientation & {
 };
 
 export const ImageListItem = (props: ImageListItemProps) => {
-  const loadListItemImage = useLoadListItemImage({
+  const imageFallbackView = useImageFallbackView({
     image: props.image,
   });
   return (
@@ -24,21 +24,21 @@ export const ImageListItem = (props: ImageListItemProps) => {
       onPress={props.onPress}>
       <TMDBImage
         imageType={props.orientation === 'PORTRAIT' ? 'profile' : 'still'}
-        onError={loadListItemImage.onError}
-        onLoad={loadListItemImage.onLoad}
+        onError={imageFallbackView.onError}
+        onLoad={imageFallbackView.onLoad}
         style={Styles.TMDBImageStyle}
         image={props.image}
       />
-      {loadListItemImage.isFallbackImageVisible && (
+      {imageFallbackView.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity: loadListItemImage.opacity,
+              opacity: imageFallbackView.opacity,
             },
           ]}>
           {renderSVGIconConditionally({
-            condition: loadListItemImage.hasError,
+            condition: imageFallbackView.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,

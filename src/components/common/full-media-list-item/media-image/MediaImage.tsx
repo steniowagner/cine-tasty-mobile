@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {renderSVGIconConditionally, TMDBImage} from '@components';
-import {useLoadListItemImage} from '@hooks';
+import {useImageFallbackView} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './MediaImage.styles';
@@ -16,7 +16,7 @@ type MediaImageProps = {
 
 export const MediaImage = ({image}: MediaImageProps) => {
   const {isFallbackImageVisible, hasError, onError, opacity, onLoad} =
-    useLoadListItemImage({
+    useImageFallbackView({
       image,
     });
 

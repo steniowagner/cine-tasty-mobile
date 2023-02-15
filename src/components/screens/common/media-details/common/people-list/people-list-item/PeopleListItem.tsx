@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 
 import {renderSVGIconConditionally} from '@components';
-import {useLoadListItemImage} from '@hooks';
+import {useImageFallbackView} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './PeopleListItem.styles';
@@ -19,7 +19,7 @@ type PeopleListItemProps = {
 
 export const PeopleListItem = memo(
   (props: PeopleListItemProps) => {
-    const loadListItemImage = useLoadListItemImage({
+    const imageFallbackView = useImageFallbackView({
       image: props.image,
     });
     return (
@@ -29,21 +29,21 @@ export const PeopleListItem = memo(
         <Styles.TMDBImageStyled
           testID="person-image"
           imageType="poster"
-          onError={loadListItemImage.onError}
-          onLoad={loadListItemImage.onLoad}
+          onError={imageFallbackView.onError}
+          onLoad={imageFallbackView.onLoad}
           image={props.image}
           style={{}}
         />
-        {loadListItemImage.isFallbackImageVisible && (
+        {imageFallbackView.isFallbackImageVisible && (
           <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
             style={[
               {
-                opacity: loadListItemImage.opacity,
+                opacity: imageFallbackView.opacity,
               },
             ]}>
             {renderSVGIconConditionally({
-              condition: loadListItemImage.hasError,
+              condition: imageFallbackView.hasError,
               ifTrue: {
                 colorThemeRef: 'fallbackImageIcon',
                 size: DEFAULT_ICON_SIZE,

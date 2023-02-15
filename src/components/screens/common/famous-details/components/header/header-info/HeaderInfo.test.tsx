@@ -13,7 +13,7 @@ import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 
 import HeaderInfo, {HeaderInfoProps} from './HeaderInfo';
 import {TMDBImageQualityProvider} from '@providers';
-import {ANIMATION_DURATION} from '@src/hooks/useLoadListItemImage';
+import {ANIMATION_DURATION} from '@src/hooks/useImageFallbackView';
 
 const KNOWN_FOR_DEPARTMENT = 'KNOWN_FOR_DEPARTMENT';
 const PROFILE_IMAGE = 'PROFILE_IMAGE';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {renderSVGIconConditionally, TMDBImage} from '@components';
-import {useLoadListItemImage} from '@hooks';
+import {useImageFallbackView} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './ProfileImage.styles';
@@ -11,15 +11,15 @@ type ProfileImageProps = {
 };
 
 const ProfileImage = (props: ProfileImageProps) => {
-  const loadListImage = useLoadListItemImage({
+  const imageFallbackView = useImageFallbackView({
     image: props.profileImage,
   });
   return (
     <>
       <TMDBImage
         imageType="profile"
-        onError={loadListImage.onError}
-        onLoad={loadListImage.onLoad}
+        onError={imageFallbackView.onError}
+        onLoad={imageFallbackView.onLoad}
         image={props.profileImage}
         testID="profile-image"
         style={{
@@ -28,16 +28,16 @@ const ProfileImage = (props: ProfileImageProps) => {
           borderRadius: metrics.extraSmallSize,
         }}
       />
-      {loadListImage.isFallbackImageVisible && (
+      {imageFallbackView.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-profile-image-wrapper"
           style={[
             {
-              opacity: loadListImage.opacity,
+              opacity: imageFallbackView.opacity,
             },
           ]}>
           {renderSVGIconConditionally({
-            condition: loadListImage.hasError,
+            condition: imageFallbackView.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: Styles.DEFAULT_ICON_SIZE,

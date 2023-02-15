@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {renderSVGIconConditionally, Icons} from '@components';
-import {useLoadListItemImage} from '@hooks';
+import {useImageFallbackView} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './PosterImage.styles';
@@ -14,29 +14,29 @@ type PosterImageProps = {
 };
 
 export const PosterImage = (props: PosterImageProps) => {
-  const loadListItemImage = useLoadListItemImage({
+  const imageFallbackView = useImageFallbackView({
     image: props.image,
   });
   return (
     <>
       <Styles.TMDBImageStyled
-        onError={loadListItemImage.onError}
-        onLoad={loadListItemImage.onLoad}
+        onError={imageFallbackView.onError}
+        onLoad={imageFallbackView.onLoad}
         testID="poster-image"
         image={props.image}
         imageType="poster"
         style={{}}
       />
-      {loadListItemImage.isFallbackImageVisible && (
+      {imageFallbackView.isFallbackImageVisible && (
         <Styles.FallbackImageWrapper
           testID="fallback-image-wrapper"
           style={[
             {
-              opacity: loadListItemImage.opacity,
+              opacity: imageFallbackView.opacity,
             },
           ]}>
           {renderSVGIconConditionally({
-            condition: loadListItemImage.hasError,
+            condition: imageFallbackView.hasError,
             ifTrue: {
               colorThemeRef: 'fallbackImageIcon',
               size: DEFAULT_ICON_SIZE,

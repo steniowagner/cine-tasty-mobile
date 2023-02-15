@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {renderSVGIconConditionally, SVGIcon} from '@components';
-import {useLoadListItemImage} from '@hooks';
+import {useImageFallbackView} from '@hooks';
 import metrics from '@styles/metrics';
 
 import * as Styles from './SimplifiedMediaListItem.styles';
@@ -21,7 +21,7 @@ type SimplifiedMediaListItemProps = {
 export const SimplifiedMediaListItem = (
   props: SimplifiedMediaListItemProps,
 ) => {
-  const loadListImage = useLoadListItemImage({
+  const imageFallbackView = useImageFallbackView({
     image: props.image,
   });
   return (
@@ -33,23 +33,23 @@ export const SimplifiedMediaListItem = (
         <Styles.CustomTMDBImage
           imageType="poster"
           withLargeLayout={props.withLargeLayout}
-          onError={loadListImage.onError}
-          onLoad={loadListImage.onLoad}
+          onError={imageFallbackView.onError}
+          onLoad={imageFallbackView.onLoad}
           image={props.image}
           testID="simplified-media-list-image"
           style={{}}
         />
-        {loadListImage.isFallbackImageVisible && (
+        {imageFallbackView.isFallbackImageVisible && (
           <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
             withLargeLayout={props.withLargeLayout}
             style={[
               {
-                opacity: loadListImage.opacity,
+                opacity: imageFallbackView.opacity,
               },
             ]}>
             {renderSVGIconConditionally({
-              condition: loadListImage.hasError,
+              condition: imageFallbackView.hasError,
               ifTrue: {
                 colorThemeRef: 'fallbackImageIcon',
                 size: DEFAULT_ICON_SIZE,

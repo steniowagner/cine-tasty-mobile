@@ -3,11 +3,11 @@ import {Animated} from 'react-native';
 
 export const ANIMATION_DURATION = 400;
 
-type UseLoadListItemImageProps = {
+type UseImageFallbackViewProps = {
   image: string;
 };
 
-export const useLoadListItemImage = (props: UseLoadListItemImageProps) => {
+export const useImageFallbackView = (props: UseImageFallbackViewProps) => {
   const [isFallbackImageVisible, setIsFallbackImageVisible] = useState(true);
   const [hasError, setImageHasError] = useState(false);
   const [isLoaded, setIsImageLoaded] = useState(false);
