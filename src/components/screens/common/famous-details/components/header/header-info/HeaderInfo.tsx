@@ -1,10 +1,11 @@
 import React from 'react';
 
+import {TMDBImageWithFallback} from '@components';
+
 import KnownForDepartment from '../known-for-department/KnownForDepartment';
 import HeaderLoadingPlaceholder from '../header-loading-placeholder/HeaderLoadingPlaceholder';
 import InfoText, {DEFAULT_MARGIN_VERTICAL} from '../InfoText';
 import BirthDayText from '../birthday-text/BirthDayText';
-import ProfileImage from '../profile-image/ProfileImage';
 import * as Styles from './HeaderInfo.styles';
 
 export type HeaderInfoProps = {
@@ -20,7 +21,15 @@ const HeaderInfo = (props: HeaderInfoProps) => (
   <Styles.Wrapper testID="header-info">
     <Styles.NameText testID="name-text">{props.name}</Styles.NameText>
     <Styles.InfoWrapper>
-      <ProfileImage profileImage={props.profileImage} />
+      <TMDBImageWithFallback
+        imageType="profile"
+        testID="profile-image"
+        image={props.profileImage}
+        style={Styles.sheet.profileImage}
+        iconImageLoading="account"
+        iconImageError="image-off"
+        iconSize={Styles.PROFILE_IMAGE_ICON_SIZE}
+      />
       {props.isLoading ? (
         <HeaderLoadingPlaceholder />
       ) : (
