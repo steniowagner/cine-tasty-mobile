@@ -55,7 +55,7 @@ export const useTMDBImageWithFallback = (
       borderRadius: props.style.borderRadius,
       backgroundColor: theme.colors.fallbackImageBackground,
     }),
-    [props.style],
+    [props.style, theme],
   );
 
   useEffect(() => {
