@@ -36,7 +36,7 @@ export const TMDBImageWithFallback = (props: TMDBImageWithFallbackProps) => {
       {tmdbImageWithFallback.isVisible && (
         <Animated.View
           style={tmdbImageWithFallback.imageFallbackViewStyle}
-          testID="tmdb-fallback-image">
+          testID={`${props.testID}-tmdb-fallback-image`}>
           {renderSVGIconConditionally({
             condition: tmdbImageWithFallback.hasError,
             ifTrue: {
