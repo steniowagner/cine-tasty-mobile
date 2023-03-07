@@ -22,7 +22,7 @@ export const useTMDBImage = (props: UseTMDBImageProps) => {
       }${props.image}`;
     }
     return `${THUMBNAIL_URL}${props.image}`;
-  }, [props.isThumbnail, props.imageType, props.image]);
+  }, [props.isThumbnail, props.imageType, props.image, imagesQualities]);
 
   return {
     uri,
