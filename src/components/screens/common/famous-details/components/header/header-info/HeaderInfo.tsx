@@ -5,7 +5,7 @@ import {TMDBImageWithFallback} from '@components';
 import KnownForDepartment from '../known-for-department/KnownForDepartment';
 import HeaderLoadingPlaceholder from '../header-loading-placeholder/HeaderLoadingPlaceholder';
 import InfoText, {DEFAULT_MARGIN_VERTICAL} from '../InfoText';
-import BirthDayText from '../birthday-text/BirthDayText';
+import {BirthDayText} from '../birthday-text/BirthDayText';
 import * as Styles from './HeaderInfo.styles';
 
 export type HeaderInfoProps = {
@@ -17,7 +17,7 @@ export type HeaderInfoProps = {
   name: string;
 };
 
-const HeaderInfo = (props: HeaderInfoProps) => (
+export const HeaderInfo = (props: HeaderInfoProps) => (
   <Styles.Wrapper testID="header-info">
     <Styles.NameText testID="name-text">{props.name}</Styles.NameText>
     <Styles.InfoWrapper>
@@ -52,5 +52,3 @@ const HeaderInfo = (props: HeaderInfoProps) => (
     </Styles.InfoWrapper>
   </Styles.Wrapper>
 );
-
-export default HeaderInfo;
