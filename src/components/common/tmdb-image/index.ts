@@ -1,4 +1,4 @@
 export {useTMDBImage} from './useTMDBImage';
 export {TMDBImage} from './TMDBImage';
-export {TMDBAnimatedImage} from './TMDBAnimatedImage';
+export {TMDBImageAnimated} from './with-animation/TMDBImageAnimated';
 export {TMDBImageWithFallback} from './with-fallback/TMDBImageWithFallback';

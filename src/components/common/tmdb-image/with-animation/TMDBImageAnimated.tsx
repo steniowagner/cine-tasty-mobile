@@ -2,15 +2,15 @@ import React from 'react';
 import {StyleProp, ImageStyle} from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import {useTMDBImage} from './useTMDBImage';
-import {TMDBAImageProps} from './TMDBImagesProps';
+import {useTMDBImage} from '../useTMDBImage';
+import {TMDBAImageProps} from '../TMDBImagesProps';
 
-type TMDBAnimatedImageProps = TMDBAImageProps & {
+type TMDBImageAnimatedProps = TMDBAImageProps & {
   style: Animated.AnimateStyle<StyleProp<ImageStyle>>;
   blurRadius?: number;
 };
 
-export const TMDBAnimatedImage = (props: TMDBAnimatedImageProps) => {
+export const TMDBImageAnimated = (props: TMDBImageAnimatedProps) => {
   const tmdbImage = useTMDBImage({
     isThumbnail: props.isThumbnail,
     imageType: props.imageType,
