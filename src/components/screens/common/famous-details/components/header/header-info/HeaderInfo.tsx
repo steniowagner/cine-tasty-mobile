@@ -3,7 +3,7 @@ import React from 'react';
 import {TMDBImageWithFallback} from '@components';
 
 import KnownForDepartment from '../known-for-department/KnownForDepartment';
-import HeaderLoadingPlaceholder from '../header-loading-placeholder/HeaderLoadingPlaceholder';
+import {HeaderLoadingPlaceholder} from '../header-loading-placeholder/HeaderLoadingPlaceholder';
 import InfoText, {DEFAULT_MARGIN_VERTICAL} from '../InfoText';
 import {BirthDayText} from '../birthday-text/BirthDayText';
 import * as Styles from './HeaderInfo.styles';

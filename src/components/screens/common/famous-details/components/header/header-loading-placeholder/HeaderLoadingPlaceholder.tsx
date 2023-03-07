@@ -1,38 +1,15 @@
 import React from 'react';
 
 import {LoadingPlaceholder} from '@components';
-import metrics from '@styles/metrics';
 
 import * as Styles from './HeaderLoadingPlaceholder.styles';
-import {DEFAULT_MARGIN_VERTICAL} from '../InfoText';
 
-const HeaderLoadingPlaceholder = () => (
+export const HeaderLoadingPlaceholder = () => (
   <Styles.LoadingWrapper testID="loading-header-placeholder">
     <Styles.TextLoadingWrapper>
-      <LoadingPlaceholder
-        style={{
-          width: metrics.getWidthFromDP('60%'),
-          borderRadius: metrics.height,
-          height: metrics.largeSize,
-        }}
-      />
-      <LoadingPlaceholder
-        style={{
-          marginVertical: DEFAULT_MARGIN_VERTICAL,
-          width: metrics.getWidthFromDP('60%'),
-          borderRadius: metrics.height,
-          height: metrics.largeSize,
-        }}
-      />
-      <LoadingPlaceholder
-        style={{
-          width: metrics.getWidthFromDP('60%'),
-          borderRadius: metrics.height,
-          height: metrics.largeSize,
-        }}
-      />
+      <LoadingPlaceholder style={Styles.styles.loadingItem} />
+      <LoadingPlaceholder style={Styles.styles.middleItem} />
+      <LoadingPlaceholder style={Styles.styles.loadingItem} />
     </Styles.TextLoadingWrapper>
   </Styles.LoadingWrapper>
 );
-
-export default HeaderLoadingPlaceholder;
