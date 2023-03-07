@@ -145,7 +145,6 @@ describe('<TMDBImageAnimated />', () => {
         jest.runAllTimers();
       });
       await waitFor(() => {});
-      console.log(elements.tmdbImageAnimated(component).props);
       expect(elements.tmdbImageAnimated(component).props.style).toEqual(style);
     });
 
