@@ -1,19 +1,15 @@
 import React, {useLayoutEffect} from 'react';
-import {Animated} from 'react-native';
+import {ScrollView} from 'react-native';
 import {withTheme} from 'styled-components/native';
 
 import {
   ExpansibleTextSection,
   MediaHorizontalList,
-  ProgressiveImage,
   ImagesList,
   HeaderBackButton,
   Advise,
   StatusBarStyled,
 } from '@components';
-import {useGetCurrentTheme} from '@hooks';
-
-import metrics from '@styles/metrics';
 
 import {FamousDetailStackProps} from '../routes/route-params-types';
 import HeaderInfo from './header/header-info/HeaderInfo';
@@ -22,7 +18,6 @@ import * as Styles from './FamousDetails.styles';
 import DeathDay from './death-day/DeathDay';
 
 export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
-  const getCurrentTheme = useGetCurrentTheme({theme: props.theme});
   const famousDetail = useFamousDetail({
     id: props.route.params.id,
   });
@@ -49,38 +44,7 @@ export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
   return (
     <>
       <StatusBarStyled />
-      <Styles.BackgroundImageWrapper testID="background-image-wrapper">
-        <Animated.View
-          style={{
-            opacity: famousDetail.scrollViewOffset.interpolate({
-              inputRange: [0, metrics.getHeightFromDP('10%')],
-              outputRange: [1, 0],
-              extrapolate: 'clamp',
-            }),
-          }}>
-          <ProgressiveImage
-            image={famousDetail.backgroundImage}
-            imageType="backdrop"
-          />
-        </Animated.View>
-        {/* @ts-ignore */}
-        <Styles.SmokeShadow currentTheme={getCurrentTheme.currentTheme} />
-      </Styles.BackgroundImageWrapper>
-      <Animated.ScrollView
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {y: famousDetail.scrollViewOffset},
-              },
-            },
-          ],
-          {
-            useNativeDriver: true,
-          },
-        )}
-        testID="scroll-content">
+      <ScrollView testID="scroll-content">
         <HeaderInfo
           knownForDepartment={famousDetail.famous?.knownForDepartment}
           profileImage={props.route.params.profileImage}
@@ -123,7 +87,7 @@ export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
             )}
           </>
         )}
-      </Animated.ScrollView>
+      </ScrollView>
     </>
   );
 });
