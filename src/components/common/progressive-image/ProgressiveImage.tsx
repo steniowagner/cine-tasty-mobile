@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {TMDBAnimatedImage} from '@components';
+import {TMDBImageAnimated} from '@components';
 import {ImageType} from '@local-types';
 
 import {useProgressiveImage} from './useProgressiveImage';
@@ -26,7 +26,7 @@ export const ProgressiveImage = (props: ProgressiveImageProps) => {
       removeBackgroundColor={props.removeBackgroundColor}
       testID="progressive-image-wrapper">
       {!progressiveImage.isImageLoaded && (
-        <TMDBAnimatedImage
+        <TMDBImageAnimated
           onLoad={progressiveImage.onLoadThumbnail}
           imageType={props.imageType}
           blurRadius={1}
@@ -39,7 +39,7 @@ export const ProgressiveImage = (props: ProgressiveImageProps) => {
           ]}
         />
       )}
-      <TMDBAnimatedImage
+      <TMDBImageAnimated
         onLoad={progressiveImage.onLoadImage}
         imageType={props.imageType}
         image={props.image}
