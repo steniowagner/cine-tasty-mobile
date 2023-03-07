@@ -7,7 +7,7 @@ type KnownForDepartmentProps = {
   knownForDepartment?: string;
 };
 
-const KnownForDepartment = (props: KnownForDepartmentProps) => {
+export const KnownForDepartment = (props: KnownForDepartmentProps) => {
   if (!props.knownForDepartment) {
     return null;
   }
@@ -20,5 +20,3 @@ const KnownForDepartment = (props: KnownForDepartmentProps) => {
     </Styles.KnownForDepartmentWrapper>
   );
 };
-
-export default KnownForDepartment;
