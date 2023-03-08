@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import BirthDayText from './BirthDayText';
+import {BirthDayText} from './BirthDayText';
 
 const MOCK_T_VALUE = 'February';
 

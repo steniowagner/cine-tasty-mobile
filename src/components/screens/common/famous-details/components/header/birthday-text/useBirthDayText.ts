@@ -8,7 +8,7 @@ type UseBirthDayTextProps = {
   rawDateString: string;
 };
 
-const useBirthDayText = (props: UseBirthDayTextProps) => {
+export const useBirthDayText = (props: UseBirthDayTextProps) => {
   const translations = useTranslations();
 
   const parse = useCallback(() => {
@@ -48,5 +48,3 @@ const useBirthDayText = (props: UseBirthDayTextProps) => {
     text,
   };
 };
-
-export default useBirthDayText;

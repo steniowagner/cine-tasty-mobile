@@ -12,6 +12,7 @@ export type Style = {
   height?: string | number;
   marginBottom?: number;
   marginHorizontal?: number;
+  marginVertical?: number;
 };
 
 type UseLoadingPlaceholderProps = {
@@ -28,6 +29,7 @@ export const useLoadingPlaceholder = (props: UseLoadingPlaceholderProps) => {
   const style = useAnimatedStyle(() => {
     return {
       opacity: animatedOpacity.value,
+      marginVertical: props.style.marginVertical,
     };
   });
 

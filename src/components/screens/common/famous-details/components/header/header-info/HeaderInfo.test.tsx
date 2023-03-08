@@ -1,19 +1,18 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   cleanup,
   render,
   RenderAPI,
-  act,
   waitFor,
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
-import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
+import {setupTimeTravel} from '@mocks/timeTravel';
 
-import HeaderInfo, {HeaderInfoProps} from './HeaderInfo';
-import {TMDBImageQualityProvider} from '@providers';
-import {ANIMATION_DURATION} from '@src/hooks/useImageFallbackView';
+import {HeaderInfo, HeaderInfoProps} from './HeaderInfo';
+import {TMDBImageQualitiesProvider} from '@providers';
 
 const KNOWN_FOR_DEPARTMENT = 'KNOWN_FOR_DEPARTMENT';
 const PROFILE_IMAGE = 'PROFILE_IMAGE';
@@ -21,19 +20,19 @@ const PLACE_OF_BIRTH = 'PLACE_OF_BIRTH';
 const BIRTH_DATE = '1994-02-21';
 const NAME = 'STENIO WAGNER';
 
-const renderHeaderInfo = (props: HeaderInfoProps) => (
-  <TMDBImageQualityProvider>
+const renderHeaderInfo = (props: Partial<HeaderInfoProps>) => (
+  <TMDBImageQualitiesProvider>
     <ThemeProvider theme={theme}>
       <HeaderInfo
-        knownForDepartment={props.knownForDepartment}
-        profileImage={props.profileImage}
-        placeOfBirth={props.placeOfBirth}
-        isLoading={props.isLoading}
-        birthDate={props.birthDate}
-        name={props.name}
+        knownForDepartment={props.knownForDepartment ?? KNOWN_FOR_DEPARTMENT}
+        profileImage={props.profileImage || PROFILE_IMAGE}
+        placeOfBirth={props.placeOfBirth ?? PLACE_OF_BIRTH}
+        isLoading={props.isLoading || false}
+        birthDate={props.birthDate ?? BIRTH_DATE}
+        name={props.name || NAME}
       />
     </ThemeProvider>
-  </TMDBImageQualityProvider>
+  </TMDBImageQualitiesProvider>
 );
 
 describe('<HeaderInfo />', () => {
@@ -50,23 +49,18 @@ describe('<HeaderInfo />', () => {
       api.queryByTestId('text-content-wrapper'),
   };
 
-  beforeEach(() => {
-    jest.useFakeTimers();
-    setupTimeTravel();
-  });
+  describe('When the data is loading', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+      setupTimeTravel();
+    });
 
-  afterEach(cleanup);
+    afterEach(cleanup);
 
-  describe('Loading-state', () => {
-    it('should render the loading-state when the "isLoading" is "true"', async () => {
+    it('should render the correctly', async () => {
       const component = render(
         renderHeaderInfo({
-          knownForDepartment: KNOWN_FOR_DEPARTMENT,
-          profileImage: PROFILE_IMAGE,
-          placeOfBirth: PLACE_OF_BIRTH,
-          birthDate: BIRTH_DATE,
           isLoading: true,
-          name: NAME,
         }),
       );
       expect(elements.loadingHeaderPlaceholder(component)).not.toBeNull();
@@ -80,144 +74,122 @@ describe('<HeaderInfo />', () => {
     });
   });
 
-  describe('Full-content-state', () => {
-    it('should only show the header-info content when the "isLoading" is "false"', async () => {
-      const component = render(
-        renderHeaderInfo({
-          knownForDepartment: KNOWN_FOR_DEPARTMENT,
-          profileImage: PROFILE_IMAGE,
-          placeOfBirth: PLACE_OF_BIRTH,
-          birthDate: BIRTH_DATE,
-          isLoading: false,
-          name: NAME,
-        }),
-      );
-      act(() => {
-        timeTravel(ANIMATION_DURATION);
-      });
+  describe('When the data is loaded', () => {
+    it('should only show render corretly when all the data is presented', async () => {
+      const component = render(renderHeaderInfo({}));
       expect(elements.loadingHeaderPlaceholder(component)).toBeNull();
       expect(elements.profileImage(component)).not.toBeNull();
       expect(elements.name(component)).not.toBeNull();
+      expect(elements.name(component).children[0]).toEqual(NAME);
       expect(elements.textContentWrapper(component)).not.toBeNull();
       expect(elements.birthday(component)).not.toBeNull();
       expect(elements.placeOfBirth(component)).not.toBeNull();
+      expect(elements.placeOfBirth(component).children[0]).toEqual(
+        PLACE_OF_BIRTH,
+      );
       expect(elements.knownForDepartment(component)).not.toBeNull();
+      expect(elements.knownForDepartment(component).children[0]).toEqual(
+        KNOWN_FOR_DEPARTMENT,
+      );
       await waitFor(() => {});
     });
 
-    it('should not show the "birth-date" when the "birthDate" is an empty string', async () => {
+    it('should not show the "BirthDate" when the "birthDate" is an empty string', async () => {
       const component = render(
         renderHeaderInfo({
-          knownForDepartment: KNOWN_FOR_DEPARTMENT,
-          profileImage: PROFILE_IMAGE,
-          placeOfBirth: PLACE_OF_BIRTH,
           birthDate: '',
-          isLoading: false,
-          name: NAME,
         }),
       );
-      act(() => {
-        timeTravel(ANIMATION_DURATION);
-      });
       expect(elements.loadingHeaderPlaceholder(component)).toBeNull();
       expect(elements.profileImage(component)).not.toBeNull();
       expect(elements.name(component)).not.toBeNull();
+      expect(elements.name(component).children[0]).toEqual(NAME);
       expect(elements.textContentWrapper(component)).not.toBeNull();
       expect(elements.birthday(component)).toBeNull();
       expect(elements.placeOfBirth(component)).not.toBeNull();
+      expect(elements.placeOfBirth(component).children[0]).toEqual(
+        PLACE_OF_BIRTH,
+      );
       expect(elements.knownForDepartment(component)).not.toBeNull();
+      expect(elements.knownForDepartment(component).children[0]).toEqual(
+        KNOWN_FOR_DEPARTMENT,
+      );
       await waitFor(() => {});
     });
 
-    it('should not show the "place-of-birth" when the "placeOfBirth" is an empty string', async () => {
+    it('should not show the "PlaceOfBirth" when the "placeOfBirth" is an empty string', async () => {
       const component = render(
         renderHeaderInfo({
-          knownForDepartment: KNOWN_FOR_DEPARTMENT,
-          profileImage: PROFILE_IMAGE,
           placeOfBirth: '',
-          birthDate: BIRTH_DATE,
-          isLoading: false,
-          name: NAME,
         }),
       );
-      act(() => {
-        timeTravel(ANIMATION_DURATION);
-      });
       expect(elements.loadingHeaderPlaceholder(component)).toBeNull();
       expect(elements.profileImage(component)).not.toBeNull();
       expect(elements.name(component)).not.toBeNull();
+      expect(elements.name(component).children[0]).toEqual(NAME);
       expect(elements.textContentWrapper(component)).not.toBeNull();
       expect(elements.birthday(component)).not.toBeNull();
       expect(elements.placeOfBirth(component)).toBeNull();
       expect(elements.knownForDepartment(component)).not.toBeNull();
+      expect(elements.knownForDepartment(component).children[0]).toEqual(
+        KNOWN_FOR_DEPARTMENT,
+      );
       await waitFor(() => {});
     });
 
-    it('should not show the "known-for-department" when the "knownForDepartment" is an empty string', async () => {
+    it('should not show the "KnownForDepartment" when the "knownForDepartment" is an empty string', async () => {
       const component = render(
         renderHeaderInfo({
           knownForDepartment: '',
-          profileImage: PROFILE_IMAGE,
-          placeOfBirth: PLACE_OF_BIRTH,
-          birthDate: BIRTH_DATE,
-          isLoading: false,
-          name: NAME,
         }),
       );
-      act(() => {
-        timeTravel(ANIMATION_DURATION);
-      });
       expect(elements.loadingHeaderPlaceholder(component)).toBeNull();
       expect(elements.profileImage(component)).not.toBeNull();
       expect(elements.name(component)).not.toBeNull();
+      expect(elements.name(component).children[0]).toEqual(NAME);
       expect(elements.textContentWrapper(component)).not.toBeNull();
       expect(elements.birthday(component)).not.toBeNull();
       expect(elements.placeOfBirth(component)).not.toBeNull();
+      expect(elements.placeOfBirth(component).children[0]).toEqual(
+        PLACE_OF_BIRTH,
+      );
       expect(elements.knownForDepartment(component)).toBeNull();
       await waitFor(() => {});
     });
 
-    it('should not show the "place-of-birth" and "birth-date" when the "placeOfBirth" and "birthDate" are empty strings', async () => {
+    it('should not show the "PlaceOfBirth" and "BirthDate" when the "placeOfBirth" and "birthDate" are empty strings', async () => {
       const component = render(
         renderHeaderInfo({
-          knownForDepartment: KNOWN_FOR_DEPARTMENT,
-          profileImage: PROFILE_IMAGE,
           placeOfBirth: '',
           birthDate: '',
-          isLoading: false,
-          name: NAME,
         }),
       );
-      act(() => {
-        timeTravel(ANIMATION_DURATION);
-      });
       expect(elements.loadingHeaderPlaceholder(component)).toBeNull();
       expect(elements.profileImage(component)).not.toBeNull();
       expect(elements.name(component)).not.toBeNull();
+      expect(elements.name(component).children[0]).toEqual(NAME);
       expect(elements.textContentWrapper(component)).not.toBeNull();
       expect(elements.birthday(component)).toBeNull();
       expect(elements.placeOfBirth(component)).toBeNull();
       expect(elements.knownForDepartment(component)).not.toBeNull();
+      expect(elements.knownForDepartment(component).children[0]).toEqual(
+        KNOWN_FOR_DEPARTMENT,
+      );
       await waitFor(() => {});
     });
 
-    it('should not show the "place-of-birth", "birth-date" and "known-for-department" when the "placeOfBirth", "birthDate" and "knownForDepartment are empty strings', async () => {
+    it('should not show the "PlaceOfBirth", "BirthDate" and "KnownForDepartment" when the "placeOfBirth", "birthDate" and "knownForDepartment are empty strings', async () => {
       const component = render(
         renderHeaderInfo({
-          profileImage: PROFILE_IMAGE,
           knownForDepartment: '',
           placeOfBirth: '',
           birthDate: '',
-          isLoading: false,
-          name: NAME,
         }),
       );
-      act(() => {
-        timeTravel(ANIMATION_DURATION);
-      });
       expect(elements.loadingHeaderPlaceholder(component)).toBeNull();
       expect(elements.profileImage(component)).not.toBeNull();
       expect(elements.name(component)).not.toBeNull();
+      expect(elements.name(component).children[0]).toEqual(NAME);
       expect(elements.textContentWrapper(component)).not.toBeNull();
       expect(elements.birthday(component)).toBeNull();
       expect(elements.placeOfBirth(component)).toBeNull();

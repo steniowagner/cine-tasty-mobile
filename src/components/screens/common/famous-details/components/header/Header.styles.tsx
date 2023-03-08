@@ -11,7 +11,7 @@ type InfoTextStyle = {
   marginTop?: number;
 };
 
-const InfoText = styled(Text)<InfoTextStyle>`
+export const DefaultText = styled(Text)<InfoTextStyle>`
   font-size: ${({theme}) => theme.metrics.largeSize}px;
   margin-top: ${({marginTop}) => marginTop || 0}px;
   margin-bottom: ${({marginBottom}) => marginBottom || 0}px;
@@ -19,5 +19,3 @@ const InfoText = styled(Text)<InfoTextStyle>`
   color: ${({withCustomColor, theme}) =>
     withCustomColor ? theme.colors.buttonText : theme.colors.text};
 `;
-
-export default InfoText;

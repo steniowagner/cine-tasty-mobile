@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {Image, Alert} from 'react-native';
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
@@ -11,7 +12,7 @@ import {
 } from '@testing-library/react-native';
 import {InMemoryCache} from '@apollo/client';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as mockFamousDetails from '@mocks/fixtures/famous-details';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
@@ -19,20 +20,28 @@ import {AlertMessageProvider} from '@providers';
 import {Routes} from '@routes/routes';
 import {Translations} from '@i18n/tags';
 
+import {FamousDetails} from './FamousDetails';
+
 jest.spyOn(Alert, 'alert');
 
-import {FamousDetails} from './FamousDetails';
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock');
+  Reanimated.default.call = () => {};
+  return Reanimated;
+});
 
 const USER_ID = 123;
 
-const renderFamousDetails = (
-  mockResolvers?: readonly MockedResponse<Record<string, any>>[],
-  navigate = jest.fn(),
-  goBack = jest.fn(),
-) => {
+type RenderFamousDetailsProps = {
+  mockResolvers?: readonly MockedResponse<Record<string, any>>[];
+  navigate?: jest.Mock;
+  goBack?: jest.Mock;
+};
+
+const renderFamousDetails = (props: RenderFamousDetailsProps) => {
   const FamousDetailScreen = ({navigation}) => (
     <MockedProvider
-      mocks={mockResolvers}
+      mocks={props.mockResolvers}
       defaultOptions={{
         watchQuery: {fetchPolicy: 'no-cache'},
         query: {fetchPolicy: 'no-cache'},
@@ -42,10 +51,14 @@ const renderFamousDetails = (
           possibleTypes,
         })
       }>
-      <TMDBImageQualityProvider>
+      <TMDBImageQualitiesProvider>
         <AlertMessageProvider>
           <FamousDetails
-            navigation={{...navigation, navigate, goBack}}
+            navigation={{
+              ...navigation,
+              navigate: props.navigate,
+              goBack: props.goBack,
+            }}
             route={{
               name: Routes.Famous.DETAILS,
               key: `${Routes.Famous.DETAILS}-key`,
@@ -57,7 +70,7 @@ const renderFamousDetails = (
             }}
           />
         </AlertMessageProvider>
-      </TMDBImageQualityProvider>
+      </TMDBImageQualitiesProvider>
     </MockedProvider>
   );
 
@@ -74,8 +87,6 @@ describe('<FamousDetail />', () => {
       api.queryByTestId('advise-description'),
     adviseSuggestion: (api: RenderAPI) =>
       api.queryByTestId('advise-suggestion'),
-    backgroundImage: (api: RenderAPI) =>
-      api.queryByTestId('background-image-wrapper'),
     scrollableContent: (api: RenderAPI) => api.queryByTestId('scroll-content'),
     headerInfo: (api: RenderAPI) => api.queryByTestId('header-info'),
     deathDay: (api: RenderAPI) => api.queryByTestId('death-day-wrapper'),
@@ -90,7 +101,7 @@ describe('<FamousDetail />', () => {
     loadingBiography: (api: RenderAPI) =>
       api.queryByTestId('loading-expansible-text-section'),
     loadingProfileImage: (api: RenderAPI) =>
-      api.queryByTestId('fallback-profile-image-wrapper'),
+      api.queryByTestId('profile-image-tmdb-fallback-image'),
     profileImage: (api: RenderAPI) => api.queryByTestId('profile-image'),
     sectionsTitle: (api: RenderAPI) => api.queryAllByTestId('section-title'),
   };
@@ -112,8 +123,10 @@ describe('<FamousDetail />', () => {
       jest.useFakeTimers();
     });
 
-    it('should render correctly when it has all the data', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+    afterEach(cleanup);
+
+    it('should render correctly when the data is "loaded"', async () => {
+      const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
         {
           withBiography: true,
@@ -123,17 +136,8 @@ describe('<FamousDetail />', () => {
           withTVCast: true,
         },
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       fireEvent(elements.profileImage(component), 'onLoad');
-      act(() => {
-        jest.runAllTimers();
-      });
       await waitFor(() => {
         expect(elements.imagesList(component)).not.toBeNull();
       });
@@ -145,7 +149,6 @@ describe('<FamousDetail />', () => {
       expect(elements.deathDay(component)).not.toBeNull();
       expect(elements.biography(component)).not.toBeNull();
       expect(elements.headerInfo(component)).not.toBeNull();
-      expect(elements.backgroundImage(component)).not.toBeNull();
       expect(elements.headerBackButton(component)).not.toBeNull();
       expect(elements.moviesCast(component)).not.toBeNull();
       expect(elements.tvCast(component)).not.toBeNull();
@@ -153,8 +156,8 @@ describe('<FamousDetail />', () => {
       await waitFor(() => {});
     });
 
-    it('should render correctly when "deathDay" is undefined', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+    it('should render correctly when "deathDay" is "undefined"', async () => {
+      const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
         {
           withDeathDay: false,
@@ -164,17 +167,8 @@ describe('<FamousDetail />', () => {
           withTVCast: true,
         },
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       fireEvent(elements.profileImage(component), 'onLoad');
-      act(() => {
-        jest.runAllTimers();
-      });
       await waitFor(() => {
         expect(elements.imagesList(component)).not.toBeNull();
       });
@@ -186,7 +180,6 @@ describe('<FamousDetail />', () => {
       expect(elements.deathDay(component)).toBeNull();
       expect(elements.biography(component)).not.toBeNull();
       expect(elements.headerInfo(component)).not.toBeNull();
-      expect(elements.backgroundImage(component)).not.toBeNull();
       expect(elements.headerBackButton(component)).not.toBeNull();
       expect(elements.moviesCast(component)).not.toBeNull();
       expect(elements.tvCast(component)).not.toBeNull();
@@ -194,28 +187,17 @@ describe('<FamousDetail />', () => {
       await waitFor(() => {});
     });
 
-    it('should render correctly when "moviesCast" and "deathday" are undefined', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+    it('should render correctly when "moviesCast" and "deathday" are "undefined"', async () => {
+      const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
         {
-          withDeathDay: false,
-          withMoviesCast: false,
           withBiography: true,
           withImages: true,
           withTVCast: true,
         },
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       fireEvent(elements.profileImage(component), 'onLoad');
-      act(() => {
-        jest.runAllTimers();
-      });
       await waitFor(() => {
         expect(elements.imagesList(component)).not.toBeNull();
       });
@@ -223,12 +205,11 @@ describe('<FamousDetail />', () => {
       expect(elements.loadingHeader(component)).toBeNull();
       expect(elements.loadingBiography(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
-      expect(elements.moviesCast(component)).toBeNull();
+      expect(elements.moviesCast(component)).not.toBeNull();
       expect(elements.deathDay(component)).toBeNull();
       expect(elements.scrollableContent(component)).not.toBeNull();
       expect(elements.biography(component)).not.toBeNull();
       expect(elements.headerInfo(component)).not.toBeNull();
-      expect(elements.backgroundImage(component)).not.toBeNull();
       expect(elements.headerBackButton(component)).not.toBeNull();
       expect(elements.tvCast(component)).not.toBeNull();
       expect(elements.imagesList(component)).not.toBeNull();
@@ -236,23 +217,14 @@ describe('<FamousDetail />', () => {
     });
 
     it('should render correctly when "moviesCast", "deathday" and "images" are undefined', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+      const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
         {
-          withDeathDay: false,
-          withMoviesCast: false,
-          withImages: false,
           withBiography: true,
           withTVCast: true,
         },
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       fireEvent(elements.profileImage(component), 'onLoad');
       act(() => {
         jest.runAllTimers();
@@ -261,36 +233,25 @@ describe('<FamousDetail />', () => {
       expect(elements.loadingHeader(component)).toBeNull();
       expect(elements.loadingBiography(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
-      expect(elements.moviesCast(component)).toBeNull();
+      expect(elements.moviesCast(component)).not.toBeNull();
       expect(elements.deathDay(component)).toBeNull();
       expect(elements.imagesList(component)).toBeNull();
       expect(elements.scrollableContent(component)).not.toBeNull();
       expect(elements.biography(component)).not.toBeNull();
       expect(elements.headerInfo(component)).not.toBeNull();
-      expect(elements.backgroundImage(component)).not.toBeNull();
       expect(elements.headerBackButton(component)).not.toBeNull();
       expect(elements.tvCast(component)).not.toBeNull();
       await waitFor(() => {});
     });
 
     it('should render correctly when "moviesCast", "deathday", "images" and "tvCast" are undefined', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+      const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
         {
-          withDeathDay: false,
-          withMoviesCast: false,
-          withImages: false,
-          withTVCast: false,
           withBiography: true,
         },
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       fireEvent(elements.profileImage(component), 'onLoad');
       act(() => {
         jest.runAllTimers();
@@ -299,34 +260,23 @@ describe('<FamousDetail />', () => {
       expect(elements.loadingHeader(component)).toBeNull();
       expect(elements.loadingBiography(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
-      expect(elements.moviesCast(component)).toBeNull();
+      expect(elements.moviesCast(component)).not.toBeNull();
       expect(elements.deathDay(component)).toBeNull();
       expect(elements.imagesList(component)).toBeNull();
-      expect(elements.tvCast(component)).toBeNull();
+      expect(elements.tvCast(component)).not.toBeNull();
       expect(elements.scrollableContent(component)).not.toBeNull();
       expect(elements.biography(component)).not.toBeNull();
       expect(elements.headerInfo(component)).not.toBeNull();
-      expect(elements.backgroundImage(component)).not.toBeNull();
       expect(elements.headerBackButton(component)).not.toBeNull();
       await waitFor(() => {});
     });
 
     it('should render the "cast-movies-section-text" correctly when the "moviesCasts" is an empty array', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+      const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
-        {
-          withMoviesCast: true,
-          withTVCast: true,
-          emptyCastMovies: true,
-        },
+        {},
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       fireEvent(elements.profileImage(component), 'onLoad');
       act(() => {
         jest.runAllTimers();
@@ -341,21 +291,11 @@ describe('<FamousDetail />', () => {
     });
 
     it('should render the "cast-tv-section-text" correctly when the "tvCasts" is an empty array', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+      const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
-        {
-          withMoviesCast: true,
-          withTVCast: true,
-          emptyCastTV: true,
-        },
+        {},
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       fireEvent(elements.profileImage(component), 'onLoad');
       act(() => {
         jest.runAllTimers();
@@ -376,23 +316,16 @@ describe('<FamousDetail />', () => {
       jest.clearAllMocks();
     });
 
+    afterEach(cleanup);
+
     it('should call the "Alert.alert" with the correct params when the "biography" is an empty string', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+      const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
         {
           withBiography: false,
-          withMoviesCast: true,
-          withImages: true,
-          withTVCast: true,
         },
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       fireEvent(elements.profileImage(component), 'onLoad');
       await waitFor(() => {
         expect(Alert.alert).toHaveBeenCalledTimes(1);
@@ -413,21 +346,12 @@ describe('<FamousDetail />', () => {
   });
 
   describe('Loading State', () => {
-    it('should render the "loading-state" correctly when is loading', async () => {
-      const goBack = jest.fn();
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+    it('should render the "loading-state" correctly when the data is loading', async () => {
+      const mockResolvers = mockFamousDetails.makeNetworkErrorResolver(
         {language: 'EN', id: USER_ID},
         {},
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderFamousDetails(resolvers, undefined, goBack),
-      );
+      const component = render(renderFamousDetails({mockResolvers}));
       expect(elements.loadingProfileImage(component)).not.toBeNull();
       expect(elements.loadingHeader(component)).not.toBeNull();
       expect(elements.loadingBiography(component)).not.toBeNull();
@@ -443,18 +367,12 @@ describe('<FamousDetail />', () => {
       jest.useFakeTimers();
     });
 
-    it('should render the "Advise" component correctly when a network-error happens during the request', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+    it('should render the "Advise" component correctly when a network-error happens', async () => {
+      const mockResolvers = mockFamousDetails.makeNetworkErrorResolver(
         {language: 'EN', id: USER_ID},
         {},
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       act(() => {
         jest.runAllTimers();
       });
@@ -472,23 +390,16 @@ describe('<FamousDetail />', () => {
       expect(elements.adviseSuggestion(component).children[0]).toEqual(
         Translations.Tags.FAMOUS_DETAIL_ERROR_SUGGESTION,
       );
-      expect(elements.backgroundImage(component)).toBeNull();
       expect(elements.scrollableContent(component)).toBeNull();
       await waitFor(() => {});
     });
 
-    it('should render the "Advise" component correctly when a graphql-error happens during the request', async () => {
-      const queryResult = mockFamousDetails.famousDetailsResolvers(
+    it('should render the "Advise" component correctly when a graphql-error happens', async () => {
+      const mockResolvers = mockFamousDetails.makeGraphQLErrorResolver(
         {language: 'EN', id: USER_ID},
         {},
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderFamousDetails(resolvers));
+      const component = render(renderFamousDetails({mockResolvers}));
       act(() => {
         jest.runAllTimers();
       });
@@ -506,36 +417,48 @@ describe('<FamousDetail />', () => {
       expect(elements.adviseSuggestion(component).children[0]).toEqual(
         Translations.Tags.FAMOUS_DETAIL_ERROR_SUGGESTION,
       );
-      expect(elements.backgroundImage(component)).toBeNull();
       expect(elements.scrollableContent(component)).toBeNull();
       await waitFor(() => {});
     });
   });
 
   describe('Pressing the "Back-button"', () => {
+    describe('When successfuly retrieve the data', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+
+      afterEach(cleanup);
+
+      it('should call "navigation.goBack" when the user press the "back-button"', async () => {
+        const goBack = jest.fn();
+        const mockResolvers = mockFamousDetails.makeSuccessResolver(
+          {language: 'EN', id: USER_ID},
+          {},
+        );
+        const component = render(renderFamousDetails({mockResolvers, goBack}));
+        expect(elements.headerBackButton(component)).not.toBeNull();
+        expect(goBack).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.headerBackButton(component));
+        expect(goBack).toHaveBeenCalledTimes(1);
+        await waitFor(() => {});
+      });
+    });
+
     describe('When a "network-error" happened', () => {
       beforeEach(() => {
         jest.useFakeTimers();
       });
 
+      afterEach(cleanup);
+
       it('should call "navigation.goBack" when the user press the "back-button"', async () => {
         const goBack = jest.fn();
-        const queryResult = mockFamousDetails.famousDetailsResolvers(
+        const mockResolvers = mockFamousDetails.makeNetworkErrorResolver(
           {language: 'EN', id: USER_ID},
           {},
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.responseWithNetworkError,
-          },
-        ];
-        const component = render(
-          renderFamousDetails(resolvers, undefined, goBack),
-        );
-        await waitFor(() => {
-          expect(elements.adviseWrapper(component)).not.toBeNull();
-        });
+        const component = render(renderFamousDetails({mockResolvers, goBack}));
         expect(elements.headerBackButton(component)).not.toBeNull();
         expect(goBack).toHaveBeenCalledTimes(0);
         fireEvent.press(elements.headerBackButton(component));
@@ -549,59 +472,20 @@ describe('<FamousDetail />', () => {
         jest.useFakeTimers();
       });
 
+      afterEach(cleanup);
+
       it('should call "navigation.goBack" when the user press the "back-button"', async () => {
         const goBack = jest.fn();
-        const queryResult = mockFamousDetails.famousDetailsResolvers(
+        const mockResolvers = mockFamousDetails.makeGraphQLErrorResolver(
           {language: 'EN', id: USER_ID},
           {},
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.responseWithGraphQLError,
-          },
-        ];
-        const component = render(
-          renderFamousDetails(resolvers, undefined, goBack),
-        );
-        await waitFor(() => {
-          expect(elements.adviseWrapper(component)).not.toBeNull();
-        });
+        const component = render(renderFamousDetails({mockResolvers, goBack}));
         expect(elements.headerBackButton(component)).not.toBeNull();
         expect(goBack).toHaveBeenCalledTimes(0);
         fireEvent.press(elements.headerBackButton(component));
         expect(goBack).toHaveBeenCalledTimes(1);
         await waitFor(() => {});
-      });
-    });
-
-    describe('When successfuly retrieve the data', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      it('should call "navigation.goBack" when the user press the "back-button"', async () => {
-        const goBack = jest.fn();
-        const queryResult = mockFamousDetails.famousDetailsResolvers(
-          {language: 'EN', id: USER_ID},
-          {},
-        );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
-        const component = render(
-          renderFamousDetails(resolvers, undefined, goBack),
-        );
-        await waitFor(() => {
-          expect(elements.backgroundImage(component)).not.toBeNull();
-        });
-        expect(elements.headerBackButton(component)).not.toBeNull();
-        expect(goBack).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.headerBackButton(component));
-        expect(goBack).toHaveBeenCalledTimes(1);
       });
     });
   });

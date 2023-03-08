@@ -1,40 +1,6 @@
-import {Animated, View} from 'react-native';
+import {View} from 'react-native';
 import styled from 'styled-components/native';
-import LinearGradient from 'react-native-linear-gradient';
-
-import {ThemeId} from '@local-types';
-
-export const BackgroundImageWrapper = styled(Animated.View)`
-  width: 100%;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('100%')}px;
-  position: absolute;
-`;
-
-type SmokeShadowStyleProps = {
-  currentTheme: ThemeId;
-};
-
-export const SmokeShadow = styled(LinearGradient).attrs<SmokeShadowStyleProps>(
-  ({currentTheme, theme}) => {
-    const backgroundAlphax4Count = currentTheme === ThemeId.DARK ? 1 : 5;
-
-    return {
-      colors: [
-        ...Array(backgroundAlphax4Count).fill(theme.colors.backgroundAlphax4),
-        theme.colors.backgroundAlphax3,
-        theme.colors.backgroundAlphax2,
-        theme.colors.backgroundAlphax1,
-        theme.colors.background,
-      ],
-    };
-  },
-)`
-  width: 100%;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('100%')}px;
-  position: absolute;
-  bottom: 0;
-`;
 
 export const BiographySectionWrapper = styled(View)`
-  margin-top: ${({theme}) => theme.metrics.getWidthFromDP('5%')}px;
+  margin-top: ${({theme}) => theme.metrics.extraLargeSize}px;
 `;

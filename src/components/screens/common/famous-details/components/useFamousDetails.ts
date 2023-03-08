@@ -1,6 +1,5 @@
-import {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {useQuery} from '@apollo/client';
-import {Animated} from 'react-native';
 
 import {GET_FAMOUS_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
@@ -13,8 +12,6 @@ type UseFamousDetailProps = {
 };
 
 const useFamousDetail = (props: UseFamousDetailProps) => {
-  const scrollViewOffset = useRef(new Animated.Value(0)).current;
-
   const translations = useTranslations();
   const query = useQuery<
     SchemaTypes.GetFamousDetail,
@@ -26,27 +23,6 @@ const useFamousDetail = (props: UseFamousDetailProps) => {
       id: props.id,
     },
   });
-
-  const getRandomImage = useCallback(() => {
-    const hasImages =
-      query.data &&
-      query.data?.person.images &&
-      !!query.data?.person.images.length;
-    if (!hasImages) {
-      return '';
-    }
-    const randomIndex = Math.floor(
-      Math.random() * Math.floor(query.data?.person.images.length),
-    );
-    return query.data?.person.images[randomIndex];
-  }, [query.data?.person.images]);
-
-  const backgroundImage = useMemo((): string => {
-    if (!query.data || !query.data?.person) {
-      return '';
-    }
-    return getRandomImage();
-  }, [getRandomImage, query.data]);
 
   const handleShowLanguageAlert = useCallback(() => {
     const shouldShowLanguageAlert =
@@ -108,8 +84,6 @@ const useFamousDetail = (props: UseFamousDetailProps) => {
     famous: query.data?.person,
     isLoading: query.loading,
     hasError: !!query.error,
-    scrollViewOffset,
-    backgroundImage,
     texts,
   };
 };

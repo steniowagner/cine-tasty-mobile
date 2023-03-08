@@ -4,7 +4,7 @@ import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
 
-import DeathDay from './DeathDay';
+import {DeathDay} from './DeathDay';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -14,33 +14,37 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
-const renderBirthDayText = (deathDate: string) => (
+const renderDeathDay = (day: string) => (
   <ThemeProvider theme={theme}>
-    <DeathDay deathDate={deathDate} />
+    <DeathDay day={day} />
   </ThemeProvider>
 );
 
-describe('<DeathDay /> - [ES]', () => {
+describe('<DeathDay />', () => {
   const elements = {
     deathDayWrapper: (api: RenderAPI) => api.queryByTestId('death-day-wrapper'),
     deathDayText: (api: RenderAPI) => api.queryByTestId('death-day-text'),
   };
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  describe('When the "language" selected is "Spanish"', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
 
-  afterEach(cleanup);
+    afterEach(cleanup);
 
-  it('should render correctly with a valid date when the current language is "en"', () => {
-    const component = render(renderBirthDayText('1994-02-21'));
-    expect(elements.deathDayWrapper(component)).not.toBeNull();
-    expect(elements.deathDayText(component).children[0]).toEqual('21/02/1994');
-  });
+    it('should render correctly when the date is valid', () => {
+      const component = render(renderDeathDay('1994-02-21'));
+      expect(elements.deathDayWrapper(component)).not.toBeNull();
+      expect(elements.deathDayText(component).children[0]).toEqual(
+        '21/02/1994',
+      );
+    });
 
-  it('should render a "-" when the date is an empty string and the current language is "en"', () => {
-    const component = render(renderBirthDayText(''));
-    expect(elements.deathDayWrapper(component)).not.toBeNull();
-    expect(elements.deathDayText(component).children[0]).toEqual('-');
+    it('should render a "-" when the date is an empty string', () => {
+      const component = render(renderDeathDay(''));
+      expect(elements.deathDayWrapper(component)).not.toBeNull();
+      expect(elements.deathDayText(component).children[0]).toEqual('-');
+    });
   });
 });
