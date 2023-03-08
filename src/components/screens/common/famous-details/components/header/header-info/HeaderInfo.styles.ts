@@ -20,7 +20,7 @@ export const InfoTextWrapper = styled(View)`
   width: ${({theme}) => theme.metrics.getWidthFromDP('63%')}px;
 `;
 
-export const NameText = styled(Text)`
+export const NameText = styled(Text).attrs(() => ({numberOfLines: 2}))`
   width: 65%;
   margin-bottom: ${({theme}) => theme.metrics.extraLargeSize}px;
   font-size: ${({theme}) => theme.metrics.getWidthFromDP('10%')}px;
