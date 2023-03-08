@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InfoText, {DEFAULT_MARGIN_VERTICAL} from '../InfoText';
+import * as HeaderStyles from '../Header.styles';
 import {useBirthDayText} from './useBirthDayText';
 
 type BirthdayTextProps = {
@@ -11,8 +11,10 @@ export const BirthDayText = (props: BirthdayTextProps) => {
   const birthDayText = useBirthDayText({rawDateString: props.rawBirthDate});
 
   return (
-    <InfoText marginBottom={DEFAULT_MARGIN_VERTICAL - 3} testID="birthday-text">
+    <HeaderStyles.DefaultText
+      marginBottom={HeaderStyles.DEFAULT_MARGIN_VERTICAL - 3}
+      testID="birthday-text">
       {birthDayText.text}
-    </InfoText>
+    </HeaderStyles.DefaultText>
   );
 };

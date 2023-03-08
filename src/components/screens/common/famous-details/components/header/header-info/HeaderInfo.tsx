@@ -2,9 +2,9 @@ import React from 'react';
 
 import {TMDBImageWithFallback} from '@components';
 
-import KnownForDepartment from '../known-for-department/KnownForDepartment';
+import {KnownForDepartment} from '../known-for-department/KnownForDepartment';
 import {HeaderLoadingPlaceholder} from '../header-loading-placeholder/HeaderLoadingPlaceholder';
-import InfoText, {DEFAULT_MARGIN_VERTICAL} from '../InfoText';
+import * as HeaderStyles from '../Header.styles';
 import {BirthDayText} from '../birthday-text/BirthDayText';
 import * as Styles from './HeaderInfo.styles';
 
@@ -39,11 +39,11 @@ export const HeaderInfo = (props: HeaderInfoProps) => (
               <BirthDayText rawBirthDate={props.birthDate} />
             )}
             {!!props.placeOfBirth && (
-              <InfoText
-                marginBottom={DEFAULT_MARGIN_VERTICAL}
+              <HeaderStyles.DefaultText
+                marginBottom={HeaderStyles.DEFAULT_MARGIN_VERTICAL}
                 testID="place-of-birth">
                 {props.placeOfBirth}
-              </InfoText>
+              </HeaderStyles.DefaultText>
             )}
           </Styles.InfoTextWrapper>
           <KnownForDepartment knownForDepartment={props.knownForDepartment} />

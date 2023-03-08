@@ -1,7 +1,7 @@
 import React from 'react';
 
 import * as Styles from './KnownForDepartment.styles';
-import InfoText from '../InfoText';
+import * as HeaderStyles from '../Header.styles';
 
 type KnownForDepartmentProps = {
   knownForDepartment?: string;
@@ -14,9 +14,11 @@ export const KnownForDepartment = (props: KnownForDepartmentProps) => {
 
   return (
     <Styles.KnownForDepartmentWrapper>
-      <InfoText testID="known-for-department-text" withCustomColor>
+      <HeaderStyles.DefaultText
+        testID="known-for-department-text"
+        withCustomColor>
         {props.knownForDepartment}
-      </InfoText>
+      </HeaderStyles.DefaultText>
     </Styles.KnownForDepartmentWrapper>
   );
 };

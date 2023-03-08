@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';
 
-import {DEFAULT_MARGIN_VERTICAL} from '../InfoText';
+import {DEFAULT_MARGIN_VERTICAL} from '../Header.styles';
 
 const DEFAULT_STYLE = {
   width: metrics.getWidthFromDP('60%'),
