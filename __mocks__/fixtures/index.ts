@@ -9,3 +9,4 @@ export * from './news';
 export * from './famous-details';
 export * from './home-trending-movies';
 export * from './home-trending-tv-shows';
+export * from './media-horizontal-list';
