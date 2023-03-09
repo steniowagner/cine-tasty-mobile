@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   RenderAPI,
@@ -8,7 +9,7 @@ import {
 import {ThemeProvider} from 'styled-components/native';
 
 import {randomPositiveNumber, randomArrayIndex} from '@mocks/utils';
-import {TMDBImageQualityProvider} from '@providers';
+import {TMDBImageQualitiesProvider} from '@providers';
 import {dark as theme} from '@styles/themes/dark';
 import {Routes} from '@routes/routes';
 
@@ -33,9 +34,9 @@ const renderImagesList = (images?: string[]) => {
     randomPositiveNumber(10, 1) % 2 === 0 ? 'LANDSCAPE' : 'PORTRAIT';
   return (
     <ThemeProvider theme={theme}>
-      <TMDBImageQualityProvider>
+      <TMDBImageQualitiesProvider>
         <ImagesList orientation={orientation} images={images} />
-      </TMDBImageQualityProvider>
+      </TMDBImageQualitiesProvider>
     </ThemeProvider>
   );
 };

@@ -12,7 +12,7 @@ type ImagesListProps = ImageOrientation & {
 export const ImagesList = (props: ImagesListProps) => {
   const imagesList = useImagesList({images: props.images});
 
-  if (!props.images || !props.images.length) {
+  if (!imagesList.hasImages) {
     return null;
   }
 
