@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {ThemeProvider} from 'styled-components/native';
 import {
@@ -7,34 +8,22 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 
-import {randomPositiveNumber, randomArrayIndex} from '@mocks/utils';
-import {castTVShows} from '@mocks/fixtures/tv-shows';
-import {TMDBImageQualityProvider} from '@providers';
+import {randomArrayIndex} from '@mocks/utils';
+import {TMDBImageQualitiesProvider} from '@providers';
 import {dark as theme} from '@styles/themes/dark';
 import {Routes} from '@routes/routes';
+import {
+  makeMoviesHorizontalList,
+  makeTVShowsHorizontalList,
+} from '@mocks/fixtures';
 
 import {MediaHorizontalList} from './MediaHorizontalList';
-import {
-  UseMediaHorizontalListProps,
-  MediaHorizontalItem,
-} from './useMediaHorizontalList';
+import {UseMediaHorizontalListProps} from './useMediaHorizontalList';
 
 const SECTION_TITLE = 'SECTION_TITLE';
 const mockNavigation = {
   push: jest.fn(),
 };
-const castMovies = (size: number) =>
-  Array(size)
-    .fill({})
-    .map((_, index) => ({
-      __typename: 'CastMovie',
-      profilePath: `POSTER_PATH_${index}`,
-      character: `CHARACTER_${index}`,
-      id: index,
-      voteAverage: index + 1,
-      voteCount: index + 1,
-      title: `TITLE_${index}`,
-    }));
 
 jest.mock('@react-navigation/native', () => {
   const actualReactNavigationNative = jest.requireActual(
@@ -52,9 +41,9 @@ const renderMediaHorizontalList = (
   },
 ) => (
   <ThemeProvider theme={theme}>
-    <TMDBImageQualityProvider>
+    <TMDBImageQualitiesProvider>
       <MediaHorizontalList {...props} />
-    </TMDBImageQualityProvider>
+    </TMDBImageQualitiesProvider>
   </ThemeProvider>
 );
 
@@ -76,10 +65,9 @@ describe('<MediaHorizontalList />', () => {
 
     describe('Renders correctly', () => {
       it('should render correctly when it has some movies to show', async () => {
-        const numberOfItems = randomPositiveNumber(10, 1);
         const component = render(
           renderMediaHorizontalList({
-            dataset: castMovies(numberOfItems) as MediaHorizontalItem[],
+            dataset: makeMoviesHorizontalList(),
             title: SECTION_TITLE,
             type: 'MOVIE',
           }),
@@ -113,8 +101,7 @@ describe('<MediaHorizontalList />', () => {
 
     describe('Touch-press correctly', () => {
       it('should call navigate to the correct screen when the user press on of the list-items', async () => {
-        const numberOfItems = randomPositiveNumber(10, 1);
-        const dataset = castMovies(numberOfItems) as MediaHorizontalItem[];
+        const dataset = makeMoviesHorizontalList();
         const itemSelected = randomArrayIndex(dataset);
         const component = render(
           renderMediaHorizontalList({
@@ -145,10 +132,9 @@ describe('<MediaHorizontalList />', () => {
 
     describe('Renders correctly', () => {
       it('should render correctly when it has some tv-shows to show', async () => {
-        const numberOfItems = randomPositiveNumber(10, 1);
         const component = render(
           renderMediaHorizontalList({
-            dataset: castTVShows(numberOfItems) as MediaHorizontalItem[],
+            dataset: makeTVShowsHorizontalList(),
             title: SECTION_TITLE,
             type: 'TV_SHOW',
           }),
@@ -180,10 +166,9 @@ describe('<MediaHorizontalList />', () => {
       });
     });
 
-    describe('Touch-press correctly', () => {
+    describe('Pressing the items', () => {
       it('should call navigate to the correct screen when the user press on of the list-items', async () => {
-        const numberOfItems = randomPositiveNumber(10, 1);
-        const dataset = castTVShows(numberOfItems) as MediaHorizontalItem[];
+        const dataset = makeTVShowsHorizontalList();
         const itemSelected = randomArrayIndex(dataset);
         const component = render(
           renderMediaHorizontalList({
