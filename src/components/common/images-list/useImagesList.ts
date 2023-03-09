@@ -23,5 +23,6 @@ export const useImagesList = (props: UseImagesListProps) => {
 
   return {
     onPressImage: handlePressImage,
+    hasImages: props.images && props.images.length,
   };
 };
