@@ -56,11 +56,11 @@ export const useMediaHorizontalList = (props: UseMediaHorizontalListProps) => {
         voteCount: item.voteCount,
         id: item.id,
       })),
-    [props.dataset],
+    [props.dataset, props.type],
   );
 
   return {
-    handlePressItem,
+    onPressItem: handlePressItem,
     dataset,
   };
 };

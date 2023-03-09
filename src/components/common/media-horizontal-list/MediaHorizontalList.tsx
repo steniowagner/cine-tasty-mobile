@@ -15,6 +15,7 @@ type MediaHorizontalListProps = UseMediaHorizontalListProps & {
 
 export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
   const mediaHorizontalList = useMediaHorizontalList(props);
+
   return (
     <Section title={props.title}>
       <FlatListSection
@@ -24,7 +25,7 @@ export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
           const mediaItem = item as MediaItem;
           return (
             <SimplifiedMediaListItem
-              onPress={() => mediaHorizontalList.handlePressItem(mediaItem)}
+              onPress={() => mediaHorizontalList.onPressItem(mediaItem)}
               voteAverage={mediaItem.voteAverage}
               voteCount={mediaItem.voteCount}
               image={mediaItem.posterPath}
