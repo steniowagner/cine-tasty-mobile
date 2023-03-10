@@ -2,17 +2,16 @@ import {ActivityIndicator, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import {SVGIcon} from '@components';
-
 import metrics from '@styles/metrics';
 
-export const LANDSCAPE_HEIGHT = metrics.getWidthFromDP('50%');
+export const LANDSCAPE_HEIGHT = metrics.getWidthFromDP('65%');
 export const PORTRAIT_HEIGHT = metrics.getWidthFromDP('100%');
 
 export const Wrapper = styled(View)`
   width: ${({theme}) => theme.metrics.width}px;
   height: ${PORTRAIT_HEIGHT}px;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 `;
 
 export const CustomActivityIndicator = styled(ActivityIndicator).attrs(

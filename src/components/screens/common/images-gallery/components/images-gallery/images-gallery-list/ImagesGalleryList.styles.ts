@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 
 export const PlaceholderListItem = styled(View)`
   width: ${({theme}) => theme.metrics.width}px;
-  background-color: red;
   height: 100%;
 `;
 

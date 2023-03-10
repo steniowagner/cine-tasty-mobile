@@ -2,7 +2,7 @@ import React, {memo} from 'react';
 
 import {useTMDBImage, ProgressiveImage} from '@components';
 
-import useImagesGalleryListItem from './useImagesGalleryListItem';
+import {useImagesGalleryListItem} from './useImagesGalleryListItem';
 import * as Styles from './ImagesGalleryListItem.styles';
 
 type ImagesGalleryListItemProps = {
