@@ -22,21 +22,29 @@ export const useImagesGalleryList = (props: UseImagesGalleryListProps) => {
     });
   }, [props.indexImageSelected]);
 
-  const handleAllowImageToBeShown = useCallback(() => {
-    setImagesAllowedToBeShown((previousImagesAllowedToBeShown: boolean[]) => {
-      previousImagesAllowedToBeShown[props.indexImageSelected] = true;
-      return previousImagesAllowedToBeShown;
-    });
+  const handleSetImagesAllowedToBeShown = useCallback(() => {
+    setImagesAllowedToBeShown((previousImagesAllowedToBeShown: boolean[]) =>
+      previousImagesAllowedToBeShown.map(
+        (previousImageAllowedToBeShown, index) =>
+          index === props.indexImageSelected
+            ? true
+            : previousImageAllowedToBeShown,
+      ),
+    );
   }, [props.indexImageSelected]);
 
-  useEffect(() => {
-    const imagesGalleryListRefNotInitialized =
-      !imagesGalleryListRef || !imagesGalleryListRef.current;
-    if (imagesGalleryListRefNotInitialized || !props.datasetSize) {
+  const handleUpdateIndexImageSelected = useCallback(() => {
+    const isImagesGalleryListRefInitialized =
+      imagesGalleryListRef && imagesGalleryListRef.current;
+    if (!isImagesGalleryListRefInitialized || !props.datasetSize) {
       return;
     }
-    handleAllowImageToBeShown();
+    handleSetImagesAllowedToBeShown();
     moveList();
+  }, [handleSetImagesAllowedToBeShown, moveList]);
+
+  useEffect(() => {
+    handleUpdateIndexImageSelected();
   }, [props.indexImageSelected]);
 
   return {
