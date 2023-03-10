@@ -20,6 +20,7 @@ export const ImagesGalleryList = (props: ImagesGalleryListProps) => {
     indexImageSelected: props.indexImageSelected,
     datasetSize: props.images.length,
   });
+
   return (
     <FlatList
       onMomentumScrollEnd={props.onFlatlistMomentumScrollEnd}
@@ -29,7 +30,7 @@ export const ImagesGalleryList = (props: ImagesGalleryListProps) => {
         }
         return (
           <ImagesGalleryListItem
-            isAllowedToBeShowed={props.indexImageSelected === index}
+            isAllowedToBeShown={props.indexImageSelected === index}
             imageURL={item}
           />
         );
@@ -41,6 +42,7 @@ export const ImagesGalleryList = (props: ImagesGalleryListProps) => {
         length: metrics.width,
         index,
       })}
+      contentContainerStyle={Styles.sheet.flatlist}
       ref={imagesGalleryList.refList}
       keyExtractor={item => item}
       data={props.images}
