@@ -21,8 +21,8 @@ export const useImagesGalleryListItem = (
   props: UseImagesGalleryListItemProps,
 ) => {
   const [imageStatus, setImageStatus] = useState<ImageStatus>('LOADING');
-  const [dimensions, setDimensions] = useState<Dimensions>(null);
-  const [imageHeight, setImageHeight] = useState<number>(0);
+  const [dimensions, setDimensions] = useState<Dimensions | undefined>();
+  const [imageHeight, setImageHeight] = useState(0);
 
   const getImageSize = useCallback(() => {
     Image.getSize(
