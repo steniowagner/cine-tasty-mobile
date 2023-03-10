@@ -7,13 +7,13 @@ type UseImageGalleryProps = {
   indexFirstItemSelected: number;
 };
 
-const useImageGallery = (props: UseImageGalleryProps) => {
+export const useImagesGallery = (props: UseImageGalleryProps) => {
   const [indexImageSelected, setIndexImageSelected] = useState(
     props.indexFirstItemSelected,
   );
 
-  const onFlatlistMomentumScrollEnd = useCallback(
-    (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
+  const handleFlatlistMomentumScrollEnd = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const {contentOffset} = event.nativeEvent;
       const isHorizontalSwipeMovement = contentOffset.x > 0;
       const currentPageIndex = isHorizontalSwipeMovement
@@ -24,15 +24,10 @@ const useImageGallery = (props: UseImageGalleryProps) => {
     [],
   );
 
-  const onPressThumbListItem = useCallback((indexSelected: number) => {
-    setIndexImageSelected(indexSelected);
-  }, []);
-
   return {
-    onFlatlistMomentumScrollEnd,
-    onPressThumbListItem,
+    onFlatlistMomentumScrollEnd: handleFlatlistMomentumScrollEnd,
+    onPressThumbListItem: (indexSelected: number) =>
+      setIndexImageSelected(indexSelected),
     indexImageSelected,
   };
 };
-
-export default useImageGallery;
