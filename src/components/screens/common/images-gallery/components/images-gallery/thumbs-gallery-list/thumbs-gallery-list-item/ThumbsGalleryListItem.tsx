@@ -1,7 +1,6 @@
 import React, {memo} from 'react';
 
 import {renderSVGIconConditionally} from '@components';
-import metrics from '@styles/metrics';
 
 import {useThumbsGalleryListItem} from './useThumbsGalleryListItem';
 import * as Styles from './ThumbsGalleryListItem.styles';
@@ -12,15 +11,12 @@ type ThumbListItemProps = {
   image: string;
 };
 
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
-
 const ThumbsGalleryListItem = (props: ThumbListItemProps) => {
-  const thumbsGalleryListItem = useThumbsGalleryListItem({
-    isSelected: props.isSelected,
-  });
+  const thumbsGalleryListItem = useThumbsGalleryListItem();
+
   return (
     <Styles.Wrapper
-      borderColor={thumbsGalleryListItem.borderColor}
+      isSelected={props.isSelected}
       onPress={props.onPress}
       testID="thumb-list-item">
       <Styles.ThumbImage
@@ -38,12 +34,12 @@ const ThumbsGalleryListItem = (props: ThumbListItemProps) => {
             condition: thumbsGalleryListItem.imageStatus === 'ERROR',
             ifTrue: {
               colorThemeRef: 'fallbackImageBackground',
-              size: DEFAULT_ICON_SIZE,
+              size: Styles.DEFAULT_ICON_SIZE,
               id: 'image-off',
             },
             ifFalse: {
               colorThemeRef: 'fallbackImageBackground',
-              size: DEFAULT_ICON_SIZE,
+              size: Styles.DEFAULT_ICON_SIZE,
               id: 'image',
             },
           })}
