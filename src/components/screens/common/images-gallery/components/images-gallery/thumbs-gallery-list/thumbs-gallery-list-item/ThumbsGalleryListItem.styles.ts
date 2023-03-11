@@ -10,9 +10,6 @@ const THUMB_MARGIN = metrics.extraSmallSize;
 export const BORDER_WIDTH = metrics.getWidthFromDP('0.5%');
 export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 export const THUMB_TOTAL_SIZE = THUMB_SIZE + THUMB_MARGIN * 2;
-export const listStyles = {
-  paddingHorizontal: metrics.mediumSize,
-};
 
 type ThumbImageStyleProps = {
   isSelected: boolean;
