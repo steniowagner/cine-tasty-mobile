@@ -10,6 +10,7 @@ export const PORTRAIT_HEIGHT = metrics.getWidthFromDP('100%');
 export const Wrapper = styled(View)`
   width: ${({theme}) => theme.metrics.width}px;
   height: ${PORTRAIT_HEIGHT}px;
+  margin-top: ${({theme}) => theme.metrics.getWidthFromDP('10%')}px;
   align-items: center;
   justify-content: center;
 `;

@@ -5,6 +5,6 @@ import metrics from '@styles/metrics';
 export const sheet = StyleSheet.create({
   list: {
     paddingHorizontal: metrics.mediumSize,
-    alignItems: 'center',
+    paddingTop: metrics.getWidthFromDP('10%'),
   },
 });
