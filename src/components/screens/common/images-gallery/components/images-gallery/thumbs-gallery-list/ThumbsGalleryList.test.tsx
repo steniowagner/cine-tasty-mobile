@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   fireEvent,
@@ -7,7 +8,7 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {dark as theme} from '@styles/themes/dark';
 import {randomPositiveNumber} from '@mocks/utils';
 
@@ -18,7 +19,7 @@ const renderThumbsGalleryList = (
   indexImageSelected = 0,
   onPressThumbListItem = jest.fn(),
 ) => (
-  <TMDBImageQualityProvider>
+  <TMDBImageQualitiesProvider>
     <ThemeProvider theme={theme}>
       <ThumbsGalleryList
         onPressThumbListItem={onPressThumbListItem}
@@ -26,7 +27,7 @@ const renderThumbsGalleryList = (
         thumbs={thumbs}
       />
     </ThemeProvider>
-  </TMDBImageQualityProvider>
+  </TMDBImageQualitiesProvider>
 );
 
 describe('<ThumbsGalleryList />', () => {
@@ -77,13 +78,14 @@ describe('<ThumbsGalleryList />', () => {
       const thumbs = Array(randomPositiveNumber(10, 2))
         .fill('')
         .map((_, index) => `THUMB_${index}`);
+      const indexItemSelected = randomPositiveNumber(thumbs.length - 1, 0);
       const component = render(
         renderThumbsGalleryList(thumbs, 0, onPressThumbListItem),
       );
       expect(onPressThumbListItem).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.thumbsItems(component)[1]);
+      fireEvent.press(elements.thumbsItems(component)[indexItemSelected]);
       expect(onPressThumbListItem).toHaveBeenCalledTimes(1);
-      expect(onPressThumbListItem).toHaveBeenCalledWith(1);
+      expect(onPressThumbListItem).toHaveBeenCalledWith(indexItemSelected);
       await waitFor(() => {});
     });
   });
