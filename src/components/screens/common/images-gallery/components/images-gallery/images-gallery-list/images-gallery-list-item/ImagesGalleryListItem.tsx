@@ -2,11 +2,11 @@ import React, {memo} from 'react';
 
 import {useTMDBImage, ProgressiveImage} from '@components';
 
-import useImagesGalleryListItem from './useImagesGalleryListItem';
+import {useImagesGalleryListItem} from './useImagesGalleryListItem';
 import * as Styles from './ImagesGalleryListItem.styles';
 
 type ImagesGalleryListItemProps = {
-  isAllowedToBeShowed: boolean;
+  isAllowedToBeShown: boolean;
   imageURL: string;
 };
 
@@ -53,7 +53,7 @@ const shouldComponentUpdate = (
   previousState: ImagesGalleryListItemProps,
   nextState: ImagesGalleryListItemProps,
 ): boolean =>
-  (previousState.isAllowedToBeShowed || !nextState.isAllowedToBeShowed) &&
-  (!previousState.isAllowedToBeShowed || nextState.isAllowedToBeShowed);
+  (previousState.isAllowedToBeShown || !nextState.isAllowedToBeShown) &&
+  (!previousState.isAllowedToBeShown || nextState.isAllowedToBeShown);
 
 export default memo(ImagesGalleryListItem, shouldComponentUpdate);

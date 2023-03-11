@@ -17,10 +17,12 @@ type UseImagesGalleryListItemProps = {
   imageURL: string;
 };
 
-const useImagesGalleryListItem = (props: UseImagesGalleryListItemProps) => {
+export const useImagesGalleryListItem = (
+  props: UseImagesGalleryListItemProps,
+) => {
   const [imageStatus, setImageStatus] = useState<ImageStatus>('LOADING');
-  const [dimensions, setDimensions] = useState<Dimensions>(null);
-  const [imageHeight, setImageHeight] = useState<number>(0);
+  const [dimensions, setDimensions] = useState<Dimensions | undefined>();
+  const [imageHeight, setImageHeight] = useState(0);
 
   const getImageSize = useCallback(() => {
     Image.getSize(
@@ -38,11 +40,7 @@ const useImagesGalleryListItem = (props: UseImagesGalleryListItemProps) => {
     );
   }, [props.imageURL]);
 
-  useEffect(() => {
-    getImageSize();
-  }, []);
-
-  useEffect(() => {
+  const handleSetImageHeight = useCallback(() => {
     if (!dimensions) {
       return;
     }
@@ -51,11 +49,17 @@ const useImagesGalleryListItem = (props: UseImagesGalleryListItemProps) => {
     setImageHeight(height);
   }, [dimensions]);
 
+  useEffect(() => {
+    getImageSize();
+  }, []);
+
+  useEffect(() => {
+    handleSetImageHeight();
+  }, [dimensions]);
+
   return {
     isLoading: imageStatus === 'LOADING',
     hasError: imageStatus === 'ERROR',
     imageHeight,
   };
 };
-
-export default useImagesGalleryListItem;

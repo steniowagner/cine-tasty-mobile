@@ -1,6 +1,8 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {Image} from 'react-native';
 import {
+  act,
   cleanup,
   render,
   RenderAPI,
@@ -8,7 +10,7 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {dark as theme} from '@styles/themes/dark';
 
 import ImagesGalleryListItem from './ImagesGalleryListItem';
@@ -16,6 +18,7 @@ import {
   LANDSCAPE_HEIGHT,
   PORTRAIT_HEIGHT,
 } from './ImagesGalleryListItem.styles';
+import {CONSTANTS} from '@utils';
 
 const IMAGE_URL = 'SOME_IMAGE_URL';
 
@@ -23,14 +26,14 @@ const renderImagesGalleryListItem = (
   imageURL: string,
   isAllowedToBeShowed = true,
 ) => (
-  <TMDBImageQualityProvider>
+  <TMDBImageQualitiesProvider>
     <ThemeProvider theme={theme}>
       <ImagesGalleryListItem
-        isAllowedToBeShowed={isAllowedToBeShowed}
+        isAllowedToBeShown={isAllowedToBeShowed}
         imageURL={imageURL}
       />
     </ThemeProvider>
-  </TMDBImageQualityProvider>
+  </TMDBImageQualitiesProvider>
 );
 
 describe('<ImagesGalleryListItem />', () => {
@@ -44,22 +47,41 @@ describe('<ImagesGalleryListItem />', () => {
     thumbnail: (api: RenderAPI) => api.queryByTestId('progressive-thumbnail'),
   };
 
-  describe('"isAllowedToBeShowed" is "true"', () => {
-    describe('When the image is Landscape', () => {
+  describe('When "isAllowedToBeShown" is "true"', () => {
+    describe('When the "image" is "Landscape"', () => {
+      const getSizeMock = jest.spyOn(Image, 'getSize');
+
       beforeEach(() => {
         jest.clearAllMocks();
+        jest.useFakeTimers();
+        getSizeMock.mockImplementation(
+          (_: string, onSuccess: (width: number, height: number) => void) => {
+            // Postponing this callback call to the next-tick, so we can have some fictional time to load the image
+            process.nextTick(() => {
+              onSuccess(101, 100);
+            });
+          },
+        );
       });
 
       afterEach(cleanup);
 
-      it('should render with the correct height', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            onSuccess(101, 100);
-          },
+      it('should fetch the image from the correct url', async () => {
+        expect(getSizeMock).toHaveBeenCalledTimes(0);
+        render(renderImagesGalleryListItem(IMAGE_URL));
+        expect(getSizeMock).toHaveBeenCalledTimes(1);
+        expect(getSizeMock.mock.calls[0][0]).toEqual(
+          `${CONSTANTS.VALUES.IMAGES.BASE_URL}/undefined${IMAGE_URL}`,
         );
+        await waitFor(() => {});
+      });
+
+      it('should render with the correct height', async () => {
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {});
         expect(elements.image(component).props.style.height).toEqual(
           LANDSCAPE_HEIGHT,
         );
@@ -70,65 +92,59 @@ describe('<ImagesGalleryListItem />', () => {
       });
 
       it('should render correctly when the app fetches the image-size successfully', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            onSuccess(101, 100);
-          },
-        );
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {});
         expect(elements.listItem(component)).not.toBeNull();
         expect(elements.loadingState(component)).toBeNull();
         expect(elements.errorState(component)).toBeNull();
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).not.toBeNull();
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
 
-      it('should render the loading-state correctly when the app is fetching the image size', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            setTimeout(() => {
-              onSuccess(101, 100);
-            }, 0);
-          },
-        );
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
+      it('should render the "loading-state" correctly when the app is "fetching" the image size', async () => {
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
-        expect(elements.listItem(component)).toBeNull();
         expect(elements.loadingState(component)).not.toBeNull();
+        expect(elements.listItem(component)).toBeNull();
         expect(elements.errorState(component)).toBeNull();
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).toBeNull();
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
     });
 
-    describe('When the image Portrait', () => {
+    describe('When the "image" is "Portrait"', () => {
+      const getSizeMock = jest.spyOn(Image, 'getSize');
+
       beforeEach(() => {
         jest.clearAllMocks();
+        jest.useFakeTimers();
+        getSizeMock.mockImplementation(
+          (_: string, onSuccess: (width: number, height: number) => void) => {
+            // Postponing this callback call to the next-tick, so we can have some fictional time to load the image
+            process.nextTick(() => {
+              onSuccess(100, 100);
+            });
+          },
+        );
+      });
+
+      beforeEach(() => {
+        jest.clearAllMocks();
+        jest.useFakeTimers();
       });
 
       afterEach(cleanup);
 
       it('should render with the correct height', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            onSuccess(100, 100);
-          },
-        );
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {});
         expect(elements.image(component).props.style.height).toEqual(
           PORTRAIT_HEIGHT,
         );
@@ -139,46 +155,26 @@ describe('<ImagesGalleryListItem />', () => {
       });
 
       it('should render correctly when the app fetches the image-size successfully', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            onSuccess(100, 100);
-          },
-        );
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {});
         expect(elements.listItem(component)).not.toBeNull();
         expect(elements.loadingState(component)).toBeNull();
         expect(elements.errorState(component)).toBeNull();
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).not.toBeNull();
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
 
-      it('should render the loading-state correctly when the app is fetching the image size', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            setTimeout(() => {
-              onSuccess(100, 100);
-            }, 0);
-          },
-        );
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
+      it('should render the "loading-state" correctly when the app is "fetching" the image size', async () => {
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
-        expect(elements.listItem(component)).toBeNull();
         expect(elements.loadingState(component)).not.toBeNull();
+        expect(elements.listItem(component)).toBeNull();
         expect(elements.errorState(component)).toBeNull();
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).toBeNull();
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
     });
@@ -190,46 +186,59 @@ describe('<ImagesGalleryListItem />', () => {
 
       afterEach(cleanup);
 
-      it('should render the error-state correctly when the app gets an error when try to fetch the image-size', async () => {
+      it('should render the "error-state" correctly when the app gets an "error" when try to fetch the image-size', async () => {
         const getSizeMock = jest.spyOn(Image, 'getSize');
         getSizeMock.mockImplementation(
           (_: string, __: Function, onError: Function) => {
             onError();
           },
         );
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
         expect(elements.listItem(component)).toBeNull();
         expect(elements.loadingState(component)).toBeNull();
         expect(elements.errorState(component)).not.toBeNull();
         expect(elements.imageOffIcon(component)).not.toBeNull();
         expect(elements.image(component)).toBeNull();
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
     });
   });
 
-  describe('"isAllowedToBeShowed" is "false"', () => {
-    describe('When the image is Landscape', () => {
+  describe('When "isAllowedToBeShowed" is "false"', () => {
+    describe('When the image is "Landscape"', () => {
+      const getSizeMock = jest.spyOn(Image, 'getSize');
+
       beforeEach(() => {
         jest.clearAllMocks();
+        jest.useFakeTimers();
+        getSizeMock.mockImplementation(
+          (_: string, onSuccess: (width: number, height: number) => void) => {
+            // Postponing this callback call to the next-tick, so we can have some fictional time to load the image
+            process.nextTick(() => {
+              onSuccess(101, 100);
+            });
+          },
+        );
       });
 
       afterEach(cleanup);
 
-      it('should render with the correct height', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            onSuccess(101, 100);
-          },
+      it('should fetch the image from the correct url', async () => {
+        expect(getSizeMock).toHaveBeenCalledTimes(0);
+        render(renderImagesGalleryListItem(IMAGE_URL, false));
+        expect(getSizeMock).toHaveBeenCalledTimes(1);
+        expect(getSizeMock.mock.calls[0][0]).toEqual(
+          `${CONSTANTS.VALUES.IMAGES.BASE_URL}/undefined${IMAGE_URL}`,
         );
-        const component = render(renderImagesGalleryListItem(IMAGE_URL));
-        component.rerender(renderImagesGalleryListItem(IMAGE_URL, false));
+        await waitFor(() => {});
+      });
+
+      it('should render with the correct height', async () => {
+        const component = render(renderImagesGalleryListItem(IMAGE_URL, false));
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {});
         expect(elements.image(component).props.style.height).toEqual(
           LANDSCAPE_HEIGHT,
         );
@@ -240,37 +249,20 @@ describe('<ImagesGalleryListItem />', () => {
       });
 
       it('should render correctly when the app fetches the image-size successfully', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            onSuccess(101, 100);
-          },
-        );
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
-        const component = render(renderImagesGalleryListItem(IMAGE_URL));
-        component.rerender(renderImagesGalleryListItem(IMAGE_URL, false));
+        const component = render(renderImagesGalleryListItem(IMAGE_URL, false));
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {});
         expect(elements.listItem(component)).not.toBeNull();
         expect(elements.loadingState(component)).toBeNull();
         expect(elements.errorState(component)).toBeNull();
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).not.toBeNull();
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
 
       it('should render the loading-state correctly when the app is fetching the image size', async () => {
-        const getSizeMock = jest.spyOn(Image, 'getSize');
-        getSizeMock.mockImplementation(
-          (_: string, onSuccess: (width: number, height: number) => void) => {
-            setTimeout(() => {
-              onSuccess(101, 100);
-            }, 0);
-          },
-        );
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
         component.rerender(renderImagesGalleryListItem(IMAGE_URL, false));
         expect(elements.listItem(component)).toBeNull();
@@ -278,10 +270,6 @@ describe('<ImagesGalleryListItem />', () => {
         expect(elements.errorState(component)).toBeNull();
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).toBeNull();
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
     });
@@ -365,25 +353,19 @@ describe('<ImagesGalleryListItem />', () => {
 
       afterEach(cleanup);
 
-      it('should render the error-state correctly when the app gets an error when try to fetch the image-size', async () => {
+      it('should render the "error-state" correctly when the app gets an "error" when try to fetch the image-size', async () => {
         const getSizeMock = jest.spyOn(Image, 'getSize');
         getSizeMock.mockImplementation(
           (_: string, __: Function, onError: Function) => {
             onError();
           },
         );
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
-        const component = render(renderImagesGalleryListItem(IMAGE_URL));
-        component.rerender(renderImagesGalleryListItem(IMAGE_URL, false));
+        const component = render(renderImagesGalleryListItem(IMAGE_URL, false));
         expect(elements.listItem(component)).toBeNull();
         expect(elements.loadingState(component)).toBeNull();
         expect(elements.errorState(component)).not.toBeNull();
         expect(elements.imageOffIcon(component)).not.toBeNull();
         expect(elements.image(component)).toBeNull();
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
     });

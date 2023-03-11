@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {Image} from 'react-native';
 import {DefaultTheme} from 'styled-components/native';
@@ -9,12 +10,13 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {dark} from '@styles/themes/dark';
 import {light} from '@styles/themes/light';
 import metrics from '@styles/metrics';
 
 import ThumbsGalleryListItem from './ThumbsGalleryListItem';
+import {BORDER_WIDTH} from './ThumbsGalleryListItem.styles';
 
 type RenderThumbsGalleryListItemProps = {
   isSelected?: boolean;
@@ -26,7 +28,7 @@ type RenderThumbsGalleryListItemProps = {
 const renderThumbsGalleryListItem = (
   props: RenderThumbsGalleryListItemProps,
 ) => (
-  <TMDBImageQualityProvider>
+  <TMDBImageQualitiesProvider>
     <ThemeProvider theme={props.theme || dark}>
       <ThumbsGalleryListItem
         onPress={props.onPress || jest.fn()}
@@ -34,7 +36,7 @@ const renderThumbsGalleryListItem = (
         image={props.image}
       />
     </ThemeProvider>
-  </TMDBImageQualityProvider>
+  </TMDBImageQualitiesProvider>
 );
 
 describe('<ThumbsGalleryListItem />', () => {
@@ -48,7 +50,7 @@ describe('<ThumbsGalleryListItem />', () => {
     dotMarker: (api: RenderAPI) => api.queryByTestId('thumb-dot-marker'),
   };
 
-  describe('Successfuly loads the image', () => {
+  describe('When successfuly loads the image', () => {
     beforeAll(() => {
       jest
         .spyOn(Image, 'getSize')
@@ -59,7 +61,7 @@ describe('<ThumbsGalleryListItem />', () => {
         );
     });
 
-    describe('The item is "selected"', () => {
+    describe('When "isSelected" is "true"', () => {
       it('should render correctly when the image-state is "LOADING"', async () => {
         const component = render(
           renderThumbsGalleryListItem({image: 'SOME_IMAGE', isSelected: true}),
@@ -88,7 +90,7 @@ describe('<ThumbsGalleryListItem />', () => {
       });
     });
 
-    describe('The item is "unselected"', () => {
+    describe('When "isSelected" is "true""', () => {
       it('should render correctly when the image-state is "LOADING"', async () => {
         const component = render(
           renderThumbsGalleryListItem({image: 'SOME_IMAGE', isSelected: false}),
@@ -119,7 +121,7 @@ describe('<ThumbsGalleryListItem />', () => {
 
     describe('Renders the border correctly', () => {
       describe('When the theme is "DARK"', () => {
-        describe('The item is "selected"', () => {
+        describe('When "isSelected" is "true"', () => {
           it('should render the "border" correctly when the image-state is "LOADING"', async () => {
             const component = render(
               renderThumbsGalleryListItem({
@@ -128,7 +130,7 @@ describe('<ThumbsGalleryListItem />', () => {
               }),
             );
             expect(elements.wrapper(component).props.style.borderWidth).toEqual(
-              metrics.getWidthFromDP('0.5%'),
+              BORDER_WIDTH,
             );
             expect(elements.wrapper(component).props.style.borderColor).toEqual(
               dark.colors.primary,
@@ -145,7 +147,7 @@ describe('<ThumbsGalleryListItem />', () => {
             );
             fireEvent(elements.image(component), 'onLoad');
             expect(elements.wrapper(component).props.style.borderWidth).toEqual(
-              metrics.getWidthFromDP('0.5%'),
+              BORDER_WIDTH,
             );
             expect(elements.wrapper(component).props.style.borderColor).toEqual(
               dark.colors.primary,
@@ -154,7 +156,7 @@ describe('<ThumbsGalleryListItem />', () => {
           });
         });
 
-        describe('The item is "unselected"', () => {
+        describe('When "isSelected" is "false"', () => {
           it('should render the "border" correctly when the image-state is "LOADING"', async () => {
             const component = render(
               renderThumbsGalleryListItem({
@@ -163,7 +165,7 @@ describe('<ThumbsGalleryListItem />', () => {
               }),
             );
             expect(elements.wrapper(component).props.style.borderWidth).toEqual(
-              metrics.getWidthFromDP('0.5%'),
+              BORDER_WIDTH,
             );
             expect(elements.wrapper(component).props.style.borderColor).toEqual(
               'transparent',
@@ -180,7 +182,7 @@ describe('<ThumbsGalleryListItem />', () => {
             );
             fireEvent(elements.image(component), 'onLoad');
             expect(elements.wrapper(component).props.style.borderWidth).toEqual(
-              metrics.getWidthFromDP('0.5%'),
+              BORDER_WIDTH,
             );
             expect(elements.wrapper(component).props.style.borderColor).toEqual(
               'transparent',
@@ -269,7 +271,7 @@ describe('<ThumbsGalleryListItem />', () => {
   });
 
   describe('Error when tried to load the image', () => {
-    describe('The item is "selected"', () => {
+    describe('When "isSelected" is "true"', () => {
       it('should render correctly when the image-state is "ERROR"', async () => {
         const component = render(
           renderThumbsGalleryListItem({image: 'SOME_IMAGE', isSelected: true}),
@@ -285,7 +287,7 @@ describe('<ThumbsGalleryListItem />', () => {
       });
     });
 
-    describe('The item is "unselected"', () => {
+    describe('When "isSelected" is "false"', () => {
       it('should render correctly when the image-state is "ERROR"', async () => {
         const component = render(
           renderThumbsGalleryListItem({image: 'SOME_IMAGE', isSelected: false}),
@@ -303,7 +305,7 @@ describe('<ThumbsGalleryListItem />', () => {
 
     describe('Renders the border correctly', () => {
       describe('When the theme is "DARK"', () => {
-        describe('The item is "selected"', () => {
+        describe('When "isSelected" is "true"', () => {
           it('should render the "border" correctly when the image-state is "ERROR"', async () => {
             const component = render(
               renderThumbsGalleryListItem({
@@ -313,7 +315,7 @@ describe('<ThumbsGalleryListItem />', () => {
             );
             fireEvent(elements.image(component), 'onError');
             expect(elements.wrapper(component).props.style.borderWidth).toEqual(
-              metrics.getWidthFromDP('0.5%'),
+              BORDER_WIDTH,
             );
             expect(elements.wrapper(component).props.style.borderColor).toEqual(
               dark.colors.primary,
@@ -322,7 +324,7 @@ describe('<ThumbsGalleryListItem />', () => {
           });
         });
 
-        describe('The item is "unselected"', () => {
+        describe('When "isSelected" is "false"', () => {
           it('should render the "border" correctly when the image-state is "ERROR"', async () => {
             const component = render(
               renderThumbsGalleryListItem({
@@ -332,7 +334,7 @@ describe('<ThumbsGalleryListItem />', () => {
             );
             fireEvent(elements.image(component), 'onError');
             expect(elements.wrapper(component).props.style.borderWidth).toEqual(
-              metrics.getWidthFromDP('0.5%'),
+              BORDER_WIDTH,
             );
             expect(elements.wrapper(component).props.style.borderColor).toEqual(
               'transparent',
@@ -387,7 +389,7 @@ describe('<ThumbsGalleryListItem />', () => {
   });
 
   describe('Pressing the item', () => {
-    describe('The item is "selected"', () => {
+    describe('When "isSelected" is "true"', () => {
       describe('The image-state is "LOADING"', () => {
         it('should call the "onPress" when the user press the item', async () => {
           const onPress = jest.fn();
@@ -442,7 +444,7 @@ describe('<ThumbsGalleryListItem />', () => {
       });
     });
 
-    describe('The item is "unselected"', () => {
+    describe('When "isSelected" is "false"', () => {
       describe('The image-state is "LOADING"', () => {
         it('should call the "onPress" when the user press the item', async () => {
           const onPress = jest.fn();

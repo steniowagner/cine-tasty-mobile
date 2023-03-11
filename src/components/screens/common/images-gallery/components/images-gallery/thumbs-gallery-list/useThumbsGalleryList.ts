@@ -3,27 +3,26 @@ import {ScrollView} from 'react-native';
 
 import metrics from '@styles/metrics';
 
-import {
-  THUMB_TOTAL_SIZE,
-  listStyles,
-} from './thumbs-gallery-list-item/ThumbsGalleryListItem.styles';
+import * as ThumbsGalleryListItemStyles from './thumbs-gallery-list-item/ThumbsGalleryListItem.styles';
+import * as Styles from './ThumbsGalleryList.styles';
 
 type UseThumbsGalleryListProps = {
   indexImageSelected: number;
 };
 
 export const INITIAL_NUMBER_ITEMS_LIST = Math.ceil(
-  metrics.width / THUMB_TOTAL_SIZE,
+  metrics.width / ThumbsGalleryListItemStyles.THUMB_TOTAL_SIZE,
 );
 
-const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
+export const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
   const thumbsListRef = useRef<ScrollView>();
 
   const moveList = useCallback(() => {
     const basePixelsToScroll =
-      props.indexImageSelected * THUMB_TOTAL_SIZE +
-      listStyles.paddingHorizontal;
-    const middleOfTheScreen = (metrics.width - THUMB_TOTAL_SIZE) / 2;
+      props.indexImageSelected * ThumbsGalleryListItemStyles.THUMB_TOTAL_SIZE +
+      Styles.sheet.list.paddingHorizontal;
+    const middleOfTheScreen =
+      (metrics.width - ThumbsGalleryListItemStyles.THUMB_TOTAL_SIZE) / 2;
     const isThumbBeyondHalfScreen = basePixelsToScroll >= metrics.width / 2;
     const middleScreenOffset = basePixelsToScroll - middleOfTheScreen;
     const offset = isThumbBeyondHalfScreen ? middleScreenOffset : 0;
@@ -35,7 +34,8 @@ const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
   }, [props.indexImageSelected]);
 
   const handleMoveThumbsGalleryList = useCallback(() => {
-    if (!thumbsListRef || !thumbsListRef.current) {
+    const isThumbsListRefSet = thumbsListRef && thumbsListRef.current;
+    if (!isThumbsListRefSet) {
       return;
     }
     moveList();
@@ -49,7 +49,7 @@ const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
     setTimeout(() => {
       // for some reason, the ScrollView doesn't scroll properly on the first render
       handleMoveThumbsGalleryList();
-    }, 100);
+    }, 0);
   }, []);
 
   return {
@@ -57,5 +57,3 @@ const useThumbsGalleryList = (props: UseThumbsGalleryListProps) => {
     thumbsListRef,
   };
 };
-
-export default useThumbsGalleryList;

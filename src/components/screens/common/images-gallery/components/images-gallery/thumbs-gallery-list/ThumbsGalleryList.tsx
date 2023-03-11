@@ -2,8 +2,8 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 
 import ThumbsGalleryListItem from './thumbs-gallery-list-item/ThumbsGalleryListItem';
-import {listStyles} from './thumbs-gallery-list-item/ThumbsGalleryListItem.styles';
-import useThumbsGalleryList from './useThumbsGalleryList';
+import {useThumbsGalleryList} from './useThumbsGalleryList';
+import * as Styles from './ThumbsGalleryList.styles';
 
 type ThumbsGalleryListProps = {
   onPressThumbListItem: (indexThumbSelected: number) => void;
@@ -15,9 +15,10 @@ export const ThumbsGalleryList = (props: ThumbsGalleryListProps) => {
   const thumbsGalleryList = useThumbsGalleryList({
     indexImageSelected: props.indexImageSelected,
   });
+
   return (
     <ScrollView
-      contentContainerStyle={listStyles}
+      contentContainerStyle={Styles.sheet.list}
       ref={thumbsGalleryList.thumbsListRef}
       showsHorizontalScrollIndicator={false}
       testID="thumbs-gallery-list"

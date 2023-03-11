@@ -7,10 +7,9 @@ import {TMDBImage} from '@components';
 
 const THUMB_SIZE = metrics.getWidthFromDP('20%');
 const THUMB_MARGIN = metrics.extraSmallSize;
+export const BORDER_WIDTH = metrics.getWidthFromDP('0.5%');
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 export const THUMB_TOTAL_SIZE = THUMB_SIZE + THUMB_MARGIN * 2;
-export const listStyles = {
-  paddingHorizontal: metrics.mediumSize,
-};
 
 type ThumbImageStyleProps = {
   isSelected: boolean;
@@ -18,7 +17,7 @@ type ThumbImageStyleProps = {
 };
 
 type WrapperStyleProps = {
-  borderColor: string;
+  isSelected: boolean;
 };
 
 export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
@@ -27,8 +26,14 @@ export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   margin-horizontal: ${THUMB_MARGIN}px;
   align-items: center;
   border-radius: ${metrics.mediumSize}px;
-  border: ${({borderColor, theme}) =>
-    `${theme.metrics.getWidthFromDP('0.5%')}px solid ${borderColor}`};
+  border: ${({isSelected, theme}) => {
+    const borderColor = isSelected
+      ? theme.id === Types.ThemeId.DARK
+        ? theme.colors.primary
+        : theme.colors.buttonText
+      : 'transparent';
+    return `${BORDER_WIDTH}px solid ${borderColor}`;
+  }};
 `;
 
 export const DotMarker = styled(View)`

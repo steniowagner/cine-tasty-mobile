@@ -14,6 +14,8 @@ export const ForegroundLayer = styled(View)<ForegroundLayerStyleProps>`
       ? 'transparent'
       : theme.colors.progressiveImageBackground};
   border-radius: ${({borderRadius}) => Number(borderRadius)}px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const sheet = StyleSheet.create({
@@ -23,9 +25,5 @@ export const sheet = StyleSheet.create({
   },
   imageOverlay: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
   },
 });
