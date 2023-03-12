@@ -10,7 +10,7 @@ import {
 } from '@testing-library/react-native';
 import {MockedResponse, MockedProvider} from '@apollo/client/testing';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {AlertMessageProvider} from '@providers';
 import {setupTimeTravel} from '@mocks/timeTravel';
 import possibleTypes from '@graphql/possibleTypes.json';
@@ -128,9 +128,9 @@ const renderFamous = (
         })
       }>
       <AlertMessageProvider>
-        <TMDBImageQualityProvider>
+        <TMDBImageQualitiesProvider>
           <Famous navigation={{...navigation, navigate}} route={route} />
-        </TMDBImageQualityProvider>
+        </TMDBImageQualitiesProvider>
       </AlertMessageProvider>
     </MockedProvider>
   );
