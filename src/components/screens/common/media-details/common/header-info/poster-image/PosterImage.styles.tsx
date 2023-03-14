@@ -15,7 +15,7 @@ export const FallbackImageWrapper = styled(Animated.View)`
 `;
 
 export const TMDBImageStyled = styled(TMDBImage)`
-  width: ${({theme}) => theme.metrics.getWidthFromDP('30%')}px;
-  height: 100%;
-  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
+  width: ${({theme}) => theme.metrics.getWidthFromDP('70%')}px;
+  height: ${({theme}) => theme.metrics.getHeightFromDP('50%')}px;
+  border-radius: ${({theme}) => theme.metrics.mediumSize}px;
 `;
