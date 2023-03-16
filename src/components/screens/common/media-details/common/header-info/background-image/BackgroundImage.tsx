@@ -1,25 +1,25 @@
 import React from 'react';
+import Animated from 'react-native-reanimated';
 
-import {useTMDBImage} from '@components';
-
+import {useBackgroundImage} from './useBackgroundImage';
 import * as Styles from './BackgroundImage.styles';
 
 type BackgroundImageProps = {
-  isLoading: boolean;
   image: string;
 };
 
 export const BackgroundImage = (props: BackgroundImageProps) => {
-  const tmdbImage = useTMDBImage({
-    isThumbnail: true,
-    imageType: 'poster',
+  const backgroundImage = useBackgroundImage({
     image: props.image,
   });
 
   return (
-    <Styles.Wrapper testID="background-image-wrapper">
-      <Styles.BackgroundImage blurRadius={1} source={{uri: tmdbImage.uri}} />
-      <Styles.SmokeShadow />
-    </Styles.Wrapper>
+    <Animated.Image
+      blurRadius={Styles.DEFAULT_BLUR_RADIUS}
+      onLoad={backgroundImage.onLoadBackgroundImage}
+      testID="background-image"
+      source={{uri: backgroundImage.uri}}
+      style={backgroundImage.style}
+    />
   );
 };
