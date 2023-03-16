@@ -1,40 +1,27 @@
 import React from 'react';
-import {DefaultTheme, withTheme} from 'styled-components/native';
+import Animated from 'react-native-reanimated';
 
-import {LoadingPlaceholder, ProgressiveImage} from '@components';
-import {useGetCurrentTheme} from '@hooks';
-
+import {useBackgroundImage} from './useBackgroundImage';
 import * as Styles from './BackgroundImage.styles';
 
 type BackgroundImageProps = {
-  theme: DefaultTheme;
-  isLoading: boolean;
-  imageURL: string;
+  image: string;
 };
 
 export const BackgroundImage = (props: BackgroundImageProps) => {
-  const getCurrentTheme = useGetCurrentTheme({theme: props.theme});
+  const backgroundImage = useBackgroundImage({
+    image: props.image,
+  });
+
   return (
-    <Styles.Wrapper testID="background-image-wrapper">
-      {props.isLoading ? (
-        <LoadingPlaceholder
-          testID="background-image-loading"
-          indexToDelayAnimation={2}
-          style={Styles.LoadingPlaceholderStyle}
-        />
-      ) : (
-        <ProgressiveImage
-          imageType="backdrop"
-          image={props.imageURL}
-          borderRadius={0}
-        />
-      )}
-      <Styles.SmokeShadow
-        // @ts-ignore
-        currentTheme={getCurrentTheme.currentTheme}
+    <Animated.View style={backgroundImage.style}>
+      <Styles.BackgroundImage
+        blurRadius={Styles.DEFAULT_BLUR_RADIUS}
+        onLoad={backgroundImage.onLoadBackgroundImage}
+        testID="background-image"
+        source={{uri: backgroundImage.uri}}
       />
-    </Styles.Wrapper>
+      <Styles.SmokeShadow />
+    </Animated.View>
   );
 };
-
-export default withTheme(BackgroundImage);

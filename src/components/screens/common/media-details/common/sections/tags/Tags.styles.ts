@@ -9,11 +9,11 @@ type ExtraTagStyleProp = {
 };
 
 export const Wrapper = styled(View)`
-  width: 100%;
+  width: 90%;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   padding-horizontal: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  margin-bottom: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
 `;
 
 export const TagWrapper = styled(View)<ExtraTagStyleProp>`
