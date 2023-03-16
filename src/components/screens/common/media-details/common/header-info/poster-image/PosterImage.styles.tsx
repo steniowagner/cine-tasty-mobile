@@ -10,7 +10,7 @@ const DEFAULT_BORDER_RADIUS = metrics.mediumSize;
 
 export const FallbackImageWrapper = styled(Animated.View)`
   width: ${DEFAULT_WIDTH}px;
-  height: ${DEFAULT_HEIGHT}
+  height: ${DEFAULT_HEIGHT}px;
   justify-content: center;
   align-items: center;
   position: absolute;
