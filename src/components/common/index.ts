@@ -36,3 +36,4 @@ export {
   SVGIconProps,
 } from './svg-icon';
 export {ModalSheet} from './modal-sheet/ModalSheet';
+export {MediaHeadline} from './media-headline/MediaHeadline';
