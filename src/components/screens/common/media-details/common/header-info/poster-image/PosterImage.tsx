@@ -17,6 +17,7 @@ export const PosterImage = (props: PosterImageProps) => {
   const imageFallbackView = useImageFallbackView({
     image: props.image,
   });
+
   return (
     <>
       <Styles.TMDBImageStyled

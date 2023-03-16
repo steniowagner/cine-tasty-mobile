@@ -14,12 +14,14 @@ export const BackgroundImage = (props: BackgroundImageProps) => {
   });
 
   return (
-    <Animated.Image
-      blurRadius={Styles.DEFAULT_BLUR_RADIUS}
-      onLoad={backgroundImage.onLoadBackgroundImage}
-      testID="background-image"
-      source={{uri: backgroundImage.uri}}
-      style={backgroundImage.style}
-    />
+    <Animated.View style={backgroundImage.style}>
+      <Styles.BackgroundImage
+        blurRadius={Styles.DEFAULT_BLUR_RADIUS}
+        onLoad={backgroundImage.onLoadBackgroundImage}
+        testID="background-image"
+        source={{uri: backgroundImage.uri}}
+      />
+      <Styles.SmokeShadow />
+    </Animated.View>
   );
 };
