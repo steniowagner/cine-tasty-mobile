@@ -1,7 +1,6 @@
 import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
-import {LoadingPlaceholder} from '@components';
 import {CONSTANTS} from '@utils';
 
 type ExtraTagStyleProp = {
@@ -30,12 +29,4 @@ export const TagText = styled(Text)<ExtraTagStyleProp>`
   font-family: CircularStd-Medium;
   color: ${({isExtra, theme}) => (isExtra ? 'white' : theme.colors.buttonText)};
   text-align: center;
-`;
-
-export const LoadingPlaceholderStylde = styled(LoadingPlaceholder)`
-  margin-top: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
-  width: ${({theme}) => theme.metrics.getWidthFromDP('20%')}px;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('10%')}px;
-  borderradius: ${({theme}) => theme.metrics.extraSmallSize}px;
-  marginright: ${({theme}) => theme.metrics.smallSize}px;
 `;
