@@ -37,3 +37,4 @@ export {
 } from './svg-icon';
 export {ModalSheet} from './modal-sheet/ModalSheet';
 export {MediaHeadline} from './media-headline/MediaHeadline';
+export {ScrollWithAnimatedHeader} from './scroll-with-animated-header/ScrollWithAnimatedHeader';
