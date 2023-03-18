@@ -20,6 +20,7 @@ export const HeaderInfo = (props: HeaderInfoProps) => {
 
   return (
     <Styles.Wrapper headerHeight={headerHeight} testID="header-info-wrapper">
+      <Styles.SmokeShadow />
       <TMDBImageWithFallback
         iconImageLoading="video-vintage"
         iconImageError="image-off"
