@@ -10,6 +10,11 @@ jest.mock('react-i18next', () => ({
   getI18n: () => ({language: 'en'}),
 }));
 
+jest.mock('react-native-status-bar-height', () => ({
+  getStatusBarHeight: () => 10,
+  isIPhoneWithMonobrow: jest.fn(),
+}));
+
 jest.mock('react-native-fast-image', () => {
   const {View} = require('react-native');
 
