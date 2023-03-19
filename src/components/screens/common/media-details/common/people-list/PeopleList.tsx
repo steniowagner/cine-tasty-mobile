@@ -7,8 +7,14 @@ import * as Types from '@local-types';
 import {usePeopleList, PeopleListItemType} from './usePeopleList';
 import {PeopleListItem} from './people-list-item/PeopleListItem';
 
+export type PressItemParams = {
+  id: string;
+  name: string;
+  image: string;
+};
+
 type PeopleListProps = {
-  onPressItem: (id: string, name: string, image: string) => void;
+  onPressItem: (params: PressItemParams) => void;
   dataset:
     | Types.CrewDataset
     | Types.CastDataset
@@ -31,7 +37,13 @@ export const PeopleList = (props: PeopleListProps) => {
           testID={`people-list-${props.type}`}>
           {peopleList.items.map((item, index) => (
             <PeopleListItem
-              onPress={() => props.onPressItem(item.id, item.name, item.image)}
+              onPress={() =>
+                props.onPressItem({
+                  id: item.id,
+                  name: item.name,
+                  image: item.image,
+                })
+              }
               withSubtext={props.type !== 'creator'}
               key={`${item.id}-${index}`}
               subText={item.subText}
@@ -58,11 +70,11 @@ export const PeopleList = (props: PeopleListProps) => {
           return (
             <PeopleListItem
               onPress={() =>
-                props.onPressItem(
-                  peopleListItem.id,
-                  peopleListItem.name,
-                  peopleListItem.image,
-                )
+                props.onPressItem({
+                  id: peopleListItem.id,
+                  name: peopleListItem.name,
+                  image: peopleListItem.image,
+                })
               }
               withSubtext={props.type !== 'creator'}
               key={`${peopleListItem.id}-${index}`}
