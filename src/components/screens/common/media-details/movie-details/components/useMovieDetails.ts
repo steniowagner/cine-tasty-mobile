@@ -1,17 +1,24 @@
 import {useCallback, useEffect, useMemo} from 'react';
 import {useQuery} from '@apollo/client';
 
-import {showLanguageAlert, formatCurrency, formatDate} from '@utils';
+import {showLanguageAlert} from '@utils';
 import {GET_MOVIE_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
-import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
 
-import {MovieDetailNavigationProp} from '../routes/route-params-types';
+import {
+  MovieDetailNavigationProp,
+  MovieDetailRouteProp,
+} from '../routes/route-params-types';
+import {useMakeAnimatedHeaderIntepolationParams} from '../../common/useMakeAnimatedHeaderInterpolationParams';
+import {PressItemParams} from '../../common/people-list/PeopleList';
+import {translateMoviesDetailsTexts} from './translateMoviesDetailsTexts';
+import {makeMovieInfoItems} from './makeMovieInfoItems';
 
 type UseMovieDetailsProps = {
   navigation: MovieDetailNavigationProp;
+  route: MovieDetailRouteProp;
   hasVoteAverage: boolean;
   hasGenresIds: boolean;
   hasVoteCount: boolean;
@@ -19,6 +26,8 @@ type UseMovieDetailsProps = {
 };
 
 export const useMovieDetails = (props: UseMovieDetailsProps) => {
+  const animatedHeaderIntepolationParams =
+    useMakeAnimatedHeaderIntepolationParams();
   const translations = useTranslations();
 
   const query = useQuery<
@@ -35,103 +44,17 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     fetchPolicy: 'cache-first',
   });
 
-  const releaseDate = useMemo(
-    (): string => (query.data?.movie?.releaseDate || '-').split('-')[0],
-    [query.data],
-  );
-
   const texts = useMemo(
-    () => ({
-      movieTag: translations.translate(
-        Translations.Tags.MEDIA_DETAIL_MOVIE_TITLE,
-      ),
-      sections: {
-        cast: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_CAST,
-        ),
-        crew: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_CREW,
-        ),
-        images: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_IMAGES,
-        ),
-        videos: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_VIDEOS,
-        ),
-        productionCompanies: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
-        ),
-      },
-      info: {
-        originalTitle: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
-        ),
-        releaseDate: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_RELEASE_DATE,
-        ),
-        budget: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_BUDGET,
-        ),
-        revenue: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_REVENUE,
-        ),
-        productionCountries: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_PRODUCTION_COUNTRIES,
-        ),
-        spokenLanguages: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_SPOKEN_LANGUAGES,
-        ),
-      },
-      languageAlert: {
-        description: translations.translate(
-          Translations.Tags.LANGUAGE_WARNING_MEDIA_DESCRIPTION,
-        ),
-        positiveActionTitle: translations.translate(
-          Translations.Tags.LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION,
-        ),
-        title: translations.translate(
-          Translations.Tags.LANGUAGE_WARNING_MEDIA_TITLE,
-        ),
-      },
-    }),
+    () => translateMoviesDetailsTexts(translations.translate),
     [translations.translate],
   );
 
   const infoItems = useMemo(
-    () => [
-      {
-        value: query.data?.movie?.originalTitle || '-',
-        title: texts.info.originalTitle,
-      },
-      {
-        value: formatDate(query.data?.movie?.releaseDate),
-        title: texts.info.releaseDate,
-      },
-      {
-        value: formatCurrency(query.data?.movie?.budget),
-        title: texts.info.budget,
-      },
-      {
-        value: formatCurrency(query.data?.movie?.revenue),
-        title: texts.info.revenue,
-      },
-      {
-        value: query.data?.movie?.productionCountries.length
-          ? query.data?.movie?.productionCountries.join(', ')
-          : '-',
-        title: texts.info.productionCountries,
-      },
-      {
-        value: query.data?.movie?.spokenLanguages.length
-          ? query.data?.movie?.spokenLanguages.join(', ')
-          : '-',
-        title: texts.info.spokenLanguages,
-      },
-    ],
-    [query.data, texts],
+    () => makeMovieInfoItems(query, texts.info),
+    [query, texts],
   );
 
-  const onPressSimilarItem = useCallback(
+  const handlePressSimilarMovie = useCallback(
     (similar: SchemaTypes.MovieDetail_movie_similar) => {
       props.navigation.push(Routes.Movie.DETAILS, {
         voteAverage: similar.voteAverage,
@@ -144,23 +67,23 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     [props.navigation],
   );
 
-  const onPressCast = useCallback(
-    (id: string, name: string, image: string) => {
+  const handlePressCast = useCallback(
+    (params: PressItemParams) => {
       props.navigation.push(Routes.Famous.DETAILS, {
-        profileImage: image,
-        id: Number(id),
-        name,
+        profileImage: params.image,
+        id: Number(params.id),
+        name: params.name,
       });
     },
     [props.navigation],
   );
 
-  const onPressCrew = useCallback(
-    (id: string, name: string, image: string) => {
+  const handlePressCrew = useCallback(
+    (params: PressItemParams) => {
       props.navigation.push(Routes.Famous.DETAILS, {
-        profileImage: image,
-        id: Number(id),
-        name,
+        profileImage: params.image,
+        id: Number(params.id),
+        name: params.name,
       });
     },
     [props.navigation],
@@ -176,7 +99,7 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     [props.navigation],
   );
 
-  useEffect(() => {
+  const handleShowLanguageAlert = useCallback(() => {
     const shouldShowLanguageAlert =
       !query.loading && query.data?.movie && !query.data?.movie.overview;
     if (shouldShowLanguageAlert) {
@@ -190,15 +113,29 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     }
   }, [query.loading, query.data?.movie]);
 
+  useEffect(() => {
+    handleShowLanguageAlert();
+  }, [query.loading, query.data?.movie]);
+
   return {
+    canShowContent:
+      !query.loading && !query.error && query.data && query.data.movie,
+    votesAverage:
+      props.route.params.voteAverage || query.data?.movie?.voteAverage || 0,
+    voteCount:
+      props.route.params.voteCount || query.data?.movie?.voteCount || 0,
+    poster: props.route.params.posterPath,
+    title: props.route.params.title,
+    tags: props.route.params.genreIds || query.data?.movie?.genres || [],
+    animatedHeaderIntepolationParams,
     movie: query.data?.movie,
+    releaseDate: (query.data?.movie?.releaseDate || '-').split('-')[0],
     isLoading: query.loading,
     hasError: !!query.error,
-    onPressSimilarItem,
+    onPressSimilarMovie: handlePressSimilarMovie,
     onPressReviews,
-    onPressCrew,
-    onPressCast,
-    releaseDate,
+    onPressCrew: handlePressCrew,
+    onPressCast: handlePressCast,
     infoItems,
     texts,
   };

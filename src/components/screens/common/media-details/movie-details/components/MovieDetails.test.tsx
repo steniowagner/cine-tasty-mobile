@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {Alert} from 'react-native';
 import {
@@ -10,7 +11,7 @@ import {
 } from '@testing-library/react-native';
 import {MockedProvider} from '@apollo/client/testing';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as mockMovieDetails from '@mocks/fixtures/movie';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
@@ -28,19 +29,21 @@ const TITLE = 'TITLE';
 
 jest.spyOn(Alert, 'alert');
 
-const renderMovieDetails = ({
-  navigate = jest.fn(),
-  push = jest.fn(),
-  goBack = jest.fn(),
-  mockResolvers,
-  voteAverage,
-  voteCount,
-  genreIds,
-  id,
-}: any) => {
+type RenderMovieDetailsProps = {
+  navigate?: jest.Mock;
+  push?: jest.Mock;
+  goBack?: jest.Mock;
+  mockResolvers: any;
+  voteAverage?: number;
+  voteCount?: number;
+  genreIds?: string[];
+  id: string;
+};
+
+const renderMovieDetails = (params: RenderMovieDetailsProps) => {
   const MovieDetailsScreen = ({navigation}) => (
     <MockedProvider
-      mocks={mockResolvers}
+      mocks={params.mockResolvers}
       defaultOptions={{
         watchQuery: {fetchPolicy: 'no-cache'},
         query: {fetchPolicy: 'no-cache'},
@@ -50,25 +53,30 @@ const renderMovieDetails = ({
           possibleTypes,
         })
       }>
-      <TMDBImageQualityProvider>
+      <TMDBImageQualitiesProvider>
         <AlertMessageProvider>
           <MovieDetail
-            navigation={{...navigation, navigate, goBack, push}}
+            navigation={{
+              ...navigation,
+              navigate: params.navigate,
+              goBack: params.goBack,
+              push: params.push,
+            }}
             route={{
               name: Routes.Movie.DETAILS,
               key: `${Routes.Movie.DETAILS}-key`,
               params: {
                 posterPath: POSTER_PATH,
                 title: TITLE,
-                voteAverage,
-                voteCount,
-                genreIds,
-                id: Number(id),
+                voteAverage: params.voteAverage,
+                voteCount: params.voteCount,
+                genreIds: params.genreIds,
+                id: Number(params.id),
               },
             }}
           />
         </AlertMessageProvider>
-      </TMDBImageQualityProvider>
+      </TMDBImageQualitiesProvider>
     </MockedProvider>
   );
   return <MockedNavigation component={MovieDetailsScreen} />;
@@ -76,15 +84,9 @@ const renderMovieDetails = ({
 
 describe('<MovieDetails />', () => {
   const elements = {
-    backButton: (api: RenderAPI) => api.queryByTestId('header-back-button'),
     advise: (api: RenderAPI) => api.queryByTestId('advise-wrapper'),
     headerInfo: (api: RenderAPI) => api.queryByTestId('header-info-wrapper'),
-    tagsWrapper: (api: RenderAPI) => api.queryAllByTestId('tags'),
-    tagsTexts: (api: RenderAPI) => api.queryAllByTestId('tag-text'),
-    tagsLoading: (api: RenderAPI) => api.queryByTestId('tags-loading'),
     sectionsTitle: (api: RenderAPI) => api.queryAllByTestId('section-title'),
-    loadingOverview: (api: RenderAPI) =>
-      api.queryAllByTestId('loading-overview'),
     overviewWrapper: (api: RenderAPI) =>
       api.queryByTestId('media-item-description-wrapper'),
     generalInfo: (api: RenderAPI) => api.queryByTestId('general-info-wrapper'),
@@ -95,10 +97,18 @@ describe('<MovieDetails />', () => {
     productionCompanies: (api: RenderAPI) =>
       api.queryByTestId('production-network-companies'),
     reviews: (api: RenderAPI) => api.queryByTestId('reviews-content-wrapper'),
+    loading: (api: RenderAPI) => api.queryByTestId('media-details-loading'),
     similar: (api: RenderAPI) => api.queryByTestId('similar-list'),
     sections: (api: RenderAPI) => api.queryAllByTestId('section-wrapper'),
-    voteAverage: (api: RenderAPI) => api.queryByTestId('media-votes-average'),
-    voteCount: (api: RenderAPI) => api.queryByTestId('media-votes-count'),
+    adviseWrapper: (api: RenderAPI) => api.queryByTestId('advise-wrapper'),
+    adviseTitle: (api: RenderAPI) => api.queryByTestId('advise-title'),
+    votesAverage: (api: RenderAPI) => api.queryByTestId('votes-text'),
+    voteCount: (api: RenderAPI) => api.queryByTestId('vote-count'),
+    tagsTexts: (api: RenderAPI) => api.queryAllByTestId('tag-text'),
+    adviseDescription: (api: RenderAPI) =>
+      api.queryByTestId('advise-description'),
+    adviseSuggestion: (api: RenderAPI) =>
+      api.queryByTestId('advise-suggestion'),
     generalInfoItems: (api: RenderAPI) =>
       api.queryAllByTestId(/general-info-wrapper-/),
     generalInfoTitles: (api: RenderAPI) =>
@@ -116,7 +126,7 @@ describe('<MovieDetails />', () => {
       api.queryByTestId('view-all-button-reviews'),
   };
 
-  describe('Renders correctly', () => {
+  describe('Rendering the components', () => {
     describe('Default flow', () => {
       const id = '1';
 
@@ -126,20 +136,14 @@ describe('<MovieDetails />', () => {
 
       afterEach(cleanup);
 
-      it('should render correctly when it receive all the data', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers({
+      it('should render correctly', async () => {
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
           id,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -150,12 +154,10 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        expect(elements.backButton(component)).not.toBeNull();
         expect(elements.headerInfo(component)).not.toBeNull();
         expect(elements.sections(component).length).toEqual(8);
-        expect(elements.tagsWrapper(component)).not.toBeNull();
         expect(elements.overviewWrapper(component)).not.toBeNull();
         expect(elements.generalInfo(component)).not.toBeNull();
         expect(elements.cast(component)).not.toBeNull();
@@ -169,19 +171,13 @@ describe('<MovieDetails />', () => {
       });
 
       it('should render the sections titles correctly', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers({
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
           id,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -192,7 +188,7 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.sectionsTitle(component).length).toEqual(9);
         expect(elements.sectionsTitle(component)[0].children[0]).toEqual(
@@ -217,7 +213,7 @@ describe('<MovieDetails />', () => {
           Translations.Tags.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
         );
         expect(elements.sectionsTitle(component)[7].children[0]).toEqual(
-          `${Translations.Tags.MEDIA_DETAIL_SECTIONS_REVIEW} (${queryResult.result.result.data.movie.reviews.length})`,
+          `${Translations.Tags.MEDIA_DETAIL_SECTIONS_REVIEW} (${resolvers[0].result.data.movie.reviews.length})`,
         );
         expect(elements.sectionsTitle(component)[8].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_SIMILAR,
@@ -225,7 +221,7 @@ describe('<MovieDetails />', () => {
       });
     });
 
-    describe('Rendering the Header-info/votes-average', () => {
+    describe('Header-info/votes-average', () => {
       const id = '4';
 
       beforeEach(() => {
@@ -235,19 +231,13 @@ describe('<MovieDetails />', () => {
       afterEach(cleanup);
 
       it('should render the "votes-average" correctly when the "route.params.voteAverage" is set', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers({
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
           withVoteAverage: false,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
           id,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderMovieDetails({
@@ -260,17 +250,17 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        expect(elements.voteAverage(component).children[0]).toEqual(
-          `${voteAverage.toFixed(1)}`,
+        expect(elements.votesAverage(component).children[0]).toEqual(
+          `${voteAverage.toFixed(1)} `,
         );
         await waitFor(() => {});
       });
 
-      it('should render the "votes-average" correctly when the "route.params.voteAverage" is not set and "movie.voteAvera" is set', async () => {
+      it('should render the "votes-average" correctly when the "route.params.voteAverage" is not set and "movie.voteAverage" is set', async () => {
         const voteAverage = randomPositiveNumber(10, 1);
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
@@ -282,12 +272,6 @@ describe('<MovieDetails />', () => {
             voteAverage,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -298,16 +282,16 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        expect(elements.voteAverage(component).children[0]).toEqual(
-          `${voteAverage.toFixed(1)}`,
+        expect(elements.votesAverage(component).children[0]).toEqual(
+          `${voteAverage.toFixed(1)} `,
         );
         await waitFor(() => {});
       });
     });
 
-    describe('Rendering the Header-info/votes-count', () => {
+    describe('Header-info/votes-count', () => {
       const id = '5';
 
       beforeEach(() => {
@@ -317,20 +301,14 @@ describe('<MovieDetails />', () => {
       afterEach(cleanup);
 
       it('should render the "votes-count" correctly when the "route.params.voteCount" is set', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers({
+        const voteCount = randomPositiveNumber(10, 1);
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: false,
           language: 'EN',
           id,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
-        const voteCount = randomPositiveNumber(10, 1);
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -342,17 +320,17 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.voteCount(component).children[0]).toEqual(
-          `${voteCount}`,
+          ` (${voteCount})`,
         );
         await waitFor(() => {});
       });
 
       it('should render the "votes-count" correctly when the "route.params.voteCount" is not set and "movie.Count" is set', async () => {
         const voteCount = randomPositiveNumber(10, 1);
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
@@ -364,12 +342,6 @@ describe('<MovieDetails />', () => {
             voteCount,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -380,16 +352,16 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.voteCount(component).children[0]).toEqual(
-          `${voteCount}`,
+          ` (${voteCount})`,
         );
         await waitFor(() => {});
       });
     });
 
-    describe('Rendering the Extra-tags', () => {
+    describe('Extra-Tags', () => {
       describe('When the "extra-tags" comes from the "route.params"', () => {
         const id = '2';
 
@@ -399,20 +371,14 @@ describe('<MovieDetails />', () => {
 
         afterEach(cleanup);
 
-        it('should render the extra-tags correctly', async () => {
-          const queryResult = mockMovieDetails.movieDetailsResolvers({
+        it('should render correctly', async () => {
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
             withVoteAverage: true,
             withGenresIds: false,
             withVoteCount: true,
             language: 'EN',
             id,
           });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
           const genreIds = Array(randomPositiveNumber(10, 1))
             .fill('')
             .map((_, index) => `ROUTE_PARAMS_GENRE_${index}`);
@@ -439,19 +405,13 @@ describe('<MovieDetails />', () => {
         });
 
         it('should render correctly "tags" content correctly', async () => {
-          const queryResult = mockMovieDetails.movieDetailsResolvers({
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
             withVoteAverage: true,
             withGenresIds: false,
             withVoteCount: true,
             language: 'EN',
             id,
           });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
           const genreIds = Array(randomPositiveNumber(10, 1))
             .fill('')
             .map((_, index) => `ROUTE_PARAMS_GENRE_${index}`);
@@ -466,9 +426,6 @@ describe('<MovieDetails />', () => {
               id,
             }),
           );
-          act(() => {
-            jest.runAllTimers();
-          });
           await waitFor(() => {
             expect(elements.tagsTexts(component).length).toBeGreaterThan(0);
           });
@@ -497,28 +454,19 @@ describe('<MovieDetails />', () => {
         afterEach(cleanup);
 
         it('should render the extra-tags correctly', async () => {
-          const queryResult = mockMovieDetails.movieDetailsResolvers({
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
             id,
           });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
           const component = render(
             renderMovieDetails({
               mockResolvers: resolvers,
               id,
             }),
           );
-          act(() => {
-            jest.runAllTimers();
-          });
           await waitFor(() => {
             expect(elements.tagsTexts(component).length).toBeGreaterThan(0);
           });
@@ -531,19 +479,13 @@ describe('<MovieDetails />', () => {
         });
 
         it('should render correctly "tags" content correctly', async () => {
-          const queryResult = mockMovieDetails.movieDetailsResolvers({
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
             id,
           });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
           const extraTags = [
             mockMovieDetails.releaseDate.split('-')[0],
             Translations.Tags.MEDIA_DETAIL_MOVIE_TITLE,
@@ -554,9 +496,6 @@ describe('<MovieDetails />', () => {
               id,
             }),
           );
-          act(() => {
-            jest.runAllTimers();
-          });
           await waitFor(() => {
             expect(elements.tagsTexts(component).length).toBeGreaterThan(0);
           });
@@ -573,43 +512,9 @@ describe('<MovieDetails />', () => {
           }
         });
       });
-
-      describe('Loading state', () => {
-        const id = '4';
-
-        beforeEach(() => {
-          jest.useFakeTimers();
-        });
-
-        afterEach(cleanup);
-
-        it('should render the "loading-tags" correctly when the "genre-ids" is undefined and "isLoading" is "true"', async () => {
-          const queryResult = mockMovieDetails.movieDetailsResolvers({
-            withVoteAverage: true,
-            withGenresIds: true,
-            withVoteCount: true,
-            language: 'EN',
-            id,
-          });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
-          const component = render(
-            renderMovieDetails({
-              mockResolvers: resolvers,
-              id,
-            }),
-          );
-          expect(elements.tagsLoading(component)).not.toBeNull();
-          await waitFor(() => {});
-        });
-      });
     });
 
-    describe('Rendering the General-info', () => {
+    describe('General-info', () => {
       beforeEach(() => {
         jest.useFakeTimers();
       });
@@ -617,19 +522,13 @@ describe('<MovieDetails />', () => {
       afterEach(cleanup);
 
       it('should render the "info-items" correctly when it has all the data', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers({
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
           withVoteAverage: false,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
           id: '1',
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderMovieDetails({
@@ -642,9 +541,9 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const movie = queryResult.result.result.data.movie;
+        const movie = resolvers[0].result.data.movie;
         expect(elements.generalInfoItems(component).length).toEqual(6);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -685,7 +584,7 @@ describe('<MovieDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data except for "original-title"', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
@@ -697,12 +596,6 @@ describe('<MovieDetails />', () => {
             removeOriginalTitle: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderMovieDetails({
@@ -715,9 +608,9 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const movie = queryResult.result.result.data.movie;
+        const movie = resolvers[0].result.data.movie;
         expect(elements.generalInfoItems(component).length).toEqual(6);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -758,7 +651,7 @@ describe('<MovieDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "production-countries" is empty', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
@@ -770,12 +663,6 @@ describe('<MovieDetails />', () => {
             removeProductionCountries: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderMovieDetails({
@@ -788,9 +675,9 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const movie = queryResult.result.result.data.movie;
+        const movie = resolvers[0].result.data.movie;
         expect(elements.generalInfoItems(component).length).toEqual(6);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -831,7 +718,7 @@ describe('<MovieDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "spoken-languages" is empty', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
@@ -843,12 +730,6 @@ describe('<MovieDetails />', () => {
             removeSpokenLanguages: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderMovieDetails({
@@ -861,9 +742,9 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const movie = queryResult.result.result.data.movie;
+        const movie = resolvers[0].result.data.movie;
         expect(elements.generalInfoItems(component).length).toEqual(6);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -912,19 +793,13 @@ describe('<MovieDetails />', () => {
       afterEach(cleanup);
 
       it('should render the sections correctly', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers({
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
           id: '1',
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -935,7 +810,7 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.cast(component)).not.toBeNull();
         expect(elements.crew(component)).not.toBeNull();
@@ -945,7 +820,7 @@ describe('<MovieDetails />', () => {
       });
 
       it('should render the sections correctly when "cast" is empty', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
@@ -957,12 +832,6 @@ describe('<MovieDetails />', () => {
             castLength: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -973,7 +842,7 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.cast(component)).toBeNull();
         expect(elements.crew(component)).not.toBeNull();
@@ -983,7 +852,7 @@ describe('<MovieDetails />', () => {
 
       it('should render the "similar-section" correctly when it has some data to show', async () => {
         const similarLength = randomPositiveNumber(10, 1);
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
@@ -995,12 +864,6 @@ describe('<MovieDetails />', () => {
             similarLength,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -1011,13 +874,13 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.similarItems(component).length).toEqual(similarLength);
       });
 
       it('should render the "similar-section" correctly when it is empty', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
@@ -1029,12 +892,6 @@ describe('<MovieDetails />', () => {
             similarLength: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -1045,13 +902,13 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.similarItems(component).length).toEqual(0);
       });
 
       it('should render the sections correctly when "crew" is empty', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
@@ -1063,12 +920,6 @@ describe('<MovieDetails />', () => {
             crewLenth: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -1079,7 +930,7 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.crew(component)).toBeNull();
         expect(elements.cast(component)).not.toBeNull();
@@ -1088,7 +939,7 @@ describe('<MovieDetails />', () => {
       });
 
       it('should render the sections correctly when "images" is empty', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
@@ -1100,12 +951,6 @@ describe('<MovieDetails />', () => {
             imagesLength: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -1116,7 +961,7 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.images(component)).toBeNull();
         expect(elements.crew(component)).not.toBeNull();
@@ -1125,7 +970,7 @@ describe('<MovieDetails />', () => {
       });
 
       it('should render the sections correctly when "videos" is empty', async () => {
-        const queryResult = mockMovieDetails.movieDetailsResolvers(
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
@@ -1137,12 +982,6 @@ describe('<MovieDetails />', () => {
             videosLength: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderMovieDetails({
             mockResolvers: resolvers,
@@ -1153,7 +992,7 @@ describe('<MovieDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.videos(component)).toBeNull();
         expect(elements.crew(component)).not.toBeNull();
@@ -1163,57 +1002,15 @@ describe('<MovieDetails />', () => {
     });
   });
 
-  describe('Pressing the "back-button"', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
-    it('should call the "navigation.goBack" when the user press the "back-button"', async () => {
-      const queryResult = mockMovieDetails.movieDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
-      });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const goBack = jest.fn();
-      const component = render(
-        renderMovieDetails({
-          mockResolvers: resolvers,
-          goBack,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      expect(goBack).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.backButton(component));
-      expect(goBack).toHaveBeenCalledTimes(1);
-    });
-  });
-
   describe('Showing the "language-alert-message"', () => {
     beforeEach(() => {
       jest.useFakeTimers();
-      jest.clearAllMocks();
     });
 
     afterEach(cleanup);
 
-    it('should call the "Alert.alert" with the correct params when the "overview" is an empty string', async () => {
-      const queryResult = mockMovieDetails.movieDetailsResolvers(
+    it('should call the "Alert.alert" correctly when the "overview" is an "empty string"', async () => {
+      const resolvers = mockMovieDetails.makeQuerySuccessResolver(
         {
           withVoteAverage: true,
           withGenresIds: true,
@@ -1225,12 +1022,6 @@ describe('<MovieDetails />', () => {
           removeOverview: true,
         },
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
       render(
         renderMovieDetails({
           mockResolvers: resolvers,
@@ -1258,287 +1049,335 @@ describe('<MovieDetails />', () => {
     });
   });
 
-  describe('Pressing the lists-items', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-      jest.clearAllMocks();
-    });
-
-    afterEach(cleanup);
-
-    it('should call "navigation.push" correctly when the user press some item from the "cast-list"', async () => {
-      const push = jest.fn();
-      const queryResult = mockMovieDetails.movieDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
+  describe('Pressing the some of the lists-items', () => {
+    describe('When pressing some of the "cast" items', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderMovieDetails({
-          mockResolvers: resolvers,
-          push,
+
+      afterEach(cleanup);
+
+      it('should call "navigation.push" correclty', async () => {
+        const push = jest.fn();
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
           id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {movie} = queryResult.result.result.data;
-      const indexItemSelected = randomPositiveNumber(movie.cast.length - 1, 0);
-      expect(push).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.castItems(component)[indexItemSelected]);
-      expect(push).toHaveBeenCalledTimes(1);
-      expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-        profileImage: movie.cast[indexItemSelected].profilePath,
-        name: movie.cast[indexItemSelected].name,
-        id: Number(movie.cast[indexItemSelected].id),
+        });
+        const component = render(
+          renderMovieDetails({
+            mockResolvers: resolvers,
+            push,
+            id: '1',
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.cast(component)).not.toBeNull();
+        });
+        const {movie} = resolvers[0].result.data;
+        const indexItemSelected = randomPositiveNumber(
+          movie.cast.length - 1,
+          0,
+        );
+        expect(push).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.castItems(component)[indexItemSelected]);
+        expect(push).toHaveBeenCalledTimes(1);
+        expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+          profileImage: movie.cast[indexItemSelected].profilePath,
+          name: movie.cast[indexItemSelected].name,
+          id: Number(movie.cast[indexItemSelected].id),
+        });
       });
     });
 
-    it('should call "navigation.push" correctly when the user press some item from the "crew-list"', async () => {
-      const push = jest.fn();
-      const queryResult = mockMovieDetails.movieDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
+    describe('When pressing some of the "crew" items', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderMovieDetails({
-          mockResolvers: resolvers,
-          push,
+
+      afterEach(cleanup);
+
+      it('should call "navigation.push" correctly', async () => {
+        const push = jest.fn();
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
           id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {movie} = queryResult.result.result.data;
-      const indexItemSelected = randomPositiveNumber(movie.crew.length - 1, 0);
-      expect(push).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.crewItems(component)[indexItemSelected]);
-      expect(push).toHaveBeenCalledTimes(1);
-      expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-        profileImage: movie.crew[indexItemSelected].profilePath,
-        name: movie.crew[indexItemSelected].name,
-        id: Number(movie.crew[indexItemSelected].id),
+        });
+        const component = render(
+          renderMovieDetails({
+            mockResolvers: resolvers,
+            push,
+            id: '1',
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.crew(component)).not.toBeNull();
+        });
+        const {movie} = resolvers[0].result.data;
+        const indexItemSelected = randomPositiveNumber(
+          movie.crew.length - 1,
+          0,
+        );
+        expect(push).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.crewItems(component)[indexItemSelected]);
+        expect(push).toHaveBeenCalledTimes(1);
+        expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+          profileImage: movie.crew[indexItemSelected].profilePath,
+          name: movie.crew[indexItemSelected].name,
+          id: Number(movie.crew[indexItemSelected].id),
+        });
       });
     });
 
-    it('should call "navigation.navigate" correctly when the user press some item from the "reviews-list"', async () => {
-      const navigate = jest.fn();
-      const queryResult = mockMovieDetails.movieDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
+    describe('When pressing some of the "reviews" items', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderMovieDetails({
-          mockResolvers: resolvers,
-          navigate,
+
+      afterEach(cleanup);
+
+      it('should call "navigation.navigate" correctly"', async () => {
+        const navigate = jest.fn();
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
           id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {movie} = queryResult.result.result.data;
-      expect(navigate).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.viewAllReviews(component));
-      expect(navigate).toHaveBeenCalledTimes(1);
-      expect(navigate).toHaveBeenCalledWith(Routes.MediaDetail.REVIEWS, {
-        mediaTitle: movie.title,
-        reviews: movie.reviews,
+        });
+        const component = render(
+          renderMovieDetails({
+            mockResolvers: resolvers,
+            navigate,
+            id: '1',
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.reviews(component)).not.toBeNull();
+        });
+        const {movie} = resolvers[0].result.data;
+        expect(navigate).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.viewAllReviews(component));
+        expect(navigate).toHaveBeenCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(Routes.MediaDetail.REVIEWS, {
+          mediaTitle: movie.title,
+          reviews: movie.reviews,
+        });
       });
     });
 
-    it('should call "navigation.push" correctly when the user press some item from the "simila-list"', async () => {
-      const push = jest.fn();
-      const queryResult = mockMovieDetails.movieDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
+    describe('When pressing some of the "similar" items', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderMovieDetails({
-          mockResolvers: resolvers,
-          push,
+
+      afterEach(cleanup);
+
+      it('should call "navigation.push" correctly', async () => {
+        const push = jest.fn();
+        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
           id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {movie} = queryResult.result.result.data;
-      const indexItemSelected = randomPositiveNumber(
-        movie.similar.length - 1,
-        0,
-      );
-      expect(push).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.similarItems(component)[indexItemSelected]);
-      expect(push).toHaveBeenCalledTimes(1);
-      expect(push).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
-        voteAverage: movie.similar[indexItemSelected].voteAverage,
-        posterPath: movie.similar[indexItemSelected].posterPath,
-        voteCount: movie.similar[indexItemSelected].voteCount,
-        title: movie.similar[indexItemSelected].title,
-        id: movie.similar[indexItemSelected].id,
+        });
+        const component = render(
+          renderMovieDetails({
+            mockResolvers: resolvers,
+            push,
+            id: '1',
+          }),
+        );
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {
+          expect(elements.similar(component)).not.toBeNull();
+        });
+        const {movie} = resolvers[0].result.data;
+        const indexItemSelected = randomPositiveNumber(
+          movie.similar.length - 1,
+          0,
+        );
+        expect(push).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.similarItems(component)[indexItemSelected]);
+        expect(push).toHaveBeenCalledTimes(1);
+        expect(push).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
+          voteAverage: movie.similar[indexItemSelected].voteAverage,
+          posterPath: movie.similar[indexItemSelected].posterPath,
+          voteCount: movie.similar[indexItemSelected].voteCount,
+          title: movie.similar[indexItemSelected].title,
+          id: movie.similar[indexItemSelected].id,
+        });
       });
     });
   });
 
-  describe('Error-state', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
+  describe('When some "error" happens', () => {
+    describe('When a "Network-error" happens', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+
+      afterEach(cleanup);
+
+      it('should render correctly', async () => {
+        const resolvers = mockMovieDetails.makeQueryNetworkErrorResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: '1',
+        });
+        const component = render(
+          renderMovieDetails({
+            mockResolvers: resolvers,
+            id: '1',
+          }),
+        );
+        act(() => {
+          jest.runAllTimers();
+        });
+        expect(elements.advise(component)).not.toBeNull();
+        expect(elements.headerInfo(component)).toBeNull();
+        expect(elements.sections(component).length).toEqual(0);
+        expect(elements.overviewWrapper(component)).toBeNull();
+        expect(elements.generalInfo(component)).toBeNull();
+        expect(elements.cast(component)).toBeNull();
+        expect(elements.crew(component)).toBeNull();
+        expect(elements.images(component)).toBeNull();
+        expect(elements.videos(component)).toBeNull();
+        expect(elements.productionCompanies(component)).toBeNull();
+        expect(elements.reviews(component)).toBeNull();
+        expect(elements.similar(component)).toBeNull();
+        await waitFor(() => {});
+      });
+
+      it('should render the "Advise" correctly', async () => {
+        const resolvers = mockMovieDetails.makeQueryNetworkErrorResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: '1',
+        });
+        const component = render(
+          renderMovieDetails({
+            mockResolvers: resolvers,
+            id: '1',
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.adviseWrapper(component)).not.toBeNull();
+        });
+        expect(elements.adviseTitle(component)).not.toBeNull();
+        expect(elements.adviseTitle(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_TITLE,
+        );
+        expect(elements.adviseDescription(component)).not.toBeNull();
+        expect(elements.adviseDescription(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_DESCRIPTION,
+        );
+        expect(elements.adviseSuggestion(component)).not.toBeNull();
+        expect(elements.adviseSuggestion(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_SUGGESTION,
+        );
+      });
     });
 
-    afterEach(cleanup);
+    describe('When a "GraphQL-error" happens', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
 
-    it('should show the "Error-state" when some Network-error happens', async () => {
-      const queryResult = mockMovieDetails.movieDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
-      });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(
-        renderMovieDetails({
-          mockResolvers: resolvers,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.advise(component)).not.toBeNull();
-      expect(elements.backButton(component)).not.toBeNull();
-      expect(elements.headerInfo(component)).toBeNull();
-      expect(elements.sections(component).length).toEqual(0);
-      expect(elements.tagsWrapper(component)).toEqual([]);
-      expect(elements.overviewWrapper(component)).toBeNull();
-      expect(elements.generalInfo(component)).toBeNull();
-      expect(elements.cast(component)).toBeNull();
-      expect(elements.crew(component)).toBeNull();
-      expect(elements.images(component)).toBeNull();
-      expect(elements.videos(component)).toBeNull();
-      expect(elements.productionCompanies(component)).toBeNull();
-      expect(elements.reviews(component)).toBeNull();
-      expect(elements.similar(component)).toBeNull();
-      await waitFor(() => {});
-    });
+      afterEach(cleanup);
 
-    it('should show the "Error-state" when some GraphQL-error happens', async () => {
-      const queryResult = mockMovieDetails.movieDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
-      });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(
-        renderMovieDetails({
-          mockResolvers: resolvers,
+      it('should render correctly', async () => {
+        const resolvers = mockMovieDetails.makeQueryGraphQLErrorResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
           id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
+        });
+        const component = render(
+          renderMovieDetails({
+            mockResolvers: resolvers,
+            id: '1',
+          }),
+        );
+        act(() => {
+          jest.runAllTimers();
+        });
+        expect(elements.advise(component)).not.toBeNull();
+        expect(elements.headerInfo(component)).toBeNull();
+        expect(elements.sections(component).length).toEqual(0);
+        expect(elements.overviewWrapper(component)).toBeNull();
+        expect(elements.generalInfo(component)).toBeNull();
+        expect(elements.cast(component)).toBeNull();
+        expect(elements.crew(component)).toBeNull();
+        expect(elements.images(component)).toBeNull();
+        expect(elements.videos(component)).toBeNull();
+        expect(elements.productionCompanies(component)).toBeNull();
+        expect(elements.reviews(component)).toBeNull();
+        expect(elements.similar(component)).toBeNull();
+        await waitFor(() => {});
       });
-      expect(elements.advise(component)).not.toBeNull();
-      expect(elements.backButton(component)).not.toBeNull();
-      expect(elements.headerInfo(component)).toBeNull();
-      expect(elements.sections(component).length).toEqual(0);
-      expect(elements.tagsWrapper(component)).toEqual([]);
-      expect(elements.overviewWrapper(component)).toBeNull();
-      expect(elements.generalInfo(component)).toBeNull();
-      expect(elements.cast(component)).toBeNull();
-      expect(elements.crew(component)).toBeNull();
-      expect(elements.images(component)).toBeNull();
-      expect(elements.videos(component)).toBeNull();
-      expect(elements.productionCompanies(component)).toBeNull();
-      expect(elements.reviews(component)).toBeNull();
-      expect(elements.similar(component)).toBeNull();
-      await waitFor(() => {});
+
+      it('should render the "Advise" correctly', async () => {
+        const resolvers = mockMovieDetails.makeQueryNetworkErrorResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: '1',
+        });
+        const component = render(
+          renderMovieDetails({
+            mockResolvers: resolvers,
+            id: '1',
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.adviseWrapper(component)).not.toBeNull();
+        });
+        expect(elements.adviseTitle(component)).not.toBeNull();
+        expect(elements.adviseTitle(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_TITLE,
+        );
+        expect(elements.adviseDescription(component)).not.toBeNull();
+        expect(elements.adviseDescription(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_DESCRIPTION,
+        );
+        expect(elements.adviseSuggestion(component)).not.toBeNull();
+        expect(elements.adviseSuggestion(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_SUGGESTION,
+        );
+      });
     });
   });
 
-  describe('Loading-state', () => {
+  describe('When the data is "loading"', () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
 
     afterEach(cleanup);
 
-    it('should render the "loading-state" correctly when the "isLoading" is true', async () => {
-      const queryResult = mockMovieDetails.movieDetailsResolvers({
+    it('should render correctly', async () => {
+      const resolvers = mockMovieDetails.makeQuerySuccessResolver({
         withVoteAverage: true,
         withGenresIds: true,
         withVoteCount: true,
         language: 'EN',
         id: '1',
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithNetworkError,
-        },
-      ];
       const component = render(
         renderMovieDetails({
           mockResolvers: resolvers,
@@ -1546,12 +1385,8 @@ describe('<MovieDetails />', () => {
         }),
       );
       expect(elements.advise(component)).toBeNull();
-      expect(elements.backButton(component)).not.toBeNull();
-      expect(elements.loadingOverview(component)).not.toBeNull();
-      expect(elements.tagsLoading(component)).not.toBeNull();
-      expect(elements.headerInfo(component)).not.toBeNull();
-      expect(elements.sections(component).length).toEqual(1);
-      expect(elements.tagsWrapper(component)).toEqual([]);
+      expect(elements.loading(component)).not.toBeNull();
+      expect(elements.sections(component).length).toEqual(0);
       expect(elements.overviewWrapper(component)).toBeNull();
       expect(elements.generalInfo(component)).toBeNull();
       expect(elements.cast(component)).toBeNull();

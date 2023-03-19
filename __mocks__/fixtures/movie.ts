@@ -72,7 +72,7 @@ Array(length)
     removeOverview?: boolean
   }
 
-  export const releaseDate = '1994-02-21';
+export const releaseDate = '1994-02-21';
 
 export const movieDetailsResolvers = (variables: OperationVariables, configuration: Configuration = {}) => {
   const request = {
@@ -114,10 +114,12 @@ export const movieDetailsResolvers = (variables: OperationVariables, configurati
       },
     },
   };
+
   const responseWithNetworkError = {
     ...request,
     error: new Error('A Network error occurred'),
   };
+
   const responseWithGraphQLError = {
     ...request,
     errors: [new GraphQLError('A GraphQL error occurred')],
@@ -129,4 +131,28 @@ export const movieDetailsResolvers = (variables: OperationVariables, configurati
     request,
     result,
   };
+};
+
+export const makeQuerySuccessResolver = (variables: OperationVariables, configuration: Configuration = {}) => {
+  const baseResolver = movieDetailsResolvers(variables, configuration);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.result,
+  }];
+};
+
+export const makeQueryNetworkErrorResolver = (variables: OperationVariables, configuration: Configuration = {}) => {
+  const baseResolver = movieDetailsResolvers(variables, configuration);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.responseWithNetworkError,
+  }];
+};
+
+export const makeQueryGraphQLErrorResolver = (variables: OperationVariables, configuration: Configuration = {}) => {
+  const baseResolver = movieDetailsResolvers(variables, configuration);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.responseWithNetworkError,
+  }];
 };

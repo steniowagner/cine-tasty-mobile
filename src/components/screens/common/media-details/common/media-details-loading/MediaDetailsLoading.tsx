@@ -9,7 +9,7 @@ export const MediaDetailsLoading = () => {
   const headerHeight = useHeaderHeight();
 
   return (
-    <Styles.Wrapper headerHeight={headerHeight}>
+    <Styles.Wrapper testID="media-details-loading" headerHeight={headerHeight}>
       <LoadingPlaceholder
         indexToDelayAnimation={0}
         style={Styles.sheet.poster}
