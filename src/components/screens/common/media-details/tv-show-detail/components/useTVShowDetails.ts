@@ -7,12 +7,16 @@ import {showLanguageAlert} from '@utils';
 import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
 
+import {useMakeAnimatedHeaderIntepolationParams} from '../../common/useMakeAnimatedHeaderInterpolationParams';
 import {TVShowDetailNavigationProp} from '../routes/route-params-types';
 import {makeTVShowsInfoItems} from './makeTVShowInfoItems';
 import {translateTVShowsDetailsTexts} from './translateTVShowsDetailsTexts';
+import {PressItemParams} from '../../common/people-list/PeopleList';
+import {TVShowDetailRouteProp} from '../routes/route-params-types';
 
 type UseTVShowDetailsProps = {
   navigation: TVShowDetailNavigationProp;
+  route: TVShowDetailRouteProp;
   hasVoteAverage: boolean;
   hasGenresIds: boolean;
   hasVoteCount: boolean;
@@ -28,6 +32,9 @@ type Directives = {
 type Variables = Directives & SchemaTypes.TVShowDetailVariables;
 
 export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
+  const animatedHeaderIntepolationParams =
+    useMakeAnimatedHeaderIntepolationParams();
+
   const translations = useTranslations();
 
   const query = useQuery<SchemaTypes.TVShowDetail, Variables>(
@@ -54,7 +61,7 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
     [query.data, texts],
   );
 
-  const handlePressSimilarItem = useCallback(
+  const handlePressSimilarTVShow = useCallback(
     (similar: SchemaTypes.TVShowDetail_tvShow_similar) => {
       props.navigation.push(Routes.TVShow.DETAILS, {
         voteAverage: similar.voteAverage,
@@ -74,38 +81,29 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
     });
   }, [query.data?.tvShow]);
 
-  const handlePressCrew = useCallback(
-    (id: string, name: string, image: string) => {
-      props.navigation.push(Routes.Famous.DETAILS, {
-        profileImage: image,
-        id: Number(id),
-        name,
-      });
-    },
-    [],
-  );
+  const handlePressCrew = useCallback((params: PressItemParams) => {
+    props.navigation.push(Routes.Famous.DETAILS, {
+      profileImage: params.image,
+      id: Number(params.id),
+      name: params.name,
+    });
+  }, []);
 
-  const handlePressCast = useCallback(
-    (id: string, name: string, image: string) => {
-      props.navigation.push(Routes.Famous.DETAILS, {
-        profileImage: image,
-        id: Number(id),
-        name,
-      });
-    },
-    [],
-  );
+  const handlePressCast = useCallback((params: PressItemParams) => {
+    props.navigation.push(Routes.Famous.DETAILS, {
+      profileImage: params.image,
+      id: Number(params.id),
+      name: params.name,
+    });
+  }, []);
 
-  const handlePressCreatedBy = useCallback(
-    (id: string, name: string, image: string) => {
-      props.navigation.push(Routes.Famous.DETAILS, {
-        profileImage: image,
-        id: Number(id),
-        name,
-      });
-    },
-    [],
-  );
+  const handlePressCreatedBy = useCallback((params: PressItemParams) => {
+    props.navigation.push(Routes.Famous.DETAILS, {
+      profileImage: params.image,
+      id: Number(params.id),
+      name: params.name,
+    });
+  }, []);
 
   const handlePressSeeSeasons = useCallback(() => {
     props.navigation.navigate(Routes.TVShow.SEASONS, {
@@ -134,14 +132,23 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
   }, [query.data?.tvShow, query.loading]);
 
   return {
+    firstAirDate: (query.data?.tvShow?.firstAirDate || '-').split('-')[0],
     tvShow: query.data?.tvShow,
+    canShowContent:
+      !query.loading && !query.error && query.data && query.data.tvShow,
     isLoading: query.loading,
     hasError: !!query.error,
-    onPressSimilarItem: handlePressSimilarItem,
+    votesAverage:
+      props.route.params.voteAverage || query.data?.tvShow?.voteAverage || 0,
+    voteCount: props.route.params.voteCount || query.data?.tvShow?.voteCount,
+    poster: query.data?.tvShow?.posterPath || '',
+    tags: props.route.params.genreIds || query.data?.tvShow?.genres || [],
+    onPressSimilarTVShow: handlePressSimilarTVShow,
+    title: props.route.params?.title,
+    animatedHeaderIntepolationParams,
     onPressSeeSeasons: handlePressSeeSeasons,
     onPressCreatedBy: handlePressCreatedBy,
     onPressReviews: handlePressReviews,
-    firstAirDate: (query.data?.tvShow?.firstAirDate || '-').split('-')[0],
     onPressCrew: handlePressCrew,
     onPressCast: handlePressCast,
     infoItems,

@@ -3,7 +3,7 @@ import {Translations} from '@i18n/tags';
 type TranslateFunction = (tag: Translations.Tags) => string;
 
 export const translateTVShowsDetailsTexts = (translate: TranslateFunction) => ({
-  tvTag: translate(Translations.Tags.MEDIA_DETAIL_TV_SHOWS_TITLE),
+  tvShowTag: translate(Translations.Tags.MEDIA_DETAIL_TV_SHOWS_TITLE),
   seeSeasons: translate(Translations.Tags.MEDIA_DETAIL_SECTIONS_SEASONS),
   sections: {
     createdBy: translate(Translations.Tags.MEDIA_DETAIL_SECTIONS_CREATED_BY),
