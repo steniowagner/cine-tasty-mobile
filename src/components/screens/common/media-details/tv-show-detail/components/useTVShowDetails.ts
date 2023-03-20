@@ -4,13 +4,12 @@ import {useQuery} from '@apollo/client';
 import {GET_TV_SHOW_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import {showLanguageAlert} from '@utils';
-import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
-import {formatDate} from '@utils';
 
 import {TVShowDetailNavigationProp} from '../routes/route-params-types';
 import {makeTVShowsInfoItems} from './makeTVShowInfoItems';
+import {translateTVShowsDetailsTexts} from './translateTVShowsDetailsTexts';
 
 type UseTVShowDetailsProps = {
   navigation: TVShowDetailNavigationProp;
@@ -46,71 +45,7 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
   );
 
   const texts = useMemo(
-    () => ({
-      tvTag: translations.translate(
-        Translations.Tags.MEDIA_DETAIL_TV_SHOWS_TITLE,
-      ),
-      seeSeasons: translations.translate(
-        Translations.Tags.MEDIA_DETAIL_SECTIONS_SEASONS,
-      ),
-      sections: {
-        createdBy: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_CREATED_BY,
-        ),
-        cast: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_CAST,
-        ),
-        crew: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_CREW,
-        ),
-        images: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_IMAGES,
-        ),
-        networks: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_NETWORKS,
-        ),
-        productionCompanies: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
-        ),
-      },
-      info: {
-        originalTitle: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
-        ),
-        originalLanguage: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_LANGUAGE,
-        ),
-        numberOfEpisodes: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_NUMBER_OF_EPISODES,
-        ),
-        numberOfSeasons: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_NUMBER_OF_SEASONS,
-        ),
-        episodeRuntime: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_EPISODE_RUNTIME,
-        ),
-        originalCountry: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_COUNTRY,
-        ),
-        firstAirDate: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_FIRST_AIR_DATE,
-        ),
-        lastAirDate: translations.translate(
-          Translations.Tags.MEDIA_DETAIL_SECTIONS_LAST_AIR_DATE,
-        ),
-      },
-      languageAlert: {
-        description: translations.translate(
-          Translations.Tags.LANGUAGE_WARNING_MEDIA_DESCRIPTION,
-        ),
-        positiveActionTitle: translations.translate(
-          Translations.Tags.LANGUAGE_WARNING_MEDIA_POSITIVE_ACTION,
-        ),
-        title: translations.translate(
-          Translations.Tags.LANGUAGE_WARNING_MEDIA_TITLE,
-        ),
-      },
-    }),
+    () => translateTVShowsDetailsTexts(translations.translate),
     [translations.translate],
   );
 
@@ -119,7 +54,7 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
     [query.data, texts],
   );
 
-  const onPressSimilarItem = useCallback(
+  const handlePressSimilarItem = useCallback(
     (similar: SchemaTypes.TVShowDetail_tvShow_similar) => {
       props.navigation.push(Routes.TVShow.DETAILS, {
         voteAverage: similar.voteAverage,
@@ -132,30 +67,14 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
     [query.data?.tvShow],
   );
 
-  const onPressReviews = useCallback(() => {
+  const handlePressReviews = useCallback(() => {
     props.navigation.navigate(Routes.MediaDetail.REVIEWS, {
       mediaTitle: query.data?.tvShow.name,
       reviews: query.data?.tvShow.reviews,
     });
   }, [query.data?.tvShow]);
 
-  const onPressCrew = useCallback((id: string, name: string, image: string) => {
-    props.navigation.push(Routes.Famous.DETAILS, {
-      profileImage: image,
-      id: Number(id),
-      name,
-    });
-  }, []);
-
-  const onPressCast = useCallback((id: string, name: string, image: string) => {
-    props.navigation.push(Routes.Famous.DETAILS, {
-      profileImage: image,
-      id: Number(id),
-      name,
-    });
-  }, []);
-
-  const onPressCreatedBy = useCallback(
+  const handlePressCrew = useCallback(
     (id: string, name: string, image: string) => {
       props.navigation.push(Routes.Famous.DETAILS, {
         profileImage: image,
@@ -166,7 +85,29 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
     [],
   );
 
-  const onPressSeeSeasons = useCallback(() => {
+  const handlePressCast = useCallback(
+    (id: string, name: string, image: string) => {
+      props.navigation.push(Routes.Famous.DETAILS, {
+        profileImage: image,
+        id: Number(id),
+        name,
+      });
+    },
+    [],
+  );
+
+  const handlePressCreatedBy = useCallback(
+    (id: string, name: string, image: string) => {
+      props.navigation.push(Routes.Famous.DETAILS, {
+        profileImage: image,
+        id: Number(id),
+        name,
+      });
+    },
+    [],
+  );
+
+  const handlePressSeeSeasons = useCallback(() => {
     props.navigation.navigate(Routes.TVShow.SEASONS, {
       numberOfSeasons: query.data?.tvShow.numberOfSeasons,
       title: query.data?.tvShow.name,
@@ -174,12 +115,7 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
     });
   }, [query.data?.tvShow]);
 
-  const firstAirDate = useMemo(
-    (): string => (query.data?.tvShow?.firstAirDate || '-').split('-')[0],
-    [query.data?.tvShow],
-  );
-
-  useEffect(() => {
+  const handleShowLanguageAlert = useCallback(() => {
     const shouldShowLanguageAlert =
       !query.loading && query.data?.tvShow && !query.data?.tvShow?.overview;
     if (shouldShowLanguageAlert) {
@@ -193,17 +129,21 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
     }
   }, [query.data?.tvShow, query.loading]);
 
+  useEffect(() => {
+    handleShowLanguageAlert();
+  }, [query.data?.tvShow, query.loading]);
+
   return {
     tvShow: query.data?.tvShow,
     isLoading: query.loading,
     hasError: !!query.error,
-    onPressSimilarItem,
-    onPressSeeSeasons,
-    onPressCreatedBy,
-    onPressReviews,
-    firstAirDate,
-    onPressCrew,
-    onPressCast,
+    onPressSimilarItem: handlePressSimilarItem,
+    onPressSeeSeasons: handlePressSeeSeasons,
+    onPressCreatedBy: handlePressCreatedBy,
+    onPressReviews: handlePressReviews,
+    firstAirDate: (query.data?.tvShow?.firstAirDate || '-').split('-')[0],
+    onPressCrew: handlePressCrew,
+    onPressCast: handlePressCast,
     infoItems,
     texts,
   };
