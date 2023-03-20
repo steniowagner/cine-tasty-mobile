@@ -10,6 +10,7 @@ import {Routes} from '@routes/routes';
 import {formatDate} from '@utils';
 
 import {TVShowDetailNavigationProp} from '../routes/route-params-types';
+import {makeTVShowsInfoItems} from './makeTVShowInfoItems';
 
 type UseTVShowDetailsProps = {
   navigation: TVShowDetailNavigationProp;
@@ -114,48 +115,7 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
   );
 
   const infoItems = useMemo(
-    () => [
-      {
-        title: texts.info.originalTitle,
-        value: query.data?.tvShow?.name || '-',
-      },
-      {
-        value: query.data?.tvShow?.originalLanguage || '-',
-        title: texts.info.originalLanguage,
-      },
-      {
-        title: texts.info.numberOfEpisodes,
-        value: query.data?.tvShow?.numberOfEpisodes
-          ? String(query.data?.tvShow?.numberOfEpisodes)
-          : '-',
-      },
-      {
-        title: texts.info.numberOfSeasons,
-        value: query.data?.tvShow.numberOfSeasons
-          ? String(query.data?.tvShow.numberOfSeasons)
-          : '-',
-      },
-      {
-        title: texts.info.episodeRuntime,
-        value: query.data?.tvShow.episodeRunTime.length
-          ? query.data?.tvShow.episodeRunTime.join(', ').concat('min')
-          : '-',
-      },
-      {
-        title: texts.info.originalCountry,
-        value: query.data?.tvShow?.originCountry
-          ? query.data?.tvShow?.originCountry.join(', ')
-          : '-',
-      },
-      {
-        title: texts.info.firstAirDate,
-        value: formatDate(query.data?.tvShow?.firstAirDate) || '-',
-      },
-      {
-        title: texts.info.lastAirDate,
-        value: formatDate(query.data?.tvShow?.lastAirDate) || '-',
-      },
-    ],
+    () => makeTVShowsInfoItems(query, texts.info),
     [query.data, texts],
   );
 
