@@ -11,7 +11,7 @@ type HeaderProps = {
   image: string;
 };
 
-const Header = (props: HeaderProps) => (
+export const Header = (props: HeaderProps) => (
   <Styles.Wrapper testID="header-wrapper">
     <Styles.SeasonPosterImageWrapper testID="poster-image-wrapper">
       {/* <PosterImage loadingIcon="video-vintage" image={props.image} /> */}
@@ -19,5 +19,3 @@ const Header = (props: HeaderProps) => (
     <SeasonOverviewText season={props.season} overview={props.overview} />
   </Styles.Wrapper>
 );
-
-export default Header;

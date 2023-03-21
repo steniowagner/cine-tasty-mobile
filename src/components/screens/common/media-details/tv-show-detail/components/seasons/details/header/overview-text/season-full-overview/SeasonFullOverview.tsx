@@ -7,12 +7,10 @@ type SeasonFullOverviewProps = {
   overview: string;
 };
 
-const SeasonFullOverview = (props: SeasonFullOverviewProps) => (
+export const SeasonFullOverview = (props: SeasonFullOverviewProps) => (
   <ScrollView testID="season-full-overview-wrapper" bounces={false}>
     <SeasonFullOverviewStyles.FullOverviewText testID="overview-text">
       {props.overview}
     </SeasonFullOverviewStyles.FullOverviewText>
   </ScrollView>
 );
-
-export default SeasonFullOverview;

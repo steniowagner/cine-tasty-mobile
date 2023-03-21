@@ -3,10 +3,10 @@ import {ScrollView} from 'react-native';
 
 import {LoadingIndicator, Section, Advise} from '@components';
 
-import TVShowSeasonsListItem from './episode-list-item/EpisodesListItem';
+import {TVShowSeasonsListItem} from './episode-list-item/EpisodesListItem';
 import {useSeasonsDetails} from './useSeasonsDetails';
 import * as Styles from './SeasonsDetails.styles';
-import Header from './header/Header';
+import {Header} from './header/Header';
 
 type SeasonsDetailsProps = {
   season: number;
