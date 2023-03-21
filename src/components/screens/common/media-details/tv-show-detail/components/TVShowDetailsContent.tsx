@@ -50,7 +50,7 @@ export const TVShowDetailsContent = (props: TVShowDetailsContentProps) => (
       tags={props.tags}
       extraTags={[props.releaseDate, props.texts.tvShowTag]}
     />
-    <MediaDetailsCommonStyles.Wrapper>
+    <MediaDetailsCommonStyles.Wrapper testID="tv-show-details-content">
       <Overview overview={props.tvShow?.overview} isLoading={false} />
       <>
         <GeneralInfo infoItems={props.infoItems} />

@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {Alert} from 'react-native';
 import {
@@ -10,7 +11,7 @@ import {
 } from '@testing-library/react-native';
 import {MockedProvider} from '@apollo/client/testing';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as mockTVShowDetails from '@mocks/fixtures/tv-shows';
 import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
@@ -24,22 +25,25 @@ import {TVShowDetail} from './TVShowDetail';
 
 const POSTER_PATH = 'POSTER_PATH';
 const TITLE = 'TITLE';
+const ID = '1';
 
 jest.spyOn(Alert, 'alert');
 
-const renderTVShowDetails = ({
-  navigate = jest.fn(),
-  push = jest.fn(),
-  goBack = jest.fn(),
-  mockResolvers,
-  voteAverage,
-  voteCount,
-  genreIds,
-  id,
-}: any) => {
-  const tvShowDetailsScreen = ({navigation}) => (
+type RenderTVShowDetailsProps = {
+  navigate?: jest.Mock;
+  push?: jest.Mock;
+  goBack?: jest.Mock;
+  mockResolvers: any;
+  voteAverage?: number;
+  voteCount?: number;
+  genreIds?: string[];
+  id: string;
+};
+
+const renderTVShowDetails = (props: RenderTVShowDetailsProps) => {
+  const TvShowDetailsScreen = ({navigation}) => (
     <MockedProvider
-      mocks={mockResolvers}
+      mocks={props.mockResolvers}
       defaultOptions={{
         watchQuery: {fetchPolicy: 'no-cache'},
         query: {fetchPolicy: 'no-cache'},
@@ -49,41 +53,42 @@ const renderTVShowDetails = ({
           possibleTypes,
         })
       }>
-      <TMDBImageQualityProvider>
+      <TMDBImageQualitiesProvider>
         <AlertMessageProvider>
           <TVShowDetail
-            navigation={{...navigation, navigate, goBack, push}}
+            navigation={{
+              ...navigation,
+              navigate: props.navigate,
+              goBack: props.goBack,
+              push: props.push,
+            }}
             route={{
               name: Routes.TVShow.DETAILS,
               key: `${Routes.TVShow.DETAILS}-key`,
               params: {
                 posterPath: POSTER_PATH,
                 title: TITLE,
-                voteAverage,
-                voteCount,
-                genreIds,
-                id: Number(id),
+                voteAverage: props.voteAverage,
+                voteCount: props.voteCount,
+                genreIds: props.genreIds,
+                id: Number(props.id),
               },
             }}
           />
         </AlertMessageProvider>
-      </TMDBImageQualityProvider>
+      </TMDBImageQualitiesProvider>
     </MockedProvider>
   );
-  return <MockedNavigation component={tvShowDetailsScreen} />;
+  return <MockedNavigation component={TvShowDetailsScreen} />;
 };
 
 describe('<TVShowDetails />', () => {
   const elements = {
     backButton: (api: RenderAPI) => api.queryByTestId('header-back-button'),
-    advise: (api: RenderAPI) => api.queryByTestId('advise-wrapper'),
     headerInfo: (api: RenderAPI) => api.queryByTestId('header-info-wrapper'),
     tagsWrapper: (api: RenderAPI) => api.queryAllByTestId('tags'),
     tagsTexts: (api: RenderAPI) => api.queryAllByTestId('tag-text'),
-    tagsLoading: (api: RenderAPI) => api.queryByTestId('tags-loading'),
     sectionsTitle: (api: RenderAPI) => api.queryAllByTestId('section-title'),
-    loadingOverview: (api: RenderAPI) =>
-      api.queryAllByTestId('loading-overview'),
     overviewWrapper: (api: RenderAPI) =>
       api.queryByTestId('media-item-description-wrapper'),
     generalInfo: (api: RenderAPI) => api.queryByTestId('general-info-wrapper'),
@@ -97,8 +102,8 @@ describe('<TVShowDetails />', () => {
     reviews: (api: RenderAPI) => api.queryByTestId('reviews-content-wrapper'),
     similar: (api: RenderAPI) => api.queryByTestId('similar-list'),
     sections: (api: RenderAPI) => api.queryAllByTestId('section-wrapper'),
-    voteAverage: (api: RenderAPI) => api.queryByTestId('media-votes-average'),
-    voteCount: (api: RenderAPI) => api.queryByTestId('media-votes-count'),
+    voteAverage: (api: RenderAPI) => api.queryByTestId('votes-text'),
+    voteCount: (api: RenderAPI) => api.queryByTestId('vote-count'),
     generalInfoItems: (api: RenderAPI) =>
       api.queryAllByTestId(/general-info-wrapper-/),
     generalInfoTitles: (api: RenderAPI) =>
@@ -117,12 +122,20 @@ describe('<TVShowDetails />', () => {
     viewAllReviews: (api: RenderAPI) =>
       api.queryByTestId('view-all-button-reviews'),
     seasons: (api: RenderAPI) => api.queryByTestId('rounded-button'),
+    loading: (api: RenderAPI) => api.queryByTestId('media-details-loading'),
+    backgroundImage: (api: RenderAPI) => api.queryByTestId('background-image'),
+    contentWrapper: (api: RenderAPI) =>
+      api.queryByTestId('tv-show-details-content'),
+    adviseDescription: (api: RenderAPI) =>
+      api.queryByTestId('advise-description'),
+    adviseSuggestion: (api: RenderAPI) =>
+      api.queryByTestId('advise-suggestion'),
+    adviseTitle: (api: RenderAPI) => api.queryByTestId('advise-title'),
+    adviseWrapper: (api: RenderAPI) => api.queryByTestId('advise-wrapper'),
   };
 
-  describe('Renders correctly', () => {
+  describe('Rendering the components', () => {
     describe('Default flow', () => {
-      const id = '1';
-
       beforeEach(() => {
         jest.useFakeTimers();
       });
@@ -130,30 +143,24 @@ describe('<TVShowDetails />', () => {
       afterEach(cleanup);
 
       it('should render correctly when it receive all the data', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
-          id,
+          id: ID,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id,
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.backButton(component)).not.toBeNull();
         expect(elements.headerInfo(component)).not.toBeNull();
@@ -169,34 +176,28 @@ describe('<TVShowDetails />', () => {
         expect(elements.productionCompanies(component)).not.toBeNull();
         expect(elements.reviews(component)).not.toBeNull();
         expect(elements.similar(component)).not.toBeNull();
-        expect(elements.advise(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
 
       it('should render the sections titles correctly', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
-          id,
+          id: ID,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id,
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.sectionsTitle(component).length).toEqual(11);
         expect(elements.sectionsTitle(component)[0].children[0]).toEqual(
@@ -227,7 +228,7 @@ describe('<TVShowDetails />', () => {
           Translations.Tags.MEDIA_DETAIL_SECTIONS_PRODUCTION_COMPANIES,
         );
         expect(elements.sectionsTitle(component)[9].children[0]).toEqual(
-          `${Translations.Tags.MEDIA_DETAIL_SECTIONS_REVIEW} (${queryResult.result.result.data.tvShow.reviews.length})`,
+          `${Translations.Tags.MEDIA_DETAIL_SECTIONS_REVIEW} (${resolvers[0].result.data.tvShow.reviews.length})`,
         );
         expect(elements.sectionsTitle(component)[10].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_SIMILAR,
@@ -236,8 +237,6 @@ describe('<TVShowDetails />', () => {
     });
 
     describe('Rendering the Header-info/votes-average', () => {
-      const id = '4';
-
       beforeEach(() => {
         jest.useFakeTimers();
       });
@@ -245,81 +244,67 @@ describe('<TVShowDetails />', () => {
       afterEach(cleanup);
 
       it('should render the "votes-average" correctly when the "route.params.voteAverage" is set', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
           withVoteAverage: false,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
-          id,
+          id: ID,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
             voteAverage,
-            id,
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.voteAverage(component).children[0]).toEqual(
-          `${voteAverage.toFixed(1)}`,
+          `${voteAverage.toFixed(1)} `,
         );
         await waitFor(() => {});
       });
 
       it('should render the "votes-average" correctly when the "route.params.voteAverage" is not set and "tvShow.voteAvera" is set', async () => {
         const voteAverage = randomPositiveNumber(10, 1);
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id,
+            id: ID,
           },
           {
             voteAverage,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id,
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.voteAverage(component).children[0]).toEqual(
-          `${voteAverage.toFixed(1)}`,
+          `${voteAverage.toFixed(1)} `,
         );
         await waitFor(() => {});
       });
     });
 
     describe('Rendering the Header-info/votes-count', () => {
-      const id = '5';
-
       beforeEach(() => {
         jest.useFakeTimers();
       });
@@ -327,79 +312,67 @@ describe('<TVShowDetails />', () => {
       afterEach(cleanup);
 
       it('should render the "votes-count" correctly when the "route.params.voteCount" is set', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: false,
           language: 'EN',
-          id,
+          id: ID,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteCount = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
             voteCount,
-            id,
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.voteCount(component).children[0]).toEqual(
-          `${voteCount}`,
+          ` (${voteCount})`,
         );
         await waitFor(() => {});
       });
 
       it('should render the "votes-count" correctly when the "route.params.voteCount" is not set and "tvShow.Count" is set', async () => {
         const voteCount = randomPositiveNumber(10, 1);
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id,
+            id: ID,
           },
           {
             voteCount,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id,
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.voteCount(component).children[0]).toEqual(
-          `${voteCount}`,
+          ` (${voteCount})`,
         );
         await waitFor(() => {});
       });
     });
 
-    describe('Rendering the Extra-tags', () => {
+    describe('Extra-tags', () => {
       describe('When the "extra-tags" comes from the "route.params"', () => {
         const id = '2';
 
@@ -410,19 +383,13 @@ describe('<TVShowDetails />', () => {
         afterEach(cleanup);
 
         it('should render the extra-tags correctly', async () => {
-          const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
             withVoteAverage: true,
             withGenresIds: false,
             withVoteCount: true,
             language: 'EN',
             id,
           });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
           const genreIds = Array(randomPositiveNumber(10, 1))
             .fill('')
             .map((_, index) => `ROUTE_PARAMS_GENRE_${index}`);
@@ -449,19 +416,13 @@ describe('<TVShowDetails />', () => {
         });
 
         it('should render correctly "tags" content correctly', async () => {
-          const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
             withVoteAverage: true,
             withGenresIds: false,
             withVoteCount: true,
             language: 'EN',
             id,
           });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
           const genreIds = Array(randomPositiveNumber(10, 1))
             .fill('')
             .map((_, index) => `ROUTE_PARAMS_GENRE_${index}`);
@@ -498,8 +459,6 @@ describe('<TVShowDetails />', () => {
       });
 
       describe('When the "extra-tags" comes from the "tvShows.genres"', () => {
-        const id = '3';
-
         beforeEach(() => {
           jest.useFakeTimers();
         });
@@ -507,23 +466,17 @@ describe('<TVShowDetails />', () => {
         afterEach(cleanup);
 
         it('should render the extra-tags correctly', async () => {
-          const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id,
+            id: ID,
           });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
           const component = render(
             renderTVShowDetails({
               mockResolvers: resolvers,
-              id,
+              id: ID,
             }),
           );
           act(() => {
@@ -541,19 +494,13 @@ describe('<TVShowDetails />', () => {
         });
 
         it('should render correctly "tags" content correctly', async () => {
-          const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id,
+            id: ID,
           });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
           const extraTags = [
             mockTVShowDetails.firstAirDate.split('-')[0],
             Translations.Tags.MEDIA_DETAIL_TV_SHOWS_TITLE,
@@ -561,7 +508,7 @@ describe('<TVShowDetails />', () => {
           const component = render(
             renderTVShowDetails({
               mockResolvers: resolvers,
-              id,
+              id: ID,
             }),
           );
           act(() => {
@@ -583,43 +530,9 @@ describe('<TVShowDetails />', () => {
           }
         });
       });
-
-      describe('Loading state', () => {
-        const id = '4';
-
-        beforeEach(() => {
-          jest.useFakeTimers();
-        });
-
-        afterEach(cleanup);
-
-        it('should render the "loading-tags" correctly when the "genre-ids" is undefined and "isLoading" is "true"', async () => {
-          const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-            withVoteAverage: true,
-            withGenresIds: true,
-            withVoteCount: true,
-            language: 'EN',
-            id,
-          });
-          const resolvers = [
-            {
-              ...queryResult.request,
-              ...queryResult.result,
-            },
-          ];
-          const component = render(
-            renderTVShowDetails({
-              mockResolvers: resolvers,
-              id,
-            }),
-          );
-          expect(elements.tagsLoading(component)).not.toBeNull();
-          await waitFor(() => {});
-        });
-      });
     });
 
-    describe('Rendering the General-info', () => {
+    describe('General-info', () => {
       beforeEach(() => {
         jest.useFakeTimers();
       });
@@ -627,19 +540,13 @@ describe('<TVShowDetails />', () => {
       afterEach(cleanup);
 
       it('should render the "info-items" correctly when it has all the data', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
           withVoteAverage: false,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
-          id: '1',
+          id: ID,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
@@ -652,9 +559,9 @@ describe('<TVShowDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -707,7 +614,7 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data except for "original-name"', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
@@ -719,27 +626,21 @@ describe('<TVShowDetails />', () => {
             removeName: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
             voteAverage,
-            id: '1',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -792,24 +693,18 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "original-language" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '1',
+            id: ID,
           },
           {
             removeOriginalLanguage: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
@@ -822,9 +717,9 @@ describe('<TVShowDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -877,39 +772,33 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "number-of-episodes" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '1',
+            id: ID,
           },
           {
             removeNumberOfEpisodes: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
             voteAverage,
-            id: '1',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -962,24 +851,18 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "number-of-seasons" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '1',
+            id: ID,
           },
           {
             removeNumberOfSeasons: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
@@ -992,9 +875,9 @@ describe('<TVShowDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -1047,7 +930,7 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "episode-runtime" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
@@ -1059,27 +942,21 @@ describe('<TVShowDetails />', () => {
             removeEpisodeRuntime: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
             voteAverage,
-            id: '1',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -1132,39 +1009,33 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "original-country" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '1',
+            id: ID,
           },
           {
             removeOriginalCountry: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
             voteAverage,
-            id: '1',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -1217,7 +1088,7 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "first-air-date" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
@@ -1229,12 +1100,6 @@ describe('<TVShowDetails />', () => {
             removeFirstAirDate: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
@@ -1247,9 +1112,9 @@ describe('<TVShowDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -1302,24 +1167,18 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the "info-items" correctly when it has all the data and the "last-air-date" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: false,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '1',
+            id: ID,
           },
           {
             removeLastAirDate: true,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const voteAverage = randomPositiveNumber(10, 1);
         const component = render(
           renderTVShowDetails({
@@ -1332,9 +1191,9 @@ describe('<TVShowDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
-        const tvShow = queryResult.result.result.data.tvShow;
+        const tvShow = resolvers[0].result.data.tvShow;
         expect(elements.generalInfoItems(component).length).toEqual(8);
         expect(elements.generalInfoTitles(component)[0].children[0]).toEqual(
           Translations.Tags.MEDIA_DETAIL_SECTIONS_ORIGINAL_TITLE,
@@ -1395,30 +1254,24 @@ describe('<TVShowDetails />', () => {
       afterEach(cleanup);
 
       it('should render the sections correctly', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
-          id: '1',
+          id: ID,
         });
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id: '1',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.cast(component)).not.toBeNull();
         expect(elements.crew(component)).not.toBeNull();
@@ -1428,35 +1281,29 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the sections correctly when "cast" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '2',
+            id: ID,
           },
           {
             castLength: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id: '2',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.cast(component)).toBeNull();
         expect(elements.crew(component)).not.toBeNull();
@@ -1466,103 +1313,85 @@ describe('<TVShowDetails />', () => {
 
       it('should render the "similar-section" correctly when it has some data to show', async () => {
         const similarLength = randomPositiveNumber(10, 1);
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '2',
+            id: ID,
           },
           {
             similarLength,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id: '2',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.similarItems(component).length).toEqual(similarLength);
       });
 
       it('should render the "similar-section" correctly when it is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '2',
+            id: ID,
           },
           {
             similarLength: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id: '2',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.similarItems(component).length).toEqual(0);
       });
 
       it('should render the sections correctly when "crew" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '1',
+            id: ID,
           },
           {
             crewLenth: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id: '1',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.crew(component)).toBeNull();
         expect(elements.cast(component)).not.toBeNull();
@@ -1571,24 +1400,18 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the sections correctly when "images" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '1',
+            id: ID,
           },
           {
             imagesLength: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
@@ -1599,7 +1422,7 @@ describe('<TVShowDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.images(component)).toBeNull();
         expect(elements.crew(component)).not.toBeNull();
@@ -1608,82 +1431,35 @@ describe('<TVShowDetails />', () => {
       });
 
       it('should render the sections correctly when "videos" is empty', async () => {
-        const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
           {
             withVoteAverage: true,
             withGenresIds: true,
             withVoteCount: true,
             language: 'EN',
-            id: '1',
+            id: ID,
           },
           {
             videosLength: 0,
           },
         );
-        const resolvers = [
-          {
-            ...queryResult.request,
-            ...queryResult.result,
-          },
-        ];
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
-            id: '1',
+            id: ID,
           }),
         );
         act(() => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.loadingOverview(component)).toEqual([]);
+          expect(elements.loading(component)).toBeNull();
         });
         expect(elements.videos(component)).toBeNull();
         expect(elements.crew(component)).not.toBeNull();
         expect(elements.cast(component)).not.toBeNull();
         expect(elements.images(component)).not.toBeNull();
       });
-    });
-  });
-
-  describe('Pressing the "back-button"', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
-    it('should call the "navigation.goBack" when the user press the "back-button"', async () => {
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
-      });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const goBack = jest.fn();
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          goBack,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      expect(goBack).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.backButton(component));
-      expect(goBack).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -1694,35 +1470,29 @@ describe('<TVShowDetails />', () => {
 
     afterEach(cleanup);
 
-    it('should call the "navigation.navigate" when the user press the "sesons-button"', async () => {
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+    it('should call the "navigation.navigate" correctly', async () => {
+      const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
         withVoteAverage: true,
         withGenresIds: true,
         withVoteCount: true,
         language: 'EN',
-        id: '1',
+        id: ID,
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
       const navigate = jest.fn();
       const component = render(
         renderTVShowDetails({
           mockResolvers: resolvers,
           navigate,
-          id: '1',
+          id: ID,
         }),
       );
       act(() => {
         jest.runAllTimers();
       });
       await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
+        expect(elements.loading(component)).toBeNull();
       });
-      const {tvShow} = queryResult.result.result.data;
+      const {tvShow} = resolvers[0].result.data;
       expect(navigate).toHaveBeenCalledTimes(0);
       fireEvent.press(elements.seasons(component));
       expect(navigate).toHaveBeenCalledTimes(1);
@@ -1737,34 +1507,27 @@ describe('<TVShowDetails />', () => {
   describe('Showing the "language-alert-message"', () => {
     beforeEach(() => {
       jest.useFakeTimers();
-      jest.clearAllMocks();
     });
 
     afterEach(cleanup);
 
-    it('should call the "Alert.alert" with the correct params when the "overview" is an empty string', async () => {
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers(
+    it('should call the "Alert.alert" correctly when the "overview" is an "empty string"', async () => {
+      const resolvers = mockTVShowDetails.makeQuerySuccessResolver(
         {
           withVoteAverage: true,
           withGenresIds: true,
           withVoteCount: true,
           language: 'EN',
-          id: '1',
+          id: ID,
         },
         {
           removeOverview: true,
         },
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
       render(
         renderTVShowDetails({
           mockResolvers: resolvers,
-          id: '1',
+          id: ID,
         }),
       );
       act(() => {
@@ -1788,353 +1551,332 @@ describe('<TVShowDetails />', () => {
     });
   });
 
-  describe('Pressing the lists-items', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-      jest.clearAllMocks();
-    });
+  describe('Pressing the some of the lists-items', () => {
+    describe('When pressing some of the "cast" items', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
 
-    afterEach(cleanup);
+      afterEach(cleanup);
 
-    it('should call "navigation.push" correctly when the user press some item from the "creators-list"', async () => {
-      const push = jest.fn();
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
-      });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          push,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {tvShow} = queryResult.result.result.data;
-      const indexItemSelected = randomPositiveNumber(
-        tvShow.createdBy.length - 1,
-        0,
-      );
-      expect(push).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.creatorsItems(component)[indexItemSelected]);
-      expect(push).toHaveBeenCalledTimes(1);
-      expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-        profileImage: tvShow.createdBy[indexItemSelected].profilePath,
-        name: tvShow.createdBy[indexItemSelected].name,
-        id: Number(tvShow.createdBy[indexItemSelected].id),
+      it('should call "navigation.push" correclty', async () => {
+        const push = jest.fn();
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            push,
+            id: ID,
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.cast(component)).not.toBeNull();
+        });
+        const {tvShow} = resolvers[0].result.data;
+        const indexItemSelected = randomPositiveNumber(
+          tvShow.cast.length - 1,
+          0,
+        );
+        expect(push).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.castItems(component)[indexItemSelected]);
+        expect(push).toHaveBeenCalledTimes(1);
+        expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+          profileImage: tvShow.cast[indexItemSelected].profilePath,
+          name: tvShow.cast[indexItemSelected].name,
+          id: Number(tvShow.cast[indexItemSelected].id),
+        });
       });
     });
 
-    it('should call "navigation.push" correctly when the user press some item from the "cast-list"', async () => {
-      const push = jest.fn();
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
+    describe('When pressing some of the "crew" items', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          push,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {tvShow} = queryResult.result.result.data;
-      const indexItemSelected = randomPositiveNumber(tvShow.cast.length - 1, 0);
-      expect(push).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.castItems(component)[indexItemSelected]);
-      expect(push).toHaveBeenCalledTimes(1);
-      expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-        profileImage: tvShow.cast[indexItemSelected].profilePath,
-        name: tvShow.cast[indexItemSelected].name,
-        id: Number(tvShow.cast[indexItemSelected].id),
+
+      afterEach(cleanup);
+
+      it('should call "navigation.push" correctly', async () => {
+        const push = jest.fn();
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            push,
+            id: ID,
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.crew(component)).not.toBeNull();
+        });
+        const {tvShow} = resolvers[0].result.data;
+        const indexItemSelected = randomPositiveNumber(
+          tvShow.crew.length - 1,
+          0,
+        );
+        expect(push).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.crewItems(component)[indexItemSelected]);
+        expect(push).toHaveBeenCalledTimes(1);
+        expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+          profileImage: tvShow.crew[indexItemSelected].profilePath,
+          name: tvShow.crew[indexItemSelected].name,
+          id: Number(tvShow.crew[indexItemSelected].id),
+        });
       });
     });
 
-    it('should call "navigation.push" correctly when the user press some item from the "crew-list"', async () => {
-      const push = jest.fn();
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
+    describe('When pressing some of the "reviews" items', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          push,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {tvShow} = queryResult.result.result.data;
-      const indexItemSelected = randomPositiveNumber(tvShow.crew.length - 1, 0);
-      expect(push).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.crewItems(component)[indexItemSelected]);
-      expect(push).toHaveBeenCalledTimes(1);
-      expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-        profileImage: tvShow.crew[indexItemSelected].profilePath,
-        name: tvShow.crew[indexItemSelected].name,
-        id: Number(tvShow.crew[indexItemSelected].id),
+
+      afterEach(cleanup);
+
+      it('should call "navigation.navigate" correctly"', async () => {
+        const navigate = jest.fn();
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            navigate,
+            id: ID,
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.reviews(component)).not.toBeNull();
+        });
+        const {tvShow} = resolvers[0].result.data;
+        expect(navigate).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.viewAllReviews(component));
+        expect(navigate).toHaveBeenCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(Routes.MediaDetail.REVIEWS, {
+          mediaTitle: tvShow.name,
+          reviews: tvShow.reviews,
+        });
       });
     });
 
-    it('should call "navigation.navigate" correctly when the user press some item from the "reviews-list"', async () => {
-      const navigate = jest.fn();
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
+    describe('When pressing some of the "similar" items', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          navigate,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {tvShow} = queryResult.result.result.data;
-      expect(navigate).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.viewAllReviews(component));
-      expect(navigate).toHaveBeenCalledTimes(1);
-      expect(navigate).toHaveBeenCalledWith(Routes.MediaDetail.REVIEWS, {
-        mediaTitle: tvShow.name,
-        reviews: tvShow.reviews,
-      });
-    });
 
-    it('should call "navigation.push" correctly when the user press some item from the "simila-list"', async () => {
-      const push = jest.fn();
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
-      });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          push,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loadingOverview(component)).toEqual([]);
-      });
-      const {tvShow} = queryResult.result.result.data;
-      const indexItemSelected = randomPositiveNumber(
-        tvShow.similar.length - 1,
-        0,
-      );
-      expect(push).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.similarItems(component)[indexItemSelected]);
-      expect(push).toHaveBeenCalledTimes(1);
-      expect(push).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
-        voteAverage: tvShow.similar[indexItemSelected].voteAverage,
-        posterPath: tvShow.similar[indexItemSelected].posterPath,
-        voteCount: tvShow.similar[indexItemSelected].voteCount,
-        title: tvShow.similar[indexItemSelected].name,
-        id: tvShow.similar[indexItemSelected].id,
+      afterEach(cleanup);
+
+      it('should call "navigation.push" correctly', async () => {
+        const push = jest.fn();
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            push,
+            id: ID,
+          }),
+        );
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {
+          expect(elements.similar(component)).not.toBeNull();
+        });
+        const {tvShow} = resolvers[0].result.data;
+        const indexItemSelected = randomPositiveNumber(
+          tvShow.similar.length - 1,
+          0,
+        );
+        expect(push).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.similarItems(component)[indexItemSelected]);
+        expect(push).toHaveBeenCalledTimes(1);
+        expect(push).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
+          voteAverage: tvShow.similar[indexItemSelected].voteAverage,
+          posterPath: tvShow.similar[indexItemSelected].posterPath,
+          voteCount: tvShow.similar[indexItemSelected].voteCount,
+          title: tvShow.similar[indexItemSelected].name,
+          id: tvShow.similar[indexItemSelected].id,
+        });
       });
     });
   });
 
-  describe('Error-state', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
+  describe('When some "error" happens', () => {
+    describe('When a "Network-error" happens', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+
+      afterEach(cleanup);
+
+      it('should should render correctly', async () => {
+        const resolvers = mockTVShowDetails.makeQueryNetworkErrorResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            id: ID,
+          }),
+        );
+        act(() => {
+          jest.runAllTimers();
+        });
+        expect(elements.loading(component)).toBeNull();
+        expect(elements.backgroundImage(component)).toBeNull();
+        expect(elements.contentWrapper(component)).toBeNull();
+        expect(elements.headerInfo(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).not.toBeNull();
+        await waitFor(() => {});
+      });
+
+      it('should render the "Advise" correctly', async () => {
+        const resolvers = mockTVShowDetails.makeQueryNetworkErrorResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            id: ID,
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.adviseWrapper(component)).not.toBeNull();
+        });
+        expect(elements.adviseTitle(component)).not.toBeNull();
+        expect(elements.adviseTitle(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_TITLE,
+        );
+        expect(elements.adviseDescription(component)).not.toBeNull();
+        expect(elements.adviseDescription(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_DESCRIPTION,
+        );
+        expect(elements.adviseSuggestion(component)).not.toBeNull();
+        expect(elements.adviseSuggestion(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_SUGGESTION,
+        );
+      });
     });
 
-    afterEach(cleanup);
+    describe('When a "GraphQL-error" happens', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
 
-    it('should show the "Error-state" when some Network-error happens', async () => {
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
-      });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.advise(component)).not.toBeNull();
-      expect(elements.backButton(component)).not.toBeNull();
-      expect(elements.headerInfo(component)).toBeNull();
-      expect(elements.sections(component).length).toEqual(0);
-      expect(elements.tagsWrapper(component)).toEqual([]);
-      expect(elements.overviewWrapper(component)).toBeNull();
-      expect(elements.generalInfo(component)).toBeNull();
-      expect(elements.cast(component)).toBeNull();
-      expect(elements.crew(component)).toBeNull();
-      expect(elements.images(component)).toBeNull();
-      expect(elements.videos(component)).toBeNull();
-      expect(elements.productionCompanies(component)).toEqual([]);
-      expect(elements.reviews(component)).toBeNull();
-      expect(elements.similar(component)).toBeNull();
-      await waitFor(() => {});
-    });
+      afterEach(cleanup);
 
-    it('should show the "Error-state" when some GraphQL-error happens', async () => {
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: '1',
+      it('should should render correctly', async () => {
+        const resolvers = mockTVShowDetails.makeQueryGraphQLErrorResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            id: '1',
+          }),
+        );
+        act(() => {
+          jest.runAllTimers();
+        });
+        expect(elements.loading(component)).toBeNull();
+        expect(elements.backgroundImage(component)).toBeNull();
+        expect(elements.contentWrapper(component)).toBeNull();
+        expect(elements.headerInfo(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).not.toBeNull();
+        await waitFor(() => {});
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          id: '1',
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
+
+      it('should render the "Advise" correctly', async () => {
+        const resolvers = mockTVShowDetails.makeQueryGraphQLErrorResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            id: '1',
+          }),
+        );
+        await waitFor(() => {
+          expect(elements.adviseWrapper(component)).not.toBeNull();
+        });
+        expect(elements.adviseTitle(component)).not.toBeNull();
+        expect(elements.adviseTitle(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_TITLE,
+        );
+        expect(elements.adviseDescription(component)).not.toBeNull();
+        expect(elements.adviseDescription(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_DESCRIPTION,
+        );
+        expect(elements.adviseSuggestion(component)).not.toBeNull();
+        expect(elements.adviseSuggestion(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_ERROR_SUGGESTION,
+        );
       });
-      expect(elements.advise(component)).not.toBeNull();
-      expect(elements.backButton(component)).not.toBeNull();
-      expect(elements.headerInfo(component)).toBeNull();
-      expect(elements.sections(component).length).toEqual(0);
-      expect(elements.tagsWrapper(component)).toEqual([]);
-      expect(elements.overviewWrapper(component)).toBeNull();
-      expect(elements.generalInfo(component)).toBeNull();
-      expect(elements.cast(component)).toBeNull();
-      expect(elements.crew(component)).toBeNull();
-      expect(elements.images(component)).toBeNull();
-      expect(elements.videos(component)).toBeNull();
-      expect(elements.productionCompanies(component)).toEqual([]);
-      expect(elements.reviews(component)).toBeNull();
-      expect(elements.similar(component)).toBeNull();
-      await waitFor(() => {});
     });
   });
 
-  describe('Loading-state', () => {
+  describe('When the data is "loading"', () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
 
     afterEach(cleanup);
 
-    it('should render the "loading-state" correctly when the "isLoading" is true', async () => {
-      const queryResult = mockTVShowDetails.tvShowsDetailsResolvers({
+    it('should render correctly', async () => {
+      const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
         withVoteAverage: true,
         withGenresIds: true,
         withVoteCount: true,
         language: 'EN',
-        id: '1',
+        id: ID,
       });
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithNetworkError,
-        },
-      ];
       const component = render(
         renderTVShowDetails({
           mockResolvers: resolvers,
-          id: '1',
+          id: ID,
         }),
       );
-      expect(elements.advise(component)).toBeNull();
-      expect(elements.backButton(component)).not.toBeNull();
-      expect(elements.loadingOverview(component)).not.toBeNull();
-      expect(elements.tagsLoading(component)).not.toBeNull();
-      expect(elements.headerInfo(component)).not.toBeNull();
-      expect(elements.sections(component).length).toEqual(1);
-      expect(elements.tagsWrapper(component)).toEqual([]);
-      expect(elements.overviewWrapper(component)).toBeNull();
-      expect(elements.generalInfo(component)).toBeNull();
-      expect(elements.cast(component)).toBeNull();
-      expect(elements.crew(component)).toBeNull();
-      expect(elements.images(component)).toBeNull();
-      expect(elements.videos(component)).toBeNull();
-      expect(elements.productionCompanies(component)).toEqual([]);
-      expect(elements.reviews(component)).toBeNull();
-      expect(elements.similar(component)).toBeNull();
-      expect(elements.creator(component)).toBeNull();
+      expect(elements.loading(component)).not.toBeNull();
+      expect(elements.backgroundImage(component)).toBeNull();
+      expect(elements.contentWrapper(component)).toBeNull();
+      expect(elements.headerInfo(component)).toBeNull();
+      expect(elements.adviseWrapper(component)).toBeNull();
       await waitFor(() => {});
     });
   });
