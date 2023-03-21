@@ -14,7 +14,7 @@ export const BackgroundImage = (props: BackgroundImageProps) => {
   });
 
   return (
-    <Animated.View style={backgroundImage.style}>
+    <Animated.View style={backgroundImage.style} testID="background-image">
       <Styles.BackgroundImage
         blurRadius={Styles.DEFAULT_BLUR_RADIUS}
         onLoad={backgroundImage.onLoadBackgroundImage}

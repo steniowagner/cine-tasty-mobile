@@ -28,6 +28,7 @@ type UseMovieDetailsProps = {
 export const useMovieDetails = (props: UseMovieDetailsProps) => {
   const animatedHeaderIntepolationParams =
     useMakeAnimatedHeaderIntepolationParams();
+
   const translations = useTranslations();
 
   const query = useQuery<
@@ -89,7 +90,7 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     [props.navigation],
   );
 
-  const onPressReviews = useCallback(
+  const handlePressReviews = useCallback(
     (movie: SchemaTypes.MovieDetail_movie) => {
       props.navigation.navigate(Routes.MediaDetail.REVIEWS, {
         mediaTitle: movie.title,
@@ -133,7 +134,7 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     isLoading: query.loading,
     hasError: !!query.error,
     onPressSimilarMovie: handlePressSimilarMovie,
-    onPressReviews,
+    onPressReviews: handlePressReviews,
     onPressCrew: handlePressCrew,
     onPressCast: handlePressCast,
     infoItems,
