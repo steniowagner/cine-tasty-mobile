@@ -1,10 +1,16 @@
 import React from 'react';
 import {ThemeProvider} from 'styled-components/native';
-import {render, act, RenderAPI} from '@testing-library/react-native';
+import {
+  render,
+  act,
+  RenderAPI,
+  cleanup,
+  waitFor,
+} from '@testing-library/react-native';
 import {MockedProvider} from '@apollo/client/testing';
 import {InMemoryCache} from '@apollo/client';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import * as tvShowsDetailsResolvers from '@mocks/fixtures/tv-show-season';
 import possibleTypes from '@graphql/possibleTypes.json';
 import {randomPositiveNumber} from '@mocks/utils';
@@ -38,9 +44,9 @@ const renderSeasonsDetails = (mockResolvers: any, season: number) => (
       })
     }>
     <ThemeProvider theme={theme}>
-      <TMDBImageQualityProvider>
+      <TMDBImageQualitiesProvider>
         <SeasonsDetails season={season} id={ID} />
-      </TMDBImageQualityProvider>
+      </TMDBImageQualitiesProvider>
     </ThemeProvider>
   </MockedProvider>
 );
@@ -64,10 +70,10 @@ describe('<SeasonsDetails />', () => {
       jest.useFakeTimers();
     });
 
-    it('should render correctly when all the data is returned', () => {
+    it('should render correctly when all the data is returned', async () => {
       const season = randomPositiveNumber(10, 1);
       const numberEpisodes = randomPositiveNumber(10, 1);
-      const queryResult = tvShowsDetailsResolvers.tvShowsDetailsResolvers(
+      const resolvers = tvShowsDetailsResolvers.makeQuerySuccessResolver(
         {
           language: 'EN',
           season,
@@ -75,12 +81,6 @@ describe('<SeasonsDetails />', () => {
         },
         numberEpisodes,
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
       const component = render(renderSeasonsDetails(resolvers, season));
       act(() => {
         jest.runAllTimers();
@@ -92,18 +92,19 @@ describe('<SeasonsDetails />', () => {
       expect(elements.episodes(component).length).toEqual(numberEpisodes);
       expect(elements.overview(component)).not.toBeNull();
       expect(elements.overview(component).children[0]).toEqual('OVERVIEW');
+      await waitFor(() => {});
     });
   });
 
-  describe('Loading-state', () => {
+  describe('When the data is "loading"', () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
 
-    it('should render correctly when the data is loading', () => {
+    it('should render correctly', async () => {
       const season = randomPositiveNumber(10, 1);
       const numberEpisodes = randomPositiveNumber(10, 1);
-      const queryResult = tvShowsDetailsResolvers.tvShowsDetailsResolvers(
+      const resolvers = tvShowsDetailsResolvers.makeQuerySuccessResolver(
         {
           language: 'EN',
           season,
@@ -111,104 +112,95 @@ describe('<SeasonsDetails />', () => {
         },
         numberEpisodes,
       );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.result,
-        },
-      ];
       const component = render(renderSeasonsDetails(resolvers, season));
       expect(elements.loading(component)).not.toBeNull();
       expect(elements.advise(component)).toBeNull();
       expect(elements.season(component)).toBeNull();
       expect(elements.episodes(component)).toEqual([]);
       expect(elements.overview(component)).toBeNull();
+      await waitFor(() => {});
     });
   });
 
   describe('When some error happens', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
+    describe('When a "Network-error" happens', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+
+      afterEach(cleanup);
+
+      it('should render correctly', async () => {
+        const season = randomPositiveNumber(10, 1);
+        const numberEpisodes = randomPositiveNumber(10, 1);
+        const resolvers = tvShowsDetailsResolvers.makeQueryNetworkErrorResolver(
+          {
+            language: 'EN',
+            season,
+            id: ID,
+          },
+          numberEpisodes,
+        );
+        const component = render(renderSeasonsDetails(resolvers, season));
+        act(() => {
+          jest.runAllTimers();
+        });
+        expect(elements.loading(component)).toBeNull();
+        expect(elements.advise(component)).not.toBeNull();
+        expect(elements.adviseTitle(component)).not.toBeNull();
+        expect(elements.adviseTitle(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE,
+        );
+        expect(elements.adviseDescription(component)).not.toBeNull();
+        expect(elements.adviseDescription(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION,
+        );
+        expect(elements.adviseSuggestion(component)).not.toBeNull();
+        expect(elements.adviseSuggestion(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION,
+        );
+        expect(elements.season(component)).toBeNull();
+        expect(elements.episodes(component)).toEqual([]);
+        expect(elements.overview(component)).toBeNull();
+        await waitFor(() => {});
+      });
     });
 
-    it('should show the "Adise" correctly when a "Network-error" happened', () => {
-      const season = randomPositiveNumber(10, 1);
-      const numberEpisodes = randomPositiveNumber(10, 1);
-      const queryResult = tvShowsDetailsResolvers.tvShowsDetailsResolvers(
-        {
-          language: 'EN',
-          season,
-          id: ID,
-        },
-        numberEpisodes,
-      );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithNetworkError,
-        },
-      ];
-      const component = render(renderSeasonsDetails(resolvers, season));
-      act(() => {
-        jest.runAllTimers();
+    describe('When a "GraphQL-error" happens', () => {
+      it('should render correctly', async () => {
+        const season = randomPositiveNumber(10, 1);
+        const numberEpisodes = randomPositiveNumber(10, 1);
+        const resolvers = tvShowsDetailsResolvers.makeQueryGraphQLErrorResolver(
+          {
+            language: 'EN',
+            season,
+            id: ID,
+          },
+          numberEpisodes,
+        );
+        const component = render(renderSeasonsDetails(resolvers, season));
+        act(() => {
+          jest.runAllTimers();
+        });
+        expect(elements.loading(component)).toBeNull();
+        expect(elements.advise(component)).not.toBeNull();
+        expect(elements.adviseTitle(component)).not.toBeNull();
+        expect(elements.adviseTitle(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE,
+        );
+        expect(elements.adviseDescription(component)).not.toBeNull();
+        expect(elements.adviseDescription(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION,
+        );
+        expect(elements.adviseSuggestion(component)).not.toBeNull();
+        expect(elements.adviseSuggestion(component).children[0]).toEqual(
+          Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION,
+        );
+        expect(elements.season(component)).toBeNull();
+        expect(elements.episodes(component)).toEqual([]);
+        expect(elements.overview(component)).toBeNull();
+        await waitFor(() => {});
       });
-      expect(elements.loading(component)).toBeNull();
-      expect(elements.advise(component)).not.toBeNull();
-      expect(elements.adviseTitle(component)).not.toBeNull();
-      expect(elements.adviseTitle(component).children[0]).toEqual(
-        Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE,
-      );
-      expect(elements.adviseDescription(component)).not.toBeNull();
-      expect(elements.adviseDescription(component).children[0]).toEqual(
-        Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION,
-      );
-      expect(elements.adviseSuggestion(component)).not.toBeNull();
-      expect(elements.adviseSuggestion(component).children[0]).toEqual(
-        Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION,
-      );
-      expect(elements.season(component)).toBeNull();
-      expect(elements.episodes(component)).toEqual([]);
-      expect(elements.overview(component)).toBeNull();
-    });
-
-    it('should show the "Adise" correctly when a "GraphQL-error" happened', () => {
-      const season = randomPositiveNumber(10, 1);
-      const numberEpisodes = randomPositiveNumber(10, 1);
-      const queryResult = tvShowsDetailsResolvers.tvShowsDetailsResolvers(
-        {
-          language: 'EN',
-          season,
-          id: ID,
-        },
-        numberEpisodes,
-      );
-      const resolvers = [
-        {
-          ...queryResult.request,
-          ...queryResult.responseWithGraphQLError,
-        },
-      ];
-      const component = render(renderSeasonsDetails(resolvers, season));
-      act(() => {
-        jest.runAllTimers();
-      });
-      expect(elements.loading(component)).toBeNull();
-      expect(elements.advise(component)).not.toBeNull();
-      expect(elements.adviseTitle(component)).not.toBeNull();
-      expect(elements.adviseTitle(component).children[0]).toEqual(
-        Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE,
-      );
-      expect(elements.adviseDescription(component)).not.toBeNull();
-      expect(elements.adviseDescription(component).children[0]).toEqual(
-        Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION,
-      );
-      expect(elements.adviseSuggestion(component)).not.toBeNull();
-      expect(elements.adviseSuggestion(component).children[0]).toEqual(
-        Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION,
-      );
-      expect(elements.season(component)).toBeNull();
-      expect(elements.episodes(component)).toEqual([]);
-      expect(elements.overview(component)).toBeNull();
     });
   });
 });

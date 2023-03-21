@@ -94,7 +94,7 @@ describe('<SeasonOverviewText />', () => {
   });
 
   describe('When the "overview" is not provided', () => {
-    it('should render correctly when no overview is provided', () => {
+    it('should render correctly', () => {
       const component = render(renderSeasonOverviewText());
       act(() => {
         jest.runAllTimers();
