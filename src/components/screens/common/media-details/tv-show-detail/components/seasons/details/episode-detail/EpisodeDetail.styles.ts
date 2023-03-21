@@ -1,7 +1,13 @@
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import styled from 'styled-components/native';
 
+import {SVGIcon} from '@components';
 import {CONSTANTS} from '@utils';
+import metrics from '@styles/metrics';
+import {dark} from '@styles/themes';
+
+export const IMAGE_OFF_ICON_SIZE = metrics.getWidthFromDP('12%');
+export const DEFAULT_TEXT_COLOR = dark.colors.text;
 
 export const Wrapper = styled(View)`
   width: 100%;
@@ -9,16 +15,6 @@ export const Wrapper = styled(View)`
   max-height: ${({theme}) => theme.metrics.getHeightFromDP('80%')}px;
   background-color: white;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
-`;
-
-export const EpisodeImageFallback = styled(View)`
-  width: 100%;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('30%')}px;
-  justify-content: center;
-  align-items: center;
-  border-top-left-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
-  border-top-right-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
-  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;
 
 export const EpisodeTitleText = styled(Text)`
@@ -39,9 +35,17 @@ export const EpisodeAiredText = styled(Text)`
   margin-top: ${({theme}) => theme.metrics.smallSize}px;
   font-size: ${({theme}) => theme.metrics.largeSize}px;
   font-family: CircularStd-Medium;
-  color: rgba(0, 0, 0, 0.5);
+  color: ${DEFAULT_TEXT_COLOR};
 `;
 
 export const TextWrapper = styled(View)`
   padding: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
 `;
+
+export const sheet = StyleSheet.create({
+  profileImage: {
+    width: metrics.width,
+    height: metrics.getWidthFromDP('30%'),
+    borderRadius: 0,
+  },
+});

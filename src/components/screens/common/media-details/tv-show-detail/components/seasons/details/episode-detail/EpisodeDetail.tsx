@@ -1,12 +1,11 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {ScrollView} from 'react-native';
-import {useTranslation} from 'react-i18next';
 
-import {TMDBImage, StarsVotes, SVGIcon} from '@components';
+import {TMDBImageWithFallback, StarsVotes} from '@components';
 import * as SchemaTypes from '@schema-types';
-import * as TRANSLATIONS from '@i18n/tags';
-import metrics from '@styles/metrics';
+import {Translations} from '@i18n/tags';
 import {formatDate} from '@utils';
+import {useTranslations} from '@hooks';
 
 import * as Styles from './EpisodeDetail.styles';
 
@@ -14,61 +13,43 @@ type EpisodeDetailProps = {
   episode: SchemaTypes.TVShowSeasonsDetail_tvShowSeason_episodes;
 };
 
-const EpisodeDetail = ({episode}: EpisodeDetailProps) => {
-  const {t} = useTranslation();
-
-  const renderImage = useCallback(() => {
-    if (episode.stillPath) {
-      return (
-        <TMDBImage
-          image={episode.stillPath}
-          testID="episode-image"
-          imageType="poster"
-          style={{
-            width: '100%',
-            height: metrics.getWidthFromDP('30%'),
-          }}
-        />
-      );
-    }
-
-    return (
-      <Styles.EpisodeImageFallback testID="episode-image-fallback">
-        <SVGIcon
-          size={metrics.getWidthFromDP('12%')}
-          colorThemeRef="buttonText"
-          id="image-off"
-        />
-      </Styles.EpisodeImageFallback>
-    );
-  }, [episode]);
+export const EpisodeDetail = (props: EpisodeDetailProps) => {
+  const translations = useTranslations();
 
   return (
     <Styles.Wrapper>
       <ScrollView bounces={false}>
-        {renderImage()}
+        {props.episode.stillPath && (
+          <TMDBImageWithFallback
+            imageType="profile"
+            testID="profile-image"
+            image={props.episode.stillPath}
+            style={Styles.sheet.profileImage}
+            iconImageLoading="account"
+            iconImageError="image-off"
+            iconSize={Styles.IMAGE_OFF_ICON_SIZE}
+          />
+        )}
         <Styles.TextWrapper>
           <Styles.EpisodeTitleText testID="episode-title-text">
-            {episode.name}
+            {props.episode.name}
           </Styles.EpisodeTitleText>
           <StarsVotes
-            textColor="rgba(0, 0, 0, 0.8)"
-            voteCount={episode.voteCount}
-            votes={episode.voteAverage}
+            textColor={Styles.DEFAULT_TEXT_COLOR}
+            voteCount={props.episode.voteCount}
+            votes={props.episode.voteAverage}
             withText
           />
           <Styles.EpisodeAiredText testID="air-date-text">
-            {`${t(
-              TRANSLATIONS.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE,
-            )} ${formatDate(episode.airDate)}`}
+            {`${translations.translate(
+              Translations.Tags.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE,
+            )} ${formatDate(props.episode.airDate)}`}
           </Styles.EpisodeAiredText>
           <Styles.EpisodeOverviewText testID="overview-text">
-            {episode.overview || '...'}
+            {props.episode.overview || '...'}
           </Styles.EpisodeOverviewText>
         </Styles.TextWrapper>
       </ScrollView>
     </Styles.Wrapper>
   );
 };
-
-export default EpisodeDetail;
