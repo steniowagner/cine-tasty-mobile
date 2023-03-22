@@ -4,12 +4,14 @@ import {useSeasonOverviewText} from './useSeasonOverviewText';
 import * as Styles from './SeasonOverviewText.styles';
 
 type SeasonOverviewTextProps = {
+  openSeasonOverviewDetailsModal: () => void;
   overview: string;
   season: number;
 };
 
 export const SeasonOverviewText = (props: SeasonOverviewTextProps) => {
   const seasonOverviewText = useSeasonOverviewText({
+    openSeasonOverviewDetailsModal: props.openSeasonOverviewDetailsModal,
     overview: props.overview,
     season: props.season,
   });
@@ -34,7 +36,7 @@ export const SeasonOverviewText = (props: SeasonOverviewTextProps) => {
       </Styles.OverviewText>
       {seasonOverviewText.shouldShowReadMoreButton && (
         <Styles.ReadMoreButton
-          onPress={seasonOverviewText.onPressReadMore}
+          onPress={props.openSeasonOverviewDetailsModal}
           testID="read-more-button">
           <Styles.ReadMoreText testID="read-more-text">
             {seasonOverviewText.readMoreButtonText}

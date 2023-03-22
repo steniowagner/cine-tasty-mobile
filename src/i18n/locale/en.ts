@@ -300,6 +300,7 @@ const en: Locale = {
     votes: 'Votes',
     tvShow: {
       tvShow: 'TV-Show',
+      back: 'Back',
       seasonEpisode: {
         readMoreSeasonOverview: 'Read More',
         episodes: 'Episodes',

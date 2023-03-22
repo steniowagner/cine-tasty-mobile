@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import {useQuery} from '@apollo/client';
 
 import {TV_SHOW_SEASONS_DETAIL} from '@graphql/queries';
@@ -8,10 +8,14 @@ import {useTranslations} from '@hooks';
 
 type UseSeasonsDetailsProps = {
   season: number;
+  tvShowTitle: string;
   id: string;
 };
 
 export const useSeasonsDetails = (props: UseSeasonsDetailsProps) => {
+  const [isSeasonOverviewModalOpen, setIsSeasonOverviewModalOpen] =
+    useState(false);
+
   const translations = useTranslations();
 
   const query = useQuery<
@@ -39,14 +43,26 @@ export const useSeasonsDetails = (props: UseSeasonsDetailsProps) => {
           Translations.Tags.MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE,
         ),
       },
-      epsiode: translations.translate(
+      epsiodes: translations.translate(
         Translations.Tags.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_EPISODE,
       ),
+      modal: {
+        title: `${props.tvShowTitle}\n${translations.translate(
+          Translations.Tags.MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON,
+        )} ${props.season}`,
+        ctaTitle: translations.translate(
+          Translations.Tags.MEDIA_DETAIL_TV_SHOWS_SEASON_BACK,
+        ),
+      },
     }),
-    [translations],
+    [translations, query.data],
   );
 
   return {
+    isSeasonOverviewModalOpen,
+    openSeasonOverviewDetailsModal: () => setIsSeasonOverviewModalOpen(true),
+    onCloseSeasonOverviewDetailsModal: () =>
+      setIsSeasonOverviewModalOpen(false),
     data: query.data?.tvShowSeason,
     isLoading: query.loading,
     hasError: !!query.error,

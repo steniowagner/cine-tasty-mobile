@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import {CONSTANTS} from '@utils';
@@ -8,7 +8,7 @@ export const EPISODE_INDEX_WRAPPER_WIDTH = metrics.getWidthFromDP('12%');
 export const EPISODE_INDEX_WRAPPER_HEIGHT = metrics.getWidthFromDP('12%');
 export const EPISODE_INDEX_WRAPPER_BORDER_RADIUS = metrics.getWidthFromDP('6%');
 
-export const ListItemWrapper = styled(TouchableOpacity)`
+export const ListItemWrapper = styled(View)`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;

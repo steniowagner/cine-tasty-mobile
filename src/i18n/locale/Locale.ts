@@ -213,6 +213,7 @@ export type Locale = {
     votes: string;
     tvShow: {
       tvShow: string;
+      back: string;
       seasonEpisode: {
         readMoreSeasonOverview: string;
         episodes: string;

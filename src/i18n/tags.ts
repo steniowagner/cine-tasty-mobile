@@ -125,6 +125,7 @@ export namespace Translations {
     MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_EPISODE = 'translations:mediaDetail:tvShow:seasonEpisode:episodes',
     MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_AIR_DATE = 'translations:mediaDetail:tvShow:seasonEpisode:airDate',
     MEDIA_DETAIL_TV_SHOWS_SEASON_EPISODE_SEASON = 'translations:mediaDetail:tvShow:seasonEpisode:season',
+    MEDIA_DETAIL_TV_SHOWS_SEASON_BACK = 'translations:mediaDetail:tvShow:back',
     MEDIA_DETAIL_TV_SHOWS_ERRORS_DESCRIPTION = 'translations:mediaDetail:tvShow:errors:description',
     MEDIA_DETAIL_TV_SHOWS_ERRORS_SUGGESTION = 'translations:mediaDetail:tvShow:errors:suggestion',
     MEDIA_DETAIL_TV_SHOWS_ERRORS_TITLE = 'translations:mediaDetail:tvShow:errors:title',

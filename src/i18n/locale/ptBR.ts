@@ -303,6 +303,7 @@ const ptBR: Locale = {
     votes: 'Votos',
     tvShow: {
       tvShow: 'Séries',
+      back: 'Voltar',
       seasonEpisode: {
         readMoreSeasonOverview: 'Ver mais',
         episodes: 'Episódios',

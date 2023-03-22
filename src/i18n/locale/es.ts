@@ -304,6 +304,7 @@ const es: Locale = {
     votes: 'Votos',
     tvShow: {
       tvShow: 'TV-Show',
+      back: 'Volver',
       seasonEpisode: {
         readMoreSeasonOverview: 'Lee mas',
         episodes: 'Episodios',

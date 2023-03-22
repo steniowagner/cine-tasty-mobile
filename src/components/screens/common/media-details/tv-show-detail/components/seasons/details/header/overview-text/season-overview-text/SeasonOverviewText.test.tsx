@@ -26,9 +26,16 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
-const renderSeasonOverviewText = (overview?: string) => (
+const renderSeasonOverviewText = (
+  openSeasonOverviewDetailsModal = jest.fn(),
+  overview?: string,
+) => (
   <ThemeProvider theme={theme}>
-    <SeasonOverviewText overview={overview} season={1} />
+    <SeasonOverviewText
+      openSeasonOverviewDetailsModal={openSeasonOverviewDetailsModal}
+      overview={overview}
+      season={1}
+    />
   </ThemeProvider>
 );
 
@@ -48,7 +55,9 @@ describe('<SeasonOverviewText />', () => {
   describe('When the "overview" is provided', () => {
     it('should render correctly when some overview is provided and it has less lines than the max', () => {
       const OVERVIEW_TEXT = 'some overview';
-      const components = render(renderSeasonOverviewText(OVERVIEW_TEXT));
+      const components = render(
+        renderSeasonOverviewText(jest.fn(), OVERVIEW_TEXT),
+      );
       const textEvent = {
         nativeEvent: {
           lines: {
@@ -69,7 +78,9 @@ describe('<SeasonOverviewText />', () => {
 
     it('should render correctly when some overview is provided and it has more lines than the max', () => {
       const OVERVIEW_TEXT = 'some overview';
-      const component = render(renderSeasonOverviewText(OVERVIEW_TEXT));
+      const component = render(
+        renderSeasonOverviewText(jest.fn(), OVERVIEW_TEXT),
+      );
       const textEvent = {
         nativeEvent: {
           lines: {
@@ -105,9 +116,33 @@ describe('<SeasonOverviewText />', () => {
     });
   });
 
-  describe.skip('Show the "full-overview"', () => {
-    it('should show the "full-overview" when the user press the "read-more" text', () => {
-      // todo
+  describe('Seasons-Modal', () => {
+    const textEvent = {
+      nativeEvent: {
+        lines: {
+          length: MAX_NUMBER_LINES + 1,
+        },
+      },
+    };
+
+    describe('Pressing the "Read More" button', () => {
+      it('should call the "openSeasonOverviewDetailsModal" correctly', () => {
+        const openSeasonOverviewDetailsModal = jest.fn();
+        const OVERVIEW_TEXT = 'some overview';
+        const component = render(
+          renderSeasonOverviewText(
+            openSeasonOverviewDetailsModal,
+            OVERVIEW_TEXT,
+          ),
+        );
+        act(() => {
+          jest.runAllTimers();
+        });
+        fireEvent(elements.overviewText(component), 'onTextLayout', textEvent);
+        expect(openSeasonOverviewDetailsModal).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.readMoreButton(component));
+        expect(openSeasonOverviewDetailsModal).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

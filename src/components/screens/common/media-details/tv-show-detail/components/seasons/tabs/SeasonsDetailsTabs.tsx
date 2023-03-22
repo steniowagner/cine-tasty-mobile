@@ -22,7 +22,11 @@ export const SeasonsDetailsTabs = (props: SeasonsDetailsStackProps) => {
           barStyle="dark-content"
           animated
         />
-        <SeasonsDetails season={1} id={props.route.params.id} />
+        <SeasonsDetails
+          season={1}
+          id={props.route.params.id}
+          tvShowTitle={props.route.params.title}
+        />
       </>
     );
   }
@@ -72,7 +76,11 @@ export const SeasonsDetailsTabs = (props: SeasonsDetailsStackProps) => {
                 season: index + 1,
               }}>
               {() => (
-                <SeasonsDetails season={index + 1} id={props.route.params.id} />
+                <SeasonsDetails
+                  tvShowTitle={props.route.params.title}
+                  season={index + 1}
+                  id={props.route.params.id}
+                />
               )}
             </Tab.Screen>
           ))}
