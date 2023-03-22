@@ -23,7 +23,9 @@ export const SeasonOverviewDetailsModal = (
     ctaButtonTitle={props.ctaButtonTitle}
     ctaButtonCallback={props.onPressCtaButton}>
     <ScrollView contentContainerStyle={Styles.sheet.wrapper} bounces={false}>
-      <Styles.EpisodeOverview>{props.overview}</Styles.EpisodeOverview>
+      <Styles.EpisodeOverview testID="season-overview-details">
+        {props.overview}
+      </Styles.EpisodeOverview>
     </ScrollView>
   </ModalSheet>
 );

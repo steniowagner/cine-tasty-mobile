@@ -56,7 +56,9 @@ export const ModalSheet = (props: ModalSheetProps) => {
           </Styles.GripWrapper>
           {props.title && (
             <Styles.ListHeaderWrapper>
-              <Styles.Title>{props.title}</Styles.Title>
+              <Styles.Title testID="modal-sheet-title">
+                {props.title}
+              </Styles.Title>
               <Styles.LineDivider />
             </Styles.ListHeaderWrapper>
           )}
