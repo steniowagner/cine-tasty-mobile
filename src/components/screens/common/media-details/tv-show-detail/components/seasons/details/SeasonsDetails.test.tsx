@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {ThemeProvider} from 'styled-components/native';
 import {
@@ -53,7 +54,7 @@ const renderSeasonsDetails = (mockResolvers: any, season: number) => (
 
 describe('<SeasonsDetails />', () => {
   const elements = {
-    loading: (api: RenderAPI) => api.queryByTestId('loading-content-indicator'),
+    loading: (api: RenderAPI) => api.queryByTestId('loading-wrapper'),
     advise: (api: RenderAPI) => api.queryByTestId('advise-wrapper'),
     adviseTitle: (api: RenderAPI) => api.queryByTestId('advise-title'),
     adviseDescription: (api: RenderAPI) =>

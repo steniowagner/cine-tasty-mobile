@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import {LoadingPlaceholder, Section} from '@components';
 
@@ -10,8 +10,8 @@ const NUMBER_OF_ITEMS = 10;
 
 export const LoadingSeasonsDetails = () => (
   <>
-    <HeaderStyles.Wrapper testID="header-wrapper">
-      <HeaderStyles.SeasonPosterImageWrapper testID="poster-image-wrapper">
+    <HeaderStyles.Wrapper testID="loading-wrapper">
+      <HeaderStyles.SeasonPosterImageWrapper>
         <Styles.HeaderWrapper>
           <LoadingPlaceholder
             indexToDelayAnimation={0}
@@ -20,19 +20,19 @@ export const LoadingSeasonsDetails = () => (
           <Styles.TextsPlaceholdersWrapper>
             <>
               <LoadingPlaceholder
-                indexToDelayAnimation={0}
+                indexToDelayAnimation={1}
                 style={Styles.sheet.text}
               />
               <LoadingPlaceholder
-                indexToDelayAnimation={0}
+                indexToDelayAnimation={2}
                 style={Styles.sheet.text}
               />
               <LoadingPlaceholder
-                indexToDelayAnimation={0}
+                indexToDelayAnimation={3}
                 style={Styles.sheet.text}
               />
               <LoadingPlaceholder
-                indexToDelayAnimation={0}
+                indexToDelayAnimation={4}
                 style={Styles.sheet.text}
               />
             </>
@@ -49,19 +49,19 @@ export const LoadingSeasonsDetails = () => (
     {Array(NUMBER_OF_ITEMS)
       .fill(undefined)
       .map((_, index) => (
-        <>
+        <Fragment key={index}>
           <Styles.EpisodeWrapper>
             <LoadingPlaceholder
-              indexToDelayAnimation={0}
+              indexToDelayAnimation={5}
               style={Styles.sheet.episodeIndex}
             />
             <LoadingPlaceholder
-              indexToDelayAnimation={0}
+              indexToDelayAnimation={6}
               style={{...Styles.sheet.text, ...Styles.sheet.episodesTitle}}
             />
           </Styles.EpisodeWrapper>
           {index < NUMBER_OF_ITEMS - 1 && <SeasonsDetailsStyles.LineDivider />}
-        </>
+        </Fragment>
       ))}
   </>
 );
