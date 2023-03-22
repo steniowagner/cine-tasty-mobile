@@ -2,6 +2,11 @@ import {TouchableOpacity, Text, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import {CONSTANTS} from '@utils';
+import metrics from '@styles/metrics';
+
+export const EPISODE_INDEX_WRAPPER_WIDTH = metrics.getWidthFromDP('12%');
+export const EPISODE_INDEX_WRAPPER_HEIGHT = metrics.getWidthFromDP('12%');
+export const EPISODE_INDEX_WRAPPER_BORDER_RADIUS = metrics.getWidthFromDP('6%');
 
 export const ListItemWrapper = styled(TouchableOpacity)`
   width: 100%;
@@ -29,11 +34,11 @@ export const EpisodeIndexText = styled(Text)`
 `;
 
 export const EpisodeIndexWrapper = styled(View)`
-  width: ${({theme}) => theme.metrics.getWidthFromDP('12%')}px;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('12%')}px;
+  width: ${EPISODE_INDEX_WRAPPER_WIDTH}px;
+  height: ${EPISODE_INDEX_WRAPPER_HEIGHT}px;
   justify-content: center;
   align-items: center;
-  border-radius: ${({theme}) => theme.metrics.getWidthFromDP('6%')}px;
+  border-radius: ${EPISODE_INDEX_WRAPPER_BORDER_RADIUS}px;
   background-color: ${({theme}) => theme.colors.primary};
 `;
 

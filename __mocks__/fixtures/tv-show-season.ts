@@ -39,3 +39,27 @@ export const tvShowsDetailsResolvers = (variables: OperationVariables, episodesL
     result,
   };
 };
+
+export const makeQuerySuccessResolver = (variables: OperationVariables, episodesLength: number) => {
+  const baseResolver = tvShowsDetailsResolvers(variables, episodesLength);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.result,
+  }];
+};
+
+export const makeQueryNetworkErrorResolver = (variables: OperationVariables, episodesLength: number) => {
+  const baseResolver = tvShowsDetailsResolvers(variables, episodesLength);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.responseWithNetworkError,
+  }];
+};
+
+export const makeQueryGraphQLErrorResolver = (variables: OperationVariables, episodesLength: number) => {
+  const baseResolver = tvShowsDetailsResolvers(variables, episodesLength);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.responseWithNetworkError,
+  }];
+};

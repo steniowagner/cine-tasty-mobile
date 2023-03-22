@@ -1,12 +1,13 @@
 import React, {Fragment} from 'react';
 import {ScrollView} from 'react-native';
 
-import {LoadingIndicator, Section, Advise} from '@components';
+import {Section, Advise} from '@components';
 
-import TVShowSeasonsListItem from './episode-list-item/EpisodesListItem';
+import {TVShowSeasonsListItem} from './episode-list-item/EpisodesListItem';
+import {LoadingSeasonsDetails} from './loading-seasons-details/LoadingSeasonsDetails';
 import {useSeasonsDetails} from './useSeasonsDetails';
 import * as Styles from './SeasonsDetails.styles';
-import Header from './header/Header';
+import {Header} from './header/Header';
 
 type SeasonsDetailsProps = {
   season: number;
@@ -20,7 +21,7 @@ export const SeasonsDetails = (props: SeasonsDetailsProps) => {
   });
 
   if (seasonsDetails.isLoading) {
-    return <LoadingIndicator />;
+    return <LoadingSeasonsDetails />;
   }
 
   if (seasonsDetails.hasError) {

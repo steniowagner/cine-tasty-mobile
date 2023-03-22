@@ -7,7 +7,7 @@ import {randomPositiveNumber} from '../utils';
 
 export const castTVShows = (size: number) => Array(size).fill({}).map((_, index) => ({
   __typename: 'CastTVShow',
-  posterPath: `POSTER_PATH_${index}`,
+  profilePath: `POSTER_PATH_${index}`,
   character: `CHARACTER_${index}`,
   name: `NAME_${index}`,
   id: index,
@@ -163,4 +163,28 @@ export const tvShowsDetailsResolvers = (variables: OperationVariables, configura
     request,
     result,
   };
+};
+
+export const makeQuerySuccessResolver = (variables: OperationVariables, configuration: Configuration = {}) => {
+  const baseResolver = tvShowsDetailsResolvers(variables, configuration);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.result,
+  }];
+};
+
+export const makeQueryNetworkErrorResolver = (variables: OperationVariables, configuration: Configuration = {}) => {
+  const baseResolver = tvShowsDetailsResolvers(variables, configuration);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.responseWithNetworkError,
+  }];
+};
+
+export const makeQueryGraphQLErrorResolver = (variables: OperationVariables, configuration: Configuration = {}) => {
+  const baseResolver = tvShowsDetailsResolvers(variables, configuration);
+  return [{
+    ...baseResolver.request,
+    ...baseResolver.responseWithNetworkError,
+  }];
 };
