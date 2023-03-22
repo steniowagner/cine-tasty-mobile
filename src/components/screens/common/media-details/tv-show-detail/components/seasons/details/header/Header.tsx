@@ -6,6 +6,7 @@ import {SeasonOverviewText} from './overview-text/season-overview-text/SeasonOve
 import * as Styles from './Header.styles';
 
 type HeaderProps = {
+  openSeasonOverviewDetailsModal: () => void;
   overview: string;
   season: number;
   image: string;
@@ -24,6 +25,10 @@ export const Header = (props: HeaderProps) => (
         iconSize={Styles.IMAGE_OFF_ICON_SIZE}
       />
     </Styles.SeasonPosterImageWrapper>
-    <SeasonOverviewText season={props.season} overview={props.overview} />
+    <SeasonOverviewText
+      openSeasonOverviewDetailsModal={props.openSeasonOverviewDetailsModal}
+      season={props.season}
+      overview={props.overview}
+    />
   </Styles.Wrapper>
 );
