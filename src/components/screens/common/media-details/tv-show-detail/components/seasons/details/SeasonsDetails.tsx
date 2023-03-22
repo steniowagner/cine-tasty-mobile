@@ -36,23 +36,25 @@ export const SeasonsDetails = (props: SeasonsDetailsProps) => {
   }
 
   return (
-    <ScrollView testID="season-detail">
-      <Header
-        season={seasonsDetails.data.seasonNumber}
-        overview={seasonsDetails.data.overview}
-        image={seasonsDetails.data.posterPath}
-      />
-      <Section title={seasonsDetails.texts.epsiode} noMarginBottom>
-        <></>
-      </Section>
-      {seasonsDetails.data.episodes.map((episode, index) => (
-        <Fragment key={episode.id}>
-          <TVShowSeasonsListItem episode={episode} index={index} />
-          {index !== seasonsDetails.data.episodes.length - 1 && (
-            <Styles.LineDivider />
-          )}
-        </Fragment>
-      ))}
-    </ScrollView>
+    <>
+      <ScrollView testID="season-detail">
+        <Header
+          season={seasonsDetails.data.seasonNumber}
+          overview={seasonsDetails.data.overview}
+          image={seasonsDetails.data.posterPath}
+        />
+        <Section title={seasonsDetails.texts.epsiode} noMarginBottom>
+          <></>
+        </Section>
+        {seasonsDetails.data.episodes.map((episode, index) => (
+          <Fragment key={episode.id}>
+            <TVShowSeasonsListItem episode={episode} index={index} />
+            {index !== seasonsDetails.data.episodes.length - 1 && (
+              <Styles.LineDivider />
+            )}
+          </Fragment>
+        ))}
+      </ScrollView>
+    </>
   );
 };
