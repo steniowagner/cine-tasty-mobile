@@ -21,7 +21,7 @@ export const InfoTextWrapper = styled(View)`
 `;
 
 export const NameText = styled(Text).attrs(() => ({numberOfLines: 2}))`
-  width: 65%;
+  width: 85%;
   margin-bottom: ${({theme}) => theme.metrics.extraLargeSize}px;
   font-size: ${({theme}) => theme.metrics.getWidthFromDP('10%')}px;
   font-family: CircularStd-Black;

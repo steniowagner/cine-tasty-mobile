@@ -7,12 +7,18 @@ import {showLanguageAlert} from '@utils';
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 
+import {useMakeAnimatedHeaderIntepolationParams} from './useMakeAnimatedHeaderInterpolationParams';
+
 type UseFamousDetailProps = {
   id: number;
 };
 
-const useFamousDetail = (props: UseFamousDetailProps) => {
+export const useFamousDetail = (props: UseFamousDetailProps) => {
+  const animatedHeaderIntepolationParams =
+    useMakeAnimatedHeaderIntepolationParams();
+
   const translations = useTranslations();
+
   const query = useQuery<
     SchemaTypes.GetFamousDetail,
     SchemaTypes.GetFamousDetailVariables
@@ -81,11 +87,11 @@ const useFamousDetail = (props: UseFamousDetailProps) => {
   }, [query.data]);
 
   return {
+    animatedHeaderIntepolationParams,
+    canShowContent: query.data?.person && !query.loading && !query.error,
     famous: query.data?.person,
     isLoading: query.loading,
     hasError: !!query.error,
     texts,
   };
 };
-
-export default useFamousDetail;
