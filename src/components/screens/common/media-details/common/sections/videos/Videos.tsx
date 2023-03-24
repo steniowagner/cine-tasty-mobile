@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {ScrollViewSection, SVGIcon, Section} from '@components';
+import {ScrollViewSection, Section} from '@components';
 import * as SchemaTypes from '@schema-types';
-import metrics from '@styles/metrics';
 
 import * as Styles from './Videos.styles';
 import {useVideos} from './useVideos';
@@ -17,6 +16,7 @@ type VideosProps = {
 
 export const Videos = (props: VideosProps) => {
   const videos = useVideos();
+
   return (
     <Section title={videos.texts.section}>
       <ScrollViewSection
@@ -34,11 +34,7 @@ export const Videos = (props: VideosProps) => {
               }}
             />
             <Styles.IconWrapper>
-              <SVGIcon
-                size={metrics.getWidthFromDP('12%')}
-                id="play-circle"
-                colorThemeRef="white"
-              />
+              <Styles.PlayVideoIcon />
             </Styles.IconWrapper>
           </Styles.VideoListItemWrapper>
         ))}
