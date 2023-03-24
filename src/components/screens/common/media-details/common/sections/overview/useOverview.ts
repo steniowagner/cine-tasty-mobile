@@ -12,7 +12,7 @@ export const useOverview = () => {
         Translations.Tags.MEDIA_DETAIL_SECTIONS_OVERVIEW,
       ),
     }),
-    [],
+    [translations.translate],
   );
 
   return {

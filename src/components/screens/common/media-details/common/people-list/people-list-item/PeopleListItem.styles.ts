@@ -1,14 +1,18 @@
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 import Animated from 'react-native-reanimated';
 
-import {TMDBImage} from '@components';
+import metrics from '@styles/metrics';
 import {CONSTANTS} from '@utils';
 
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
+const DEFAULT_WIDTH = metrics.getWidthFromDP('42%');
+const DEFAULT_HEIGHT = metrics.getWidthFromDP('62%');
+
 export const Wrapper = styled(TouchableOpacity)`
-  width: ${({theme}) => theme.metrics.getWidthFromDP('42%')}px;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('62')}px;
+  width: ${DEFAULT_WIDTH}px;
+  height: ${DEFAULT_HEIGHT}px;
   margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;
@@ -71,8 +75,10 @@ export const FallbackImageWrapper = styled(Animated.View)`
   background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;
 
-export const TMDBImageStyled = styled(TMDBImage)`
-  width: 100%;
-  height: 100%;
-  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
-`;
+export const sheet = StyleSheet.create({
+  image: {
+    width: DEFAULT_WIDTH,
+    height: DEFAULT_HEIGHT,
+    borderRadius: metrics.extraSmallSize,
+  },
+});

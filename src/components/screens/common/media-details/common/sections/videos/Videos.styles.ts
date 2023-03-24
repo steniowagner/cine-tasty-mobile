@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
 
 import {CONSTANTS} from '@utils';
+import {SVGIcon} from '@components';
 
 export const VideoListItemWrapper = styled(TouchableOpacity)`
   width: ${({theme}) => theme.metrics.getWidthFromDP('48%')}px;
@@ -26,3 +27,9 @@ export const Image = styled(FastImage)`
   height: 100%;
   border-radius: ${({theme}) => theme.metrics.smallSize}px;
 `;
+
+export const PlayVideoIcon = styled(SVGIcon).attrs(({theme}) => ({
+  size: theme.metrics.getWidthFromDP('12%'),
+  id: 'play-circle',
+  colorThemeRef: 'white',
+}))``;

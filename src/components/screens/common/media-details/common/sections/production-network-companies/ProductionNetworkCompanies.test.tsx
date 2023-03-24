@@ -4,10 +4,8 @@ import {render, RenderAPI, waitFor} from '@testing-library/react-native';
 import {randomPositiveNumber} from '@mocks/utils';
 import {ThemeContextProvider} from '@providers';
 
-import {
-  ProductionNetworkCompaniesList,
-  ProductionNetworkCompanies,
-} from './ProductionNetworkCompanies';
+import {ProductionNetworkCompaniesList} from './useProductionNetworkCompanies';
+import {ProductionNetworkCompanies} from './ProductionNetworkCompanies';
 
 const items = (length: number) =>
   Array(length)
@@ -17,7 +15,7 @@ const items = (length: number) =>
       logoPath: `LOGO_PATH_${index}`,
       name: `NAME_${index}`,
       id: `ID_${index}`,
-    }));
+    })) as ProductionNetworkCompaniesList[];
 
 const renderProductionsNetworkList = (
   productionNetworkCompaniesList: ProductionNetworkCompaniesList[] = [],

@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {Image} from 'react-native';
 import {
@@ -8,7 +9,7 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {dark} from '@styles/themes/dark';
 
 import {PeopleListItem} from './PeopleListItem';
@@ -18,7 +19,7 @@ const NAME = 'SOME_NAME';
 const TYPE = 'SOME_TYPE';
 
 const renderPeopleListItem = (onPress = jest.fn(), withSubtext?: boolean) => (
-  <TMDBImageQualityProvider>
+  <TMDBImageQualitiesProvider>
     <ThemeProvider theme={dark}>
       <PeopleListItem
         onPress={onPress}
@@ -29,7 +30,7 @@ const renderPeopleListItem = (onPress = jest.fn(), withSubtext?: boolean) => (
         type={TYPE}
       />
     </ThemeProvider>
-  </TMDBImageQualityProvider>
+  </TMDBImageQualitiesProvider>
 );
 
 describe('<PeopleListItem />', () => {

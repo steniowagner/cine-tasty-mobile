@@ -10,20 +10,16 @@ import {ThemeProvider} from 'styled-components/native';
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark} from '@styles/themes/dark';
 
-import {NUMBER_ITEMS, Tags} from './Tags';
+import {Tags} from './Tags';
 
 const tagsDataset = (length: number, startFrom: number = 1) =>
   Array(length)
     .fill('')
     .map((_, index) => `TAG_${startFrom * (index + 1)}`);
 
-const renderTags = (
-  tags: string[] = [],
-  extraTags: string[] = [],
-  isLoading = false,
-) => (
+const renderTags = (tags: string[] = [], extraTags: string[] = []) => (
   <ThemeProvider theme={dark}>
-    <Tags extraTags={extraTags} isLoading={isLoading} tags={tags} />
+    <Tags extraTags={extraTags} tags={tags} />
   </ThemeProvider>
 );
 
@@ -196,23 +192,6 @@ describe('<Tags />', () => {
         }
         await waitFor(() => {});
       });
-    });
-  });
-
-  describe('Loading State', () => {
-    afterEach(cleanup);
-
-    it('should render the "loading-state" correctly when "isLoading" is "true"', async () => {
-      const extraTags = tagsDataset(randomPositiveNumber(10, 1));
-      const tags = tagsDataset(randomPositiveNumber(10, 1), 11);
-      const components = render(renderTags(tags, extraTags, true));
-      await waitFor(() => {
-        expect(elements.loadingsWrapper(components)).not.toBeNull();
-      });
-      expect(elements.loadings(components).length).toEqual(NUMBER_ITEMS);
-      expect(elements.tags(components).length).toEqual(0);
-      expect(elements.tagsWrappers(components).length).toEqual(0);
-      await waitFor(() => {});
     });
   });
 });

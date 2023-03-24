@@ -121,13 +121,6 @@ export type BaseSearchProps = {
   isLoading: boolean;
 }
 
-export enum CustomizedModalChildrenType {
-  TV_SHOW_READ_MORE_DETAILS = 'TV_SHOW_READ_MORE_DETAILS',
-  TV_SHOW_EPISODE_DETAILS = 'TV_SHOW_EPISODE_DETAILS',
-  MEDIA_FILTER = 'MEDIA_FILTER',
-  LANGUAGE = 'LANGUAGE',
-}
-
 export type SimplifiedMedia = OnTheAirTVShows | TopRatedTVShows | PopuarTVShows | NowPlayingMovies | PopularMovies | TopRatedMovies | UpcomingMovies;
 
 export type HomeTop3Item = (OnTheAirTVShows | NowPlayingMovies) & { onPress: () => void };

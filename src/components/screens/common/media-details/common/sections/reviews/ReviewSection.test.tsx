@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
+import {act, fireEvent, render, RenderAPI} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import {randomPositiveNumber} from '@mocks/utils';
@@ -7,13 +7,13 @@ import {dark} from '@styles/themes/dark';
 import {Translations} from '@i18n/tags';
 
 import {ReviewsSection, Review} from './ReviewsSection';
-import {act} from 'react-test-renderer';
 
 jest.mock('@styles/metrics', () => {
   const metricsModule = jest.requireActual('@styles/metrics');
   return {
     ...metricsModule,
     getWidthFromDP: jest.fn().mockReturnValue(25),
+    getHeightFromDP: jest.fn().mockReturnValue(50),
     extraLargeSize: 10,
     largeSize: 5,
     width: 100,

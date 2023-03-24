@@ -5,7 +5,13 @@ import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import metrics from '@styles/metrics';
 
-const useReviewsSection = () => {
+export const REVIEWS_LENGTH = 3;
+
+type UseReviewsSectionProps = {
+  reviewsLength: number;
+};
+
+export const useReviewsSection = (props: UseReviewsSectionProps) => {
   const [indexReviewSelected, setIndexReviewSelected] = useState(0);
   const flatListRef = useRef<FlatList<any>>();
 
@@ -33,11 +39,10 @@ const useReviewsSection = () => {
   );
 
   return {
+    paginationDotsLenght: Math.min(props.reviewsLength, REVIEWS_LENGTH),
     indexReviewSelected,
     onMomentumScrollEnd,
     flatListRef,
     texts,
   };
 };
-
-export default useReviewsSection;
