@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {ScrollViewSection, FlatListSection, Section} from '@components';
+import {FlatListSection, Section} from '@components';
 import * as SchemaTypes from '@schema-types';
 import * as Types from '@local-types';
 
@@ -13,49 +13,20 @@ export type PressItemParams = {
   image: string;
 };
 
+export type Type = 'cast' | 'crew' | 'creator';
+
 type PeopleListProps = {
   onPressItem: (params: PressItemParams) => void;
   dataset:
     | Types.CrewDataset
     | Types.CastDataset
     | SchemaTypes.TVShowDetail_tvShow_createdBy[];
-  type: 'cast' | 'crew' | 'creator';
+  type: Type;
   sectionTitle: string;
 };
 
-export const LIST_BATCH_ITEMS_COUNT = 25;
-
 export const PeopleList = (props: PeopleListProps) => {
   const peopleList = usePeopleList({dataset: props.dataset, type: props.type});
-
-  if (props.dataset.length <= LIST_BATCH_ITEMS_COUNT) {
-    return (
-      <Section title={props.sectionTitle}>
-        <ScrollViewSection
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          testID={`people-list-${props.type}`}>
-          {peopleList.items.map((item, index) => (
-            <PeopleListItem
-              onPress={() =>
-                props.onPressItem({
-                  id: item.id,
-                  name: item.name,
-                  image: item.image,
-                })
-              }
-              withSubtext={props.type !== 'creator'}
-              key={`${item.id}-${index}`}
-              subText={item.subText}
-              image={item.image}
-              name={item.name}
-              type={props.type}
-            />
-          ))}
-        </ScrollViewSection>
-      </Section>
-    );
-  }
 
   return (
     <Section title={props.sectionTitle}>
@@ -64,7 +35,6 @@ export const PeopleList = (props: PeopleListProps) => {
         testID={`people-list-${props.type}`}
         data={peopleList.items}
         horizontal
-        initialNumToRender={LIST_BATCH_ITEMS_COUNT}
         renderItem={({item, index}) => {
           const peopleListItem = item as PeopleListItemType;
           return (

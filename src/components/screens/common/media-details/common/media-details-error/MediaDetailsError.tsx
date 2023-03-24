@@ -6,6 +6,7 @@ import {useMediaDetailsError} from './useMediaDetailsError';
 
 export const MediaDetailsError = () => {
   const mediadetailsError = useMediaDetailsError();
+
   return (
     <>
       <StatusBarStyled />
