@@ -1,8 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {CustomizedModal} from '@screens/common';
-import {Onboarding} from '@screens';
 import {Routes} from '@routes/routes';
 
 import CheckingInitialScreen from './checking-initial-screen/CheckingInitialScreen';
@@ -36,9 +34,6 @@ const RouteNavigation = () => {
         cardOverlayEnabled: true,
         animationEnabled: false,
         headerShown: false,
-      }}
-      defaultScreenOptions={{
-        presentation: 'modal',
       }}>
       {currentStack === 'checking-initial-screen' && (
         <RootStack.Screen
@@ -61,11 +56,6 @@ const RouteNavigation = () => {
             options={{headerShown: false}}
             name={Routes.Tabs.TABS}
             component={Tabs}
-          />
-          <RootStack.Screen
-            options={{headerShown: false, animationEnabled: true}}
-            component={CustomizedModal}
-            name={Routes.CustomModal.CUSTOM_MODAL_STACK}
           />
         </>
       )}
