@@ -52,7 +52,7 @@ export const MovieDetailsContent = (props: MovieDetailsContentProps) => (
       extraTags={[props.releaseDate, props.texts.movieTag]}
     />
     <Styles.Wrapper>
-      <Overview overview={props.movie.overview} isLoading={false} />
+      <Overview overview={props.movie.overview} />
       <>
         <GeneralInfo infoItems={props.infoItems} />
         {!!props.movie.cast.length && (
