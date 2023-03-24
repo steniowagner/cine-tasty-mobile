@@ -5,7 +5,7 @@ import * as SchemaTypes from '@schema-types';
 import {SectionViewAll} from '@components';
 
 import {ReviewSectionListItem} from './reviews-section-list-item/ReviewSectionListItem';
-import useReviewsSection from './useReviewsSection';
+import {useReviewsSection, REVIEWS_LENGTH} from './useReviewsSection';
 import * as Styles from './ReviewsSection.styles';
 
 export type Review =
@@ -18,7 +18,10 @@ type ReviewsSectionProps = {
 };
 
 export const ReviewsSection = (props: ReviewsSectionProps) => {
-  const reviewSection = useReviewsSection();
+  const reviewSection = useReviewsSection({
+    reviewsLength: props.reviews.length,
+  });
+
   return (
     <Styles.ContentWrapper testID="reviews-content-wrapper">
       <SectionViewAll
@@ -34,7 +37,7 @@ export const ReviewsSection = (props: ReviewsSectionProps) => {
         renderItem={({item}) => (
           <ReviewSectionListItem review={item.content} author={item.author} />
         )}
-        data={props.reviews.slice(0, 3)}
+        data={props.reviews.slice(0, REVIEWS_LENGTH)}
         ref={reviewSection.flatListRef}
         testID="reviews-preview-list"
         pagingEnabled
@@ -42,7 +45,7 @@ export const ReviewsSection = (props: ReviewsSectionProps) => {
       />
       {props.reviews.length > 1 && (
         <Styles.PaginationWrapper>
-          {Array(Math.min(props.reviews.length, 3))
+          {Array(reviewSection.paginationDotsLenght)
             .fill({})
             .map((_, index) => (
               <Styles.Dot
