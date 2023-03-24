@@ -1,13 +1,10 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 
-import * as SchemaTypes from '@schema-types';
-
+import {
+  useProductionNetworkCompanies,
+  ProductionNetworkCompaniesList,
+} from './useProductionNetworkCompanies';
 import * as Styles from './ProductionNetworkCompanies.styles';
-
-export type ProductionNetworkCompaniesList =
-  | SchemaTypes.TVShowDetail_tvShow_productionCompanies
-  | SchemaTypes.MovieDetail_movie_productionCompanies
-  | SchemaTypes.TVShowDetail_tvShow_networks;
 
 type ProductionNetworkCompaniesProps = {
   productionNetworkCompaniesList: ProductionNetworkCompaniesList[];
@@ -16,17 +13,14 @@ type ProductionNetworkCompaniesProps = {
 export const ProductionNetworkCompanies = (
   props: ProductionNetworkCompaniesProps,
 ) => {
-  const productionCompanies = useMemo(
-    () =>
-      props.productionNetworkCompaniesList
-        .map(productionCompany => productionCompany.name)
-        .join(', '),
-    [props.productionNetworkCompaniesList],
-  );
+  const productionNetworkCompanies = useProductionNetworkCompanies({
+    productionNetworkCompaniesList: props.productionNetworkCompaniesList,
+  });
+
   return (
     <Styles.Wrapper testID="production-network-companies">
       <Styles.ItemText testID="production-companies-text">
-        {productionCompanies}
+        {productionNetworkCompanies.text}
       </Styles.ItemText>
     </Styles.Wrapper>
   );
