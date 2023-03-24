@@ -2,8 +2,6 @@ import React from 'react';
 
 import * as Styles from './Tags.styles';
 
-export const NUMBER_ITEMS = 4;
-
 type TagsProps = {
   extraTags: string[];
   tags: string[];
