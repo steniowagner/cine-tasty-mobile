@@ -1,5 +1,4 @@
 import React from 'react';
-import {withTheme} from 'styled-components/native';
 
 import {
   ExpansibleTextSection,
@@ -15,7 +14,7 @@ import {useFamousDetail} from './useFamousDetails';
 import * as Styles from './FamousDetails.styles';
 import {DeathDay} from './death-day/DeathDay';
 
-export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
+export const FamousDetails = (props: FamousDetailStackProps) => {
   const famousDetail = useFamousDetail({
     id: props.route.params.id,
   });
@@ -97,4 +96,4 @@ export const FamousDetails = withTheme((props: FamousDetailStackProps) => {
       )}
     </ScrollWithAnimatedHeader>
   );
-});
+};

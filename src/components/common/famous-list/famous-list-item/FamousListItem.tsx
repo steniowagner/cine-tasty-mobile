@@ -26,13 +26,13 @@ export const FamousListItem = memo(
         style={{...famousListItem.measures}}
         onPress={props.onPress}>
         <>
-          {/*@ts-ignore*/}
           <Styles.TMDBImageStyled
             onError={famousListItem.onError}
             testID="famous-list-item-image"
             onLoad={famousListItem.onLoad}
             image={props.image}
             imageType="profile"
+            style={{}}
           />
           {famousListItem.isFallbackImageVisible && (
             <Styles.FallbackImageWrapper
