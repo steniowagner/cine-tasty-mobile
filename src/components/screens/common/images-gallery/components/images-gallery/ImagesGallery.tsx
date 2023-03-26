@@ -4,11 +4,11 @@ import {HeaderIconButton} from '@components';
 
 import {ImagesGalleryList} from './images-gallery-list/ImagesGalleryList';
 import {ThumbsGalleryList} from './thumbs-gallery-list/ThumbsGalleryList';
-import {ImagesGalleryStackProps} from '../../routes/route-params-types';
+import {ImagesGalleryProps} from '../../routes/route-params-types';
 import {useImagesGallery} from './useImagesGallery';
 import * as Styles from './ImagesGallery.styles';
 
-export const ImagesGallery = (props: ImagesGalleryStackProps) => {
+export const ImagesGallery = (props: ImagesGalleryProps) => {
   const imagesGallery = useImagesGallery({
     indexFirstItemSelected: props.route.params.indexSelected,
   });

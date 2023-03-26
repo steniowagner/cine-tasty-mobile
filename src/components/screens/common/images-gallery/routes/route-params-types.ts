@@ -1,29 +1,33 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
+import {FamousStackParams} from '@src/components/screens/famous/routes/route-params-types';
+import {HomeStackParams} from '@src/components/screens/home/routes/route-params-types';
+import {checkIsHomeStack} from '@routes/constants';
 import {Routes} from '@routes/routes';
 
-type ImagesGalleryStackParams = {
-  [Routes.ImagesGallery.IMAGES_GALLERY]: ImagesGalleryParams;
+type StackParams = FamousStackParams & HomeStackParams;
+
+type Route = Routes.Famous.IMAGES_GALLERY | Routes.Home.IMAGES_GALLERY;
+
+export type ImagesGalleryNavigationProp = StackNavigationProp<
+  StackParams,
+  Route
+>;
+
+export type ImagesGalleryRouteProp = RouteProp<StackParams, Route>;
+
+export type ImagesGalleryProps = {
+  navigation: ImagesGalleryNavigationProp;
+  route: ImagesGalleryRouteProp;
 };
 
-type ImagesGalleryParams = {
+export type ImagesGalleryParams = {
   indexSelected: number;
   images: string[];
 };
 
-/** Images-Gallery-Stack-Props */
-export type ImagesGalleryNavigationProp = StackNavigationProp<
-  ImagesGalleryStackParams,
-  Routes.ImagesGallery.IMAGES_GALLERY
->;
-
-export type ImagesGalleryRouteProp = RouteProp<
-  ImagesGalleryStackParams,
-  Routes.ImagesGallery.IMAGES_GALLERY
->;
-
-export type ImagesGalleryStackProps = {
-  navigation: ImagesGalleryNavigationProp;
-  route: ImagesGalleryRouteProp;
-};
+export const getRouteName = (rootParent: string) =>
+  checkIsHomeStack(rootParent)
+    ? Routes.Home.IMAGES_GALLERY
+    : Routes.Famous.IMAGES_GALLERY;
