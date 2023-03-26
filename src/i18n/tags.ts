@@ -29,6 +29,7 @@ export namespace Translations {
     // TABS
     TABS_QUIZ = 'translations:tabs:quiz',
     TABS_NEWS = 'translations:tabs:news',
+    TABS_FAMOUS = 'translations:tabs:famous',
 
     // FAMOUS
     FAMOUS_SEARCHBAR_PLACEHOLDER = 'translations:famous:searchBarPlaceholder',
@@ -257,7 +258,6 @@ export const LANGUAGES = 'translations:languages';
 export const TABS = 'translations:tabs';
 export const TABS_HOME = 'translations:tabs:home';
 export const TABS_NEWS = 'translations:tabs:news';
-export const TABS_FAMOUS = 'translations:tabs:famous';
 
 // HOME
 
