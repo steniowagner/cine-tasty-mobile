@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import {TouchableOpacity} from 'react-native';
 
-import {renderSVGIconConditionally} from '@components';
+import {TMDBImageWithFallback} from '@components';
 
 import {useFamousListItem} from './useFamousListItem';
 import * as Styles from './FamousListItem.styles';
@@ -25,35 +25,17 @@ export const FamousListItem = memo(
         testID="famous-list-item-button"
         style={{...famousListItem.measures}}
         onPress={props.onPress}>
-        <>
-          <Styles.TMDBImageStyled
-            onError={famousListItem.onError}
-            testID="famous-list-item-image"
-            onLoad={famousListItem.onLoad}
-            image={props.image}
-            imageType="profile"
-            style={{}}
-          />
-          {famousListItem.isFallbackImageVisible && (
-            <Styles.FallbackImageWrapper
-              testID="fallback-image-wrapper"
-              style={famousListItem.imageFallbackViewStyle}>
-              {renderSVGIconConditionally({
-                condition: famousListItem.hasError,
-                ifTrue: {
-                  colorThemeRef: 'fallbackImageIcon',
-                  size: Styles.DEFAULT_ICON_SIZE,
-                  id: 'image-off',
-                },
-                ifFalse: {
-                  colorThemeRef: 'fallbackImageIcon',
-                  size: Styles.DEFAULT_ICON_SIZE,
-                  id: 'account',
-                },
-              })}
-            </Styles.FallbackImageWrapper>
-          )}
-        </>
+        <TMDBImageWithFallback
+          imageType="profile"
+          testID="famous-list-item-image"
+          image={props.image}
+          style={{
+            ...Styles.sheet.image,
+          }}
+          iconImageLoading="account"
+          iconImageError="image-off"
+          iconSize={Styles.DEFAULT_ICON_SIZE}
+        />
         <Styles.PersonName testID="title-text">{props.title}</Styles.PersonName>
       </TouchableOpacity>
     );
