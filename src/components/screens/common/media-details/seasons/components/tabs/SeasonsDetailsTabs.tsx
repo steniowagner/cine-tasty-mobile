@@ -5,13 +5,13 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {dark as theme} from '@styles/themes';
 import metrics from '@styles/metrics';
 
-import {SeasonsDetailsStackProps} from '../../../routes/route-params-types';
+import {TVShowSeasonsProps} from '../../routes/route-params-types';
 import {useSeasonsDetailsTabs} from './useSeasonsDetailsTabs';
-import {SeasonsDetails} from '../details/SeasonsDetails';
+import {SeasonsDetails} from '../SeasonsDetails';
 
 const Tab = createMaterialTopTabNavigator();
 
-export const SeasonsDetailsTabs = (props: SeasonsDetailsStackProps) => {
+export const SeasonsDetailsTabs = (props: TVShowSeasonsProps) => {
   const seasonsDetailsTabs = useSeasonsDetailsTabs(props.route.params);
 
   if (props.route.params.numberOfSeasons === 1) {

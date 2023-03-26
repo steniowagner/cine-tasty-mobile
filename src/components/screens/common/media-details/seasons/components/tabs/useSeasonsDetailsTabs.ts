@@ -4,7 +4,7 @@ import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import metrics from '@styles/metrics';
 
-import {SeasonsDetailsParams} from '../../../routes/route-params-types';
+import {SeasonsDetailsParams} from '../../../tv-show-detail/routes/route-params-types';
 
 export const useSeasonsDetailsTabs = (props: SeasonsDetailsParams) => {
   const translations = useTranslations();

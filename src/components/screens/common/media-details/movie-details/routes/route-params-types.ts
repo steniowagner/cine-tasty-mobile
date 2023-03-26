@@ -17,7 +17,7 @@ export type MovieDetailsNavigationProp = StackNavigationProp<
 
 export type MovieDetailsRouteProp = RouteProp<StackParams, Route>;
 
-export type MovieDetailsNavigationProps = {
+export type MovieDetailsProps = {
   navigation: MovieDetailsNavigationProp;
   route: MovieDetailsRouteProp;
 };
@@ -33,5 +33,5 @@ export type MovieDetailsParams = {
 
 export const getRouteName = (rootParent: string) =>
   checkIsHomeStack(rootParent)
-    ? Routes.Famous.MOVIE_DETAILS
-    : Routes.Home.MOVIE_DETAILS;
+    ? Routes.Home.MOVIE_DETAILS
+    : Routes.Famous.MOVIE_DETAILS;
