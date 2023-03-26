@@ -28,6 +28,7 @@ export namespace Translations {
 
     // TABS
     TABS_QUIZ = 'translations:tabs:quiz',
+    TABS_NEWS = 'translations:tabs:news',
 
     // FAMOUS
     FAMOUS_SEARCHBAR_PLACEHOLDER = 'translations:famous:searchBarPlaceholder',
