@@ -8,13 +8,13 @@ import {
   ScrollWithAnimatedHeader,
 } from '@components';
 
-import {FamousDetailStackProps} from '../routes/route-params-types';
+import {FamousDetailsProps} from '../routes/route-params-types';
 import {HeaderInfo} from './header/header-info/HeaderInfo';
 import {useFamousDetail} from './useFamousDetails';
 import * as Styles from './FamousDetails.styles';
 import {DeathDay} from './death-day/DeathDay';
 
-export const FamousDetails = (props: FamousDetailStackProps) => {
+export const FamousDetails = (props: FamousDetailsProps) => {
   const famousDetail = useFamousDetail({
     id: props.route.params.id,
   });
