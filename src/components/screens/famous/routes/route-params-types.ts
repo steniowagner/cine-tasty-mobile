@@ -10,7 +10,7 @@ import {ReviewsParams} from '@src/components/screens/common/reviews/routes/route
 import {SeasonsDetailsParams} from '@src/components/screens/common/media-details/seasons/routes/route-params-types';
 import {Routes} from '@routes/routes';
 
-export type FamousStackParams = {
+export type FamousStackRoutes = {
   [Routes.Famous.FAMOUS]: FamousProps;
   [Routes.Famous.DETAILS]: FamousDetailsParams;
   [Routes.Famous.IMAGES_GALLERY]: ImagesGalleryParams;
@@ -26,11 +26,11 @@ type FamousProps = {
 };
 
 export type FamousNavigationProp = StackNavigationProp<
-  FamousStackParams,
+  FamousStackRoutes,
   Routes.Famous.FAMOUS
 >;
 
 export type FamousStackProps = {
   navigation: FamousNavigationProp;
-  route: RouteProp<FamousStackParams, Routes.Famous.FAMOUS>;
+  route: RouteProp<FamousStackRoutes, Routes.Famous.FAMOUS>;
 };

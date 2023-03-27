@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {getRouteName as getMoviesDetailsRouteName} from '@src/components/screens/common/media-details/movie-details/routes/route-params-types';
 import {getRouteName as getTVShowsDetailsRouteName} from '@src/components/screens/common/media-details/tv-show-detail/routes/route-params-types';
-import {FamousStackParams} from '@src/components/screens/famous/routes/route-params-types';
+import {FamousStackRoutes} from '@src/components/screens/famous/routes/route-params-types';
 import {HomeStackRoutes} from '@src/components/screens/home/routes/route-params-types';
 import {StackNavigationProp} from '@react-navigation/stack';
 import * as SchemaTypes from '@schema-types';
@@ -28,7 +28,7 @@ type FamousMediaDetailsRoutes =
   | Routes.Famous.MOVIE_DETAILS;
 
 type FamousMediaDetailsParams = Pick<
-  FamousStackParams,
+  FamousStackRoutes,
   FamousMediaDetailsRoutes
 >;
 
