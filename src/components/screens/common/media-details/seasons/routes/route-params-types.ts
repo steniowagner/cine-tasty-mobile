@@ -8,25 +8,20 @@ import {Routes} from '@routes/routes';
 
 type StackParams = FamousStackParams & HomeStackParams;
 
-type Route =
-  | Routes.Famous.TV_SHOW_DETAILS_DETAILS
-  | Routes.Home.TV_SHOW_DETAILS_DETAILS;
+type Route = Routes.Famous.TV_SHOW_SEASONS | Routes.Home.TV_SHOW_SEASONS;
 
-export type TVShowDetailsProps = {
+export type SeasonsProps = {
   navigation: StackNavigationProp<StackParams, Route>;
   route: RouteProp<StackParams, Route>;
 };
 
-export type TVShowDetailParams = {
-  voteAverage?: number;
-  genreIds?: string[];
-  posterPath: string;
-  voteCount?: number;
+export type SeasonsDetailsParams = {
+  numberOfSeasons: number;
   title: string;
-  id: number;
+  id: string;
 };
 
 export const getRouteName = (rootParent: string) =>
   checkIsHomeStack(rootParent)
-    ? Routes.Home.TV_SHOW_DETAILS_DETAILS
-    : Routes.Famous.TV_SHOW_DETAILS_DETAILS;
+    ? Routes.Famous.TV_SHOW_SEASONS
+    : Routes.Home.TV_SHOW_SEASONS;

@@ -2,11 +2,10 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {withTheme} from 'styled-components/native';
 
-import {ReviewsStackProps} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
-import {TVShowStack} from '@src/components/screens/common/media-details/tv-show-detail/routes/stack-routes';
+import {ReviewsStackProps} from '@src/components/screens/common/reviews/routes/route-params-types';
 import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetails';
 import {FamousDetails} from '@src/components/screens/common/famous-details/components/FamousDetails';
-import {Reviews} from '@src/components/screens/common/media-details/reviews/components/Reviews';
+import {Reviews} from '@src/components/screens/common/reviews/components/Reviews';
 import {Search} from '@src/components/screens/common/search/components/search/Search';
 import {
   getTransparentHeaderOptions,
@@ -51,7 +50,7 @@ const SearchStack = ({route, theme}: SearchStackProps) => {
         })}
         component={MovieDetail}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={Routes.MediaDetail.REVIEWS}
         options={({route: reviewsRoute}: ReviewsStackProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
@@ -64,7 +63,7 @@ const SearchStack = ({route, theme}: SearchStackProps) => {
         name={Routes.TVShow.DETAILS}
         options={{headerShown: false}}
         component={TVShowStack}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

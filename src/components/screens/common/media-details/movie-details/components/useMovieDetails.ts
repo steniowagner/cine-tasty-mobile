@@ -1,24 +1,25 @@
 import {useCallback, useEffect, useMemo} from 'react';
 import {useQuery} from '@apollo/client';
 
+import {getRouteName as getReviewsRouteName} from '@src/components/screens/common/reviews/routes/route-params-types';
 import {showLanguageAlert} from '@utils';
 import {GET_MOVIE_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
 
-import {
-  MovieDetailNavigationProp,
-  MovieDetailRouteProp,
-} from '../routes/route-params-types';
 import {useMakeAnimatedHeaderIntepolationParams} from '../../common/useMakeAnimatedHeaderInterpolationParams';
+import {
+  MovieDetailsNavigationProp,
+  MovieDetailsRouteProp,
+} from '../routes/route-params-types';
 import {PressItemParams} from '../../common/people-list/PeopleList';
 import {translateMoviesDetailsTexts} from './translateMoviesDetailsTexts';
 import {makeMovieInfoItems} from './makeMovieInfoItems';
 
 type UseMovieDetailsProps = {
-  navigation: MovieDetailNavigationProp;
-  route: MovieDetailRouteProp;
+  navigation: MovieDetailsNavigationProp;
+  route: MovieDetailsRouteProp;
   hasVoteAverage: boolean;
   hasGenresIds: boolean;
   hasVoteCount: boolean;
@@ -92,7 +93,10 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
 
   const handlePressReviews = useCallback(
     (movie: SchemaTypes.MovieDetail_movie) => {
-      props.navigation.navigate(Routes.MediaDetail.REVIEWS, {
+      const parentRootRouteName = getReviewsRouteName(
+        props.navigation.getState().routes[0].name,
+      );
+      props.navigation.navigate(parentRootRouteName, {
         mediaTitle: movie.title,
         reviews: movie.reviews,
       });
