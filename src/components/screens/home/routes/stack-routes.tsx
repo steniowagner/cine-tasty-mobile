@@ -2,12 +2,11 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 
-import {ReviewsStackProps} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
+import {ReviewsStackProps} from '@src/components/screens/common/reviews/routes/route-params-types';
 import {ImagesGallery} from '@src/components/screens/common/images-gallery/components/images-gallery/ImagesGallery';
-import {TVShowStack} from '@src/components/screens/common/media-details/tv-show-detail/routes/stack-routes';
 import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetails';
 import {FamousDetails} from '@src/components/screens/common/famous-details/components/FamousDetails';
-import {Reviews} from '@src/components/screens/common/media-details/reviews/components/Reviews';
+import {Reviews} from '@src/components/screens/common/reviews/components/Reviews';
 import {
   getTransparentHeaderOptions,
   DEFAULT_HEADER_OPTIONS,
@@ -18,6 +17,9 @@ import {Routes} from '@routes/routes';
 import MediaSectionViewAll from '../components/media-section-view-all/MediaSectionViewAll';
 import {MediaSectionViewAllStackProps} from './route-params-types';
 import {Home} from '../components/Home';
+import {TVShowDetail} from '../../common/media-details/tv-show-detail/components/TVShowDetail';
+import {SeasonsDetailsStackProps} from '../../common/media-details/tv-show-detail/routes/route-params-types';
+import {SeasonsDetailsTabs} from '../../common/media-details/seasons/components/tabs/SeasonsDetailsTabs';
 
 const Stack = createStackNavigator();
 
@@ -66,11 +68,27 @@ export const HomeStack = withTheme(({theme}: HomeStackProps) => {
         component={MovieDetail}
       />
       <Stack.Screen
-        name={Routes.TVShow.DETAILS}
+        name={Routes.Famous.TV_SHOW_DETAILS_DETAILS}
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
+          header: () => null,
         })}
-        component={TVShowStack}
+        component={TVShowDetail}
+      />
+      <Stack.Screen
+        name={Routes.Famous.TV_SHOW_SEASONS}
+        options={(seasonsDetailsStackProps: SeasonsDetailsStackProps) => ({
+          ...DEFAULT_HEADER_OPTIONS,
+          headerTintColor: theme.colors.buttonText,
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+            shadowColor: 'transparent',
+            elevation: 0,
+          },
+          headerTitle: seasonsDetailsStackProps.route.params.title,
+          headerTitleAlign: 'center',
+        })}
+        component={SeasonsDetailsTabs}
       />
       <Stack.Screen
         name={Routes.MediaDetail.REVIEWS}

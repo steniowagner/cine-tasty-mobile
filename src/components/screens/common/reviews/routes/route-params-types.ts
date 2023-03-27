@@ -2,11 +2,11 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
 import {FamousStackParams} from '@src/components/screens/famous/routes/route-params-types';
-import {HomeStackParams} from '@src/components/screens/home/routes/route-params-types';
+import {HomeStackRoutes} from '@src/components/screens/home/routes/route-params-types';
 import {checkIsHomeStack} from '@routes/constants';
 import {Routes} from '@routes/routes';
 
-type StackParams = FamousStackParams & HomeStackParams;
+type StackParams = FamousStackParams & HomeStackRoutes;
 
 type Route = Routes.Famous.MEDIA_REVIEWS | Routes.Home.MEDIA_REVIEWS;
 

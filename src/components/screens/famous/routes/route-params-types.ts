@@ -25,17 +25,12 @@ type FamousProps = {
   headerTitle: string;
 };
 
-/** Famous-Stack-Props */
 export type FamousNavigationProp = StackNavigationProp<
-  FamousStackParams,
-  Routes.Famous.FAMOUS
->;
-export type FamousRouteProp = RouteProp<
   FamousStackParams,
   Routes.Famous.FAMOUS
 >;
 
 export type FamousStackProps = {
   navigation: FamousNavigationProp;
-  route: FamousRouteProp;
+  route: RouteProp<FamousStackParams, Routes.Famous.FAMOUS>;
 };
