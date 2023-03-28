@@ -28,4 +28,4 @@ export const getTransparentHeaderOptions = (theme: DefaultTheme) => ({
   },
 });
 
-export const checkIsHomeStack = (route: string) => route.match(/HOME/gi);
+export const checkIsHomeStack = (route: string) => /HOME/gi.test(route);

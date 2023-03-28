@@ -97,7 +97,9 @@ const useMediaSectionViewAll = ({
 
   const onPressItem = useCallback(
     (item: Types.SimplifiedMedia) => {
-      const nextRoute = isMovie ? Routes.Movie.DETAILS : Routes.TVShow.DETAILS;
+      const nextRoute = isMovie
+        ? Routes.Home.MOVIE_DETAILS
+        : Routes.Home.TV_SHOW_DETAILS;
 
       const params = {
         genreIds: item.genreIds || [],

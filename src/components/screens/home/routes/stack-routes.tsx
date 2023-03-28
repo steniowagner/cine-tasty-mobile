@@ -45,7 +45,7 @@ export const HomeStack = () => {
           ...TRANSPARENT_HEADER_OPTIONS,
           ...TransitionPresets.SlideFromRightIOS,
         }}
-        name={Routes.Famous.DETAILS}
+        name={Routes.Home.FAMOUS_DETAILS}
         component={FamousDetails}
       />
       <Stack.Screen
@@ -65,7 +65,7 @@ export const HomeStack = () => {
         component={MovieDetail}
       />
       <Stack.Screen
-        name={Routes.Famous.TV_SHOW_DETAILS}
+        name={Routes.Home.TV_SHOW_DETAILS}
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
           header: () => null,
@@ -73,7 +73,7 @@ export const HomeStack = () => {
         component={TVShowDetail}
       />
       <Stack.Screen
-        name={Routes.Famous.TV_SHOW_SEASONS}
+        name={Routes.Home.TV_SHOW_SEASONS}
         options={(props: SeasonsProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
           headerTintColor: theme.colors.buttonText,

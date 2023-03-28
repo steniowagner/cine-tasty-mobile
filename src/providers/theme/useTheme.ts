@@ -67,7 +67,7 @@ const useTheme = () => {
         : {...light, id: Types.ThemeId.SYSTEM};
     }
 
-    return theme === Types.ThemeId.DARK ? dark : light;
+    return theme === Types.ThemeId.DARK ? light : light;
   }, [systemTheme, theme]);
 
   return {
