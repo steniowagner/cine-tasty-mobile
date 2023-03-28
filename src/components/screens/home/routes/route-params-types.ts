@@ -15,7 +15,7 @@ import {ReviewsParams} from '../../common/reviews/routes/route-params-types';
 export type HomeStackRoutes = {
   [Routes.Home.HOME]: undefined;
   [Routes.Home.MEDIA_DETAILS_VIEW_ALL]: MediaSectionViewAllParams;
-  [Routes.Home.TV_SHOW_DETAILS_DETAILS]: TVShowDetailParams;
+  [Routes.Home.TV_SHOW_DETAILS]: TVShowDetailParams;
   [Routes.Home.TV_SHOW_SEASONS]: SeasonsDetailsParams;
   [Routes.Home.FAMOUS_DETAILS]: FamousDetailsParams;
   [Routes.Home.MOVIE_DETAILS]: MovieDetailsParams;

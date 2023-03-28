@@ -8,13 +8,18 @@ import {Routes} from '@routes/routes';
 
 type StackParams = FamousStackRoutes & HomeStackRoutes;
 
-type Route =
-  | Routes.Famous.TV_SHOW_DETAILS_DETAILS
-  | Routes.Home.TV_SHOW_DETAILS_DETAILS;
+type Route = Routes.Famous.TV_SHOW_DETAILS | Routes.Home.TV_SHOW_DETAILS;
+
+export type TVShowDetailsNavigationProp = StackNavigationProp<
+  StackParams,
+  Route
+>;
+
+export type TVShowDetailsRouteProp = RouteProp<StackParams, Route>;
 
 export type TVShowDetailsProps = {
-  navigation: StackNavigationProp<StackParams, Route>;
-  route: RouteProp<StackParams, Route>;
+  navigation: TVShowDetailsNavigationProp;
+  route: TVShowDetailsRouteProp;
 };
 
 export type TVShowDetailParams = {
@@ -28,5 +33,5 @@ export type TVShowDetailParams = {
 
 export const getRouteName = (rootParent: string) =>
   checkIsHomeStack(rootParent)
-    ? Routes.Home.TV_SHOW_DETAILS_DETAILS
-    : Routes.Famous.TV_SHOW_DETAILS_DETAILS;
+    ? Routes.Home.TV_SHOW_DETAILS
+    : Routes.Famous.TV_SHOW_DETAILS;

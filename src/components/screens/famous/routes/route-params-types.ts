@@ -14,7 +14,7 @@ export type FamousStackRoutes = {
   [Routes.Famous.FAMOUS]: FamousProps;
   [Routes.Famous.DETAILS]: FamousDetailsParams;
   [Routes.Famous.IMAGES_GALLERY]: ImagesGalleryParams;
-  [Routes.Famous.TV_SHOW_DETAILS_DETAILS]: TVShowDetailParams;
+  [Routes.Famous.TV_SHOW_DETAILS]: TVShowDetailParams;
   [Routes.Famous.MOVIE_DETAILS]: MovieDetailsParams;
   [Routes.Famous.TV_SHOW_SEASONS]: SeasonsDetailsParams;
   [Routes.Famous.SEARCH]: SearchParams;

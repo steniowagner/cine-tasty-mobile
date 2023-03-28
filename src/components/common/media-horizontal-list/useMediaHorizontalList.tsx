@@ -24,7 +24,7 @@ export type MediaItem = {
 };
 
 type FamousMediaDetailsRoutes =
-  | Routes.Famous.TV_SHOW_DETAILS_DETAILS
+  | Routes.Famous.TV_SHOW_DETAILS
   | Routes.Famous.MOVIE_DETAILS;
 
 type FamousMediaDetailsParams = Pick<
@@ -33,7 +33,7 @@ type FamousMediaDetailsParams = Pick<
 >;
 
 type HomeMediaDetailsRoutes =
-  | Routes.Home.TV_SHOW_DETAILS_DETAILS
+  | Routes.Home.TV_SHOW_DETAILS
   | Routes.Home.MOVIE_DETAILS;
 
 type HomeMediaDetailsParams = Pick<HomeStackRoutes, HomeMediaDetailsRoutes>;

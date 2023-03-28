@@ -20,7 +20,7 @@ export type ReviewsParams = {
   reviews: Review[];
 };
 
-export type ReviewsNavigationProps = {
+export type ReviewsProps = {
   navigation: StackNavigationProp<StackParams, Route>;
   route: RouteProp<StackParams, Route>;
 };

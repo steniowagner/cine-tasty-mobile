@@ -5,18 +5,24 @@ import {GET_TV_SHOW_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import {showLanguageAlert} from '@utils';
 import {useTranslations} from '@hooks';
-import {Routes} from '@routes/routes';
 
 import {useMakeAnimatedHeaderIntepolationParams} from '../../common/useMakeAnimatedHeaderInterpolationParams';
-import {TVShowDetailNavigationProp} from '../routes/route-params-types';
+import {
+  TVShowDetailsNavigationProp,
+  TVShowDetailsRouteProp,
+} from '../routes/route-params-types';
 import {makeTVShowsInfoItems} from './makeTVShowInfoItems';
 import {translateTVShowsDetailsTexts} from './translateTVShowsDetailsTexts';
 import {PressItemParams} from '../../common/people-list/PeopleList';
-import {TVShowDetailRouteProp} from '../routes/route-params-types';
+import {getRouteName as getTVShowDetailsRouteName} from '../routes/route-params-types';
+import {getRouteName as getReviewsRouteName} from '../../../reviews/routes/route-params-types';
+import {getRouteName as getTVShowSeasonsRouteName} from '../../seasons/routes/route-params-types';
+import {getRouteName as getFamousRouteName} from '../../../famous-details/routes/route-params-types';
+import {ParsedSimilar} from '../../common/sections/similar/useSimilar';
 
 type UseTVShowDetailsProps = {
-  navigation: TVShowDetailNavigationProp;
-  route: TVShowDetailRouteProp;
+  navigation: TVShowDetailsNavigationProp;
+  route: TVShowDetailsRouteProp;
   hasVoteAverage: boolean;
   hasGenresIds: boolean;
   hasVoteCount: boolean;
@@ -62,43 +68,36 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
   );
 
   const handlePressSimilarTVShow = useCallback(
-    (similar: SchemaTypes.TVShowDetail_tvShow_similar) => {
-      props.navigation.push(Routes.TVShow.DETAILS, {
+    (similar: ParsedSimilar) => {
+      const route = getTVShowDetailsRouteName(
+        props.navigation.getState().routes[0].name,
+      );
+      props.navigation.push(route, {
         voteAverage: similar.voteAverage,
         posterPath: similar.posterPath,
         voteCount: similar.voteCount,
-        title: similar.name,
+        title: similar.title,
         id: similar.id,
       });
     },
-    [query.data?.tvShow],
+    [props.navigation, query.data?.tvShow],
   );
 
   const handlePressReviews = useCallback(() => {
-    props.navigation.navigate(Routes.MediaDetail.REVIEWS, {
+    const route = getReviewsRouteName(
+      props.navigation.getState().routes[0].name,
+    );
+    props.navigation.navigate(route, {
       mediaTitle: query.data?.tvShow.name,
       reviews: query.data?.tvShow.reviews,
     });
-  }, [query.data?.tvShow]);
+  }, [props.navigation, query.data?.tvShow]);
 
-  const handlePressCrew = useCallback((params: PressItemParams) => {
-    props.navigation.push(Routes.Famous.DETAILS, {
-      profileImage: params.image,
-      id: Number(params.id),
-      name: params.name,
-    });
-  }, []);
-
-  const handlePressCast = useCallback((params: PressItemParams) => {
-    props.navigation.push(Routes.Famous.DETAILS, {
-      profileImage: params.image,
-      id: Number(params.id),
-      name: params.name,
-    });
-  }, []);
-
-  const handlePressCreatedBy = useCallback((params: PressItemParams) => {
-    props.navigation.push(Routes.Famous.DETAILS, {
+  const handlePressFamousItem = useCallback((params: PressItemParams) => {
+    const route = getFamousRouteName(
+      props.navigation.getState().routes[0].name,
+    );
+    props.navigation.push(route, {
       profileImage: params.image,
       id: Number(params.id),
       name: params.name,
@@ -106,12 +105,15 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
   }, []);
 
   const handlePressSeeSeasons = useCallback(() => {
-    props.navigation.navigate(Routes.TVShow.SEASONS, {
+    const route = getTVShowSeasonsRouteName(
+      props.navigation.getState().routes[0].name,
+    );
+    props.navigation.navigate(route, {
       numberOfSeasons: query.data?.tvShow.numberOfSeasons,
       title: query.data?.tvShow.name,
       id: query.data?.tvShow.id,
     });
-  }, [query.data?.tvShow]);
+  }, [props.navigation, query.data?.tvShow]);
 
   const handleShowLanguageAlert = useCallback(() => {
     const shouldShowLanguageAlert =
@@ -147,10 +149,10 @@ export const useTVShowDetails = (props: UseTVShowDetailsProps) => {
     title: props.route.params?.title,
     animatedHeaderIntepolationParams,
     onPressSeeSeasons: handlePressSeeSeasons,
-    onPressCreatedBy: handlePressCreatedBy,
+    onPressCreatedBy: handlePressFamousItem,
     onPressReviews: handlePressReviews,
-    onPressCrew: handlePressCrew,
-    onPressCast: handlePressCast,
+    onPressCrew: handlePressFamousItem,
+    onPressCast: handlePressFamousItem,
     infoItems,
     texts,
   };

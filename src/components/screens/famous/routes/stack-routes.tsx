@@ -58,7 +58,7 @@ export const FamousStack = () => {
         component={MovieDetail}
       />
       <Stack.Screen
-        name={Routes.Famous.TV_SHOW_DETAILS_DETAILS}
+        name={Routes.Famous.TV_SHOW_DETAILS}
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
           header: () => null,

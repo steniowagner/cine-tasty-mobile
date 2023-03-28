@@ -23,5 +23,5 @@ export type SeasonsDetailsParams = {
 
 export const getRouteName = (rootParent: string) =>
   checkIsHomeStack(rootParent)
-    ? Routes.Famous.TV_SHOW_SEASONS
-    : Routes.Home.TV_SHOW_SEASONS;
+    ? Routes.Home.TV_SHOW_SEASONS
+    : Routes.Famous.TV_SHOW_SEASONS;
