@@ -1,24 +1,26 @@
 import {useCallback, useEffect, useMemo} from 'react';
 import {useQuery} from '@apollo/client';
 
+import {getRouteName as getFamousRouteName} from '@src/components/screens/common/famous-details/routes/route-params-types';
+import {getRouteName as getReviewsRouteName} from '@src/components/screens/common/reviews/routes/route-params-types';
 import {showLanguageAlert} from '@utils';
 import {GET_MOVIE_DETAIL} from '@graphql/queries';
 import * as SchemaTypes from '@schema-types';
 import {useTranslations} from '@hooks';
-import {Routes} from '@routes/routes';
 
-import {
-  MovieDetailNavigationProp,
-  MovieDetailRouteProp,
-} from '../routes/route-params-types';
 import {useMakeAnimatedHeaderIntepolationParams} from '../../common/useMakeAnimatedHeaderInterpolationParams';
+import {getRouteName as getMovieDetailsRouteName} from '../routes/route-params-types';
+import {
+  MovieDetailsNavigationProp,
+  MovieDetailsRouteProp,
+} from '../routes/route-params-types';
 import {PressItemParams} from '../../common/people-list/PeopleList';
 import {translateMoviesDetailsTexts} from './translateMoviesDetailsTexts';
 import {makeMovieInfoItems} from './makeMovieInfoItems';
 
 type UseMovieDetailsProps = {
-  navigation: MovieDetailNavigationProp;
-  route: MovieDetailRouteProp;
+  navigation: MovieDetailsNavigationProp;
+  route: MovieDetailsRouteProp;
   hasVoteAverage: boolean;
   hasGenresIds: boolean;
   hasVoteCount: boolean;
@@ -57,7 +59,10 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
 
   const handlePressSimilarMovie = useCallback(
     (similar: SchemaTypes.MovieDetail_movie_similar) => {
-      props.navigation.push(Routes.Movie.DETAILS, {
+      const route = getMovieDetailsRouteName(
+        props.navigation.getState().routes[0].name,
+      );
+      props.navigation.push(route, {
         voteAverage: similar.voteAverage,
         posterPath: similar.posterPath,
         voteCount: similar.voteCount,
@@ -68,20 +73,12 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     [props.navigation],
   );
 
-  const handlePressCast = useCallback(
+  const handlePressPersonItem = useCallback(
     (params: PressItemParams) => {
-      props.navigation.push(Routes.Famous.DETAILS, {
-        profileImage: params.image,
-        id: Number(params.id),
-        name: params.name,
-      });
-    },
-    [props.navigation],
-  );
-
-  const handlePressCrew = useCallback(
-    (params: PressItemParams) => {
-      props.navigation.push(Routes.Famous.DETAILS, {
+      const route = getFamousRouteName(
+        props.navigation.getState().routes[0].name,
+      );
+      props.navigation.push(route, {
         profileImage: params.image,
         id: Number(params.id),
         name: params.name,
@@ -92,7 +89,10 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
 
   const handlePressReviews = useCallback(
     (movie: SchemaTypes.MovieDetail_movie) => {
-      props.navigation.navigate(Routes.MediaDetail.REVIEWS, {
+      const parentRootRouteName = getReviewsRouteName(
+        props.navigation.getState().routes[0].name,
+      );
+      props.navigation.navigate(parentRootRouteName, {
         mediaTitle: movie.title,
         reviews: movie.reviews,
       });
@@ -135,8 +135,8 @@ export const useMovieDetails = (props: UseMovieDetailsProps) => {
     hasError: !!query.error,
     onPressSimilarMovie: handlePressSimilarMovie,
     onPressReviews: handlePressReviews,
-    onPressCrew: handlePressCrew,
-    onPressCast: handlePressCast,
+    onPressCrew: handlePressPersonItem,
+    onPressCast: handlePressPersonItem,
     infoItems,
     texts,
   };

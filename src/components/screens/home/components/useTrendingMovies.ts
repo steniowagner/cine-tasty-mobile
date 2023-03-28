@@ -27,7 +27,7 @@ export const useTrendingMovies = (props: UseTrendingMoviesProps) => {
 
   const handlePressMediaItem = useCallback(
     (item: Types.SimplifiedMedia) => {
-      props.navigation.navigate(Routes.Movie.DETAILS, {
+      props.navigation.navigate(Routes.Home.MOVIE_DETAILS, {
         ...item,
         genreIds: item.genreIds || [],
       });

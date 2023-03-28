@@ -8,26 +8,24 @@ import {Routes} from '@routes/routes';
 
 type StackParams = FamousStackRoutes & HomeStackRoutes;
 
-type Route = Routes.Famous.IMAGES_GALLERY | Routes.Home.IMAGES_GALLERY;
+type Route = Routes.Famous.MEDIA_REVIEWS | Routes.Home.MEDIA_REVIEWS;
 
-export type ImagesGalleryNavigationProp = StackNavigationProp<
-  StackParams,
-  Route
->;
-
-export type ImagesGalleryRouteProp = RouteProp<StackParams, Route>;
-
-export type ImagesGalleryProps = {
-  navigation: ImagesGalleryNavigationProp;
-  route: ImagesGalleryRouteProp;
+export type Review = {
+  content: string;
+  author: string;
 };
 
-export type ImagesGalleryParams = {
-  indexSelected: number;
-  images: string[];
+export type ReviewsParams = {
+  mediaTitle: string;
+  reviews: Review[];
+};
+
+export type ReviewsProps = {
+  navigation: StackNavigationProp<StackParams, Route>;
+  route: RouteProp<StackParams, Route>;
 };
 
 export const getRouteName = (rootParent: string) =>
   checkIsHomeStack(rootParent)
-    ? Routes.Home.IMAGES_GALLERY
-    : Routes.Famous.IMAGES_GALLERY;
+    ? Routes.Home.MEDIA_REVIEWS
+    : Routes.Famous.MEDIA_REVIEWS;

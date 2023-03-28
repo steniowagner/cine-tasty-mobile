@@ -3,11 +3,11 @@ import {View} from 'react-native';
 
 import {MediaItemDescription} from '@components';
 
-import {ReviewsStackProps} from '../routes/route-params-types';
+import {ReviewsNavigationProps} from '../routes/route-params-types';
 import * as Styles from './Reviews.styles';
 import {useReviews} from './useReviews';
 
-export const Reviews = (props: ReviewsStackProps) => {
+export const Reviews = (props: ReviewsNavigationProps) => {
   const reviews = useReviews();
 
   if (!props.route.params) {

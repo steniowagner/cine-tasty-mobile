@@ -49,7 +49,7 @@ export const useFamousDetail = (props: UseFamousDetailProps) => {
       onPressPositiveAction: () => {},
       singleAction: true,
     });
-  }, [query.loading, query.data]);
+  }, [translations.translate, query.loading, query.data]);
 
   const texts = useMemo(() => {
     const castMoviesSection = translations.translate(

@@ -3,13 +3,13 @@ import React from 'react';
 import {StatusBarStyled, ScrollWithAnimatedHeader} from '@components';
 
 import {MediaDetailsError} from '../../common/media-details-error/MediaDetailsError';
-import {TVShowDetailStackProps} from '../routes/route-params-types';
+import {TVShowDetailsProps} from '../routes/route-params-types';
 import {useTVShowDetails} from './useTVShowDetails';
 import {MediaDetailsLoading} from '../../common/media-details-loading/MediaDetailsLoading';
 import {BackgroundImage} from '../../common/header-info/background-image/BackgroundImage';
 import {TVShowDetailsContent} from './TVShowDetailsContent';
 
-export const TVShowDetail = (props: TVShowDetailStackProps) => {
+export const TVShowDetail = (props: TVShowDetailsProps) => {
   const tvShowDetails = useTVShowDetails({
     hasVoteAverage: !!props.route.params.voteAverage,
     hasVoteCount: !!props.route.params.voteCount,

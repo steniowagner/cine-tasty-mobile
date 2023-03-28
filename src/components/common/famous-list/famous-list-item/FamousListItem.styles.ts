@@ -1,18 +1,14 @@
-import {Text} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import styled from 'styled-components/native';
 import Animated from 'react-native-reanimated';
 
-import {TMDBImage} from '@components';
 import metrics from '@styles/metrics';
 
-export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
+import {getFamousListItemMeasures} from '../get-famous-list-item-measures/getFamousListItemMeasures';
 
-export const TMDBImageStyled = styled(TMDBImage)`
-  width: 100%;
-  height: 70%;
-  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
-  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
-`;
+const famousListItemMeasures = getFamousListItemMeasures(0);
+
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 
 export const PersonName = styled(Text).attrs({
   numberOfLines: 2,
@@ -32,3 +28,11 @@ export const FallbackImageWrapper = styled(Animated.View)`
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
   background-color: ${({theme}) => theme.colors.fallbackImageBackground};
 `;
+
+export const sheet = StyleSheet.create({
+  image: {
+    width: famousListItemMeasures.width,
+    height: famousListItemMeasures.height * 0.7,
+    borderRadius: metrics.extraSmallSize,
+  },
+});

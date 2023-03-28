@@ -20,6 +20,10 @@ const makeReviews = (length: number): Review[] =>
     }));
 
 const renderReviews = (reviews?: Review[]) => {
+  const route =
+    randomPositiveNumber(1, 0) % 2 === 0
+      ? Routes.Home.MEDIA_REVIEWS
+      : Routes.Famous.MEDIA_REVIEWS;
   const params = reviews
     ? {
         mediaTitle: 'SOME_MEDIAL_TITLE',
@@ -31,8 +35,8 @@ const renderReviews = (reviews?: Review[]) => {
       <Reviews
         navigation={navigation}
         route={{
-          name: Routes.MediaDetail.REVIEWS,
-          key: `${Routes.MediaDetail.REVIEWS}-key`,
+          name: route,
+          key: `${route}-key`,
           params,
         }}
       />

@@ -8,26 +8,20 @@ import {Routes} from '@routes/routes';
 
 type StackParams = FamousStackRoutes & HomeStackRoutes;
 
-type Route = Routes.Famous.IMAGES_GALLERY | Routes.Home.IMAGES_GALLERY;
+type Route = Routes.Famous.TV_SHOW_SEASONS | Routes.Home.TV_SHOW_SEASONS;
 
-export type ImagesGalleryNavigationProp = StackNavigationProp<
-  StackParams,
-  Route
->;
-
-export type ImagesGalleryRouteProp = RouteProp<StackParams, Route>;
-
-export type ImagesGalleryProps = {
-  navigation: ImagesGalleryNavigationProp;
-  route: ImagesGalleryRouteProp;
+export type SeasonsProps = {
+  navigation: StackNavigationProp<StackParams, Route>;
+  route: RouteProp<StackParams, Route>;
 };
 
-export type ImagesGalleryParams = {
-  indexSelected: number;
-  images: string[];
+export type SeasonsDetailsParams = {
+  numberOfSeasons: number;
+  title: string;
+  id: string;
 };
 
 export const getRouteName = (rootParent: string) =>
   checkIsHomeStack(rootParent)
-    ? Routes.Home.IMAGES_GALLERY
-    : Routes.Famous.IMAGES_GALLERY;
+    ? Routes.Home.TV_SHOW_SEASONS
+    : Routes.Famous.TV_SHOW_SEASONS;

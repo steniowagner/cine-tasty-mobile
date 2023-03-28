@@ -1,17 +1,28 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
-import {FamousDetailsParams} from '@src/components/screens/common/famous-details/routes/route-params-types';
-import {ReviewsParams} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
+import {FamousStackRoutes} from '@src/components/screens/famous/routes/route-params-types';
+import {HomeStackRoutes} from '@src/components/screens/home/routes/route-params-types';
+import {checkIsHomeStack} from '@routes/constants';
 import {Routes} from '@routes/routes';
 
-type MovieDetailStackParams = {
-  [Routes.Famous.DETAILS]: FamousDetailsParams;
-  [Routes.MediaDetail.REVIEWS]: ReviewsParams;
-  [Routes.Movie.DETAILS]: MovieDetailParams;
+type StackParams = FamousStackRoutes & HomeStackRoutes;
+
+type Route = Routes.Famous.MOVIE_DETAILS | Routes.Home.MOVIE_DETAILS;
+
+export type MovieDetailsNavigationProp = StackNavigationProp<
+  StackParams,
+  Route
+>;
+
+export type MovieDetailsRouteProp = RouteProp<StackParams, Route>;
+
+export type MovieDetailsProps = {
+  navigation: MovieDetailsNavigationProp;
+  route: MovieDetailsRouteProp;
 };
 
-export type MovieDetailParams = {
+export type MovieDetailsParams = {
   voteAverage?: number;
   genreIds?: string[];
   posterPath: string;
@@ -20,18 +31,7 @@ export type MovieDetailParams = {
   id: number;
 };
 
-/** Movie-Detail-Stack-Props */
-export type MovieDetailNavigationProp = StackNavigationProp<
-  MovieDetailStackParams,
-  Routes.Movie.DETAILS
->;
-
-export type MovieDetailRouteProp = RouteProp<
-  MovieDetailStackParams,
-  Routes.Movie.DETAILS
->;
-
-export type MovieDetailStackProps = {
-  navigation: MovieDetailNavigationProp;
-  route: MovieDetailRouteProp;
-};
+export const getRouteName = (rootParent: string) =>
+  checkIsHomeStack(rootParent)
+    ? Routes.Home.MOVIE_DETAILS
+    : Routes.Famous.MOVIE_DETAILS;

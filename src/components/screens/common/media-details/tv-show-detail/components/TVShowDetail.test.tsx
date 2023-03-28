@@ -30,6 +30,7 @@ const ID = '1';
 jest.spyOn(Alert, 'alert');
 
 type RenderTVShowDetailsProps = {
+  route?: Routes.Home.TV_SHOW_DETAILS | Routes.Famous.TV_SHOW_DETAILS;
   navigate?: jest.Mock;
   push?: jest.Mock;
   goBack?: jest.Mock;
@@ -40,10 +41,17 @@ type RenderTVShowDetailsProps = {
   id: string;
 };
 
-const renderTVShowDetails = (props: RenderTVShowDetailsProps) => {
+const getRandomRoute = () =>
+  randomPositiveNumber(10, 1) % 2 === 0
+    ? Routes.Home.TV_SHOW_DETAILS
+    : Routes.Famous.TV_SHOW_DETAILS;
+
+const renderTVShowDetails = (params: RenderTVShowDetailsProps) => {
+  const routeName = params.route || getRandomRoute();
+
   const TvShowDetailsScreen = ({navigation}) => (
     <MockedProvider
-      mocks={props.mockResolvers}
+      mocks={params.mockResolvers}
       defaultOptions={{
         watchQuery: {fetchPolicy: 'no-cache'},
         query: {fetchPolicy: 'no-cache'},
@@ -58,20 +66,23 @@ const renderTVShowDetails = (props: RenderTVShowDetailsProps) => {
           <TVShowDetail
             navigation={{
               ...navigation,
-              navigate: props.navigate,
-              goBack: props.goBack,
-              push: props.push,
+              navigate: params.navigate,
+              goBack: params.goBack,
+              push: params.push,
+              getState: () => ({
+                routes: [{name: routeName}],
+              }),
             }}
             route={{
-              name: Routes.TVShow.DETAILS,
-              key: `${Routes.TVShow.DETAILS}-key`,
+              name: routeName,
+              key: `${routeName}-key`,
               params: {
                 posterPath: POSTER_PATH,
                 title: TITLE,
-                voteAverage: props.voteAverage,
-                voteCount: props.voteCount,
-                genreIds: props.genreIds,
-                id: Number(props.id),
+                voteAverage: params.voteAverage,
+                voteCount: params.voteCount,
+                genreIds: params.genreIds,
+                id: Number(params.id),
               },
             }}
           />
@@ -1463,47 +1474,6 @@ describe('<TVShowDetails />', () => {
     });
   });
 
-  describe('Pressing the "seasons-button"', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
-    it('should call the "navigation.navigate" correctly', async () => {
-      const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
-        withVoteAverage: true,
-        withGenresIds: true,
-        withVoteCount: true,
-        language: 'EN',
-        id: ID,
-      });
-      const navigate = jest.fn();
-      const component = render(
-        renderTVShowDetails({
-          mockResolvers: resolvers,
-          navigate,
-          id: ID,
-        }),
-      );
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.loading(component)).toBeNull();
-      });
-      const {tvShow} = resolvers[0].result.data;
-      expect(navigate).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.seasons(component));
-      expect(navigate).toHaveBeenCalledTimes(1);
-      expect(navigate).toHaveBeenCalledWith(Routes.TVShow.SEASONS, {
-        numberOfSeasons: tvShow.numberOfSeasons,
-        title: tvShow.name,
-        id: tvShow.id,
-      });
-    });
-  });
-
   describe('Showing the "language-alert-message"', () => {
     beforeEach(() => {
       jest.useFakeTimers();
@@ -1551,16 +1521,17 @@ describe('<TVShowDetails />', () => {
     });
   });
 
-  describe('Pressing the some of the lists-items', () => {
-    describe('When pressing some of the "cast" items', () => {
+  describe(`When the current "route" is ${Routes.Home.TV_SHOW_DETAILS}`, () => {
+    const route = Routes.Home.TV_SHOW_DETAILS;
+
+    describe('Pressing the "seasons-button"', () => {
       beforeEach(() => {
         jest.useFakeTimers();
       });
 
       afterEach(cleanup);
 
-      it('should call "navigation.push" correclty', async () => {
-        const push = jest.fn();
+      it('should call the "navigation.navigate" correctly', async () => {
         const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
           withVoteAverage: true,
           withGenresIds: true,
@@ -1568,131 +1539,12 @@ describe('<TVShowDetails />', () => {
           language: 'EN',
           id: ID,
         });
-        const component = render(
-          renderTVShowDetails({
-            mockResolvers: resolvers,
-            push,
-            id: ID,
-          }),
-        );
-        await waitFor(() => {
-          expect(elements.cast(component)).not.toBeNull();
-        });
-        const {tvShow} = resolvers[0].result.data;
-        const indexItemSelected = randomPositiveNumber(
-          tvShow.cast.length - 1,
-          0,
-        );
-        expect(push).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.castItems(component)[indexItemSelected]);
-        expect(push).toHaveBeenCalledTimes(1);
-        expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-          profileImage: tvShow.cast[indexItemSelected].profilePath,
-          name: tvShow.cast[indexItemSelected].name,
-          id: Number(tvShow.cast[indexItemSelected].id),
-        });
-      });
-    });
-
-    describe('When pressing some of the "crew" items', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      afterEach(cleanup);
-
-      it('should call "navigation.push" correctly', async () => {
-        const push = jest.fn();
-        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
-          withVoteAverage: true,
-          withGenresIds: true,
-          withVoteCount: true,
-          language: 'EN',
-          id: ID,
-        });
-        const component = render(
-          renderTVShowDetails({
-            mockResolvers: resolvers,
-            push,
-            id: ID,
-          }),
-        );
-        await waitFor(() => {
-          expect(elements.crew(component)).not.toBeNull();
-        });
-        const {tvShow} = resolvers[0].result.data;
-        const indexItemSelected = randomPositiveNumber(
-          tvShow.crew.length - 1,
-          0,
-        );
-        expect(push).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.crewItems(component)[indexItemSelected]);
-        expect(push).toHaveBeenCalledTimes(1);
-        expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-          profileImage: tvShow.crew[indexItemSelected].profilePath,
-          name: tvShow.crew[indexItemSelected].name,
-          id: Number(tvShow.crew[indexItemSelected].id),
-        });
-      });
-    });
-
-    describe('When pressing some of the "reviews" items', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      afterEach(cleanup);
-
-      it('should call "navigation.navigate" correctly"', async () => {
         const navigate = jest.fn();
-        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
-          withVoteAverage: true,
-          withGenresIds: true,
-          withVoteCount: true,
-          language: 'EN',
-          id: ID,
-        });
         const component = render(
           renderTVShowDetails({
             mockResolvers: resolvers,
+            route,
             navigate,
-            id: ID,
-          }),
-        );
-        await waitFor(() => {
-          expect(elements.reviews(component)).not.toBeNull();
-        });
-        const {tvShow} = resolvers[0].result.data;
-        expect(navigate).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.viewAllReviews(component));
-        expect(navigate).toHaveBeenCalledTimes(1);
-        expect(navigate).toHaveBeenCalledWith(Routes.MediaDetail.REVIEWS, {
-          mediaTitle: tvShow.name,
-          reviews: tvShow.reviews,
-        });
-      });
-    });
-
-    describe('When pressing some of the "similar" items', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      afterEach(cleanup);
-
-      it('should call "navigation.push" correctly', async () => {
-        const push = jest.fn();
-        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
-          withVoteAverage: true,
-          withGenresIds: true,
-          withVoteCount: true,
-          language: 'EN',
-          id: ID,
-        });
-        const component = render(
-          renderTVShowDetails({
-            mockResolvers: resolvers,
-            push,
             id: ID,
           }),
         );
@@ -1700,22 +1552,410 @@ describe('<TVShowDetails />', () => {
           jest.runAllTimers();
         });
         await waitFor(() => {
-          expect(elements.similar(component)).not.toBeNull();
+          expect(elements.loading(component)).toBeNull();
         });
         const {tvShow} = resolvers[0].result.data;
-        const indexItemSelected = randomPositiveNumber(
-          tvShow.similar.length - 1,
-          0,
+        expect(navigate).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.seasons(component));
+        expect(navigate).toHaveBeenCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(Routes.Home.TV_SHOW_SEASONS, {
+          numberOfSeasons: tvShow.numberOfSeasons,
+          title: tvShow.name,
+          id: tvShow.id,
+        });
+      });
+    });
+
+    describe('Pressing the some of the lists-items', () => {
+      describe('When pressing some of the "cast" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correclty', async () => {
+          const push = jest.fn();
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: ID,
+          });
+          const component = render(
+            renderTVShowDetails({
+              mockResolvers: resolvers,
+              route,
+              push,
+              id: ID,
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.cast(component)).not.toBeNull();
+          });
+          const {tvShow} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            tvShow.cast.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.castItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Home.FAMOUS_DETAILS, {
+            profileImage: tvShow.cast[indexItemSelected].profilePath,
+            name: tvShow.cast[indexItemSelected].name,
+            id: Number(tvShow.cast[indexItemSelected].id),
+          });
+        });
+      });
+
+      describe('When pressing some of the "crew" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correctly', async () => {
+          const push = jest.fn();
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: ID,
+          });
+          const component = render(
+            renderTVShowDetails({
+              mockResolvers: resolvers,
+              route,
+              push,
+              id: ID,
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.crew(component)).not.toBeNull();
+          });
+          const {tvShow} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            tvShow.crew.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.crewItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Home.FAMOUS_DETAILS, {
+            profileImage: tvShow.crew[indexItemSelected].profilePath,
+            name: tvShow.crew[indexItemSelected].name,
+            id: Number(tvShow.crew[indexItemSelected].id),
+          });
+        });
+      });
+
+      describe('When pressing some of the "reviews" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.navigate" correctly"', async () => {
+          const navigate = jest.fn();
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: ID,
+          });
+          const component = render(
+            renderTVShowDetails({
+              mockResolvers: resolvers,
+              route,
+              navigate,
+              id: ID,
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.reviews(component)).not.toBeNull();
+          });
+          const {tvShow} = resolvers[0].result.data;
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.viewAllReviews(component));
+          expect(navigate).toHaveBeenCalledTimes(1);
+          expect(navigate).toHaveBeenCalledWith(Routes.Home.MEDIA_REVIEWS, {
+            mediaTitle: tvShow.name,
+            reviews: tvShow.reviews,
+          });
+        });
+      });
+
+      describe('When pressing some of the "similar" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correctly', async () => {
+          const push = jest.fn();
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: ID,
+          });
+          const component = render(
+            renderTVShowDetails({
+              mockResolvers: resolvers,
+              route,
+              push,
+              id: ID,
+            }),
+          );
+          act(() => {
+            jest.runAllTimers();
+          });
+          await waitFor(() => {
+            expect(elements.similar(component)).not.toBeNull();
+          });
+          const {tvShow} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            tvShow.similar.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.similarItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Home.TV_SHOW_DETAILS, {
+            voteAverage: tvShow.similar[indexItemSelected].voteAverage,
+            posterPath: tvShow.similar[indexItemSelected].posterPath,
+            voteCount: tvShow.similar[indexItemSelected].voteCount,
+            title: tvShow.similar[indexItemSelected].name,
+            id: tvShow.similar[indexItemSelected].id,
+          });
+        });
+      });
+    });
+  });
+
+  describe(`When the current "route" is ${Routes.Famous.TV_SHOW_DETAILS}`, () => {
+    const route = Routes.Famous.TV_SHOW_DETAILS;
+
+    describe('Pressing the "seasons-button"', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
+
+      afterEach(cleanup);
+
+      it('should call the "navigation.navigate" correctly', async () => {
+        const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+          withVoteAverage: true,
+          withGenresIds: true,
+          withVoteCount: true,
+          language: 'EN',
+          id: ID,
+        });
+        const navigate = jest.fn();
+        const component = render(
+          renderTVShowDetails({
+            mockResolvers: resolvers,
+            route,
+            navigate,
+            id: ID,
+          }),
         );
-        expect(push).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.similarItems(component)[indexItemSelected]);
-        expect(push).toHaveBeenCalledTimes(1);
-        expect(push).toHaveBeenCalledWith(Routes.TVShow.DETAILS, {
-          voteAverage: tvShow.similar[indexItemSelected].voteAverage,
-          posterPath: tvShow.similar[indexItemSelected].posterPath,
-          voteCount: tvShow.similar[indexItemSelected].voteCount,
-          title: tvShow.similar[indexItemSelected].name,
-          id: tvShow.similar[indexItemSelected].id,
+        act(() => {
+          jest.runAllTimers();
+        });
+        await waitFor(() => {
+          expect(elements.loading(component)).toBeNull();
+        });
+        const {tvShow} = resolvers[0].result.data;
+        expect(navigate).toHaveBeenCalledTimes(0);
+        fireEvent.press(elements.seasons(component));
+        expect(navigate).toHaveBeenCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(Routes.Famous.TV_SHOW_SEASONS, {
+          numberOfSeasons: tvShow.numberOfSeasons,
+          title: tvShow.name,
+          id: tvShow.id,
+        });
+      });
+    });
+
+    describe('Pressing the some of the lists-items', () => {
+      describe('When pressing some of the "cast" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correclty', async () => {
+          const push = jest.fn();
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: ID,
+          });
+          const component = render(
+            renderTVShowDetails({
+              mockResolvers: resolvers,
+              route,
+              push,
+              id: ID,
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.cast(component)).not.toBeNull();
+          });
+          const {tvShow} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            tvShow.cast.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.castItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+            profileImage: tvShow.cast[indexItemSelected].profilePath,
+            name: tvShow.cast[indexItemSelected].name,
+            id: Number(tvShow.cast[indexItemSelected].id),
+          });
+        });
+      });
+
+      describe('When pressing some of the "crew" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correctly', async () => {
+          const push = jest.fn();
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: ID,
+          });
+          const component = render(
+            renderTVShowDetails({
+              mockResolvers: resolvers,
+              route,
+              push,
+              id: ID,
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.crew(component)).not.toBeNull();
+          });
+          const {tvShow} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            tvShow.crew.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.crewItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+            profileImage: tvShow.crew[indexItemSelected].profilePath,
+            name: tvShow.crew[indexItemSelected].name,
+            id: Number(tvShow.crew[indexItemSelected].id),
+          });
+        });
+      });
+
+      describe('When pressing some of the "reviews" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.navigate" correctly"', async () => {
+          const navigate = jest.fn();
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: ID,
+          });
+          const component = render(
+            renderTVShowDetails({
+              mockResolvers: resolvers,
+              route,
+              navigate,
+              id: ID,
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.reviews(component)).not.toBeNull();
+          });
+          const {tvShow} = resolvers[0].result.data;
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.viewAllReviews(component));
+          expect(navigate).toHaveBeenCalledTimes(1);
+          expect(navigate).toHaveBeenCalledWith(Routes.Famous.MEDIA_REVIEWS, {
+            mediaTitle: tvShow.name,
+            reviews: tvShow.reviews,
+          });
+        });
+      });
+
+      describe('When pressing some of the "similar" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correctly', async () => {
+          const push = jest.fn();
+          const resolvers = mockTVShowDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: ID,
+          });
+          const component = render(
+            renderTVShowDetails({
+              mockResolvers: resolvers,
+              route,
+              push,
+              id: ID,
+            }),
+          );
+          act(() => {
+            jest.runAllTimers();
+          });
+          await waitFor(() => {
+            expect(elements.similar(component)).not.toBeNull();
+          });
+          const {tvShow} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            tvShow.similar.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.similarItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Famous.TV_SHOW_DETAILS, {
+            voteAverage: tvShow.similar[indexItemSelected].voteAverage,
+            posterPath: tvShow.similar[indexItemSelected].posterPath,
+            voteCount: tvShow.similar[indexItemSelected].voteCount,
+            title: tvShow.similar[indexItemSelected].name,
+            id: tvShow.similar[indexItemSelected].id,
+          });
         });
       });
     });

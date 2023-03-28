@@ -27,3 +27,5 @@ export const getTransparentHeaderOptions = (theme: DefaultTheme) => ({
     elevation: 0,
   },
 });
+
+export const checkIsHomeStack = (route: string) => /HOME/gi.test(route);

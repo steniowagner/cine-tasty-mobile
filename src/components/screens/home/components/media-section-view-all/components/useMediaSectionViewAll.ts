@@ -1,17 +1,17 @@
-import { useCallback, useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { DocumentNode } from 'graphql';
+import {useCallback, useState, useMemo} from 'react';
+import {useTranslation} from 'react-i18next';
+import {DocumentNode} from 'graphql';
 
-import { useGetCurrentISO6391Language, usePaginatedQuery } from '@hooks';
+import {useGetCurrentISO6391Language, usePaginatedQuery} from '@hooks';
 import * as SchemaTypes from '@schema-types';
-import { getQuery } from '@graphql/queries';
+import {getQuery} from '@graphql/queries';
 import * as TRANSLATIONS from '@i18n/tags';
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import { MediaSectionViewAllStackNavigationProp } from '../../routes/route-params-types';
-import { getTVShowProperQuery, getMovieProperQuery } from './getProperQuery';
-import useOnGetData, { Data } from './useOnGetData';
+import {MediaSectionViewAllStackNavigationProp} from '../routes/route-params-types';
+import {getTVShowProperQuery, getMovieProperQuery} from './getProperQuery';
+import useOnGetData, {Data} from './useOnGetData';
 
 type PaginationVariables = {
   language?: SchemaTypes.ISO6391Language | null;
@@ -31,15 +31,14 @@ const useMediaSectionViewAll = ({
   navigation,
   isMovie,
 }: UseMediaSectionViewAllProps) => {
-  const [mediaItems, setMediaItems] = useState<Types.SimplifiedMedia[]>(
-    initialMediaItems,
-  );
+  const [mediaItems, setMediaItems] =
+    useState<Types.SimplifiedMedia[]>(initialMediaItems);
   const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const { currentISO6391Language } = useGetCurrentISO6391Language();
-  const onGetData = useOnGetData({ trendingMediaItemKey, isMovie });
-  const { t } = useTranslation();
+  const {currentISO6391Language} = useGetCurrentISO6391Language();
+  const onGetData = useOnGetData({trendingMediaItemKey, isMovie});
+  const {t} = useTranslation();
 
   const properQuery = useMemo((): DocumentNode => {
     const queryId = isMovie
@@ -50,7 +49,7 @@ const useMediaSectionViewAll = ({
   }, [trendingMediaItemKey, isMovie]);
 
   const handleOnGetData = useCallback((data: Data): boolean => {
-    const { hasMore, items } = onGetData(data);
+    const {hasMore, items} = onGetData(data);
 
     setMediaItems((preiviousMediaItems: Types.SimplifiedMedia[]) => [
       ...preiviousMediaItems,
@@ -60,7 +59,10 @@ const useMediaSectionViewAll = ({
     return hasMore;
   }, []);
 
-  const { onPaginateQuery, isPaginating } = usePaginatedQuery<Data, PaginationVariables>({
+  const {onPaginateQuery, isPaginating} = usePaginatedQuery<
+    Data,
+    PaginationVariables
+  >({
     onPaginationQueryError: () => {
       const i18nErrorRef = isMovie
         ? TRANSLATIONS.HOME_MOVIES_PAGINATION_ERROR
@@ -95,7 +97,9 @@ const useMediaSectionViewAll = ({
 
   const onPressItem = useCallback(
     (item: Types.SimplifiedMedia) => {
-      const nextRoute = isMovie ? Routes.Movie.DETAILS : Routes.TVShow.DETAILS;
+      const nextRoute = isMovie
+        ? Routes.Home.MOVIE_DETAILS
+        : Routes.Home.TV_SHOW_DETAILS;
 
       const params = {
         genreIds: item.genreIds || [],

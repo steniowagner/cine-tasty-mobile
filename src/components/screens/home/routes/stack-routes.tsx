@@ -1,13 +1,12 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {DefaultTheme, withTheme} from 'styled-components/native';
+import {useTheme} from 'styled-components/native';
 
-import {ReviewsStackProps} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
+import {ReviewsProps} from '@src/components/screens/common/reviews/routes/route-params-types';
 import {ImagesGallery} from '@src/components/screens/common/images-gallery/components/images-gallery/ImagesGallery';
-import {TVShowStack} from '@src/components/screens/common/media-details/tv-show-detail/routes/stack-routes';
 import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetails';
 import {FamousDetails} from '@src/components/screens/common/famous-details/components/FamousDetails';
-import {Reviews} from '@src/components/screens/common/media-details/reviews/components/Reviews';
+import {Reviews} from '@src/components/screens/common/reviews/components/Reviews';
 import {
   getTransparentHeaderOptions,
   DEFAULT_HEADER_OPTIONS,
@@ -15,17 +14,17 @@ import {
 import SearchStack from '@src/components/screens/common/search/routes/stack-routes';
 import {Routes} from '@routes/routes';
 
-import MediaSectionViewAll from '../components/media-section-view-all/MediaSectionViewAll';
-import {MediaSectionViewAllStackProps} from './route-params-types';
+import MediaSectionViewAll from '../components/media-section-view-all/components/MediaSectionViewAll';
+import {MediaSectionViewAllProps} from '../components/media-section-view-all/routes/route-params-types';
 import {Home} from '../components/Home';
+import {TVShowDetail} from '../../common/media-details/tv-show-detail/components/TVShowDetail';
+import {SeasonsProps} from '../../common/media-details/seasons/routes/route-params-types';
+import {SeasonsDetailsTabs} from '../../common/media-details/seasons/components/tabs/SeasonsDetailsTabs';
 
 const Stack = createStackNavigator();
 
-type HomeStackProps = {
-  theme: DefaultTheme;
-};
-
-export const HomeStack = withTheme(({theme}: HomeStackProps) => {
+export const HomeStack = () => {
+  const theme = useTheme();
   const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
 
   return (
@@ -46,12 +45,12 @@ export const HomeStack = withTheme(({theme}: HomeStackProps) => {
           ...TRANSPARENT_HEADER_OPTIONS,
           ...TransitionPresets.SlideFromRightIOS,
         }}
-        name={Routes.Famous.DETAILS}
+        name={Routes.Home.FAMOUS_DETAILS}
         component={FamousDetails}
       />
       <Stack.Screen
         name={Routes.Home.MEDIA_DETAILS_VIEW_ALL}
-        options={({route}: MediaSectionViewAllStackProps) => ({
+        options={({route}: MediaSectionViewAllProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
           headerTitle: route.params.headerTitle,
           headerTitleAlign: 'center',
@@ -59,22 +58,38 @@ export const HomeStack = withTheme(({theme}: HomeStackProps) => {
         component={MediaSectionViewAll}
       />
       <Stack.Screen
-        name={Routes.Movie.DETAILS}
+        name={Routes.Home.MOVIE_DETAILS}
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
         })}
         component={MovieDetail}
       />
       <Stack.Screen
-        name={Routes.TVShow.DETAILS}
+        name={Routes.Home.TV_SHOW_DETAILS}
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
+          header: () => null,
         })}
-        component={TVShowStack}
+        component={TVShowDetail}
       />
       <Stack.Screen
-        name={Routes.MediaDetail.REVIEWS}
-        options={({route}: ReviewsStackProps) => ({
+        name={Routes.Home.TV_SHOW_SEASONS}
+        options={(props: SeasonsProps) => ({
+          ...DEFAULT_HEADER_OPTIONS,
+          headerTintColor: theme.colors.buttonText,
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+            shadowColor: 'transparent',
+            elevation: 0,
+          },
+          headerTitle: props.route.params.title,
+          headerTitleAlign: 'center',
+        })}
+        component={SeasonsDetailsTabs}
+      />
+      <Stack.Screen
+        name={Routes.Home.MEDIA_REVIEWS}
+        options={({route}: ReviewsProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
           headerTitle: route.params.mediaTitle,
           headerTitleAlign: 'center',
@@ -82,7 +97,7 @@ export const HomeStack = withTheme(({theme}: HomeStackProps) => {
         component={Reviews}
       />
       <Stack.Screen
-        name={Routes.ImagesGallery.IMAGES_GALLERY}
+        name={Routes.Home.IMAGES_GALLERY}
         component={ImagesGallery}
         options={() => ({
           ...DEFAULT_HEADER_OPTIONS,
@@ -92,8 +107,8 @@ export const HomeStack = withTheme(({theme}: HomeStackProps) => {
       <Stack.Screen
         options={{headerShown: false}}
         component={SearchStack}
-        name={Routes.Search.SEARCH_STACK}
+        name={Routes.Home.SEARCH}
       />
     </Stack.Navigator>
   );
-});
+};

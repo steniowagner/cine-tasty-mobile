@@ -7,8 +7,8 @@ import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
 
 import {SetupQuestions} from '../components/setup-questions/SetupQuestions';
-import Questions from '../components/questions/Questions';
-import Results from '../components/results/Results';
+import {Questions} from '../components/questions/Questions';
+import {Results} from '../components/results/Results';
 import {Quiz} from '../components/Quiz';
 
 const Stack = createStackNavigator();

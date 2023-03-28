@@ -3,13 +3,13 @@ import React from 'react';
 import {ScrollWithAnimatedHeader, StatusBarStyled} from '@components';
 
 import {MediaDetailsError} from '../../common/media-details-error/MediaDetailsError';
-import {MovieDetailStackProps} from '../routes/route-params-types';
+import {MovieDetailsProps} from '../routes/route-params-types';
 import {BackgroundImage} from '../../common/header-info/background-image/BackgroundImage';
 import {MediaDetailsLoading} from '../../common/media-details-loading/MediaDetailsLoading';
 import {MovieDetailsContent} from './movies-details-content/MovieDetailsContent';
 import {useMovieDetails} from './useMovieDetails';
 
-export const MovieDetail = (props: MovieDetailStackProps) => {
+export const MovieDetail = (props: MovieDetailsProps) => {
   const movieDetails = useMovieDetails({
     hasVoteAverage: !!props.route.params.voteAverage,
     hasVoteCount: !!props.route.params.voteCount,

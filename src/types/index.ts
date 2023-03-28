@@ -4,6 +4,9 @@ import {
   FetchMoreOptions,
 } from 'apollo-client';
 
+import { FamousStackRoutes } from '@src/components/screens/famous/routes/route-params-types';
+import { HomeStackRoutes } from '@src/components/screens/home/routes/route-params-types';
+import { StackNavigationProp } from '@react-navigation/stack';
 import * as SchemaTypes from '@schema-types';
 import { Icons } from '@components';
 import { Routes } from '@routes/routes';
@@ -202,3 +205,33 @@ export type ResentSearchItem = {
   title: string;
   id: number;
 };
+
+type FamousStackCommonRoutes =
+  | Routes.Famous.IMAGES_GALLERY
+  | Routes.Famous.TV_SHOW_DETAILS
+  | Routes.Famous.TV_SHOW_SEASONS
+  | Routes.Famous.MOVIE_DETAILS
+  | Routes.Famous.DETAILS
+  | Routes.Famous.MEDIA_REVIEWS
+  | Routes.Famous.SEARCH;
+
+type FamousStackCommonParams = Pick<
+  FamousStackRoutes,
+  FamousStackCommonRoutes
+>;
+
+type HomeStackCommonRoutes =
+| Routes.Home.IMAGES_GALLERY
+| Routes.Home.TV_SHOW_DETAILS
+| Routes.Home.TV_SHOW_SEASONS
+| Routes.Home.MOVIE_DETAILS
+| Routes.Home.FAMOUS_DETAILS
+| Routes.Home.MEDIA_REVIEWS
+| Routes.Home.SEARCH;
+
+type HomeStackCommonParams = Pick<HomeStackRoutes, HomeStackCommonRoutes>;
+
+export type SharedScreensNavigation = StackNavigationProp<
+  FamousStackCommonParams & HomeStackCommonParams,
+  HomeStackCommonRoutes | FamousStackCommonRoutes
+>;

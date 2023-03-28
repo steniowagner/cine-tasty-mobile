@@ -30,6 +30,7 @@ const TITLE = 'TITLE';
 jest.spyOn(Alert, 'alert');
 
 type RenderMovieDetailsProps = {
+  route?: Routes.Home.MOVIE_DETAILS | Routes.Famous.MOVIE_DETAILS;
   navigate?: jest.Mock;
   push?: jest.Mock;
   goBack?: jest.Mock;
@@ -40,7 +41,14 @@ type RenderMovieDetailsProps = {
   id: string;
 };
 
+const getRandomRoute = () =>
+  randomPositiveNumber(10, 1) % 2 === 0
+    ? Routes.Home.MOVIE_DETAILS
+    : Routes.Famous.MOVIE_DETAILS;
+
 const renderMovieDetails = (params: RenderMovieDetailsProps) => {
+  const routeName = params.route || getRandomRoute();
+
   const MovieDetailsScreen = ({navigation}) => (
     <MockedProvider
       mocks={params.mockResolvers}
@@ -61,10 +69,13 @@ const renderMovieDetails = (params: RenderMovieDetailsProps) => {
               navigate: params.navigate,
               goBack: params.goBack,
               push: params.push,
+              getState: () => ({
+                routes: [{name: routeName}],
+              }),
             }}
             route={{
-              name: Routes.Movie.DETAILS,
-              key: `${Routes.Movie.DETAILS}-key`,
+              name: routeName,
+              key: `${routeName}-key`,
               params: {
                 posterPath: POSTER_PATH,
                 title: TITLE,
@@ -1050,170 +1061,354 @@ describe('<MovieDetails />', () => {
   });
 
   describe('Pressing the some of the lists-items', () => {
-    describe('When pressing some of the "cast" items', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
+    describe(`When the current "route" is ${Routes.Home.MOVIE_DETAILS}`, () => {
+      const route = Routes.Home.MOVIE_DETAILS;
+
+      describe('When pressing some of the "reviews" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.navigate" correctly"', async () => {
+          const navigate = jest.fn();
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: '1',
+          });
+          const component = render(
+            renderMovieDetails({
+              mockResolvers: resolvers,
+              route,
+              navigate,
+              id: '1',
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.reviews(component)).not.toBeNull();
+          });
+          const {movie} = resolvers[0].result.data;
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.viewAllReviews(component));
+          expect(navigate).toHaveBeenCalledTimes(1);
+          expect(navigate).toHaveBeenCalledWith(Routes.Home.MEDIA_REVIEWS, {
+            mediaTitle: movie.title,
+            reviews: movie.reviews,
+          });
+        });
       });
 
-      afterEach(cleanup);
+      describe('When pressing some of the "similar" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
 
-      it('should call "navigation.push" correclty', async () => {
-        const push = jest.fn();
-        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
-          withVoteAverage: true,
-          withGenresIds: true,
-          withVoteCount: true,
-          language: 'EN',
-          id: '1',
-        });
-        const component = render(
-          renderMovieDetails({
-            mockResolvers: resolvers,
-            push,
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correctly', async () => {
+          const push = jest.fn();
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
             id: '1',
-          }),
-        );
-        await waitFor(() => {
-          expect(elements.cast(component)).not.toBeNull();
+          });
+          const component = render(
+            renderMovieDetails({
+              mockResolvers: resolvers,
+              push,
+              route,
+              id: '1',
+            }),
+          );
+          act(() => {
+            jest.runAllTimers();
+          });
+          await waitFor(() => {
+            expect(elements.similar(component)).not.toBeNull();
+          });
+          const {movie} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            movie.similar.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.similarItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Home.MOVIE_DETAILS, {
+            voteAverage: movie.similar[indexItemSelected].voteAverage,
+            posterPath: movie.similar[indexItemSelected].posterPath,
+            voteCount: movie.similar[indexItemSelected].voteCount,
+            title: movie.similar[indexItemSelected].title,
+            id: movie.similar[indexItemSelected].id,
+          });
         });
-        const {movie} = resolvers[0].result.data;
-        const indexItemSelected = randomPositiveNumber(
-          movie.cast.length - 1,
-          0,
-        );
-        expect(push).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.castItems(component)[indexItemSelected]);
-        expect(push).toHaveBeenCalledTimes(1);
-        expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-          profileImage: movie.cast[indexItemSelected].profilePath,
-          name: movie.cast[indexItemSelected].name,
-          id: Number(movie.cast[indexItemSelected].id),
+      });
+
+      describe('When pressing some of the "cast" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correclty', async () => {
+          const push = jest.fn();
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: '1',
+          });
+          const component = render(
+            renderMovieDetails({
+              mockResolvers: resolvers,
+              push,
+              route,
+              id: '1',
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.cast(component)).not.toBeNull();
+          });
+          const {movie} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            movie.cast.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.castItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Home.FAMOUS_DETAILS, {
+            profileImage: movie.cast[indexItemSelected].profilePath,
+            name: movie.cast[indexItemSelected].name,
+            id: Number(movie.cast[indexItemSelected].id),
+          });
+        });
+      });
+
+      describe('When pressing some of the "crew" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
+        });
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correctly', async () => {
+          const push = jest.fn();
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: '1',
+          });
+          const component = render(
+            renderMovieDetails({
+              mockResolvers: resolvers,
+              push,
+              route,
+              id: '1',
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.crew(component)).not.toBeNull();
+          });
+          const {movie} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            movie.crew.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.crewItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Home.FAMOUS_DETAILS, {
+            profileImage: movie.crew[indexItemSelected].profilePath,
+            name: movie.crew[indexItemSelected].name,
+            id: Number(movie.crew[indexItemSelected].id),
+          });
         });
       });
     });
 
-    describe('When pressing some of the "crew" items', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
+    describe(`When the current "route" is ${Routes.Famous.MOVIE_DETAILS}`, () => {
+      const route = Routes.Famous.MOVIE_DETAILS;
 
-      afterEach(cleanup);
-
-      it('should call "navigation.push" correctly', async () => {
-        const push = jest.fn();
-        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
-          withVoteAverage: true,
-          withGenresIds: true,
-          withVoteCount: true,
-          language: 'EN',
-          id: '1',
+      describe('When pressing some of the "reviews" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
         });
-        const component = render(
-          renderMovieDetails({
-            mockResolvers: resolvers,
-            push,
+
+        afterEach(cleanup);
+
+        it('should call "navigation.navigate" correctly"', async () => {
+          const navigate = jest.fn();
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
             id: '1',
-          }),
-        );
-        await waitFor(() => {
-          expect(elements.crew(component)).not.toBeNull();
-        });
-        const {movie} = resolvers[0].result.data;
-        const indexItemSelected = randomPositiveNumber(
-          movie.crew.length - 1,
-          0,
-        );
-        expect(push).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.crewItems(component)[indexItemSelected]);
-        expect(push).toHaveBeenCalledTimes(1);
-        expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
-          profileImage: movie.crew[indexItemSelected].profilePath,
-          name: movie.crew[indexItemSelected].name,
-          id: Number(movie.crew[indexItemSelected].id),
+          });
+          const component = render(
+            renderMovieDetails({
+              mockResolvers: resolvers,
+              route,
+              navigate,
+              id: '1',
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.reviews(component)).not.toBeNull();
+          });
+          const {movie} = resolvers[0].result.data;
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.viewAllReviews(component));
+          expect(navigate).toHaveBeenCalledTimes(1);
+          expect(navigate).toHaveBeenCalledWith(Routes.Famous.MEDIA_REVIEWS, {
+            mediaTitle: movie.title,
+            reviews: movie.reviews,
+          });
         });
       });
-    });
 
-    describe('When pressing some of the "reviews" items', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      afterEach(cleanup);
-
-      it('should call "navigation.navigate" correctly"', async () => {
-        const navigate = jest.fn();
-        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
-          withVoteAverage: true,
-          withGenresIds: true,
-          withVoteCount: true,
-          language: 'EN',
-          id: '1',
+      describe('When pressing some of the "similar" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
         });
-        const component = render(
-          renderMovieDetails({
-            mockResolvers: resolvers,
-            navigate,
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correctly', async () => {
+          const push = jest.fn();
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
             id: '1',
-          }),
-        );
-        await waitFor(() => {
-          expect(elements.reviews(component)).not.toBeNull();
-        });
-        const {movie} = resolvers[0].result.data;
-        expect(navigate).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.viewAllReviews(component));
-        expect(navigate).toHaveBeenCalledTimes(1);
-        expect(navigate).toHaveBeenCalledWith(Routes.MediaDetail.REVIEWS, {
-          mediaTitle: movie.title,
-          reviews: movie.reviews,
+          });
+          const component = render(
+            renderMovieDetails({
+              mockResolvers: resolvers,
+              push,
+              route,
+              id: '1',
+            }),
+          );
+          act(() => {
+            jest.runAllTimers();
+          });
+          await waitFor(() => {
+            expect(elements.similar(component)).not.toBeNull();
+          });
+          const {movie} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            movie.similar.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.similarItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Famous.MOVIE_DETAILS, {
+            voteAverage: movie.similar[indexItemSelected].voteAverage,
+            posterPath: movie.similar[indexItemSelected].posterPath,
+            voteCount: movie.similar[indexItemSelected].voteCount,
+            title: movie.similar[indexItemSelected].title,
+            id: movie.similar[indexItemSelected].id,
+          });
         });
       });
-    });
 
-    describe('When pressing some of the "similar" items', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      afterEach(cleanup);
-
-      it('should call "navigation.push" correctly', async () => {
-        const push = jest.fn();
-        const resolvers = mockMovieDetails.makeQuerySuccessResolver({
-          withVoteAverage: true,
-          withGenresIds: true,
-          withVoteCount: true,
-          language: 'EN',
-          id: '1',
+      describe('When pressing some of the "cast" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
         });
-        const component = render(
-          renderMovieDetails({
-            mockResolvers: resolvers,
-            push,
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correclty', async () => {
+          const push = jest.fn();
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
             id: '1',
-          }),
-        );
-        act(() => {
-          jest.runAllTimers();
+          });
+          const component = render(
+            renderMovieDetails({
+              mockResolvers: resolvers,
+              push,
+              route,
+              id: '1',
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.cast(component)).not.toBeNull();
+          });
+          const {movie} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            movie.cast.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.castItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+            profileImage: movie.cast[indexItemSelected].profilePath,
+            name: movie.cast[indexItemSelected].name,
+            id: Number(movie.cast[indexItemSelected].id),
+          });
         });
-        await waitFor(() => {
-          expect(elements.similar(component)).not.toBeNull();
+      });
+
+      describe('When pressing some of the "crew" items', () => {
+        beforeEach(() => {
+          jest.useFakeTimers();
         });
-        const {movie} = resolvers[0].result.data;
-        const indexItemSelected = randomPositiveNumber(
-          movie.similar.length - 1,
-          0,
-        );
-        expect(push).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.similarItems(component)[indexItemSelected]);
-        expect(push).toHaveBeenCalledTimes(1);
-        expect(push).toHaveBeenCalledWith(Routes.Movie.DETAILS, {
-          voteAverage: movie.similar[indexItemSelected].voteAverage,
-          posterPath: movie.similar[indexItemSelected].posterPath,
-          voteCount: movie.similar[indexItemSelected].voteCount,
-          title: movie.similar[indexItemSelected].title,
-          id: movie.similar[indexItemSelected].id,
+
+        afterEach(cleanup);
+
+        it('should call "navigation.push" correctly', async () => {
+          const push = jest.fn();
+          const resolvers = mockMovieDetails.makeQuerySuccessResolver({
+            withVoteAverage: true,
+            withGenresIds: true,
+            withVoteCount: true,
+            language: 'EN',
+            id: '1',
+          });
+          const component = render(
+            renderMovieDetails({
+              mockResolvers: resolvers,
+              push,
+              route,
+              id: '1',
+            }),
+          );
+          await waitFor(() => {
+            expect(elements.crew(component)).not.toBeNull();
+          });
+          const {movie} = resolvers[0].result.data;
+          const indexItemSelected = randomPositiveNumber(
+            movie.crew.length - 1,
+            0,
+          );
+          expect(push).toHaveBeenCalledTimes(0);
+          fireEvent.press(elements.crewItems(component)[indexItemSelected]);
+          expect(push).toHaveBeenCalledTimes(1);
+          expect(push).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+            profileImage: movie.crew[indexItemSelected].profilePath,
+            name: movie.crew[indexItemSelected].name,
+            id: Number(movie.crew[indexItemSelected].id),
+          });
         });
       });
     });

@@ -27,7 +27,7 @@ export const useTrendingTVShows = (props: UseTrendingTVShowsProps) => {
 
   const handlePressMediaItem = useCallback(
     (item: Types.SimplifiedMedia) => {
-      props.navigation.navigate(Routes.TVShow.DETAILS, {
+      props.navigation.navigate(Routes.Home.TV_SHOW_DETAILS, {
         ...item,
         genreIds: item.genreIds || [],
       });

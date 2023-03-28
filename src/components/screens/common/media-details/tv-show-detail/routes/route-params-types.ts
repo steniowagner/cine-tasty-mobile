@@ -1,18 +1,27 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
-import {ReviewsParams} from '@src/components/screens/common/media-details/reviews/routes/route-params-types';
-import {FamousDetailsParams} from '@src/components/screens/common/famous-details/routes/route-params-types';
+import {FamousStackRoutes} from '@src/components/screens/famous/routes/route-params-types';
+import {HomeStackRoutes} from '@src/components/screens/home/routes/route-params-types';
+import {checkIsHomeStack} from '@routes/constants';
 import {Routes} from '@routes/routes';
 
-type TVShowdetailStackParams = {
-  [Routes.TVShow.DETAILS]: TVShowDetailParams;
-  [Routes.TVShow.SEASONS]: SeasonsDetailsParams;
-  [Routes.MediaDetail.REVIEWS]: ReviewsParams;
-  [Routes.Famous.DETAILS]: FamousDetailsParams;
+type StackParams = FamousStackRoutes & HomeStackRoutes;
+
+type Route = Routes.Famous.TV_SHOW_DETAILS | Routes.Home.TV_SHOW_DETAILS;
+
+export type TVShowDetailsNavigationProp = StackNavigationProp<
+  StackParams,
+  Route
+>;
+
+export type TVShowDetailsRouteProp = RouteProp<StackParams, Route>;
+
+export type TVShowDetailsProps = {
+  navigation: TVShowDetailsNavigationProp;
+  route: TVShowDetailsRouteProp;
 };
 
-/** TVShow-Details-Params */
 export type TVShowDetailParams = {
   voteAverage?: number;
   genreIds?: string[];
@@ -22,40 +31,7 @@ export type TVShowDetailParams = {
   id: number;
 };
 
-/** TVShow-Details-Stack-Props */
-export type TVShowDetailNavigationProp = StackNavigationProp<
-  TVShowdetailStackParams,
-  Routes.TVShow.DETAILS
->;
-
-export type TVShowDetailRouteProp = RouteProp<
-  TVShowdetailStackParams,
-  Routes.TVShow.DETAILS
->;
-
-export type TVShowDetailStackProps = {
-  navigation: TVShowDetailNavigationProp;
-  route: TVShowDetailRouteProp;
-};
-
-/** Seasons-Details-Params */
-export type SeasonsDetailsParams = {
-  numberOfSeasons: number;
-  title: string;
-  id: string;
-};
-
-export type SeasonsDetailsStackProps = {
-  navigation: SeasonDetailsNavigationProp;
-  route: SeasonDetailsRouteProp;
-};
-
-export type SeasonDetailsNavigationProp = StackNavigationProp<
-  TVShowdetailStackParams,
-  Routes.TVShow.SEASONS
->;
-
-export type SeasonDetailsRouteProp = RouteProp<
-  TVShowdetailStackParams,
-  Routes.TVShow.SEASONS
->;
+export const getRouteName = (rootParent: string) =>
+  checkIsHomeStack(rootParent)
+    ? Routes.Home.TV_SHOW_DETAILS
+    : Routes.Famous.TV_SHOW_DETAILS;
