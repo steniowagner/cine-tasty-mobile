@@ -4,6 +4,7 @@ import {CONSTANTS} from '@utils';
 
 import {useMediaSwitcher} from './useMediaSwitcher';
 import * as Styles from './MediaSwitcher.styles';
+import {LayoutChangeEvent} from 'react-native';
 
 type MediaSwitcherProps = {
   onCalcuateSwitchWidth: () => void;
@@ -28,17 +29,7 @@ export const MediaSwitcher = (props: MediaSwitcherProps) => {
         width={mediaSwitcher.width}
         testID="switcher-indicator"
         isDisabled={props.isDisabled}
-        style={{
-          transform: [
-            {
-              translateX: mediaSwitcher.translateX.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, mediaSwitcher.width],
-                extrapolate: 'clamp',
-              }),
-            },
-          ],
-        }}
+        style={mediaSwitcher.animatedStyle}
       />
       <Styles.Row>
         {mediaSwitcher.items.map(switchItem => (
@@ -49,7 +40,9 @@ export const MediaSwitcher = (props: MediaSwitcherProps) => {
             width={mediaSwitcher.width}
             key={switchItem.title}>
             <Styles.OptionText
-              onLayout={switchItem.onLayout}
+              onLayout={(event: LayoutChangeEvent) =>
+                switchItem.onLayout(event.nativeEvent.layout.width)
+              }
               style={{color: switchItem.textColor}}
               testID={`${switchItem.title}-text`}>
               {switchItem.title}

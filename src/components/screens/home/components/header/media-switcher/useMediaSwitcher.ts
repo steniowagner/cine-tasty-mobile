@@ -1,9 +1,15 @@
-import {useCallback, useState, useMemo, useEffect, useRef} from 'react';
-import {Animated} from 'react-native';
+import {useCallback, useState, useMemo, useEffect} from 'react';
+import {
+  useAnimatedStyle,
+  interpolate,
+  withTiming,
+  runOnJS,
+} from 'react-native-reanimated';
 
 import metrics from '@styles/metrics';
 
 import {useDefineSwitchers} from './useDefineSwicthers';
+import {useSharedValue} from 'react-native-reanimated';
 
 export const SWITCH_ANIMATION_DURATION_MS = 300;
 
@@ -19,27 +25,41 @@ type UseMediaSwitcherProps = {
 };
 
 export const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
-  const [switchItemsWidth, setSwitchItemsWidth] = useState<number[]>([]);
+  const [switchItemsWidth, setSwitchItemsWidth] = useState<number[]>([
+    undefined,
+    undefined,
+  ]);
   const [isSwitching, setIsSwitching] = useState(false);
   const [indexSelected, setIndexSelected] = useState(0);
 
-  const translateX = useRef(new Animated.Value(0)).current;
+  const switcherPosition = useSharedValue(0);
 
-  const onAniamateSwitch = useCallback(
+  const animateSwitcher = useCallback(
+    (index: number, onFinishAnimation: () => void) => {
+      switcherPosition.value = withTiming(
+        index,
+        {
+          duration: SWITCH_ANIMATION_DURATION_MS,
+        },
+        (isFinished: boolean) => {
+          if (isFinished) {
+            runOnJS(setIsSwitching)(false);
+            runOnJS(onFinishAnimation)();
+          }
+        },
+      );
+    },
+    [indexSelected],
+  );
+
+  const handlePressSwitcher = useCallback(
     (index: number, onFinishAnimation: () => void) => {
       if (indexSelected === index) {
         return;
       }
       setIndexSelected(index);
       setIsSwitching(true);
-      Animated.timing(translateX, {
-        duration: SWITCH_ANIMATION_DURATION_MS,
-        useNativeDriver: true,
-        toValue: index,
-      }).start(() => {
-        setIsSwitching(false);
-        onFinishAnimation();
-      });
+      animateSwitcher(index, onFinishAnimation);
     },
     [indexSelected],
   );
@@ -47,35 +67,41 @@ export const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
   const defineSwitchers = useDefineSwitchers({
     onPressSwitchMovies: props.onPressSwitchMovies,
     onPresSwitchTVShows: props.onPresSwitchTVShows,
-    animateSwitcher: onAniamateSwitch,
+    onPressSwitcher: handlePressSwitcher,
     switchItemsWidth,
     setSwitchItemsWidth,
     indexSelected,
   });
 
   const width = useMemo(() => {
-    if (switchItemsWidth.length !== defineSwitchers.items.length) {
+    const isSwicthersWidthDefined = switchItemsWidth.every(
+      switchItemWidth => typeof switchItemWidth === 'number',
+    );
+    if (!isSwicthersWidthDefined) {
       return metrics.width;
     }
-    let switchItemWidth = 0;
-    for (let i = 0; i < switchItemsWidth.length; i += 1) {
-      if (switchItemsWidth[i] > switchItemWidth) {
-        switchItemWidth = switchItemsWidth[i];
-      }
-    }
-    return switchItemWidth;
+    return switchItemsWidth.sort().reverse()[0];
   }, [switchItemsWidth, defineSwitchers.items]);
 
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: width !== metrics.width ? 1 : 0,
+    transform: [
+      {translateX: interpolate(switcherPosition.value, [0, 1], [0, width])},
+    ],
+  }));
+
   useEffect(() => {
-    if (width !== metrics.width) {
+    const alreadyCalculatedSwitcherWidth = width !== metrics.width;
+    if (alreadyCalculatedSwitcherWidth) {
       props.onCalcuateSwitchWidth();
     }
   }, [width]);
 
   return {
     items: defineSwitchers.items,
+    animatedStyle,
     isSwitching,
-    translateX,
+    switcherPosition,
     width,
   };
 };

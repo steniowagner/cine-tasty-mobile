@@ -1,12 +1,11 @@
 import {Dispatch, SetStateAction, useCallback, useMemo} from 'react';
-import {LayoutChangeEvent} from 'react-native';
 import {useTheme} from 'styled-components/native';
 
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 
 type UseDefineSwitchersProps = {
-  animateSwitcher: (index: number, onFinishAnimation: () => void) => void;
+  onPressSwitcher: (index: number, onFinishAnimation: () => void) => void;
   setSwitchItemsWidth: Dispatch<SetStateAction<number[]>>;
   onPressSwitchMovies: () => void;
   onPresSwitchTVShows: () => void;
@@ -18,15 +17,15 @@ export const useDefineSwitchers = (props: UseDefineSwitchersProps) => {
   const translations = useTranslations();
   const theme = useTheme();
 
-  const handleOnLayout = useCallback(
-    (event: LayoutChangeEvent, switcherIndex: number) => {
+  const setSwitcherWidth = useCallback(
+    (itemWidth: number, switcherIndex: number) => {
       const isSwitcherAlreadyMeasured = !!props.switchItemsWidth[switcherIndex];
       if (isSwitcherAlreadyMeasured) {
         return;
       }
       props.setSwitchItemsWidth((previousSwitchItemsWidths: number[]) =>
         Object.assign([...previousSwitchItemsWidths], {
-          [switcherIndex]: event.nativeEvent?.layout?.width,
+          [switcherIndex]: itemWidth,
         }),
       );
     },
@@ -37,8 +36,8 @@ export const useDefineSwitchers = (props: UseDefineSwitchersProps) => {
     () => [
       {
         title: translations.translate(Translations.Tags.HOME_MOVIES),
-        onLayout: (event: LayoutChangeEvent) => handleOnLayout(event, 0),
-        onPress: () => props.animateSwitcher(0, props.onPressSwitchMovies),
+        onLayout: (itemWidth: number) => setSwitcherWidth(itemWidth, 0),
+        onPress: () => props.onPressSwitcher(0, props.onPressSwitchMovies),
         textColor:
           props.indexSelected === 0
             ? theme.colors.buttonText
@@ -46,8 +45,8 @@ export const useDefineSwitchers = (props: UseDefineSwitchersProps) => {
       },
       {
         title: translations.translate(Translations.Tags.HOME_TV_SHOWS),
-        onLayout: (event: LayoutChangeEvent) => handleOnLayout(event, 1),
-        onPress: () => props.animateSwitcher(1, props.onPresSwitchTVShows),
+        onLayout: (itemWidth: number) => setSwitcherWidth(itemWidth, 1),
+        onPress: () => props.onPressSwitcher(1, props.onPresSwitchTVShows),
         textColor:
           props.indexSelected === 1
             ? theme.colors.buttonText
@@ -55,12 +54,12 @@ export const useDefineSwitchers = (props: UseDefineSwitchersProps) => {
       },
     ],
     [
-      props.animateSwitcher,
+      props.onPressSwitcher,
       props.onPressSwitchMovies,
       props.onPresSwitchTVShows,
       props.indexSelected,
       translations.translate,
-      handleOnLayout,
+      setSwitcherWidth,
     ],
   );
 
