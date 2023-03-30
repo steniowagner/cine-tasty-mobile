@@ -1,25 +1,27 @@
 import React from 'react';
-import {LayoutChangeEvent} from 'react-native';
 
 import {CONSTANTS} from '@utils';
 
-import useMediaSwitcher, {SwitchItem} from './useMediaSwitcher';
+import {useMediaSwitcher} from './useMediaSwitcher';
 import * as Styles from './MediaSwitcher.styles';
 
 type MediaSwitcherProps = {
   onCalcuateSwitchWidth: () => void;
-  items: SwitchItem[];
+  onPresSwitchTVShows: () => void;
+  onPressSwitchMovies: () => void;
   isDisabled: boolean;
 };
 
 export const MediaSwitcher = (props: MediaSwitcherProps) => {
   const mediaSwitcher = useMediaSwitcher({
     onCalcuateSwitchWidth: props.onCalcuateSwitchWidth,
-    items: props.items,
+    onPressSwitchMovies: props.onPressSwitchMovies,
+    onPresSwitchTVShows: props.onPresSwitchTVShows,
   });
+
   return (
     <Styles.Wrapper
-      width={props.items.length * mediaSwitcher.width}
+      width={mediaSwitcher.items.length * mediaSwitcher.width}
       style={CONSTANTS.VALUES.DEFAULT_SHADOW}
       testID="media-switcher-wrapper">
       <Styles.SwitcherIndicator
@@ -47,9 +49,7 @@ export const MediaSwitcher = (props: MediaSwitcherProps) => {
             width={mediaSwitcher.width}
             key={switchItem.title}>
             <Styles.OptionText
-              onLayout={(event: LayoutChangeEvent) =>
-                switchItem.onLayout(event)
-              }
+              onLayout={switchItem.onLayout}
               style={{color: switchItem.textColor}}
               testID={`${switchItem.title}-text`}>
               {switchItem.title}

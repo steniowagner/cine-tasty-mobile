@@ -1,8 +1,9 @@
 import {useCallback, useState, useMemo, useEffect, useRef} from 'react';
-import {Animated, LayoutChangeEvent} from 'react-native';
-import {useTheme} from 'styled-components/native';
+import {Animated} from 'react-native';
 
 import metrics from '@styles/metrics';
+
+import {useDefineSwitchers} from './useDefineSwicthers';
 
 export const SWITCH_ANIMATION_DURATION_MS = 300;
 
@@ -13,17 +14,16 @@ export type SwitchItem = {
 
 type UseMediaSwitcherProps = {
   onCalcuateSwitchWidth: () => void;
-  items: SwitchItem[];
+  onPressSwitchMovies: () => void;
+  onPresSwitchTVShows: () => void;
 };
 
-const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
-  const [switchItemsWidths, setSwitchItemsWidth] = useState<number[]>([]);
+export const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
+  const [switchItemsWidth, setSwitchItemsWidth] = useState<number[]>([]);
   const [isSwitching, setIsSwitching] = useState(false);
   const [indexSelected, setIndexSelected] = useState(0);
 
   const translateX = useRef(new Animated.Value(0)).current;
-
-  const theme = useTheme();
 
   const onAniamateSwitch = useCallback(
     (index: number, onFinishAnimation: () => void) => {
@@ -44,54 +44,27 @@ const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
     [indexSelected],
   );
 
-  const onSwitchItemLayout = useCallback(
-    (event: LayoutChangeEvent, switchItemindex: number) => {
-      const isSwitchItemAlreadyMeasured = !!switchItemsWidths[switchItemindex];
-      if (isSwitchItemAlreadyMeasured) {
-        return;
-      }
-      const {width} = event.nativeEvent.layout;
-      setSwitchItemsWidth((previousSwitchItemsWidths: number[]) =>
-        Object.assign([...previousSwitchItemsWidths], {
-          [switchItemindex]: width,
-        }),
-      );
-    },
-    [switchItemsWidths],
-  );
+  const defineSwitchers = useDefineSwitchers({
+    onPressSwitchMovies: props.onPressSwitchMovies,
+    onPresSwitchTVShows: props.onPresSwitchTVShows,
+    animateSwitcher: onAniamateSwitch,
+    switchItemsWidth,
+    setSwitchItemsWidth,
+    indexSelected,
+  });
 
   const width = useMemo(() => {
-    if (switchItemsWidths.length !== props.items.length) {
+    if (switchItemsWidth.length !== defineSwitchers.items.length) {
       return metrics.width;
     }
     let switchItemWidth = 0;
-    for (let i = 0; i < switchItemsWidths.length; i += 1) {
-      if (switchItemsWidths[i] > switchItemWidth) {
-        switchItemWidth = switchItemsWidths[i];
+    for (let i = 0; i < switchItemsWidth.length; i += 1) {
+      if (switchItemsWidth[i] > switchItemWidth) {
+        switchItemWidth = switchItemsWidth[i];
       }
     }
     return switchItemWidth;
-  }, [switchItemsWidths, props.items]);
-
-  const items = useMemo(
-    () => [
-      {
-        onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 0),
-        textColor:
-          indexSelected === 0 ? theme.colors.buttonText : theme.colors.text,
-        onPress: () => onAniamateSwitch(0, props.items[0].onPress),
-        title: props.items[0].title,
-      },
-      {
-        onLayout: (event: LayoutChangeEvent) => onSwitchItemLayout(event, 1),
-        textColor:
-          indexSelected === 1 ? theme.colors.buttonText : theme.colors.text,
-        onPress: () => onAniamateSwitch(1, props.items[1].onPress),
-        title: props.items[1].title,
-      },
-    ],
-    [onSwitchItemLayout, indexSelected, theme, props.items],
-  );
+  }, [switchItemsWidth, defineSwitchers.items]);
 
   useEffect(() => {
     if (width !== metrics.width) {
@@ -100,11 +73,9 @@ const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
   }, [width]);
 
   return {
+    items: defineSwitchers.items,
     isSwitching,
     translateX,
     width,
-    items,
   };
 };
-
-export default useMediaSwitcher;

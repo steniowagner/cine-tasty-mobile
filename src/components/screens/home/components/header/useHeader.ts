@@ -1,8 +1,6 @@
 import {useCallback, useState, useMemo, useRef, useEffect} from 'react';
 import {Animated} from 'react-native';
 
-import {Translations} from '@i18n/tags';
-import {useTranslations} from '@hooks';
 import {CONSTANTS} from '@utils';
 
 type UseHeaderProps = {
@@ -15,25 +13,6 @@ export const useHeader = (props: UseHeaderProps) => {
   const [isSwitchWidthCalculated, setIsSwitchWidthCalculated] = useState(false);
 
   const opacity = useRef(new Animated.Value(0)).current;
-  const translations = useTranslations();
-
-  const items = useMemo(
-    () => [
-      {
-        title: translations.translate(Translations.Tags.HOME_MOVIES),
-        onPress: props.onPressSwitchMovies,
-      },
-      {
-        title: translations.translate(Translations.Tags.HOME_TV_SHOWS),
-        onPress: props.onPresSwitchTVShows,
-      },
-    ],
-    [
-      props.onPressSwitchMovies,
-      props.onPresSwitchTVShows,
-      translations.translate,
-    ],
-  );
 
   const onCalcuateSwitchWidth = useCallback(
     () => setIsSwitchWidthCalculated(true),
@@ -60,7 +39,8 @@ export const useHeader = (props: UseHeaderProps) => {
 
   return {
     opacity: headerOpacity,
+    onPresSwitchTVShows: props.onPresSwitchTVShows,
+    onPressSwitchMovies: props.onPressSwitchMovies,
     onCalcuateSwitchWidth,
-    items,
   };
 };
