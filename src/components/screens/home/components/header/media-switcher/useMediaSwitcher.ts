@@ -19,7 +19,7 @@ export type SwitchItem = {
 };
 
 type UseMediaSwitcherProps = {
-  onCalcuateSwitchWidth: () => void;
+  onCalculateSwitchWidth: () => void;
   onPressSwitchMovies: () => void;
   onPresSwitchTVShows: () => void;
 };
@@ -92,7 +92,7 @@ export const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
   useEffect(() => {
     const alreadyCalculatedSwitcherWidth = width !== metrics.width;
     if (alreadyCalculatedSwitcherWidth) {
-      props.onCalcuateSwitchWidth();
+      props.onCalculateSwitchWidth();
     }
   }, [width]);
 

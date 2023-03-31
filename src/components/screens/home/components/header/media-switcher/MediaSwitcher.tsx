@@ -7,7 +7,7 @@ import {useMediaSwitcher} from './useMediaSwitcher';
 import * as Styles from './MediaSwitcher.styles';
 
 type MediaSwitcherProps = {
-  onCalcuateSwitchWidth: () => void;
+  onCalculateSwitchWidth: () => void;
   onPresSwitchTVShows: () => void;
   onPressSwitchMovies: () => void;
   isDisabled: boolean;
@@ -15,7 +15,7 @@ type MediaSwitcherProps = {
 
 export const MediaSwitcher = (props: MediaSwitcherProps) => {
   const mediaSwitcher = useMediaSwitcher({
-    onCalcuateSwitchWidth: props.onCalcuateSwitchWidth,
+    onCalculateSwitchWidth: props.onCalculateSwitchWidth,
     onPressSwitchMovies: props.onPressSwitchMovies,
     onPresSwitchTVShows: props.onPresSwitchTVShows,
   });
