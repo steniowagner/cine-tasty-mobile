@@ -1,4 +1,5 @@
-import {TouchableOpacity, Platform, Animated} from 'react-native';
+import {TouchableOpacity, Platform} from 'react-native';
+import Animated from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 

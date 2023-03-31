@@ -20,9 +20,10 @@ export const Header = (props: HeaderProps) => {
     onPresSwitchTVShows: props.onPresSwitchTVShows,
     onPressSwitchMovies: props.onPressSwitchMovies,
   });
+
   return (
     <>
-      <Styles.Wrapper testID="header-wrapper" style={{opacity: header.opacity}}>
+      <Styles.Wrapper testID="header-wrapper" style={header.animatedStyles}>
         <HeaderIconButton
           disabled={props.shouldDisableActions}
           onPress={props.onPressSettings}
@@ -30,9 +31,10 @@ export const Header = (props: HeaderProps) => {
           withMarginLeft
         />
         <MediaSwitcher
-          onCalcuateSwitchWidth={header.onCalcuateSwitchWidth}
+          onCalculateSwitchWidth={header.onCalculateSwitchWidth}
+          onPresSwitchTVShows={props.onPresSwitchTVShows}
+          onPressSwitchMovies={props.onPressSwitchMovies}
           isDisabled={props.shouldDisableActions}
-          items={header.items}
         />
         <HeaderIconButton
           disabled={props.shouldDisableActions}

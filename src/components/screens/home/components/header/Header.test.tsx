@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
@@ -5,9 +6,6 @@ import {ThemeProvider} from 'styled-components/native';
 import {dark as theme} from '@styles/themes/dark';
 
 import {Header} from './Header';
-
-const switchTVShowsTitle = 'translations:home:tvShows';
-const switchMoviesTitle = 'translations:home:movies';
 
 const renderHeader = ({
   onPresSwitchTVShows = jest.fn(),
@@ -34,30 +32,14 @@ describe('<Header />', () => {
     search: (api: RenderAPI) =>
       api.getByTestId('header-icon-button-wrapper-magnify'),
     wrapper: (api: RenderAPI) => api.getByTestId('media-switcher-wrapper'),
-    tvShowsSwitchText: (api: RenderAPI) =>
-      api.getByTestId(`${switchTVShowsTitle}-text`),
-    moviesSwitchText: (api: RenderAPI) =>
-      api.getByTestId(`${switchMoviesTitle}-text`),
   };
 
-  describe('UI', () => {
+  describe('Renering the Header', () => {
     it('should render correctly', () => {
       const component = render(renderHeader({}));
       expect(elements.settings(component)).not.toBeNull();
       expect(elements.search(component)).not.toBeNull();
       expect(elements.wrapper(component)).not.toBeNull();
-    });
-
-    it('should render the switch-items with the correct labels', () => {
-      const component = render(renderHeader({}));
-      expect(elements.tvShowsSwitchText(component)).not.toBeNull();
-      expect(elements.tvShowsSwitchText(component).children[0]).toEqual(
-        switchTVShowsTitle,
-      );
-      expect(elements.moviesSwitchText(component)).not.toBeNull();
-      expect(elements.moviesSwitchText(component).children[0]).toEqual(
-        switchMoviesTitle,
-      );
     });
   });
 
@@ -70,7 +52,7 @@ describe('<Header />', () => {
       expect(onPressSettings).toHaveBeenCalledTimes(1);
     });
 
-    it('should not-call "onPressSettings" when the "settings" button is pressed and the "shouldDisableActions" is "true"', () => {
+    it('should not call "onPressSettings" when the "settings" button is pressed and the "shouldDisableActions" is "true"', () => {
       const onPressSettings = jest.fn();
       const component = render(
         renderHeader({onPressSettings, shouldDisableActions: true}),
@@ -88,7 +70,7 @@ describe('<Header />', () => {
       expect(onPressSearch).toHaveBeenCalledTimes(1);
     });
 
-    it('should not-call "onPressSearch" when the "search" button is pressed and the "shouldDisableActions" is "true"', () => {
+    it('should not call "onPressSearch" when the "search" button is pressed and the "shouldDisableActions" is "true"', () => {
       const onPressSearch = jest.fn();
       const component = render(
         renderHeader({onPressSearch, shouldDisableActions: true}),

@@ -1,8 +1,10 @@
-import {useCallback, useState, useMemo, useRef, useEffect} from 'react';
-import {Animated} from 'react-native';
+import {useCallback, useState, useEffect} from 'react';
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-import {Translations} from '@i18n/tags';
-import {useTranslations} from '@hooks';
 import {CONSTANTS} from '@utils';
 
 type UseHeaderProps = {
@@ -14,53 +16,41 @@ type UseHeaderProps = {
 export const useHeader = (props: UseHeaderProps) => {
   const [isSwitchWidthCalculated, setIsSwitchWidthCalculated] = useState(false);
 
-  const opacity = useRef(new Animated.Value(0)).current;
-  const translations = useTranslations();
+  const opacity = useSharedValue(0);
 
-  const items = useMemo(
-    () => [
-      {
-        title: translations.translate(Translations.Tags.HOME_MOVIES),
-        onPress: props.onPressSwitchMovies,
-      },
-      {
-        title: translations.translate(Translations.Tags.HOME_TV_SHOWS),
-        onPress: props.onPresSwitchTVShows,
-      },
-    ],
-    [
-      props.onPressSwitchMovies,
-      props.onPresSwitchTVShows,
-      translations.translate,
-    ],
-  );
-
-  const onCalcuateSwitchWidth = useCallback(
+  const onCalculateSwitchWidth = useCallback(
     () => setIsSwitchWidthCalculated(true),
     [],
   );
 
-  const headerOpacity = useMemo(
-    () => (isSwitchWidthCalculated ? opacity : 0),
-    [isSwitchWidthCalculated, opacity],
-  );
-
-  const animateHeaderOpacity = useCallback(() => {
-    const currentOpacity = props.shouldDisableActions ? 0.5 : 1;
-    Animated.timing(opacity, {
+  const animateHeaderOpacity = useCallback((toValue: number) => {
+    opacity.value = withTiming(toValue, {
       duration: CONSTANTS.VALUES.DEFAULT_ANIMATION_DURATION,
-      toValue: currentOpacity,
-      useNativeDriver: true,
-    }).start();
-  }, [props.shouldDisableActions]);
+    });
+  }, []);
+
+  const handleOnChangeShouldDisableActions = useCallback(() => {
+    if (!isSwitchWidthCalculated) {
+      return;
+    }
+    setTimeout(() => {
+      const toValue = props.shouldDisableActions ? 0.5 : 1;
+      animateHeaderOpacity(toValue);
+    }, CONSTANTS.VALUES.DEFAULT_ANIMATION_DURATION);
+  }, [props.shouldDisableActions, isSwitchWidthCalculated]);
+
+  const animatedStyles = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
 
   useEffect(() => {
-    animateHeaderOpacity();
+    handleOnChangeShouldDisableActions();
   }, [props.shouldDisableActions]);
 
   return {
-    opacity: headerOpacity,
-    onCalcuateSwitchWidth,
-    items,
+    onPresSwitchTVShows: props.onPresSwitchTVShows,
+    onPressSwitchMovies: props.onPressSwitchMovies,
+    onCalculateSwitchWidth,
+    animatedStyles,
   };
 };
