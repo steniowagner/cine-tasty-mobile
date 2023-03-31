@@ -1,24 +1,24 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
+import {HomeStackRoutes} from '@src/components/screens/home/routes/route-params-types';
 import * as Types from '@local-types';
 import {Routes} from '@routes/routes';
 
-import {HomeStackRoutes} from '../../../routes/route-params-types';
+type StackParams = HomeStackRoutes;
 
-export type MediaSectionViewAllStackNavigationProp = StackNavigationProp<
-  HomeStackRoutes,
-  Routes.Home.MEDIA_DETAILS_VIEW_ALL
+type Route = Routes.Home.MEDIA_DETAILS_VIEW_ALL;
+
+export type MediaSectionViewAllNavigationProp = StackNavigationProp<
+  StackParams,
+  Route
 >;
 
-export type MediaSectionViewAllStackRouteProp = RouteProp<
-  HomeStackRoutes,
-  Routes.Home.MEDIA_DETAILS_VIEW_ALL
->;
+export type MediaSectionViewAllRouteProp = RouteProp<StackParams, Route>;
 
 export type MediaSectionViewAllProps = {
-  navigation: MediaSectionViewAllStackNavigationProp;
-  route: MediaSectionViewAllStackRouteProp;
+  navigation: MediaSectionViewAllNavigationProp;
+  route: MediaSectionViewAllRouteProp;
 };
 
 export type MediaSectionViewAllParams = {

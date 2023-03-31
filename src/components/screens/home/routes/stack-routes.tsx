@@ -14,7 +14,7 @@ import {
 import SearchStack from '@src/components/screens/common/search/routes/stack-routes';
 import {Routes} from '@routes/routes';
 
-import MediaSectionViewAll from '../components/media-section-view-all/components/MediaSectionViewAll';
+import {MediaSectionViewAll} from '../components/media-section-view-all/components/MediaSectionViewAll';
 import {MediaSectionViewAllProps} from '../components/media-section-view-all/routes/route-params-types';
 import {Home} from '../components/Home';
 import {TVShowDetail} from '../../common/media-details/tv-show-detail/components/TVShowDetail';

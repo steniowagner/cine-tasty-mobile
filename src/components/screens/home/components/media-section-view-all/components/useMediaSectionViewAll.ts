@@ -1,130 +1,110 @@
 import {useCallback, useState, useMemo} from 'react';
-import {useTranslation} from 'react-i18next';
-import {DocumentNode} from 'graphql';
 
-import {useGetCurrentISO6391Language, usePaginatedQuery} from '@hooks';
+import {useTranslations, usePagination} from '@hooks';
 import * as SchemaTypes from '@schema-types';
-import {getQuery} from '@graphql/queries';
-import * as TRANSLATIONS from '@i18n/tags';
+import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import {MediaSectionViewAllStackNavigationProp} from '../routes/route-params-types';
-import {getTVShowProperQuery, getMovieProperQuery} from './getProperQuery';
-import useOnGetData, {Data} from './useOnGetData';
+import {MediaSectionViewAllNavigationProp} from '../routes/route-params-types';
+import {MediaSectionViewAllData, MediaTrendingItem} from './on-get-data/types';
+import {getTrendingQuery} from './get-trending-query/getTrendingQuery';
+import {handleOnGetData} from './on-get-data/handleOnGetData';
 
-type PaginationVariables = {
+type Variables = {
   language?: SchemaTypes.ISO6391Language | null;
-  page: number;
 };
 
 type UseMediaSectionViewAllProps = {
-  navigation: MediaSectionViewAllStackNavigationProp;
+  navigation: MediaSectionViewAllNavigationProp;
   trendingMediaItemKey: Types.TrendingMediaItemKey;
   initialMediaItems: Types.SimplifiedMedia[];
   isMovie: boolean;
 };
 
-const useMediaSectionViewAll = ({
-  trendingMediaItemKey,
-  initialMediaItems,
-  navigation,
-  isMovie,
-}: UseMediaSectionViewAllProps) => {
-  const [mediaItems, setMediaItems] =
-    useState<Types.SimplifiedMedia[]>(initialMediaItems);
-  const [hasPaginationError, setHasPaginationError] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+export const useMediaSectionViewAll = (props: UseMediaSectionViewAllProps) => {
+  const [hasPaginationError, setHasPaginationError] = useState(false);
 
-  const {currentISO6391Language} = useGetCurrentISO6391Language();
-  const onGetData = useOnGetData({trendingMediaItemKey, isMovie});
-  const {t} = useTranslation();
+  const translations = useTranslations();
 
-  const properQuery = useMemo((): DocumentNode => {
-    const queryId = isMovie
-      ? getMovieProperQuery(trendingMediaItemKey)
-      : getTVShowProperQuery(trendingMediaItemKey);
+  const query = useMemo(
+    () => getTrendingQuery(props.trendingMediaItemKey, props.isMovie),
+    [props.trendingMediaItemKey, props.isMovie],
+  );
 
-    return getQuery(queryId);
-  }, [trendingMediaItemKey, isMovie]);
+  const onGetData = useCallback(
+    (data: MediaSectionViewAllData) =>
+      handleOnGetData({
+        trendingMediaItemKey: props.trendingMediaItemKey,
+        isMovie: props.isMovie,
+        data,
+      }),
+    [props.trendingMediaItemKey, props.isMovie],
+  );
 
-  const handleOnGetData = useCallback((data: Data): boolean => {
-    const {hasMore, items} = onGetData(data);
+  const texts = useMemo(
+    () => ({
+      paginationError: props.isMovie
+        ? translations.translate(Translations.Tags.HOME_MOVIES_PAGINATION_ERROR)
+        : translations.translate(
+            Translations.Tags.HOME_TV_SHOWS_PAGINATION_ERROR,
+          ),
+    }),
+    [props.isMovie, translations.translate],
+  );
 
-    setMediaItems((preiviousMediaItems: Types.SimplifiedMedia[]) => [
-      ...preiviousMediaItems,
-      ...items,
-    ]);
+  const variables = useMemo(
+    () => ({
+      language: translations.language,
+    }),
+    [translations.language],
+  );
 
-    return hasMore;
-  }, []);
-
-  const {onPaginateQuery, isPaginating} = usePaginatedQuery<
-    Data,
-    PaginationVariables
+  const pagination = usePagination<
+    MediaSectionViewAllData,
+    MediaTrendingItem,
+    Variables
   >({
-    onPaginationQueryError: () => {
-      const i18nErrorRef = isMovie
-        ? TRANSLATIONS.HOME_MOVIES_PAGINATION_ERROR
-        : TRANSLATIONS.HOME_TV_SHOWS_PAGINATION_ERROR;
-
-      setError(t(i18nErrorRef));
-
-      setHasPaginationError(true);
-    },
-    variables: {
-      language: currentISO6391Language,
-    },
-    fireEntryQueryWhenMounted: false,
-    onEntryQueryError: () => {},
-    onGetData: handleOnGetData,
-    fetchPolicy: 'no-cache',
-    query: properQuery,
+    initialDataset: props.initialMediaItems as MediaTrendingItem[],
+    paginationError: texts.paginationError,
+    skipFirstRun: false,
+    entryQueryError: '',
+    variables,
+    onGetData,
+    query,
   });
 
   const onPressBottomReloadButton = useCallback(() => {
     setHasPaginationError(false);
-
-    setError('');
-
-    onPaginateQuery();
-  }, []);
-
-  const shouldShowListBottomReloadButton = useMemo(
-    () => !!mediaItems.length && (hasPaginationError || isPaginating),
-    [hasPaginationError, isPaginating, mediaItems],
-  );
+    pagination.paginate();
+  }, [pagination.paginate]);
 
   const onPressItem = useCallback(
     (item: Types.SimplifiedMedia) => {
-      const nextRoute = isMovie
+      const nextRoute = props.isMovie
         ? Routes.Home.MOVIE_DETAILS
         : Routes.Home.TV_SHOW_DETAILS;
-
-      const params = {
+      props.navigation.navigate(nextRoute, {
         genreIds: item.genreIds || [],
         voteAverage: item.voteAverage,
         posterPath: item.posterPath,
         voteCount: item.voteCount,
         title: item.title,
         id: item.id,
-      };
-
-      navigation.navigate(nextRoute, params);
+      });
     },
-    [isMovie],
+    [props.isMovie, props.navigation],
   );
 
   return {
-    shouldShowListBottomReloadButton,
-    onEndReached: onPaginateQuery,
+    shouldShowListBottomReloadButton:
+      !!pagination.dataset.length &&
+      (pagination.hasPaginationError || pagination.isPaginating),
+    onEndReached: pagination.paginate,
     onPressBottomReloadButton,
-    dataset: mediaItems,
+    dataset: pagination.dataset,
     hasPaginationError,
-    isPaginating,
+    isPaginating: pagination.isPaginating,
     onPressItem,
-    error,
   };
 };
-
-export default useMediaSectionViewAll;

@@ -17,7 +17,7 @@ type HomeSectionProps = {
   id: string;
 };
 
-const HomeSection = (props: HomeSectionProps) => (
+export const HomeSection = (props: HomeSectionProps) => (
   <Styles.Wrapper testID="section-wrapper">
     <SectionViewAll
       onPressViewAll={props.onPressViewAll}
@@ -48,5 +48,3 @@ const HomeSection = (props: HomeSectionProps) => (
     />
   </Styles.Wrapper>
 );
-
-export default HomeSection;
