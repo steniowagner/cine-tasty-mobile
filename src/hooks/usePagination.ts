@@ -29,6 +29,7 @@ type UsePaginationProps<TResult, TDataset, TVariables> = {
   onGetData: (result: TResult) => GetQueryResult<TDataset>;
   variables?: ReceivedVariables<TVariables>;
   skipCurrentVariableUpdate?: boolean;
+  initialDataset?: TDataset[];
   fetchPolicy?: FetchPolicy;
   entryQueryError: string;
   paginationError: string;
@@ -39,7 +40,9 @@ type UsePaginationProps<TResult, TDataset, TVariables> = {
 export const usePagination = <TResult, TDataset, TVariables>(
   props: UsePaginationProps<TResult, TDataset, TVariables>,
 ) => {
-  const [dataset, setDataset] = useState<TDataset[]>([]);
+  const [dataset, setDataset] = useState<TDataset[]>(
+    props.initialDataset || [],
+  );
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState('');
 
