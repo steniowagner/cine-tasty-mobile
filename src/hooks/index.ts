@@ -3,5 +3,5 @@ export {useSystemThemePreference} from './useSystemThemePreference';
 export {useImageFallbackView} from './useImageFallbackView';
 export {useGetCurrentTheme} from './useGetCurrentTheme';
 export {useTranslations} from './useTranslations';
-export {usePagination} from './usePagination';
+export {usePagination} from './pagination/usePagination';
 export {useImperativeQuery} from './useImperativeQuery';
