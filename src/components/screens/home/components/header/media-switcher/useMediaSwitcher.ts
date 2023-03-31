@@ -1,5 +1,6 @@
 import {useCallback, useState, useMemo, useEffect} from 'react';
 import {
+  useSharedValue,
   useAnimatedStyle,
   interpolate,
   withTiming,
@@ -9,9 +10,8 @@ import {
 import metrics from '@styles/metrics';
 
 import {useDefineSwitchers} from './useDefineSwicthers';
-import {useSharedValue} from 'react-native-reanimated';
 
-export const SWITCH_ANIMATION_DURATION_MS = 300;
+const SWITCH_ANIMATION_DURATION_MS = 300;
 
 export type SwitchItem = {
   title: string;
@@ -31,7 +31,6 @@ export const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
   ]);
   const [isSwitching, setIsSwitching] = useState(false);
   const [indexSelected, setIndexSelected] = useState(0);
-
   const switcherPosition = useSharedValue(0);
 
   const animateSwitcher = useCallback(
@@ -80,7 +79,7 @@ export const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
     if (!isSwicthersWidthDefined) {
       return metrics.width;
     }
-    return switchItemsWidth.sort().reverse()[0];
+    return switchItemsWidth.sort((a, b) => b - a)[0];
   }, [switchItemsWidth, defineSwitchers.items]);
 
   const animatedStyle = useAnimatedStyle(() => ({

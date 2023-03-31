@@ -10,10 +10,6 @@ type DynamicWidthStyleProps = {
   width: number;
 };
 
-type SwitcherIndicatorProps = DynamicWidthStyleProps & {
-  isDisabled: boolean;
-};
-
 export const Wrapper = styled(View)<WrapperStyleProps>`
   width: ${({width}) => width}px;
   border-radius: ${({theme}) => theme.metrics.height}px;
@@ -21,14 +17,13 @@ export const Wrapper = styled(View)<WrapperStyleProps>`
   background-color: ${({theme}) => theme.colors.secondary};
 `;
 
-export const SwitcherIndicator = styled(Animated.View)<SwitcherIndicatorProps>`
+export const SwitcherIndicator = styled(Animated.View)<DynamicWidthStyleProps>`
   width: ${({width}) => width}px;
   height: 100%;
   border-radius: ${({theme}) => theme.metrics.height}px;
   background-color: ${({theme}) => theme.colors.primary};
   border: ${({theme}) =>
     `${theme.metrics.extraSmallSize}px solid ${theme.colors.secondary}`};
-    opacity: ${({isDisabled}) => (isDisabled ? 0.5 : 1)}
   position: absolute;
 `;
 

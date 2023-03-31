@@ -1,10 +1,10 @@
 import React from 'react';
+import {LayoutChangeEvent} from 'react-native';
 
 import {CONSTANTS} from '@utils';
 
 import {useMediaSwitcher} from './useMediaSwitcher';
 import * as Styles from './MediaSwitcher.styles';
-import {LayoutChangeEvent} from 'react-native';
 
 type MediaSwitcherProps = {
   onCalcuateSwitchWidth: () => void;
@@ -28,7 +28,6 @@ export const MediaSwitcher = (props: MediaSwitcherProps) => {
       <Styles.SwitcherIndicator
         width={mediaSwitcher.width}
         testID="switcher-indicator"
-        isDisabled={props.isDisabled}
         style={mediaSwitcher.animatedStyle}
       />
       <Styles.Row>
