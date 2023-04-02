@@ -1,4 +1,4 @@
-import {useCallback, useState, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import {useTranslations, usePagination} from '@hooks';
 import * as SchemaTypes from '@schema-types';
@@ -23,8 +23,6 @@ type UseMediaSectionViewAllProps = {
 };
 
 export const useMediaSectionViewAll = (props: UseMediaSectionViewAllProps) => {
-  const [hasPaginationError, setHasPaginationError] = useState(false);
-
   const translations = useTranslations();
 
   const query = useMemo(
@@ -74,11 +72,6 @@ export const useMediaSectionViewAll = (props: UseMediaSectionViewAllProps) => {
     query,
   });
 
-  const onPressBottomReloadButton = useCallback(() => {
-    setHasPaginationError(false);
-    pagination.paginate();
-  }, [pagination.paginate]);
-
   const onPressItem = useCallback(
     (item: Types.SimplifiedMedia) => {
       const nextRoute = props.isMovie
@@ -98,12 +91,12 @@ export const useMediaSectionViewAll = (props: UseMediaSectionViewAllProps) => {
 
   return {
     shouldShowListBottomReloadButton:
-      !!pagination.dataset.length &&
+      pagination.dataset.length &&
       (pagination.hasPaginationError || pagination.isPaginating),
     onEndReached: pagination.paginate,
-    onPressBottomReloadButton,
+    onPressBottomReloadButton: pagination.paginate,
     dataset: pagination.dataset,
-    hasPaginationError,
+    hasPaginationError: pagination.hasPaginationError,
     isPaginating: pagination.isPaginating,
     onPressItem,
   };
