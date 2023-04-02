@@ -6,7 +6,7 @@ import * as Types from '@local-types';
 
 import {HomeStackProps} from '../routes/route-params-types';
 import LoadingHome from './top3/loading-top3/LoadingTop3';
-import HomeSection from './home-section/HomeSection';
+import {HomeSection} from './home-section/HomeSection';
 import {Header} from './header/Header';
 import {useHome} from './useHome';
 import {Top3} from './top3/Top3';
