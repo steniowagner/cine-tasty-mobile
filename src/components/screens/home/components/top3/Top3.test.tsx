@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   fireEvent,
@@ -7,7 +8,7 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
+import {TMDBImageQualitiesProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 import * as Types from '@local-types';
@@ -37,11 +38,11 @@ const makeTop3Items = (typename: Typename, onPress = jest.fn()) =>
     })) as Types.HomeTop3Item[];
 
 const renderTop3 = (props: Top3Props) => (
-  <TMDBImageQualityProvider>
+  <TMDBImageQualitiesProvider>
     <ThemeProvider theme={theme}>
       <Top3 {...props} />
     </ThemeProvider>
-  </TMDBImageQualityProvider>
+  </TMDBImageQualitiesProvider>
 );
 
 describe('<Top3 />', () => {
