@@ -10,7 +10,7 @@ export type TVShowTrendingData =
   | SchemaTypes.TrendingPopularTVShows
   | SchemaTypes.TrendingTopRatedTVShows;
 
-type TVShowTrendingItem =
+export type TVShowTrendingItem =
   | SchemaTypes.TrendingAiringTodayTVShows_trendingTvShows_airingToday_items
   | SchemaTypes.TrendingOnTheAirTVShows_trendingTvShows_onTheAir_items
   | SchemaTypes.TrendingPopularTVShows_trendingTvShows_popular_items
@@ -22,7 +22,7 @@ export type MovieTrendingData =
   | SchemaTypes.TrendingTopRatedMovies
   | SchemaTypes.TrendingUpcomingMovies;
 
-type MovieTrendingItem =
+export type MovieTrendingItem =
   | SchemaTypes.TrendingNowPlayingMovies_trendingMovies_nowPlaying_items
   | SchemaTypes.TrendingPopularMovies_trendingMovies_popular_items
   | SchemaTypes.TrendingTopRatedMovies_trendingMovies_topRated_items

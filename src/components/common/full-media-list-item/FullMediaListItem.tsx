@@ -18,7 +18,9 @@ export const FullMediaListItem = (props: FullMediaListItemProps) => (
   <Styles.Wrapper onPress={props.onPressDetails} testID="full-media-list-item">
     <MediaImage image={props.image} />
     <Styles.TextContentWrapper>
-      <Styles.TitleText>{props.title}</Styles.TitleText>
+      <Styles.TitleText testID="full-media-list-item-text">
+        {props.title}
+      </Styles.TitleText>
       <StarsVotes votes={props.votes} withText voteCount={props.voteCount} />
       <Styles.GenresText>{props.genres.join('  \u2022  ')}</Styles.GenresText>
     </Styles.TextContentWrapper>
