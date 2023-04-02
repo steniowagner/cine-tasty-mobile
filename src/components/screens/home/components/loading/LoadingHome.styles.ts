@@ -4,11 +4,6 @@ import styled from 'styled-components/native';
 
 import * as Top3ListItemStyles from '../top3/top-3-list-item/Top3ListItem.styles';
 
-type ItemWrapperStyleProps = {
-  isTheMiddle: boolean;
-  width: number;
-};
-
 export const Wrapper = styled(View)`
   flex-direction: row;
   left: -${({theme}) => {
@@ -34,19 +29,6 @@ export const LoadingSmokeShadow = styled(LinearGradient).attrs(({theme}) => ({
   width: ${Top3ListItemStyles.ITEM_WIDTH}px;
   height: ${Top3ListItemStyles.ITEM_HEIGHT}px;
   border-radius: ${Top3ListItemStyles.ITEM_BORDER_RADIUS}px;
-  position: absolute;
-`;
-
-export const SmokeShadow = styled(LinearGradient).attrs(({theme}) => ({
-  colors: [
-    'transparent',
-    theme.colors.backgroundAlphax1,
-    theme.colors.background,
-  ],
-}))<Pick<ItemWrapperStyleProps, 'isTheMiddle'>>`
-  width: ${Top3ListItemStyles.ITEM_WIDTH}px;
-  height: ${Top3ListItemStyles.ITEM_HEIGHT + 2}px;
-
   position: absolute;
 `;
 

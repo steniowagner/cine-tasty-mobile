@@ -3,7 +3,6 @@ import {Animated} from 'react-native';
 
 import {ProgressiveImage, RoundedButton, StarsVotes} from '@components';
 
-import * as LoadingTop3Styles from '../../loading/LoadingHome.styles';
 import {useTop3ListItem} from './useTop3ListITem';
 import * as Styles from './Top3ListItem.styles';
 
@@ -20,6 +19,7 @@ type Top3ListItemProps = {
 
 export const Top3ListItem = (props: Top3ListItemProps) => {
   const top3ListItem = useTop3ListItem();
+
   return (
     <Styles.Wrapper
       style={{
@@ -32,7 +32,7 @@ export const Top3ListItem = (props: Top3ListItemProps) => {
         imageType="backdrop"
         image={props.image}
       />
-      <LoadingTop3Styles.SmokeShadow isTheMiddle={false} />
+      <Styles.SmokeShadow />
       <Styles.TextContentWrapper>
         <Styles.TitleText testID="top3-title">{props.title}</Styles.TitleText>
         <Styles.StarsWrapper>

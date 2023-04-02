@@ -1,8 +1,9 @@
 import {Animated, View, Text} from 'react-native';
 import styled from 'styled-components/native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import * as Types from '@local-types';
 import metrics from '@styles/metrics';
+import {dark} from '@styles/themes';
 
 export const ITEM_HEIGHT = metrics.getHeightFromDP('58%');
 export const ITEM_MARGING = metrics.getWidthFromDP('12.5%');
@@ -23,43 +24,51 @@ export const Wrapper = styled(Animated.View)<ItemWrapperStyleProps>`
 
 export const TextContentWrapper = styled(View)`
   width: 100%;
-  height: 50%;
   align-items: center;
   justify-content: flex-end;
   position: absolute;
-  bottom: 0;
-`;
-
-export const StarsWrapper = styled(View)`
-  justify-content: center;
-  align-items: center;
-  background-color: ${({theme}) =>
-    theme.id === Types.ThemeId.LIGHT ? theme.colors.buttonText : 'transparent'};
-  padding: ${({theme}) =>
-    theme.id === Types.ThemeId.LIGHT ? theme.metrics.mediumSize : 0}px;
-  border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
+  bottom: ${({theme}) => theme.metrics.extraLargeSize}px;
 `;
 
 export const TitleText = styled(Text).attrs({
   numberOfLines: 3,
 })`
-  margin-bottom: ${({theme}) => theme.metrics.smallSize}px;
   margin-horizontal: ${({theme}) => theme.metrics.mediumSize}px;
-  font-size: ${({theme}) => theme.metrics.getWidthFromDP('8%')}px;
-  color: ${({theme}) => theme.colors.text};
+  font-size: ${({theme}) => theme.metrics.getWidthFromDP('7%')}px;
+  color: ${dark.colors.text};
   font-family: CircularStd-Black;
   text-align: center;
 `;
 
 export const GenreText = styled(Text)`
-  margin-top: ${({theme}) => theme.metrics.smallSize}px;
   margin-bottom: ${({theme}) => theme.metrics.largeSize}px;
   font-size: ${({theme}) => theme.metrics.largeSize}px;
-  color: ${({theme}) => theme.colors.text};
+  color: ${dark.colors.text};
   font-family: CircularStd-Bold;
   text-align: center;
 `;
 
 export const LearnMoreButtonWrapper = styled(View)`
   width: 80%;
+`;
+
+export const SmokeShadow = styled(LinearGradient).attrs(() => ({
+  colors: [
+    'transparent',
+    'transparent',
+    dark.colors.backgroundAlphax2,
+    dark.colors.backgroundAlphax1,
+    dark.colors.backgroundAlphax1,
+    dark.colors.backgroundAlphax1,
+  ],
+}))`
+  width: ${ITEM_WIDTH}px;
+  height: ${ITEM_HEIGHT + 2}px;
+  border-radius: ${ITEM_BORDER_RADIUS}px;
+  position: absolute;
+`;
+
+export const StarsWrapper = styled(View)`
+  margin-top: ${({theme}) => theme.metrics.extraSmallSize}px;
+  margin-bottom: ${({theme}) => theme.metrics.smallSize}px;
 `;
