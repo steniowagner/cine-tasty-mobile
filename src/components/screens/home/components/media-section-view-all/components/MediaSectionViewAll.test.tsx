@@ -187,6 +187,42 @@ describe('<MediaSectionViewAll />', () => {
         });
       });
 
+      describe('Pressing some of the items', () => {
+        it('should call "navigate" correctly', () => {
+          const initialDataset =
+            viewAllFixtures.makeMoviesViewAllInitialDataset(
+              randomPositiveNumber(10, 1),
+              1,
+            );
+          const indexItemSelected = randomPositiveNumber(
+            initialDataset.length - 1,
+            0,
+          );
+          const resolvers = viewAllFixtures.makePaginationSuccessQuery({
+            numberOfItems: randomPositiveNumber(10, 1),
+            trendingKey,
+            query,
+            isMovie,
+          });
+          const navigate = jest.fn();
+          const component = render(
+            renderMediaSectionViewAll({
+              mockResolvers: resolvers,
+              initialDataset,
+              sectionKey: trendingKey,
+              headerTitle: HEADER_TITLE,
+              navigate,
+              isMovie,
+            }),
+          );
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.viewAllListItems(component)[indexItemSelected],
+          );
+          expect(navigate).toHaveBeenCalledTimes(1);
+        });
+      });
+
       describe('When paginates successfully', () => {
         beforeEach(() => {
           jest.useFakeTimers();
@@ -1161,6 +1197,42 @@ describe('<MediaSectionViewAll />', () => {
             initialDataset.length,
           );
           expect(elements.paginatingSpinner(component)).not.toBeNull();
+        });
+      });
+
+      describe('Pressing some of the items', () => {
+        it('should call "navigate" correctly', () => {
+          const initialDataset =
+            viewAllFixtures.makeMoviesViewAllInitialDataset(
+              randomPositiveNumber(10, 1),
+              1,
+            );
+          const indexItemSelected = randomPositiveNumber(
+            initialDataset.length - 1,
+            0,
+          );
+          const resolvers = viewAllFixtures.makePaginationSuccessQuery({
+            numberOfItems: randomPositiveNumber(10, 1),
+            trendingKey,
+            query,
+            isMovie,
+          });
+          const navigate = jest.fn();
+          const component = render(
+            renderMediaSectionViewAll({
+              mockResolvers: resolvers,
+              initialDataset,
+              sectionKey: trendingKey,
+              headerTitle: HEADER_TITLE,
+              navigate,
+              isMovie,
+            }),
+          );
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.viewAllListItems(component)[indexItemSelected],
+          );
+          expect(navigate).toHaveBeenCalledTimes(1);
         });
       });
 
@@ -2141,6 +2213,42 @@ describe('<MediaSectionViewAll />', () => {
         });
       });
 
+      describe('Pressing some of the items', () => {
+        it('should call "navigate" correctly', () => {
+          const initialDataset =
+            viewAllFixtures.makeMoviesViewAllInitialDataset(
+              randomPositiveNumber(10, 1),
+              1,
+            );
+          const indexItemSelected = randomPositiveNumber(
+            initialDataset.length - 1,
+            0,
+          );
+          const resolvers = viewAllFixtures.makePaginationSuccessQuery({
+            numberOfItems: randomPositiveNumber(10, 1),
+            trendingKey,
+            query,
+            isMovie,
+          });
+          const navigate = jest.fn();
+          const component = render(
+            renderMediaSectionViewAll({
+              mockResolvers: resolvers,
+              initialDataset,
+              sectionKey: trendingKey,
+              headerTitle: HEADER_TITLE,
+              navigate,
+              isMovie,
+            }),
+          );
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.viewAllListItems(component)[indexItemSelected],
+          );
+          expect(navigate).toHaveBeenCalledTimes(1);
+        });
+      });
+
       describe('When paginates successfully', () => {
         beforeEach(() => {
           jest.useFakeTimers();
@@ -3115,6 +3223,42 @@ describe('<MediaSectionViewAll />', () => {
             initialDataset.length,
           );
           expect(elements.paginatingSpinner(component)).not.toBeNull();
+        });
+      });
+
+      describe('Pressing some of the items', () => {
+        it('should call "navigate" correctly', () => {
+          const initialDataset =
+            viewAllFixtures.makeMoviesViewAllInitialDataset(
+              randomPositiveNumber(10, 1),
+              1,
+            );
+          const indexItemSelected = randomPositiveNumber(
+            initialDataset.length - 1,
+            0,
+          );
+          const resolvers = viewAllFixtures.makePaginationSuccessQuery({
+            numberOfItems: randomPositiveNumber(10, 1),
+            trendingKey,
+            query,
+            isMovie,
+          });
+          const navigate = jest.fn();
+          const component = render(
+            renderMediaSectionViewAll({
+              mockResolvers: resolvers,
+              initialDataset,
+              sectionKey: trendingKey,
+              headerTitle: HEADER_TITLE,
+              navigate,
+              isMovie,
+            }),
+          );
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.viewAllListItems(component)[indexItemSelected],
+          );
+          expect(navigate).toHaveBeenCalledTimes(1);
         });
       });
 
@@ -4099,6 +4243,42 @@ describe('<MediaSectionViewAll />', () => {
         });
       });
 
+      describe('Pressing some of the items', () => {
+        it('should call "navigate" correctly', () => {
+          const initialDataset =
+            viewAllFixtures.makeMoviesViewAllInitialDataset(
+              randomPositiveNumber(10, 1),
+              1,
+            );
+          const indexItemSelected = randomPositiveNumber(
+            initialDataset.length - 1,
+            0,
+          );
+          const resolvers = viewAllFixtures.makePaginationSuccessQuery({
+            numberOfItems: randomPositiveNumber(10, 1),
+            trendingKey,
+            query,
+            isMovie,
+          });
+          const navigate = jest.fn();
+          const component = render(
+            renderMediaSectionViewAll({
+              mockResolvers: resolvers,
+              initialDataset,
+              sectionKey: trendingKey,
+              headerTitle: HEADER_TITLE,
+              navigate,
+              isMovie,
+            }),
+          );
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.viewAllListItems(component)[indexItemSelected],
+          );
+          expect(navigate).toHaveBeenCalledTimes(1);
+        });
+      });
+
       describe('When paginates successfully', () => {
         beforeEach(() => {
           jest.useFakeTimers();
@@ -5073,6 +5253,42 @@ describe('<MediaSectionViewAll />', () => {
             initialDataset.length,
           );
           expect(elements.paginatingSpinner(component)).not.toBeNull();
+        });
+      });
+
+      describe('Pressing some of the items', () => {
+        it('should call "navigate" correctly', () => {
+          const initialDataset =
+            viewAllFixtures.makeMoviesViewAllInitialDataset(
+              randomPositiveNumber(10, 1),
+              1,
+            );
+          const indexItemSelected = randomPositiveNumber(
+            initialDataset.length - 1,
+            0,
+          );
+          const resolvers = viewAllFixtures.makePaginationSuccessQuery({
+            numberOfItems: randomPositiveNumber(10, 1),
+            trendingKey,
+            query,
+            isMovie,
+          });
+          const navigate = jest.fn();
+          const component = render(
+            renderMediaSectionViewAll({
+              mockResolvers: resolvers,
+              initialDataset,
+              sectionKey: trendingKey,
+              headerTitle: HEADER_TITLE,
+              navigate,
+              isMovie,
+            }),
+          );
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.viewAllListItems(component)[indexItemSelected],
+          );
+          expect(navigate).toHaveBeenCalledTimes(1);
         });
       });
 
@@ -6053,6 +6269,42 @@ describe('<MediaSectionViewAll />', () => {
         });
       });
 
+      describe('Pressing some of the items', () => {
+        it('should call "navigate" correctly', () => {
+          const initialDataset =
+            viewAllFixtures.makeMoviesViewAllInitialDataset(
+              randomPositiveNumber(10, 1),
+              1,
+            );
+          const indexItemSelected = randomPositiveNumber(
+            initialDataset.length - 1,
+            0,
+          );
+          const resolvers = viewAllFixtures.makePaginationSuccessQuery({
+            numberOfItems: randomPositiveNumber(10, 1),
+            trendingKey,
+            query,
+            isMovie,
+          });
+          const navigate = jest.fn();
+          const component = render(
+            renderMediaSectionViewAll({
+              mockResolvers: resolvers,
+              initialDataset,
+              sectionKey: trendingKey,
+              headerTitle: HEADER_TITLE,
+              navigate,
+              isMovie,
+            }),
+          );
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.viewAllListItems(component)[indexItemSelected],
+          );
+          expect(navigate).toHaveBeenCalledTimes(1);
+        });
+      });
+
       describe('When paginates successfully', () => {
         beforeEach(() => {
           jest.useFakeTimers();
@@ -7027,6 +7279,42 @@ describe('<MediaSectionViewAll />', () => {
             initialDataset.length,
           );
           expect(elements.paginatingSpinner(component)).not.toBeNull();
+        });
+      });
+
+      describe('Pressing some of the items', () => {
+        it('should call "navigate" correctly', () => {
+          const initialDataset =
+            viewAllFixtures.makeMoviesViewAllInitialDataset(
+              randomPositiveNumber(10, 1),
+              1,
+            );
+          const indexItemSelected = randomPositiveNumber(
+            initialDataset.length - 1,
+            0,
+          );
+          const resolvers = viewAllFixtures.makePaginationSuccessQuery({
+            numberOfItems: randomPositiveNumber(10, 1),
+            trendingKey,
+            query,
+            isMovie,
+          });
+          const navigate = jest.fn();
+          const component = render(
+            renderMediaSectionViewAll({
+              mockResolvers: resolvers,
+              initialDataset,
+              sectionKey: trendingKey,
+              headerTitle: HEADER_TITLE,
+              navigate,
+              isMovie,
+            }),
+          );
+          expect(navigate).toHaveBeenCalledTimes(0);
+          fireEvent.press(
+            elements.viewAllListItems(component)[indexItemSelected],
+          );
+          expect(navigate).toHaveBeenCalledTimes(1);
         });
       });
 
