@@ -21,6 +21,6 @@ export const ListWrapper = styled(View)`
   margin-top: ${({theme}) =>
     Platform.select({
       android: theme.metrics.getWidthFromDP('22%'),
-      ios: theme.metrics.getWidthFromDP('28%'),
+      ios: theme.metrics.getWidthFromDP('30%'),
     })}px;
 `;

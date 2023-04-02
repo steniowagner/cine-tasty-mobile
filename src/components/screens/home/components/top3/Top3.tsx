@@ -1,37 +1,25 @@
-import React, {Fragment, useRef} from 'react';
-import {Animated} from 'react-native';
+import React from 'react';
+import Animated from 'react-native-reanimated';
 
 import * as Types from '@local-types';
 
-import * as Top3ListItemStyles from './top-3-list-item/Top3ListItem.styles';
 import {Top3ListItem} from './top-3-list-item/Top3ListItem';
 import * as Styles from './Top3.styles';
+import {useTop3} from './useTop3';
 
 export type Top3Props = {
   items: Types.HomeTop3Item[];
 };
 
 export const Top3 = (props: Top3Props) => {
-  const scrollX = useRef(
-    new Animated.Value(Styles.INITIAL_SCROLL_POSITION),
-  ).current;
+  const top3List = useTop3();
+
   return (
     <Styles.ListWrapper>
       <Animated.ScrollView
         showsHorizontalScrollIndicator={false}
         decelerationRate="fast"
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {x: scrollX},
-              },
-            },
-          ],
-          {
-            useNativeDriver: true,
-          },
-        )}
+        onScroll={top3List.handleScroll}
         contentOffset={{x: Styles.SCROLL_CONTENT_OFFSET, y: 0}}
         snapToInterval={Styles.SNAP_INTERVAL}
         removeClippedSubviews={false}
@@ -41,37 +29,19 @@ export const Top3 = (props: Top3Props) => {
         bounces={false}
         pagingEnabled
         horizontal>
-        {props.items.map((item, index) => {
-          const translateY = scrollX.interpolate({
-            inputRange: [
-              (index - 1) * Top3ListItemStyles.ITEM_WIDTH,
-              index * Top3ListItemStyles.ITEM_WIDTH,
-              (index + 1) * Top3ListItemStyles.ITEM_WIDTH,
-            ],
-            outputRange: [
-              Top3ListItemStyles.ITEM_MARGING_TOP,
-              0,
-              Top3ListItemStyles.ITEM_MARGING_TOP,
-            ],
-            extrapolate: 'clamp',
-          });
-          return (
-            <Fragment key={item.id}>
-              {index === 0 && <Styles.ListGap />}
-              <Top3ListItem
-                onPress={item.onPress}
-                voteAverage={item.voteAverage}
-                voteCount={item.voteCount}
-                translateY={translateY}
-                genres={item.genreIds}
-                image={item.posterPath}
-                title={item.title}
-                index={index}
-              />
-              {index === 2 && <Styles.ListGap />}
-            </Fragment>
-          );
-        })}
+        {props.items.map((item, index) => (
+          <Top3ListItem
+            key={item.id}
+            scrollViewPosition={top3List.scrollViewPosition}
+            onPress={item.onPress}
+            voteAverage={item.voteAverage}
+            voteCount={item.voteCount}
+            genres={item.genreIds}
+            image={item.posterPath}
+            title={item.title}
+            index={index}
+          />
+        ))}
       </Animated.ScrollView>
     </Styles.ListWrapper>
   );
