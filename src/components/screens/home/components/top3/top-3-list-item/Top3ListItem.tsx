@@ -1,14 +1,13 @@
 import React from 'react';
-import {Animated} from 'react-native';
+import {SharedValue} from 'react-native-reanimated';
 
 import {ProgressiveImage, RoundedButton, StarsVotes} from '@components';
 
-import * as LoadingTop3Styles from '../../loading/LoadingHome.styles';
-import {useTop3ListItem} from './useTop3ListITem';
+import {useTop3ListItem} from './useTop3ListItem';
 import * as Styles from './Top3ListItem.styles';
 
 type Top3ListItemProps = {
-  translateY: Animated.AnimatedInterpolation;
+  scrollViewPosition: SharedValue<number>;
   onPress: () => void;
   voteAverage: number;
   voteCount: number;
@@ -19,12 +18,14 @@ type Top3ListItemProps = {
 };
 
 export const Top3ListItem = (props: Top3ListItemProps) => {
-  const top3ListItem = useTop3ListItem();
+  const top3ListItem = useTop3ListItem({
+    scrollViewPosition: props.scrollViewPosition,
+    index: props.index,
+  });
+
   return (
     <Styles.Wrapper
-      style={{
-        transform: [{translateY: props.translateY}],
-      }}
+      style={top3ListItem.style}
       index={props.index}
       testID="top3-wrapper">
       <ProgressiveImage
@@ -32,7 +33,7 @@ export const Top3ListItem = (props: Top3ListItemProps) => {
         imageType="backdrop"
         image={props.image}
       />
-      <LoadingTop3Styles.SmokeShadow isTheMiddle={false} />
+      <Styles.SmokeShadow />
       <Styles.TextContentWrapper>
         <Styles.TitleText testID="top3-title">{props.title}</Styles.TitleText>
         <Styles.StarsWrapper>

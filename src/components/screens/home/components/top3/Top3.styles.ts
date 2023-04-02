@@ -9,11 +9,6 @@ export const SNAP_INTERVAL = metrics.getWidthFromDP('80%');
 export const INITIAL_SCROLL_POSITION = metrics.getWidthFromDP('80%');
 export const SCROLL_CONTENT_OFFSET = metrics.getWidthFromDP('80%');
 
-export const ListGap = styled(View)`
-  height: 1px;
-  width: ${Top3listItemStyles.ITEM_MARGING}px;
-`;
-
 export const ListWrapper = styled(View)`
   width: 100%;
   height: ${Top3listItemStyles.ITEM_HEIGHT +
@@ -21,6 +16,6 @@ export const ListWrapper = styled(View)`
   margin-top: ${({theme}) =>
     Platform.select({
       android: theme.metrics.getWidthFromDP('22%'),
-      ios: theme.metrics.getWidthFromDP('28%'),
+      ios: theme.metrics.getWidthFromDP('30%'),
     })}px;
 `;
