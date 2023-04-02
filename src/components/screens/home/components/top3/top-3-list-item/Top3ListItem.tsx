@@ -3,7 +3,7 @@ import {Animated} from 'react-native';
 
 import {ProgressiveImage, RoundedButton, StarsVotes} from '@components';
 
-import * as LoadingTop3Styles from '../loading-top3/LoadingTop3.styles';
+import * as LoadingTop3Styles from '../../loading/LoadingHome.styles';
 import {useTop3ListItem} from './useTop3ListITem';
 import * as Styles from './Top3ListItem.styles';
 
