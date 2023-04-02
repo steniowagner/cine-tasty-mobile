@@ -220,6 +220,14 @@ describe('<MediaSectionViewAll />', () => {
             elements.viewAllListItems(component)[indexItemSelected],
           );
           expect(navigate).toHaveBeenCalledTimes(1);
+          expect(navigate).toHaveBeenCalledWith(Routes.Home.MOVIE_DETAILS, {
+            genreIds: initialDataset[indexItemSelected].genreIds,
+            voteAverage: initialDataset[indexItemSelected].voteAverage,
+            posterPath: initialDataset[indexItemSelected].posterPath,
+            voteCount: initialDataset[indexItemSelected].voteCount,
+            title: initialDataset[indexItemSelected].title,
+            id: initialDataset[indexItemSelected].id,
+          });
         });
       });
 
@@ -7285,7 +7293,7 @@ describe('<MediaSectionViewAll />', () => {
       describe('Pressing some of the items', () => {
         it('should call "navigate" correctly', () => {
           const initialDataset =
-            viewAllFixtures.makeMoviesViewAllInitialDataset(
+            viewAllFixtures.makeTVShowViewAllInitialDataset(
               randomPositiveNumber(10, 1),
               1,
             );
@@ -7315,6 +7323,14 @@ describe('<MediaSectionViewAll />', () => {
             elements.viewAllListItems(component)[indexItemSelected],
           );
           expect(navigate).toHaveBeenCalledTimes(1);
+          expect(navigate).toHaveBeenCalledWith(Routes.Home.TV_SHOW_DETAILS, {
+            genreIds: initialDataset[indexItemSelected].genreIds,
+            voteAverage: initialDataset[indexItemSelected].voteAverage,
+            posterPath: initialDataset[indexItemSelected].posterPath,
+            voteCount: initialDataset[indexItemSelected].voteCount,
+            title: initialDataset[indexItemSelected].title,
+            id: initialDataset[indexItemSelected].id,
+          });
         });
       });
 
