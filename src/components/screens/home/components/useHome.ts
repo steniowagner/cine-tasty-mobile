@@ -4,8 +4,8 @@ import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
 import {HomeStackNavigationProp} from '../routes/route-params-types';
-import {useTrendingMovies} from './useTrendingMovies';
-import {useTrendingTVShows} from './useTrendingTVShow';
+import {useTrendingMovies} from './trending-movies/useTrendingMovies';
+import {useTrendingTVShows} from './trending-tv-shows/useTrendingTVShow';
 
 export const TRANSITIONING_DURATION = 500;
 
