@@ -24,7 +24,7 @@ const makeTrendingTVShowsSection = (
   onPressViewAll: () =>
     params.onPressViewAll({
       viewAllTitle: params.texts[params.id].viewAll,
-      isMovie: true,
+      isMovie: false,
       id: params.id,
       data: params.tvShows,
     }),

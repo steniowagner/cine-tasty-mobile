@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 
 import {PaginatedListHeader} from '@components';
@@ -14,7 +14,7 @@ import {Top3} from './top3/Top3';
 export const Home = (props: HomeStackProps) => {
   const home = useHome({navigation: props.navigation});
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     props.navigation.setOptions({
       header: () => (
         <>

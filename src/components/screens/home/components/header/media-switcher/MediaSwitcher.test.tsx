@@ -50,7 +50,7 @@ const triggerOnLayoutTextComponent = (
 const renderMediaSwitcher = (props: Partial<RenderMediaSwitcherProps>) => (
   <ThemeProvider theme={theme}>
     <MediaSwitcher
-      onCalcuateSwitchWidth={props.onCalcuateSwitchWidth || jest.fn()}
+      onCalculateSwitchWidth={props.onCalcuateSwitchWidth || jest.fn()}
       onPresSwitchTVShows={props.onPresSwitchTVShows || jest.fn()}
       onPressSwitchMovies={props.onPressSwitchMovies || jest.fn()}
       isDisabled={props.isDisabled}
