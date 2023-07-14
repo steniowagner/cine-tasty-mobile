@@ -11,6 +11,7 @@ import {Routes} from '@routes/routes';
 
 import {MediaSectionViewAllParams} from '../components/media-section-view-all/routes/route-params-types';
 import {ReviewsParams} from '../../common/reviews/routes/route-params-types';
+import {SettingsStackParams} from '../../settings/routes/route-params-types';
 
 export type HomeStackRoutes = {
   [Routes.Home.HOME]: undefined;
@@ -23,16 +24,10 @@ export type HomeStackRoutes = {
   [Routes.Home.MOVIE_DETAILS]: MovieDetailsParams;
   [Routes.Home.SEARCH]: SearchParams;
   [Routes.Home.MEDIA_REVIEWS]: ReviewsParams;
-  [Routes.Settings.SETTINGS]: undefined;
-  [Routes.Settings.IMAGES_QUALITY]: undefined;
-  [Routes.Settings.OPEN_SOURCE]: undefined;
-  [Routes.Settings.LANGUAGE]: undefined;
-  [Routes.Settings.THEME]: undefined;
-  [Routes.Settings.ABOUT]: undefined;
-};
+} & SettingsStackParams;
 
 export type HomeStackNavigationProp = StackNavigationProp<
-  HomeStackRoutes,
+  HomeStackRoutes & SettingsStackParams,
   Routes.Home.HOME
 >;
 

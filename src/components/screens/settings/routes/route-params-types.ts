@@ -1,9 +1,9 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
-import { Routes } from '@routes/routes';
+import {Routes} from '@routes/routes';
 
-type SettingsStackParams = {
+export type SettingsStackParams = {
   [Routes.Settings.SETTINGS]: undefined;
   [Routes.Settings.IMAGES_QUALITY]: undefined;
   [Routes.Settings.OPEN_SOURCE]: undefined;
@@ -17,7 +17,10 @@ export type SettingsNavigationProp = StackNavigationProp<
   SettingsStackParams,
   Routes.Settings.SETTINGS
 >;
-export type SettingsRouteProp = RouteProp<SettingsStackParams, Routes.Settings.SETTINGS>;
+export type SettingsRouteProp = RouteProp<
+  SettingsStackParams,
+  Routes.Settings.SETTINGS
+>;
 
 export type SettingsStackProps = {
   navigation: SettingsNavigationProp;

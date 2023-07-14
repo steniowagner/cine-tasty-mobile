@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 
+import {SettingsModal} from '@src/components/screens/settings/components/settings-modal/SettingsModal';
 import {PaginatedListHeader} from '@components';
 import * as Types from '@local-types';
 
@@ -38,22 +39,30 @@ export const Home = (props: HomeStackProps) => {
   }
 
   return (
-    <ScrollView testID="scrollview-content">
-      <Top3 items={home.top3} />
-      {home.trendings.map(trending => (
-        <HomeSection
-          onPressItem={(mediaItem: Types.SimplifiedMedia) =>
-            trending.onPressItem(mediaItem)
-          }
-          onPressViewAll={trending.onPressViewAll}
-          sectionTitle={trending.sectionTitle}
-          key={trending.sectionTitle}
-          id={`${home.isMoviesSelected ? 'MOVIES' : 'TV_SHOWS'}-${
-            trending.sectionTitle
-          }`}
-          items={trending.data}
-        />
-      ))}
-    </ScrollView>
+    <>
+      <SettingsModal
+        onPressOption={home.onPressSettingsOption}
+        isOpen={home.isSettingsModalOpen}
+        onCloseModal={home.onCloseSettingsModal}
+        options={home.settingsOptions}
+      />
+      <ScrollView testID="scrollview-content">
+        <Top3 items={home.top3} />
+        {home.trendings.map(trending => (
+          <HomeSection
+            onPressItem={(mediaItem: Types.SimplifiedMedia) =>
+              trending.onPressItem(mediaItem)
+            }
+            onPressViewAll={trending.onPressViewAll}
+            sectionTitle={trending.sectionTitle}
+            key={trending.sectionTitle}
+            id={`${home.isMoviesSelected ? 'MOVIES' : 'TV_SHOWS'}-${
+              trending.sectionTitle
+            }`}
+            items={trending.data}
+          />
+        ))}
+      </ScrollView>
+    </>
   );
 };

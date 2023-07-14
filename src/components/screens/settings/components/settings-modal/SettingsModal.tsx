@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Option} from '@src/components/screens/home/components/useSettingsModal';
+import {Option} from '@src/components/screens/home/components/settings-modal/useSettingsModal';
 import {ModalSheet} from '@components';
 
 import {SettingsModalOption} from './settings-modal-option/SettingsModalOption';
