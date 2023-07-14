@@ -9,7 +9,7 @@ import DefaultOpenSourceItem from './DefaultOpenSourceItem';
 import * as Styles from './OpenSource.styles';
 import useOpenSource from './useOpenSource';
 
-const OpenSource = () => {
+export const OpenSource = () => {
   const {items} = useOpenSource();
 
   return (
@@ -39,5 +39,3 @@ const OpenSource = () => {
     </ScrollView>
   );
 };
-
-export default OpenSource;

@@ -3,10 +3,10 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
+import {useSettingsModal} from '../components/settings/settings-modal/useSettingsModal';
 import {HomeStackNavigationProp} from '../routes/route-params-types';
 import {useTrendingMovies} from './trending-movies/useTrendingMovies';
 import {useTrendingTVShows} from './trending-tv-shows/useTrendingTVShow';
-import {useSettingsModal} from './settings-modal/useSettingsModal';
 
 export const TRANSITIONING_DURATION = 500;
 

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 
-import {SettingsModal} from '@src/components/screens/settings/components/settings-modal/SettingsModal';
+import {SettingsModal} from './settings/settings-modal/SettingsModal';
 import {PaginatedListHeader} from '@components';
 import * as Types from '@local-types';
 

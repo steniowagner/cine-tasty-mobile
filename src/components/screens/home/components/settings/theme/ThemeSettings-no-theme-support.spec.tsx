@@ -6,7 +6,7 @@ import * as TRANSLATIONS from '@i18n/tags';
 import CONSTANTS from '@utils/constants';
 import * as Types from '@local-types';
 
-import ThemeSettings from './ThemeSettings';
+import ThemeSettings from './Theme';
 
 jest.mock('utils/storage');
 
