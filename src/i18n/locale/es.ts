@@ -227,7 +227,6 @@ const es: Locale = {
   },
   home: {
     learMoreButtonText: 'VER MÁS',
-    settings: 'Ajustes',
     tvShows: 'TV Shows',
     viewAll: 'Ver todo',
     movies: 'Películas',
@@ -242,34 +241,12 @@ const es: Locale = {
       upcoming: 'Próximamente',
       upcomingViewAllTitle: 'Próximamente (películas)',
     },
-    settingsSections: {
-      openSource: {
-        sectionDescription:
-          'Lista con todos los recursos de código abierto utilizados',
-        sectionTitle: 'Código-Abierto',
-        headerTitle: 'Código-Abierto',
-      },
-      language: {
-        sectionDescription: 'Elija el idioma que utilizará la aplicación',
-        sectionTitle: 'Idioma',
-        headerTitle: 'Idioma',
-      },
-      about: {
-        sectionDescription:
-          'Más información sobre el creador de esta aplicación.',
-        sectionTitle: 'Acerca de',
-        headerTitle: 'Acerca de',
-      },
-      imagesQuality: {
-        sectionDescription: 'Ajustar la calidad de las imágenes mostradas',
-        sectionTitle: 'Calidad de imágenes',
-        headerTitle: 'Calidad de imágenes',
-      },
-      theme: {
-        sectionDescription: 'Elija entre el modo claro y oscuro',
-        sectionTitle: 'Tema',
-        headerTitle: 'Tema',
-      },
+    settings: {
+      openSource: 'Open-source',
+      language: 'Idioma',
+      about: 'Acerca de',
+      imagesQuality: 'Calidad de imágenes',
+      theme: 'Tema',
     },
     trendingTvShows: {
       error: 'No se pudieron cargar los programas de TV',

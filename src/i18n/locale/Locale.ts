@@ -29,12 +29,6 @@ type ErrorDescription = {
   title: string;
 };
 
-type SettingsSection = {
-  sectionDescription: string;
-  sectionTitle: string;
-  headerTitle: string;
-};
-
 type OpenSourceSection = {
   description: string;
   title: string;
@@ -83,7 +77,6 @@ export type Locale = {
   time: Record<Time, string>;
   home: {
     learMoreButtonText: string;
-    settings: string;
     viewAll: string;
     tvShows: string;
     movies: string;
@@ -99,12 +92,12 @@ export type Locale = {
         placeholder: string;
       };
     };
-    settingsSections: {
-      imagesQuality: SettingsSection;
-      openSource: SettingsSection;
-      language: SettingsSection;
-      about: SettingsSection;
-      theme: SettingsSection;
+    settings: {
+      imagesQuality: string;
+      openSource: string;
+      language: string;
+      about: string;
+      theme: string;
     };
     tvShowsPaginationError: string;
     moviesPaginationError: string;

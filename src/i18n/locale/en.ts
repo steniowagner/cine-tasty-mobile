@@ -225,7 +225,6 @@ const en: Locale = {
   },
   home: {
     learMoreButtonText: 'LEARN MORE',
-    settings: 'Settings',
     tvShows: 'TV Shows',
     viewAll: 'View All',
     movies: 'Movies',
@@ -240,32 +239,12 @@ const en: Locale = {
       upcoming: 'Upcoming',
       upcomingViewAllTitle: 'Upcoming Movies',
     },
-    settingsSections: {
-      openSource: {
-        sectionDescription: 'List with all open-source resources used',
-        sectionTitle: 'Open-Source',
-        headerTitle: 'Open-Source',
-      },
-      language: {
-        sectionDescription: 'Choose the language that the app will use',
-        sectionTitle: 'Language',
-        headerTitle: 'Language',
-      },
-      about: {
-        sectionDescription: 'Learn more about the creator of this app',
-        sectionTitle: 'About',
-        headerTitle: 'About',
-      },
-      imagesQuality: {
-        sectionDescription: 'Adjust the quality of the images showed',
-        sectionTitle: 'Images Quality',
-        headerTitle: 'Images Quality',
-      },
-      theme: {
-        sectionDescription: 'Choose between Light and Dark mode',
-        sectionTitle: 'Theme',
-        headerTitle: 'Theme',
-      },
+    settings: {
+      openSource: 'Open-source',
+      language: 'Language',
+      about: 'About',
+      imagesQuality: 'Images Quality',
+      theme: 'Theme',
     },
     trendingTvShows: {
       error: "Couldn't load the TV Shows",
