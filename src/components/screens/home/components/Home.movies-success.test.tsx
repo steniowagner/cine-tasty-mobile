@@ -19,8 +19,8 @@ import {Routes} from '@routes/routes';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 
+import {settingsModalOptions} from './settings-modal/options';
 import {Home} from './Home';
-
 jest.mock('react-native-reanimated', () => {
   const Reanimated = require('react-native-reanimated/mock');
   Reanimated.default.call = () => {};
@@ -60,8 +60,13 @@ const renderHome = (
 
 describe('<Home /> # Movies/success test cases', () => {
   const elements = {
-    // settingsButton: (api: RenderAPI) =>
-    //   api.queryByTestId('header-icon-button-wrapper-settings'),
+    modalSheet: (api: RenderAPI) => api.queryByTestId('modal-sheet'),
+    settingsOptionsButtons: (api: RenderAPI) =>
+      api.queryAllByTestId('settings-modal-option-button'),
+    settingsOptionsTexts: (api: RenderAPI) =>
+      api.queryAllByTestId('settings-modal-option-text'),
+    settingsButton: (api: RenderAPI) =>
+      api.queryByTestId('header-icon-button-wrapper-settings'),
     // searchButton: (api: RenderAPI) =>
     //   api.queryByTestId('header-icon-button-wrapper-magnify'),
     loading: (api: RenderAPI) => api.queryByTestId('loading-home'),
@@ -72,13 +77,50 @@ describe('<Home /> # Movies/success test cases', () => {
     sections: (api: RenderAPI) => api.queryAllByTestId('section-wrapper'),
   };
 
+  describe('Settings flow', () => {
+    it('should open the "Settings Modal" when the user presses the "Settings" button', async () => {
+      const resolvers = trendingMoviesFixtures.makeQuerySuccessResolver();
+      const component = render(renderHome(resolvers));
+      await waitFor(() => {
+        expect(elements.top3LearnMoreButtons(component).length).toBeGreaterThan(
+          0,
+        );
+      });
+      expect(elements.modalSheet(component).props.visible).toEqual(false);
+      fireEvent.press(elements.settingsButton(component));
+      expect(elements.modalSheet(component).props.visible).toEqual(true);
+    });
+
+    it('should show the elements correctly', async () => {
+      const resolvers = trendingMoviesFixtures.makeQuerySuccessResolver();
+      const component = render(renderHome(resolvers));
+      await waitFor(() => {
+        expect(elements.top3LearnMoreButtons(component).length).toBeGreaterThan(
+          0,
+        );
+      });
+      fireEvent.press(elements.settingsButton(component));
+      const icons = within(elements.modalSheet(component)).queryAllByTestId(
+        /icon-/,
+      );
+      elements
+        .settingsOptionsTexts(component)
+        .forEach((settingsOptionsText, index) => {
+          expect(settingsOptionsText.children[0]).toEqual(
+            settingsModalOptions[index].titleTag,
+          );
+          expect(icons[index].props.testID).toEqual(
+            `icon-${settingsModalOptions[index].icon}`,
+          );
+        });
+    });
+  });
+
   describe('Pressing items', () => {
     const getTop3ItemSelected = (items: any[], titleItemSelected: string) => {
       const [, id] = titleItemSelected.split('-');
       return items[Number(id)];
     };
-
-    // it('should open the "Settings Modal" when the user presses the "Settings" button', () => {});
 
     // it('should navigate to the "Search" correctly when the user presses the "Search" button', () => {});
 
