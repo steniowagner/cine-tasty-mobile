@@ -12,6 +12,8 @@ const VALUES = {
   IMAGES: {
     BASE_URL: 'https://image.tmdb.org/t/p',
     THUMBNAIL_SIZE_CODE: 'w45',
+    PROFILE:
+      'https://s3-sa-east-1.amazonaws.com/bon-appetit-resources/user-profile/user-profile.jpg',
   },
   FALLBACK_LANGUAGE: 'en',
   DEFAULT_SPACING: metrics.mediumSize,
