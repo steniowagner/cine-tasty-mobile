@@ -4,12 +4,12 @@ import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
 import {Icons} from '@components';
 
-import {HomeStackNavigationProp} from '../../routes/route-params-types';
+import {HomeStackNavigationProp} from '../../../routes/route-params-types';
 import {settingsModalOptions} from './options';
 
 export type Option = {
   id: 'about' | 'images-quality' | 'language' | 'open-source' | 'theme';
-  route: Routes.Settings;
+  route: Routes.Home;
   title: string;
   icon: Icons;
 };

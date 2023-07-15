@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {Option} from '@src/components/screens/home/components/settings-modal/useSettingsModal';
 import {ModalSheet} from '@components';
 
 import {SettingsModalOption} from './settings-modal-option/SettingsModalOption';
+import {Option} from './useSettingsModal';
 
 type SettingsModalProps = {
   onPressOption: (option: Option) => void;
