@@ -32,6 +32,9 @@ export const light: DefaultTheme = {
     white: '#FFFFFF',
     progressiveImageBackground: 'rgba(242, 242, 242, 0.5)',
     modalTextContent: '#111111',
+    github: '#333333',
+    instagram: '#E1306C',
+    linkedin: '#0077B5',
   },
   metrics,
 };

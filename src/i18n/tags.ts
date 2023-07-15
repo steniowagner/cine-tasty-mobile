@@ -197,13 +197,15 @@ export namespace Translations {
     SETTINGS_OPEN_SOURCE = 'translations:home:settings:openSource',
     SETTINGS_LANGUAGE = 'translations:home:settings:language',
     SETTINGS_THEME = 'translations:home:settings:theme',
+
+    // Settings/About
+    SETTINGS_ABOUT_SOFTWARE_ENGINEER = 'translations:softwareEngineer',
+    SETTINGS_ABOUT_ABOUT_ME = 'translations:about',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
 
 // General
-export const SOFTWARE_ENGINEER = 'translations:softwareEngineer';
-export const ABOUT = 'translations:about';
 export const MONTHS = 'translations:months';
 
 // Onboarding
