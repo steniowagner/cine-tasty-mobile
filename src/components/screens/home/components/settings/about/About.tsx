@@ -12,16 +12,19 @@ export const About = () => {
   const about = useAbout();
   return (
     <Styles.Wrapper>
-      <Styles.BeautifulImage />
-      <Styles.NameText>Stenio Wagner</Styles.NameText>
-      <Styles.SoftwareEngineerText>
+      <Styles.BeautifulImage testID="profile-image" />
+      <Styles.NameText testID="name-text">Stenio Wagner</Styles.NameText>
+      <Styles.SoftwareEngineerText testID="software-engineer-text">
         {about.texts.softwareEngineer}
       </Styles.SoftwareEngineerText>
-      <Styles.AboutText>{about.texts.aboutMe}</Styles.AboutText>
+      <Styles.AboutText testID="about-me-text">
+        {about.texts.aboutMe}
+      </Styles.AboutText>
       <Styles.SocialNetworkButtonsWrapper>
         {socialNetworks.map(socialNetwork => (
           <Styles.SocialNetworkButton
             onPress={() => Linking.openURL(socialNetwork.url)}
+            testID="social-network-button"
             color={socialNetwork.color}
             key={socialNetwork.url}>
             <SVGIcon
