@@ -3,6 +3,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
+import {useSettingsModal} from '../components/settings/settings-modal/useSettingsModal';
 import {HomeStackNavigationProp} from '../routes/route-params-types';
 import {useTrendingMovies} from './trending-movies/useTrendingMovies';
 import {useTrendingTVShows} from './trending-tv-shows/useTrendingTVShow';
@@ -16,6 +17,8 @@ type UseHomeProps = {
 export const useHome = (props: UseHomeProps) => {
   const [isMoviesSelected, setIsMoviesSelected] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const settingsModal = useSettingsModal({navigation: props.navigation});
 
   const handlePressViewAll = useCallback(
     (params: Types.PressViewAllParams) => {
@@ -88,6 +91,11 @@ export const useHome = (props: UseHomeProps) => {
   }, [isTransitioning]);
 
   return {
+    onPressSettings: settingsModal.open,
+    isSettingsModalOpen: settingsModal.isOpen,
+    onPressSettingsOption: settingsModal.onPressOption,
+    onCloseSettingsModal: settingsModal.close,
+    settingsOptions: settingsModal.options,
     onSelectTVShows: handleSelectTVShows,
     onSelectMovies: handleSelectMovies,
     onPressReload: handleOnPresReload,
@@ -97,7 +105,6 @@ export const useHome = (props: UseHomeProps) => {
     trendings,
     top3,
 
-    onPressSettings: () => {},
     onPressSearch: () => {},
   };
 };

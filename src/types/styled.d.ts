@@ -28,6 +28,7 @@ declare module 'styled-components/native' {
     green: string;
     white: string;
     progressiveImageBackground: string;
+    modalTextContent: string;
   };
 
   export type Metrics = {

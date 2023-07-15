@@ -190,6 +190,13 @@ export namespace Translations {
     HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR = 'translations:home:search:tvShows:queryByTextError',
     HOME_SEARCH_TV_SHOW_PAGINATION_ERROR = 'translations:home:search:tvShows:paginationError',
     HOME_SEARCH_TV_SHOW_PLACEHOLDER = 'translations:home:search:tvShows:placeholder',
+
+    // Settings
+    SETTINGS_ABOUT = 'translations:home:settings:about',
+    SETTINGS_IMAGES_QUALITY = 'translations:home:settings:imagesQuality',
+    SETTINGS_OPEN_SOURCE = 'translations:home:settings:openSource',
+    SETTINGS_LANGUAGE = 'translations:home:settings:language',
+    SETTINGS_THEME = 'translations:home:settings:theme',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV

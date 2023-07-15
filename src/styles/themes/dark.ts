@@ -31,6 +31,7 @@ export const dark: DefaultTheme = {
     green: '#32BE70',
     white: '#FFFFFF',
     progressiveImageBackground: 'rgba(242, 242, 242, 0.5)',
+    modalTextContent: '#111111',
   },
   metrics,
 };

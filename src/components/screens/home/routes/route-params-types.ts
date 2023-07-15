@@ -23,12 +23,11 @@ export type HomeStackRoutes = {
   [Routes.Home.MOVIE_DETAILS]: MovieDetailsParams;
   [Routes.Home.SEARCH]: SearchParams;
   [Routes.Home.MEDIA_REVIEWS]: ReviewsParams;
-  [Routes.Settings.SETTINGS]: undefined;
-  [Routes.Settings.IMAGES_QUALITY]: undefined;
-  [Routes.Settings.OPEN_SOURCE]: undefined;
-  [Routes.Settings.LANGUAGE]: undefined;
-  [Routes.Settings.THEME]: undefined;
-  [Routes.Settings.ABOUT]: undefined;
+  [Routes.Home.SETTINGS_IMAGES_QUALITY]: undefined;
+  [Routes.Home.SETTINGS_OPEN_SOURCE]: undefined;
+  [Routes.Home.SETTINGS_LANGUAGE]: undefined;
+  [Routes.Home.SETTINGS_THEME]: undefined;
+  [Routes.Home.SETTINGS_ABOUT]: undefined;
 };
 
 export type HomeStackNavigationProp = StackNavigationProp<

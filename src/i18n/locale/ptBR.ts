@@ -227,7 +227,6 @@ const ptBR: Locale = {
   },
   home: {
     learMoreButtonText: 'VER MAIS',
-    settings: 'Configurações',
     tvShows: 'Séries',
     viewAll: 'Ver todos',
     movies: 'Filmes',
@@ -242,33 +241,12 @@ const ptBR: Locale = {
       upcoming: 'Em Breve',
       upcomingViewAllTitle: 'Em Breve (filmes)',
     },
-    settingsSections: {
-      openSource: {
-        sectionDescription:
-          'Lista com todos os recursos de código aberto utilizados',
-        sectionTitle: 'Código-Aberto',
-        headerTitle: 'Código-Aberto',
-      },
-      language: {
-        sectionDescription: 'Escolha o idioma que o app irá usar',
-        sectionTitle: 'Idioma',
-        headerTitle: 'Idioma',
-      },
-      about: {
-        sectionDescription: 'Veja mais sobre o criador deste aplciativo',
-        sectionTitle: 'Sobre',
-        headerTitle: 'Sobre',
-      },
-      imagesQuality: {
-        sectionDescription: 'Ajustar a qualidade das images mostradas',
-        sectionTitle: 'Qualidade das Images',
-        headerTitle: 'Qualidade das Images',
-      },
-      theme: {
-        sectionDescription: 'Escolha entre o tema Escuro e Claro',
-        sectionTitle: 'Tema',
-        headerTitle: 'Tema',
-      },
+    settings: {
+      openSource: 'Open-source',
+      language: 'Idioma',
+      about: 'Sobre',
+      imagesQuality: 'Qualidade das Images',
+      theme: 'Tema',
     },
     trendingTvShows: {
       error: 'Não foi possível carregar as Séries',

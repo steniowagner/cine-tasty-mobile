@@ -11,7 +11,7 @@ import * as Styles from './About.styles';
 
 const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
-const About = () => {
+export const About = () => {
   const {t} = useTranslation();
 
   return (
@@ -55,5 +55,3 @@ const About = () => {
     </Styles.Wrapper>
   );
 };
-
-export default About;

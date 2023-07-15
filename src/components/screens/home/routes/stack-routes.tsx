@@ -13,6 +13,8 @@ import {
 } from '@routes/constants';
 import SearchStack from '@src/components/screens/common/search/routes/stack-routes';
 import {Routes} from '@routes/routes';
+import {useTranslations} from '@hooks';
+import {Translations} from '@i18n/tags';
 
 import {MediaSectionViewAll} from '../components/media-section-view-all/components/MediaSectionViewAll';
 import {MediaSectionViewAllProps} from '../components/media-section-view-all/routes/route-params-types';
@@ -20,19 +22,25 @@ import {Home} from '../components/Home';
 import {TVShowDetail} from '../../common/media-details/tv-show-detail/components/TVShowDetail';
 import {SeasonsProps} from '../../common/media-details/seasons/routes/route-params-types';
 import {SeasonsDetailsTabs} from '../../common/media-details/seasons/components/tabs/SeasonsDetailsTabs';
+import {ImagesQuality} from '../components/settings/images-quality/ImagesQuality';
+import {Languages} from '../components/settings/languages/Languages';
+import {Theme} from '../components/settings/theme/Theme';
+import {OpenSource} from '../components/settings/open-source/OpenSource';
+import {About} from '../components/settings/about/About';
 
-const Stack = createStackNavigator();
+const StackNavigator = createStackNavigator();
 
 export const HomeStack = () => {
   const theme = useTheme();
   const TRANSPARENT_HEADER_OPTIONS = getTransparentHeaderOptions(theme);
+  const translations = useTranslations();
 
   return (
-    <Stack.Navigator
+    <StackNavigator.Navigator
       screenOptions={{
         headerMode: 'screen',
       }}>
-      <Stack.Screen
+      <StackNavigator.Screen
         options={{
           ...TRANSPARENT_HEADER_OPTIONS,
           headerTransparent: true,
@@ -40,7 +48,7 @@ export const HomeStack = () => {
         name={Routes.Home.HOME}
         component={Home}
       />
-      <Stack.Screen
+      <StackNavigator.Screen
         options={{
           ...TRANSPARENT_HEADER_OPTIONS,
           ...TransitionPresets.SlideFromRightIOS,
@@ -48,7 +56,7 @@ export const HomeStack = () => {
         name={Routes.Home.FAMOUS_DETAILS}
         component={FamousDetails}
       />
-      <Stack.Screen
+      <StackNavigator.Screen
         name={Routes.Home.MEDIA_DETAILS_VIEW_ALL}
         options={({route}: MediaSectionViewAllProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
@@ -57,14 +65,14 @@ export const HomeStack = () => {
         })}
         component={MediaSectionViewAll}
       />
-      <Stack.Screen
+      <StackNavigator.Screen
         name={Routes.Home.MOVIE_DETAILS}
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
         })}
         component={MovieDetail}
       />
-      <Stack.Screen
+      <StackNavigator.Screen
         name={Routes.Home.TV_SHOW_DETAILS}
         options={() => ({
           ...TRANSPARENT_HEADER_OPTIONS,
@@ -72,7 +80,7 @@ export const HomeStack = () => {
         })}
         component={TVShowDetail}
       />
-      <Stack.Screen
+      <StackNavigator.Screen
         name={Routes.Home.TV_SHOW_SEASONS}
         options={(props: SeasonsProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
@@ -87,7 +95,7 @@ export const HomeStack = () => {
         })}
         component={SeasonsDetailsTabs}
       />
-      <Stack.Screen
+      <StackNavigator.Screen
         name={Routes.Home.MEDIA_REVIEWS}
         options={({route}: ReviewsProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
@@ -96,7 +104,7 @@ export const HomeStack = () => {
         })}
         component={Reviews}
       />
-      <Stack.Screen
+      <StackNavigator.Screen
         name={Routes.Home.IMAGES_GALLERY}
         component={ImagesGallery}
         options={() => ({
@@ -104,11 +112,62 @@ export const HomeStack = () => {
           headerTitleAlign: 'center',
         })}
       />
-      <Stack.Screen
+      <StackNavigator.Screen
         options={{headerShown: false}}
         component={SearchStack}
         name={Routes.Home.SEARCH}
       />
-    </Stack.Navigator>
+      <StackNavigator.Screen
+        name={Routes.Home.SETTINGS_IMAGES_QUALITY}
+        component={ImagesQuality}
+        options={() => ({
+          ...DEFAULT_HEADER_OPTIONS,
+          headerTitle: translations.translate(
+            Translations.Tags.SETTINGS_IMAGES_QUALITY,
+          ),
+          headerTitleAlign: 'center',
+        })}
+      />
+      <StackNavigator.Screen
+        name={Routes.Home.SETTINGS_LANGUAGE}
+        component={Languages}
+        options={() => ({
+          ...DEFAULT_HEADER_OPTIONS,
+          headerTitle: translations.translate(
+            Translations.Tags.SETTINGS_LANGUAGE,
+          ),
+          headerTitleAlign: 'center',
+        })}
+      />
+      <StackNavigator.Screen
+        name={Routes.Home.SETTINGS_THEME}
+        component={Theme}
+        options={() => ({
+          ...DEFAULT_HEADER_OPTIONS,
+          headerTitle: translations.translate(Translations.Tags.SETTINGS_THEME),
+          headerTitleAlign: 'center',
+        })}
+      />
+      <StackNavigator.Screen
+        name={Routes.Home.SETTINGS_OPEN_SOURCE}
+        component={OpenSource}
+        options={() => ({
+          ...DEFAULT_HEADER_OPTIONS,
+          headerTitle: translations.translate(
+            Translations.Tags.SETTINGS_OPEN_SOURCE,
+          ),
+          headerTitleAlign: 'center',
+        })}
+      />
+      <StackNavigator.Screen
+        name={Routes.Home.SETTINGS_ABOUT}
+        component={About}
+        options={() => ({
+          ...DEFAULT_HEADER_OPTIONS,
+          headerTitle: translations.translate(Translations.Tags.SETTINGS_ABOUT),
+          headerTitleAlign: 'center',
+        })}
+      />
+    </StackNavigator.Navigator>
   );
 };
