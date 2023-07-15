@@ -29,6 +29,9 @@ declare module 'styled-components/native' {
     white: string;
     progressiveImageBackground: string;
     modalTextContent: string;
+    github: string;
+    instagram: string;
+    linkedin: string;
   };
 
   export type Metrics = {
