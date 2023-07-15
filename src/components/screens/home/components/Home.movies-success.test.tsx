@@ -19,7 +19,7 @@ import {Routes} from '@routes/routes';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 
-import {settingsModalOptions} from './settings-modal/options';
+import {settingsModalOptions} from './settings/settings-modal/options';
 import {Home} from './Home';
 jest.mock('react-native-reanimated', () => {
   const Reanimated = require('react-native-reanimated/mock');
@@ -113,6 +113,90 @@ describe('<Home /> # Movies/success test cases', () => {
             `icon-${settingsModalOptions[index].icon}`,
           );
         });
+    });
+
+    describe('Navigating to the settings-options screens', () => {
+      it('should navigate to the "Settings/Images Quality" screen when the user presses the "Images Quality" option', async () => {
+        const navigate = jest.fn();
+        const resolvers = trendingMoviesFixtures.makeQuerySuccessResolver();
+        const component = render(renderHome(resolvers, navigate));
+        await waitFor(() => {
+          expect(
+            elements.top3LearnMoreButtons(component).length,
+          ).toBeGreaterThan(0);
+        });
+        fireEvent.press(elements.settingsButton(component));
+        expect(navigate).toBeCalledTimes(0);
+        fireEvent.press(elements.settingsOptionsButtons(component)[0]);
+        expect(navigate).toBeCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(
+          Routes.Home.SETTINGS_IMAGES_QUALITY,
+        );
+      });
+
+      it('should navigate to the "Settings/Language" screen when the user presses the "Language" option', async () => {
+        const navigate = jest.fn();
+        const resolvers = trendingMoviesFixtures.makeQuerySuccessResolver();
+        const component = render(renderHome(resolvers, navigate));
+        await waitFor(() => {
+          expect(
+            elements.top3LearnMoreButtons(component).length,
+          ).toBeGreaterThan(0);
+        });
+        fireEvent.press(elements.settingsButton(component));
+        expect(navigate).toBeCalledTimes(0);
+        fireEvent.press(elements.settingsOptionsButtons(component)[1]);
+        expect(navigate).toBeCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(Routes.Home.SETTINGS_LANGUAGE);
+      });
+
+      it('should navigate to the "Settings/Theme" screen when the user presses the "Theme" option', async () => {
+        const navigate = jest.fn();
+        const resolvers = trendingMoviesFixtures.makeQuerySuccessResolver();
+        const component = render(renderHome(resolvers, navigate));
+        await waitFor(() => {
+          expect(
+            elements.top3LearnMoreButtons(component).length,
+          ).toBeGreaterThan(0);
+        });
+        fireEvent.press(elements.settingsButton(component));
+        expect(navigate).toBeCalledTimes(0);
+        fireEvent.press(elements.settingsOptionsButtons(component)[2]);
+        expect(navigate).toBeCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(Routes.Home.SETTINGS_THEME);
+      });
+
+      it('should navigate to the "Settings/Open-source" screen when the user presses the "Open-source" option', async () => {
+        const navigate = jest.fn();
+        const resolvers = trendingMoviesFixtures.makeQuerySuccessResolver();
+        const component = render(renderHome(resolvers, navigate));
+        await waitFor(() => {
+          expect(
+            elements.top3LearnMoreButtons(component).length,
+          ).toBeGreaterThan(0);
+        });
+        fireEvent.press(elements.settingsButton(component));
+        expect(navigate).toBeCalledTimes(0);
+        fireEvent.press(elements.settingsOptionsButtons(component)[3]);
+        expect(navigate).toBeCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(Routes.Home.SETTINGS_OPEN_SOURCE);
+      });
+
+      it('should navigate to the "Settings/About" screen when the user presses the "About" option', async () => {
+        const navigate = jest.fn();
+        const resolvers = trendingMoviesFixtures.makeQuerySuccessResolver();
+        const component = render(renderHome(resolvers, navigate));
+        await waitFor(() => {
+          expect(
+            elements.top3LearnMoreButtons(component).length,
+          ).toBeGreaterThan(0);
+        });
+        fireEvent.press(elements.settingsButton(component));
+        expect(navigate).toBeCalledTimes(0);
+        fireEvent.press(elements.settingsOptionsButtons(component)[4]);
+        expect(navigate).toBeCalledTimes(1);
+        expect(navigate).toHaveBeenCalledWith(Routes.Home.SETTINGS_ABOUT);
+      });
     });
   });
 
