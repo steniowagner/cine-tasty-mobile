@@ -22,7 +22,8 @@
       "@styles/*": ["./styles/*"],
       "@utils": ["./utils/index"],
       "@i18n/*": ["./i18n/*"],
-      "@src/*": ["./*"]
+      "@src/*": ["./*"],
+      "@dependencies": ["../package.json"]
     }
   },
   "include": ["src/**/*", "schema.json"],

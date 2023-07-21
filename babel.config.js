@@ -41,6 +41,7 @@ module.exports = {
           '@styles': './src/styles',
           '@i18n': './src/i18n',
           '@src': './src',
+          '@dependencies': './package.json',
         },
       },
     ],
