@@ -9,16 +9,17 @@ export const SupportLibraries = () => {
   const supportLibraries = useSupportLibraries();
   return (
     <>
-      <OpenSourceStyles.SectionTitle>
+      <OpenSourceStyles.SectionTitle testID="support-libraries-title">
         {supportLibraries.texts.title}
       </OpenSourceStyles.SectionTitle>
-      <OpenSourceStyles.SectionDescrpition>
+      <OpenSourceStyles.SectionDescrpition testID="support-libraries-description">
         {supportLibraries.texts.description}
       </OpenSourceStyles.SectionDescrpition>
       <Styles.Wrapper>
         {supportLibraries.libraries.map(library => (
           <Styles.TextWrapper key={library}>
-            <TextIconButtonStyles.DefaultText>
+            <TextIconButtonStyles.DefaultText
+              testID={`support-library-${library}`}>
               {library}
             </TextIconButtonStyles.DefaultText>
           </Styles.TextWrapper>
