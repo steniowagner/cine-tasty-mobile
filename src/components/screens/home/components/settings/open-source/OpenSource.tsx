@@ -4,7 +4,7 @@ import {ScrollView} from 'react-native';
 import {Icons} from '@components';
 import {CONSTANTS} from '@utils';
 
-import SupportLibraries from './support-libraries/SupportLibraries';
+import {SupportLibraries} from './support-libraries/SupportLibraries';
 import DefaultOpenSourceItem from './DefaultOpenSourceItem';
 import * as Styles from './OpenSource.styles';
 import useOpenSource from './useOpenSource';
