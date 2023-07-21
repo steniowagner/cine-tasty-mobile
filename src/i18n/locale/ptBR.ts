@@ -55,29 +55,6 @@ const ptBR: Locale = {
   },
   about:
     'Olá!\n\nSou um Engeiro de Software e amo aplicar meu conhecimento para resolver problemas, criar produtos incríveis e impactar vidas!',
-  openSource: {
-    libraries: {
-      description:
-        'Lista de todas as bibliotecas que foram usados por este projeto',
-      title: 'Bibliotecas de suporte',
-    },
-    github: {
-      description: 'Repositório público contendo o código-fonte deste projeto',
-      title: 'Repositório no GitHub',
-    },
-    tmdb: {
-      description: 'Fonte dos dados de Filmes e Séries de TV',
-      title: 'TheMovieDB',
-    },
-    opentrivia: {
-      description: 'Fonte dos dados dos Quizes',
-      title: 'OpenTriviaDB',
-    },
-    newsapi: {
-      description: 'Fonte dos dados das Notícias',
-      title: 'News API',
-    },
-  },
   imageQualities: {
     low: 'Baixa',
     medium: 'Média',
@@ -247,6 +224,32 @@ const ptBR: Locale = {
       about: 'Sobre',
       imagesQuality: 'Qualidade das Images',
       theme: 'Tema',
+      sections: {
+        openSource: {
+          libraries: {
+            description:
+              'Lista de todas as bibliotecas que foram usados por este projeto',
+            title: 'Bibliotecas de suporte',
+          },
+          github: {
+            description:
+              'Repositório público contendo o código-fonte deste projeto',
+            title: 'Repositório no GitHub',
+          },
+          tmdb: {
+            description: 'Fonte dos dados de Filmes e Séries de TV',
+            title: 'TheMovieDB',
+          },
+          opentrivia: {
+            description: 'Fonte dos dados dos Quizes',
+            title: 'OpenTriviaDB',
+          },
+          newsapi: {
+            description: 'Fonte dos dados das Notícias',
+            title: 'News API',
+          },
+        },
+      },
     },
     trendingTvShows: {
       error: 'Não foi possível carregar as Séries',

@@ -66,13 +66,6 @@ export type Locale = {
     next: string;
     start: string;
   };
-  openSource: {
-    libraries: OpenSourceSection;
-    github: OpenSourceSection;
-    tmdb: OpenSourceSection;
-    newsapi: OpenSourceSection;
-    opentrivia: OpenSourceSection;
-  };
   tabs: Record<Tabs, string>;
   time: Record<Time, string>;
   home: {
@@ -98,6 +91,15 @@ export type Locale = {
       language: string;
       about: string;
       theme: string;
+      sections: {
+        openSource: {
+          libraries: OpenSourceSection;
+          github: OpenSourceSection;
+          tmdb: OpenSourceSection;
+          newsapi: OpenSourceSection;
+          opentrivia: OpenSourceSection;
+        };
+      };
     };
     tvShowsPaginationError: string;
     moviesPaginationError: string;

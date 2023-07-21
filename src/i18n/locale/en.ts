@@ -54,28 +54,6 @@ const en: Locale = {
   },
   about:
     "Hey!\n\nI'm Full-Stack Software Engineer that loves apply his knowledge to solve problems, create amazing products and impact lives!",
-  openSource: {
-    libraries: {
-      description: 'List of all libraries that was used by this project',
-      title: 'Support libraries',
-    },
-    github: {
-      description: "Public repository with the project's source-code",
-      title: 'GitHub repository',
-    },
-    tmdb: {
-      description: 'Movies and TV Shows datasource',
-      title: 'TheMovieDB',
-    },
-    opentrivia: {
-      description: 'Quiz datasource',
-      title: 'OpenTriviaDB',
-    },
-    newsapi: {
-      description: 'News datasource',
-      title: 'News API',
-    },
-  },
   imageQualities: {
     low: 'Low',
     medium: 'Medium',
@@ -245,6 +223,30 @@ const en: Locale = {
       about: 'About',
       imagesQuality: 'Images Quality',
       theme: 'Theme',
+      sections: {
+        openSource: {
+          libraries: {
+            description: 'List of all libraries that was used by this project',
+            title: 'Support libraries',
+          },
+          github: {
+            description: "Public repository with the project's source-code",
+            title: 'GitHub repository',
+          },
+          tmdb: {
+            description: 'Movies and TV Shows datasource',
+            title: 'TheMovieDB',
+          },
+          opentrivia: {
+            description: 'Quiz datasource',
+            title: 'OpenTriviaDB',
+          },
+          newsapi: {
+            description: 'News datasource',
+            title: 'News API',
+          },
+        },
+      },
     },
     trendingTvShows: {
       error: "Couldn't load the TV Shows",

@@ -60,28 +60,6 @@ const es: Locale = {
   },
   about:
     'Oye!\n\n¡Soy un ingeniero de software Full-Stack al que le encanta aplicar sus conocimientos para resolver problemas, crear productos asombrosos e impactar vidas!',
-  openSource: {
-    libraries: {
-      description: 'Lista de todas las bibliotecas que utilizó este proyecto',
-      title: 'Bibliotecas de apoyo',
-    },
-    github: {
-      description: 'Repositorio público con el código fuente del proyecto',
-      title: 'Repositorio de GitHub',
-    },
-    tmdb: {
-      description: 'Fuente de datos de películas y programas de televisión',
-      title: 'TheMovieDB',
-    },
-    opentrivia: {
-      description: 'Fuente de datos de los Quizes',
-      title: 'OpenTriviaDB',
-    },
-    newsapi: {
-      description: 'Fuente de datos de las Noticias',
-      title: 'News API',
-    },
-  },
   imageQualities: {
     low: 'Baja',
     medium: 'Medio',
@@ -247,6 +225,33 @@ const es: Locale = {
       about: 'Acerca de',
       imagesQuality: 'Calidad de imágenes',
       theme: 'Tema',
+      sections: {
+        openSource: {
+          libraries: {
+            description:
+              'Lista de todas las bibliotecas que utilizó este proyecto',
+            title: 'Bibliotecas de apoyo',
+          },
+          github: {
+            description:
+              'Repositorio público con el código fuente del proyecto',
+            title: 'Repositorio de GitHub',
+          },
+          tmdb: {
+            description:
+              'Fuente de datos de películas y programas de televisión',
+            title: 'TheMovieDB',
+          },
+          opentrivia: {
+            description: 'Fuente de datos de los Quizes',
+            title: 'OpenTriviaDB',
+          },
+          newsapi: {
+            description: 'Fuente de datos de las Noticias',
+            title: 'News API',
+          },
+        },
+      },
     },
     trendingTvShows: {
       error: 'No se pudieron cargar los programas de TV',
