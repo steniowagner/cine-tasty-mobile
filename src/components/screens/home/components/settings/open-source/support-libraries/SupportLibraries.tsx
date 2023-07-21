@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as TextIconButtonStyles from '../support-links/support-link/SupportLink.styles';
 import {useSupportLibraries} from './useSupportLibraries';
-import * as OpenSourceStyles from '../support-links/SupportLinks.styles';
+import * as OpenSourceStyles from '../support-links/support-link/SupportLink.styles';
 import * as Styles from './SupportLibraries.styles';
 
 export const SupportLibraries = () => {

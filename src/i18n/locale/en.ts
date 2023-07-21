@@ -231,7 +231,7 @@ const en: Locale = {
           },
           github: {
             description: "Public repository with the project's source-code",
-            title: 'GitHub repository',
+            title: 'GitHub',
           },
           tmdb: {
             description: 'Movies and TV Shows datasource',

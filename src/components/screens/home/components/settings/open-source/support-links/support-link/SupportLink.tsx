@@ -22,7 +22,7 @@ export const SupportLink = (props: SupportLinkProps) => (
       <Styles.DefaultText>{props.title}</Styles.DefaultText>
       <Styles.GapSpace />
       <SVGIcon
-        size={metrics.getWidthFromDP('7%')}
+        size={metrics.extraLargeSize}
         colorThemeRef="buttonText"
         id={props.icon}
       />

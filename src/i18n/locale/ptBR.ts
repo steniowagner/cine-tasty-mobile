@@ -234,7 +234,7 @@ const ptBR: Locale = {
           github: {
             description:
               'Repositório público contendo o código-fonte deste projeto',
-            title: 'Repositório no GitHub',
+            title: 'GitHub',
           },
           tmdb: {
             description: 'Fonte dos dados de Filmes e Séries de TV',

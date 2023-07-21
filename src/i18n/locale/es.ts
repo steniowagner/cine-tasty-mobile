@@ -235,7 +235,7 @@ const es: Locale = {
           github: {
             description:
               'Repositorio público con el código fuente del proyecto',
-            title: 'Repositorio de GitHub',
+            title: 'GitHub',
           },
           tmdb: {
             description:

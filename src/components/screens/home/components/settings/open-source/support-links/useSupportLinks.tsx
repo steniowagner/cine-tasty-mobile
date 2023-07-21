@@ -2,6 +2,7 @@ import React from 'react';
 import {useMemo} from 'react';
 import {SvgCssUri} from 'react-native-svg';
 
+import {Icons} from '@src/components/common/svg-icon/icons';
 import {useTranslations} from '@hooks';
 import {Translations} from '@i18n/tags';
 import {CONSTANTS} from '@utils';
@@ -21,7 +22,7 @@ export const useSupportLinks = () => {
         ),
         buttonText: 'steniowagner/cine-tasty',
         url: CONSTANTS.VALUES.LINKS.GITHUB_REPOSITORY,
-        icon: 'github',
+        icon: 'github' as Icons,
       },
       {
         description: translations.translate(
@@ -32,11 +33,12 @@ export const useSupportLinks = () => {
         ),
         buttonText: 'TMDB Api',
         url: CONSTANTS.VALUES.LINKS.TMBD,
-        icon: 'video-vintage',
+        icon: 'video-vintage' as Icons,
         IconComponent: (
           <SvgCssUri
-            width={metrics.getWidthFromDP('50%')}
-            height={metrics.getWidthFromDP('50%')}
+            testID="tmdb-api-logo"
+            width={metrics.getWidthFromDP('40%')}
+            height={metrics.getWidthFromDP('40%')}
             uri={CONSTANTS.VALUES.LINKS.TMDB_LOGO}
           />
         ),
@@ -50,7 +52,7 @@ export const useSupportLinks = () => {
         ),
         buttonText: 'OpenTriviaDB API',
         url: CONSTANTS.VALUES.LINKS.OPEN_TRIVIA_API,
-        icon: 'quiz-active',
+        icon: 'quiz-active' as Icons,
       },
       {
         description: translations.translate(
@@ -61,7 +63,7 @@ export const useSupportLinks = () => {
         ),
         buttonText: 'News API',
         url: CONSTANTS.VALUES.LINKS.NEWS_API,
-        icon: 'news-active',
+        icon: 'news-active' as Icons,
       },
     ],
     [],
