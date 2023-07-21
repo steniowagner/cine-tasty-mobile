@@ -29,6 +29,14 @@ const VALUES = {
     shadowRadius: 3.84,
     elevation: 5,
   },
+  LINKS: {
+    GITHUB_REPOSITORY: 'https://github.com/steniowagner/cine-tasty-mobile',
+    TMDB_LOGO:
+      'https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg',
+    TMBD: 'https://www.themoviedb.org/',
+    OPEN_TRIVIA_API: 'https://opentdb.com/',
+    NEWS_API: 'https://newsapi.org/',
+  },
 };
 
 export const CONSTANTS = {VALUES, KEYS};

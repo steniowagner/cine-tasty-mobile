@@ -24,3 +24,16 @@ export const GapSpace = styled(View)`
   width: ${({theme}) => theme.metrics.extraSmallSize}px;
   height: 1px;
 `;
+
+export const SectionTitle = styled(Text)`
+  margin-bottom: ${({theme}) => theme.metrics.extraSmallSize}px;
+  font-size: ${({theme}) => theme.metrics.extraLargeSize}px;
+  color: ${({theme}) => theme.colors.text};
+  font-family: CircularStd-Bold;
+`;
+
+export const SectionDescrpition = styled(Text)`
+  font-size: ${({theme}) => theme.metrics.largeSize}px;
+  color: ${({theme}) => theme.colors.subText};
+  font-family: CircularStd-Bold;
+`;

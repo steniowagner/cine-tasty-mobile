@@ -201,6 +201,18 @@ export namespace Translations {
     // Settings/About
     SETTINGS_ABOUT_SOFTWARE_ENGINEER = 'translations:softwareEngineer',
     SETTINGS_ABOUT_ABOUT_ME = 'translations:about',
+
+    // Settings/Open-source
+    SETTINGS_OPEN_SOURCE_LIBRARIES_DESCRIPTION = 'translations:home:settings:sections:openSource:libraries:description',
+    SETTINGS_OPEN_SOURCE_LIBRARIES_TITLE = 'translations:home:settings:sections:openSource:libraries:title',
+    SETTINGS_OPEN_SOURCE_GITHUB_DESCRIPTION = 'translations:home:settings:sections:openSource:github:description',
+    SETTINGS_OPEN_SOURCE_GITHUB_TITLE = 'translations:home:settings:sections:openSource:github:title',
+    SETTINGS_OPEN_SOURCE_TMDB_DESCRIPTION = 'translations:home:settings:sections:openSource:tmdb:description',
+    SETTINGS_OPEN_SOURCE_TMDB_TITLE = 'translations:home:settings:sections:openSource:tmdb:title',
+    SETTINGS_OPEN_SOURCE_NEWS_API_DESCRIPTION = 'translations:home:settings:sections:openSource:newsapi:description',
+    SETTINGS_OPEN_SOURCE_NEWS_API_TITLE = 'translations:home:settings:sections:openSource:newsapi:title',
+    SETTINGS_OPEN_SOURCE_OPEN_TRIVIA_API_DESCRIPTION = 'translations:home:settings:sections:openSource:opentrivia:description',
+    SETTINGS_OPEN_SOURCE_OPEN_TRIVIA_API_TITLE = 'translations:home:settings:sections:openSource:opentrivia:title',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -236,26 +248,6 @@ export const ONBOARDING_NEWS_TITLE = 'translations:onboarding:news:title';
 export const THEME_SYSTEM_PREFERENCES = 'translations:theme:system';
 export const THEME_LIGHT = 'translations:theme:light';
 export const THEME_DARK = 'translations:theme:dark';
-
-// OPEN-SOURCE
-export const OPEN_SOURCE_LIBRARIES_DESCRIPTION =
-  'translations:openSource:libraries:description';
-export const OPEN_SOURCE_LIBRARIES_TITLE =
-  'translations:openSource:libraries:title';
-export const OPEN_SOURCE_GITHUB_DESCRIPTION =
-  'translations:openSource:github:description';
-export const OPEN_SOURCE_GITHUB_TITLE = 'translations:openSource:github:title';
-export const OPEN_SOURCE_TMDB_DESCRIPTION =
-  'translations:openSource:tmdb:description';
-export const OPEN_SOURCE_TMDB_TITLE = 'translations:openSource:tmdb:title';
-export const OPEN_SOURCE_NEWS_API_DESCRIPTION =
-  'translations:openSource:newsapi:description';
-export const OPEN_SOURCE_NEWS_API_TITLE =
-  'translations:openSource:newsapi:title';
-export const OPEN_SOURCE_OPEN_TRIVIA_API_DESCRIPTION =
-  'translations:openSource:opentrivia:description';
-export const OPEN_SOURCE_OPEN_TRIVIA_API_TITLE =
-  'translations:openSource:opentrivia:title';
 
 // IMAGES-QUALITIES
 export const IMAGE_QUALITIES = 'translations:imageQualities';

@@ -1,35 +1,30 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
-import * as TRANSLATIONS from '@i18n/tags';
-
-import TextIconButton from '../text-icon-button/TextIconButton';
-import * as OpenSourceStyles from '../OpenSource.styles';
+import * as TextIconButtonStyles from '../support-links/support-link/SupportLink.styles';
+import {useSupportLibraries} from './useSupportLibraries';
+import * as OpenSourceStyles from '../support-links/support-link/SupportLink.styles';
 import * as Styles from './SupportLibraries.styles';
-import libraries from '../libraries';
 
-const SupportLibraries = () => {
-  const { t } = useTranslation();
-
+export const SupportLibraries = () => {
+  const supportLibraries = useSupportLibraries();
   return (
     <>
-      <OpenSourceStyles.SectionTitle>
-        {t(TRANSLATIONS.OPEN_SOURCE_LIBRARIES_TITLE)}
+      <OpenSourceStyles.SectionTitle testID="support-libraries-title">
+        {supportLibraries.texts.title}
       </OpenSourceStyles.SectionTitle>
-      <OpenSourceStyles.SectionDescrpition>
-        {t(TRANSLATIONS.OPEN_SOURCE_LIBRARIES_DESCRIPTION)}
+      <OpenSourceStyles.SectionDescrpition testID="support-libraries-description">
+        {supportLibraries.texts.description}
       </OpenSourceStyles.SectionDescrpition>
       <Styles.Wrapper>
-        {libraries.map((library) => (
-          <TextIconButton
-            text={library.title}
-            url={library.url}
-            key={library.title}
-          />
+        {supportLibraries.libraries.map(library => (
+          <Styles.TextWrapper key={library}>
+            <TextIconButtonStyles.DefaultText
+              testID={`support-library-${library}`}>
+              {library}
+            </TextIconButtonStyles.DefaultText>
+          </Styles.TextWrapper>
         ))}
       </Styles.Wrapper>
     </>
   );
 };
-
-export default SupportLibraries;
