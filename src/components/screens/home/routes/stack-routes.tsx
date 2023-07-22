@@ -24,7 +24,7 @@ import {SeasonsProps} from '../../common/media-details/seasons/routes/route-para
 import {SeasonsDetailsTabs} from '../../common/media-details/seasons/components/tabs/SeasonsDetailsTabs';
 import {ImagesQuality} from '../components/settings/images-quality/ImagesQuality';
 import {Languages} from '../components/settings/languages/Languages';
-import {Theme} from '../components/settings/theme/Theme';
+import {ThemeSettings} from '../components/settings/theme-settings/ThemeSettings';
 import {OpenSource} from '../components/settings/open-source/OpenSource';
 import {About} from '../components/settings/about/About';
 
@@ -141,7 +141,7 @@ export const HomeStack = () => {
       />
       <StackNavigator.Screen
         name={Routes.Home.SETTINGS_THEME}
-        component={Theme}
+        component={ThemeSettings}
         options={() => ({
           ...DEFAULT_HEADER_OPTIONS,
           headerTitle: translations.translate(Translations.Tags.SETTINGS_THEME),
