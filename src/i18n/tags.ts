@@ -218,6 +218,9 @@ export namespace Translations {
     SETTINGS_THEME_SYSTEM_PREFERENCES = 'translations:home:settings:sections:theme:system',
     SETTINGS_THEME_LIGHT = 'translations:home:settings:sections:theme:light',
     SETTINGS_THEME_DARK = 'translations:home:settings:sections:theme:dark',
+
+    // Settings/Languages
+    SETTINGS_LANGUAGES = 'translations:home:settings:sections:languages',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV

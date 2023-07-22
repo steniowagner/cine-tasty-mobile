@@ -8,6 +8,8 @@ type Options = {
   value: number;
 };
 
+const LANGUAGES = ['en', 'es', 'ptBR'];
+
 export const useTranslations = () => {
   const i18next = useTranslation();
 
@@ -18,16 +20,13 @@ export const useTranslations = () => {
 
   const language = useMemo(() => {
     switch (i18next.i18n.language) {
-      case 'en':
+      case LANGUAGES[0]:
         return SchemaTypes.ISO6391Language.EN;
 
-      case 'es':
+      case LANGUAGES[1]:
         return SchemaTypes.ISO6391Language.ES;
 
-      case 'ptPT':
-        return SchemaTypes.ISO6391Language.PT;
-
-      case 'ptBR':
+      case LANGUAGES[2]:
         return SchemaTypes.ISO6391Language.PTBR;
 
       default:
@@ -36,6 +35,7 @@ export const useTranslations = () => {
   }, [i18next.i18n.language]);
 
   return {
+    languages: LANGUAGES,
     translate,
     language,
   };

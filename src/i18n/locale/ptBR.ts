@@ -56,11 +56,6 @@ const ptBR: Locale = {
     high: 'Alta',
     veryHigh: 'Muito Alta',
   },
-  languages: {
-    en: 'Inglês',
-    es: 'Espanhol',
-    ptBR: 'Português',
-  },
   errors: {
     paginateFamousError: 'Não foi possível carregar mais famosos',
     searchFamousError: 'Não foi possível buscar por este famoso',
@@ -248,6 +243,11 @@ const ptBR: Locale = {
           dark: 'Escuro',
           light: 'Claro',
           system: 'Seguir as preferências do sistema',
+        },
+        languages: {
+          en: 'Inglês',
+          es: 'Espanhol',
+          ptBR: 'Português',
         },
       },
     },

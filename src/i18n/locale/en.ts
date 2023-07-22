@@ -55,11 +55,6 @@ const en: Locale = {
     high: 'High',
     veryHigh: 'Very High',
   },
-  languages: {
-    en: 'English',
-    es: 'Spanish',
-    ptBR: 'Portuguese',
-  },
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -245,6 +240,11 @@ const en: Locale = {
           dark: 'Dark',
           light: 'Light',
           system: 'Follow System Preferences',
+        },
+        languages: {
+          en: 'English',
+          es: 'Spanish',
+          ptBR: 'Portuguese',
         },
       },
     },

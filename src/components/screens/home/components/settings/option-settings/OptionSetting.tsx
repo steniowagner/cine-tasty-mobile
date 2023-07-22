@@ -5,27 +5,21 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './OptionSetting.styles';
 
-type OptionSettingProps = {
+type OptionSettingsProps = {
   onPress: () => void;
   isSelected: boolean;
   title: string;
 };
 
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('7%');
+const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('6%');
 
-const RadioBoxMarkedIcon = () => (
-  <SVGIcon size={DEFAULT_ICON_SIZE} id="radiobox-marked" />
-);
-
-const RadioBoxUnmarkedIcon = () => (
-  <SVGIcon size={DEFAULT_ICON_SIZE} id="radiobox-blank" />
-);
-
-const OptionSetting = ({isSelected, onPress, title}: OptionSettingProps) => (
-  <Styles.Wrapper onPress={onPress} testID="option-settings">
-    {isSelected ? <RadioBoxMarkedIcon /> : <RadioBoxUnmarkedIcon />}
-    <Styles.OptionTitle testID="option-title">{title}</Styles.OptionTitle>
+export const OptionSettings = (props: OptionSettingsProps) => (
+  <Styles.Wrapper onPress={props.onPress} testID="option-settings">
+    {props.isSelected ? (
+      <SVGIcon size={DEFAULT_ICON_SIZE} id="radiobox-marked" />
+    ) : (
+      <SVGIcon size={DEFAULT_ICON_SIZE} id="radiobox-blank" />
+    )}
+    <Styles.OptionTitle testID="option-title">{props.title}</Styles.OptionTitle>
   </Styles.Wrapper>
 );
-
-export default OptionSetting;

@@ -1,11 +1,6 @@
 import {Locale} from './Locale';
 
 const es: Locale = {
-  languages: {
-    en: 'Inglés',
-    es: 'Español',
-    ptBR: 'Portugués',
-  },
   languageWarning: {
     quiz: {
       positiveAction: 'Sí',
@@ -249,6 +244,11 @@ const es: Locale = {
           dark: 'Oscuro',
           light: 'Claro',
           system: 'Siga las preferencias del sistema',
+        },
+        languages: {
+          en: 'Inglés',
+          es: 'Español',
+          ptBR: 'Portugués',
         },
       },
     },
