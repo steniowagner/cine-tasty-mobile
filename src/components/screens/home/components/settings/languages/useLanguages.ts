@@ -1,38 +1,32 @@
-import {useMemo} from 'react';
-import {useTranslation} from 'react-i18next';
+import {useCallback, useMemo} from 'react';
 import RNRestart from 'react-native-restart';
 
-import * as TRANSLATIONS from '@i18n/tags';
 import {CONSTANTS, storage} from '@utils';
-import * as Types from '@local-types';
+import {useTranslations} from '@hooks';
+import {Translations} from '@i18n/tags';
 
-const useLanguages = () => {
-  const {i18n, t} = useTranslation();
+export const useLanguages = () => {
+  const translations = useTranslations();
 
-  const languages = useMemo(() => {
-    if (!i18n) {
-      return [];
-    }
+  const handlePressLanguage = useCallback(async (language: string) => {
+    await storage.set(CONSTANTS.KEYS.LANGUAGE, language);
+    RNRestart.Restart();
+  }, []);
 
-    const languageKeys = Object.keys(
-      i18n.services.resourceStore.data,
-    ) as Types.Languages[];
-
-    return languageKeys.map(languageKey => ({
-      onPress: async () => {
-        await storage.set(CONSTANTS.KEYS.LANGUAGE, languageKey);
-
-        RNRestart.Restart();
-      },
-      title: t(`${TRANSLATIONS.LANGUAGES}:${languageKey}`),
-      id: languageKey,
-    }));
-  }, [i18n]);
+  const languages = useMemo(
+    () =>
+      translations.languages.map(language => ({
+        title: translations.translate(
+          `${Translations.Tags.SETTINGS_LANGUAGES}:${language}` as Translations.Tags,
+        ),
+        onPress: () => handlePressLanguage(language),
+        id: language,
+      })),
+    [translations.languages],
+  );
 
   return {
-    selectedLanguage: i18n.language,
+    selectedLanguage: translations.language,
     languages,
   };
 };
-
-export default useLanguages;
