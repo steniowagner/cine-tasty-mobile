@@ -37,6 +37,10 @@ const VALUES = {
     OPEN_TRIVIA_API: 'https://opentdb.com/',
     NEWS_API: 'https://newsapi.org/',
   },
+  THEME: {
+    MIN_SUPPORTED_ANDROID_API_VERSION: 29,
+    MIN_SUPPORTED_IOS_VERSION: 13,
+  },
 };
 
 export const CONSTANTS = {VALUES, KEYS};

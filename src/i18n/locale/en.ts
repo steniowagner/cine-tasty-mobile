@@ -47,11 +47,6 @@ const en: Locale = {
     },
   },
   select: 'SELECT',
-  theme: {
-    dark: 'Dark',
-    light: 'Light',
-    system: 'Follow System Preferences',
-  },
   about:
     "Hey!\n\nI'm Full-Stack Software Engineer that loves apply his knowledge to solve problems, create amazing products and impact lives!",
   imageQualities: {
@@ -245,6 +240,11 @@ const en: Locale = {
             description: 'News datasource',
             title: 'News API',
           },
+        },
+        theme: {
+          dark: 'Dark',
+          light: 'Light',
+          system: 'Follow System Preferences',
         },
       },
     },

@@ -1,16 +1,15 @@
 import React from 'react';
 
 import OptionSettings from '../option-settings/OptionSetting';
-import useThemeSettings from './useThemeSettings';
+import {useThemeSettings} from './useThemeSettings';
 
-export const Theme = () => {
-  const {selectedTheme, themeOptions} = useThemeSettings();
-
+export const ThemeSettings = () => {
+  const themeSettings = useThemeSettings();
   return (
     <>
-      {themeOptions.map(theme => (
+      {themeSettings.options.map(theme => (
         <OptionSettings
-          isSelected={theme.id === selectedTheme}
+          isSelected={theme.id === themeSettings.selectedTheme}
           onPress={theme.onPress}
           title={theme.title}
           key={theme.title}

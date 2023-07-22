@@ -53,11 +53,6 @@ const es: Locale = {
     },
   },
   select: 'SELECCIONE',
-  theme: {
-    dark: 'Oscuro',
-    light: 'Claro',
-    system: 'Siga las preferencias del sistema',
-  },
   about:
     'Oye!\n\n¡Soy un ingeniero de software Full-Stack al que le encanta aplicar sus conocimientos para resolver problemas, crear productos asombrosos e impactar vidas!',
   imageQualities: {
@@ -66,7 +61,6 @@ const es: Locale = {
     high: 'Alta',
     veryHigh: 'Muy alta',
   },
-
   errors: {
     paginateFamousError: 'No se pudo cargar más famoso',
     searchFamousError: 'No se pudo buscar a esta persona',
@@ -250,6 +244,11 @@ const es: Locale = {
             description: 'Fuente de datos de las Noticias',
             title: 'News API',
           },
+        },
+        theme: {
+          dark: 'Oscuro',
+          light: 'Claro',
+          system: 'Siga las preferencias del sistema',
         },
       },
     },
