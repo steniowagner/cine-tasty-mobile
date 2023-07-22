@@ -1,6 +1,6 @@
 import React from 'react';
 
-import OptionSettings from '../option-settings/OptionSetting';
+import {OptionSettings} from '../option-settings/OptionSetting';
 import useLanguages from './useLanguages';
 
 export const Languages = () => {
