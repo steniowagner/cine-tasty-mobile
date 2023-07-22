@@ -213,6 +213,11 @@ export namespace Translations {
     SETTINGS_OPEN_SOURCE_NEWS_API_TITLE = 'translations:home:settings:sections:openSource:newsapi:title',
     SETTINGS_OPEN_SOURCE_OPEN_TRIVIA_API_DESCRIPTION = 'translations:home:settings:sections:openSource:opentrivia:description',
     SETTINGS_OPEN_SOURCE_OPEN_TRIVIA_API_TITLE = 'translations:home:settings:sections:openSource:opentrivia:title',
+
+    // Settings/Theme
+    SETTINGS_THEME_SYSTEM_PREFERENCES = 'translations:home:settings:sections:theme:system',
+    SETTINGS_THEME_LIGHT = 'translations:home:settings:sections:theme:light',
+    SETTINGS_THEME_DARK = 'translations:home:settings:sections:theme:dark',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -243,11 +248,6 @@ export const ONBOARDING_QUIZ_TITLE = 'translations:onboarding:quiz:title';
 export const ONBOARDING_NEWS_DESCRIPTION =
   'translations:onboarding:news:description';
 export const ONBOARDING_NEWS_TITLE = 'translations:onboarding:news:title';
-
-// THEME
-export const THEME_SYSTEM_PREFERENCES = 'translations:theme:system';
-export const THEME_LIGHT = 'translations:theme:light';
-export const THEME_DARK = 'translations:theme:dark';
 
 // IMAGES-QUALITIES
 export const IMAGE_QUALITIES = 'translations:imageQualities';

@@ -48,11 +48,6 @@ const ptBR: Locale = {
   },
   softwareEngineer: 'Engenheiro de Software',
   select: 'SELECIONAR',
-  theme: {
-    dark: 'Escuro',
-    light: 'Claro',
-    system: 'Seguir as preferências do sistema',
-  },
   about:
     'Olá!\n\nSou um Engeiro de Software e amo aplicar meu conhecimento para resolver problemas, criar produtos incríveis e impactar vidas!',
   imageQualities: {
@@ -248,6 +243,11 @@ const ptBR: Locale = {
             description: 'Fonte dos dados das Notícias',
             title: 'News API',
           },
+        },
+        theme: {
+          dark: 'Escuro',
+          light: 'Claro',
+          system: 'Seguir as preferências do sistema',
         },
       },
     },

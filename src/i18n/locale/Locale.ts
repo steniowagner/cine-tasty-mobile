@@ -99,6 +99,11 @@ export type Locale = {
           newsapi: OpenSourceSection;
           opentrivia: OpenSourceSection;
         };
+        theme: {
+          dark: string;
+          light: string;
+          system: string;
+        };
       };
     };
     tvShowsPaginationError: string;
@@ -253,9 +258,4 @@ export type Locale = {
     };
   };
   months: string[];
-  theme: {
-    dark: string;
-    light: string;
-    system: string;
-  };
 };
