@@ -3,6 +3,12 @@ import {Platform} from 'react-native';
 import * as Types from '@local-types';
 import metrics from '@styles/metrics';
 
+import xsmall from './qualities/xsmall';
+import small from './qualities/small';
+import medium from './qualities/medium';
+import large from './qualities/large';
+import xlarge from './qualities/xlarge';
+
 const makeIOSScreenSizeClassification =
   (): Types.DeviceScreenClassification => {
     if (metrics.width <= 320 && metrics.height <= 480) {
@@ -37,9 +43,17 @@ const makeAndroidScreenSizeClassification =
     return 'xsmall';
   };
 
-export const classifyDeviceScreenSize = () => {
-  return Platform.select({
+export const classifyScreenSize = () => {
+  const screenClassification = Platform.select({
     android: makeAndroidScreenSizeClassification(),
     ios: makeIOSScreenSizeClassification(),
   });
+  const classifications = {
+    xsmall,
+    small,
+    medium,
+    large,
+    xlarge,
+  };
+  return classifications[screenClassification];
 };

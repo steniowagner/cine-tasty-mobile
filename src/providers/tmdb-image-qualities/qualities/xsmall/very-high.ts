@@ -1,6 +1,6 @@
 import * as Types from '@local-types';
 
-const veryHigh: Types.ImageQuailties = {
+const veryHigh: Types.MappingImageTypeToImageSize = {
   poster: 'w342',
   backdrop: 'w780',
   still: 'w300',

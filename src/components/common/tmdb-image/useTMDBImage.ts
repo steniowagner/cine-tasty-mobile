@@ -13,16 +13,16 @@ type UseTMDBImageProps = {
 };
 
 export const useTMDBImage = (props: UseTMDBImageProps) => {
-  const imagesQualities = useTMDBImageQualities();
+  const tmdbImagesQualities = useTMDBImageQualities();
 
   const uri = useMemo(() => {
-    if (!props.isThumbnail) {
+    if (!props.isThumbnail && tmdbImagesQualities.mappingImageTypeToImageSize) {
       return `${CONSTANTS.VALUES.IMAGES.BASE_URL}/${
-        imagesQualities[props.imageType]
+        tmdbImagesQualities.mappingImageTypeToImageSize[props.imageType]
       }${props.image}`;
     }
     return `${THUMBNAIL_URL}${props.image}`;
-  }, [props.isThumbnail, props.imageType, props.image, imagesQualities]);
+  }, [props.isThumbnail, props.imageType, props.image, tmdbImagesQualities]);
 
   return {
     uri,

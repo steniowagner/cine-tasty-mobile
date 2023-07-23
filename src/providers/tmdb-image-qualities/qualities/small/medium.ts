@@ -1,6 +1,6 @@
 import * as Types from '@local-types';
 
-const medium: Types.ImageQuailties = {
+const medium: Types.MappingImageTypeToImageSize = {
   poster: 'w154',
   backdrop: 'w300',
   still: 'w185',

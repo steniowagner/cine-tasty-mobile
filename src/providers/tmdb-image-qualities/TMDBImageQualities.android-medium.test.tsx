@@ -40,13 +40,20 @@ const utils = require('@utils');
 const renderTMDBImageQuality = () => {
   const ContextChildren = () => {
     const tmdbImageQuality = useTMDBImageQualities();
-
     return (
       <>
-        <Text testID="backdrop">{tmdbImageQuality.backdrop}</Text>
-        <Text testID="poster">{tmdbImageQuality.poster}</Text>
-        <Text testID="still">{tmdbImageQuality.still}</Text>
-        <Text testID="profile">{tmdbImageQuality.profile}</Text>
+        <Text testID="backdrop">
+          {tmdbImageQuality.mappingImageTypeToImageSize?.backdrop}
+        </Text>
+        <Text testID="poster">
+          {tmdbImageQuality.mappingImageTypeToImageSize?.poster}
+        </Text>
+        <Text testID="still">
+          {tmdbImageQuality.mappingImageTypeToImageSize?.still}
+        </Text>
+        <Text testID="profile">
+          {tmdbImageQuality.mappingImageTypeToImageSize?.profile}
+        </Text>
       </>
     );
   };

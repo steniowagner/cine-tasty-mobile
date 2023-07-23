@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import RNRestart from 'react-native-restart';
 
+import {useTMDBImageQualities} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {useTranslations} from '@hooks';
 import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
@@ -18,6 +19,7 @@ export const useImagesQuality = () => {
     Types.ImageQualities | undefined
   >(undefined);
 
+  const tmdbImagesQualities = useTMDBImageQualities();
   const translations = useTranslations();
 
   const onPress = useCallback(async (imageQuality: Types.ImageQualities) => {
@@ -30,6 +32,11 @@ export const useImagesQuality = () => {
       undefined,
       Types.ImageQualities
     >(CONSTANTS.KEYS.IMAGES_QUALITY, undefined);
+    console.log(
+      'tmdbImagesQualities.: ',
+      tmdbImagesQualities.imageQualitySelected,
+    );
+
     setQualitySelected(imageQualityFromStore);
   }, []);
 
