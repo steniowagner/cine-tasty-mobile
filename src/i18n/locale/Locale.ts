@@ -48,7 +48,6 @@ type LanguageWarning = {
 
 export type Locale = {
   errors: Record<ErrorType, Record<keyof ErrorDescription, string> | string>;
-  imageQualities: Record<Types.ImageQualities, string>;
   select: string;
   softwareEngineer: string;
   about: string;
@@ -104,6 +103,7 @@ export type Locale = {
           system: string;
         };
         languages: Record<Types.Languages, string>;
+        imageQualities: Record<Types.ImageQualities, string>;
       };
     };
     tvShowsPaginationError: string;

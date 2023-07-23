@@ -49,12 +49,6 @@ const en: Locale = {
   select: 'SELECT',
   about:
     "Hey!\n\nI'm Full-Stack Software Engineer that loves apply his knowledge to solve problems, create amazing products and impact lives!",
-  imageQualities: {
-    low: 'Low',
-    medium: 'Medium',
-    high: 'High',
-    veryHigh: 'Very High',
-  },
   errors: {
     paginateFamousError: "Couldn't load more Famous",
     searchFamousError: "Couldn't search for this person",
@@ -245,6 +239,12 @@ const en: Locale = {
           en: 'English',
           es: 'Spanish',
           ptBR: 'Portuguese',
+        },
+        imageQualities: {
+          low: 'Low',
+          medium: 'Medium',
+          high: 'High',
+          veryHigh: 'Very High',
         },
       },
     },

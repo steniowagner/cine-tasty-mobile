@@ -50,12 +50,6 @@ const ptBR: Locale = {
   select: 'SELECIONAR',
   about:
     'Olá!\n\nSou um Engeiro de Software e amo aplicar meu conhecimento para resolver problemas, criar produtos incríveis e impactar vidas!',
-  imageQualities: {
-    low: 'Baixa',
-    medium: 'Média',
-    high: 'Alta',
-    veryHigh: 'Muito Alta',
-  },
   errors: {
     paginateFamousError: 'Não foi possível carregar mais famosos',
     searchFamousError: 'Não foi possível buscar por este famoso',
@@ -248,6 +242,12 @@ const ptBR: Locale = {
           en: 'Inglês',
           es: 'Espanhol',
           ptBR: 'Português',
+        },
+        imageQualities: {
+          low: 'Baixa',
+          medium: 'Média',
+          high: 'Alta',
+          veryHigh: 'Muito Alta',
         },
       },
     },
