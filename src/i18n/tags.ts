@@ -221,6 +221,9 @@ export namespace Translations {
 
     // Settings/Languages
     SETTINGS_LANGUAGES = 'translations:home:settings:sections:languages',
+
+    // Settings/Images-quality
+    SETTINGS_IMAGES_QUALITIES = 'translations:home:settings:sections:imageQualities',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV
@@ -251,9 +254,6 @@ export const ONBOARDING_QUIZ_TITLE = 'translations:onboarding:quiz:title';
 export const ONBOARDING_NEWS_DESCRIPTION =
   'translations:onboarding:news:description';
 export const ONBOARDING_NEWS_TITLE = 'translations:onboarding:news:title';
-
-// IMAGES-QUALITIES
-export const IMAGE_QUALITIES = 'translations:imageQualities';
 
 // LANGUAGES
 export const LANGUAGES = 'translations:languages';

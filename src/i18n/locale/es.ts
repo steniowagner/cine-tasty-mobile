@@ -50,12 +50,6 @@ const es: Locale = {
   select: 'SELECCIONE',
   about:
     'Oye!\n\n¡Soy un ingeniero de software Full-Stack al que le encanta aplicar sus conocimientos para resolver problemas, crear productos asombrosos e impactar vidas!',
-  imageQualities: {
-    low: 'Baja',
-    medium: 'Medio',
-    high: 'Alta',
-    veryHigh: 'Muy alta',
-  },
   errors: {
     paginateFamousError: 'No se pudo cargar más famoso',
     searchFamousError: 'No se pudo buscar a esta persona',
@@ -249,6 +243,12 @@ const es: Locale = {
           en: 'Inglés',
           es: 'Español',
           ptBR: 'Portugués',
+        },
+        imageQualities: {
+          low: 'Baja',
+          medium: 'Medio',
+          high: 'Alta',
+          veryHigh: 'Muy alta',
         },
       },
     },

@@ -1,10 +1,10 @@
-import {useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import RNRestart from 'react-native-restart';
 
-import * as TRANSLATIONS from '@i18n/tags';
+import {useTranslations} from '@hooks';
 import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
+import {Translations} from '@i18n/tags';
 
 export const qualities: Types.ImageQualities[] = [
   'low',
@@ -13,16 +13,15 @@ export const qualities: Types.ImageQualities[] = [
   'veryHigh',
 ];
 
-const useImagesQuality = () => {
+export const useImagesQuality = () => {
   const [qualitySelected, setQualitySelected] = useState<
     Types.ImageQualities | undefined
   >(undefined);
 
-  const {t} = useTranslation();
+  const translations = useTranslations();
 
-  const onPress = useCallback((imageQuality: Types.ImageQualities) => {
-    storage.set(CONSTANTS.KEYS.IMAGES_QUALITY, imageQuality);
-
+  const onPress = useCallback(async (imageQuality: Types.ImageQualities) => {
+    await storage.set(CONSTANTS.KEYS.IMAGES_QUALITY, imageQuality);
     RNRestart.Restart();
   }, []);
 
@@ -31,22 +30,27 @@ const useImagesQuality = () => {
       undefined,
       Types.ImageQualities
     >(CONSTANTS.KEYS.IMAGES_QUALITY, undefined);
-
     setQualitySelected(imageQualityFromStore);
   }, []);
+
+  const options = useMemo(
+    () =>
+      qualities.map(quality => ({
+        title: translations.translate(
+          `${Translations.Tags.SETTINGS_IMAGES_QUALITIES}:${quality}` as Translations.Tags,
+        ),
+        quality,
+      })),
+    [],
+  );
 
   useEffect(() => {
     setImageQualityFromStore();
   }, []);
 
   return {
-    qualities: qualities.map(imageQuality => ({
-      title: t(`${TRANSLATIONS.IMAGE_QUALITIES}:${imageQuality}`),
-      quality: imageQuality,
-    })),
+    qualities: options,
     qualitySelected,
     onPress,
   };
 };
-
-export default useImagesQuality;
