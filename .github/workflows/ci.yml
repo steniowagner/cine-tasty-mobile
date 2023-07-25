@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: Test
-    runs-on: macos
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
       - name: Set up Node
