@@ -3,7 +3,7 @@ import {RenderAPI, cleanup, render} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import {dark as theme} from '@styles/themes/dark';
-import {quizFixtures} from '@mocks/fixtures';
+import {quizFixtures} from '@mocks/fixtures/quiz';
 import {Translations} from '@i18n/tags';
 import * as Types from '@local-types';
 

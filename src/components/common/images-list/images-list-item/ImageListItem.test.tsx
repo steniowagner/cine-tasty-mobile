@@ -1,13 +1,8 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
-import {
-  RenderAPI,
-  fireEvent,
-  render,
-  waitFor,
-} from '@testing-library/react-native';
+import {RenderAPI, fireEvent, render} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@providers';
 import {dark as theme} from '@styles/themes/dark';
 import metrics from '@styles/metrics';
 
@@ -18,13 +13,11 @@ const renderImageListItem = (
   onPress = jest.fn(),
 ) => (
   <ThemeProvider theme={theme}>
-    <TMDBImageQualityProvider>
-      <ImageListItem
-        orientation={orientation}
-        onPress={onPress}
-        image="SOME_IMAGE"
-      />
-    </TMDBImageQualityProvider>
+    <ImageListItem
+      orientation={orientation}
+      onPress={onPress}
+      image="SOME_IMAGE"
+    />
   </ThemeProvider>
 );
 

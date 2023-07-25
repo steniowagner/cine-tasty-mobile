@@ -19,6 +19,17 @@ export const FamousDetails = (props: FamousDetailsProps) => {
     id: props.route.params.id,
   });
 
+  if (famousDetail.hasError) {
+    return (
+      <Advise
+        description={famousDetail.texts.advise.description}
+        suggestion={famousDetail.texts.advise.suggestion}
+        title={famousDetail.texts.advise.title}
+        icon="alert-box"
+      />
+    );
+  }
+
   return (
     <ScrollWithAnimatedHeader
       isLoading={famousDetail.isLoading}
@@ -40,60 +51,50 @@ export const FamousDetails = (props: FamousDetailsProps) => {
         famousDetail.animatedHeaderIntepolationParams
           .headerTitleOpacityInterpolationOutput
       }>
-      {famousDetail.hasError && (
-        <Advise
-          description={famousDetail.texts.advise.description}
-          suggestion={famousDetail.texts.advise.suggestion}
-          title={famousDetail.texts.advise.title}
-          icon="alert-box"
+      <>
+        <HeaderInfo
+          knownForDepartment={famousDetail.famous?.knownForDepartment}
+          profileImage={props.route.params.profileImage}
+          placeOfBirth={famousDetail.famous?.placeOfBirth}
+          birthDate={famousDetail.famous?.birthday}
+          isLoading={famousDetail.isLoading}
+          name={props.route.params.name}
         />
-      )}
-      {famousDetail.canShowContent && (
-        <>
-          <HeaderInfo
-            knownForDepartment={famousDetail.famous?.knownForDepartment}
-            profileImage={props.route.params.profileImage}
-            placeOfBirth={famousDetail.famous?.placeOfBirth}
-            birthDate={famousDetail.famous?.birthday}
+        {famousDetail.famous?.deathday && (
+          <DeathDay day={famousDetail.famous.deathday} />
+        )}
+        <Styles.BiographySectionWrapper testID="biography-section">
+          <ExpansibleTextSection
+            sectionTitle={famousDetail.texts.biography}
+            text={famousDetail.famous?.biography}
             isLoading={famousDetail.isLoading}
-            name={props.route.params.name}
           />
-          {famousDetail.famous?.deathday && (
-            <DeathDay day={famousDetail.famous.deathday} />
-          )}
-          <Styles.BiographySectionWrapper testID="biography-section">
-            <ExpansibleTextSection
-              sectionTitle={famousDetail.texts.biography}
-              text={famousDetail.famous?.biography}
-              isLoading={famousDetail.isLoading}
-            />
-          </Styles.BiographySectionWrapper>
-          {famousDetail.famous && (
-            <>
-              {famousDetail.famous.images && (
-                <ImagesList
-                  images={famousDetail.famous.images}
-                  orientation="PORTRAIT"
-                />
-              )}
-              {famousDetail.famous.moviesCast && (
-                <MediaHorizontalList
-                  title={famousDetail.texts.castMoviesSection}
-                  dataset={famousDetail.famous.moviesCast}
-                  type="MOVIE"
-                />
-              )}
-              {famousDetail.famous.tvCast && (
-                <MediaHorizontalList
-                  title={famousDetail.texts.castTvShowSection}
-                  dataset={famousDetail.famous.tvCast}
-                  type="TV_SHOW"
-                />
-              )}
-            </>
-          )}
-        </>
-      )}
+        </Styles.BiographySectionWrapper>
+        {famousDetail.famous && (
+          <>
+            {famousDetail.famous.images && (
+              <ImagesList
+                images={famousDetail.famous.images}
+                orientation="PORTRAIT"
+              />
+            )}
+            {famousDetail.famous.moviesCast && (
+              <MediaHorizontalList
+                title={famousDetail.texts.castMoviesSection}
+                dataset={famousDetail.famous.moviesCast}
+                type="MOVIE"
+              />
+            )}
+            {famousDetail.famous.tvCast && (
+              <MediaHorizontalList
+                title={famousDetail.texts.castTvShowSection}
+                dataset={famousDetail.famous.tvCast}
+                type="TV_SHOW"
+              />
+            )}
+          </>
+        )}
+      </>
     </ScrollWithAnimatedHeader>
   );
 };

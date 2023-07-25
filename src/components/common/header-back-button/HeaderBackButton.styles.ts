@@ -1,7 +1,4 @@
-import {TouchableOpacity} from 'react-native';
-import styled from 'styled-components/native';
+import metrics from '@styles/metrics';
 
-export const IconWrapper = styled(TouchableOpacity)`
-  justify-content: center;
-  align-items: center;
-`;
+export const IOS_ICON_SIZE = metrics.getWidthFromDP('9%');
+export const IOS_ICON_ID = 'chevron-left';

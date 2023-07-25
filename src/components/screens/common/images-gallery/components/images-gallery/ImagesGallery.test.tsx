@@ -28,8 +28,8 @@ const renderImagesGallery = (indexSelected = 0, images = []) => {
         <ImagesGallery
           navigation={{...navigation, goBack: mockGoback}}
           route={{
-            name: Routes.ImagesGallery.IMAGES_GALLERY,
-            key: `${Routes.ImagesGallery.IMAGES_GALLERY}-key`,
+            name: Routes.Home.IMAGES_GALLERY,
+            key: `${Routes.Home.IMAGES_GALLERY}-key`,
             params: {
               indexSelected,
               images,

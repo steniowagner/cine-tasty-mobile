@@ -15,7 +15,7 @@ import {Routes} from '@routes/routes';
 import {
   makeMoviesHorizontalList,
   makeTVShowsHorizontalList,
-} from '@mocks/fixtures';
+} from '@mocks/fixtures/media-horizontal-list';
 
 import {MediaHorizontalList} from './MediaHorizontalList';
 import {UseMediaHorizontalListProps} from './useMediaHorizontalList';
@@ -23,6 +23,7 @@ import {UseMediaHorizontalListProps} from './useMediaHorizontalList';
 const SECTION_TITLE = 'SECTION_TITLE';
 const mockNavigation = {
   push: jest.fn(),
+  getState: jest.fn().mockReturnValue({routes: [{name: 'HOME'}]}),
 };
 
 jest.mock('@react-navigation/native', () => {
@@ -113,7 +114,7 @@ describe('<MediaHorizontalList />', () => {
         expect(mockNavigation.push).toBeCalledTimes(0);
         fireEvent.press(elements.listItems(component)[itemSelected]);
         expect(mockNavigation.push).toBeCalledTimes(1);
-        expect(mockNavigation.push).toBeCalledWith(Routes.Movie.DETAILS, {
+        expect(mockNavigation.push).toBeCalledWith(Routes.Home.MOVIE_DETAILS, {
           voteAverage: dataset[itemSelected].voteAverage,
           posterPath: dataset[itemSelected].posterPath,
           voteCount: dataset[itemSelected].voteCount,
@@ -180,13 +181,16 @@ describe('<MediaHorizontalList />', () => {
         expect(mockNavigation.push).toBeCalledTimes(0);
         fireEvent.press(elements.listItems(component)[itemSelected]);
         expect(mockNavigation.push).toBeCalledTimes(1);
-        expect(mockNavigation.push).toBeCalledWith(Routes.TVShow.DETAILS, {
-          voteAverage: dataset[itemSelected].voteAverage,
-          posterPath: dataset[itemSelected].posterPath,
-          voteCount: dataset[itemSelected].voteCount,
-          title: dataset[itemSelected].name,
-          id: dataset[itemSelected].id,
-        });
+        expect(mockNavigation.push).toBeCalledWith(
+          Routes.Home.TV_SHOW_DETAILS,
+          {
+            voteAverage: dataset[itemSelected].voteAverage,
+            posterPath: dataset[itemSelected].posterPath,
+            voteCount: dataset[itemSelected].voteCount,
+            title: dataset[itemSelected].name,
+            id: dataset[itemSelected].id,
+          },
+        );
         await waitFor(() => {});
       });
     });

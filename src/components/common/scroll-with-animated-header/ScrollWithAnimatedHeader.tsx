@@ -59,7 +59,9 @@ export const ScrollWithAnimatedHeader = (
     <Animated.ScrollView
       scrollEventThrottle={16}
       bounces={scrollWithAnimatedHeader.canScrollViewBounce}
-      onScroll={scrollWithAnimatedHeader.onScroll}>
+      onScroll={scrollWithAnimatedHeader.onScroll}
+      testID="scroll-with-animated-header"
+      scrollEnabled={!props.isLoading}>
       {props.children}
     </Animated.ScrollView>
   );

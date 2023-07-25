@@ -14,7 +14,7 @@ import possibleTypes from '@graphql/possibleTypes.json';
 import MockedNavigation from '@mocks/MockedNavigator';
 import {randomPositiveNumber} from '@mocks/utils';
 import * as SchemaTypes from '@schema-types';
-import {quizFixtures} from '@mocks/fixtures';
+import {quizFixtures} from '@mocks/fixtures/quiz';
 import {Routes} from '@routes/routes';
 import {dark as theme} from '@styles/themes/dark';
 

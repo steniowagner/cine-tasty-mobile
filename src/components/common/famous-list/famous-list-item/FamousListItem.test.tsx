@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   cleanup,
@@ -14,6 +15,12 @@ import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 
 import {FamousListItem} from './FamousListItem';
+
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock');
+  Reanimated.default.call = () => {};
+  return Reanimated;
+});
 
 const TITLE = 'TITLE';
 
@@ -40,7 +47,7 @@ describe('<FamousListItem />', () => {
       api.queryByTestId('famous-list-item-button'),
     tmdbImage: (api: RenderAPI) => api.queryByTestId('famous-list-item-image'),
     fallbackWrapper: (api: RenderAPI) =>
-      api.queryByTestId('fallback-image-wrapper'),
+      api.queryByTestId('famous-list-item-image-tmdb-fallback-image'),
     imageOffIcon: (api: RenderAPI) => api.queryByTestId('icon-image-off'),
     accountIcon: (api: RenderAPI) => api.queryByTestId('icon-account'),
     titleText: (api: RenderAPI) => api.queryByTestId('title-text'),
@@ -55,29 +62,23 @@ describe('<FamousListItem />', () => {
 
     it('should render correctly the "Loading-state" when is loading the image', async () => {
       const component = render(renderFamousListItem('SOME_IMAGE_URI'));
-      await waitFor(() => {
-        expect(elements.titleText(component)).not.toBeNull();
-        expect(elements.titleText(component).children[0]).toEqual(TITLE);
-        expect(elements.fallbackWrapper(component)).not.toBeNull();
-        expect(elements.accountIcon(component)).not.toBeNull();
-        expect(elements.imageOffIcon(component)).toBeNull();
-      });
+      expect(elements.titleText(component)).not.toBeNull();
+      expect(elements.titleText(component).children[0]).toEqual(TITLE);
+      expect(elements.fallbackWrapper(component)).not.toBeNull();
+      expect(elements.accountIcon(component)).not.toBeNull();
+      expect(elements.imageOffIcon(component)).toBeNull();
     });
 
     it('should render correctly when the image is loaded after a rerender', async () => {
       const component = render(renderFamousListItem('SOME_IMAGE_URI'));
       component.rerender(renderFamousListItem('SOME_IMAGE_URI'));
       fireEvent(elements.tmdbImage(component), 'onLoad');
-      act(() => {
-        jest.runAllTimers();
-      });
-      await waitFor(() => {
-        expect(elements.titleText(component)).not.toBeNull();
-        expect(elements.titleText(component).children[0]).toEqual(TITLE);
-        expect(elements.fallbackWrapper(component)).toBeNull();
-        expect(elements.accountIcon(component)).toBeNull();
-        expect(elements.imageOffIcon(component)).toBeNull();
-      });
+      expect(elements.titleText(component)).not.toBeNull();
+      expect(elements.titleText(component).children[0]).toEqual(TITLE);
+      expect(elements.fallbackWrapper(component)).toBeNull();
+      expect(elements.accountIcon(component)).toBeNull();
+      expect(elements.imageOffIcon(component)).toBeNull();
+      await waitFor(() => {});
     });
 
     it('should render correctly when the image is loaded', async () => {
@@ -86,13 +87,12 @@ describe('<FamousListItem />', () => {
       act(() => {
         jest.runAllTimers();
       });
-      await waitFor(() => {
-        expect(elements.titleText(component)).not.toBeNull();
-        expect(elements.titleText(component).children[0]).toEqual(TITLE);
-        expect(elements.fallbackWrapper(component)).toBeNull();
-        expect(elements.accountIcon(component)).toBeNull();
-        expect(elements.imageOffIcon(component)).toBeNull();
-      });
+      expect(elements.titleText(component)).not.toBeNull();
+      expect(elements.titleText(component).children[0]).toEqual(TITLE);
+      expect(elements.fallbackWrapper(component)).toBeNull();
+      expect(elements.accountIcon(component)).toBeNull();
+      expect(elements.imageOffIcon(component)).toBeNull();
+      await waitFor(() => {});
     });
 
     it('should render correctly the "Error-state" when had some "error" during the "image-loading"', async () => {
@@ -101,13 +101,12 @@ describe('<FamousListItem />', () => {
       act(() => {
         jest.runAllTimers();
       });
-      await waitFor(() => {
-        expect(elements.titleText(component)).not.toBeNull();
-        expect(elements.titleText(component).children[0]).toEqual(TITLE);
-        expect(elements.fallbackWrapper(component)).not.toBeNull();
-        expect(elements.imageOffIcon(component)).not.toBeNull();
-        expect(elements.accountIcon(component)).toBeNull();
-      });
+      expect(elements.titleText(component)).not.toBeNull();
+      expect(elements.titleText(component).children[0]).toEqual(TITLE);
+      expect(elements.fallbackWrapper(component)).not.toBeNull();
+      expect(elements.imageOffIcon(component)).not.toBeNull();
+      expect(elements.accountIcon(component)).toBeNull();
+      await waitFor(() => {});
     });
 
     it('should render correctly the "Error-state" when has no "image"', async () => {
@@ -115,13 +114,12 @@ describe('<FamousListItem />', () => {
       act(() => {
         jest.runAllTimers();
       });
-      await waitFor(() => {
-        expect(elements.titleText(component)).not.toBeNull();
-        expect(elements.titleText(component).children[0]).toEqual(TITLE);
-        expect(elements.fallbackWrapper(component)).not.toBeNull();
-        expect(elements.imageOffIcon(component)).not.toBeNull();
-        expect(elements.accountIcon(component)).toBeNull();
-      });
+      expect(elements.titleText(component)).not.toBeNull();
+      expect(elements.titleText(component).children[0]).toEqual(TITLE);
+      expect(elements.fallbackWrapper(component)).not.toBeNull();
+      expect(elements.imageOffIcon(component)).not.toBeNull();
+      expect(elements.accountIcon(component)).toBeNull();
+      await waitFor(() => {});
     });
   });
 

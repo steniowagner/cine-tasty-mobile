@@ -25,6 +25,7 @@ jest.mock('@react-navigation/native', () => {
     ...reactNavigationNativeModule,
     useNavigation: () => ({
       navigate: mockNavigate,
+      getState: jest.fn().mockReturnValue({routes: [{name: 'FAMOUS'}]}),
     }),
   };
 });
