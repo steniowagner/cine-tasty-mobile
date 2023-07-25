@@ -25,6 +25,7 @@ import {Famous} from './Famous';
 
 const mockNavigation = {
   navigate: jest.fn(),
+  getState: jest.fn().mockReturnValue({routes: [{name: 'FAMOUS'}]}),
 };
 
 jest.mock('@react-navigation/native', () => {

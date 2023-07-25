@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   RenderAPI,
@@ -8,14 +9,18 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {TMDBImageQualityProvider} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
-import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {randomPositiveNumber} from '@mocks/utils';
 import {dark as theme} from '@styles/themes/dark';
 import metrics from '@styles/metrics';
 
 import {SimplifiedMediaListItem} from './SimplifiedMediaListItem';
 import * as Styles from './SimplifiedMediaListItem.styles';
+
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock');
+  Reanimated.default.call = () => {};
+  return Reanimated;
+});
 
 const VOTE_AVERAGE = randomPositiveNumber(10, 1);
 const VOTE_COUNT = randomPositiveNumber(10, 1);
@@ -27,16 +32,14 @@ const renderSimplifiedMediaListItem = (
   withLargeLayout = false,
 ) => (
   <ThemeProvider theme={theme}>
-    <TMDBImageQualityProvider>
-      <SimplifiedMediaListItem
-        withLargeLayout={withLargeLayout}
-        voteAverage={VOTE_AVERAGE}
-        voteCount={VOTE_COUNT}
-        onPress={onPress}
-        image={IMAGE}
-        title={TITLE}
-      />
-    </TMDBImageQualityProvider>
+    <SimplifiedMediaListItem
+      withLargeLayout={withLargeLayout}
+      voteAverage={VOTE_AVERAGE}
+      voteCount={VOTE_COUNT}
+      onPress={onPress}
+      image={IMAGE}
+      title={TITLE}
+    />
   </ThemeProvider>
 );
 
@@ -54,10 +57,6 @@ describe('<SimplifiedMediaListItem />', () => {
     title: (api: RenderAPI) => api.queryByTestId('simplified-media-list-title'),
     votes: (api: RenderAPI) => api.queryByTestId('simplified-media-list-votes'),
   };
-
-  beforeEach(() => {
-    setupTimeTravel();
-  });
 
   describe('Renders correctly', () => {
     it('should render correctly', async () => {
@@ -79,55 +78,23 @@ describe('<SimplifiedMediaListItem />', () => {
 
     it('should render correctly when the image loads', async () => {
       const component = render(renderSimplifiedMediaListItem());
-      expect(elements.wrapperButton(component)).not.toBeNull();
-      expect(elements.imageOffIcon(component)).toBeNull();
-      expect(elements.videoVintageIcon(component)).not.toBeNull();
-      expect(elements.fallbackImage(component)).not.toBeNull();
-      expect(elements.image(component)).not.toBeNull();
+      fireEvent(elements.image(component), 'onLoad');
       expect(elements.title(component)).not.toBeNull();
-      expect(elements.title(component).children[0]).toEqual(TITLE);
       expect(elements.starIcon(component)).not.toBeNull();
-      expect(elements.votes(component)).not.toBeNull();
       expect(elements.votes(component).children[0]).toEqual(
         `${VOTE_AVERAGE.toFixed(1)} (${VOTE_COUNT})`,
       );
-      fireEvent(elements.image(component), 'onLoad');
-      act(() => {
-        timeTravel(1000);
-      });
-      expect(elements.wrapperButton(component)).not.toBeNull();
+      expect(elements.fallbackImage(component)).toBeNull();
       expect(elements.imageOffIcon(component)).toBeNull();
       expect(elements.videoVintageIcon(component)).toBeNull();
-      expect(elements.fallbackImage(component)).toBeNull();
       expect(elements.image(component)).not.toBeNull();
-      expect(elements.title(component)).not.toBeNull();
       expect(elements.title(component).children[0]).toEqual(TITLE);
-      expect(elements.starIcon(component)).not.toBeNull();
-      expect(elements.votes(component)).not.toBeNull();
-      expect(elements.votes(component).children[0]).toEqual(
-        `${VOTE_AVERAGE.toFixed(1)} (${VOTE_COUNT})`,
-      );
       await waitFor(() => {});
     });
 
     it('should render correctly when the image had some problem during the load', async () => {
       const component = render(renderSimplifiedMediaListItem());
-      expect(elements.wrapperButton(component)).not.toBeNull();
-      expect(elements.imageOffIcon(component)).toBeNull();
-      expect(elements.videoVintageIcon(component)).not.toBeNull();
-      expect(elements.fallbackImage(component)).not.toBeNull();
-      expect(elements.image(component)).not.toBeNull();
-      expect(elements.title(component)).not.toBeNull();
-      expect(elements.title(component).children[0]).toEqual(TITLE);
-      expect(elements.starIcon(component)).not.toBeNull();
-      expect(elements.votes(component)).not.toBeNull();
-      expect(elements.votes(component).children[0]).toEqual(
-        `${VOTE_AVERAGE.toFixed(1)} (${VOTE_COUNT})`,
-      );
       fireEvent(elements.image(component), 'onError');
-      act(() => {
-        timeTravel(1000);
-      });
       expect(elements.wrapperButton(component)).not.toBeNull();
       expect(elements.imageOffIcon(component)).not.toBeNull();
       expect(elements.videoVintageIcon(component)).toBeNull();
@@ -151,10 +118,10 @@ describe('<SimplifiedMediaListItem />', () => {
       expect(elements.wrapperButton(component).props.style.height).toEqual(
         '100%',
       );
-      expect(elements.fallbackImage(component).props.style.width).toEqual(
+      expect(elements.fallbackImage(component).props.style[0].width).toEqual(
         '100%',
       );
-      expect(elements.fallbackImage(component).props.style.height).toEqual(
+      expect(elements.fallbackImage(component).props.style[0].height).toEqual(
         metrics.getWidthFromDP(Styles.WRAPPER_LARGE_HEIGHT),
       );
       expect(elements.image(component).props.style[0].width).toEqual('100%');
@@ -180,10 +147,10 @@ describe('<SimplifiedMediaListItem />', () => {
       expect(elements.wrapperButton(component).props.style.height).toEqual(
         '100%',
       );
-      expect(elements.fallbackImage(component).props.style.height).toEqual(
+      expect(elements.fallbackImage(component).props.style[0].height).toEqual(
         metrics.getWidthFromDP(Styles.WRAPPER_DEFAULT_HEIGHT),
       );
-      expect(elements.fallbackImage(component).props.style.width).toEqual(
+      expect(elements.fallbackImage(component).props.style[0].width).toEqual(
         '100%',
       );
       expect(elements.image(component).props.style[0].width).toEqual('100%');

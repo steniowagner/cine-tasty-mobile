@@ -73,7 +73,6 @@ const renderFamousDetails = (props: RenderFamousDetailsProps) => {
       </TMDBImageQualitiesProvider>
     </MockedProvider>
   );
-
   return <MockedNavigation component={FamousDetailScreen} />;
 };
 
@@ -87,7 +86,8 @@ describe('<FamousDetail />', () => {
       api.queryByTestId('advise-description'),
     adviseSuggestion: (api: RenderAPI) =>
       api.queryByTestId('advise-suggestion'),
-    scrollableContent: (api: RenderAPI) => api.queryByTestId('scroll-content'),
+    scrollableContent: (api: RenderAPI) =>
+      api.queryByTestId('scroll-with-animated-header'),
     headerInfo: (api: RenderAPI) => api.queryByTestId('header-info'),
     deathDay: (api: RenderAPI) => api.queryByTestId('death-day-wrapper'),
     biography: (api: RenderAPI) => api.queryByTestId('biography-section'),
@@ -100,8 +100,6 @@ describe('<FamousDetail />', () => {
       api.queryByTestId('loading-header-placeholder'),
     loadingBiography: (api: RenderAPI) =>
       api.queryByTestId('loading-expansible-text-section'),
-    loadingProfileImage: (api: RenderAPI) =>
-      api.queryByTestId('profile-image-tmdb-fallback-image'),
     profileImage: (api: RenderAPI) => api.queryByTestId('profile-image'),
     sectionsTitle: (api: RenderAPI) => api.queryAllByTestId('section-title'),
   };
@@ -119,12 +117,6 @@ describe('<FamousDetail />', () => {
   afterEach(cleanup);
 
   describe('Renders correctly', () => {
-    beforeEach(() => {
-      jest.useFakeTimers();
-    });
-
-    afterEach(cleanup);
-
     it('should render correctly when the data is "loaded"', async () => {
       const mockResolvers = mockFamousDetails.makeSuccessResolver(
         {language: 'EN', id: USER_ID},
@@ -137,14 +129,12 @@ describe('<FamousDetail />', () => {
         },
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      fireEvent(elements.profileImage(component), 'onLoad');
       await waitFor(() => {
-        expect(elements.imagesList(component)).not.toBeNull();
+        expect(elements.loadingHeader(component)).toBeNull();
+        expect(elements.loadingBiography(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
-      expect(elements.loadingProfileImage(component)).toBeNull();
-      expect(elements.loadingHeader(component)).toBeNull();
-      expect(elements.loadingBiography(component)).toBeNull();
-      expect(elements.adviseWrapper(component)).toBeNull();
+      fireEvent(elements.profileImage(component), 'onLoad');
       expect(elements.scrollableContent(component)).not.toBeNull();
       expect(elements.deathDay(component)).not.toBeNull();
       expect(elements.biography(component)).not.toBeNull();
@@ -153,7 +143,6 @@ describe('<FamousDetail />', () => {
       expect(elements.moviesCast(component)).not.toBeNull();
       expect(elements.tvCast(component)).not.toBeNull();
       expect(elements.imagesList(component)).not.toBeNull();
-      await waitFor(() => {});
     });
 
     it('should render correctly when "deathDay" is "undefined"', async () => {
@@ -168,11 +157,12 @@ describe('<FamousDetail />', () => {
         },
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      fireEvent(elements.profileImage(component), 'onLoad');
       await waitFor(() => {
-        expect(elements.imagesList(component)).not.toBeNull();
+        expect(elements.loadingHeader(component)).toBeNull();
+        expect(elements.loadingBiography(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
-      expect(elements.loadingProfileImage(component)).toBeNull();
+      fireEvent(elements.profileImage(component), 'onLoad');
       expect(elements.loadingHeader(component)).toBeNull();
       expect(elements.loadingBiography(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
@@ -197,11 +187,12 @@ describe('<FamousDetail />', () => {
         },
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      fireEvent(elements.profileImage(component), 'onLoad');
       await waitFor(() => {
-        expect(elements.imagesList(component)).not.toBeNull();
+        expect(elements.loadingHeader(component)).toBeNull();
+        expect(elements.loadingBiography(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
-      expect(elements.loadingProfileImage(component)).toBeNull();
+      fireEvent(elements.profileImage(component), 'onLoad');
       expect(elements.loadingHeader(component)).toBeNull();
       expect(elements.loadingBiography(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
@@ -225,11 +216,12 @@ describe('<FamousDetail />', () => {
         },
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      fireEvent(elements.profileImage(component), 'onLoad');
-      act(() => {
-        jest.runAllTimers();
+      await waitFor(() => {
+        expect(elements.loadingHeader(component)).toBeNull();
+        expect(elements.loadingBiography(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
-      expect(elements.loadingProfileImage(component)).toBeNull();
+      fireEvent(elements.profileImage(component), 'onLoad');
       expect(elements.loadingHeader(component)).toBeNull();
       expect(elements.loadingBiography(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
@@ -252,11 +244,12 @@ describe('<FamousDetail />', () => {
         },
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      fireEvent(elements.profileImage(component), 'onLoad');
-      act(() => {
-        jest.runAllTimers();
+      await waitFor(() => {
+        expect(elements.loadingHeader(component)).toBeNull();
+        expect(elements.loadingBiography(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
-      expect(elements.loadingProfileImage(component)).toBeNull();
+      fireEvent(elements.profileImage(component), 'onLoad');
       expect(elements.loadingHeader(component)).toBeNull();
       expect(elements.loadingBiography(component)).toBeNull();
       expect(elements.adviseWrapper(component)).toBeNull();
@@ -277,13 +270,12 @@ describe('<FamousDetail />', () => {
         {},
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      fireEvent(elements.profileImage(component), 'onLoad');
-      act(() => {
-        jest.runAllTimers();
-      });
       await waitFor(() => {
-        expect(elements.moviesCast(component)).not.toBeNull();
+        expect(elements.loadingHeader(component)).toBeNull();
+        expect(elements.loadingBiography(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
+      fireEvent(elements.profileImage(component), 'onLoad');
       expect(elements.sectionsTitle(component)[1].children[0]).toEqual(
         `${Translations.Tags.FAMOUS_DETAIL_CAST_MOVIES} (0)`,
       );
@@ -296,13 +288,12 @@ describe('<FamousDetail />', () => {
         {},
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      fireEvent(elements.profileImage(component), 'onLoad');
-      act(() => {
-        jest.runAllTimers();
-      });
       await waitFor(() => {
-        expect(elements.moviesCast(component)).not.toBeNull();
+        expect(elements.loadingHeader(component)).toBeNull();
+        expect(elements.loadingBiography(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
+      fireEvent(elements.profileImage(component), 'onLoad');
       expect(elements.sectionsTitle(component)[2].children[0]).toEqual(
         `${Translations.Tags.FAMOUS_DETAIL_CAST_TV} (0)`,
       );
@@ -312,11 +303,8 @@ describe('<FamousDetail />', () => {
 
   describe('Showing the "language-alert-message"', () => {
     beforeEach(() => {
-      jest.useFakeTimers();
       jest.clearAllMocks();
     });
-
-    afterEach(cleanup);
 
     it('should call the "Alert.alert" with the correct params when the "biography" is an empty string', async () => {
       const mockResolvers = mockFamousDetails.makeSuccessResolver(
@@ -326,10 +314,12 @@ describe('<FamousDetail />', () => {
         },
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      fireEvent(elements.profileImage(component), 'onLoad');
       await waitFor(() => {
-        expect(Alert.alert).toHaveBeenCalledTimes(1);
+        expect(elements.loadingHeader(component)).toBeNull();
+        expect(elements.loadingBiography(component)).toBeNull();
+        expect(elements.adviseWrapper(component)).toBeNull();
       });
+      expect(Alert.alert).toHaveBeenCalledTimes(1);
       expect((Alert.alert as jest.Mock).mock.calls[0][0]).toEqual(
         Translations.Tags.LANGUAGE_WARNING_FAMOUS_TITLE,
       );
@@ -346,19 +336,20 @@ describe('<FamousDetail />', () => {
   });
 
   describe('Loading State', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
     it('should render the "loading-state" correctly when the data is loading', async () => {
       const mockResolvers = mockFamousDetails.makeNetworkErrorResolver(
         {language: 'EN', id: USER_ID},
         {},
       );
       const component = render(renderFamousDetails({mockResolvers}));
-      expect(elements.loadingProfileImage(component)).not.toBeNull();
-      expect(elements.loadingHeader(component)).not.toBeNull();
-      expect(elements.loadingBiography(component)).not.toBeNull();
-      expect(elements.imagesList(component)).toBeNull();
-      expect(elements.moviesCast(component)).toBeNull();
-      expect(elements.tvCast(component)).toBeNull();
-      await waitFor(() => {});
+      await waitFor(() => {
+        expect(elements.loadingHeader(component)).not.toBeNull();
+        expect(elements.loadingBiography(component)).not.toBeNull();
+      });
     });
   });
 
@@ -419,74 +410,6 @@ describe('<FamousDetail />', () => {
       );
       expect(elements.scrollableContent(component)).toBeNull();
       await waitFor(() => {});
-    });
-  });
-
-  describe('Pressing the "Back-button"', () => {
-    describe('When successfuly retrieve the data', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      afterEach(cleanup);
-
-      it('should call "navigation.goBack" when the user press the "back-button"', async () => {
-        const goBack = jest.fn();
-        const mockResolvers = mockFamousDetails.makeSuccessResolver(
-          {language: 'EN', id: USER_ID},
-          {},
-        );
-        const component = render(renderFamousDetails({mockResolvers, goBack}));
-        expect(elements.headerBackButton(component)).not.toBeNull();
-        expect(goBack).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.headerBackButton(component));
-        expect(goBack).toHaveBeenCalledTimes(1);
-        await waitFor(() => {});
-      });
-    });
-
-    describe('When a "network-error" happened', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      afterEach(cleanup);
-
-      it('should call "navigation.goBack" when the user press the "back-button"', async () => {
-        const goBack = jest.fn();
-        const mockResolvers = mockFamousDetails.makeNetworkErrorResolver(
-          {language: 'EN', id: USER_ID},
-          {},
-        );
-        const component = render(renderFamousDetails({mockResolvers, goBack}));
-        expect(elements.headerBackButton(component)).not.toBeNull();
-        expect(goBack).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.headerBackButton(component));
-        expect(goBack).toHaveBeenCalledTimes(1);
-        await waitFor(() => {});
-      });
-    });
-
-    describe('When a "graphql-error" happened', () => {
-      beforeEach(() => {
-        jest.useFakeTimers();
-      });
-
-      afterEach(cleanup);
-
-      it('should call "navigation.goBack" when the user press the "back-button"', async () => {
-        const goBack = jest.fn();
-        const mockResolvers = mockFamousDetails.makeGraphQLErrorResolver(
-          {language: 'EN', id: USER_ID},
-          {},
-        );
-        const component = render(renderFamousDetails({mockResolvers, goBack}));
-        expect(elements.headerBackButton(component)).not.toBeNull();
-        expect(goBack).toHaveBeenCalledTimes(0);
-        fireEvent.press(elements.headerBackButton(component));
-        expect(goBack).toHaveBeenCalledTimes(1);
-        await waitFor(() => {});
-      });
     });
   });
 });

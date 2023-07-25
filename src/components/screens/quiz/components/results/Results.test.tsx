@@ -12,7 +12,7 @@ import MockedNavigation from '@mocks/MockedNavigator';
 import {randomPositiveNumber} from '@mocks/utils';
 import {randomArrayElement} from '@mocks/utils';
 import * as SchemaTypes from '@schema-types';
-import {quizFixtures} from '@mocks/fixtures';
+import {quizFixtures} from '@mocks/fixtures/quiz';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import {Results} from './Results';

@@ -8,7 +8,7 @@ import {
 } from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
-import {mockQuiz} from '@mocks/fixtures';
+import {quizFixtures} from '@mocks/fixtures/quiz';
 import {dark as theme} from '@styles/themes/dark';
 import {randomArrayIndex} from '@mocks/utils';
 import {Translations} from '@i18n/tags';
@@ -40,13 +40,13 @@ const checkIsOptionUnselected = (params: CheckOptionParams) => {
 const checkIsAllOptionsUnselected = (
   params: Omit<CheckOptionParams, 'indexOption'>,
 ) => {
-  for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
+  for (let i = 0; i < quizFixtures().multiChoiceOptions.length; i++) {
     checkIsOptionUnselected({...params, indexOption: i});
   }
 };
 
 const checkIsOnlyThisOptionSelcted = (params: CheckOptionParams) => {
-  for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
+  for (let i = 0; i < quizFixtures().multiChoiceOptions.length; i++) {
     if (params.indexOption === i) {
       checkIsOptionSelected({...params, indexOption: i});
     } else {
@@ -59,9 +59,9 @@ const checkIsOptionsRenderedInTheCorrectOrder = (
   elements: Record<string, any>,
   component: RenderAPI,
 ) => {
-  for (let i = 0; i < mockQuiz().multiChoiceOptions.length; i++) {
+  for (let i = 0; i < quizFixtures().multiChoiceOptions.length; i++) {
     expect(elements.multiChoicesButtonTexts(component)[i].children[0]).toEqual(
-      mockQuiz().multiChoiceOptions[i],
+      quizFixtures().multiChoiceOptions[i],
     );
   }
 };
@@ -79,7 +79,7 @@ const checkIsNextButtonRenderdCorrectly = (
 const renderMultiChoice = (isFocused = true, onPressNext = jest.fn()) => (
   <ThemeProvider theme={theme}>
     <MultiChoiceQuestion
-      answers={mockQuiz().multiChoiceOptions}
+      answers={quizFixtures().multiChoiceOptions}
       onPressNext={onPressNext}
       isFocused={isFocused}
     />
@@ -107,7 +107,7 @@ describe('<MultiChoiceQuestion />', () => {
       it('should render correctly when there is no option selected and "isFocused" is "true"', () => {
         const component = render(renderMultiChoice());
         expect(elements.multiChoicesButtons(component).length).toEqual(
-          mockQuiz().multiChoiceOptions.length,
+          quizFixtures().multiChoiceOptions.length,
         );
         checkIsOptionsRenderedInTheCorrectOrder(elements, component);
         checkIsNextButtonRenderdCorrectly(elements, component);
@@ -118,7 +118,7 @@ describe('<MultiChoiceQuestion />', () => {
       it('should render correctly when there is no option selected and "isFocused" is "false"', () => {
         const component = render(renderMultiChoice(false));
         expect(elements.multiChoicesButtons(component).length).toEqual(
-          mockQuiz().multiChoiceOptions.length,
+          quizFixtures().multiChoiceOptions.length,
         );
         checkIsOptionsRenderedInTheCorrectOrder(elements, component);
         checkIsNextButtonRenderdCorrectly(elements, component);
@@ -130,14 +130,14 @@ describe('<MultiChoiceQuestion />', () => {
     it('should keep the default state when it gets unfocused and there is no option selected', () => {
       const component = render(renderMultiChoice());
       expect(elements.multiChoicesButtons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
+        quizFixtures().multiChoiceOptions.length,
       );
       checkIsOptionsRenderedInTheCorrectOrder(elements, component);
       checkIsNextButtonRenderdCorrectly(elements, component);
       checkIsAllOptionsUnselected({elements, component});
       component.rerender(renderMultiChoice(false));
       expect(elements.multiChoicesButtons(component).length).toEqual(
-        mockQuiz().multiChoiceOptions.length,
+        quizFixtures().multiChoiceOptions.length,
       );
       checkIsOptionsRenderedInTheCorrectOrder(elements, component);
       checkIsNextButtonRenderdCorrectly(elements, component);
@@ -146,7 +146,7 @@ describe('<MultiChoiceQuestion />', () => {
 
     it('should keep the current state when it gets unfocused and the there is some option selected', () => {
       const indexOptionSelected = randomArrayIndex(
-        mockQuiz().multiChoiceOptions,
+        quizFixtures().multiChoiceOptions,
       );
       const component = render(renderMultiChoice());
       fireEvent.press(
@@ -171,7 +171,7 @@ describe('<MultiChoiceQuestion />', () => {
 
     it('should keep the current state when it gets focused and the there is some option selected', () => {
       const indexOptionSelected = randomArrayIndex(
-        mockQuiz().multiChoiceOptions,
+        quizFixtures().multiChoiceOptions,
       );
       const component = render(renderMultiChoice(false));
       fireEvent.press(
@@ -198,7 +198,7 @@ describe('<MultiChoiceQuestion />', () => {
   describe('Pressing the items', () => {
     it('should only update the state of the pressed option when there was no option selected', () => {
       const indexOptionSelected = randomArrayIndex(
-        mockQuiz().multiChoiceOptions,
+        quizFixtures().multiChoiceOptions,
       );
       const component = render(renderMultiChoice());
       checkIsAllOptionsUnselected({elements, component});
@@ -217,10 +217,10 @@ describe('<MultiChoiceQuestion />', () => {
 
     it('should only update the state of the pressed option when there is some option selected', () => {
       const indexFirstOptionSelected = randomArrayIndex(
-        mockQuiz().multiChoiceOptions,
+        quizFixtures().multiChoiceOptions,
       );
       const indexSecondOptionSelected = randomArrayIndex(
-        mockQuiz().multiChoiceOptions,
+        quizFixtures().multiChoiceOptions,
         [indexFirstOptionSelected],
       );
       const component = render(renderMultiChoice());
@@ -247,7 +247,7 @@ describe('<MultiChoiceQuestion />', () => {
     it('should call "onPress" correctly when the user selects some option and press "NEXT"', () => {
       const onPress = jest.fn();
       const optionSelectedIndex = randomArrayIndex(
-        mockQuiz().multiChoiceOptions,
+        quizFixtures().multiChoiceOptions,
       );
       const component = render(renderMultiChoice(true, onPress));
       fireEvent.press(
@@ -257,7 +257,7 @@ describe('<MultiChoiceQuestion />', () => {
       fireEvent.press(elements.nextButton(component));
       expect(onPress).toHaveBeenCalledTimes(1);
       expect(onPress).toHaveBeenCalledWith(
-        mockQuiz().multiChoiceOptions[optionSelectedIndex],
+        quizFixtures().multiChoiceOptions[optionSelectedIndex],
       );
     });
   });

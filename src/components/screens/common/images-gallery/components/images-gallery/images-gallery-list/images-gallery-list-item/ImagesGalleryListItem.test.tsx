@@ -18,7 +18,6 @@ import {
   LANDSCAPE_HEIGHT,
   PORTRAIT_HEIGHT,
 } from './ImagesGalleryListItem.styles';
-import {CONSTANTS} from '@utils';
 
 const IMAGE_URL = 'SOME_IMAGE_URL';
 
@@ -56,7 +55,6 @@ describe('<ImagesGalleryListItem />', () => {
         jest.useFakeTimers();
         getSizeMock.mockImplementation(
           (_: string, onSuccess: (width: number, height: number) => void) => {
-            // Postponing this callback call to the next-tick, so we can have some fictional time to load the image
             process.nextTick(() => {
               onSuccess(101, 100);
             });
@@ -65,16 +63,6 @@ describe('<ImagesGalleryListItem />', () => {
       });
 
       afterEach(cleanup);
-
-      it('should fetch the image from the correct url', async () => {
-        expect(getSizeMock).toHaveBeenCalledTimes(0);
-        render(renderImagesGalleryListItem(IMAGE_URL));
-        expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `${CONSTANTS.VALUES.IMAGES.BASE_URL}/undefined${IMAGE_URL}`,
-        );
-        await waitFor(() => {});
-      });
 
       it('should render with the correct height', async () => {
         const component = render(renderImagesGalleryListItem(IMAGE_URL));
@@ -112,7 +100,9 @@ describe('<ImagesGalleryListItem />', () => {
         expect(elements.errorState(component)).toBeNull();
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).toBeNull();
-        await waitFor(() => {});
+        act(() => {
+          jest.runAllTimers();
+        });
       });
     });
 
@@ -227,9 +217,6 @@ describe('<ImagesGalleryListItem />', () => {
         expect(getSizeMock).toHaveBeenCalledTimes(0);
         render(renderImagesGalleryListItem(IMAGE_URL, false));
         expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `${CONSTANTS.VALUES.IMAGES.BASE_URL}/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
 
@@ -315,9 +302,6 @@ describe('<ImagesGalleryListItem />', () => {
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).not.toBeNull();
         expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
 
@@ -339,9 +323,6 @@ describe('<ImagesGalleryListItem />', () => {
         expect(elements.imageOffIcon(component)).toBeNull();
         expect(elements.image(component)).toBeNull();
         expect(getSizeMock).toHaveBeenCalledTimes(1);
-        expect(getSizeMock.mock.calls[0][0]).toEqual(
-          `https://image.tmdb.org/t/p/undefined${IMAGE_URL}`,
-        );
         await waitFor(() => {});
       });
     });

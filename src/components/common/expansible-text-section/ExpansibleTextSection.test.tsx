@@ -1,3 +1,4 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
 import {
   render,

@@ -2,8 +2,11 @@ import {TouchableOpacity, View, Text} from 'react-native';
 import styled from 'styled-components/native';
 import Animated from 'react-native-reanimated';
 
+import metrics from '@styles/metrics';
+
 import {TMDBImage} from '../tmdb-image/TMDBImage';
 
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
 export const WRAPPER_DEFAULT_WIDTH = '40%';
 export const WRAPPER_DEFAULT_HEIGHT = '68%';
 export const WRAPPER_LARGE_WIDTH = '45%';

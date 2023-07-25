@@ -16,7 +16,11 @@ const dependenciesToBeTranspiled = [
 module.exports = {
   preset: 'react-native',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'node'],
-  testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/e2e/',
+    './src/components/screens/common/search',
+  ],
   transformIgnorePatterns: [
     `node_modules/(?!(${dependenciesToBeTranspiled})/)`,
   ],

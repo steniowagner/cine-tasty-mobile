@@ -17,6 +17,13 @@ import {ImagesList} from './ImagesList';
 
 const mockNavigation = {
   navigate: jest.fn(),
+  getState: () => ({
+    routes: [
+      {
+        name: Routes.Home.IMAGES_GALLERY,
+      },
+    ],
+  }),
 };
 
 jest.mock('@react-navigation/native', () => {
@@ -91,7 +98,7 @@ describe('<ImagesList />', () => {
       fireEvent.press(elements.imageButtons(component)[indexImageSelected]);
       expect(mockNavigation.navigate).toHaveBeenCalledTimes(1);
       expect(mockNavigation.navigate).toHaveBeenCalledWith(
-        Routes.ImagesGallery.IMAGES_GALLERY,
+        Routes.Home.IMAGES_GALLERY,
         {
           indexSelected: indexImageSelected,
           images: images,

@@ -6,6 +6,7 @@ import {GET_FAMOUS_DETAIL} from '@graphql/queries';
 import {randomPositiveNumber} from '../utils';
 
 type SetupDataResponse = {
+  withKnownForDepartment?: boolean;
   withImages?: boolean;
   withMoviesCast?: boolean;
   withTVCast?: boolean;
@@ -37,7 +38,7 @@ const makeImages = () => Array(randomPositiveNumber(10, 1)).fill({}).map((_, ind
 
 const makeFamous = (setupDataResponse: SetupDataResponse) => ({
   __typename: 'Person',
-  knownForDepartment: 'KNOWN_FOR_DEPARTMENT',
+  knownForDepartment: setupDataResponse.withKnownForDepartment ? 'KNOWN_FOR_DEPARTMENT' : '',
   placeOfBirth: 'PLACE_OF_BIRTH',
   biography: setupDataResponse.withBiography ? 'BIOGRAPHY' : '',
   birthday: '1994-21-02',

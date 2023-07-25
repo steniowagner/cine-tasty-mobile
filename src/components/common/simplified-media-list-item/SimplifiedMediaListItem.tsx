@@ -6,8 +6,6 @@ import metrics from '@styles/metrics';
 
 import * as Styles from './SimplifiedMediaListItem.styles';
 
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('14%');
-
 type SimplifiedMediaListItemProps = {
   withLargeLayout?: boolean;
   onPress: () => void;
@@ -24,6 +22,7 @@ export const SimplifiedMediaListItem = (
   const imageFallbackView = useImageFallbackView({
     image: props.image,
   });
+
   return (
     <Styles.Wrapper
       testID={props.testID || 'simplified-media-list-button'}
@@ -48,12 +47,12 @@ export const SimplifiedMediaListItem = (
               condition: imageFallbackView.hasError,
               ifTrue: {
                 colorThemeRef: 'fallbackImageIcon',
-                size: DEFAULT_ICON_SIZE,
+                size: Styles.DEFAULT_ICON_SIZE,
                 id: 'image-off',
               },
               ifFalse: {
                 colorThemeRef: 'fallbackImageIcon',
-                size: DEFAULT_ICON_SIZE,
+                size: Styles.DEFAULT_ICON_SIZE,
                 id: 'video-vintage',
               },
             })}
@@ -68,7 +67,7 @@ export const SimplifiedMediaListItem = (
       <Styles.StarsContentWrapper>
         <SVGIcon
           id="star-full"
-          size={metrics.getWidthFromDP('6%')}
+          size={metrics.extraLargeSize}
           colorThemeRef="primary"
         />
         <Styles.DefaultText

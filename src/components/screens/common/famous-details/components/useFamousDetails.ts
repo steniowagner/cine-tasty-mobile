@@ -85,10 +85,9 @@ export const useFamousDetail = (props: UseFamousDetailProps) => {
   useEffect(() => {
     handleShowLanguageAlert();
   }, [query.data]);
-
+  // console.log(query.data, query.loading, query.error);
   return {
     animatedHeaderIntepolationParams,
-    canShowContent: query.data?.person && !query.loading && !query.error,
     famous: query.data?.person,
     isLoading: query.loading,
     hasError: !!query.error,
