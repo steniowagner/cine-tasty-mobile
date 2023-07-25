@@ -1,9 +1,7 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import RNRestart from 'react-native-restart';
+import {useMemo} from 'react';
 
 import {useTMDBImageQualities} from '@src/providers/tmdb-image-qualities/TMDBImageQualities';
 import {useTranslations} from '@hooks';
-import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
 import {Translations} from '@i18n/tags';
 
@@ -15,30 +13,8 @@ export const qualities: Types.ImageQualities[] = [
 ];
 
 export const useImagesQuality = () => {
-  const [qualitySelected, setQualitySelected] = useState<
-    Types.ImageQualities | undefined
-  >(undefined);
-
   const tmdbImagesQualities = useTMDBImageQualities();
   const translations = useTranslations();
-
-  const onPress = useCallback(async (imageQuality: Types.ImageQualities) => {
-    await storage.set(CONSTANTS.KEYS.IMAGES_QUALITY, imageQuality);
-    RNRestart.Restart();
-  }, []);
-
-  const setImageQualityFromStore = useCallback(async () => {
-    const imageQualityFromStore = await storage.get<
-      undefined,
-      Types.ImageQualities
-    >(CONSTANTS.KEYS.IMAGES_QUALITY, undefined);
-    console.log(
-      'tmdbImagesQualities.: ',
-      tmdbImagesQualities.imageQualitySelected,
-    );
-
-    setQualitySelected(imageQualityFromStore);
-  }, []);
 
   const options = useMemo(
     () =>
@@ -51,13 +27,10 @@ export const useImagesQuality = () => {
     [],
   );
 
-  useEffect(() => {
-    setImageQualityFromStore();
-  }, []);
-
   return {
+    qualitySelected: tmdbImagesQualities.imageQualitySelected,
+    onPress: (imageQuality: Types.ImageQualities) =>
+      tmdbImagesQualities.changeQuality(imageQuality),
     qualities: options,
-    qualitySelected,
-    onPress,
   };
 };
