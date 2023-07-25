@@ -5,25 +5,23 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
+import RNRestart from 'react-native-restart';
 
 import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
 
 import {classifyScreenSize} from './classifyScreenSize';
+import mediumSizes from './qualities/medium/medium';
 
 type TMDBImageQualitiesContextState = {
   mappingImageTypeToImageSize?: Types.MappingImageTypeToImageSize;
+  changeQuality: (quality: Types.ImageQualities) => void;
   imageQualitySelected: Types.ImageQualities;
 };
 
 const TMDB_IMAGE_QUALITIES_CONTEXT = {
   imageQualitySelected: 'medium',
-  mappingImageTypeToImageSize: {
-    poster: 'w154',
-    backdrop: 'w300',
-    still: 'w92',
-    profile: 'w92',
-  },
+  mappingImageTypeToImageSize: mediumSizes,
 } as TMDBImageQualitiesContextState;
 
 const TMDBImageQualitiesContext = createContext<TMDBImageQualitiesContextState>(
@@ -57,13 +55,25 @@ export const TMDBImageQualitiesProvider = (
     setMappingImageTypeToImageSize(screenSize[qualitySelected]);
   }, []);
 
+  const handleChangeImagesQuality = useCallback(
+    async (quality: Types.ImageQualities) => {
+      await storage.set(CONSTANTS.KEYS.IMAGES_QUALITY, quality);
+      RNRestart.Restart();
+    },
+    [],
+  );
+
   useEffect(() => {
     handleSetImagesQualities();
   }, []);
 
   return (
     <TMDBImageQualitiesContext.Provider
-      value={{mappingImageTypeToImageSize, imageQualitySelected}}>
+      value={{
+        mappingImageTypeToImageSize,
+        changeQuality: handleChangeImagesQuality,
+        imageQualitySelected,
+      }}>
       {props.children}
     </TMDBImageQualitiesContext.Provider>
   );
