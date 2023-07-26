@@ -15,10 +15,9 @@ type UseHomeProps = {
 };
 
 export const useHome = (props: UseHomeProps) => {
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isMoviesSelected, setIsMoviesSelected] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const settingsModal = useSettingsModal({navigation: props.navigation});
 
   const handlePressViewAll = useCallback(
     (params: Types.PressViewAllParams) => {
@@ -82,6 +81,10 @@ export const useHome = (props: UseHomeProps) => {
     handler();
   }, [trendingMovies.exec, trendingTVShows.exec, isMoviesSelected]);
 
+  const handlePressSettings = useCallback(() => {
+    setIsSettingsModalOpen(true);
+  }, []);
+
   useEffect(() => {
     if (isTransitioning) {
       setTimeout(() => {
@@ -91,20 +94,17 @@ export const useHome = (props: UseHomeProps) => {
   }, [isTransitioning]);
 
   return {
-    onPressSettings: settingsModal.open,
-    isSettingsModalOpen: settingsModal.isOpen,
-    onPressSettingsOption: settingsModal.onPressOption,
-    onCloseSettingsModal: settingsModal.close,
-    settingsOptions: settingsModal.options,
     onSelectTVShows: handleSelectTVShows,
     onSelectMovies: handleSelectMovies,
     onPressReload: handleOnPresReload,
+    onPressSettings: handlePressSettings,
+    isSettingsModalOpen,
+    setIsSettingsModalOpen,
     isMoviesSelected,
     shouldShowReload,
     isLoading,
     trendings,
     top3,
-
     onPressSearch: () => {},
   };
 };
