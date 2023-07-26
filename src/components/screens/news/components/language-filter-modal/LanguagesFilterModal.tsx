@@ -26,7 +26,7 @@ export const LanguagesFilterModal = (props: LanguagesFilterModalProps) => {
       isOpen={props.isOpen}
       onClose={languagesFilterModal.onCloseModal}
       ctaButtonTitle={languagesFilterModal.texts.modalCtaButton}
-      ctaButtonCallback={languagesFilterModal.onPressSelect}>
+      onPressCTAButton={languagesFilterModal.onPressSelect}>
       <LanguageFilter
         onSelectLanguage={languagesFilterModal.setLanguageSelected}
         languageSelected={languagesFilterModal.languageSelected}

@@ -11,7 +11,9 @@ import {useModalSheet} from './useModalSheet';
 type ModalSheetProps = {
   children: React.ReactNode;
   ctaButtonTitle?: string;
-  ctaButtonCallback?: () => unknown;
+  forceClose?: boolean;
+  onCloseForcibly?: () => void;
+  onPressCTAButton?: () => unknown;
   title?: string;
   isOpen: boolean;
   onClose: () => void;
@@ -20,7 +22,9 @@ type ModalSheetProps = {
 
 export const ModalSheet = (props: ModalSheetProps) => {
   const modalSheet = useModalSheet({
-    ctaButtonCallback: props.ctaButtonCallback,
+    onPressCTAButton: props.onPressCTAButton,
+    forceClose: props.forceClose,
+    onCloseForcibly: props.onCloseForcibly,
     height: props.height,
     onClose: props.onClose,
     isOpen: props.isOpen,
@@ -29,7 +33,7 @@ export const ModalSheet = (props: ModalSheetProps) => {
   return (
     <Modal
       testID="modal-sheet"
-      visible={props.isOpen}
+      visible={modalSheet.internalIsOpen}
       transparent
       animationType="none">
       <Animated.View
