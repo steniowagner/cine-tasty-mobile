@@ -11,9 +11,9 @@ import {
 import {WRAPPER_HEIGHT as TAB_NAVIGATOR_HEIGHT} from '@routes/components/tab-navigator/TabNavigator.styles';
 import metrics from '@styles/metrics';
 
+import {useDarkLayerAnimatedStyle} from './useDarkLayerAnimatedStyle';
 import {DEFAULT_MODAL_SHEET_HEIGHT} from './ModalSheet.styles';
 import {useGestureEvents} from './useGestureEvents';
-import {useDarkLayerAnimatedStyle} from './useDarkLayerAnimatedStyle';
 
 export const MAX_CLAMPING = metrics.getWidthFromDP('8%');
 
@@ -26,7 +26,9 @@ const SPRING_CONFIG = {
 };
 
 type UseModalSheetProps = {
-  ctaButtonCallback?: () => unknown;
+  onPressCTAButton?: () => unknown;
+  forceClose?: boolean;
+  onCloseForcibly?: () => void;
   height?: number;
   onClose: () => void;
   isOpen?: boolean;
@@ -35,7 +37,7 @@ type UseModalSheetProps = {
 export const useModalSheet = (props: UseModalSheetProps) => {
   const [bottomGapSectionHeight, setBottomGapSectionHeight] =
     useState(MAX_CLAMPING);
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
 
   const dimensions = useWindowDimensions();
 
@@ -74,38 +76,57 @@ export const useModalSheet = (props: UseModalSheetProps) => {
     top: withSpring(distanceFromTop.value, SPRING_CONFIG),
   }));
 
-  const handlePressCTAButton = useCallback(() => {
+  const closeModal = useCallback((callback = () => {}) => {
     setBottomGapSectionHeight(0);
     distanceFromTop.value = withTiming(
       dimensions.height + TAB_NAVIGATOR_HEIGHT,
       {duration: CLOSE_MODAL_ANIMATION_DURATION},
-      () => runOnJS(props.ctaButtonCallback)(),
+      () => runOnJS(callback)(),
     );
-  }, [props.ctaButtonCallback]);
+  }, []);
 
-  const openModalSheetWithAnimation = useCallback(() => {
+  const handlePressCTAButton = useCallback(() => {
+    closeModal(props.onPressCTAButton);
+  }, [props.onPressCTAButton]);
+
+  const openModal = useCallback(() => {
     distanceFromTop.value = withSpring(cardInitialPosition, SPRING_CONFIG, () =>
       runOnJS(setBottomGapSectionHeight)(MAX_CLAMPING),
     );
   }, [cardInitialPosition]);
 
   useEffect(() => {
-    if (isOpen) {
-      openModalSheetWithAnimation();
+    if (internalIsOpen) {
+      openModal();
     }
-  }, [isOpen]);
+  }, [internalIsOpen]);
+
+  const handleForceClose = useCallback(() => {
+    if (props.forceClose === false) {
+      setInternalIsOpen(props.isOpen);
+    }
+    if (props.forceClose === true && !props.isOpen) {
+      closeModal(() => {
+        props.onCloseForcibly();
+        setInternalIsOpen(false);
+      });
+    }
+  }, [props.onCloseForcibly, props.isOpen, props.forceClose]);
 
   useEffect(() => {
-    setIsOpen(props.isOpen);
-  }, [props.isOpen]);
+    if (props.forceClose === undefined) {
+      return setInternalIsOpen(props.isOpen);
+    }
+    handleForceClose();
+  }, [props.isOpen, props.forceClose]);
 
   return {
     cardAnimatedStyle: distanceFromTopAnimatedStyle,
+    onPressCTAButton: handlePressCTAButton,
     bottomGapSectionHeight,
     darkLayerAnimatedStyle,
-    onPressCTAButton: handlePressCTAButton,
     handleGestureEvent,
+    internalIsOpen,
     cardHeight,
-    isOpen,
   };
 };

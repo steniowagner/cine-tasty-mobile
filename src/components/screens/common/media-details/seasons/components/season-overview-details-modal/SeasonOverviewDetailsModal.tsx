@@ -21,7 +21,7 @@ export const SeasonOverviewDetailsModal = (
     isOpen={props.isOpen}
     onClose={props.onClose}
     ctaButtonTitle={props.ctaButtonTitle}
-    ctaButtonCallback={props.onPressCtaButton}>
+    onPressCTAButton={props.onPressCtaButton}>
     <ScrollView contentContainerStyle={Styles.sheet.wrapper} bounces={false}>
       <Styles.EpisodeOverview testID="season-overview-details">
         {props.overview}

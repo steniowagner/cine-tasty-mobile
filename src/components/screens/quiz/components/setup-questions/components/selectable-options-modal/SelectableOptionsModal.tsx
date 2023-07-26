@@ -22,7 +22,7 @@ export const SelectableOptionsModal = (props: SelectableOptionsModalProps) => {
       isOpen={props.isSetupQuestionModalOpen}
       onClose={props.onCloseSetupQuestionModal}
       ctaButtonTitle={setupOptionsList.texts.modalCtaTitle}
-      ctaButtonCallback={setupOptionsList.onPressCtaButton}>
+      onPressCTAButton={setupOptionsList.onPressCtaButton}>
       <Styles.Wrapper testID="options-list">
         {setupOptionsList.options.map(option => (
           <OptionListItem

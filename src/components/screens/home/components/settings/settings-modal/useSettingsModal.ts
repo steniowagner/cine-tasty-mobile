@@ -14,12 +14,14 @@ export type Option = {
   icon: Icons;
 };
 
-type UseSettingsModalProps = {
+export type UseSettingsModalProps = {
+  setIsSettingsModalOpen: (isSettingsModalOpen: boolean) => void;
   navigation: HomeStackNavigationProp;
+  isSettingsModalOpen: boolean;
 };
 
 export const useSettingsModal = (props: UseSettingsModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [optionSelected, setOptionSelected] = useState<Option | undefined>();
 
   const translations = useTranslations();
 
@@ -35,18 +37,32 @@ export const useSettingsModal = (props: UseSettingsModalProps) => {
     [translations.translate],
   );
 
-  const handlePressOption = useCallback(
-    (option: Option) => {
-      props.navigation.navigate(option.route);
-    },
-    [props.navigation],
-  );
+  const handlePressOption = useCallback((option: Option) => {
+    setOptionSelected(option);
+    props.setIsSettingsModalOpen(false);
+  }, []);
+
+  const open = useCallback(() => {
+    props.setIsSettingsModalOpen(true);
+  }, [props.setIsSettingsModalOpen]);
+
+  const close = useCallback(() => {
+    props.setIsSettingsModalOpen(false);
+  }, [props.setIsSettingsModalOpen]);
+
+  const onCloseForcibly = useCallback(() => {
+    props.setIsSettingsModalOpen(false);
+    props.navigation.navigate(optionSelected.route);
+    setOptionSelected(undefined);
+  }, [optionSelected, props.navigation]);
 
   return {
+    forceClose: !!optionSelected,
     onPressOption: handlePressOption,
-    open: () => setIsOpen(true),
-    close: () => setIsOpen(false),
-    isOpen,
+    isOpen: props.isSettingsModalOpen,
+    onCloseForcibly,
     options,
+    close,
+    open,
   };
 };

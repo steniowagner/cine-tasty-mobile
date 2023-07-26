@@ -41,10 +41,9 @@ export const Home = (props: HomeStackProps) => {
   return (
     <>
       <SettingsModal
-        onPressOption={home.onPressSettingsOption}
-        isOpen={home.isSettingsModalOpen}
-        onCloseModal={home.onCloseSettingsModal}
-        options={home.settingsOptions}
+        setIsSettingsModalOpen={home.setIsSettingsModalOpen}
+        isSettingsModalOpen={home.isSettingsModalOpen}
+        navigation={props.navigation}
       />
       <ScrollView testID="scrollview-content">
         <Top3 items={home.top3} />
