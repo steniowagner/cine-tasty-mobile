@@ -1,11 +1,36 @@
-import React from 'react';
-import {useRoute} from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-import {SearchRouteProp} from '../../routes/route-params-types';
+import {
+  SearchRouteProp,
+  SearchNavigationProp,
+} from '../../routes/route-params-types';
+import {SearchBar} from './searchbar/SearchBar';
+import {useSearch} from './useSearch';
 
 export const Search = () => {
+  const navigation = useNavigation<SearchNavigationProp>();
   const route = useRoute<SearchRouteProp>();
-  console.log(route.params);
+
+  const search = useSearch({
+    searchByTextError: route.params.searchByTextError,
+    paginationError: route.params.paginationError,
+    searchType: route.params.searchType,
+    queryId: route.params.queryId,
+  });
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <SearchBar
+          onTypeSearchQuery={search.onTypeSearchQuery}
+          onPressClose={navigation.goBack}
+          placeholder={route.params.placeholder}
+        />
+      ),
+    });
+  }, [search.onTypeSearchQuery]);
+
   return <></>;
 };
 

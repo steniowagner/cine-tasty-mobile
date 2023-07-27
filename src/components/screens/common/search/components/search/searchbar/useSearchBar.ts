@@ -5,7 +5,7 @@ type UseSearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
 };
 
-const useSearchBar = (props: UseSearchBarProps) => {
+export const useSearchBar = (props: UseSearchBarProps) => {
   const inputRef = useRef<TextInput>();
 
   useEffect(() => {
@@ -26,5 +26,3 @@ const useSearchBar = (props: UseSearchBarProps) => {
     inputRef,
   };
 };
-
-export default useSearchBar;

@@ -18,7 +18,7 @@ type UseSearchProps = {
   paginationError: string;
 };
 
-const useSearch = (props: UseSearchProps) => {
+export const useSearch = (props: UseSearchProps) => {
   const [query, setQuery] = useState('');
 
   const translations = useTranslations();
@@ -85,5 +85,3 @@ const useSearch = (props: UseSearchProps) => {
     error: pagination.error,
   };
 };
-
-export default useSearch;

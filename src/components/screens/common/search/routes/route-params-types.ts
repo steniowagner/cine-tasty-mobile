@@ -1,4 +1,5 @@
 import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import {HomeStackRoutes} from '@src/components/screens/home/routes/route-params-types';
 import * as SchemaTypes from '@schema-types';
@@ -18,3 +19,5 @@ type StackParams = HomeStackRoutes;
 type Route = Routes.Home.SEARCH_MOVIE | Routes.Home.SEARCH_TV_SHOW;
 
 export type SearchRouteProp = RouteProp<StackParams, Route>;
+
+export type SearchNavigationProp = StackNavigationProp<StackParams, Route>;

@@ -1,10 +1,10 @@
 import React from 'react';
 import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
-import {ThemeProvider} from 'styled-components/native';
 
-import {dark as theme} from '@styles/themes/dark';
+import MockedNavigation from '@mocks/MockedNavigator';
+import {ThemeContextProvider} from '@providers';
 
-import SearchBar from './SearchBar.android';
+import SearchBar from './SearchBar';
 
 jest.mock('react-native-status-bar-height', () => ({
   getStatusBarHeight: () => 10,
@@ -15,22 +15,26 @@ const PLACEHOLDER = 'SOME PLACEHOLDER';
 
 type RenderSearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
-  onPressSearch: () => void;
+  onPressSearch?: () => void;
   onPressClose: () => void;
 };
 
-const renderSearchBar = (props: RenderSearchBarProps) => (
-  <ThemeProvider theme={theme}>
-    <SearchBar
-      onTypeSearchQuery={props.onTypeSearchQuery}
-      onPressSearch={props.onPressSearch}
-      onPressClose={props.onPressClose}
-      placeholder={PLACEHOLDER}
-    />
-  </ThemeProvider>
-);
+const renderSearchBar = (props: RenderSearchBarProps) => {
+  const SearchBarIOS = () => (
+    <ThemeContextProvider>
+      <SearchBar
+        onTypeSearchQuery={props.onTypeSearchQuery}
+        onPressSearch={props.onPressSearch}
+        onPressClose={props.onPressClose}
+        placeholder={PLACEHOLDER}
+      />
+    </ThemeContextProvider>
+  );
 
-describe('<SearchBar /> - [Android]', () => {
+  return <MockedNavigation component={SearchBarIOS} />;
+};
+
+describe('<SearchBar /> - [iOS]', () => {
   const elements = {
     wrapper: (api: RenderAPI) => api.queryByTestId('searchbar-wrapper'),
     closeButton: (api: RenderAPI) =>

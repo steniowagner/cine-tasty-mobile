@@ -5,7 +5,7 @@ import {HeaderIconButton} from '@components';
 import {CONSTANTS} from '@utils';
 
 import * as Styles from './SearchBar.styles';
-import useSearchBar from './useSearchBar';
+import {useSearchBar} from './useSearchBar';
 
 type SearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
@@ -14,7 +14,7 @@ type SearchBarProps = {
   placeholder: string;
 };
 
-const SearchBar = (props: SearchBarProps) => {
+export const SearchBar = (props: SearchBarProps) => {
   const searchBar = useSearchBar({onTypeSearchQuery: props.onTypeSearchQuery});
   return (
     <>
@@ -43,5 +43,3 @@ const SearchBar = (props: SearchBarProps) => {
     </>
   );
 };
-
-export default SearchBar;

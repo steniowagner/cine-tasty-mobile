@@ -167,7 +167,9 @@ export const HomeStack = () => {
       />
       <StackNavigator.Screen
         name={Routes.Home.SEARCH_MOVIE}
-        options={{headerShown: false}}
+        options={{
+          header: () => null,
+        }}
         initialParams={{
           searchType: SchemaTypes.SearchType.MOVIE,
           queryId: 'search_movie' as Types.CineTastyQuery,
@@ -185,9 +187,11 @@ export const HomeStack = () => {
       />
       <StackNavigator.Screen
         name={Routes.Home.SEARCH_TV_SHOW}
-        options={{headerShown: false}}
+        options={{
+          header: () => null,
+        }}
         initialParams={{
-          searchType: SchemaTypes.SearchType.MOVIE,
+          searchType: SchemaTypes.SearchType.TV,
           queryId: 'search_tv' as Types.CineTastyQuery,
           searchByTextError: translations.translate(
             Translations.Tags.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
