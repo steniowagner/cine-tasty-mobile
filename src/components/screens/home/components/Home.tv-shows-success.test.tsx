@@ -69,8 +69,8 @@ describe('<Home /> # TV-Shows/success test cases', () => {
       api.queryAllByTestId('settings-modal-option-text'),
     settingsButton: (api: RenderAPI) =>
       api.queryByTestId('header-icon-button-wrapper-settings'),
-    // searchButton: (api: RenderAPI) =>
-    //   api.queryByTestId('header-icon-button-wrapper-magnify'),
+    searchButton: (api: RenderAPI) =>
+      api.queryByTestId('header-icon-button-wrapper-magnify'),
     loading: (api: RenderAPI) => api.queryByTestId('loading-home'),
     top3LearnMoreButtons: (api: RenderAPI) =>
       api.queryAllByTestId('rounded-button'),
@@ -284,7 +284,29 @@ describe('<Home /> # TV-Shows/success test cases', () => {
       return items[Number(id)];
     };
 
-    // it('should navigate to the "Search" correctly when the user presses the "Search" button', () => {});
+    it('should navigate to the "Search" correctly when the user presses the "Search" button', async () => {
+      const navigate = jest.fn();
+      const resolvers = [
+        ...trendingMoviesFixtures.makeQuerySuccessResolver(),
+        ...trendingTVShowsFixtures.makeQuerySuccessResolver(),
+      ];
+      const component = render(renderHome(resolvers, navigate));
+      await waitFor(() => {
+        expect(elements.top3LearnMoreButtons(component).length).toBeGreaterThan(
+          0,
+        );
+      });
+      fireEvent.press(elements.tvShowsSwitcher(component));
+      await waitFor(() => {
+        expect(elements.top3LearnMoreButtons(component).length).toBeGreaterThan(
+          0,
+        );
+      });
+      expect(navigate).toHaveBeenCalledTimes(0);
+      fireEvent.press(elements.searchButton(component));
+      expect(navigate).toHaveBeenCalledTimes(1);
+      expect(navigate).toHaveBeenCalledWith(Routes.Home.SEARCH_TV_SHOW);
+    });
 
     it('should navigate to the "MediaDetails" correctly when the user presses the "Top3/Learn More" button', async () => {
       const navigate = jest.fn();
