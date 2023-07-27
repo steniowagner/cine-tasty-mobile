@@ -1,7 +1,11 @@
 import React from 'react';
+import {useRoute} from '@react-navigation/native';
 
-export const Search = props => {
-  console.log('>>> props: ', props.route.params);
+import {SearchRouteProp} from '../../routes/route-params-types';
+
+export const Search = () => {
+  const route = useRoute<SearchRouteProp>();
+  console.log(route.params);
   return <></>;
 };
 
