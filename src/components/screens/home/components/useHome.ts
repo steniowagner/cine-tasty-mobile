@@ -3,7 +3,6 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-import {useSettingsModal} from '../components/settings/settings-modal/useSettingsModal';
 import {HomeStackNavigationProp} from '../routes/route-params-types';
 import {useTrendingMovies} from './trending-movies/useTrendingMovies';
 import {useTrendingTVShows} from './trending-tv-shows/useTrendingTVShow';
@@ -85,6 +84,13 @@ export const useHome = (props: UseHomeProps) => {
     setIsSettingsModalOpen(true);
   }, []);
 
+  const handlePressSearch = useCallback(() => {
+    const searchRoute = isMoviesSelected
+      ? Routes.Home.SEARCH_MOVIE
+      : Routes.Home.SEARCH_TV_SHOW;
+    props.navigation.navigate(searchRoute);
+  }, [isMoviesSelected]);
+
   useEffect(() => {
     if (isTransitioning) {
       setTimeout(() => {
@@ -98,6 +104,7 @@ export const useHome = (props: UseHomeProps) => {
     onSelectMovies: handleSelectMovies,
     onPressReload: handleOnPresReload,
     onPressSettings: handlePressSettings,
+    onPressSearch: handlePressSearch,
     isSettingsModalOpen,
     setIsSettingsModalOpen,
     isMoviesSelected,
@@ -105,6 +112,5 @@ export const useHome = (props: UseHomeProps) => {
     isLoading,
     trendings,
     top3,
-    onPressSearch: () => {},
   };
 };
