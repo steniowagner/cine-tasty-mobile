@@ -28,7 +28,7 @@ import {Languages} from '../components/settings/languages/Languages';
 import {ThemeSettings} from '../components/settings/theme-settings/ThemeSettings';
 import {OpenSource} from '../components/settings/open-source/OpenSource';
 import {About} from '../components/settings/about/About';
-import {Search} from '../../common/search/components/search/Search';
+import {SearchMedia} from '../../common/search/components/search/search-media/SearchMedia';
 
 const StackNavigator = createStackNavigator();
 
@@ -183,7 +183,7 @@ export const HomeStack = () => {
             Translations.Tags.HOME_SEARCH_MOVIE_PLACEHOLDER,
           ),
         }}
-        component={Search}
+        component={SearchMedia}
       />
       <StackNavigator.Screen
         name={Routes.Home.SEARCH_TV_SHOW}
@@ -203,7 +203,7 @@ export const HomeStack = () => {
             Translations.Tags.HOME_SEARCH_TV_SHOW_PLACEHOLDER,
           ),
         }}
-        component={Search}
+        component={SearchMedia}
       />
     </StackNavigator.Navigator>
   );

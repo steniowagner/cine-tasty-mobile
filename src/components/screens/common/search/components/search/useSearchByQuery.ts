@@ -10,7 +10,7 @@ type UseSearchByQueryProps = {
   query: string;
 };
 
-const useSearchByQuery = (props: UseSearchByQueryProps) => {
+export const useSearchByQuery = (props: UseSearchByQueryProps) => {
   const debouncedSetQueryString = useRef(
     debounce(async (queryStringTyped: string) => {
       if (!queryStringTyped && !props.query) {
@@ -31,5 +31,3 @@ const useSearchByQuery = (props: UseSearchByQueryProps) => {
     onTypeSearchQuery: handleTypeSearchQuery,
   };
 };
-
-export default useSearchByQuery;

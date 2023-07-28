@@ -5,20 +5,21 @@ import * as SchemaTypes from '@schema-types';
 import {getQuery} from '@graphql/queries';
 import * as Types from '@local-types';
 
-import useSearchByQuery from './useSearchByQuery';
+import {useSearchByQuery} from './useSearchByQuery';
 
 type SearchVariables = {
   input: Omit<SchemaTypes.SearchInput, 'page'>;
 };
 
 type UseSearchProps = {
+  extraVariables?: Record<string, any>;
   searchType: SchemaTypes.SearchType;
   queryId: Types.CineTastyQuery;
   searchByTextError: string;
   paginationError: string;
 };
 
-export const useSearch = (props: UseSearchProps) => {
+export const useSearch = <T>(props: UseSearchProps) => {
   const [query, setQuery] = useState('');
 
   const translations = useTranslations();
@@ -31,16 +32,25 @@ export const useSearch = (props: UseSearchProps) => {
     [],
   );
 
-  const variables = useMemo(
-    () => ({
+  const variables = useMemo(() => {
+    if (props.extraVariables) {
+      return {
+        input: {
+          ...props.extraVariables,
+          language: translations.language,
+          type: props.searchType,
+          query,
+        },
+      };
+    }
+    return {
       input: {
         language: translations.language,
         type: props.searchType,
         query,
       },
-    }),
-    [translations.language, props.searchType, query],
-  );
+    };
+  }, [translations.language, props.searchType, props.extraVariables, query]);
 
   const pagination = usePagination<
     Types.SearchResult,
@@ -80,7 +90,7 @@ export const useSearch = (props: UseSearchProps) => {
     isPaginating: pagination.isPaginating,
     onEndReached: pagination.paginate,
     isLoading: pagination.isLoading,
-    dataset: pagination.dataset,
+    dataset: pagination.dataset as T[],
     shouldShowRecentSearches,
     error: pagination.error,
   };

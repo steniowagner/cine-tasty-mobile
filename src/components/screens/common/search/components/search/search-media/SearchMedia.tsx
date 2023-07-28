@@ -1,11 +1,17 @@
 import React, {useEffect} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, Platform} from 'react-native';
 
-import {MediaListItem} from '@components';
+import {
+  PaginatedListHeader,
+  PaginationFooter,
+  MediaListItem,
+} from '@components';
 
 import {SearchBar} from '../searchbar/SearchBar';
 import {useSearchMedia} from './useSearchMedia';
 import * as Styles from './SearchMedia.styles';
+
+export const NUMBER_OF_COLUMNS = 3;
 
 export const SearchMedia = () => {
   const searchMedia = useSearchMedia();
@@ -24,80 +30,40 @@ export const SearchMedia = () => {
 
   return (
     <FlatList
-      onMomentumScrollEnd={() => {}}
-      ItemSeparatorComponent={Styles.Separator}
-      numColumns={3}
+      ListHeaderComponent={() =>
+        searchMedia.shouldShowTopReloadButton && (
+          <PaginatedListHeader onPress={searchMedia.onPressTopReloadButton} />
+        )
+      }
+      ListFooterComponent={() =>
+        searchMedia.shouldShowBottomReloadButton && (
+          <PaginationFooter
+            onPressReloadButton={searchMedia.onPressFooterReloadButton}
+            hasError={searchMedia.hasPaginationError}
+            isPaginating={searchMedia.isPaginating}
+          />
+        )
+      }
       contentContainerStyle={Styles.sheet.contentContainerStyle}
       columnWrapperStyle={Styles.sheet.columnWrapperStyle}
-      renderItem={({item, index}) => (
+      ItemSeparatorComponent={Styles.Separator}
+      onEndReachedThreshold={Platform.select({
+        android: 0.5,
+        ios: 0.1,
+      })}
+      numColumns={NUMBER_OF_COLUMNS}
+      renderItem={({item}) => (
         <MediaListItem
+          onPress={() => searchMedia.onPressItem(item)}
           layoutSize="medium"
-          onPress={() => {}}
-          voteAverage={5}
-          voteCount={10}
-          image="/wDWAA5QApz5L5BKfFaaj8HJCAQM.jpg"
-          title="Velozes & Furiosos 10"
+          image={item.posterPath}
+          title={item.title}
         />
       )}
-      keyExtractor={item => item}
-      data={Array(6).fill({})}
-      pagingEnabled
+      onEndReached={searchMedia.onEndReached}
+      keyExtractor={item => `${item.id}`}
+      data={searchMedia.items}
+      testID="seach-media-list"
     />
   );
 };
-
-// import * as SchemaTypes from '@schema-types';
-
-// import {SearchStackProps} from '../../routes/route-params-types';
-// import {RecentSearches} from '../recent-searches/RecentSearches';
-// import SearchFamous from './search-famous/SearchFamous';
-// // @ts-ignore
-// import SearchBar from './searchbar/SearchBar';
-// import useSearch from './useSearch';
-
-// export const Search = (props: SearchStackProps) => {
-//   const search = useSearch({
-//     searchByTextError: props.route.params.searchByTextError,
-//     paginationError: props.route.params.paginationError,
-//     searchType: props.route.params.searchType,
-//     queryId: props.route.params.queryId,
-//   });
-
-//   useLayoutEffect(() => {
-//     props.navigation.setOptions({
-//       header: () => (
-//         <SearchBar
-//           onTypeSearchQuery={search.onTypeSearchQuery}
-//           onPressClose={() => props.navigation.goBack()}
-//           placeholder={props.route.params.placeholder}
-//         />
-//       ),
-//     });
-//   }, [
-//     props.route.params.placeholder,
-//     search.onTypeSearchQuery,
-//     props.navigation,
-//   ]);
-
-//   return (
-//     <>
-//       {search.shouldShowRecentSearches && (
-//         <RecentSearches searchType={props.route.params.searchType} />
-//       )}
-//       {props.route.params.searchType === SchemaTypes.SearchType.PERSON && (
-//         <SearchFamous
-//           dataset={
-//             search.dataset as SchemaTypes.SearchPerson_search_items_BasePerson[]
-//           }
-//           onPressBottomReloadButton={search.onPressFooterReloadButton}
-//           onPressTopReloadButton={search.onPressTopReloadButton}
-//           hasPaginationError={search.hasPaginationError}
-//           onEndReached={search.onEndReached}
-//           isPaginating={search.isPaginating}
-//           isLoading={search.isLoading}
-//           error={search.error}
-//         />
-//       )}
-//     </>
-//   );
-// };
