@@ -1,11 +1,7 @@
 import React from 'react';
 
 import * as Types from '@local-types';
-import {
-  SimplifiedMediaListItem,
-  SectionViewAll,
-  FlatListSection,
-} from '@components';
+import {MediaListItem, SectionViewAll, FlatListSection} from '@components';
 
 import * as Styles from './HomeSection.styles';
 
@@ -26,14 +22,15 @@ export const HomeSection = (props: HomeSectionProps) => (
     />
     <FlatListSection
       renderItem={({item}) => {
-        const simplifiedMediaListItem = item as Types.SimplifiedMedia;
+        const mediaListItem = item as Types.SimplifiedMedia;
         return (
-          <SimplifiedMediaListItem
-            onPress={() => props.onPressItem(simplifiedMediaListItem)}
-            voteAverage={simplifiedMediaListItem.voteAverage}
-            voteCount={simplifiedMediaListItem.voteCount}
-            image={simplifiedMediaListItem.posterPath}
-            title={simplifiedMediaListItem.title}
+          <MediaListItem
+            layoutSize="large"
+            onPress={() => props.onPressItem(mediaListItem)}
+            voteAverage={mediaListItem.voteAverage}
+            voteCount={mediaListItem.voteCount}
+            image={mediaListItem.posterPath}
+            title={mediaListItem.title}
             testID={props.sectionTitle}
           />
         );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SimplifiedMediaListItem, Section} from '@components';
+import {MediaListItem, Section} from '@components';
 
 import {FlatListSection} from '../scrollable-section/ScrollableSection.styles';
 import {
@@ -24,7 +24,8 @@ export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
         renderItem={({item}) => {
           const mediaItem = item as MediaItem;
           return (
-            <SimplifiedMediaListItem
+            <MediaListItem
+              layoutSize="large"
               onPress={() => mediaHorizontalList.onPressItem(mediaItem)}
               voteAverage={mediaItem.voteAverage}
               voteCount={mediaItem.voteCount}

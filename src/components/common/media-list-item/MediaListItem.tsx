@@ -4,21 +4,19 @@ import {renderSVGIconConditionally, SVGIcon} from '@components';
 import {useImageFallbackView} from '@hooks';
 import metrics from '@styles/metrics';
 
-import * as Styles from './SimplifiedMediaListItem.styles';
+import * as Styles from './MediaListItem.styles';
 
-type SimplifiedMediaListItemProps = {
-  withLargeLayout?: boolean;
+type MediaListItemProps = {
+  layoutSize: Styles.LayoutSize;
   onPress: () => void;
   testID?: string;
-  voteAverage: number;
-  voteCount: number;
+  voteAverage?: number;
+  voteCount?: number;
   image: string;
   title: string;
 };
 
-export const SimplifiedMediaListItem = (
-  props: SimplifiedMediaListItemProps,
-) => {
+export const MediaListItem = (props: MediaListItemProps) => {
   const imageFallbackView = useImageFallbackView({
     image: props.image,
   });
@@ -27,11 +25,11 @@ export const SimplifiedMediaListItem = (
     <Styles.Wrapper
       testID={props.testID || 'simplified-media-list-button'}
       onPress={props.onPress}
-      withLargeLayout={props.withLargeLayout}>
+      layoutSize={props.layoutSize}>
       <>
         <Styles.CustomTMDBImage
           imageType="poster"
-          withLargeLayout={props.withLargeLayout}
+          layoutSize={props.layoutSize}
           onError={imageFallbackView.onError}
           onLoad={imageFallbackView.onLoad}
           image={props.image}
@@ -41,18 +39,18 @@ export const SimplifiedMediaListItem = (
         {imageFallbackView.isFallbackImageVisible && (
           <Styles.FallbackImageWrapper
             testID="fallback-image-wrapper"
-            withLargeLayout={props.withLargeLayout}
+            layoutSize={props.layoutSize}
             style={imageFallbackView.imageFallbackViewStyle}>
             {renderSVGIconConditionally({
               condition: imageFallbackView.hasError,
               ifTrue: {
                 colorThemeRef: 'fallbackImageIcon',
-                size: Styles.DEFAULT_ICON_SIZE,
+                size: Styles.IMAGE_LOADING_ICON_SIZE,
                 id: 'image-off',
               },
               ifFalse: {
                 colorThemeRef: 'fallbackImageIcon',
-                size: Styles.DEFAULT_ICON_SIZE,
+                size: Styles.IMAGE_LOADING_ICON_SIZE,
                 id: 'video-vintage',
               },
             })}
@@ -60,23 +58,25 @@ export const SimplifiedMediaListItem = (
         )}
       </>
       <Styles.DefaultText
-        withLargeLayout={props.withLargeLayout}
+        layoutSize={props.layoutSize}
         testID="simplified-media-list-title">
         {props.title}
       </Styles.DefaultText>
-      <Styles.StarsContentWrapper>
-        <SVGIcon
-          id="star-full"
-          size={metrics.extraLargeSize}
-          colorThemeRef="primary"
-        />
-        <Styles.DefaultText
-          withLargeLayout={props.withLargeLayout}
-          testID="simplified-media-list-votes"
-          withMarginLeft>
-          {`${props.voteAverage.toFixed(1)} (${props.voteCount})`}
-        </Styles.DefaultText>
-      </Styles.StarsContentWrapper>
+      {!!props.voteAverage && !!props.voteCount && (
+        <Styles.StarsContentWrapper>
+          <SVGIcon
+            id="star-full"
+            size={metrics.extraLargeSize}
+            colorThemeRef="primary"
+          />
+          <Styles.Gap />
+          <Styles.DefaultText
+            layoutSize={props.layoutSize}
+            testID="simplified-media-list-votes">
+            {`${props.voteAverage.toFixed(1)} (${props.voteCount})`}
+          </Styles.DefaultText>
+        </Styles.StarsContentWrapper>
+      )}
     </Styles.Wrapper>
   );
 };

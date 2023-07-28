@@ -1,37 +1,49 @@
 import React, {useEffect} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {FlatList, View} from 'react-native';
 
-import {
-  SearchRouteProp,
-  SearchNavigationProp,
-} from '../../routes/route-params-types';
-import {SearchBar} from './searchbar/SearchBar';
-import {useSearch} from './useSearch';
+import {MediaListItem} from '@components';
 
-export const Search = () => {
-  const navigation = useNavigation<SearchNavigationProp>();
-  const route = useRoute<SearchRouteProp>();
+import {SearchBar} from '../searchbar/SearchBar';
+import {useSearchMedia} from './useSearchMedia';
+import * as Styles from './SearchMedia.styles';
 
-  const search = useSearch({
-    searchByTextError: route.params.searchByTextError,
-    paginationError: route.params.paginationError,
-    searchType: route.params.searchType,
-    queryId: route.params.queryId,
-  });
+export const SearchMedia = () => {
+  const searchMedia = useSearchMedia();
 
   useEffect(() => {
-    navigation.setOptions({
+    searchMedia.navigation.setOptions({
       header: () => (
         <SearchBar
-          onTypeSearchQuery={search.onTypeSearchQuery}
-          onPressClose={navigation.goBack}
-          placeholder={route.params.placeholder}
+          onTypeSearchQuery={searchMedia.onTypeSearchQuery}
+          onPressClose={searchMedia.onPressClose}
+          placeholder={searchMedia.placeholder}
         />
       ),
     });
-  }, [search.onTypeSearchQuery]);
+  }, [searchMedia.onTypeSearchQuery]);
 
-  return <></>;
+  return (
+    <FlatList
+      onMomentumScrollEnd={() => {}}
+      ItemSeparatorComponent={Styles.Separator}
+      numColumns={3}
+      contentContainerStyle={Styles.sheet.contentContainerStyle}
+      columnWrapperStyle={Styles.sheet.columnWrapperStyle}
+      renderItem={({item, index}) => (
+        <MediaListItem
+          layoutSize="medium"
+          onPress={() => {}}
+          voteAverage={5}
+          voteCount={10}
+          image="/wDWAA5QApz5L5BKfFaaj8HJCAQM.jpg"
+          title="Velozes & Furiosos 10"
+        />
+      )}
+      keyExtractor={item => item}
+      data={Array(6).fill({})}
+      pagingEnabled
+    />
+  );
 };
 
 // import * as SchemaTypes from '@schema-types';
