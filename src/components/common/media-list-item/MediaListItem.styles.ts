@@ -70,3 +70,8 @@ export const Gap = styled(View)`
   width: ${({theme}) => theme.metrics.extraSmallSize}px;
   height: 1px;
 `;
+
+export const MediaListItemSeparator = styled(View)`
+  width: ${({theme}) => theme.metrics.mediumSize}px;
+  height: 10px;
+`;

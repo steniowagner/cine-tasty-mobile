@@ -1,7 +1,12 @@
 import React from 'react';
 
 import * as Types from '@local-types';
-import {MediaListItem, SectionViewAll, FlatListSection} from '@components';
+import {
+  MediaListItem,
+  SectionViewAll,
+  FlatListSection,
+  MediaListItemSeparator,
+} from '@components';
 
 import * as Styles from './HomeSection.styles';
 
@@ -21,6 +26,8 @@ export const HomeSection = (props: HomeSectionProps) => (
       id={props.id}
     />
     <FlatListSection
+      ItemSeparatorComponent={MediaListItemSeparator}
+      ListFooterComponent={MediaListItemSeparator}
       renderItem={({item}) => {
         const mediaListItem = item as Types.SimplifiedMedia;
         return (
