@@ -32,25 +32,17 @@ export const useSearch = <T>(props: UseSearchProps) => {
     [],
   );
 
-  const variables = useMemo(() => {
-    if (props.extraVariables) {
-      return {
-        input: {
-          ...props.extraVariables,
-          language: translations.language,
-          type: props.searchType,
-          query,
-        },
-      };
-    }
-    return {
+  const variables = useMemo(
+    () => ({
       input: {
+        ...(props.extraVariables || {}),
         language: translations.language,
         type: props.searchType,
         query,
       },
-    };
-  }, [translations.language, props.searchType, props.extraVariables, query]);
+    }),
+    [translations.language, props.searchType, props.extraVariables, query],
+  );
 
   const pagination = usePagination<
     Types.SearchResult,
@@ -82,15 +74,39 @@ export const useSearch = <T>(props: UseSearchProps) => {
     [pagination.dataset, pagination.isLoading, pagination.error, query],
   );
 
+  const handleEndReached = useCallback(() => {
+    if (pagination.error || pagination.hasPaginationError) {
+      return;
+    }
+    pagination.paginate();
+  }, [pagination.error, pagination.hasPaginationError, pagination.paginate]);
+
+  const isResultsEmpty = useMemo(
+    () =>
+      !pagination.dataset.length &&
+      !!query &&
+      !pagination.isLoading &&
+      !pagination.error &&
+      !pagination.hasPaginationError,
+    [
+      pagination.dataset,
+      query,
+      pagination.error,
+      pagination.hasPaginationError,
+      pagination.isLoading,
+    ],
+  );
+
   return {
     onTypeSearchQuery: searchByQuery.onTypeSearchQuery,
     hasPaginationError: pagination.hasPaginationError,
     onPressFooterReloadButton: pagination.paginate,
     onPressTopReloadButton: pagination.reset,
     isPaginating: pagination.isPaginating,
-    onEndReached: pagination.paginate,
+    onEndReached: handleEndReached,
     isLoading: pagination.isLoading,
     dataset: pagination.dataset as T[],
+    isResultsEmpty,
     shouldShowRecentSearches,
     error: pagination.error,
   };

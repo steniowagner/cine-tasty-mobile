@@ -3,9 +3,11 @@ import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';
 
+export const SEPARATOR_HEIGHT = metrics.extraLargeSize;
+
 export const Separator = styled(View)`
   width: 100%;
-  height: ${({theme}) => theme.metrics.extraLargeSize}px;
+  height: ${SEPARATOR_HEIGHT}px;
 `;
 
 export const sheet = StyleSheet.create({

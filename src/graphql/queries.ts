@@ -23,17 +23,14 @@ const TrendingTVShowFragment = gql`
 `;
 
 export const SEARCH_TV_SHOWS = gql`
-  query SearchTVShow($input: SearchInput!, $language: ISO6391Language) {
+  query SearchTVShow($input: SearchInput!) {
     search(input: $input) {
       totalResults
       hasMore
       items {
         ... on BaseTVShow {
           title: name
-          voteAverage
           posterPath
-          voteCount
-          genreIds(language: $language)
           id
         }
       }
@@ -42,16 +39,13 @@ export const SEARCH_TV_SHOWS = gql`
 `;
 
 export const SEARCH_MOVIES = gql`
-  query SearchMovie($input: SearchInput!, $language: ISO6391Language) {
+  query SearchMovie($input: SearchInput!) {
     search(input: $input) {
       totalResults
       hasMore
       items {
         ... on BaseMovie {
-          voteAverage
           posterPath
-          voteCount
-          genreIds(language: $language)
           title
           id
         }

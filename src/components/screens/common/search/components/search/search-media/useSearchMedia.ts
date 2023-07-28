@@ -69,6 +69,8 @@ export const useSearchMedia = () => {
     onPressTopReloadButton: search.onPressTopReloadButton,
     onPressFooterReloadButton: search.onPressFooterReloadButton,
     shouldShowTopReloadButton,
+    isResultsEmpty: search.isResultsEmpty,
+    isLoading: search.isLoading,
     navigation,
   };
 };

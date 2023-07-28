@@ -7,6 +7,7 @@ import {
   MediaListItem,
 } from '@components';
 
+import {SearchMediaLoading} from './search-media-loading/SearchMediaLoading';
 import {SearchBar} from '../searchbar/SearchBar';
 import {useSearchMedia} from './useSearchMedia';
 import * as Styles from './SearchMedia.styles';
@@ -27,6 +28,10 @@ export const SearchMedia = () => {
       ),
     });
   }, [searchMedia.onTypeSearchQuery]);
+
+  if (searchMedia.isLoading) {
+    return <SearchMediaLoading />;
+  }
 
   return (
     <FlatList
