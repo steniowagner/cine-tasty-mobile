@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react';
 
 import {FamousList} from '@components';
+import * as SchemaTypes from '@schema-types';
 
 import {SearchBar} from '../components/searchbar/SearchBar';
 import {useSearchFamous} from './useSearchFamous';
+import {RecentSearches} from '../components/recent-searches/RecentSearches';
 
 export const SearchFamous = () => {
   const searchFamous = useSearchFamous();
@@ -19,6 +21,15 @@ export const SearchFamous = () => {
       ),
     });
   }, [searchFamous.onTypeSearchQuery]);
+
+  if (searchFamous.shouldShowRecentSearches) {
+    return (
+      <RecentSearches
+        onPressItem={searchFamous.onPressRecentSearchedItem}
+        searchType={SchemaTypes.SearchType.PERSON}
+      />
+    );
+  }
 
   return (
     <FamousList
