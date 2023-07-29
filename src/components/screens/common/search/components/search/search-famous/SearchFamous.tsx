@@ -1,36 +1,36 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {FamousList} from '@components';
-import * as SchemaTypes from '@schema-types';
 
-import useSearchFamous from './useSearchFamous';
+import {useSearchFamous} from './useSearchFamous';
+import {SearchBar} from '../searchbar/SearchBar';
 
-type SearchFamousProps = {
-  dataset: SchemaTypes.SearchPerson_search_items_BasePerson[];
-  onPressTopReloadButton: () => Promise<void>;
-  onPressBottomReloadButton: () => void;
-  hasPaginationError: boolean;
-  onEndReached: () => void;
-  isPaginating: boolean;
-  isLoading: boolean;
-  error: string;
-};
+export const SearchFamous = () => {
+  const searchFamous = useSearchFamous();
 
-const SearchFamous = (props: SearchFamousProps) => {
-  const searchFamous = useSearchFamous({dataset: props.dataset});
+  useEffect(() => {
+    searchFamous.navigation.setOptions({
+      header: () => (
+        <SearchBar
+          onTypeSearchQuery={searchFamous.onTypeSearchQuery}
+          onPressClose={searchFamous.onPressClose}
+          placeholder={searchFamous.placeholder}
+        />
+      ),
+    });
+  }, [searchFamous.onTypeSearchQuery]);
+
   return (
     <FamousList
-      onPressBottomReloadButton={props.onPressBottomReloadButton}
-      beforePressItem={searchFamous.persistToRecentSearches}
-      onPressTopReloadButton={props.onPressTopReloadButton}
-      hasPaginationError={props.hasPaginationError}
-      onEndReached={props.onEndReached}
-      isPaginating={props.isPaginating}
+      onPressBottomReloadButton={searchFamous.onPressBottomReloadButton}
+      beforePressItem={searchFamous.beforePressItem}
+      onPressTopReloadButton={searchFamous.onPressTopReloadButton}
+      hasPaginationError={searchFamous.hasPaginationError}
+      onEndReached={searchFamous.onEndReached}
+      isPaginating={searchFamous.isPaginating}
       famous={searchFamous.famous}
-      isLoading={props.isLoading}
-      error={props.error}
+      isLoading={searchFamous.isLoading}
+      error={searchFamous.error}
     />
   );
 };
-
-export default SearchFamous;

@@ -17,6 +17,7 @@ import {useTranslations} from '@hooks';
 
 import {SeasonsDetailsTabs} from '../../common/media-details/seasons/components/tabs/SeasonsDetailsTabs';
 import {TVShowDetail} from '../../common/media-details/tv-show-detail/components/TVShowDetail';
+import {SearchFamous} from '../../common/search/components/search/search-famous/SearchFamous';
 import {SeasonsProps} from '../../common/media-details/seasons/routes/route-params-types';
 import {Famous} from '../components/Famous';
 
@@ -97,11 +98,13 @@ export const FamousStack = () => {
           headerTitleAlign: 'center',
         })}
       />
-      {/* <Stack.Screen
-        options={{headerShown: false}}
-        component={SearchStack}
-        name={Routes.Search.SEARCH_STACK}
-      /> */}
+      <Stack.Screen
+        name={Routes.Famous.SEARCH}
+        options={{
+          header: () => null,
+        }}
+        component={SearchFamous}
+      />
     </Stack.Navigator>
   );
 };

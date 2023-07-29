@@ -61,8 +61,8 @@ export const SEARCH_PERSON = gql`
       hasMore
       items {
         ... on BasePerson {
-          image: profilePath
-          title: name
+          profileImage: profilePath
+          name
           id
         }
       }

@@ -1,42 +1,58 @@
 import {useCallback, useMemo} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 import * as SchemaTypes from '@schema-types';
-import * as Types from '@local-types';
+import {useTranslations} from '@hooks';
+import {Translations} from '@i18n/tags';
 
-import {useRecentSearches} from '../../recent-searches/useRecentSearches';
+import {SearchNavigationProp} from '../../../routes/route-params-types';
+import {useSearch} from '../useSearch';
 
-type UseSearchFamous = {
-  dataset: SchemaTypes.SearchPerson_search_items_BasePerson[];
-};
+type SearchResult = SchemaTypes.SearchPerson_search_items_BasePerson;
 
-const useSearchFamous = (props: UseSearchFamous) => {
-  const recentSearches = useRecentSearches({
-    searchType: SchemaTypes.SearchType.PERSON,
-    shouldSkipGetInitialRecentSearches: true,
-  });
+export const useSearchFamous = () => {
+  const navigation = useNavigation<SearchNavigationProp>();
+  const translations = useTranslations();
 
-  const persistToRecentSearches = useCallback(async (famous: Types.Famous) => {
-    await recentSearches.add({
-      image: famous.profileImage,
-      title: famous.name,
-      id: famous.id,
-    });
-  }, []);
-
-  const famous = useMemo(
-    () =>
-      props.dataset.map(item => ({
-        profileImage: item.image,
-        name: item.title,
-        id: item.id,
-      })),
-    [props.dataset],
+  const texts = useMemo(
+    () => ({
+      searchByTextError: translations.translate(
+        Translations.Tags.FAMOUS_QUERY_BY_TEXT_ERROR,
+      ),
+      paginationError: translations.translate(
+        Translations.Tags.FAMOUS_QUERY_BY_PAGINATION_ERROR,
+      ),
+      searchBarPlaceholder: translations.translate(
+        Translations.Tags.FAMOUS_SEARCHBAR_PLACEHOLDER,
+      ),
+    }),
+    [translations.translate],
   );
 
+  const search = useSearch<SearchResult>({
+    searchType: SchemaTypes.SearchType.PERSON,
+    queryId: 'search_famous',
+    searchByTextError: texts.searchByTextError,
+    paginationError: texts.paginationError,
+  });
+
+  const handlePressClose = useCallback(() => {
+    navigation.goBack();
+  }, []);
+
   return {
-    persistToRecentSearches,
-    famous,
+    onPressBottomReloadButton: search.onPressFooterReloadButton,
+    beforePressItem: () => {},
+    onPressTopReloadButton: search.onPressTopReloadButton,
+    hasPaginationError: search.hasPaginationError,
+    onEndReached: search.onEndReached,
+    isPaginating: search.isPaginating,
+    famous: search.dataset,
+    isLoading: search.isLoading,
+    error: search.error,
+    placeholder: texts.searchBarPlaceholder,
+    onPressClose: handlePressClose,
+    navigation,
+    onTypeSearchQuery: search.onTypeSearchQuery,
   };
 };
-
-export default useSearchFamous;

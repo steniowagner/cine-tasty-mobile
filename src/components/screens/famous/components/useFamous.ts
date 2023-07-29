@@ -56,15 +56,9 @@ export const useFamous = (props: UseFamousProps) => {
     query: GET_FAMOUS,
   });
 
-  const onPressHeaderIconButton = useCallback(() => {
-    props.navigation.navigate(Routes.Search.SEARCH_STACK, {
-      paginationError: texts.errors.pagination,
-      placeholder: texts.searchBarPlaceholder,
-      searchByTextError: texts.errors.queryByText,
-      searchType: SchemaTypes.SearchType.PERSON,
-      queryId: 'search_famous',
-    });
-  }, [texts]);
+  const handlePressHeaderIconButton = useCallback(() => {
+    props.navigation.navigate(Routes.Famous.SEARCH);
+  }, []);
 
   const dataset = useMemo(
     () =>
@@ -77,6 +71,7 @@ export const useFamous = (props: UseFamousProps) => {
   );
 
   return {
+    onPressHeaderIconButton: handlePressHeaderIconButton,
     hasPaginationError: pagination.hasPaginationError,
     onPressFooterReloadButton: pagination.paginate,
     onPressTopReloadButton: pagination.reset,
@@ -84,7 +79,6 @@ export const useFamous = (props: UseFamousProps) => {
     onEndReached: pagination.paginate,
     isLoading: pagination.isLoading,
     error: pagination.error,
-    onPressHeaderIconButton,
     dataset,
     texts,
   };

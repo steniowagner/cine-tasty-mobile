@@ -10,17 +10,14 @@ import {SeasonsDetailsParams} from '@src/components/screens/common/media-details
 import {Routes} from '@routes/routes';
 
 export type FamousStackRoutes = {
-  [Routes.Famous.FAMOUS]: FamousProps;
+  [Routes.Famous.FAMOUS]: undefined;
   [Routes.Famous.DETAILS]: FamousDetailsParams;
   [Routes.Famous.IMAGES_GALLERY]: ImagesGalleryParams;
   [Routes.Famous.TV_SHOW_DETAILS]: TVShowDetailParams;
   [Routes.Famous.MOVIE_DETAILS]: MovieDetailsParams;
   [Routes.Famous.TV_SHOW_SEASONS]: SeasonsDetailsParams;
   [Routes.Famous.MEDIA_REVIEWS]: ReviewsParams;
-};
-
-type FamousProps = {
-  headerTitle: string;
+  [Routes.Famous.SEARCH]: undefined;
 };
 
 export type FamousNavigationProp = StackNavigationProp<
