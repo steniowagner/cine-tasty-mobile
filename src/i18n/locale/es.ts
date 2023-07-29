@@ -149,9 +149,9 @@ const es: Locale = {
   },
   famous: {
     searchBarPlaceholder: 'Buscar actor o actriz ...',
-    i18nQueryByPaginationErrorRef: 'No se pudo cargar más famoso',
-    i18nQueryByTextErrorRef: 'No podría por este famoso',
-    i18EntryQueryErrorRef: 'No se pudo cargar el famoso',
+    searchPaginationError: 'No se pudo cargar más famoso',
+    searchByTextError: 'No podría por este famoso',
+    searchEntryQueryError: 'No se pudo cargar el famoso',
   },
   search: {
     recent: 'Reciente',

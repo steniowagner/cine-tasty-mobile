@@ -33,9 +33,9 @@ export namespace Translations {
 
     // FAMOUS
     FAMOUS_SEARCHBAR_PLACEHOLDER = 'translations:famous:searchBarPlaceholder',
-    FAMOUS_QUERY_BY_PAGINATION_ERROR = 'translations:famous:i18nQueryByPaginationErrorRef',
-    FAMOUS_QUERY_BY_TEXT_ERROR = 'translations:famous:i18nQueryByTextErrorRef',
-    FAMOUS_ENTRY_QUERY_ERROR = 'translations:famous:i18EntryQueryErrorRef',
+    FAMOUS_QUERY_BY_PAGINATION_ERROR = 'translations:famous:searchPaginationError',
+    FAMOUS_QUERY_BY_TEXT_ERROR = 'translations:famous:searchByTextError',
+    FAMOUS_ENTRY_QUERY_ERROR = 'translations:famous:searchEntryQueryError',
 
     // QUIZ
     QUIZ = 'translations:quiz',

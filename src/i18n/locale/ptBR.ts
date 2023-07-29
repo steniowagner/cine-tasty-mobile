@@ -149,9 +149,9 @@ const ptBR: Locale = {
   },
   famous: {
     searchBarPlaceholder: 'Buscar por um Ator ou Atriz...',
-    i18nQueryByPaginationErrorRef: 'Não foi possível carregar mais famosos',
-    i18nQueryByTextErrorRef: 'Não foi possível carregar este famoso(a)',
-    i18EntryQueryErrorRef: 'Não foi possível carregar os famosos',
+    searchPaginationError: 'Não foi possível carregar mais famosos',
+    searchByTextError: 'Não foi possível carregar este famoso(a)',
+    searchEntryQueryError: 'Não foi possível carregar os famosos',
   },
   search: {
     recent: 'Recentes',
