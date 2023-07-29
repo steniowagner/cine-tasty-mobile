@@ -5,6 +5,10 @@ import * as SchemaTypes from '@schema-types';
 import {Routes} from '@routes/routes';
 
 import {
+  useRecentSearches,
+  RecentSearchItem,
+} from '../components/recent-searches/useRecentSearches';
+import {
   SearchMediaNavigationProp,
   SearchMediaRouteProp,
 } from './routes/route-params-types';
@@ -17,7 +21,9 @@ type MediaItem =
 export const useSearchMedia = () => {
   const navigation = useNavigation<SearchMediaNavigationProp>();
   const route = useRoute<SearchMediaRouteProp>();
-
+  const recentSearches = useRecentSearches({
+    searchType: route.params.searchType,
+  });
   const search = useSearch<MediaItem>({
     searchByTextError: route.params.searchByTextError,
     paginationError: route.params.paginationError,
@@ -29,7 +35,7 @@ export const useSearchMedia = () => {
     navigation.goBack();
   }, []);
 
-  const handlePressItem = useCallback(
+  const handleNavigateToMediaDetails = useCallback(
     (item: MediaItem) => {
       const mediaRoute =
         route.params.searchType === SchemaTypes.SearchType.MOVIE
@@ -41,7 +47,30 @@ export const useSearchMedia = () => {
         id: item.id,
       });
     },
-    [route.params.searchType],
+    [route.params.searchType, navigation.navigate],
+  );
+
+  const handlePressItem = useCallback(
+    async (item: MediaItem) => {
+      recentSearches.add({
+        image: item.posterPath,
+        title: item.title,
+        id: item.id,
+      });
+      handleNavigateToMediaDetails(item);
+    },
+    [handleNavigateToMediaDetails, recentSearches.add],
+  );
+
+  const handlePressRecentSearchedItem = useCallback(
+    (item: RecentSearchItem) => {
+      handleNavigateToMediaDetails({
+        posterPath: item.image,
+        title: item.title,
+        id: item.id,
+      } as MediaItem);
+    },
+    [handleNavigateToMediaDetails],
   );
 
   const shouldShowBottomReloadButton = useMemo(
@@ -71,6 +100,9 @@ export const useSearchMedia = () => {
     shouldShowTopReloadButton,
     isResultsEmpty: search.isResultsEmpty,
     isLoading: search.isLoading,
+    shouldShowRecentSearches: search.shouldShowRecentSearches,
+    searchType: route.params.searchType,
+    onPressRecentSearchedItem: handlePressRecentSearchedItem,
     navigation,
   };
 };

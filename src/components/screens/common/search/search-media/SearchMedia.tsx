@@ -8,6 +8,7 @@ import {
 } from '@components';
 
 import {SearchMediaLoading} from './search-media-loading/SearchMediaLoading';
+import {RecentSearches} from '../components/recent-searches/RecentSearches';
 import {SearchBar} from '../components/searchbar/SearchBar';
 import {useSearchMedia} from './useSearchMedia';
 import * as Styles from './SearchMedia.styles';
@@ -28,6 +29,15 @@ export const SearchMedia = () => {
       ),
     });
   }, [searchMedia.onTypeSearchQuery]);
+
+  if (searchMedia.shouldShowRecentSearches) {
+    return (
+      <RecentSearches
+        onPressItem={searchMedia.onPressRecentSearchedItem}
+        searchType={searchMedia.searchType}
+      />
+    );
+  }
 
   if (searchMedia.isLoading) {
     return <SearchMediaLoading />;
