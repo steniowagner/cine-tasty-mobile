@@ -1,20 +1,25 @@
-import React from 'react';
-
-import * as SchemaTypes from '@schema-types';
+import React, {useEffect} from 'react';
 
 import {RecentSearchesListItem} from './recent-searchers-list-item/RecentSearchesListItem';
-import {useRecentSearches} from './useRecentSearches';
+import {
+  UseRecentSearchesProps,
+  useRecentSearches,
+  RecentSearchItem,
+} from './useRecentSearches';
 import * as Styles from './RecentSearches.styles';
 
-type RecentSearchesProps = {
-  searchType: SchemaTypes.SearchType;
+type RecentSearchesProps = UseRecentSearchesProps & {
+  onPressItem: (item: RecentSearchItem) => void;
 };
 
 export const RecentSearches = (props: RecentSearchesProps) => {
   const recentSearches = useRecentSearches({
-    shouldSkipGetInitialRecentSearches: false,
     searchType: props.searchType,
   });
+
+  useEffect(() => {
+    recentSearches.load();
+  }, []);
 
   if (!recentSearches.items.length) {
     return null;
@@ -22,11 +27,13 @@ export const RecentSearches = (props: RecentSearchesProps) => {
 
   return (
     <Styles.Wrapper testID="recent-searches-list">
-      <Styles.RecentText>{recentSearches.texts.searchRecent}</Styles.RecentText>
+      <Styles.RecentText>
+        {recentSearches.texts.recentSearches}
+      </Styles.RecentText>
       {recentSearches.items.map(recentSearch => (
         <RecentSearchesListItem
-          onPressItem={() => recentSearches.onPressItem(recentSearch)}
-          onPressRemove={() => recentSearches.remove(recentSearch)}
+          onPressRemove={() => recentSearches.remove(recentSearch.id)}
+          onPressItem={() => props.onPressItem(recentSearch)}
           key={recentSearch.id}
           item={recentSearch}
         />
