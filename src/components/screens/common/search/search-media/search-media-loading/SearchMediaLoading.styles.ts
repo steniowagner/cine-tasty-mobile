@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';
 
-import * as MediaListItemStyles from '../../../../../../../common/media-list-item/MediaListItem.styles';
+import * as MediaListItemStyles from '../../../../../common/media-list-item/MediaListItem.styles';
 import * as SearchMediaListStyles from '../SearchMedia.styles';
 
 export const Wrapper = styled(View)`

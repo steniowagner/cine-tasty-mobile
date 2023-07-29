@@ -5,9 +5,9 @@ import * as SchemaTypes from '@schema-types';
 import {Routes} from '@routes/routes';
 
 import {
-  SearchNavigationProp,
-  SearchRouteProp,
-} from '../../../routes/route-params-types';
+  SearchMediaNavigationProp,
+  SearchMediaRouteProp,
+} from './routes/route-params-types';
 import {useSearch} from '../useSearch';
 
 type MediaItem =
@@ -15,8 +15,8 @@ type MediaItem =
   | SchemaTypes.SearchTVShow_search_items_BaseTVShow;
 
 export const useSearchMedia = () => {
-  const navigation = useNavigation<SearchNavigationProp>();
-  const route = useRoute<SearchRouteProp>();
+  const navigation = useNavigation<SearchMediaNavigationProp>();
+  const route = useRoute<SearchMediaRouteProp>();
 
   const search = useSearch<MediaItem>({
     searchByTextError: route.params.searchByTextError,

@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 
 import {FamousList} from '@components';
 
+import {SearchBar} from '../components/searchbar/SearchBar';
 import {useSearchFamous} from './useSearchFamous';
-import {SearchBar} from '../searchbar/SearchBar';
 
 export const SearchFamous = () => {
   const searchFamous = useSearchFamous();

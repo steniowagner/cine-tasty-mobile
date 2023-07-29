@@ -16,8 +16,7 @@ import {Routes} from '@routes/routes';
 import {useTranslations} from '@hooks';
 
 import {SeasonsDetailsTabs} from '../../common/media-details/seasons/components/tabs/SeasonsDetailsTabs';
-import {TVShowDetail} from '../../common/media-details/tv-show-detail/components/TVShowDetail';
-import {SearchFamous} from '../../common/search/components/search/search-famous/SearchFamous';
+import {SearchFamous, TVShowDetail} from '../../common';
 import {SeasonsProps} from '../../common/media-details/seasons/routes/route-params-types';
 import {Famous} from '../components/Famous';
 

@@ -5,13 +5,13 @@ import * as SchemaTypes from '@schema-types';
 import {useTranslations} from '@hooks';
 import {Translations} from '@i18n/tags';
 
-import {SearchNavigationProp} from '../../../routes/route-params-types';
-import {useSearch} from '../useSearch';
+import {SearchFamousNavigationProp} from './routes/route-params-types';
+import {useSearch} from '../../search/useSearch';
 
 type SearchResult = SchemaTypes.SearchPerson_search_items_BasePerson;
 
 export const useSearchFamous = () => {
-  const navigation = useNavigation<SearchNavigationProp>();
+  const navigation = useNavigation<SearchFamousNavigationProp>();
   const translations = useTranslations();
 
   const texts = useMemo(

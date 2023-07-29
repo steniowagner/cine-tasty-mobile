@@ -8,7 +8,7 @@ import {
 } from '@components';
 
 import {SearchMediaLoading} from './search-media-loading/SearchMediaLoading';
-import {SearchBar} from '../searchbar/SearchBar';
+import {SearchBar} from '../components/searchbar/SearchBar';
 import {useSearchMedia} from './useSearchMedia';
 import * as Styles from './SearchMedia.styles';
 

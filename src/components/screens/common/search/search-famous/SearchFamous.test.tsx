@@ -24,8 +24,8 @@ import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
 import {storage} from '@utils';
 
-import {STORAGE_SEARCH_SECTION} from '../../recent-searches/useRecentSearches';
-import {SEARCH_BY_QUERY_DELAY} from '../useSearchByQuery';
+import {STORAGE_SEARCH_SECTION} from '../components/recent-searches/useRecentSearches';
+import {SEARCH_BY_QUERY_DELAY} from '../components/search/useSearchByQuery';
 import {Search} from '../Search';
 
 const STORAGE_KEY = `${STORAGE_SEARCH_SECTION}:${SchemaTypes.SearchType.PERSON.toString()}`;

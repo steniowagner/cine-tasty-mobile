@@ -20,7 +20,6 @@ import * as Types from '@local-types';
 import {MediaSectionViewAll} from '../components/media-section-view-all/components/MediaSectionViewAll';
 import {MediaSectionViewAllProps} from '../components/media-section-view-all/routes/route-params-types';
 import {Home} from '../components/Home';
-import {TVShowDetail} from '../../common/media-details/tv-show-detail/components/TVShowDetail';
 import {SeasonsProps} from '../../common/media-details/seasons/routes/route-params-types';
 import {SeasonsDetailsTabs} from '../../common/media-details/seasons/components/tabs/SeasonsDetailsTabs';
 import {ImagesQuality} from '../components/settings/images-quality/ImagesQuality';
@@ -28,7 +27,7 @@ import {Languages} from '../components/settings/languages/Languages';
 import {ThemeSettings} from '../components/settings/theme-settings/ThemeSettings';
 import {OpenSource} from '../components/settings/open-source/OpenSource';
 import {About} from '../components/settings/about/About';
-import {SearchMedia} from '../../common/search/components/search/search-media/SearchMedia';
+import {SearchMedia, TVShowDetail} from '../../common';
 
 const StackNavigator = createStackNavigator();
 

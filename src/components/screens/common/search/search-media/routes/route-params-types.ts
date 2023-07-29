@@ -2,13 +2,11 @@ import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {HomeStackRoutes} from '@src/components/screens/home/routes/route-params-types';
-import {FamousStackRoutes} from '@src/components/screens/famous/routes/route-params-types';
-
 import * as SchemaTypes from '@schema-types';
 import {Routes} from '@routes/routes';
 import * as Types from '@local-types';
 
-export type SearchParams = {
+export type SearchMediaParams = {
   searchType: SchemaTypes.SearchType;
   queryId: Types.CineTastyQuery;
   searchByTextError: string;
@@ -16,13 +14,11 @@ export type SearchParams = {
   placeholder: string;
 };
 
-type StackParams = HomeStackRoutes & FamousStackRoutes;
+type Routes = Routes.Home.SEARCH_MOVIE | Routes.Home.SEARCH_TV_SHOW;
 
-type Route =
-  | Routes.Home.SEARCH_MOVIE
-  | Routes.Home.SEARCH_TV_SHOW
-  | Routes.Famous.DETAILS;
+export type SearchMediaRouteProp = RouteProp<HomeStackRoutes, Routes>;
 
-export type SearchRouteProp = RouteProp<StackParams, Route>;
-
-export type SearchNavigationProp = StackNavigationProp<StackParams, Route>;
+export type SearchMediaNavigationProp = StackNavigationProp<
+  HomeStackRoutes,
+  Routes
+>;
