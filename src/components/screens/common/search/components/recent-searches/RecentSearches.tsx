@@ -27,7 +27,7 @@ export const RecentSearches = (props: RecentSearchesProps) => {
 
   return (
     <Styles.Wrapper testID="recent-searches-list">
-      <Styles.RecentText>
+      <Styles.RecentText testID="recent-searches-title">
         {recentSearches.texts.recentSearches}
       </Styles.RecentText>
       {recentSearches.items.map(recentSearch => (

@@ -5,7 +5,7 @@ import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import {CONSTANTS, storage} from '@utils';
 
-const MAX_RECENT_SEARCHES = 3;
+export const MAX_RECENT_SEARCHES = 3;
 
 export type RecentSearchItem = {
   image: string;
