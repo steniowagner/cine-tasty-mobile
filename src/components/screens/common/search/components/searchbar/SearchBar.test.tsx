@@ -1,103 +1,82 @@
 import React from 'react';
-import {fireEvent, render, RenderAPI} from '@testing-library/react-native';
+import {ThemeProvider} from 'styled-components/native';
+import {RenderAPI, fireEvent, render} from '@testing-library/react-native';
 
-import MockedNavigation from '@mocks/MockedNavigator';
-import {ThemeContextProvider} from '@providers';
+import {dark as theme} from '@styles/themes';
 
-import SearchBar from './SearchBar';
+import {SearchBar, SearchBarProps} from './SearchBar';
 
-jest.mock('react-native-status-bar-height', () => ({
-  getStatusBarHeight: () => 10,
-}));
+const renderSearchBar = (props: SearchBarProps) => (
+  <ThemeProvider theme={theme}>
+    <SearchBar {...props} />
+  </ThemeProvider>
+);
 
-const VALUE_TYPED = 'SOME VALUE TYPED...';
-const PLACEHOLDER = 'SOME PLACEHOLDER';
-
-type RenderSearchBarProps = {
-  onTypeSearchQuery: (query: string) => void;
-  onPressSearch?: () => void;
-  onPressClose: () => void;
-};
-
-const renderSearchBar = (props: RenderSearchBarProps) => {
-  const SearchBarIOS = () => (
-    <ThemeContextProvider>
-      <SearchBar
-        onTypeSearchQuery={props.onTypeSearchQuery}
-        onPressSearch={props.onPressSearch}
-        onPressClose={props.onPressClose}
-        placeholder={PLACEHOLDER}
-      />
-    </ThemeContextProvider>
-  );
-
-  return <MockedNavigation component={SearchBarIOS} />;
-};
-
-describe('<SearchBar /> - [iOS]', () => {
+describe('<SearchBar />', () => {
   const elements = {
-    wrapper: (api: RenderAPI) => api.queryByTestId('searchbar-wrapper'),
+    input: (api: RenderAPI) => api.queryByTestId('search-input'),
     closeButton: (api: RenderAPI) =>
       api.queryByTestId('header-icon-button-wrapper-close'),
-    input: (api: RenderAPI) => api.queryByTestId('search-input'),
   };
 
-  describe('Render', () => {
-    it('should render correctly', () => {
-      const component = render(
-        renderSearchBar({
-          onTypeSearchQuery: jest.fn(),
-          onPressSearch: jest.fn(),
-          onPressClose: jest.fn(),
-        }),
-      );
-      expect(elements.wrapper(component)).not.toBeNull();
-      expect(elements.closeButton(component)).not.toBeNull();
-      expect(elements.input(component).props.placeholder).toEqual(PLACEHOLDER);
-    });
-  });
-
-  describe('Events', () => {
-    it('should call "onTypeSearchQuery" when type some text on the input with the text-typed', () => {
-      const onTypeSearchQuery = jest.fn();
-      const component = render(
-        renderSearchBar({
-          onPressSearch: jest.fn(),
-          onPressClose: jest.fn(),
-          onTypeSearchQuery,
-        }),
-      );
-      fireEvent(elements.input(component), 'onChangeText', VALUE_TYPED);
-      expect(onTypeSearchQuery).toHaveBeenCalledTimes(1);
-      expect(onTypeSearchQuery).toHaveBeenCalledWith(VALUE_TYPED);
-    });
-
-    it('should call "onPressSearch" when press the "search" key on the keyboard', () => {
-      const onPressSearch = jest.fn();
+  describe('Rendering', () => {
+    it('should show the placeholder correctly', () => {
+      const placeholder = 'SOME_PLACEHOLDER';
       const component = render(
         renderSearchBar({
           onTypeSearchQuery: jest.fn(),
           onPressClose: jest.fn(),
-          onPressSearch,
+          placeholder,
         }),
       );
-      fireEvent(elements.input(component), 'onSubmitEditing');
-      expect(onPressSearch).toHaveBeenCalledTimes(1);
+      expect(elements.input(component).props.placeholder).toEqual(placeholder);
     });
   });
 
-  describe('Press', () => {
-    it('should call "onPressClose" when press the "close" icon-button', () => {
+  describe('User events', () => {
+    it('should call "onPressClose" when the user presses the "close-button"', () => {
       const onPressClose = jest.fn();
       const component = render(
         renderSearchBar({
           onTypeSearchQuery: jest.fn(),
-          onPressSearch: jest.fn(),
+          placeholder: 'SOME_PLACEHOLDER',
           onPressClose,
         }),
       );
+      expect(onPressClose).toHaveBeenCalledTimes(0);
       fireEvent.press(elements.closeButton(component));
       expect(onPressClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call "onTypeSearchQuery" after the user type something', () => {
+      const onTypeSearchQuery = jest.fn();
+      const content = 'SOME_CONTENT_TYPED';
+      const component = render(
+        renderSearchBar({
+          placeholder: 'SOME_PLACEHOLDER',
+          onPressClose: jest.fn(),
+          onTypeSearchQuery,
+        }),
+      );
+      expect(onTypeSearchQuery).toHaveBeenCalledTimes(0);
+      fireEvent(elements.input(component), 'onChangeText', content);
+      expect(onTypeSearchQuery).toHaveBeenCalledTimes(1);
+      expect(onTypeSearchQuery).toHaveBeenCalledWith(content);
+    });
+
+    it('should call "onSubmitEditing" after the user type something', () => {
+      const onPressSearch = jest.fn();
+      const component = render(
+        renderSearchBar({
+          placeholder: 'SOME_PLACEHOLDER',
+          onPressClose: jest.fn(),
+          onTypeSearchQuery: jest.fn(),
+          onPressSearch,
+        }),
+      );
+      expect(onPressSearch).toHaveBeenCalledTimes(0);
+      fireEvent(elements.input(component), 'onSubmitEditing');
+      expect(onPressSearch).toHaveBeenCalledTimes(1);
     });
   });
 });
