@@ -7,7 +7,7 @@ import {CONSTANTS} from '@utils';
 import * as Styles from './SearchBar.styles';
 import {useSearchBar} from './useSearchBar';
 
-type SearchBarProps = {
+export type SearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
   onPressSearch?: () => void;
   onPressClose: () => void;
@@ -15,7 +15,7 @@ type SearchBarProps = {
 };
 
 export const SearchBar = (props: SearchBarProps) => {
-  const searchBar = useSearchBar({onTypeSearchQuery: props.onTypeSearchQuery});
+  const searchBar = useSearchBar();
   return (
     <>
       <StatusBar
@@ -23,7 +23,7 @@ export const SearchBar = (props: SearchBarProps) => {
         barStyle="light-content"
         animated
       />
-      <Styles.IOSWrapper testID="searchbar-wrapper">
+      <Styles.Wrapper testID="searchbar-wrapper">
         <Styles.ContentWrapper>
           <HeaderIconButton
             onPress={props.onPressClose}
@@ -33,13 +33,13 @@ export const SearchBar = (props: SearchBarProps) => {
           />
           <Styles.Input
             testID="search-input"
-            onChangeText={searchBar.onChangeText}
+            onChangeText={props.onTypeSearchQuery}
             onSubmitEditing={props.onPressSearch}
             placeholder={props.placeholder}
             ref={searchBar.inputRef}
           />
         </Styles.ContentWrapper>
-      </Styles.IOSWrapper>
+      </Styles.Wrapper>
     </>
   );
 };

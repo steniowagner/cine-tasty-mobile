@@ -1,11 +1,7 @@
-import {useCallback, useEffect, useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {TextInput} from 'react-native';
 
-type UseSearchBarProps = {
-  onTypeSearchQuery: (query: string) => void;
-};
-
-export const useSearchBar = (props: UseSearchBarProps) => {
+export const useSearchBar = () => {
   const inputRef = useRef<TextInput>();
 
   useEffect(() => {
@@ -14,15 +10,7 @@ export const useSearchBar = (props: UseSearchBarProps) => {
     }
   }, []);
 
-  const handleChangeText = useCallback(
-    (text: string) => {
-      props.onTypeSearchQuery(text);
-    },
-    [props.onTypeSearchQuery],
-  );
-
   return {
-    onChangeText: handleChangeText,
     inputRef,
   };
 };

@@ -1,18 +1,12 @@
 import {TextInput, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-
 import styled from 'styled-components/native';
+
+import {dark} from '@styles/themes';
 
 const HEADER_HEIGHT = 44;
 
-export const AndroidWrapper = styled(View)`
-  width: 100%;
-  height: ${({theme}) => theme.metrics.getWidthFromDP('16%')}px;
-  flex-direction: row;
-  background-color: ${({theme}) => theme.colors.contrast};
-`;
-
-export const IOSWrapper = styled(View)`
+export const Wrapper = styled(View)`
   width: 100%;
   height: ${() => getStatusBarHeight() + HEADER_HEIGHT}px;
   justify-content: flex-end;
@@ -25,7 +19,7 @@ export const ContentWrapper = styled(View)`
 `;
 
 export const Input = styled(TextInput).attrs(({placeholder, theme}) => ({
-  placeholderTextColor: 'rgba(255, 255, 255, 0.5)',
+  placeholderTextColor: dark.colors.subText,
   selectionColor: theme.colors.primary,
   underlineColorAndroid: 'transparent',
   returnKeyLabel: 'search',
