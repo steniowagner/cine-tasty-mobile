@@ -13,7 +13,7 @@ export const Wrapper = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: ${({theme}) => theme.metrics.getWidthFromDP('6%')}px;
+  margin-bottom: ${({theme}) => theme.metrics.extraLargeSize}px;
 `;
 
 export const PressableContent = styled(TouchableOpacity)`

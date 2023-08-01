@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {FlatList, Platform} from 'react-native';
 
-import {FamousListItem} from '@src/components/common/famous-list/famous-list-item/FamousListItem';
-import {LoadingFamous} from '@src/components/common/famous-list/loading-famous/LoadingFamous';
+import {FamousListItem} from '@src/components/screens/famous/components/famous-list-item/FamousListItem';
+import {LoadingFamous} from '@src/components/screens/famous/components/loading-famous/LoadingFamous';
 import {PaginatedListHeader, PaginationFooter} from '@components';
 import * as SchemaTypes from '@schema-types';
 
