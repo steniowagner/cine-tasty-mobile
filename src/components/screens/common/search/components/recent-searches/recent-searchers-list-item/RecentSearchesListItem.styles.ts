@@ -56,6 +56,6 @@ export const sheet = StyleSheet.create({
   image: {
     width: metrics.getWidthFromDP(IMAGE_WIDTH_PERCENTAGE),
     height: metrics.getWidthFromDP(IMAGE_HEIGHT_PERCENTAGE),
-    borderRadius: metrics.smallSize,
+    borderRadius: metrics.extraSmallSize,
   },
 });

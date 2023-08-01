@@ -10,16 +10,19 @@ import {
 import {SearchMediaLoading} from './search-media-loading/SearchMediaLoading';
 import {RecentSearches} from '../components/recent-searches/RecentSearches';
 import {SearchBar} from '../components/searchbar/SearchBar';
-import {useSearchMedia} from './useSearchMedia';
+import {
+  useSearchMedia,
+  UseSearchMediaProps as SearchMediaProps,
+} from './useSearchMedia';
 import * as Styles from './SearchMedia.styles';
 
 export const NUMBER_OF_COLUMNS = 3;
 
-export const SearchMedia = () => {
-  const searchMedia = useSearchMedia();
+export const SearchMedia = (props: SearchMediaProps) => {
+  const searchMedia = useSearchMedia(props);
 
   useEffect(() => {
-    searchMedia.navigation.setOptions({
+    props.navigation.setOptions({
       header: () => (
         <SearchBar
           onTypeSearchQuery={searchMedia.onTypeSearchQuery}
@@ -70,6 +73,7 @@ export const SearchMedia = () => {
       renderItem={({item}) => (
         <MediaListItem
           onPress={() => searchMedia.onPressItem(item)}
+          testID="search-media-item"
           layoutSize="medium"
           image={item.posterPath}
           title={item.title}
@@ -78,7 +82,7 @@ export const SearchMedia = () => {
       onEndReached={searchMedia.onEndReached}
       keyExtractor={item => `${item.id}`}
       data={searchMedia.items}
-      testID="seach-media-list"
+      testID="search-media-list"
     />
   );
 };

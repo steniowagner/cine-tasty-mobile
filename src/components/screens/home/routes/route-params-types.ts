@@ -10,7 +10,7 @@ import {Routes} from '@routes/routes';
 
 import {MediaSectionViewAllParams} from '../components/media-section-view-all/routes/route-params-types';
 import {ReviewsParams} from '../../common/reviews/routes/route-params-types';
-import {SearchMediaParams} from '../../common/search/components/search/search-media/routes/route-params-types';
+import {SearchMediaParams} from '../../common/search/search-media/routes/route-params-types';
 
 export type HomeStackRoutes = {
   [Routes.Home.HOME]: undefined;

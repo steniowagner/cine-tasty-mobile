@@ -7,7 +7,7 @@ import * as Styles from './SearchMediaLoading.styles';
 export const NUMBER_OF_ITEMS = 9;
 
 export const SearchMediaLoading = () => (
-  <Styles.Wrapper>
+  <Styles.Wrapper testID="search-media-loading">
     {Array(NUMBER_OF_ITEMS)
       .fill({})
       .map((_, index) => (

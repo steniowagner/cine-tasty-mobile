@@ -1,5 +1,4 @@
 import {useCallback, useMemo} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
 
 import * as SchemaTypes from '@schema-types';
 import {Routes} from '@routes/routes';
@@ -18,36 +17,39 @@ type MediaItem =
   | SchemaTypes.SearchMovie_search_items_BaseMovie
   | SchemaTypes.SearchTVShow_search_items_BaseTVShow;
 
-export const useSearchMedia = () => {
-  const navigation = useNavigation<SearchMediaNavigationProp>();
-  const route = useRoute<SearchMediaRouteProp>();
+export type UseSearchMediaProps = {
+  navigation: SearchMediaNavigationProp;
+  route: SearchMediaRouteProp;
+};
+
+export const useSearchMedia = (props: UseSearchMediaProps) => {
   const recentSearches = useRecentSearches({
-    searchType: route.params.searchType,
+    searchType: props.route.params.searchType,
   });
   const search = useSearch<MediaItem>({
-    searchByTextError: route.params.searchByTextError,
-    paginationError: route.params.paginationError,
-    searchType: route.params.searchType,
-    queryId: route.params.queryId,
+    searchByTextError: props.route.params.searchByTextError,
+    paginationError: props.route.params.paginationError,
+    searchType: props.route.params.searchType,
+    queryId: props.route.params.queryId,
   });
 
   const handlePressClose = useCallback(() => {
-    navigation.goBack();
-  }, []);
+    props.navigation.goBack();
+  }, [props.navigation]);
 
   const handleNavigateToMediaDetails = useCallback(
     (item: MediaItem) => {
       const mediaRoute =
-        route.params.searchType === SchemaTypes.SearchType.MOVIE
+        props.route.params.searchType === SchemaTypes.SearchType.MOVIE
           ? Routes.Home.MOVIE_DETAILS
           : Routes.Home.TV_SHOW_DETAILS;
-      navigation.navigate(mediaRoute, {
+      props.navigation.navigate(mediaRoute, {
         posterPath: item.posterPath,
         title: item.title,
         id: item.id,
       });
     },
-    [route.params.searchType, navigation.navigate],
+    [props.route.params.searchType, props.navigation.navigate],
   );
 
   const handlePressItem = useCallback(
@@ -88,7 +90,7 @@ export const useSearchMedia = () => {
   return {
     onTypeSearchQuery: search.onTypeSearchQuery,
     onPressClose: handlePressClose,
-    placeholder: route.params.placeholder,
+    placeholder: props.route.params.placeholder,
     items: search.dataset,
     onPressItem: handlePressItem,
     onEndReached: search.onEndReached,
@@ -101,8 +103,7 @@ export const useSearchMedia = () => {
     isResultsEmpty: search.isResultsEmpty,
     isLoading: search.isLoading,
     shouldShowRecentSearches: search.shouldShowRecentSearches,
-    searchType: route.params.searchType,
+    searchType: props.route.params.searchType,
     onPressRecentSearchedItem: handlePressRecentSearchedItem,
-    navigation,
   };
 };
