@@ -1,5 +1,4 @@
 import {useCallback, useMemo} from 'react';
-import {useNavigation} from '@react-navigation/native';
 
 import * as SchemaTypes from '@schema-types';
 import {useTranslations} from '@hooks';
@@ -14,8 +13,11 @@ import {
 import {SearchFamousNavigationProp} from './routes/route-params-types';
 import {useSearch} from '../../search/useSearch';
 
-export const useSearchFamous = () => {
-  const navigation = useNavigation<SearchFamousNavigationProp>();
+type UseSearchFamousParams = {
+  navigation: SearchFamousNavigationProp;
+};
+
+export const useSearchFamous = (props: UseSearchFamousParams) => {
   const translations = useTranslations();
   const recentSearches = useRecentSearches({
     searchType: SchemaTypes.SearchType.PERSON,
@@ -44,33 +46,53 @@ export const useSearchFamous = () => {
   });
 
   const handlePressClose = useCallback(() => {
-    navigation.goBack();
+    props.navigation.goBack();
   }, []);
-
-  const handleBeforePressItem = useCallback(
-    async (famous: Types.Famous) =>
-      recentSearches.add({
-        image: famous.profileImage,
-        title: famous.name,
-        id: famous.id,
-      }),
-    [recentSearches.add],
-  );
 
   const handlePressRecentSearchedItem = useCallback(
     (item: RecentSearchItem) => {
-      navigation.navigate(Routes.Famous.DETAILS, {
+      props.navigation.navigate(Routes.Famous.DETAILS, {
         profileImage: item.image,
         name: item.title,
         id: item.id,
       });
     },
-    [navigation.navigate],
+    [],
+  );
+
+  const handlePressItem = useCallback(
+    async (item: Types.Famous) => {
+      await recentSearches.add({
+        image: item.profileImage,
+        title: item.name,
+        id: item.id,
+      });
+      props.navigation.navigate(Routes.Famous.DETAILS, {
+        profileImage: item.profileImage,
+        name: item.name,
+        id: item.id,
+      });
+    },
+    [recentSearches.add],
+  );
+
+  const shouldShowBottomReloadButton = useMemo(
+    () =>
+      !!search.dataset.length &&
+      (search.hasPaginationError || search.isPaginating),
+    [search.dataset, search.hasPaginationError, search.isPaginating],
+  );
+
+  const shouldShowTopReloadButton = useMemo(
+    () => !search.dataset.length && !!search.error && !search.isLoading,
+    [search.dataset, search.error, search.isLoading],
   );
 
   return {
+    shouldShowBottomReloadButton,
+    shouldShowTopReloadButton,
     onPressBottomReloadButton: search.onPressFooterReloadButton,
-    beforePressItem: handleBeforePressItem,
+    onPressItem: handlePressItem,
     onPressTopReloadButton: search.onPressTopReloadButton,
     hasPaginationError: search.hasPaginationError,
     onEndReached: search.onEndReached,
@@ -81,7 +103,6 @@ export const useSearchFamous = () => {
     shouldShowRecentSearches: search.shouldShowRecentSearches,
     placeholder: texts.searchBarPlaceholder,
     onPressClose: handlePressClose,
-    navigation,
     onTypeSearchQuery: search.onTypeSearchQuery,
     onPressRecentSearchedItem: handlePressRecentSearchedItem,
   };
