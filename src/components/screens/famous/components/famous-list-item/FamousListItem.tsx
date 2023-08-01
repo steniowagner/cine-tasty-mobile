@@ -1,5 +1,4 @@
 import React, {memo} from 'react';
-import {TouchableOpacity} from 'react-native';
 
 import {TMDBImageWithFallback} from '@components';
 

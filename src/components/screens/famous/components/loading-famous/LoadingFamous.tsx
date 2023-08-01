@@ -6,7 +6,7 @@ import * as Styles from './LoadingFamous.styles';
 
 export const LoadingFamous = () => (
   <Styles.Wrapper testID="famous-loading-list">
-    {Array(10)
+    {Array(14)
       .fill({})
       .map((_, index) => (
         <LoadingPlaceholder

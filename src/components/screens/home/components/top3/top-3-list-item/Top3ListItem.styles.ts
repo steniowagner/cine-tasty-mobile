@@ -6,8 +6,6 @@ import Animated from 'react-native-reanimated';
 import metrics from '@styles/metrics';
 import {dark} from '@styles/themes';
 
-import * as Top3listItemStyles from '../top-3-list-item/Top3ListItem.styles';
-
 export const ITEM_HEIGHT = metrics.getHeightFromDP('58%');
 export const ITEM_MARGING = metrics.getWidthFromDP('12.5%');
 export const ITEM_WIDTH = metrics.getWidthFromDP('75%');
@@ -76,12 +74,12 @@ export const StarsWrapper = styled(View)`
 
 export const sheet = StyleSheet.create({
   left: {
-    marginLeft: Top3listItemStyles.ITEM_MARGING,
+    marginLeft: ITEM_MARGING,
   },
   middle: {
     marginHorizontal: metrics.extraLargeSize,
   },
   right: {
-    marginRight: Top3listItemStyles.ITEM_MARGING,
+    marginRight: ITEM_MARGING,
   },
 });

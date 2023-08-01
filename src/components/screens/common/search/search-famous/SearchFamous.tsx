@@ -3,6 +3,7 @@ import {FlatList, Platform} from 'react-native';
 
 import {FamousListItem} from '@src/components/screens/famous/components/famous-list-item/FamousListItem';
 import {LoadingFamous} from '@src/components/screens/famous/components/loading-famous/LoadingFamous';
+import * as FamousListStyles from '@src/components/screens/famous/components/Famous.styles';
 import {PaginatedListHeader, PaginationFooter} from '@components';
 import * as SchemaTypes from '@schema-types';
 
@@ -10,13 +11,10 @@ import {SearchBar} from '../components/searchbar/SearchBar';
 import {useSearchFamous} from './useSearchFamous';
 import {RecentSearches} from '../components/recent-searches/RecentSearches';
 import {SearchFamousNavigationProp} from './routes/route-params-types';
-import * as Styles from './SearchFamous.styles';
 
 type SearchFamousProps = {
   navigation: SearchFamousNavigationProp;
 };
-
-const NUMBER_OF_COLUMNS = 3;
 
 export const SearchFamous = (props: SearchFamousProps) => {
   const searchFamous = useSearchFamous({navigation: props.navigation});
@@ -62,12 +60,12 @@ export const SearchFamous = (props: SearchFamousProps) => {
           />
         )
       }
-      contentContainerStyle={Styles.sheet.contentContainerStyle}
+      contentContainerStyle={FamousListStyles.sheet.contentContainerStyle}
       onEndReachedThreshold={Platform.select({
         android: 0.5,
         ios: 0.1,
       })}
-      numColumns={NUMBER_OF_COLUMNS}
+      numColumns={3}
       renderItem={({item, index}) => (
         <FamousListItem
           onPress={() => searchFamous.onPressItem(item)}
