@@ -5,6 +5,7 @@ import * as SchemaTypes from '@schema-types';
 import {GET_FAMOUS} from '@graphql/queries';
 import {Translations} from '@i18n/tags';
 import {Routes} from '@routes/routes';
+import * as Types from '@local-types';
 
 import {FamousNavigationProp} from '../routes/route-params-types';
 
@@ -70,9 +71,29 @@ export const useFamous = (props: UseFamousProps) => {
     [pagination.dataset],
   );
 
+  const shouldShowTopReloadButton = useMemo(
+    () => !dataset.length && !!pagination.error && !pagination.isLoading,
+    [dataset, pagination.error, pagination.isLoading],
+  );
+
+  const shouldShowBottomReloadButton = useMemo(
+    () =>
+      !!dataset.length &&
+      (pagination.hasPaginationError || pagination.isPaginating),
+    [dataset, pagination.hasPaginationError, pagination.isPaginating],
+  );
+
+  const handlePressFamousListItem = useCallback((famous: Types.Famous) => {
+    props.navigation.navigate(Routes.Famous.DETAILS, famous);
+  }, []);
+
   return {
+    shouldShowTopReloadButton,
+    shouldShowBottomReloadButton,
     onPressHeaderIconButton: handlePressHeaderIconButton,
     hasPaginationError: pagination.hasPaginationError,
+    onPressBottomReloadButton: pagination.paginate,
+    onPressFamousListItem: handlePressFamousListItem,
     onPressFooterReloadButton: pagination.paginate,
     onPressTopReloadButton: pagination.reset,
     isPaginating: pagination.isPaginating,

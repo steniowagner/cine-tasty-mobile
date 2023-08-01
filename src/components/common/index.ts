@@ -25,7 +25,6 @@ export {MediaListItemSeparator} from './media-list-item/MediaListItem.styles';
 export {StarsVotes} from './stars-votes/StarsVotes';
 export {StatusBarStyled} from './statusbar/Statusbar';
 export * from './tmdb-image';
-export {FamousList} from './famous-list/FamousList';
 export {
   flags,
   FlagsIcons,
