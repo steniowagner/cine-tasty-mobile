@@ -1,12 +1,12 @@
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import styled from 'styled-components/native';
 import Animated from 'react-native-reanimated';
 
 import metrics from '@styles/metrics';
 
 export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('10%');
-export const IMAGE_WIDTH_PERCENTAGE = '18%';
-export const IMAGE_HEIGHT_PERCENTAGE = '18%';
+const IMAGE_WIDTH_PERCENTAGE = '14%';
+const IMAGE_HEIGHT_PERCENTAGE = '20%';
 
 export const Wrapper = styled(View)`
   width: 100%;
@@ -51,3 +51,11 @@ export const CloseButtonWrapper = styled(TouchableOpacity).attrs(({theme}) => ({
     right: theme.metrics.largeSize,
   },
 }))``;
+
+export const sheet = StyleSheet.create({
+  image: {
+    width: metrics.getWidthFromDP(IMAGE_WIDTH_PERCENTAGE),
+    height: metrics.getWidthFromDP(IMAGE_HEIGHT_PERCENTAGE),
+    borderRadius: metrics.extraSmallSize,
+  },
+});

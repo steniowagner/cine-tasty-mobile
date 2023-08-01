@@ -148,9 +148,9 @@ const en: Locale = {
   },
   famous: {
     searchBarPlaceholder: 'Search for an Actor or Actress...',
-    i18nQueryByPaginationErrorRef: "Couldn't load more famous",
-    i18nQueryByTextErrorRef: "Couldn't for this famous",
-    i18EntryQueryErrorRef: "Couldn't load the famous",
+    searchPaginationError: "Couldn't load more famous",
+    searchByTextError: "Couldn't for this famous",
+    searchEntryQueryError: "Couldn't load the famous",
   },
   search: {
     recent: 'Recent',

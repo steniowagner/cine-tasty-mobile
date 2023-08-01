@@ -1,125 +1,117 @@
-import {useCallback, useEffect, useState, useMemo} from 'react';
+import {useCallback, useState, useMemo, useEffect} from 'react';
 
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
-import * as Types from '@local-types';
-import {storage} from '@utils';
+import {CONSTANTS, storage} from '@utils';
 
-import useNavigateProperScreenDetails from './useNavigateProperScreenDetails';
-
-export const STORAGE_SEARCH_SECTION = 'RECENT-SEARCHES';
 export const MAX_RECENT_SEARCHES = 3;
 
-type UseRecentSearchesProps = {
-  shouldSkipGetInitialRecentSearches: boolean;
+export type RecentSearchItem = {
+  image: string;
+  title: string;
+  id: number;
+};
+
+export type UseRecentSearchesProps = {
   searchType: SchemaTypes.SearchType;
 };
 
 export const useRecentSearches = (props: UseRecentSearchesProps) => {
   const [recentSearches, setRecentSearches] = useState<
-    Types.ResentSearchItem[]
-  >([]);
+    RecentSearchItem[] | undefined
+  >();
 
-  const navigateProperScreenDetails = useNavigateProperScreenDetails({
-    searchType: props.searchType,
-  });
   const translations = useTranslations();
 
   const texts = useMemo(
     () => ({
-      searchRecent: translations.translate(Translations.Tags.SEARCH_RECENT),
+      recentSearches: translations.translate(Translations.Tags.SEARCH_RECENT),
     }),
     [translations.language],
   );
 
   const STORAGE_KEY = useMemo(
-    () => `${STORAGE_SEARCH_SECTION}:${props.searchType.toString()}`,
+    () =>
+      `${
+        CONSTANTS.KEYS.APP_STORAGE_KEY
+      }:RECENT_SEARCHES:${props.searchType.toString()}`,
     [props.searchType],
   );
 
-  const remove = useCallback(
-    async (recentSearch: Types.ResentSearchItem) => {
-      const recentSearchesFromStorage = await storage.get<
-        [],
-        Types.ResentSearchItem[]
-      >(STORAGE_KEY, []);
-      const recentSearchesUpdated = recentSearchesFromStorage.filter(
-        (recentSearchFromStorage: Types.ResentSearchItem) =>
-          recentSearchFromStorage.id !== recentSearch.id,
+  const addExistingItem = useCallback(
+    async (
+      currentRecentSearches: RecentSearchItem[],
+      item: RecentSearchItem,
+    ) => {
+      const recentSearchesWithoutItem = currentRecentSearches.filter(
+        persistedItem => persistedItem.id !== item.id,
       );
-      setRecentSearches(recentSearchesUpdated);
+      const recentSearchesUpdated = [item, ...recentSearchesWithoutItem].slice(
+        0,
+        MAX_RECENT_SEARCHES,
+      );
       await storage.set(STORAGE_KEY, recentSearchesUpdated);
     },
     [STORAGE_KEY],
   );
 
-  const datasetItemRemoved = useCallback(
-    (
-      item: Types.ResentSearchItem,
-      recentSearchesDataset: Types.ResentSearchItem[],
-    ) =>
-      recentSearchesDataset.filter(
-        recentSearchFromStorage => recentSearchFromStorage.id !== item.id,
-      ),
-    [],
-  );
-
-  const datasetMaxRecentSearches = useCallback(
-    (recentSearchesDataset: Types.ResentSearchItem[]) =>
-      recentSearchesDataset.slice(0, MAX_RECENT_SEARCHES),
-    [],
-  );
-
-  const checkIsItemAlreadyPersisted = useCallback(
-    (
-      item: Types.ResentSearchItem,
-      recentSearchesDataset: Types.ResentSearchItem[],
-    ) =>
-      recentSearchesDataset.some(
-        recentSearchItem => recentSearchItem.id === item.id,
-      ),
-    [],
-  );
-
-  const add = useCallback(
-    async (item: Types.ResentSearchItem) => {
-      const recentSearchesFromStorage = await storage.get<
-        Types.ResentSearchItem[],
-        Types.ResentSearchItem[]
-      >(STORAGE_KEY, []);
-      const isItemAlreadyPersisted = checkIsItemAlreadyPersisted(
-        item,
-        recentSearchesFromStorage,
+  const addNewItem = useCallback(
+    async (
+      currentRecentSearches: RecentSearchItem[],
+      item: RecentSearchItem,
+    ) => {
+      const recentSearchesUpdated = [item, ...currentRecentSearches].slice(
+        0,
+        MAX_RECENT_SEARCHES,
       );
-      const recentSearchesUpdated = isItemAlreadyPersisted
-        ? datasetItemRemoved(item, recentSearchesFromStorage)
-        : datasetMaxRecentSearches(recentSearchesFromStorage);
-      await storage.set(STORAGE_KEY, [item, ...recentSearchesUpdated]);
+      await storage.set(STORAGE_KEY, recentSearchesUpdated);
     },
     [STORAGE_KEY],
   );
 
-  const getRecentSearches = useCallback(async () => {
+  const add = useCallback(
+    async (item: RecentSearchItem) => {
+      const recentSearchesFromStorage = await storage.get<
+        RecentSearchItem[],
+        RecentSearchItem[]
+      >(STORAGE_KEY, []);
+      const isItemSearchedBefore = recentSearchesFromStorage.some(
+        recentSearchItem => recentSearchItem.id === item.id,
+      );
+      const handler = isItemSearchedBefore ? addExistingItem : addNewItem;
+      await handler(recentSearchesFromStorage, item);
+    },
+    [addExistingItem, addNewItem],
+  );
+
+  const load = useCallback(async () => {
     const recentSearchesFromStorage = await storage.get<
-      [],
-      Types.ResentSearchItem[]
+      RecentSearchItem[],
+      RecentSearchItem[]
     >(STORAGE_KEY, []);
     setRecentSearches(recentSearchesFromStorage);
   }, [STORAGE_KEY]);
 
-  useEffect(() => {
-    if (props.shouldSkipGetInitialRecentSearches) {
-      return;
-    }
-    getRecentSearches();
+  const remove = useCallback((itemId: number) => {
+    setRecentSearches(pastRecentSearches =>
+      pastRecentSearches.filter(
+        pastRecentSearch => pastRecentSearch.id !== itemId,
+      ),
+    );
   }, []);
 
+  useEffect(() => {
+    if (Array.isArray(recentSearches)) {
+      storage.set(STORAGE_KEY, recentSearches);
+    }
+  }, [recentSearches]);
+
   return {
-    onPressItem: navigateProperScreenDetails.navigate,
-    items: recentSearches,
+    items: recentSearches || [],
     remove,
-    texts,
     add,
+    texts,
+    load,
   };
 };

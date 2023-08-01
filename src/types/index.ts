@@ -200,12 +200,6 @@ export type Famous = {
   id: number | null;
 };
 
-export type ResentSearchItem = {
-  image: string;
-  title: string;
-  id: number;
-};
-
 type FamousStackCommonRoutes =
   | Routes.Famous.IMAGES_GALLERY
   | Routes.Famous.TV_SHOW_DETAILS

@@ -6,11 +6,11 @@ import {TVShowDetailParams} from '@src/components/screens/common/media-details/t
 import {MovieDetailsParams} from '@src/components/screens/common/media-details/movie-details/routes/route-params-types';
 import {SeasonsDetailsParams} from '@src/components/screens/common/media-details/seasons/routes/route-params-types';
 import {FamousDetailsParams} from '@src/components/screens/common/famous-details/routes/route-params-types';
-import {SearchParams} from '@src/components/screens/common/search/routes/route-params-types';
 import {Routes} from '@routes/routes';
 
 import {MediaSectionViewAllParams} from '../components/media-section-view-all/routes/route-params-types';
 import {ReviewsParams} from '../../common/reviews/routes/route-params-types';
+import {SearchMediaParams} from '../../common/search/search-media/routes/route-params-types';
 
 export type HomeStackRoutes = {
   [Routes.Home.HOME]: undefined;
@@ -21,7 +21,8 @@ export type HomeStackRoutes = {
   [Routes.Home.MOVIE_DETAILS]: MovieDetailsParams;
   [Routes.Home.IMAGES_GALLERY]: ImagesGalleryParams;
   [Routes.Home.MOVIE_DETAILS]: MovieDetailsParams;
-  [Routes.Home.SEARCH]: SearchParams;
+  [Routes.Home.SEARCH_MOVIE]: SearchMediaParams;
+  [Routes.Home.SEARCH_TV_SHOW]: SearchMediaParams;
   [Routes.Home.MEDIA_REVIEWS]: ReviewsParams;
   [Routes.Home.SETTINGS_IMAGES_QUALITY]: undefined;
   [Routes.Home.SETTINGS_OPEN_SOURCE]: undefined;

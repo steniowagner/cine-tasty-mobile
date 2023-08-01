@@ -182,9 +182,9 @@ export type Locale = {
     false: string;
   };
   famous: {
-    i18nQueryByPaginationErrorRef: string;
-    i18nQueryByTextErrorRef: string;
-    i18EntryQueryErrorRef: string;
+    searchPaginationError: string;
+    searchByTextError: string;
+    searchEntryQueryError: string;
     searchBarPlaceholder: string;
   };
   search: {

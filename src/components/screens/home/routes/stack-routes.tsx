@@ -11,15 +11,15 @@ import {
   getTransparentHeaderOptions,
   DEFAULT_HEADER_OPTIONS,
 } from '@routes/constants';
-import SearchStack from '@src/components/screens/common/search/routes/stack-routes';
 import {Routes} from '@routes/routes';
 import {useTranslations} from '@hooks';
 import {Translations} from '@i18n/tags';
+import * as SchemaTypes from '@schema-types';
+import * as Types from '@local-types';
 
 import {MediaSectionViewAll} from '../components/media-section-view-all/components/MediaSectionViewAll';
 import {MediaSectionViewAllProps} from '../components/media-section-view-all/routes/route-params-types';
 import {Home} from '../components/Home';
-import {TVShowDetail} from '../../common/media-details/tv-show-detail/components/TVShowDetail';
 import {SeasonsProps} from '../../common/media-details/seasons/routes/route-params-types';
 import {SeasonsDetailsTabs} from '../../common/media-details/seasons/components/tabs/SeasonsDetailsTabs';
 import {ImagesQuality} from '../components/settings/images-quality/ImagesQuality';
@@ -27,6 +27,7 @@ import {Languages} from '../components/settings/languages/Languages';
 import {ThemeSettings} from '../components/settings/theme-settings/ThemeSettings';
 import {OpenSource} from '../components/settings/open-source/OpenSource';
 import {About} from '../components/settings/about/About';
+import {SearchMedia, TVShowDetail} from '../../common';
 
 const StackNavigator = createStackNavigator();
 
@@ -113,11 +114,6 @@ export const HomeStack = () => {
         })}
       />
       <StackNavigator.Screen
-        options={{headerShown: false}}
-        component={SearchStack}
-        name={Routes.Home.SEARCH}
-      />
-      <StackNavigator.Screen
         name={Routes.Home.SETTINGS_IMAGES_QUALITY}
         component={ImagesQuality}
         options={() => ({
@@ -167,6 +163,46 @@ export const HomeStack = () => {
           headerTitle: translations.translate(Translations.Tags.SETTINGS_ABOUT),
           headerTitleAlign: 'center',
         })}
+      />
+      <StackNavigator.Screen
+        name={Routes.Home.SEARCH_MOVIE}
+        options={{
+          header: () => null,
+        }}
+        initialParams={{
+          searchType: SchemaTypes.SearchType.MOVIE,
+          queryId: 'search_movie' as Types.CineTastyQuery,
+          searchByTextError: translations.translate(
+            Translations.Tags.HOME_SEARCH_MOVIE_QUERY_BY_TEXT_ERROR,
+          ),
+          paginationError: translations.translate(
+            Translations.Tags.HOME_SEARCH_MOVIE_PAGINATION_ERROR,
+          ),
+          placeholder: translations.translate(
+            Translations.Tags.HOME_SEARCH_MOVIE_PLACEHOLDER,
+          ),
+        }}
+        component={SearchMedia}
+      />
+      <StackNavigator.Screen
+        name={Routes.Home.SEARCH_TV_SHOW}
+        options={{
+          header: () => null,
+        }}
+        initialParams={{
+          searchType: SchemaTypes.SearchType.TV,
+          queryId: 'search_tv' as Types.CineTastyQuery,
+          searchByTextError: translations.translate(
+            Translations.Tags.HOME_SEARCH_TV_SHOW_QUERY_BY_TEXT_ERROR,
+          ),
+          paginationError: translations.translate(
+            Translations.Tags.HOME_SEARCH_TV_SHOW_PAGINATION_ERROR,
+          ),
+          placeholder: translations.translate(
+            Translations.Tags.HOME_SEARCH_TV_SHOW_PLACEHOLDER,
+          ),
+        }}
+        component={SearchMedia}
       />
     </StackNavigator.Navigator>
   );
