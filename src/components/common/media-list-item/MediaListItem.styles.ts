@@ -37,9 +37,14 @@ export const CustomTMDBImage = styled(TMDBImage)<DefaultStyleProps>`
   border-radius: ${({theme}) => theme.metrics.smallSize}px;
 `;
 
-export const Wrapper = styled(TouchableOpacity)<DefaultStyleProps>`
+type WrapperStyleProps = DefaultStyleProps & {
+  marginLeft?: number;
+};
+
+export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({layoutSize}) => LAYOUT_MEASURES[layoutSize].width}px;
   height: 100%;
+  margin-left: ${({marginLeft}) => marginLeft || 0}px;
 `;
 
 export const DefaultText = styled(Text).attrs({

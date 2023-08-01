@@ -23,21 +23,6 @@ import {Routes} from '@routes/routes';
 
 import {Famous} from './Famous';
 
-const mockNavigation = {
-  navigate: jest.fn(),
-  getState: jest.fn().mockReturnValue({routes: [{name: 'FAMOUS'}]}),
-};
-
-jest.mock('@react-navigation/native', () => {
-  const actualReactNavigationNative = jest.requireActual(
-    '@react-navigation/native',
-  );
-  return {
-    ...actualReactNavigationNative,
-    useNavigation: () => mockNavigation,
-  };
-});
-
 type CheckHasItemsFromFirstAndSecondPageParams = {
   elements: Record<string, any>;
   component: RenderAPI;
@@ -77,7 +62,7 @@ const checkIsRenderingErrorCorrectly = async (
   expect(elements.famousLoadingList(component)).not.toBeNull();
   await waitFor(() => {
     expect(elements.topReloadButton(component)).not.toBeNull();
-    expect(elements.famousListItem(component).length).toEqual(0);
+    expect(elements.famousListItems(component).length).toEqual(0);
     expect(elements.famousLoadingList(component)).toBeNull();
     expect(elements.alertMessageText(component).children[0]).toEqual(
       Translations.Tags.FAMOUS_ENTRY_QUERY_ERROR,
@@ -106,7 +91,7 @@ const scrollFamousListToBottom = async (
   component: RenderAPI,
 ) => {
   await waitFor(() => {
-    expect(elements.famousListItem(component).length).toBeGreaterThan(0);
+    expect(elements.famousListItems(component).length).toBeGreaterThan(0);
   });
   expect(elements.famousLoadingList(component)).toBeNull();
   fireEvent(elements.famousList(component), 'onEndReached');
@@ -166,8 +151,6 @@ describe('<Famous />', () => {
       api.queryByTestId('header-icon-button-wrapper-magnify'),
     famousLoadingList: (api: RenderAPI) =>
       api.queryByTestId('famous-loading-list'),
-    famousListItem: (api: RenderAPI) =>
-      api.queryAllByTestId('famous-list-item-button'),
     famousListItemNames: (api: RenderAPI) => api.queryAllByTestId('title-text'),
     famousListItems: (api: RenderAPI) =>
       api.queryAllByTestId('famous-list-item-button'),
@@ -203,7 +186,7 @@ describe('<Famous />', () => {
           expect(elements.famousLoadingList(component)).toBeNull();
         });
         expect(elements.famousList(component)).not.toBeNull();
-        expect(elements.famousListItem(component).length).toEqual(
+        expect(elements.famousListItems(component).length).toEqual(
           numberOfFamous,
         );
         expect(elements.topReloadButton(component)).toBeNull();
@@ -253,12 +236,12 @@ describe('<Famous />', () => {
             const component = render(renderFamous(resolvers));
             await waitFor(() => {
               expect(elements.topReloadButton(component)).not.toBeNull();
-              expect(elements.famousListItem(component).length).toEqual(0);
+              expect(elements.famousListItems(component).length).toEqual(0);
               expect(elements.famousLoadingList(component)).toBeNull();
             });
             fireEvent.press(elements.topReloadButton(component));
             await waitFor(() => {
-              expect(elements.famousListItem(component).length).toEqual(
+              expect(elements.famousListItems(component).length).toEqual(
                 numberOfFamous,
               );
             });
@@ -277,12 +260,12 @@ describe('<Famous />', () => {
             const component = render(renderFamous(resolvers));
             await waitFor(() => {
               expect(elements.topReloadButton(component)).not.toBeNull();
-              expect(elements.famousListItem(component).length).toEqual(0);
+              expect(elements.famousListItems(component).length).toEqual(0);
               expect(elements.famousLoadingList(component)).toBeNull();
             });
             fireEvent.press(elements.topReloadButton(component));
             await waitFor(() => {
-              expect(elements.famousListItem(component).length).toEqual(
+              expect(elements.famousListItems(component).length).toEqual(
                 numberOfFamous,
               );
             });
@@ -546,15 +529,12 @@ describe('<Famous />', () => {
         expect(elements.famousList(component)).not.toBeNull();
       });
       fireEvent.press(elements.famousListItems(component)[indexItemSelected]);
-      expect(mockNavigation.navigate).toHaveBeenCalledTimes(1);
-      expect(mockNavigation.navigate).toHaveBeenCalledWith(
-        Routes.Famous.DETAILS,
-        {
-          profileImage: famousList[indexItemSelected].profilePath,
-          name: famousList[indexItemSelected].name,
-          id: famousList[indexItemSelected].id,
-        },
-      );
+      expect(navigate).toHaveBeenCalledTimes(1);
+      expect(navigate).toHaveBeenCalledWith(Routes.Famous.DETAILS, {
+        profileImage: famousList[indexItemSelected].profilePath,
+        name: famousList[indexItemSelected].name,
+        id: famousList[indexItemSelected].id,
+      });
     });
   });
 });
