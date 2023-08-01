@@ -99,9 +99,9 @@ describe('<MediaSectionViewAll />', () => {
   const elements = {
     viewAllList: (api: RenderAPI) => api.queryByTestId('media-view-all-list'),
     viewAllListItems: (api: RenderAPI) =>
-      api.queryAllByTestId('full-media-list-item'),
+      api.queryAllByTestId('simplified-media-list-button'),
     viewAllListItemsTitles: (api: RenderAPI) =>
-      api.queryAllByTestId('full-media-list-item-text'),
+      api.queryAllByTestId('simplified-media-list-title'),
     paginatingSpinner: (api: RenderAPI) =>
       api.queryByTestId('pagination-loading-footer-wrapper'),
     reloadButton: (api: RenderAPI) =>
