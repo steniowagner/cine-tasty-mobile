@@ -1,10 +1,11 @@
 import React from 'react';
 import {Platform, FlatList} from 'react-native';
 
-import {PaginationFooter, FullMediaListItem} from '@components';
+import {PaginationFooter, MediaListItem} from '@components';
 
 import {MediaSectionViewAllProps} from '../routes/route-params-types';
 import {useMediaSectionViewAll} from './useMediaSectionViewAll';
+import * as Styles from './MediaSectionViewAll.styles';
 
 export const MediaSectionViewAll = (props: MediaSectionViewAllProps) => {
   const mediaSectionViewAll = useMediaSectionViewAll({
@@ -17,6 +18,7 @@ export const MediaSectionViewAll = (props: MediaSectionViewAllProps) => {
   return (
     <>
       <FlatList
+        numColumns={Styles.NUMBER_OF_COLUMNS}
         ListFooterComponent={() =>
           mediaSectionViewAll.shouldShowListBottomReloadButton && (
             <PaginationFooter
@@ -32,13 +34,16 @@ export const MediaSectionViewAll = (props: MediaSectionViewAllProps) => {
           android: 0.5,
           ios: 0.1,
         })}
+        contentContainerStyle={Styles.sheet.contentContainerStyle}
+        columnWrapperStyle={Styles.sheet.columnWrapperStyle}
         renderItem={({item}) => (
-          <FullMediaListItem
-            onPressDetails={() => mediaSectionViewAll.onPressItem(item)}
+          <MediaListItem
+            layoutSize="medium"
+            onPress={() => mediaSectionViewAll.onPressItem(item)}
+            marginLeft={Styles.sheet.item.marginLeft}
             voteCount={item.voteCount}
-            votes={item.voteAverage}
+            voteAverage={item.voteAverage}
             image={item.posterPath}
-            genres={item.genreIds}
             title={item.title}
           />
         )}
