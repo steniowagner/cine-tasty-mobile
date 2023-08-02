@@ -35,6 +35,17 @@ export const dark: DefaultTheme = {
     github: '#333333',
     instagram: '#E1306C',
     linkedin: '#0077B5',
+    searchBar: '#4d4d4d',
+    defaultShadow: {
+      shadowColor: '#000000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
   },
   metrics,
 };

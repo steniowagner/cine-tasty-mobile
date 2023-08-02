@@ -32,6 +32,17 @@ declare module 'styled-components/native' {
     github: string;
     instagram: string;
     linkedin: string;
+    searchBar: string;
+    defaultShadow: {
+      shadowColor: string,
+      shadowOffset: {
+        width: number;
+        height: number;
+      },
+      shadowOpacity: number;
+      shadowRadius: number;
+      elevation: number;
+    },
   };
 
   export type Metrics = {

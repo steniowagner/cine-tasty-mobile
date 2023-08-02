@@ -2,7 +2,7 @@ import React from 'react';
 import {StatusBar} from 'react-native';
 
 import {HeaderIconButton} from '@components';
-import {CONSTANTS} from '@utils';
+import {dark as theme} from '@styles/themes';
 
 import * as Styles from './SearchBar.styles';
 import {useSearchBar} from './useSearchBar';
@@ -19,7 +19,7 @@ export const SearchBar = (props: SearchBarProps) => {
   return (
     <>
       <StatusBar
-        backgroundColor={CONSTANTS.VALUES.DEFAULT_SEARCH_COLOR}
+        backgroundColor={theme.colors.searchBar}
         barStyle="light-content"
         animated
       />

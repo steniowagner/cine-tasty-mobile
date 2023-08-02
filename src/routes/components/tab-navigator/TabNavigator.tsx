@@ -1,7 +1,7 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
-import {CONSTANTS} from '@utils';
+import {dark as theme} from '@styles/themes';
 
 import {TabNavigatorItem} from './tab-navigator-item/TabNavigatorItem';
 import * as Styles from './TabNavigator.styles';
@@ -15,9 +15,7 @@ export const TabNavigator = (props: BottomTabBarProps) => {
   }
 
   return (
-    <Styles.Wrapper
-      testID="tab-wrapper"
-      style={CONSTANTS.VALUES.DEFAULT_SHADOW}>
+    <Styles.Wrapper testID="tab-wrapper" style={theme.colors.defaultShadow}>
       {tabNavigator.tabs.map((item, index) => (
         <TabNavigatorItem
           onPress={() =>

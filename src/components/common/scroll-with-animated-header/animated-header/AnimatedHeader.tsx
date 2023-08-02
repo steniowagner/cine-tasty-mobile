@@ -1,8 +1,8 @@
 import React from 'react';
 import Animated from 'react-native-reanimated';
 
+import {dark as theme} from '@styles/themes';
 import {HeaderBackButton} from '@components';
-import {CONSTANTS} from '@utils';
 
 import {useAnimatedHeader} from './useAnimatedHeader';
 import * as Styles from './AnimatedHeader.styles';
@@ -35,7 +35,7 @@ export const AnimatedHeader = (props: AnimatedHeaderProps) => {
       style={[
         animatedHeader.headerBackgroundColor,
         animatedHeader.baseAnimatedStyle,
-        {...CONSTANTS.VALUES.DEFAULT_SHADOW},
+        {...theme.colors.defaultShadow},
       ]}>
       <Styles.Row>
         <Styles.Gap>

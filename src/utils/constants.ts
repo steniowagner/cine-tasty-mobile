@@ -17,17 +17,6 @@ const VALUES = {
   FALLBACK_LANGUAGE: 'en',
   DEFAULT_SPACING: metrics.mediumSize,
   DEFAULT_ANIMATION_DURATION: 400,
-  DEFAULT_SEARCH_COLOR: '#4d4d4d',
-  DEFAULT_SHADOW: {
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
   LINKS: {
     GITHUB_REPOSITORY: 'https://github.com/steniowagner/cine-tasty-mobile',
     TMDB_LOGO:

@@ -1,7 +1,7 @@
 import React from 'react';
 import {LayoutChangeEvent} from 'react-native';
 
-import {CONSTANTS} from '@utils';
+import {dark as theme} from '@styles/themes';
 
 import {useMediaSwitcher} from './useMediaSwitcher';
 import * as Styles from './MediaSwitcher.styles';
@@ -23,7 +23,7 @@ export const MediaSwitcher = (props: MediaSwitcherProps) => {
   return (
     <Styles.Wrapper
       width={mediaSwitcher.items.length * mediaSwitcher.width}
-      style={CONSTANTS.VALUES.DEFAULT_SHADOW}
+      style={theme.colors.defaultShadow}
       testID="media-switcher-wrapper">
       <Styles.SwitcherIndicator
         width={mediaSwitcher.width}
