@@ -16,6 +16,7 @@ import {NewsStackProps} from '../routes/route-params-types';
 import NewsLoading from './loading-list/NewsLoading';
 import NewsListItem from './list-item/NewsListItem';
 import {useNews} from './useNews';
+import * as Styles from './News.style';
 
 export const INITIAL_ITEMS_TO_RENDER =
   Math.floor(metrics.height / LIST_ITEM_HEIGHT) - 1;
@@ -82,6 +83,7 @@ export const News = (props: NewsStackProps) => {
             />
           )
         }
+        contentContainerStyle={Styles.sheet.wrapper}
         renderItem={({item}) => (
           <NewsListItem
             withRTL={news.languageSelected === SchemaTypes.ArticleLanguage.AR}

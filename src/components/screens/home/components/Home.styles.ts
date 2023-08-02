@@ -1,14 +1,9 @@
-import {Platform, View} from 'react-native';
-import styled from 'styled-components/native';
+import {StyleSheet} from 'react-native';
 
-import metrics from '@styles/metrics';
+import {WRAPPER_HEIGHT} from '@routes/components/tab-navigator/TabNavigator.styles';
 
-export const PopupAdviceWrapper = styled(View)`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding-top: ${Platform.select({
-    android: metrics.getWidthFromDP('18%'),
-    ios: metrics.getWidthFromDP('26%'),
-  })}px;
-`;
+export const sheet = StyleSheet.create({
+  wrapper: {
+    paddingBottom: WRAPPER_HEIGHT,
+  },
+});

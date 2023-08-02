@@ -1,21 +1,14 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
-import {dark as theme} from '@styles/themes';
-
 import {TabNavigatorItem} from './tab-navigator-item/TabNavigatorItem';
 import * as Styles from './TabNavigator.styles';
 import {useTabNavigator} from './useTabNavigator';
 
 export const TabNavigator = (props: BottomTabBarProps) => {
   const tabNavigator = useTabNavigator(props);
-
-  if (!tabNavigator.shouldShowTabNavigator) {
-    return null;
-  }
-
   return (
-    <Styles.Wrapper testID="tab-wrapper" style={theme.colors.defaultShadow}>
+    <Styles.Wrapper testID="tab-wrapper" style={tabNavigator.animatedStyle}>
       {tabNavigator.tabs.map((item, index) => (
         <TabNavigatorItem
           onPress={() =>

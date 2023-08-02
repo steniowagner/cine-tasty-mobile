@@ -1,13 +1,16 @@
 import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
+import {WRAPPER_HEIGHT} from '@routes/components/tab-navigator/TabNavigator.styles';
+
 export const Wrapper = styled(View)`
   width: 100%;
   height: 100%;
   align-items: center;
   justify-content: space-around;
-  padding-vertical: ${({theme}) => theme.metrics.getHeightFromDP('10%')}px;
+  padding-top: ${({theme}) => theme.metrics.getHeightFromDP('10%')}px;
   padding-horizontal: ${({theme}) => theme.metrics.getWidthFromDP('7%')}px;
+  padding-bottom: ${WRAPPER_HEIGHT}px;
 `;
 
 export const LargeText = styled(Text)`

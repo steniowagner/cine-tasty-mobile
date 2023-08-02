@@ -17,7 +17,7 @@ export const QuizStack = () => {
   const translations = useTranslations();
 
   return (
-    <Stack.Navigator initialRouteName={Routes.Quiz.SETUP_QUESTIONS}>
+    <Stack.Navigator initialRouteName={Routes.Quiz.QUIZ}>
       <Stack.Screen
         options={{
           headerShown: false,

@@ -100,7 +100,6 @@ export const useMediaSwitcher = (props: UseMediaSwitcherProps) => {
     items: defineSwitchers.items,
     animatedStyle,
     isSwitching,
-    switcherPosition,
     width,
   };
 };
