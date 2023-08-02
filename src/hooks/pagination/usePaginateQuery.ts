@@ -20,7 +20,7 @@ type Pagination = {
   page: number;
 };
 
-const usePaginateQuery = <TResult, TVariables>(
+export const usePaginateQuery = <TResult, TVariables>(
   props: UsePaginateQueryProps<TResult, TVariables>,
 ) => {
   const [pagination, setPagination] = useState<Pagination>({
@@ -81,5 +81,3 @@ const usePaginateQuery = <TResult, TVariables>(
     exec,
   };
 };
-
-export default usePaginateQuery;

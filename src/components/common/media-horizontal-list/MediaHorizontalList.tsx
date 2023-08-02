@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {MediaListItemSeparator, MediaListItem, Section} from '@components';
+import {MediaListItem, Section} from '@components';
 
 import {FlatListSection} from '../scrollable-section/ScrollableSection.styles';
 import {
@@ -15,12 +15,10 @@ type MediaHorizontalListProps = UseMediaHorizontalListProps & {
 
 export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
   const mediaHorizontalList = useMediaHorizontalList(props);
-
   return (
     <Section title={props.title}>
       <FlatListSection
         showsHorizontalScrollIndicator={false}
-        ItemSeparatorComponent={MediaListItemSeparator}
         data={mediaHorizontalList.dataset}
         renderItem={({item}) => {
           const mediaItem = item as MediaItem;

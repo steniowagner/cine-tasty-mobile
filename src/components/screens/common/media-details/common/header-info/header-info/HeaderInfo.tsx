@@ -1,8 +1,9 @@
 import React from 'react';
 import {useHeaderHeight} from '@react-navigation/elements';
 
-import {MediaHeadline, TMDBImageWithFallback} from '@components';
+import {TMDBImageWithFallback} from '@components';
 
+import {MediaHeadline} from './components/media-headline/MediaHeadline';
 import * as Styles from './HeaderInfo.styles';
 import {Tags} from '../../sections/tags/Tags';
 
@@ -17,7 +18,6 @@ type HeaderInfoProps = {
 
 export const HeaderInfo = (props: HeaderInfoProps) => {
   const headerHeight = useHeaderHeight();
-
   return (
     <Styles.Wrapper headerHeight={headerHeight} testID="header-info-wrapper">
       <Styles.SmokeShadow />

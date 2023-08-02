@@ -1,5 +1,5 @@
 import React from 'react';
-import {StarsVotes} from '../stars-votes/StarsVotes';
+import {StarsVotes} from '../../../../../../../../common/stars-votes/StarsVotes';
 
 import * as Styles from './MediaHeadline.styles';
 

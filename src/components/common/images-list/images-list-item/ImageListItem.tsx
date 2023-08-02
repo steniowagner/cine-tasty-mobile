@@ -1,12 +1,8 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
-import {renderSVGIconConditionally, TMDBImage} from '@components';
-import {useImageFallbackView} from '@hooks';
-import metrics from '@styles/metrics';
+import {TMDBImageWithFallback} from '@components';
 
 import * as Styles from './ImageListItem.styles';
-
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('12%');
 
 type ImageListItemProps = Styles.ImageOrientation & {
   onPress: () => void;
@@ -14,42 +10,21 @@ type ImageListItemProps = Styles.ImageOrientation & {
 };
 
 export const ImageListItem = (props: ImageListItemProps) => {
-  const imageFallbackView = useImageFallbackView({
-    image: props.image,
-  });
+  const imageStyles = useMemo(
+    () => Styles.makeImageStyle(props.orientation),
+    [],
+  );
   return (
-    <Styles.Wrapper
-      orientation={props.orientation}
-      testID="image-list-item-button"
-      onPress={props.onPress}>
-      <TMDBImage
+    <Styles.Wrapper testID="image-list-item-button" onPress={props.onPress}>
+      <TMDBImageWithFallback
+        iconImageLoading="image"
+        iconImageError="image-off"
         imageType={props.orientation === 'PORTRAIT' ? 'profile' : 'still'}
-        onError={imageFallbackView.onError}
-        onLoad={imageFallbackView.onLoad}
-        style={Styles.TMDBImageStyle}
+        style={imageStyles.image}
+        iconSize={Styles.DEFAULT_ICON_SIZE}
         image={props.image}
+        testID="image-list-item"
       />
-      {imageFallbackView.isFallbackImageVisible && (
-        <Styles.FallbackImageWrapper
-          testID="fallback-image-wrapper"
-          style={imageFallbackView.imageFallbackViewStyle}>
-          {renderSVGIconConditionally({
-            condition: imageFallbackView.hasError,
-            ifTrue: {
-              colorThemeRef: 'fallbackImageIcon',
-              size: DEFAULT_ICON_SIZE,
-              id: 'image-off',
-            },
-            ifFalse: {
-              colorThemeRef: 'fallbackImageIcon',
-              size: DEFAULT_ICON_SIZE,
-              id: 'image',
-            },
-          })}
-        </Styles.FallbackImageWrapper>
-      )}
     </Styles.Wrapper>
   );
 };
-
-export default ImageListItem;

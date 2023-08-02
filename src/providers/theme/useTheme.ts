@@ -1,9 +1,10 @@
 import {useCallback, useEffect, useState, useMemo} from 'react';
 
-import {useSystemThemePreference} from '@hooks';
 import {dark, light} from '@styles/themes';
 import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
+
+import {useSystemThemePreference} from './useSystemThemePreference';
 
 const undefinedTheme = {...dark, id: undefined};
 

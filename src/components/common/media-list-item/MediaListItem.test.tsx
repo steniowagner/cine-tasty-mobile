@@ -47,7 +47,7 @@ describe('<MediaListItem />', () => {
       api.queryByTestId('simplified-media-list-button'),
     image: (api: RenderAPI) => api.queryByTestId('simplified-media-list-image'),
     fallbackImage: (api: RenderAPI) =>
-      api.queryByTestId('fallback-image-wrapper'),
+      api.queryByTestId('simplified-media-list-image-tmdb-fallback-image'),
     imageOffIcon: (api: RenderAPI) => api.queryByTestId('icon-image-off'),
     starIcon: (api: RenderAPI) => api.queryByTestId('icon-star-full'),
     videoVintageIcon: (api: RenderAPI) =>
@@ -66,14 +66,16 @@ describe('<MediaListItem />', () => {
         expect(elements.wrapperButton(component).props.style.height).toEqual(
           '100%',
         );
-        expect(elements.fallbackImage(component).props.style[0].width).toEqual(
-          '100%',
+        expect(elements.fallbackImage(component).props.style.width).toEqual(
+          Styles.LAYOUT_MEASURES.large.width,
         );
-        expect(elements.fallbackImage(component).props.style[0].height).toEqual(
+        expect(elements.fallbackImage(component).props.style.height).toEqual(
           Styles.LAYOUT_MEASURES.large.height,
         );
-        expect(elements.image(component).props.style[0].width).toEqual('100%');
-        expect(elements.image(component).props.style[0].height).toEqual(
+        expect(elements.image(component).props.style.width).toEqual(
+          Styles.LAYOUT_MEASURES.large.width,
+        );
+        expect(elements.image(component).props.style.height).toEqual(
           Styles.LAYOUT_MEASURES.large.height,
         );
         await waitFor(() => {});
@@ -140,14 +142,16 @@ describe('<MediaListItem />', () => {
         expect(elements.wrapperButton(component).props.style.height).toEqual(
           '100%',
         );
-        expect(elements.fallbackImage(component).props.style[0].width).toEqual(
-          '100%',
+        expect(elements.fallbackImage(component).props.style.width).toEqual(
+          Styles.LAYOUT_MEASURES.medium.width,
         );
-        expect(elements.fallbackImage(component).props.style[0].height).toEqual(
+        expect(elements.fallbackImage(component).props.style.height).toEqual(
           Styles.LAYOUT_MEASURES.medium.height,
         );
-        expect(elements.image(component).props.style[0].width).toEqual('100%');
-        expect(elements.image(component).props.style[0].height).toEqual(
+        expect(elements.image(component).props.style.width).toEqual(
+          Styles.LAYOUT_MEASURES.medium.width,
+        );
+        expect(elements.image(component).props.style.height).toEqual(
           Styles.LAYOUT_MEASURES.medium.height,
         );
         await waitFor(() => {});
