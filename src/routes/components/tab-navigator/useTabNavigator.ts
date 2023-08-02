@@ -21,7 +21,7 @@ export const useTabNavigator = (props: BottomTabBarProps) => {
   const tabNavigatorPosition = useSharedValue(1);
   const translations = useTranslations();
 
-  const animateSwitcher = useCallback((position: number) => {
+  const animate = useCallback((position: number) => {
     tabNavigatorPosition.value = withTiming(position, {
       duration: ANIMATION_DURATION,
     });
@@ -74,7 +74,7 @@ export const useTabNavigator = (props: BottomTabBarProps) => {
   }, []);
 
   useEffect(() => {
-    animateSwitcher(Number(shouldShowTabNavigator));
+    animate(Number(shouldShowTabNavigator));
   }, [shouldShowTabNavigator]);
 
   return {

@@ -24,7 +24,7 @@ export const TabNavigatorItem = memo(
     );
 
     return (
-      <Styles.Wrapper testID="button-wrapper" onPress={props.onPress}>
+      <Styles.Wrapper testID="tab-button" onPress={props.onPress}>
         {renderSVGIconConditionally({
           condition: props.isSelected,
           ifTrue: {
@@ -38,7 +38,7 @@ export const TabNavigatorItem = memo(
             id: props.inactiveIcon,
           },
         })}
-        <Styles.ItemText testID="item-title" isSelected={props.isSelected}>
+        <Styles.ItemText testID="tab-title" isSelected={props.isSelected}>
           {props.title}
         </Styles.ItemText>
       </Styles.Wrapper>
