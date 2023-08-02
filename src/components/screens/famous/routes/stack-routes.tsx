@@ -3,10 +3,11 @@ import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {useTheme} from 'styled-components/native';
 
 import {ImagesGallery} from '@src/components/screens/common/images-gallery/components/images-gallery/ImagesGallery';
-import {ReviewsNavigationProps} from '@src/components/screens/common/reviews/routes/route-params-types';
+import {ReviewsProps} from '@src/components/screens/common/reviews/routes/route-params-types';
 import {MovieDetail} from '@src/components/screens/common/media-details/movie-details/components/MovieDetails';
 import {FamousDetails} from '@src/components/screens/common/famous-details/components/FamousDetails';
 import {Reviews} from '@src/components/screens/common/reviews/components/Reviews';
+import {HeaderIconButton} from '@components';
 import {
   getTransparentHeaderOptions,
   DEFAULT_HEADER_OPTIONS,
@@ -67,7 +68,7 @@ export const FamousStack = () => {
       />
       <Stack.Screen
         name={Routes.Famous.TV_SHOW_SEASONS}
-        options={(seasonsDetailsStackProps: SeasonsProps) => ({
+        options={(props: SeasonsProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
           headerTintColor: theme.colors.buttonText,
           headerStyle: {
@@ -75,26 +76,50 @@ export const FamousStack = () => {
             shadowColor: 'transparent',
             elevation: 0,
           },
-          headerTitle: seasonsDetailsStackProps.route.params.title,
+          headerTitle: props.route.params.title,
           headerTitleAlign: 'center',
+          headerLeft: () => (
+            <HeaderIconButton
+              onPress={props.navigation.goBack}
+              iconName="arrow-back"
+              withMarginLeft
+              color="buttonText"
+            />
+          ),
         })}
         component={SeasonsDetailsTabs}
       />
       <Stack.Screen
         name={Routes.Famous.MEDIA_REVIEWS}
-        options={({route}: ReviewsNavigationProps) => ({
+        options={(props: ReviewsProps) => ({
           ...DEFAULT_HEADER_OPTIONS,
-          headerTitle: route.params.mediaTitle,
+          headerTitle: props.route.params.mediaTitle,
           headerTitleAlign: 'center',
+          headerLeft: () => (
+            <HeaderIconButton
+              onPress={props.navigation.goBack}
+              iconName="arrow-back"
+              withMarginLeft
+              color="text"
+            />
+          ),
         })}
         component={Reviews}
       />
       <Stack.Screen
         name={Routes.Famous.IMAGES_GALLERY}
         component={ImagesGallery}
-        options={() => ({
+        options={({navigation}) => ({
           ...DEFAULT_HEADER_OPTIONS,
           headerTitleAlign: 'center',
+          headerLeft: () => (
+            <HeaderIconButton
+              onPress={navigation.goBack}
+              iconName="arrow-back"
+              withMarginLeft
+              color="text"
+            />
+          ),
         })}
       />
       <Stack.Screen
