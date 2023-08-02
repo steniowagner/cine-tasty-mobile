@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
-import * as Types from '@local-types';
+import {light} from '@styles/themes';
 
 type StarsWrapperStyleProps = {
   hasTags: boolean;
@@ -14,12 +14,16 @@ export const Wrapper = styled(View)`
 
 export const StarsWrapper = styled(View)<StarsWrapperStyleProps>`
   background-color: ${({theme}) =>
-    theme.id === Types.ThemeId.LIGHT ? theme.colors.buttonText : 'transparent'};
+    theme.colors.background === light.colors.background
+      ? theme.colors.buttonText
+      : 'transparent'};
   margin-top: ${({theme}) => theme.metrics.extraSmallSize}px;
   margin-bottom: ${({theme, hasTags}) =>
     hasTags ? theme.metrics.smallSize : theme.metrics.extraSmallSize}px;
   padding: ${({theme}) =>
-    theme.id === Types.ThemeId.LIGHT ? theme.metrics.mediumSize : 0}px;
+    theme.colors.background === light.colors.background
+      ? theme.metrics.mediumSize
+      : 0}px;
   border-radius: ${({theme}) => theme.metrics.extraSmallSize}px;
 `;
 

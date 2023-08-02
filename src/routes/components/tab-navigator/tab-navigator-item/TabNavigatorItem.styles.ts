@@ -1,8 +1,8 @@
 import {TouchableOpacity, Platform, Text} from 'react-native';
 import styled from 'styled-components/native';
 
-import * as Types from '@local-types';
 import metrics from '@styles/metrics';
+import {dark} from '@styles/themes';
 
 import items from '../items';
 
@@ -27,7 +27,7 @@ export const ItemText = styled(Text)<ItemTextStyleProps>`
   font-family: CircularStd-Medium;
   color: ${({isSelected, theme}) => {
     const selectedTabColor =
-      theme.id === Types.ThemeId.DARK
+      theme.colors.background === dark.colors.background
         ? theme.colors.primary
         : theme.colors.text;
     return isSelected ? selectedTabColor : theme.colors.inactiveWhite;

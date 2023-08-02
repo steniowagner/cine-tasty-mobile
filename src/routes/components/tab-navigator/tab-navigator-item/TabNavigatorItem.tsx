@@ -2,7 +2,7 @@ import React, {useMemo, memo} from 'react';
 import {useTheme} from 'styled-components/native';
 
 import {renderSVGIconConditionally, Icons} from '@components';
-import * as Types from '@local-types';
+import {dark} from '@styles/themes';
 
 import * as Styles from './TabNavigatorItem.styles';
 
@@ -19,7 +19,8 @@ export const TabNavigatorItem = memo(
     const theme = useTheme();
 
     const selectedIconColor = useMemo(
-      () => (theme.id === Types.ThemeId.DARK ? 'primary' : 'text'),
+      () =>
+        theme.colors.background === dark.colors.background ? 'primary' : 'text',
       [theme.id],
     );
 

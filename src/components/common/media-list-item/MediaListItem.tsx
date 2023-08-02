@@ -42,21 +42,22 @@ export const MediaListItem = (props: MediaListItemProps) => {
         testID="simplified-media-list-title">
         {props.title}
       </Styles.DefaultText>
-      {!!props.voteAverage && !!props.voteCount && (
-        <Styles.StarsContentWrapper>
-          <SVGIcon
-            id="star-full"
-            size={metrics.extraLargeSize}
-            colorThemeRef="primary"
-          />
-          <Styles.Gap />
-          <Styles.DefaultText
-            layoutSize={props.layoutSize}
-            testID="simplified-media-list-votes">
-            {`${props.voteAverage.toFixed(1)} (${props.voteCount})`}
-          </Styles.DefaultText>
-        </Styles.StarsContentWrapper>
-      )}
+      {typeof props.voteAverage === 'number' &&
+        typeof props.voteCount === 'number' && (
+          <Styles.StarsContentWrapper>
+            <SVGIcon
+              id="star-full"
+              size={metrics.extraLargeSize}
+              colorThemeRef="primary"
+            />
+            <Styles.Gap />
+            <Styles.DefaultText
+              layoutSize={props.layoutSize}
+              testID="simplified-media-list-votes">
+              {`${props.voteAverage.toFixed(1)} (${props.voteCount})`}
+            </Styles.DefaultText>
+          </Styles.StarsContentWrapper>
+        )}
     </Styles.Wrapper>
   );
 };

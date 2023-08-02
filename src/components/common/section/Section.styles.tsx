@@ -29,5 +29,5 @@ export const Title = styled(Text)<TitleMarginStyleProps>`
   margin-bottom: ${({theme}) => theme.metrics.largeSize}px;
   font-size: ${({theme}) => theme.metrics.getWidthFromDP('6%')}px;
   color: ${({theme}) => theme.colors.text};
-  font-family: CircularStd-Bold;
+  font-family: CircularStd-Black;
 `;

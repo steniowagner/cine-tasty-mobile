@@ -1,41 +1,38 @@
 import React, {createContext, useContext} from 'react';
-import {ThemeProvider} from 'styled-components/native';
+import {ThemeProvider, DefaultTheme} from 'styled-components/native';
 
 import * as Types from '@local-types';
 
-import useTheme from './useTheme';
+import {useTheme} from './useTheme';
 
 type ThemeContextProps = {
-  handleInitialThemeSelection: () => Promise<void>;
+  initializeTheme: () => Promise<void>;
   onSetLightTheme: () => void;
   onSetSystemTheme: () => void;
   onSetDarkTheme: () => void;
   themeId: Types.ThemeId;
+  theme: DefaultTheme;
 };
 
 type ThemeContextProviderProps = {
-  children: JSX.Element;
+  children: React.ReactChild;
 };
 
-const ThemeContextProvider = ({children}: ThemeContextProviderProps) => {
-  const {
-    handleInitialThemeSelection,
-    onSetSystemTheme,
-    onSetLightTheme,
-    onSetDarkTheme,
-    theme,
-  } = useTheme();
-
+const ThemeContextProvider = (props: ThemeContextProviderProps) => {
+  const theme = useTheme();
   return (
     <ThemeContext.Provider
       value={{
-        handleInitialThemeSelection,
-        onSetSystemTheme,
-        themeId: theme.id,
-        onSetLightTheme,
-        onSetDarkTheme,
+        initializeTheme: theme.initializeTheme,
+        onSetSystemTheme: theme.onSetSystemTheme,
+        themeId: theme.themeSelected.id,
+        onSetLightTheme: theme.onSetLightTheme,
+        onSetDarkTheme: theme.onSetDarkTheme,
+        theme: theme.themeSelected,
       }}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme.themeSelected}>
+        {props.children}
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
 };
@@ -43,11 +40,12 @@ const ThemeContextProvider = ({children}: ThemeContextProviderProps) => {
 export {ThemeContextProvider};
 
 const ThemeContext = createContext<ThemeContextProps>({
-  handleInitialThemeSelection: () => new Promise(resolve => resolve()),
+  initializeTheme: () => new Promise(resolve => resolve()),
   onSetSystemTheme: () => {},
   onSetLightTheme: () => {},
   onSetDarkTheme: () => {},
   themeId: null,
+  theme: null,
 });
 
 export default ThemeContext;

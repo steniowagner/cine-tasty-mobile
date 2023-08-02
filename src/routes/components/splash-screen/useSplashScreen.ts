@@ -12,7 +12,7 @@ type UseSplashScreenProps = {
 };
 
 const useSplashScreen = ({onLoad, theme}: UseSplashScreenProps) => {
-  const {handleInitialThemeSelection} = useThemeProvider();
+  const {initializeTheme} = useThemeProvider();
 
   const handleImageSizeOptionSelection = useCallback(async () => {
     const selectedImageSizesOption = await storage.get<
@@ -28,7 +28,7 @@ const useSplashScreen = ({onLoad, theme}: UseSplashScreenProps) => {
   useEffect(() => {
     handleImageSizeOptionSelection();
 
-    handleInitialThemeSelection();
+    initializeTheme();
   }, []);
 
   useEffect(() => {

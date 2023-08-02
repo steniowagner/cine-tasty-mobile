@@ -1,10 +1,13 @@
 import {StatusBar} from 'react-native';
 import styled from 'styled-components/native';
 
-import {ThemeId} from '@local-types';
+import {dark} from '@styles/themes';
 
 export const StatusBarStyled = styled(StatusBar).attrs(({theme}) => ({
-  barStyle: theme.id === ThemeId.LIGHT ? 'dark-content' : 'light-content',
+  barStyle:
+    theme.colors.background === dark.colors.background
+      ? 'light-content'
+      : 'dark-content',
   backgroundColor: theme.colors.secondary,
   animated: true,
 }))``;
