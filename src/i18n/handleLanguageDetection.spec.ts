@@ -43,10 +43,10 @@ describe('Testing the handleLanguageDetection()', () => {
 
         expect(storage.set).toBeCalledWith(
           CONSTANTS.KEYS.LANGUAGE,
-          'ptBR',
+          'pt',
         );
 
-        expect(language).toBe('ptBR');
+        expect(language).toBe('pt');
       });
 
       it('[iOS >= 13] should return the correct language', async () => {
@@ -84,10 +84,10 @@ describe('Testing the handleLanguageDetection()', () => {
 
         expect(storage.set).toBeCalledWith(
           CONSTANTS.KEYS.LANGUAGE,
-          'ptBR',
+          'pt',
         );
 
-        expect(language).toBe('ptBR');
+        expect(language).toBe('pt');
       });
 
       it('[ios < 13] should return the correct language', async () => {
@@ -128,10 +128,10 @@ describe('Testing the handleLanguageDetection()', () => {
 
         expect(storage.set).toBeCalledWith(
           CONSTANTS.KEYS.LANGUAGE,
-          'ptBR',
+          'pt',
         );
 
-        expect(language).toBe('ptBR');
+        expect(language).toBe('pt');
       });
     });
 
@@ -267,13 +267,13 @@ describe('Testing the handleLanguageDetection()', () => {
         storage.get,
       } = require('../utils/async-storage-adapter/storage');
 
-      storage.get.mockImplementationOnce(() => 'ptBR');
+      storage.get.mockImplementationOnce(() => 'pt');
 
       const handleLanguageDetection = require('./handleLanguageDetection');
 
       const language = await handleLanguageDetection.default();
 
-      expect(language).toBe('ptBR');
+      expect(language).toBe('pt');
     });
   });
 });

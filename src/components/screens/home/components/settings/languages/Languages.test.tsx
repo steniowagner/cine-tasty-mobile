@@ -15,7 +15,7 @@ import {storage, CONSTANTS} from '@utils';
 
 import {Languages} from './Languages';
 
-const mockLanguages = ['en', 'ptBR', 'es'];
+const mockLanguages = ['en', 'pt', 'es'];
 let mockLanguage = '';
 
 const mockRestart = jest.fn().mockImplementation();

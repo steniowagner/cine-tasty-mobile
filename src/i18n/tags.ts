@@ -100,8 +100,6 @@ export namespace Translations {
     LANGUAGE_WARNING_FAMOUS_DESCRIPTION = 'translations:languageWarning:famous:description',
 
     // FAMOUS-DETAIL
-    FAMOUS_DETAIL_READ_LESS = 'translations:famousDetail:readLess',
-    FAMOUS_DETAIL_READ_MORE = 'translations:famousDetail:readMore',
     FAMOUS_DETAIL_BIOGRAPHY = 'translations:famousDetail:biography',
     FAMOUS_DETAIL_IMAGES = 'translations:famousDetail:images',
     FAMOUS_DETAIL_CAST_MOVIES = 'translations:famousDetail:castMovies',
@@ -225,6 +223,9 @@ export namespace Translations {
 
     // Settings/Images-quality
     SETTINGS_IMAGES_QUALITIES = 'translations:home:settings:sections:imageQualities',
+
+    READ_LESS = 'translations:readLess',
+    READ_MORE = 'translations:readMore',
   }
 }
 // repetidos: READ_MORE, READ_LESS, MOVIE, TV

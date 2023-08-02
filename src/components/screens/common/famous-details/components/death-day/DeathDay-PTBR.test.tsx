@@ -8,7 +8,7 @@ import {DeathDay} from './DeathDay';
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     i18n: {
-      language: 'ptBR',
+      language: 'pt',
     },
   }),
 }));

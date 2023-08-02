@@ -5,6 +5,9 @@ import {useLanguages} from './useLanguages';
 
 export const Languages = () => {
   const languages = useLanguages();
+  console.log('languages: ', languages.languages);
+  console.log('selectedLanguage: ', languages.selectedLanguage);
+
   return (
     <>
       {languages.languages.map(language => (

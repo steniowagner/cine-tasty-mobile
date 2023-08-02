@@ -4,9 +4,9 @@ import {initReactI18next} from 'react-i18next';
 import handleLanguageDetection from './handleLanguageDetection';
 import {CONSTANTS} from '../utils';
 
-import ptBR from './locale/ptBR';
-import es from './locale/es';
-import en from './locale/en';
+import {pt} from './locale/pt';
+import {es} from './locale/es';
+import {en} from './locale/en';
 
 const languageDetectorType: Module = {
   type: 'languageDetector',
@@ -35,8 +35,8 @@ i18next
       en: {
         translations: en,
       },
-      ptBR: {
-        translations: ptBR,
+      pt: {
+        translations: pt,
       },
       es: {
         translations: es,

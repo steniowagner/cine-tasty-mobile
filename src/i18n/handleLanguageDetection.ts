@@ -6,17 +6,14 @@ import {CONSTANTS, storage} from '@utils';
 // iOS format: x-Y
 const defaultLanguagesMapping = {
   // Portuguese (Brazil)
-  'pt-BR': 'ptBR',
-  pt_BR: 'ptBR',
-
+  'pt-BR': 'pt',
+  pt_BR: 'pt',
   // Portuguese (Portugal)
-  'pt-PT': 'ptBR',
-  pt_PT: 'ptBR',
-
+  'pt-PT': 'pt',
+  pt_PT: 'pt',
   // English (USA)
   'en-US': 'en',
   en_US: 'en',
-
   // Spanish (Spain)
   'es-US': 'es',
   es_ES: 'es',
@@ -24,11 +21,9 @@ const defaultLanguagesMapping = {
 
 const fallbackLanguagesMapping = {
   // Portuguese
-  pt: 'ptBR',
-
+  pt: 'pt',
   // English
   en: 'en',
-
   // Spanish
   es: 'es',
 };
