@@ -1,79 +1,53 @@
 import React, {useMemo, memo} from 'react';
-import {DefaultTheme, withTheme} from 'styled-components/native';
+import {useTheme} from 'styled-components/native';
 
 import {renderSVGIconConditionally, Icons} from '@components';
-import {useGetCurrentTheme} from '@hooks';
-import metrics from '@styles/metrics';
 import * as Types from '@local-types';
 
 import * as Styles from './TabNavigatorItem.styles';
 
-const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
-
-type NavigatorItemProps = {
+type TabNavigatorItemProps = {
   inactiveIcon: Icons;
   activeIcon: Icons;
   onPress: () => void;
   isSelected: boolean;
-  theme: DefaultTheme;
   title: string;
-  width: number;
 };
 
-const NavigatorItem = withTheme(
-  ({
-    inactiveIcon,
-    activeIcon,
-    isSelected,
-    onPress,
-    theme,
-    width,
-    title,
-  }: NavigatorItemProps) => {
-    const {currentTheme} = useGetCurrentTheme({theme});
+export const TabNavigatorItem = memo(
+  (props: TabNavigatorItemProps) => {
+    const theme = useTheme();
 
     const selectedIconColor = useMemo(
-      () => (currentTheme === Types.ThemeId.DARK ? 'primary' : 'text'),
-      [currentTheme],
+      () => (theme.id === Types.ThemeId.DARK ? 'primary' : 'text'),
+      [theme.id],
     );
 
-    const textColor = useMemo(() => {
-      const selectedColor =
-        currentTheme === Types.ThemeId.DARK
-          ? theme.colors.primary
-          : theme.colors.text;
-
-      return isSelected ? selectedColor : theme.colors.inactiveWhite;
-    }, [isSelected, currentTheme]);
-
     return (
-      <Styles.Wrapper testID="button-wrapper" onPress={onPress} width={width}>
+      <Styles.Wrapper testID="tab-button" onPress={props.onPress}>
         {renderSVGIconConditionally({
-          condition: isSelected,
+          condition: props.isSelected,
           ifTrue: {
             colorThemeRef: selectedIconColor,
-            size: DEFAULT_ICON_SIZE,
-            id: activeIcon,
+            size: Styles.DEFAULT_ICON_SIZE,
+            id: props.activeIcon,
           },
           ifFalse: {
             colorThemeRef: 'inactiveWhite',
-            size: DEFAULT_ICON_SIZE,
-            id: inactiveIcon,
+            size: Styles.DEFAULT_ICON_SIZE,
+            id: props.inactiveIcon,
           },
         })}
-        <Styles.ItemText testID="item-title" color={textColor}>
-          {title}
+        <Styles.ItemText testID="tab-title" isSelected={props.isSelected}>
+          {props.title}
         </Styles.ItemText>
       </Styles.Wrapper>
     );
   },
+  (
+    previousState: TabNavigatorItemProps,
+    nextState: TabNavigatorItemProps,
+  ): boolean =>
+    (previousState.isSelected || !nextState.isSelected) &&
+    (!previousState.isSelected || nextState.isSelected),
 );
-
-const shouldComponentUpdate = (
-  previousState: NavigatorItemProps,
-  nextState: NavigatorItemProps,
-): boolean =>
-  (previousState.isSelected || !nextState.isSelected) &&
-  (!previousState.isSelected || nextState.isSelected);
-
-export default memo(NavigatorItem, shouldComponentUpdate);

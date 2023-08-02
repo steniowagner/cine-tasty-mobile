@@ -1,16 +1,20 @@
-import {View} from 'react-native';
 import styled from 'styled-components/native';
+import Animated from 'react-native-reanimated';
 
 import {isEqualsOrLargestThanIphoneX} from '@utils';
 import metrics from '@styles/metrics';
 
 export const WRAPPER_HEIGHT =
-  metrics.getWidthFromDP('18%') + (isEqualsOrLargestThanIphoneX() ? 30 : 0);
+  metrics.getWidthFromDP('18%') +
+  (isEqualsOrLargestThanIphoneX() ? metrics.getWidthFromDP('8%') : 0);
 
-export const Wrapper = styled(View)`
+export const Wrapper = styled(Animated.View)`
   width: ${({theme}) => theme.metrics.width}px;
   height: ${WRAPPER_HEIGHT}px;
+  position: absolute;
   flex-direction: row;
   background-color: ${({theme}) => theme.colors.secondary};
   padding-bottom: ${isEqualsOrLargestThanIphoneX() ? 30 : 0}px;
+  bottom: 0px;
+  right: 0px;
 `;

@@ -11,6 +11,7 @@ import {HomeSection} from './home-section/HomeSection';
 import {Header} from './header/Header';
 import {useHome} from './useHome';
 import {Top3} from './top3/Top3';
+import * as Styles from './Home.styles';
 
 export const Home = (props: HomeStackProps) => {
   const home = useHome({navigation: props.navigation});
@@ -45,7 +46,9 @@ export const Home = (props: HomeStackProps) => {
         isSettingsModalOpen={home.isSettingsModalOpen}
         navigation={props.navigation}
       />
-      <ScrollView testID="scrollview-content">
+      <ScrollView
+        testID="scrollview-content"
+        contentContainerStyle={Styles.sheet.wrapper}>
         <Top3 items={home.top3} />
         {home.trendings.map(trending => (
           <HomeSection

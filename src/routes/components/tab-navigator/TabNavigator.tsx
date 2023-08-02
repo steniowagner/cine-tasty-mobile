@@ -1,56 +1,26 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
-import * as TRANSLATIONS from '@i18n/tags';
-import metrics from '@styles/metrics';
-
-import TabNavigatorItem from './tab-navigator-item/TabNavigatorItem';
+import {TabNavigatorItem} from './tab-navigator-item/TabNavigatorItem';
 import * as Styles from './TabNavigator.styles';
-import useTabNavigator from './useTabNavigator';
-import items from './items';
+import {useTabNavigator} from './useTabNavigator';
 
-const ITEM_WIDTH = metrics.width / items.length;
-
-const TabNavigator = (props: BottomTabBarProps) => {
-  const {shouldShowTabNavigator, tabTitles, t} = useTabNavigator(props);
-
-  if (!shouldShowTabNavigator) {
-    return null;
-  }
-
+export const TabNavigator = (props: BottomTabBarProps) => {
+  const tabNavigator = useTabNavigator(props);
   return (
-    <Styles.Wrapper
-      testID="tab-wrapper"
-      style={{
-        shadowColor: '#000000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-      }}>
-      {items.map((item, index) => (
+    <Styles.Wrapper testID="tab-wrapper" style={tabNavigator.animatedStyle}>
+      {tabNavigator.tabs.map((item, index) => (
         <TabNavigatorItem
-          onPress={() => {
-            console.log(
-              props.state.routeNames,
-              index,
-              props.state.routeNames[index],
-            );
-            props.navigation.navigate(props.state.routeNames[index]);
-          }}
-          title={t(`${TRANSLATIONS.TABS}:${tabTitles[index].toLowerCase()}`)}
+          onPress={() =>
+            props.navigation.navigate(props.state.routeNames[index])
+          }
+          title={item.title}
           isSelected={index === props.state.index}
           inactiveIcon={item.inactiveIcon}
           activeIcon={item.activeIcon}
-          width={ITEM_WIDTH}
           key={item.id}
         />
       ))}
     </Styles.Wrapper>
   );
 };
-
-export default TabNavigator;

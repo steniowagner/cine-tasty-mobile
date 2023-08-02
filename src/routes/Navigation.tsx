@@ -7,7 +7,7 @@ import {StatusBarStyled} from '@components';
 
 import SplashScreen from './components/splash-screen/SplashScreen';
 import {useNavigation} from './useNavigation';
-import Tabs from './components/Tabs';
+import {Tabs} from './components/Tabs';
 import {Routes} from './routes';
 
 const RootStack = createStackNavigator();

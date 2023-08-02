@@ -1,25 +1,36 @@
 import {TouchableOpacity, Platform, Text} from 'react-native';
 import styled from 'styled-components/native';
 
-type WrapperButtonProps = {
-  width: number;
+import * as Types from '@local-types';
+import metrics from '@styles/metrics';
+
+import items from '../items';
+
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
+
+type ItemTextStyleProps = {
+  isSelected: boolean;
 };
 
-type ItemTextProps = {
-  color: string;
-};
-
-export const Wrapper = styled(TouchableOpacity)<WrapperButtonProps>`
-  width: ${({width}) => width}px;
+export const Wrapper = styled(TouchableOpacity)`
+  width: ${({theme}) => theme.metrics.width / items.length}px;
   height: 100%;
   align-items: center;
   justify-content: center;
 `;
 
-export const ItemText = styled(Text)<ItemTextProps>`
+export const ItemText = styled(Text)<ItemTextStyleProps>`
   margin-top: ${({theme}) =>
-    Platform.OS === 'android' ? theme.metrics.extraSmallSize : 0}px;
+    Platform.OS === 'android'
+      ? theme.metrics.mediumSize
+      : theme.metrics.extraSmallSize}px;
   font-family: CircularStd-Medium;
-  color: ${({color}) => color};
-  font-size: ${({theme}) => theme.metrics.mediumSize * 1.1}px;
+  color: ${({isSelected, theme}) => {
+    const selectedTabColor =
+      theme.id === Types.ThemeId.DARK
+        ? theme.colors.primary
+        : theme.colors.text;
+    return isSelected ? selectedTabColor : theme.colors.inactiveWhite;
+  }};
+  font-size: ${({theme}) => theme.metrics.getWidthFromDP('3.5%')}px;
 `;

@@ -221,7 +221,9 @@ type HomeStackCommonRoutes =
 | Routes.Home.MOVIE_DETAILS
 | Routes.Home.FAMOUS_DETAILS
 | Routes.Home.MEDIA_REVIEWS
-| Routes.Home.SEARCH;
+| Routes.Home.SEARCH_MOVIE
+| Routes.Home.SEARCH_TV_SHOW
+;
 
 type HomeStackCommonParams = Pick<HomeStackRoutes, HomeStackCommonRoutes>;
 
