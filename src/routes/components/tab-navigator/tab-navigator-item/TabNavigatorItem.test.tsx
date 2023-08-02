@@ -33,8 +33,8 @@ const renderTabNavigationItem = ({
 
 describe('<TabNavigatorItem />', () => {
   const elements = {
-    button: (api: RenderAPI) => api.queryByTestId('button-wrapper'),
-    text: (api: RenderAPI) => api.queryByTestId('item-title'),
+    button: (api: RenderAPI) => api.queryByTestId('tab-button'),
+    text: (api: RenderAPI) => api.queryByTestId('tab-title'),
   };
 
   it('should render correctly when the item is "unselected"', () => {
