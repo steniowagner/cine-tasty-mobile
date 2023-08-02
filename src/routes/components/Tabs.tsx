@@ -9,11 +9,11 @@ import {Routes} from '@routes/routes';
 import * as Screens from '@screens';
 
 import AndroidNavigationBar from './AndroidNavigationBar.android';
-import TabNavigator from './tab-navigator/TabNavigator';
+import {TabNavigator} from './tab-navigator/TabNavigator';
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = () => (
+export const Tabs = () => (
   <>
     <Tab.Navigator
       initialRouteName={Routes.Tabs.HOME}
@@ -29,5 +29,3 @@ const Tabs = () => (
     {Platform.OS === 'android' && <AndroidNavigationBar />}
   </>
 );
-
-export default Tabs;

@@ -27,7 +27,6 @@ const renderTabNavigationItem = ({
       isSelected={isSelected}
       onPress={onPress}
       title={icon.id}
-      width={12}
     />
   </ThemeProvider>
 );

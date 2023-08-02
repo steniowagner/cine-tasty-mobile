@@ -4,18 +4,16 @@ import styled from 'styled-components/native';
 import * as Types from '@local-types';
 import metrics from '@styles/metrics';
 
-export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
+import items from '../items';
 
-type WrapperButtonProps = {
-  width: number;
-};
+export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
 type ItemTextStyleProps = {
   isSelected: boolean;
 };
 
-export const Wrapper = styled(TouchableOpacity)<WrapperButtonProps>`
-  width: ${({width}) => width}px;
+export const Wrapper = styled(TouchableOpacity)`
+  width: ${({theme}) => theme.metrics.width / items.length}px;
   height: 100%;
   align-items: center;
   justify-content: center;

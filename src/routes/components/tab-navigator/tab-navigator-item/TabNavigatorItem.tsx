@@ -12,7 +12,6 @@ type TabNavigatorItemProps = {
   onPress: () => void;
   isSelected: boolean;
   title: string;
-  width: number;
 };
 
 export const TabNavigatorItem = memo(
@@ -25,10 +24,7 @@ export const TabNavigatorItem = memo(
     );
 
     return (
-      <Styles.Wrapper
-        testID="button-wrapper"
-        onPress={props.onPress}
-        width={props.width}>
+      <Styles.Wrapper testID="button-wrapper" onPress={props.onPress}>
         {renderSVGIconConditionally({
           condition: props.isSelected,
           ifTrue: {

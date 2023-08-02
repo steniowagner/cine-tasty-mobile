@@ -1,10 +1,11 @@
 import {useMemo} from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {useTranslation} from 'react-i18next';
 
 import {Routes} from '@routes/routes';
+import {useTranslations} from '@hooks';
 
 import items from './items';
+import {Translations} from '@i18n/tags';
 
 const screensAbleToShowTabNavigator: string[] = [
   Routes.Home.HOME,
@@ -13,26 +14,21 @@ const screensAbleToShowTabNavigator: string[] = [
   Routes.News.NEWS,
 ];
 
-const useTabNavigator = ({state}: BottomTabBarProps) => {
-  const {t} = useTranslation();
+export const useTabNavigator = (props: BottomTabBarProps) => {
+  const translations = useTranslations();
 
   const shouldShowTabNavigator = useMemo(() => {
-    const currentTabState = state.routes[state.index].state;
-
+    const currentTabState = props.state.routes[props.state.index].state;
     if (!currentTabState) {
       return true;
     }
-
     const {routes, index} = currentTabState;
-
     if (!index && typeof index !== 'number') {
       return false;
     }
-
     const {name} = routes[index];
-
     return screensAbleToShowTabNavigator.includes(name);
-  }, [state]);
+  }, [props.state]);
 
   const tabTitles = useMemo(
     () =>
@@ -42,11 +38,22 @@ const useTabNavigator = ({state}: BottomTabBarProps) => {
       }),
     [items],
   );
+
+  const tabs = useMemo(
+    () =>
+      items.map((item, index) => ({
+        ...item,
+        title: translations.translate(
+          `${Translations.Tags.TABS}:${tabTitles[
+            index
+          ].toLowerCase()}` as Translations.Tags,
+        ),
+      })),
+    [tabTitles],
+  );
+
   return {
     shouldShowTabNavigator,
-    tabTitles,
-    t,
+    tabs,
   };
 };
-
-export default useTabNavigator;

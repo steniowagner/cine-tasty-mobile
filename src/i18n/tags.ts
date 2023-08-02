@@ -27,6 +27,7 @@ export namespace Translations {
     SELECT = 'translations:select',
 
     // TABS
+    TABS = 'translations:tabs',
     TABS_QUIZ = 'translations:tabs:quiz',
     TABS_NEWS = 'translations:tabs:news',
     TABS_FAMOUS = 'translations:tabs:famous',
