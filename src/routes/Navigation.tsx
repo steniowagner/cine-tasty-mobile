@@ -1,10 +1,16 @@
 import React from 'react';
 import {DefaultTheme, withTheme} from 'styled-components/native';
 import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import {StatusBarStyled} from '@components';
 
-import useNavigation from './useNavigation';
+import SplashScreen from './components/splash-screen/SplashScreen';
+import {useNavigation} from './useNavigation';
+import Tabs from './components/Tabs';
+import {Routes} from './routes';
+
+const RootStack = createStackNavigator();
 
 type NavigationProps = {
   theme: DefaultTheme;
@@ -27,7 +33,17 @@ export const Navigation = withTheme((props: NavigationProps) => {
             text: props.theme.colors.text,
           },
         }}>
-        {navigation.renderContent()}
+        {navigation.isSplashScreenLoaded ? (
+          <RootStack.Navigator>
+            <RootStack.Screen
+              options={{headerShown: false}}
+              name={Routes.Tabs.TABS}
+              component={Tabs}
+            />
+          </RootStack.Navigator>
+        ) : (
+          <SplashScreen onLoad={navigation.handleOnLoadSplashScreen} />
+        )}
       </NavigationContainer>
     </>
   );
