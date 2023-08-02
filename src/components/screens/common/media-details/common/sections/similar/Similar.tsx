@@ -1,11 +1,6 @@
 import React from 'react';
 
-import {
-  MediaListItem,
-  MediaListItemSeparator,
-  ScrollViewSection,
-  Section,
-} from '@components';
+import {MediaListItem, ScrollViewSection, Section} from '@components';
 
 import {useSimilar, ParsedSimilar, Similar as SimilarType} from './useSimilar';
 
@@ -23,17 +18,15 @@ export const Similar = (props: SimilarSectionProps) => {
         horizontal
         testID="similar-list">
         {similar.dataset.map(similarItem => (
-          <React.Fragment key={similarItem.id}>
-            <MediaListItem
-              layoutSize="large"
-              onPress={() => props.onPressItem(similarItem)}
-              voteAverage={similarItem.voteAverage}
-              voteCount={similarItem.voteCount}
-              image={similarItem.posterPath}
-              title={similarItem.title}
-            />
-            <MediaListItemSeparator />
-          </React.Fragment>
+          <MediaListItem
+            layoutSize="large"
+            key={similarItem.id}
+            onPress={() => props.onPressItem(similarItem)}
+            voteAverage={similarItem.voteAverage}
+            voteCount={similarItem.voteCount}
+            image={similarItem.posterPath}
+            title={similarItem.title}
+          />
         ))}
       </ScrollViewSection>
     </Section>

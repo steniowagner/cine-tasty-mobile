@@ -1,10 +1,8 @@
-import {TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, StyleSheet, View, Text} from 'react-native';
 import styled from 'styled-components/native';
-import Animated from 'react-native-reanimated';
 
 import metrics from '@styles/metrics';
-
-import {TMDBImage} from '../tmdb-image/TMDBImage';
+import {CONSTANTS} from '@utils';
 
 type Measure = {
   width: number;
@@ -28,14 +26,17 @@ export const LAYOUT_MEASURES: Record<LayoutSize, Measure> = {
   },
 };
 
-export const IMAGE_LOADING_ICON_SIZE = metrics.getWidthFromDP('10%');
+export const makeImageStyles = (layoutSize: LayoutSize) =>
+  StyleSheet.create({
+    image: {
+      width: LAYOUT_MEASURES[layoutSize].width,
+      height: LAYOUT_MEASURES[layoutSize].height,
+      marginBottom: metrics.smallSize,
+      borderRadius: metrics.smallSize,
+    },
+  });
 
-export const CustomTMDBImage = styled(TMDBImage)<DefaultStyleProps>`
-  width: 100%;
-  height: ${({layoutSize}) => LAYOUT_MEASURES[layoutSize].height}px;
-  margin-bottom: ${({theme}) => theme.metrics.smallSize}px;
-  border-radius: ${({theme}) => theme.metrics.smallSize}px;
-`;
+export const IMAGE_LOADING_ICON_SIZE = metrics.getWidthFromDP('10%');
 
 type WrapperStyleProps = DefaultStyleProps & {
   marginLeft?: number;
@@ -45,6 +46,7 @@ export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({layoutSize}) => LAYOUT_MEASURES[layoutSize].width}px;
   height: 100%;
   margin-left: ${({marginLeft}) => marginLeft || 0}px;
+  margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
 `;
 
 export const DefaultText = styled(Text).attrs({
@@ -61,22 +63,7 @@ export const StarsContentWrapper = styled(View)`
   margin-top: ${({theme}) => theme.metrics.smallSize}px;
 `;
 
-export const FallbackImageWrapper = styled(Animated.View)<DefaultStyleProps>`
-  width: 100%;
-  height: ${({layoutSize}) => LAYOUT_MEASURES[layoutSize].height}px;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  border-radius: ${({theme}) => theme.metrics.smallSize}px;
-  background-color: ${({theme}) => theme.colors.fallbackImageBackground};
-`;
-
 export const Gap = styled(View)`
   width: ${({theme}) => theme.metrics.extraSmallSize}px;
   height: 1px;
-`;
-
-export const MediaListItemSeparator = styled(View)`
-  width: ${({theme}) => theme.metrics.mediumSize}px;
-  height: 10px;
 `;
