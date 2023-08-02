@@ -9,11 +9,6 @@ const useRouteNavigation = () => {
     'checking-initial-screen',
   );
 
-  const onFinishShowOnboarding = useCallback(async () => {
-    await storage.set(CONSTANTS.KEYS.ONBOARDING_SHOWED, 'true');
-    setCurrentStack('tabs');
-  }, []);
-
   const handleInitialScreenSelection = useCallback(async () => {
     const isOnboardingAlreadyShown = await storage.get<boolean, boolean>(
       CONSTANTS.KEYS.ONBOARDING_SHOWED,
@@ -30,7 +25,6 @@ const useRouteNavigation = () => {
   }, []);
 
   return {
-    onFinishShowOnboarding,
     currentStack,
   };
 };
