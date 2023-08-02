@@ -13,7 +13,7 @@ type UseEntryQueryProps<TResult, TVariables> = {
   query: DocumentNode;
 };
 
-const useEntryQuery = <TResult, TVariables>(
+export const useEntryQuery = <TResult, TVariables>(
   props: UseEntryQueryProps<TResult, TVariables>,
 ) => {
   const imperativeQuery = useImperativeQuery<TResult, TVariables>({
@@ -34,5 +34,3 @@ const useEntryQuery = <TResult, TVariables>(
     exec,
   };
 };
-
-export default useEntryQuery;

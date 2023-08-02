@@ -3,8 +3,8 @@ import {ApolloQueryResult, DocumentNode, FetchPolicy} from '@apollo/client';
 
 import {useAlertMessage} from '@providers';
 
-import usePaginateQuery from './usePaginateQuery';
-import useEntryQuery from './useEntryQuery';
+import {usePaginateQuery} from './usePaginateQuery';
+import {useEntryQuery} from './useEntryQuery';
 
 type GetQueryResult<TDataset> = {
   dataset: TDataset[];
