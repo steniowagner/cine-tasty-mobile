@@ -59,8 +59,6 @@ describe('<ImagesGallery />', () => {
       api.queryAllByTestId('images-gallery-list-item'),
     thumbsList: (api: RenderAPI) => api.queryByTestId('thumbs-gallery-list'),
     thumbsItems: (api: RenderAPI) => api.queryAllByTestId('thumb-list-item'),
-    headerIconButton: (api: RenderAPI) =>
-      api.queryByTestId('header-icon-button-wrapper-close'),
   };
 
   const makeImages = (length: number) =>
@@ -81,7 +79,6 @@ describe('<ImagesGallery />', () => {
       expect(elements.imagesItems(component).length).toBeGreaterThan(0);
       expect(elements.thumbsList(component)).not.toBeNull();
       expect(elements.thumbsItems(component).length).toEqual(datasetLength);
-      expect(elements.headerIconButton(component)).not.toBeNull();
       expect(
         component.getByText(`${indexSelected + 1}/${datasetLength}`),
       ).not.toBeNull();
@@ -214,22 +211,6 @@ describe('<ImagesGallery />', () => {
           component.queryByText(`${nextIndexSelected + 1}/${datasetLength}`),
         ).not.toBeNull();
       });
-    });
-  });
-
-  describe('Pressing the "X" header-button', () => {
-    beforeEach(() => {
-      jest.clearAllMocks();
-    });
-
-    it('should call the "navigation.goBack" when the user presses the "X" header-button', () => {
-      const datasetLength = randomPositiveNumber(10, 5);
-      const indexSelected = randomPositiveNumber(datasetLength - 1, 0);
-      const images = makeImages(datasetLength);
-      const component = render(renderImagesGallery(indexSelected, images));
-      expect(mockGoback).toHaveBeenCalledTimes(0);
-      fireEvent.press(elements.headerIconButton(component));
-      expect(mockGoback).toHaveBeenCalledTimes(1);
     });
   });
 });
