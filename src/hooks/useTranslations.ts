@@ -8,7 +8,7 @@ type Options = {
   value: number;
 };
 
-const LANGUAGES = ['en', 'es', 'ptBR'];
+const LANGUAGES = ['en', 'es', 'pt'];
 
 export const useTranslations = () => {
   const i18next = useTranslation();
@@ -22,13 +22,10 @@ export const useTranslations = () => {
     switch (i18next.i18n.language) {
       case LANGUAGES[0]:
         return SchemaTypes.ISO6391Language.EN;
-
       case LANGUAGES[1]:
         return SchemaTypes.ISO6391Language.ES;
-
       case LANGUAGES[2]:
-        return SchemaTypes.ISO6391Language.PTBR;
-
+        return SchemaTypes.ISO6391Language.PT;
       default:
         return SchemaTypes.ISO6391Language.EN;
     }

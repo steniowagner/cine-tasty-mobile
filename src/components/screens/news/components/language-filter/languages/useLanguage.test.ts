@@ -1,10 +1,10 @@
 import {renderHook} from '@testing-library/react-hooks';
 
 import * as SchemaTypes from '@schema-types';
-import PORTUGUESE from '@i18n/locale/ptBR';
+import {pt as PORTUGUESE} from '@i18n/locale/pt';
 import * as mockNews from '@mocks/fixtures/news';
-import SPANISH from '@i18n/locale/es';
-import ENGLISH from '@i18n/locale/en';
+import {es as SPANISH} from '@i18n/locale/es';
+import {en as ENGLISH} from '@i18n/locale/en';
 
 import {useLanguages} from './useLanguages';
 

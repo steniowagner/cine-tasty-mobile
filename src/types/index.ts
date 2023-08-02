@@ -153,7 +153,7 @@ export type CrewDataset = (TVShowCrew | MovieCrew)[];
 
 export type CastDataset = (TVShowCast | MovieCast)[];
 
-export type Languages = 'en' | 'es' | 'ptBR';
+export type Languages = 'en' | 'es' | 'pt';
 
 export type ImageQualities = 'low' | 'medium' | 'high' | 'veryHigh';
 

@@ -34,15 +34,11 @@ export const useMediaItemDescription = () => {
   }, [numberOfLines]);
 
   const expandableReadButtonText = useMemo(() => {
-    const isReadMoreActive = numberOfLines === DEFAULT_NUMBER_OF_LINES;
-    if (isReadMoreActive) {
-      return translations.translate(
-        translations.translate(Translations.Tags.FAMOUS_DETAIL_READ_MORE),
-      );
-    }
-    return translations.translate(
-      translations.translate(Translations.Tags.FAMOUS_DETAIL_READ_LESS),
-    );
+    const tag =
+      numberOfLines === DEFAULT_NUMBER_OF_LINES
+        ? Translations.Tags.READ_MORE
+        : Translations.Tags.READ_LESS;
+    return translations.translate(tag);
   }, [numberOfLines]);
 
   return {

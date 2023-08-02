@@ -1,6 +1,6 @@
 import {Locale} from './Locale';
 
-const es: Locale = {
+export const es: Locale = {
   languageWarning: {
     quiz: {
       positiveAction: 'Sí',
@@ -176,8 +176,6 @@ const es: Locale = {
     'Diciembre',
   ],
   famousDetail: {
-    readLess: 'Leer menos',
-    readMore: 'Lee mas',
     biography: 'Biografía',
     images: 'Imagenes',
     castMovies: 'Elenco (Películas)',
@@ -242,7 +240,7 @@ const es: Locale = {
         languages: {
           en: 'Inglés',
           es: 'Español',
-          ptBR: 'Portugués',
+          pt: 'Portugués',
         },
         imageQualities: {
           low: 'Baja',
@@ -329,6 +327,6 @@ const es: Locale = {
       networks: 'Redes',
     },
   },
+  readLess: 'Leer menos',
+  readMore: 'Lee mas',
 };
-
-export default es;

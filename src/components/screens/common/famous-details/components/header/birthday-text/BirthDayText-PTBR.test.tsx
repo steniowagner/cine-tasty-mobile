@@ -12,7 +12,7 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: () => MOCK_T_VALUE,
     i18n: {
-      language: 'ptBR',
+      language: 'pt',
     },
   }),
 }));

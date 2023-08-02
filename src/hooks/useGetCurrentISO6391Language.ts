@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 import * as SchemaTypes from '@schema-types';
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 
 export const useGetCurrentISO6391Language = () => {
-  const { i18n } = useTranslation();
+  const {i18n} = useTranslation();
 
   const currentISO6391Language = useMemo(() => {
     switch (i18n.language) {
@@ -17,7 +17,7 @@ export const useGetCurrentISO6391Language = () => {
       case 'ptPT':
         return SchemaTypes.ISO6391Language.PT;
 
-      case 'ptBR':
+      case 'pt':
         return SchemaTypes.ISO6391Language.PTBR;
 
       default:

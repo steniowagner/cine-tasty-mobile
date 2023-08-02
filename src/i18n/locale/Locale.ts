@@ -201,8 +201,6 @@ export type Locale = {
     errorTitle: string;
     castMovies: string;
     biography: string;
-    readLess: string;
-    readMore: string;
     castTV: string;
     images: string;
   };
@@ -258,4 +256,6 @@ export type Locale = {
     };
   };
   months: string[];
+  readLess: string;
+  readMore: string;
 };

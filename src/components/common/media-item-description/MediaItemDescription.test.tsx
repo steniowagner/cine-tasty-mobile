@@ -57,7 +57,7 @@ describe('<MediaItemDescription />', () => {
         DEFAULT_NUMBER_OF_LINES,
       );
       expect(elements.expandableReadText(component).children[0]).toEqual(
-        Translations.Tags.FAMOUS_DETAIL_READ_MORE,
+        Translations.Tags.READ_MORE,
       );
     });
 
@@ -143,7 +143,7 @@ describe('<MediaItemDescription />', () => {
         DEFAULT_NUMBER_OF_LINES,
       );
       expect(elements.expandableReadText(component).children[0]).toEqual(
-        Translations.Tags.FAMOUS_DETAIL_READ_MORE,
+        Translations.Tags.READ_MORE,
       );
       fireEvent.press(elements.expandableReadButton(component));
       act(() => {
@@ -153,7 +153,7 @@ describe('<MediaItemDescription />', () => {
         INCREASED_NUMBER_OF_LINES,
       );
       expect(elements.expandableReadText(component).children[0]).toEqual(
-        Translations.Tags.FAMOUS_DETAIL_READ_LESS,
+        Translations.Tags.READ_LESS,
       );
     });
 
@@ -180,7 +180,7 @@ describe('<MediaItemDescription />', () => {
         INCREASED_NUMBER_OF_LINES,
       );
       expect(elements.expandableReadText(component).children[0]).toEqual(
-        Translations.Tags.FAMOUS_DETAIL_READ_LESS,
+        Translations.Tags.READ_LESS,
       );
       fireEvent.press(elements.expandableReadButton(component));
       act(() => {
@@ -190,7 +190,7 @@ describe('<MediaItemDescription />', () => {
         DEFAULT_NUMBER_OF_LINES,
       );
       expect(elements.expandableReadText(component).children[0]).toEqual(
-        Translations.Tags.FAMOUS_DETAIL_READ_MORE,
+        Translations.Tags.READ_MORE,
       );
     });
   });
