@@ -4,7 +4,7 @@ import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import * as TRANSLATIONS from '@i18n/tags';
 import metrics from '@styles/metrics';
 
-import TabNavigatorItem from './tab-navigator-item/TabNavigatorItem';
+import {TabNavigatorItem} from './tab-navigator-item/TabNavigatorItem';
 import * as Styles from './TabNavigator.styles';
 import useTabNavigator from './useTabNavigator';
 import items from './items';
@@ -33,14 +33,9 @@ const TabNavigator = (props: BottomTabBarProps) => {
       }}>
       {items.map((item, index) => (
         <TabNavigatorItem
-          onPress={() => {
-            console.log(
-              props.state.routeNames,
-              index,
-              props.state.routeNames[index],
-            );
-            props.navigation.navigate(props.state.routeNames[index]);
-          }}
+          onPress={() =>
+            props.navigation.navigate(props.state.routeNames[index])
+          }
           title={t(`${TRANSLATIONS.TABS}:${tabTitles[index].toLowerCase()}`)}
           isSelected={index === props.state.index}
           inactiveIcon={item.inactiveIcon}
