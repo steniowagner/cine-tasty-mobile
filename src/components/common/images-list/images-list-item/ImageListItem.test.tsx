@@ -23,8 +23,7 @@ const renderImageListItem = (
 
 describe('<ImageListItem />', () => {
   const elements = {
-    imageButtons: (api: RenderAPI) =>
-      api.queryByTestId('image-list-item-button'),
+    imageButtons: (api: RenderAPI) => api.queryByTestId('image-list-item'),
   };
 
   describe('When "orientation" is "PORTRAIT"', () => {
