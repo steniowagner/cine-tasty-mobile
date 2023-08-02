@@ -60,6 +60,7 @@ export const useDefineSwitchers = (props: UseDefineSwitchersProps) => {
       props.indexSelected,
       translations.translate,
       setSwitcherWidth,
+      theme,
     ],
   );
 

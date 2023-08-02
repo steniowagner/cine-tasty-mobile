@@ -1,49 +1,57 @@
 import {useCallback, useEffect, useState, useMemo} from 'react';
-import {Appearance} from 'react-native';
+import {useColorScheme} from 'react-native';
 
 import {dark, light} from '@styles/themes';
 import {CONSTANTS, storage} from '@utils';
 import * as Types from '@local-types';
 
-const undefinedTheme = {...dark, id: undefined};
-
 export const useTheme = () => {
-  const [theme, setTheme] = useState<Types.ThemeId>(null);
+  const [themeId, setThemeId] = useState<Types.ThemeId>(null);
+
+  const colorScheme = useColorScheme();
 
   const systemTheme = useMemo(() => {
-    const colorScheme = Appearance.getColorScheme();
     if (colorScheme === 'light') {
       return Types.ThemeId.LIGHT;
     }
     return Types.ThemeId.DARK;
-  }, []);
+  }, [colorScheme]);
 
   const onSetLightTheme = useCallback(async () => {
-    setTheme(Types.ThemeId.LIGHT);
+    if (themeId === Types.ThemeId.LIGHT) {
+      return;
+    }
+    setThemeId(Types.ThemeId.LIGHT);
     await storage.set(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.LIGHT);
-  }, []);
+  }, [themeId]);
 
   const onSetDarkTheme = useCallback(async () => {
-    setTheme(Types.ThemeId.DARK);
+    if (themeId === Types.ThemeId.DARK) {
+      return;
+    }
+    setThemeId(Types.ThemeId.DARK);
     await storage.set(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.DARK);
-  }, []);
+  }, [themeId]);
 
   const onSetSystemTheme = useCallback(async () => {
-    setTheme(Types.ThemeId.SYSTEM);
+    if (themeId === Types.ThemeId.SYSTEM) {
+      return;
+    }
+    setThemeId(Types.ThemeId.SYSTEM);
     await storage.set(CONSTANTS.KEYS.APP_THEME, Types.ThemeId.SYSTEM);
-  }, []);
+  }, [themeId]);
 
   const themeSelected = useMemo(() => {
-    if (!theme) {
-      return undefinedTheme;
+    if (!themeId) {
+      return {...dark, id: undefined};
     }
-    if (theme === Types.ThemeId.SYSTEM) {
+    if (themeId === Types.ThemeId.SYSTEM) {
       return systemTheme === Types.ThemeId.DARK
         ? {...dark, id: Types.ThemeId.SYSTEM}
         : {...light, id: Types.ThemeId.SYSTEM};
     }
-    return theme === Types.ThemeId.DARK ? dark : light;
-  }, [systemTheme, theme]);
+    return themeId === Types.ThemeId.DARK ? dark : light;
+  }, [systemTheme, themeId]);
 
   const initializeTheme = useCallback(async (): Promise<void> => {
     const themeFromStorage = await storage.get<Types.ThemeId, null>(
@@ -51,16 +59,15 @@ export const useTheme = () => {
       null,
     );
     if (themeFromStorage === Types.ThemeId.SYSTEM) {
-      // need to force an update
-      setTheme(Types.ThemeId.SYSTEM);
+      setThemeId(Types.ThemeId.SYSTEM);
       return;
     }
     if (!themeFromStorage) {
-      setTheme(Types.ThemeId.DARK);
+      setThemeId(Types.ThemeId.DARK);
       return;
     }
-    setTheme(themeFromStorage);
-  }, [theme]);
+    setThemeId(themeFromStorage);
+  }, []);
 
   useEffect(() => {
     initializeTheme();

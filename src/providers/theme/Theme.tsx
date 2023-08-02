@@ -1,5 +1,5 @@
 import React, {createContext, useContext} from 'react';
-import {ThemeProvider} from 'styled-components/native';
+import {ThemeProvider, DefaultTheme} from 'styled-components/native';
 
 import * as Types from '@local-types';
 
@@ -11,6 +11,7 @@ type ThemeContextProps = {
   onSetSystemTheme: () => void;
   onSetDarkTheme: () => void;
   themeId: Types.ThemeId;
+  theme: DefaultTheme;
 };
 
 type ThemeContextProviderProps = {
@@ -27,6 +28,7 @@ const ThemeContextProvider = (props: ThemeContextProviderProps) => {
         themeId: theme.themeSelected.id,
         onSetLightTheme: theme.onSetLightTheme,
         onSetDarkTheme: theme.onSetDarkTheme,
+        theme: theme.themeSelected,
       }}>
       <ThemeProvider theme={theme.themeSelected}>
         {props.children}
@@ -43,6 +45,7 @@ const ThemeContext = createContext<ThemeContextProps>({
   onSetLightTheme: () => {},
   onSetDarkTheme: () => {},
   themeId: null,
+  theme: null,
 });
 
 export default ThemeContext;
