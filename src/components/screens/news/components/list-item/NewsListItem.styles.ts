@@ -2,7 +2,7 @@ import {TouchableOpacity, Text, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';
-import * as Types from '@local-types';
+import {dark} from '@styles/themes';
 
 export const Wrapper = styled(TouchableOpacity)`
   width: 100%;
@@ -31,7 +31,7 @@ export const SourceText = styled(Text).attrs({
   font-family: CircularStd-Bold;
   font-size: ${({theme}) => theme.metrics.largeSize}px;
   color: ${({theme}) =>
-    theme.id === Types.ThemeId.DARK
+    theme.colors.background === dark.colors.background
       ? theme.colors.primary
       : theme.colors.buttonText};
 `;
@@ -45,7 +45,9 @@ export const NewsText = styled(Text)<NewsTextStyleProps>`
   font-family: CircularStd-Medium;
   font-size: ${({theme}) => theme.metrics.largeSize}px;
   color: ${({theme}) =>
-    theme.id === Types.ThemeId.DARK ? theme.colors.text : theme.colors.subText};
+    theme.colors.background === dark.colors.background
+      ? theme.colors.text
+      : theme.colors.subText};
   text-align: ${({withRTL}) => (withRTL ? 'right' : 'left')};
 `;
 

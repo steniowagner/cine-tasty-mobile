@@ -2,8 +2,8 @@ import {TouchableOpacity, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import metrics from '@styles/metrics';
-import * as Types from '@local-types';
 import {TMDBImage} from '@components';
+import {dark} from '@styles/themes';
 
 const THUMB_SIZE = metrics.getWidthFromDP('20%');
 const THUMB_MARGIN = metrics.extraSmallSize;
@@ -28,7 +28,7 @@ export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   border-radius: ${metrics.mediumSize}px;
   border: ${({isSelected, theme}) => {
     const borderColor = isSelected
-      ? theme.id === Types.ThemeId.DARK
+      ? theme.colors.background === dark.colors.background
         ? theme.colors.primary
         : theme.colors.buttonText
       : 'transparent';
@@ -42,7 +42,7 @@ export const DotMarker = styled(View)`
   border-radius: ${({theme}) => theme.metrics.smallSize}px;
   margin-top: ${({theme}) => theme.metrics.mediumSize}px;
   background-color: ${({theme}) =>
-    theme.id === Types.ThemeId.DARK
+    theme.colors.background === dark.colors.background
       ? theme.colors.primary
       : theme.colors.buttonText};
 `;
