@@ -95,7 +95,8 @@ const renderTVShowDetails = (params: RenderTVShowDetailsProps) => {
 
 describe('<TVShowDetails />', () => {
   const elements = {
-    backButton: (api: RenderAPI) => api.queryByTestId('header-back-button'),
+    backButton: (api: RenderAPI) =>
+      api.queryByTestId('header-icon-button-wrapper-arrow-back'),
     headerInfo: (api: RenderAPI) => api.queryByTestId('header-info-wrapper'),
     tagsWrapper: (api: RenderAPI) => api.queryAllByTestId('tags'),
     tagsTexts: (api: RenderAPI) => api.queryAllByTestId('tag-text'),

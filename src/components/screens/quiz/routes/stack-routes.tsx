@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {DEFAULT_HEADER_OPTIONS} from '@routes/constants';
+import {HeaderIconButton} from '@components';
 import {Translations} from '@i18n/tags';
 import {useTranslations} from '@hooks';
 import {Routes} from '@routes/routes';
@@ -26,19 +27,35 @@ export const QuizStack = () => {
         component={Quiz}
       />
       <Stack.Screen
-        options={{
+        options={({navigation}) => ({
           ...DEFAULT_HEADER_OPTIONS,
           headerTitle: translations.translate(Translations.Tags.TABS_QUIZ),
           headerTitleAlign: 'center',
-        }}
+          headerLeft: () => (
+            <HeaderIconButton
+              onPress={navigation.goBack}
+              iconName="arrow-back"
+              withMarginLeft
+              color="text"
+            />
+          ),
+        })}
         name={Routes.Quiz.SETUP_QUESTIONS}
         component={SetupQuestions}
       />
       <Stack.Screen
-        options={{
+        options={({navigation}) => ({
           ...DEFAULT_HEADER_OPTIONS,
           headerTitleAlign: 'center',
-        }}
+          headerLeft: () => (
+            <HeaderIconButton
+              onPress={navigation.goBack}
+              iconName="arrow-back"
+              withMarginLeft
+              color="text"
+            />
+          ),
+        })}
         name={Routes.Quiz.QUESTIONS}
         component={Questions}
       />

@@ -2,7 +2,7 @@ import React from 'react';
 import Animated from 'react-native-reanimated';
 
 import {dark as theme} from '@styles/themes';
-import {HeaderBackButton} from '@components';
+import {HeaderIconButton} from '@components';
 
 import {useAnimatedHeader} from './useAnimatedHeader';
 import * as Styles from './AnimatedHeader.styles';
@@ -39,9 +39,11 @@ export const AnimatedHeader = (props: AnimatedHeaderProps) => {
       ]}>
       <Styles.Row>
         <Styles.Gap>
-          <HeaderBackButton
-            color="text"
+          <HeaderIconButton
             onPress={props.onPressHeaderBackButton}
+            iconName="arrow-back"
+            withMarginLeft
+            color="text"
           />
         </Styles.Gap>
         <Styles.TitleWrapper>

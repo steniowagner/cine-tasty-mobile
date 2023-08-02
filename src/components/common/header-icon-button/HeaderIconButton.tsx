@@ -1,8 +1,7 @@
 import React from 'react';
 import {Colors} from 'styled-components/native';
 
-import {SVGIcon, Icons} from '@components';
-import metrics from '@styles/metrics';
+import {Icons} from '@components';
 
 import * as Styles from './HeaderIconButton.styles';
 
@@ -22,10 +21,6 @@ export const HeaderIconButton = (props: HeaderIconButtonProps) => (
     withMarginLeft={props.withMarginLeft}
     disabled={props.disabled}
     onPress={props.onPress}>
-    <SVGIcon
-      size={metrics.getWidthFromDP('7%')}
-      colorThemeRef={props.color}
-      id={props.iconName}
-    />
+    <Styles.Icon colorThemeRef={props.color} id={props.iconName} />
   </Styles.Wrapper>
 );

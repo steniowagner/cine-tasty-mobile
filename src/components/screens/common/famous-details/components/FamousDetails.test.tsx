@@ -79,7 +79,7 @@ const renderFamousDetails = (props: RenderFamousDetailsProps) => {
 describe('<FamousDetail />', () => {
   const elements = {
     headerBackButton: (api: RenderAPI) =>
-      api.queryByTestId('header-back-button'),
+      api.queryByTestId('header-icon-button-wrapper-arrow-back'),
     adviseWrapper: (api: RenderAPI) => api.queryByTestId('advise-wrapper'),
     adviseTitle: (api: RenderAPI) => api.queryByTestId('advise-title'),
     adviseDescription: (api: RenderAPI) =>

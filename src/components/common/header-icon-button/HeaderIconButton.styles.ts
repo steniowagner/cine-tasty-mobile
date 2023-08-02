@@ -1,6 +1,8 @@
 import {TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 
+import {SVGIcon} from '../svg-icon';
+
 type WrapperStyleProps = {
   withMarginRight?: boolean;
   withMarginLeft?: boolean;
@@ -22,3 +24,7 @@ export const Wrapper = styled(TouchableOpacity).attrs(({theme}) => ({
   justify-content: center;
   align-items: center;
 `;
+
+export const Icon = styled(SVGIcon).attrs(({theme}) => ({
+  size: theme.metrics.getWidthFromDP('6.5%'),
+}))``;
