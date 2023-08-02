@@ -1,6 +1,5 @@
 export {Advise} from './advise/Advise';
 export {ExpansibleTextSection} from './expansible-text-section/ExpansibleTextSection';
-export {HeaderBackButton} from './header-back-button/HeaderBackButton';
 export {HeaderIconButton} from './header-icon-button/HeaderIconButton';
 export {ImagesList} from './images-list/ImagesList';
 export {LoadingIndicator} from './loading-indicator/LoadingIndicator';
