@@ -37,5 +37,5 @@ export const ViewAllText = styled(Text)`
   margin-right: -4px;
   font-family: CircularStd-Bold;
   font-size: ${({theme}) => theme.metrics.largeSize}px;
-  color: #262626;
+  color: ${({theme}) => theme.colors.buttonText};
 `;
