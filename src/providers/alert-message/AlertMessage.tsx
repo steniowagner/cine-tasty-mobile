@@ -1,6 +1,8 @@
 import React from 'react';
 
-import {usePopupAdvice} from './useAlertMessage';
+import {dark} from '@styles/themes';
+
+import {useAlertMessage} from './useAlertMessage';
 import * as Styles from './AlertMessage.styles';
 
 type AlertMessageProps = {
@@ -9,20 +11,17 @@ type AlertMessageProps = {
 };
 
 export const AlertMessage = (props: AlertMessageProps) => {
-  const popupAdvice = usePopupAdvice({
+  const alertMessage = useAlertMessage({
     onFinishToShow: props.onFinishToShow,
   });
   return (
-    <Styles.MessageWrapper
+    <Styles.Wrapper
       testID="alert-message-wrapper"
-      style={[
-        {
-          opacity: popupAdvice.opacity,
-        },
-      ]}>
+      style={[alertMessage.animatedStyle, dark.colors.defaultShadow]}>
+      <Styles.AlertIcon />
       <Styles.Message testID="alert-message-text">
         {props.message}
       </Styles.Message>
-    </Styles.MessageWrapper>
+    </Styles.Wrapper>
   );
 };
