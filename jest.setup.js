@@ -1,8 +1,3 @@
-global.ReanimatedDataMock = {
-  now: () => 0,
-};
-require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
-
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 jest.mock('react-i18next', () => ({
@@ -32,31 +27,6 @@ jest.mock('react-native-fast-image', () => {
   };
 
   return FastImage;
-});
-
-jest.mock('react-native-reanimated', () => {
-  const {View} = require('react-native');
-  return {
-    Value: jest.fn(),
-    event: jest.fn(),
-    add: jest.fn(),
-    eq: jest.fn(),
-    set: jest.fn(),
-    cond: jest.fn(),
-    interpolate: jest.fn(),
-    View,
-    Extrapolate: {CLAMP: jest.fn()},
-    Transition: {
-      Together: 'Together',
-      Out: 'Out',
-      In: 'In',
-    },
-    Easing: {
-      in: jest.fn(),
-      out: jest.fn(),
-      inOut: jest.fn(),
-    },
-  };
 });
 
 jest.mock('react-native-gesture-handler', () => {
