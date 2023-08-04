@@ -8,6 +8,7 @@ import React, {
 import RNRestart from 'react-native-restart';
 
 import {CONSTANTS, storage} from '@utils';
+
 import * as Types from '@local-types';
 
 import {classifyScreenSize} from './classifyScreenSize';

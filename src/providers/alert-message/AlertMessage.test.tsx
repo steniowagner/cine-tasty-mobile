@@ -1,53 +1,83 @@
+jest.unmock('react-native-reanimated');
 import React from 'react';
-import {RenderAPI, cleanup, render} from '@testing-library/react-native';
+import {TouchableOpacity} from 'react-native';
+import {
+  RenderAPI,
+  fireEvent,
+  render,
+  waitFor,
+  act,
+} from '@testing-library/react-native';
 import {ThemeProvider} from 'styled-components/native';
 
 import timeTravel, {setupTimeTravel} from '@mocks/timeTravel';
 import {dark as theme} from '@styles/themes/dark';
 
+import {AlertMessageProvider, useAlertMessage} from './AlertMessageContext';
 import {HIDE_POPUP_DELAY} from './useAlertMessage';
-import {AlertMessage} from './AlertMessage';
 
-const DEFAULT_TEXT = 'DEFAULT_TEXT';
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock');
+  Reanimated.default.call = () => {};
+  return Reanimated;
+});
 
-const renderAlertMessage = (
-  onFinishToShow = jest.fn(),
-  message = DEFAULT_TEXT,
-) => (
-  <ThemeProvider theme={theme}>
-    <AlertMessage onFinishToShow={onFinishToShow} message={message} />
-  </ThemeProvider>
-);
+const SOME_ALERT_MESSAGE = 'SOME_ALERT_MESSAGE';
 
-describe('<AlertMessage />', () => {
-  beforeEach(() => {
-    setupTimeTravel();
-    jest.useFakeTimers();
-  });
+const renderAlertMessage = () => {
+  const ChildrenComponent = () => {
+    const alertMessage = useAlertMessage();
+    return (
+      <TouchableOpacity
+        testID="show-message-button"
+        onPress={() => alertMessage.show(SOME_ALERT_MESSAGE)}
+      />
+    );
+  };
+  return (
+    <ThemeProvider theme={theme}>
+      <AlertMessageProvider>
+        <ChildrenComponent />
+      </AlertMessageProvider>
+    </ThemeProvider>
+  );
+};
 
-  afterEach(cleanup);
+describe('<AlertMessageProvider />', () => {
+  beforeEach(setupTimeTravel);
 
   const elements = {
+    showMessageButton: (api: RenderAPI) =>
+      api.queryByTestId('show-message-button'),
     alertMessageWrapper: (api: RenderAPI) =>
       api.queryByTestId('alert-message-wrapper'),
     alertMessageText: (api: RenderAPI) =>
       api.queryByTestId('alert-message-text'),
   };
 
-  it('should render correctly', () => {
+  it('should show the "alert-message" correctly', async () => {
     const component = render(renderAlertMessage());
+    expect(elements.alertMessageWrapper(component)).toBeNull();
+    fireEvent.press(elements.showMessageButton(component));
     expect(elements.alertMessageWrapper(component)).not.toBeNull();
-    expect(elements.alertMessageText(component)).not.toBeNull();
     expect(elements.alertMessageText(component).children[0]).toEqual(
-      DEFAULT_TEXT,
+      SOME_ALERT_MESSAGE,
     );
+    act(() => {
+      jest.runAllTimers();
+    });
   });
 
-  it('should call "onFinishToShow" after the hide-animation to be finished', () => {
-    const onFinishToShow = jest.fn();
-    render(renderAlertMessage(onFinishToShow));
-    expect(onFinishToShow).toHaveBeenCalledTimes(0);
-    timeTravel(HIDE_POPUP_DELAY * 2);
-    expect(onFinishToShow).toHaveBeenCalledTimes(1);
+  it(`should remove the "alert-message" after ${HIDE_POPUP_DELAY}ms`, async () => {
+    const component = render(renderAlertMessage());
+    expect(elements.alertMessageWrapper(component)).toBeNull();
+    fireEvent.press(elements.showMessageButton(component));
+    expect(elements.alertMessageWrapper(component)).not.toBeNull();
+    act(() => {
+      timeTravel(HIDE_POPUP_DELAY);
+    });
+    await waitFor(() => {
+      expect(elements.alertMessageWrapper(component)).toBeNull();
+    });
   });
 });

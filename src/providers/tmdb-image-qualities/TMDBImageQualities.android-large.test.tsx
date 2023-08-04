@@ -14,7 +14,6 @@ import RNRestart from 'react-native-restart';
 
 import {dark as theme} from '@styles/themes/dark';
 import * as Types from '@local-types';
-import {CONSTANTS} from '@utils';
 
 import large from './qualities/large';
 
@@ -27,10 +26,6 @@ const mockRestart = jest.fn().mockImplementation();
 jest.mock('react-native-restart');
 // @ts-ignore
 RNRestart.Restart = mockRestart;
-
-jest.mock('@utils');
-
-const utils = require('@utils');
 
 jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
@@ -48,10 +43,31 @@ jest.mock('react-native', () => {
     Animated: {
       View,
     },
+    View,
     TouchableOpacity: View,
     Text: View,
+    ScrollView: View,
+    ActivityIndicator: View,
+    FlatList: View,
+    StyleSheet: {
+      create: () => 1,
+    },
+    StatusBar: View,
   };
 });
+
+jest.mock('@utils', () => {
+  const actualUtilsModule = jest.requireActual('@utils');
+  return {
+    ...actualUtilsModule,
+    storage: {
+      set: jest.fn(),
+      get: jest.fn(),
+    },
+  };
+});
+
+const utils = require('@utils');
 
 const renderTMDBImageQuality = (
   newQuality: Types.ImageQualities = 'medium',
@@ -89,7 +105,7 @@ const renderTMDBImageQuality = (
   );
 };
 
-describe('<TMDBImageQualities /> [Android/Large]', () => {
+describe('<TMDBImageQualities /> - Android # large', () => {
   const elements = {
     backdrop: (api: RenderAPI) => api.getByTestId('backdrop'),
     poster: (api: RenderAPI) => api.getByTestId('poster'),
@@ -100,7 +116,6 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
 
   beforeEach(() => {
     jest.resetModules();
-    jest.useFakeTimers();
   });
 
   describe('When the "OS" is "Android" and the "screen-classification" is "large"', () => {
@@ -109,17 +124,14 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
 
       beforeEach(() => {
         jest.resetModules();
-        jest.useFakeTimers();
       });
 
       afterEach(cleanup);
 
-      it('should return the qualitites correctly', () => {
-        utils.storage.get.mockImplementationOnce(() => targetQuality);
+      it('should return the qualitites correctly', async () => {
+        (utils.storage.get as jest.Mock).mockResolvedValue(targetQuality);
         const component = render(renderTMDBImageQuality());
-        act(() => {
-          jest.runAllTimers();
-        });
+        await waitFor(() => {});
         expect(elements.backdrop(component).children[0]).toEqual(
           large[targetQuality].backdrop,
         );
@@ -140,17 +152,14 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
 
       beforeEach(() => {
         jest.resetModules();
-        jest.useFakeTimers();
       });
 
       afterEach(cleanup);
 
-      it('should return the qualitites correctly', () => {
-        utils.storage.get.mockImplementationOnce(() => targetQuality);
+      it('should return the qualitites correctly', async () => {
+        (utils.storage.get as jest.Mock).mockResolvedValue(targetQuality);
         const component = render(renderTMDBImageQuality());
-        act(() => {
-          jest.runAllTimers();
-        });
+        await waitFor(() => {});
         expect(elements.backdrop(component).children[0]).toEqual(
           large[targetQuality].backdrop,
         );
@@ -171,17 +180,14 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
 
       beforeEach(() => {
         jest.resetModules();
-        jest.useFakeTimers();
       });
 
       afterEach(cleanup);
 
       it('should return the qualitites correctly', async () => {
-        utils.storage.get.mockImplementationOnce(() => targetQuality);
+        (utils.storage.get as jest.Mock).mockResolvedValue(targetQuality);
         const component = render(renderTMDBImageQuality());
-        act(() => {
-          jest.runAllTimers();
-        });
+        await waitFor(() => {});
         expect(elements.backdrop(component).children[0]).toEqual(
           large[targetQuality].backdrop,
         );
@@ -202,17 +208,14 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
 
       beforeEach(() => {
         jest.resetModules();
-        jest.useFakeTimers();
       });
 
       afterEach(cleanup);
 
       it('should return the qualitites correctly', async () => {
-        utils.storage.get.mockImplementationOnce(() => targetQuality);
+        (utils.storage.get as jest.Mock).mockResolvedValue(targetQuality);
         const component = render(renderTMDBImageQuality());
-        act(() => {
-          jest.runAllTimers();
-        });
+        await waitFor(() => {});
         expect(elements.backdrop(component).children[0]).toEqual(
           large[targetQuality].backdrop,
         );
@@ -234,21 +237,18 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
 
         beforeEach(() => {
           jest.clearAllMocks();
-          jest.useFakeTimers();
         });
 
-        it('should call "storage.set" correctly', () => {
+        it('should call "storage.set" correctly', async () => {
           const component = render(renderTMDBImageQuality(qualitySelected));
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.changeQualityButton(component));
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toHaveBeenCalledWith(
-            CONSTANTS.KEYS.IMAGES_QUALITY,
+            utils.CONSTANTS.KEYS.IMAGES_QUALITY,
             qualitySelected,
           );
-          act(() => {
-            jest.runAllTimers();
-          });
+          await waitFor(() => {});
         });
 
         it('should call "RNRestart.Restart" correctly', async () => {
@@ -257,9 +257,6 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
           fireEvent.press(elements.changeQualityButton(component));
           await waitFor(() => {
             expect(mockRestart).toHaveBeenCalledTimes(1);
-          });
-          act(() => {
-            jest.runAllTimers();
           });
         });
       });
@@ -269,21 +266,18 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
 
         beforeEach(() => {
           jest.clearAllMocks();
-          jest.useFakeTimers();
         });
 
-        it('should call "storage.set" correctly', () => {
+        it('should call "storage.set" correctly', async () => {
           const component = render(renderTMDBImageQuality(qualitySelected));
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.changeQualityButton(component));
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toHaveBeenCalledWith(
-            CONSTANTS.KEYS.IMAGES_QUALITY,
+            utils.CONSTANTS.KEYS.IMAGES_QUALITY,
             qualitySelected,
           );
-          act(() => {
-            jest.runAllTimers();
-          });
+          await waitFor(() => {});
         });
 
         it('should call "RNRestart.Restart" correctly', async () => {
@@ -292,9 +286,6 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
           fireEvent.press(elements.changeQualityButton(component));
           await waitFor(() => {
             expect(mockRestart).toHaveBeenCalledTimes(1);
-          });
-          act(() => {
-            jest.runAllTimers();
           });
         });
       });
@@ -304,21 +295,18 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
 
         beforeEach(() => {
           jest.clearAllMocks();
-          jest.useFakeTimers();
         });
 
-        it('should call "storage.set" correctly', () => {
+        it('should call "storage.set" correctly', async () => {
           const component = render(renderTMDBImageQuality(qualitySelected));
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.changeQualityButton(component));
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toHaveBeenCalledWith(
-            CONSTANTS.KEYS.IMAGES_QUALITY,
+            utils.CONSTANTS.KEYS.IMAGES_QUALITY,
             qualitySelected,
           );
-          act(() => {
-            jest.runAllTimers();
-          });
+          await waitFor(() => {});
         });
 
         it('should call "RNRestart.Restart" correctly', async () => {
@@ -327,9 +315,6 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
           fireEvent.press(elements.changeQualityButton(component));
           await waitFor(() => {
             expect(mockRestart).toHaveBeenCalledTimes(1);
-          });
-          act(() => {
-            jest.runAllTimers();
           });
         });
       });
@@ -342,18 +327,16 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
           jest.useFakeTimers();
         });
 
-        it('should call "storage.set" correctly', () => {
+        it('should call "storage.set" correctly', async () => {
           const component = render(renderTMDBImageQuality(qualitySelected));
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.changeQualityButton(component));
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toHaveBeenCalledWith(
-            CONSTANTS.KEYS.IMAGES_QUALITY,
+            utils.CONSTANTS.KEYS.IMAGES_QUALITY,
             qualitySelected,
           );
-          act(() => {
-            jest.runAllTimers();
-          });
+          await waitFor(() => {});
         });
 
         it('should call "RNRestart.Restart" correctly', async () => {
@@ -362,9 +345,6 @@ describe('<TMDBImageQualities /> [Android/Large]', () => {
           fireEvent.press(elements.changeQualityButton(component));
           await waitFor(() => {
             expect(mockRestart).toHaveBeenCalledTimes(1);
-          });
-          act(() => {
-            jest.runAllTimers();
           });
         });
       });
