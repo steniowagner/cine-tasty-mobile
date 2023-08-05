@@ -512,11 +512,14 @@ describe('<News />', () => {
           expect(elements.newsList(component)).not.toBeNull();
         });
         fireEvent(elements.newsList(component), 'onEndReached');
-        expect(elements.paginationFooter(component)).not.toBeNull();
-        expect(elements.paginationLoading(component)).not.toBeNull();
+        await waitFor(() => {
+          expect(elements.paginationFooter(component)).not.toBeNull();
+          expect(elements.paginationLoading(component)).not.toBeNull();
+        });
       });
 
-      it.only('should not show the "pagination-loading" when the pagination-process is finished', async () => {
+      it('should not show the "pagination-loading" when the pagination-process is finished', async () => {
+        jest.useFakeTimers();
         const component = render(
           renderNews(mockNews.makePaginationSuccess(true)),
         );
@@ -524,6 +527,9 @@ describe('<News />', () => {
           expect(elements.newsList(component)).not.toBeNull();
         });
         fireEvent(elements.newsList(component), 'onEndReached');
+        act(() => {
+          jest.runOnlyPendingTimers();
+        });
         await waitFor(() => {
           expect(elements.paginationFooter(component)).toBeNull();
           expect(elements.paginationLoading(component)).toBeNull();
@@ -531,6 +537,7 @@ describe('<News />', () => {
       });
 
       it('should render all the items correctly after the pagination', async () => {
+        jest.useFakeTimers();
         const component = render(
           renderNews(mockNews.makePaginationSuccess(true)),
         );
@@ -540,6 +547,9 @@ describe('<News />', () => {
           );
         });
         fireEvent(elements.newsList(component), 'onEndReached');
+        act(() => {
+          jest.runOnlyPendingTimers();
+        });
         await waitFor(() => {
           expect(elements.paginationFooter(component)).toBeNull();
         });
