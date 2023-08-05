@@ -1,8 +1,5 @@
 import React from 'react';
 
-import {SVGIcon} from '@components';
-import metrics from '@styles/metrics';
-
 import * as Styles from './PagiantedListHeader.styles';
 
 type PaginatedListHeaderProps = {
@@ -11,6 +8,6 @@ type PaginatedListHeaderProps = {
 
 export const PaginatedListHeader = (props: PaginatedListHeaderProps) => (
   <Styles.ReloadButton testID="top-reload-button" onPress={props.onPress}>
-    <SVGIcon size={metrics.getWidthFromDP('10%')} id="restart" />
+    <Styles.Icon id="restart" />
   </Styles.ReloadButton>
 );

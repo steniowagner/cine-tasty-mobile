@@ -12,13 +12,6 @@ const mockOSetLightTheme = jest.fn();
 const mockOnSetSystemTheme = jest.fn();
 let mockThemeId = '';
 
-jest.mock('react-native-svg', () => {
-  const SvgXml = require('react-native/Libraries/Components/View/View');
-  return {
-    SvgXml,
-  };
-});
-
 jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
   return {

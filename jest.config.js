@@ -1,3 +1,6 @@
+const {pathsToModuleNameMapper} = require('ts-jest');
+const {compilerOptions} = require('./tsconfig');
+
 const dependenciesToBeTranspiled = [
   '@react-native',
   'react-native',
@@ -22,7 +25,9 @@ module.exports = {
   ],
   setupFiles: ['./jest.setup.js'],
   testMatch: ['**/*.test.(ts|tsx)'],
-  moduleNameMapper: {'^@mocks/(.*)$': '<rootDir>/__mocks__/$1'},
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/src/',
+  }),
   testEnvironment: 'jsdom',
   transform: {
     '\\.js?$': 'babel-jest',

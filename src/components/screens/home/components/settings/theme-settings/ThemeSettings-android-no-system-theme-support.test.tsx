@@ -7,18 +7,6 @@ import {Translations} from '@i18n/tags';
 
 import {ThemeSettings} from './ThemeSettings';
 
-const mockOnSetDarkTheme = jest.fn();
-const mockOSetLightTheme = jest.fn();
-const mockOnSetSystemTheme = jest.fn();
-let mockThemeId = '';
-
-jest.mock('react-native-svg', () => {
-  const SvgXml = require('react-native/Libraries/Components/View/View');
-  return {
-    SvgXml,
-  };
-});
-
 jest.mock('react-native', () => {
   const View = require('react-native/Libraries/Components/View/View');
   return {
@@ -52,10 +40,10 @@ jest.mock('react-native', () => {
 
 jest.mock('@src/providers/theme/Theme', () => ({
   useThemeProvider: () => ({
-    onSetSystemTheme: mockOnSetSystemTheme,
-    onSetLightTheme: mockOSetLightTheme,
-    onSetDarkTheme: mockOnSetDarkTheme,
-    themeId: mockThemeId,
+    onSetSystemTheme: jest.fn(),
+    onSetLightTheme: jest.fn(),
+    onSetDarkTheme: jest.fn(),
+    themeId: '',
   }),
 }));
 
@@ -65,7 +53,7 @@ const renderThemeSettings = () => (
   </ThemeProvider>
 );
 
-describe('<ThemeSettings /> - [Android - No system-theme support]', () => {
+describe('<ThemeSettings /> - Android # No system-theme support', () => {
   const elements = {
     optionButtons: (api: RenderAPI) => api.queryAllByTestId('option-settings'),
     optionTitles: (api: RenderAPI) => api.queryAllByTestId('option-title'),

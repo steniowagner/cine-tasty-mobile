@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SVGIcon} from '@components';
+import {SVGIcon} from '../../../../../common/svg-icon/SVGIcon';
 import metrics from '@styles/metrics';
 
 import * as Styles from './OptionSetting.styles';

@@ -4,7 +4,6 @@ import React from 'react';
 import {
   RenderAPI,
   fireEvent,
-  cleanup,
   render,
   act,
   waitFor,
@@ -23,6 +22,12 @@ import {Translations} from '@i18n/tags';
 
 import {INITIAL_ITEMS_TO_RENDER} from './News';
 import {News} from './News';
+
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock');
+  Reanimated.default.call = () => {};
+  return Reanimated;
+});
 
 type Elements = Record<string, any>;
 
@@ -121,8 +126,6 @@ describe('<News />', () => {
       jest.useFakeTimers();
     });
 
-    afterEach(cleanup);
-
     it('should show the Loading-items list', () => {
       const component = render(
         renderNews(mockNews.makeEntryQuerySuccessResolvers()),
@@ -155,8 +158,6 @@ describe('<News />', () => {
       jest.useFakeTimers();
     });
 
-    afterEach(cleanup);
-
     it('should open the language-filter modal when the user presses the "header-right-filter-button"', async () => {
       const component = render(
         renderNews(mockNews.makeEntryQuerySuccessResolvers()),
@@ -187,8 +188,6 @@ describe('<News />', () => {
       beforeEach(() => {
         jest.useFakeTimers();
       });
-
-      afterEach(cleanup);
 
       it('should render the "news-list" correctly when the user receives the articles', async () => {
         const component = render(
@@ -227,8 +226,6 @@ describe('<News />', () => {
           jest.useFakeTimers();
         });
 
-        afterEach(cleanup);
-
         it('should show the "entry-query-error-message"', async () => {
           const component = render(
             renderNews(mockNews.makeEntryQueryErrorResolvers('network')),
@@ -248,8 +245,6 @@ describe('<News />', () => {
           jest.useFakeTimers();
         });
 
-        afterEach(cleanup);
-
         it('should show the "entry-query-error-message"', async () => {
           const component = render(
             renderNews(mockNews.makeEntryQueryErrorResolvers('graphql')),
@@ -268,8 +263,6 @@ describe('<News />', () => {
         beforeEach(() => {
           jest.useFakeTimers();
         });
-
-        afterEach(cleanup);
 
         it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
           const component = render(
@@ -308,10 +301,8 @@ describe('<News />', () => {
 
       describe('Network-error > Refetch > Network-error', () => {
         beforeEach(() => {
-          setupTimeTravel();
+          jest.useFakeTimers();
         });
-
-        afterEach(cleanup);
 
         it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
           const component = render(
@@ -327,6 +318,9 @@ describe('<News />', () => {
             expect(elements.newsList(component)).not.toBeNull();
             expect(elements.articlesListItems(component).length).toEqual(0);
           });
+          act(() => {
+            jest.runAllTimers();
+          });
         });
 
         it('should show the error message correctly when the refetch-error happens', async () => {
@@ -336,17 +330,21 @@ describe('<News />', () => {
             ),
           );
           expect(elements.alertMessageWrapper(component)).toBeNull();
+          expect(elements.alertMessageText(component)).toBeNull();
           await waitFor(() => {
+            expect(elements.alertMessageWrapper(component)).not.toBeNull();
             expect(elements.alertMessageText(component).children[0]).toEqual(
               Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
             );
           });
           act(() => {
-            timeTravel(2 * HIDE_POPUP_DELAY);
+            jest.runOnlyPendingTimers();
           });
           expect(elements.alertMessageWrapper(component)).toBeNull();
+          expect(elements.alertMessageText(component)).toBeNull();
           fireEvent.press(elements.topReloadButton(component));
           await waitFor(() => {
+            expect(elements.alertMessageWrapper(component)).not.toBeNull();
             expect(elements.alertMessageText(component).children[0]).toEqual(
               Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
             );
@@ -356,10 +354,8 @@ describe('<News />', () => {
 
       describe('Network-error > Refetch > GraphQL-error', () => {
         beforeEach(() => {
-          setupTimeTravel();
+          jest.useFakeTimers();
         });
-
-        afterEach(cleanup);
 
         it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
           const component = render(
@@ -384,17 +380,21 @@ describe('<News />', () => {
             ),
           );
           expect(elements.alertMessageWrapper(component)).toBeNull();
+          expect(elements.alertMessageText(component)).toBeNull();
           await waitFor(() => {
+            expect(elements.alertMessageWrapper(component)).not.toBeNull();
             expect(elements.alertMessageText(component).children[0]).toEqual(
               Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
             );
           });
           act(() => {
-            timeTravel(2 * HIDE_POPUP_DELAY);
+            jest.runOnlyPendingTimers();
           });
           expect(elements.alertMessageWrapper(component)).toBeNull();
+          expect(elements.alertMessageText(component)).toBeNull();
           fireEvent.press(elements.topReloadButton(component));
           await waitFor(() => {
+            expect(elements.alertMessageWrapper(component)).not.toBeNull();
             expect(elements.alertMessageText(component).children[0]).toEqual(
               Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
             );
@@ -404,10 +404,8 @@ describe('<News />', () => {
 
       describe('GraphQL-error > Refetch > Network-error', () => {
         beforeEach(() => {
-          setupTimeTravel();
+          jest.useFakeTimers();
         });
-
-        afterEach(cleanup);
 
         it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
           const component = render(
@@ -432,17 +430,21 @@ describe('<News />', () => {
             ),
           );
           expect(elements.alertMessageWrapper(component)).toBeNull();
+          expect(elements.alertMessageText(component)).toBeNull();
           await waitFor(() => {
+            expect(elements.alertMessageWrapper(component)).not.toBeNull();
             expect(elements.alertMessageText(component).children[0]).toEqual(
               Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
             );
           });
           act(() => {
-            timeTravel(2 * HIDE_POPUP_DELAY);
+            jest.runOnlyPendingTimers();
           });
           expect(elements.alertMessageWrapper(component)).toBeNull();
+          expect(elements.alertMessageText(component)).toBeNull();
           fireEvent.press(elements.topReloadButton(component));
           await waitFor(() => {
+            expect(elements.alertMessageWrapper(component)).not.toBeNull();
             expect(elements.alertMessageText(component).children[0]).toEqual(
               Translations.Tags.NEWS_ENTRY_QUERY_ERROR,
             );
@@ -454,8 +456,6 @@ describe('<News />', () => {
         beforeEach(() => {
           setupTimeTravel();
         });
-
-        afterEach(cleanup);
 
         it('should refetch the data and show the "news-list" correctly when the user presses the "top-reload-button"', async () => {
           const component = render(
@@ -502,12 +502,6 @@ describe('<News />', () => {
 
   describe('Pagination', () => {
     describe('Success', () => {
-      beforeEach(() => {
-        setupTimeTravel();
-      });
-
-      afterEach(cleanup);
-
       it('should show the "pagination-loading" when the user start to paginate the "news-list"', async () => {
         const component = render(
           renderNews(mockNews.makePaginationSuccess(true)),
@@ -602,19 +596,13 @@ describe('<News />', () => {
     describe('Error', () => {
       describe('Network', () => {
         describe('Scroll > Error', () => {
-          beforeEach(() => {
-            setupTimeTravel();
-          });
-
-          afterEach(cleanup);
-
           it('should show the "pagination-reload-button" after the "pagination-error"', async () => {
             const component = render(
               renderNews(mockNews.mockPaginationError('network')),
             );
             expect(elements.paginationFooter(component)).toBeNull();
             expect(elements.paginationLoading(component)).toBeNull();
-            await scrollToEndOfList(component, elements);
+            await waitFor(async () => scrollToEndOfList(component, elements));
             await waitFor(() => {
               expect(elements.paginationFooter(component)).not.toBeNull();
               expect(elements.paginationReloadButton(component)).not.toBeNull();
@@ -625,10 +613,9 @@ describe('<News />', () => {
             const component = render(
               renderNews(mockNews.mockPaginationError('network')),
             );
-            await scrollToEndOfList(component, elements);
+            await waitFor(async () => scrollToEndOfList(component, elements));
             await waitFor(() => {
               expect(elements.alertMessageWrapper(component)).not.toBeNull();
-              expect(elements.alertMessageText(component)).not.toBeNull();
               expect(elements.alertMessageText(component).children[0]).toEqual(
                 Translations.Tags.NEWS_QUERY_BY_PAGINATION_ERROR,
               );
@@ -637,12 +624,6 @@ describe('<News />', () => {
         });
 
         describe('Scroll > Error > Success', () => {
-          beforeEach(() => {
-            jest.useFakeTimers();
-          });
-
-          afterEach(cleanup);
-
           it('should paginate to the next page after an error', async () => {
             const component = render(
               renderNews(mockNews.mockPaginationErrorSuccess('network')),
@@ -659,12 +640,6 @@ describe('<News />', () => {
         });
 
         describe('Scroll > Network-error > Network-error', () => {
-          beforeEach(() => {
-            jest.useFakeTimers();
-          });
-
-          afterEach(cleanup);
-
           it('should show the "error-message" when had a "Network-error" when tried to refetch for the first time and another "Network-error" when tried to refetch for the second time', async () => {
             const component = render(
               renderNews(
@@ -691,12 +666,6 @@ describe('<News />', () => {
         });
 
         describe('Scroll > Network-error > GraphQL-error', () => {
-          beforeEach(() => {
-            jest.useFakeTimers();
-          });
-
-          afterEach(cleanup);
-
           it('should show the "error-message" when had a "Network-error" when tried to refetch for the first time and a "GraphQL-error" when tried to refetch for the second time', async () => {
             const component = render(
               renderNews(
@@ -725,12 +694,6 @@ describe('<News />', () => {
 
       describe('GraphQL', () => {
         describe('Scroll > Error', () => {
-          beforeEach(() => {
-            setupTimeTravel();
-          });
-
-          afterEach(cleanup);
-
           it('should show the "pagination-reload-button" after the "pagination-error"', async () => {
             const component = render(
               renderNews(mockNews.mockPaginationError('graphql')),
@@ -760,12 +723,6 @@ describe('<News />', () => {
         });
 
         describe('Scroll > Error > Success', () => {
-          beforeEach(() => {
-            jest.useFakeTimers();
-          });
-
-          afterEach(cleanup);
-
           it('should paginate to the next page after an error', async () => {
             const component = render(
               renderNews(mockNews.mockPaginationErrorSuccess('graphql')),
@@ -782,12 +739,6 @@ describe('<News />', () => {
         });
 
         describe('Scroll > GraphQL-error > GraphQL-error', () => {
-          beforeEach(() => {
-            jest.useFakeTimers();
-          });
-
-          afterEach(cleanup);
-
           it('should show the "error-message" when had a "GraphQL-error" when tried to refetch for the first time and another "GraphQL-error" when tried to refetch for the second time', async () => {
             const component = render(
               renderNews(
@@ -814,12 +765,6 @@ describe('<News />', () => {
         });
 
         describe('Scroll > GraphQL-error > Network-error', () => {
-          beforeEach(() => {
-            jest.useFakeTimers();
-          });
-
-          afterEach(cleanup);
-
           it('should show the "error-message" when had a "GraphQL-error" when tried to refetch for the first time and a "Network-error" when tried to refetch for the second time', async () => {
             const component = render(
               renderNews(

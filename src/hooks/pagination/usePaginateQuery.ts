@@ -49,7 +49,12 @@ export const usePaginateQuery = <TResult, TVariables>(
       ...previousPagination,
       isPaginating: false,
     }));
-  }, [props.beforeExecQuery, props.getVariables, pagination.page]);
+  }, [
+    props.beforeExecQuery,
+    props.getVariables,
+    pagination.page,
+    imperativeQuery.exec,
+  ]);
 
   const exec = useCallback(() => {
     const isLoading = imperativeQuery.isLoading || pagination.isPaginating;

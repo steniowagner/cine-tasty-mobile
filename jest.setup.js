@@ -1,3 +1,7 @@
+global.ReanimatedDataMock = {
+  now: () => 0,
+};
+
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 jest.mock('react-i18next', () => ({
@@ -82,3 +86,11 @@ global.timeTravel = (time = FRAME_TIME) => {
     tickTravel();
   }
 };
+
+jest.mock('react-native-svg', () => {
+  const View = require('react-native/Libraries/Components/View/View');
+  return {
+    SvgXml: View,
+    SvgCssUri: View,
+  };
+});

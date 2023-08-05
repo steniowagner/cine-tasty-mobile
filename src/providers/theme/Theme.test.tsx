@@ -2,6 +2,7 @@ import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
 import {
   RenderAPI,
+  act,
   fireEvent,
   render,
   waitFor,
@@ -9,11 +10,10 @@ import {
 
 import {dark, light} from '@styles/themes';
 import * as Types from '@local-types';
-import {CONSTANTS} from '@utils';
 
 import {ThemeContextProvider, useThemeProvider} from './Theme';
 
-jest.mock('@utils');
+jest.mock('@utils', () => jest.requireActual('@utils'));
 
 const utils = require('@utils');
 
@@ -121,7 +121,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(dark),
           );
           fireEvent.press(elements.setDarkThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.DARK,
           );
@@ -137,7 +136,6 @@ describe('<ThemeProvider />', () => {
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setDarkThemeButton(component));
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
         });
       });
@@ -154,7 +152,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(light),
           );
           fireEvent.press(elements.setDarkThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.DARK,
           );
@@ -170,10 +167,9 @@ describe('<ThemeProvider />', () => {
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setDarkThemeButton(component));
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toBeCalledWith(
-            CONSTANTS.KEYS.APP_THEME,
+            utils.CONSTANTS.KEYS.APP_THEME,
             Types.ThemeId.DARK,
           );
         });
@@ -193,7 +189,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(light),
           );
           fireEvent.press(elements.setLightThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.LIGHT,
           );
@@ -209,7 +204,6 @@ describe('<ThemeProvider />', () => {
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setLightThemeButton(component));
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
         });
       });
@@ -226,7 +220,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(dark),
           );
           fireEvent.press(elements.setLightThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.LIGHT,
           );
@@ -242,10 +235,9 @@ describe('<ThemeProvider />', () => {
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setLightThemeButton(component));
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toBeCalledWith(
-            CONSTANTS.KEYS.APP_THEME,
+            utils.CONSTANTS.KEYS.APP_THEME,
             Types.ThemeId.LIGHT,
           );
         });
