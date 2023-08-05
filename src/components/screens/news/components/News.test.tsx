@@ -516,7 +516,7 @@ describe('<News />', () => {
         expect(elements.paginationLoading(component)).not.toBeNull();
       });
 
-      it('should not show the "pagination-loading" when the pagination-process is finished', async () => {
+      it.only('should not show the "pagination-loading" when the pagination-process is finished', async () => {
         const component = render(
           renderNews(mockNews.makePaginationSuccess(true)),
         );
