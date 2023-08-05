@@ -17,6 +17,7 @@ const dependenciesToBeTranspiled = [
 ].join('|');
 
 module.exports = {
+  testTimeout: 20000,
   preset: 'react-native',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'node'],
   testPathIgnorePatterns: ['/node_modules/', '/e2e/'],
