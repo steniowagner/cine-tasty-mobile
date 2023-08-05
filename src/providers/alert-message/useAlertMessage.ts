@@ -25,7 +25,14 @@ const ANIMATION_SPRING_CONFIGURATION = {
 };
 const ANIMATITON_FINAL_POSITION =
   metrics.height - (TabNavigatorHeight + AlertHeight + metrics.extraLargeSize);
-
+const OPACITY_INPUT_INTERPOLATION = [0, 0.5, 0.9, 1];
+const OPACITY_OUTPUT_INTERPOLATION = [0, 0.5, 1, 1];
+const TRANSLATE_Y_INPUT_INTERPOLATION = [0, 0.9, 1];
+const TRANSLATE_Y_OUTPUT_INTERPOLATION = [
+  metrics.height,
+  ANIMATITON_FINAL_POSITION,
+  ANIMATITON_FINAL_POSITION - metrics.extraSmallSize,
+];
 type UsePopupAdviceProps = {
   onFinishToShow?: () => void;
 };
@@ -34,16 +41,17 @@ export const useAlertMessage = (props: UsePopupAdviceProps) => {
   const position = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      position.value,
+      OPACITY_INPUT_INTERPOLATION,
+      OPACITY_OUTPUT_INTERPOLATION,
+    ),
     transform: [
       {
         translateY: interpolate(
           position.value,
-          [0, 0.9, 1],
-          [
-            metrics.height,
-            ANIMATITON_FINAL_POSITION,
-            ANIMATITON_FINAL_POSITION - metrics.extraSmallSize,
-          ],
+          TRANSLATE_Y_INPUT_INTERPOLATION,
+          TRANSLATE_Y_OUTPUT_INTERPOLATION,
         ),
       },
     ],
