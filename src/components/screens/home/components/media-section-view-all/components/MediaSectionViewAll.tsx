@@ -40,7 +40,6 @@ export const MediaSectionViewAll = (props: MediaSectionViewAllProps) => {
           <MediaListItem
             layoutSize="medium"
             onPress={() => mediaSectionViewAll.onPressItem(item)}
-            marginLeft={Styles.sheet.item.marginLeft}
             voteCount={item.voteCount}
             voteAverage={item.voteAverage}
             image={item.posterPath}

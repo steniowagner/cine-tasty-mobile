@@ -63,7 +63,6 @@ export const SearchMedia = (props: SearchMediaProps) => {
         )
       }
       contentContainerStyle={Styles.sheet.contentContainerStyle}
-      columnWrapperStyle={Styles.sheet.columnWrapperStyle}
       ItemSeparatorComponent={Styles.Separator}
       onEndReachedThreshold={Platform.select({
         android: 0.5,

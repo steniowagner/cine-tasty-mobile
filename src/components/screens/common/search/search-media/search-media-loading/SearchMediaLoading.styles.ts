@@ -10,8 +10,8 @@ export const Wrapper = styled(View)`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-horizontal: ${SearchMediaListStyles.sheet.contentContainerStyle
-    .paddingHorizontal}px;
+  padding-horizontal: ${MediaListItemStyles.LAYOUT_MEASURES.medium
+    .marginLeft}px;
   padding-top: ${SearchMediaListStyles.sheet.contentContainerStyle
     .paddingTop}px;
 `;

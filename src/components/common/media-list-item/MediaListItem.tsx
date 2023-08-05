@@ -7,7 +7,6 @@ import * as Styles from './MediaListItem.styles';
 
 type MediaListItemProps = {
   layoutSize: Styles.LayoutSize;
-  marginLeft?: number;
   onPress: () => void;
   testID?: string;
   voteAverage?: number;
@@ -26,8 +25,7 @@ export const MediaListItem = (props: MediaListItemProps) => {
     <Styles.Wrapper
       testID={props.testID || 'simplified-media-list-button'}
       onPress={props.onPress}
-      layoutSize={props.layoutSize}
-      marginLeft={props.marginLeft}>
+      layoutSize={props.layoutSize}>
       <TMDBImageWithFallback
         iconImageLoading="video-vintage"
         iconImageError="image-off"

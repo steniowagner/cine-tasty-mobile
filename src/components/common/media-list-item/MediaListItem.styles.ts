@@ -7,6 +7,8 @@ import {CONSTANTS} from '@utils';
 type Measure = {
   width: number;
   height: number;
+  marginRight: number;
+  marginLeft: number;
 };
 
 export type LayoutSize = 'large' | 'medium';
@@ -19,10 +21,14 @@ export const LAYOUT_MEASURES: Record<LayoutSize, Measure> = {
   large: {
     width: metrics.getWidthFromDP('40%'),
     height: metrics.getWidthFromDP('62%'),
+    marginRight: CONSTANTS.VALUES.DEFAULT_SPACING,
+    marginLeft: 0,
   },
   medium: {
     width: metrics.getWidthFromDP('30.5%'),
     height: metrics.getWidthFromDP('50%'),
+    marginRight: 0,
+    marginLeft: (metrics.width - metrics.getWidthFromDP('30.5%') * 3) / 4,
   },
 };
 
@@ -45,8 +51,8 @@ type WrapperStyleProps = DefaultStyleProps & {
 export const Wrapper = styled(TouchableOpacity)<WrapperStyleProps>`
   width: ${({layoutSize}) => LAYOUT_MEASURES[layoutSize].width}px;
   height: 100%;
-  margin-left: ${({marginLeft}) => marginLeft || 0}px;
-  margin-right: ${CONSTANTS.VALUES.DEFAULT_SPACING}px;
+  margin-right: ${({layoutSize}) => LAYOUT_MEASURES[layoutSize].marginRight}px;
+  margin-left: ${({layoutSize}) => LAYOUT_MEASURES[layoutSize].marginLeft}px;
 `;
 
 export const DefaultText = styled(Text).attrs({

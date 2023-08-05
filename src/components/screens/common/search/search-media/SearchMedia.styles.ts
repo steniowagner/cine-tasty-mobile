@@ -12,10 +12,7 @@ export const Separator = styled(View)`
 
 export const sheet = StyleSheet.create({
   contentContainerStyle: {
-    paddingHorizontal: metrics.smallSize,
     paddingTop: metrics.smallSize,
-  },
-  columnWrapperStyle: {
-    justifyContent: 'space-between',
+    paddingBottom: metrics.mediumSize,
   },
 });
