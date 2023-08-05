@@ -18,7 +18,6 @@ export const AlertMessage = (props: AlertMessageProps) => {
     <Styles.Wrapper
       testID="alert-message-wrapper"
       style={[alertMessage.animatedStyle, dark.colors.defaultShadow]}>
-      <Styles.AlertIcon />
       <Styles.Message testID="alert-message-text">
         {props.message}
       </Styles.Message>
