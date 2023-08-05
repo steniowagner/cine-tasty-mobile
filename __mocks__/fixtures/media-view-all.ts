@@ -38,10 +38,10 @@ export const makeTVShowViewAllInitialDataset = (length: number, page: number): T
   .fill({})
   .map((_, index) => ({
     __typename: 'BaseTVShow',
-    voteAverage: 10 / index + 1,
+    voteAverage: index + 1,
     title: `Title-${index}-Page-${page}`,
     posterPath: `PosterPath-${index}`,
-    voteCount: 10 / index + 1,
+    voteCount: index + 1,
     genreIds: [`Genre-${index}`],
     id: index,
   }));
@@ -50,10 +50,10 @@ export const makeMoviesViewAllInitialDataset = (length: number, page: number): M
   .fill({})
   .map((_, index) => ({
     __typename: 'BaseMovie',
-    voteAverage: 10 / index + 1,
+    voteAverage: index + 1,
     title: `Title-${index}-Page-${page}`,
     posterPath: `PosterPath-${index}`,
-    voteCount: 10 / index + 1,
+    voteCount: index + 1,
     genreIds: [`Genre-${index}`],
     id: index,
   }));
@@ -142,10 +142,6 @@ export const makePaginationSuccessQuery = (params: MakePaginationSuccessQueryPar
     query: params.query,
   });
   return [
-    {
-      ...queryResolver.request,
-      ...queryResolver.result,
-    },
     {
       ...queryResolver.request,
       ...queryResolver.result,

@@ -87,7 +87,7 @@ export const useAlertMessage = (props: UsePopupAdviceProps) => {
         }
       },
     );
-  }, []);
+  }, [hide]);
 
   useEffect(() => {
     show();

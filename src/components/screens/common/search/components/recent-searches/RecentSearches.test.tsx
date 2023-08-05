@@ -5,7 +5,6 @@ import {
   render,
   waitFor,
   RenderAPI,
-  act,
   fireEvent,
 } from '@testing-library/react-native';
 
@@ -14,7 +13,6 @@ import {dark as theme} from '@styles/themes/dark';
 import {randomArrayElement, randomArrayIndex} from '@mocks/utils';
 import * as SchemaTypes from '@schema-types';
 import {Translations} from '@i18n/tags';
-import {CONSTANTS} from '@utils';
 
 import {MAX_RECENT_SEARCHES} from './useRecentSearches';
 import {RecentSearches} from './RecentSearches';
@@ -25,7 +23,16 @@ jest.mock('react-native-reanimated', () => {
   return Reanimated;
 });
 
-jest.mock('@utils');
+jest.mock('@utils', () => {
+  const actualUtilsModule = jest.requireActual('@utils');
+  return {
+    ...actualUtilsModule,
+    storage: {
+      set: jest.fn(),
+      get: jest.fn(),
+    },
+  };
+});
 
 const utils = require('@utils');
 
@@ -71,18 +78,19 @@ describe('<RecentSearches />', () => {
   describe('When has some searched-items previously saved in the storage', () => {
     beforeEach(() => {
       jest.resetModules();
-      jest.useFakeTimers();
     });
 
     it('should call "storage.get" correctly', async () => {
       const searchType = randomArrayElement(searchTypes);
-      render(renderRecentSearches(searchType));
-      expect(utils.storage.get as jest.Mock).toHaveBeenCalledWith(
-        `${
-          CONSTANTS.KEYS.APP_STORAGE_KEY
-        }:RECENT_SEARCHES:${searchType.toString()}`,
-        [],
-      );
+      await waitFor(() => {
+        render(renderRecentSearches(searchType));
+        expect(utils.storage.get as jest.Mock).toHaveBeenCalledWith(
+          `${
+            utils.CONSTANTS.KEYS.APP_STORAGE_KEY
+          }:RECENT_SEARCHES:${searchType.toString()}`,
+          [],
+        );
+      });
     });
 
     it('should render the previously saved items correctly', async () => {
@@ -160,11 +168,13 @@ describe('<RecentSearches />', () => {
       jest.resetModules();
     });
 
-    it('should not render when there is not items previously searched', () => {
+    it('should not render when there is not items previously searched', async () => {
       const searchType = randomArrayElement(searchTypes);
       (utils.storage.get as jest.Mock).mockResolvedValue([]);
-      const component = render(renderRecentSearches(searchType));
-      expect(elements.buttons(component).length).toEqual(0);
+      await waitFor(() => {
+        const component = render(renderRecentSearches(searchType));
+        expect(elements.buttons(component).length).toEqual(0);
+      });
     });
   });
 });

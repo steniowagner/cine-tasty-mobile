@@ -9,11 +9,10 @@ import {
 
 import {dark, light} from '@styles/themes';
 import * as Types from '@local-types';
-import {CONSTANTS} from '@utils';
 
 import {ThemeContextProvider, useThemeProvider} from './Theme';
 
-jest.mock('@utils');
+jest.mock('@utils', () => jest.requireActual('@utils'));
 
 const utils = require('@utils');
 
@@ -122,7 +121,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(systemTheme),
           );
           fireEvent.press(elements.setSystemThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.SYSTEM,
           );
@@ -138,7 +136,6 @@ describe('<ThemeProvider />', () => {
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setSystemThemeButton(component));
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
         });
       });
@@ -155,7 +152,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(light),
           );
           fireEvent.press(elements.setSystemThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.SYSTEM,
           );
@@ -171,10 +167,9 @@ describe('<ThemeProvider />', () => {
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setSystemThemeButton(component));
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toBeCalledWith(
-            CONSTANTS.KEYS.APP_THEME,
+            utils.CONSTANTS.KEYS.APP_THEME,
             Types.ThemeId.SYSTEM,
           );
         });
@@ -192,7 +187,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(dark),
           );
           fireEvent.press(elements.setSystemThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.SYSTEM,
           );
@@ -208,10 +202,9 @@ describe('<ThemeProvider />', () => {
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setSystemThemeButton(component));
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toBeCalledWith(
-            CONSTANTS.KEYS.APP_THEME,
+            utils.CONSTANTS.KEYS.APP_THEME,
             Types.ThemeId.SYSTEM,
           );
         });
@@ -231,7 +224,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(systemTheme),
           );
           fireEvent.press(elements.setLightThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.LIGHT,
           );
@@ -244,13 +236,12 @@ describe('<ThemeProvider />', () => {
           utils.storage.get = jest.fn().mockResolvedValue(Types.ThemeId.SYSTEM);
           utils.storage.set = jest.fn();
           const component = render(renderThemeProvider());
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setLightThemeButton(component));
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toBeCalledWith(
-            CONSTANTS.KEYS.APP_THEME,
+            utils.CONSTANTS.KEYS.APP_THEME,
             Types.ThemeId.LIGHT,
           );
         });
@@ -268,7 +259,6 @@ describe('<ThemeProvider />', () => {
             JSON.stringify(systemTheme),
           );
           fireEvent.press(elements.setDarkThemeButton(component));
-          await waitFor(() => {});
           expect(elements.themeId(component).children[0]).toEqual(
             Types.ThemeId.DARK,
           );
@@ -281,13 +271,12 @@ describe('<ThemeProvider />', () => {
           utils.storage.get = jest.fn().mockResolvedValue(Types.ThemeId.SYSTEM);
           utils.storage.set = jest.fn();
           const component = render(renderThemeProvider());
-          await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(0);
           fireEvent.press(elements.setDarkThemeButton(component));
           await waitFor(() => {});
           expect(utils.storage.set).toHaveBeenCalledTimes(1);
           expect(utils.storage.set).toBeCalledWith(
-            CONSTANTS.KEYS.APP_THEME,
+            utils.CONSTANTS.KEYS.APP_THEME,
             Types.ThemeId.DARK,
           );
         });
