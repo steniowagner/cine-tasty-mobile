@@ -7,7 +7,7 @@ import { ThemeId } from '@app-types';
 
 export const INITIAL_THEME = { ...dark, id: undefined };
 
-const APP_THEME_STORAGE_KEY = 'APP_THEME';
+export const APP_THEME_STORAGE_KEY = 'APP_THEME';
 
 export const useAppTheme = () => {
   const [themeId, setThemeId] = useState<ThemeId | undefined>();
