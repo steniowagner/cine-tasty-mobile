@@ -7,6 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
+    "lint:fix": "eslint --fix --ext .ts,.tsx .",
+    "prettier:fix": "prettier '**/*.+(ts|tsx)' --write",
     "clear:ios": "cd ios && rm -rf build && cd ..",
     "clear:android": "cd android && ./gradlew clean && cd ..",
     "clear:cache": "watchman watch-del-all",
