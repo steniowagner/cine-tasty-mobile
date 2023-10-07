@@ -18,6 +18,8 @@ module.exports = {
         alias: {
           '@styles': './src/styles',
           '@app-types': './src/types/index.ts',
+          '@hooks': './src/hooks/index.ts',
+          '@providers': './src/providers/index.ts',
         },
       },
     ],
