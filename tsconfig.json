@@ -1,3 +1,15 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "moduleResolution": "NodeNext",
+    "jsx": "react-native",
+    "esModuleInterop": true,
+    "paths": {
+      "@styles/*": ["./styles/*"],
+      "@app-types": ["./types/index.ts"],
+      "@hooks": ["./hooks/index.ts"],
+      "@providers": ["./providers/index.ts"]
+    }
+  }
 }

@@ -10,17 +10,7 @@ module.exports = {
     'space-in-parens': 'error',
     'no-multiple-empty-lines': 'error',
     'prefer-const': 'error',
-    'object-curly-spacing': [
-      'error',
-      'always',
-      { objectsInObjects: false },
-    ] /*'prettier/prettier': [
-      'error',
-      {
-        bracketSpacing: true,
-        parser: 'flow',
-      },
-    ],*/,
+    'object-curly-spacing': ['error', 'always', { objectsInObjects: false }],
     '@typescript-eslint/no-unused-vars': [
       'warn', // or "error"
       {
@@ -29,5 +19,6 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_',
       },
     ],
+    'react-hooks/exhaustive-deps': 'off',
   },
 };
