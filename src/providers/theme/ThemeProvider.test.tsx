@@ -38,11 +38,6 @@ jest.mock('react-native/Libraries/Utilities/useColorScheme', () => {
 const renderThemeProvider = () => {
   const ContextChildren = () => {
     const themeProvider = useThemeProvider();
-    const pressMapping = {
-      [ThemeId.SYSTEM]: themeProvider.onSetSystemTheme,
-      [ThemeId.LIGHT]: themeProvider.onSetLightTheme,
-      [ThemeId.DARK]: themeProvider.onSetDarkTheme,
-    };
 
     return (
       <View>
@@ -90,7 +85,7 @@ describe('Providers/ThemeProvider', () => {
       jest.clearAllMocks();
     });
 
-    it('should call "storage.get" with the correctly', async () => {
+    it('should call "storage.get" correctly', async () => {
       mockGet.mockResolvedValueOnce(undefined);
       render(renderThemeProvider());
       expect(mockGet).toBeCalledTimes(1);

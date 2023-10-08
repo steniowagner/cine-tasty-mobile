@@ -2,6 +2,8 @@ import { DefaultTheme } from 'styled-components';
 
 import { ThemeId } from '@app-types';
 
+import { borderRadius } from '../border-radius';
+import typography from '../typography';
 import metrics from '../metrics';
 
 export const dark: DefaultTheme = {
@@ -32,4 +34,6 @@ export const dark: DefaultTheme = {
     white: '#FFFFFF',
   },
   metrics,
+  borderRadius,
+  typography,
 };

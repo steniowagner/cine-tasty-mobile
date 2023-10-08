@@ -1,5 +1,7 @@
 import 'styled-components';
 
+import { borderRadius } from './border-radius';
+import typography from './typography';
 import { ThemeId } from '../types';
 
 declare module 'styled-components/native' {
@@ -33,16 +35,22 @@ declare module 'styled-components/native' {
     getHeightFromDP: (px: string) => number;
     getWidthFromDP: (px: string) => number;
     navigationHeaderFontSize: number;
-    extraSmallSize: number;
-    extraLargeSize: number;
-    smallSize: number;
-    mediumSize: number;
-    largeSize: number;
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
     width: number;
     height: number;
   };
 
+  export type BorderRadius = typeof borderRadius;
+
+  export type TypographyValues = typeof typography;
+
   export interface DefaultTheme {
+    borderRadius: BorderRadius;
+    typography: Typography;
     id: ThemeId;
     metrics: Metrics;
     colors: Colors;

@@ -20,6 +20,7 @@ module.exports = {
           '@app-types': './src/types/index.ts',
           '@hooks': './src/hooks/index.ts',
           '@providers': './src/providers/index.ts',
+          '@common-components': './src/components/common/index.ts',
         },
       },
     ],

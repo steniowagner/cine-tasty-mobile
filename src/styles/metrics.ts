@@ -10,11 +10,11 @@ const getHeightFromDP = (heightPercentage: string) =>
 
 export default {
   navigationHeaderFontSize: Platform.OS === 'ios' ? 17 : 19,
-  extraSmallSize: getWidthFromDP('1'),
-  smallSize: getWidthFromDP('2'),
-  mediumSize: getWidthFromDP('3'),
-  largeSize: getWidthFromDP('4'),
-  extraLargeSize: getWidthFromDP('5'),
+  xs: getWidthFromDP('1'),
+  sm: getWidthFromDP('2'),
+  md: getWidthFromDP('3'),
+  lg: getWidthFromDP('4'),
+  xl: getWidthFromDP('5'),
   getWidthFromDP,
   getHeightFromDP,
   width,
