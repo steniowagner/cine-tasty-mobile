@@ -1,5 +1,6 @@
 import 'styled-components';
 
+import { borderRadius } from './border-radius';
 import { ThemeId } from '../types';
 
 declare module 'styled-components/native' {
@@ -33,16 +34,19 @@ declare module 'styled-components/native' {
     getHeightFromDP: (px: string) => number;
     getWidthFromDP: (px: string) => number;
     navigationHeaderFontSize: number;
-    extraSmallSize: number;
-    extraLargeSize: number;
-    smallSize: number;
-    mediumSize: number;
-    largeSize: number;
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
     width: number;
     height: number;
   };
 
+  export type BorderRadius = typeof borderRadius;
+
   export interface DefaultTheme {
+    borderRadius: BorderRadius;
     id: ThemeId;
     metrics: Metrics;
     colors: Colors;
