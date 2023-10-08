@@ -21,6 +21,7 @@ module.exports = {
           '@hooks': './src/hooks/index.ts',
           '@providers': './src/providers/index.ts',
           '@common-components': './src/components/common/index.ts',
+          '@utils': './src/utils/index.ts',
         },
       },
     ],

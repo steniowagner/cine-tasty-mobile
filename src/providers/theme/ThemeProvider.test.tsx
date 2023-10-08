@@ -13,19 +13,9 @@ import { ThemeId } from '@app-types';
 import { useThemeProvider, ThemeContextProvider } from './ThemeProvider';
 import { APP_THEME_STORAGE_KEY } from './use-app-theme';
 
-const mockGet = jest.fn();
-const mockSet = jest.fn();
+jest.mock('@utils');
 
-jest.mock('@hooks', () => {
-  const actualHooksModule = jest.requireActual('@hooks');
-  return {
-    ...actualHooksModule,
-    useStorage: () => ({
-      get: mockGet,
-      set: mockSet,
-    }),
-  };
-});
+const { storage } = require('@utils');
 
 const mockColorScheme = jest.fn();
 
@@ -86,16 +76,16 @@ describe('Providers/ThemeProvider', () => {
     });
 
     it('should call "storage.get" correctly', async () => {
-      mockGet.mockResolvedValueOnce(undefined);
+      storage.get.mockResolvedValueOnce(undefined);
       render(renderThemeProvider());
-      expect(mockGet).toBeCalledTimes(1);
-      expect(mockGet).toBeCalledWith(APP_THEME_STORAGE_KEY);
+      expect(storage.get).toBeCalledTimes(1);
+      expect(storage.get).toBeCalledWith(APP_THEME_STORAGE_KEY);
       await waitFor(() => {});
     });
 
     describe('When there is no theme saved in the storage', () => {
       it('should set the "dark-theme" as "theme"', async () => {
-        mockGet.mockResolvedValueOnce(undefined);
+        storage.get.mockResolvedValueOnce(undefined);
         const component = render(renderThemeProvider());
         expect(elements.themeIdText(component).children[0]).toEqual(undefined);
         expect(
@@ -112,7 +102,7 @@ describe('Providers/ThemeProvider', () => {
 
       describe('And the "stored-theme" is "DARK"', () => {
         it('should set the "dark-theme" as "theme"', async () => {
-          mockGet.mockResolvedValueOnce(ThemeId.DARK);
+          storage.get.mockResolvedValueOnce(ThemeId.DARK);
           const component = render(renderThemeProvider());
           act(() => {
             jest.runAllTimers();
@@ -132,7 +122,7 @@ describe('Providers/ThemeProvider', () => {
 
       describe('And the "stored-theme" is "LIGHT"', () => {
         it('should set the "light-theme" as "theme"', async () => {
-          mockGet.mockResolvedValueOnce(ThemeId.LIGHT);
+          storage.get.mockResolvedValueOnce(ThemeId.LIGHT);
           const component = render(renderThemeProvider());
           act(() => {
             jest.runAllTimers();
@@ -157,7 +147,7 @@ describe('Providers/ThemeProvider', () => {
 
         describe('And "colorScheme" is "dark"', () => {
           it('should set the "system-theme" as "dark-theme"', async () => {
-            mockGet.mockResolvedValueOnce(ThemeId.SYSTEM);
+            storage.get.mockResolvedValueOnce(ThemeId.SYSTEM);
             mockColorScheme.mockReturnValue('dark');
             const component = render(renderThemeProvider());
             act(() => {
@@ -178,7 +168,7 @@ describe('Providers/ThemeProvider', () => {
 
         describe('And "colorScheme" is "light"', () => {
           it('should set the "system-theme" as "light-theme"', async () => {
-            mockGet.mockResolvedValueOnce(ThemeId.SYSTEM);
+            storage.get.mockResolvedValueOnce(ThemeId.SYSTEM);
             mockColorScheme.mockReturnValue('light');
             const component = render(renderThemeProvider());
             act(() => {
@@ -201,6 +191,37 @@ describe('Providers/ThemeProvider', () => {
   });
 
   describe('Changing the theme', () => {
+    describe('Writing the theme into the storage', () => {
+      beforeEach(() => {
+        jest.clearAllMocks();
+        jest.useFakeTimers();
+      });
+
+      it('should call "storage.set" correctly when set the theme to "DARK"', async () => {
+        const component = render(renderThemeProvider());
+        fireEvent.press(elements.selectDarkThemeButton(component));
+        expect(storage.set.mock.calls[0][0]).toEqual(APP_THEME_STORAGE_KEY);
+        expect(storage.set.mock.calls[0][1]).toEqual(ThemeId.DARK);
+        await waitFor(() => {});
+      });
+
+      it('should call "storage.set" correctly when set the theme to "LIGHT"', async () => {
+        const component = render(renderThemeProvider());
+        fireEvent.press(elements.selectLightThemeButton(component));
+        expect(storage.set.mock.calls[0][0]).toEqual(APP_THEME_STORAGE_KEY);
+        expect(storage.set.mock.calls[0][1]).toEqual(ThemeId.LIGHT);
+        await waitFor(() => {});
+      });
+
+      it('should call "storage.set" correctly when set the theme to "SYSTEM"', async () => {
+        const component = render(renderThemeProvider());
+        fireEvent.press(elements.selectSystemThemeButton(component));
+        expect(storage.set.mock.calls[0][0]).toEqual(APP_THEME_STORAGE_KEY);
+        expect(storage.set.mock.calls[0][1]).toEqual(ThemeId.SYSTEM);
+        await waitFor(() => {});
+      });
+    });
+
     describe('When the "theme-selected" is "DARK"', () => {
       beforeEach(() => {
         jest.clearAllMocks();
@@ -208,7 +229,7 @@ describe('Providers/ThemeProvider', () => {
       });
 
       it('should not change the theme when the user switches the theme to "dark"', async () => {
-        mockGet.mockResolvedValueOnce(ThemeId.DARK);
+        storage.get.mockResolvedValueOnce(ThemeId.DARK);
         const component = render(renderThemeProvider());
         // current theme
         await waitFor(() => {
@@ -237,7 +258,7 @@ describe('Providers/ThemeProvider', () => {
 
       describe('And the user switches the theme to "light"', () => {
         it('should change the theme to "LIGHT"', async () => {
-          mockGet.mockResolvedValueOnce(ThemeId.DARK);
+          storage.get.mockResolvedValueOnce(ThemeId.DARK);
           const component = render(renderThemeProvider());
           // current theme
           await waitFor(() => {
@@ -272,7 +293,7 @@ describe('Providers/ThemeProvider', () => {
 
         describe('And "colorScheme" is "dark"', () => {
           it('should change the theme to "DARK"', async () => {
-            mockGet.mockResolvedValueOnce(ThemeId.DARK);
+            storage.get.mockResolvedValueOnce(ThemeId.DARK);
             mockColorScheme.mockReturnValue('dark');
             const component = render(renderThemeProvider());
             // current theme
@@ -303,7 +324,7 @@ describe('Providers/ThemeProvider', () => {
 
         describe('And "colorScheme" is "light"', () => {
           it('should set the "system-theme" as "light-theme"', async () => {
-            mockGet.mockResolvedValueOnce(ThemeId.DARK);
+            storage.get.mockResolvedValueOnce(ThemeId.DARK);
             mockColorScheme.mockReturnValue('light');
             const component = render(renderThemeProvider());
             // current theme
@@ -341,7 +362,7 @@ describe('Providers/ThemeProvider', () => {
       });
 
       it('should not change the theme when the user switches the theme to "light"', async () => {
-        mockGet.mockResolvedValueOnce(ThemeId.LIGHT);
+        storage.get.mockResolvedValueOnce(ThemeId.LIGHT);
         const component = render(renderThemeProvider());
         // current theme
         await waitFor(() => {
@@ -370,7 +391,7 @@ describe('Providers/ThemeProvider', () => {
 
       describe('And the user switches the theme to "dark"', () => {
         it('should change the theme to "LIGHT"', async () => {
-          mockGet.mockResolvedValueOnce(ThemeId.LIGHT);
+          storage.get.mockResolvedValueOnce(ThemeId.LIGHT);
           const component = render(renderThemeProvider());
           // current theme
           await waitFor(() => {
@@ -405,7 +426,7 @@ describe('Providers/ThemeProvider', () => {
 
         describe('And "colorScheme" is "dark"', () => {
           it('should change the theme to "DARK"', async () => {
-            mockGet.mockResolvedValueOnce(ThemeId.LIGHT);
+            storage.get.mockResolvedValueOnce(ThemeId.LIGHT);
             mockColorScheme.mockReturnValue('dark');
             const component = render(renderThemeProvider());
             // current theme
@@ -436,7 +457,7 @@ describe('Providers/ThemeProvider', () => {
 
         describe('And "colorScheme" is "light"', () => {
           it('should set the "system-theme" as "light-theme"', async () => {
-            mockGet.mockResolvedValueOnce(ThemeId.LIGHT);
+            storage.get.mockResolvedValueOnce(ThemeId.LIGHT);
             mockColorScheme.mockReturnValue('light');
             const component = render(renderThemeProvider());
             // current theme
@@ -474,7 +495,7 @@ describe('Providers/ThemeProvider', () => {
       });
 
       it('should not change the theme when the user switches the theme to "system"', async () => {
-        mockGet.mockResolvedValueOnce(ThemeId.SYSTEM);
+        storage.get.mockResolvedValueOnce(ThemeId.SYSTEM);
         const component = render(renderThemeProvider());
         // current theme
         await waitFor(() => {
@@ -493,7 +514,7 @@ describe('Providers/ThemeProvider', () => {
 
       describe('And the user switches the theme to "light"', () => {
         it('should change the theme to "LIGHT"', async () => {
-          mockGet.mockResolvedValueOnce(ThemeId.SYSTEM);
+          storage.get.mockResolvedValueOnce(ThemeId.SYSTEM);
           const component = render(renderThemeProvider());
           // current theme
           await waitFor(() => {
@@ -518,7 +539,7 @@ describe('Providers/ThemeProvider', () => {
 
       describe('And the user switches the theme to "dark"', () => {
         it('should change the theme to "DARK"', async () => {
-          mockGet.mockResolvedValueOnce(ThemeId.SYSTEM);
+          storage.get.mockResolvedValueOnce(ThemeId.SYSTEM);
           const component = render(renderThemeProvider());
           // current theme
           await waitFor(() => {

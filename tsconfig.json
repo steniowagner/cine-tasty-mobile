@@ -11,7 +11,8 @@
       "@app-types": ["./types/index.ts"],
       "@hooks": ["./hooks/index.ts"],
       "@providers": ["./providers/index.ts"],
-      "@common-components": ["./components/common/index.ts"]
+      "@common-components": ["./components/common/index.ts"],
+      "@utils": ["./utils/index.ts"]
     }
   }
 }
