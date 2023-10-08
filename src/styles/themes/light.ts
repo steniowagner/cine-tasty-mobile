@@ -3,6 +3,7 @@ import { DefaultTheme } from 'styled-components';
 import { ThemeId } from '@app-types';
 
 import { borderRadius } from '../border-radius';
+import typography from '../typography';
 import metrics from '../metrics';
 
 export const light: DefaultTheme = {
@@ -34,4 +35,5 @@ export const light: DefaultTheme = {
   },
   metrics,
   borderRadius,
+  typography,
 };

@@ -2,6 +2,7 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./src",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "jsx": "react-native",
     "esModuleInterop": true,
@@ -9,7 +10,8 @@
       "@styles/*": ["./styles/*"],
       "@app-types": ["./types/index.ts"],
       "@hooks": ["./hooks/index.ts"],
-      "@providers": ["./providers/index.ts"]
+      "@providers": ["./providers/index.ts"],
+      "@common-components": ["./components/common/index.ts"]
     }
   }
 }
