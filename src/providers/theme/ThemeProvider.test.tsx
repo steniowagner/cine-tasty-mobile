@@ -38,11 +38,6 @@ jest.mock('react-native/Libraries/Utilities/useColorScheme', () => {
 const renderThemeProvider = () => {
   const ContextChildren = () => {
     const themeProvider = useThemeProvider();
-    const pressMapping = {
-      [ThemeId.SYSTEM]: themeProvider.onSetSystemTheme,
-      [ThemeId.LIGHT]: themeProvider.onSetLightTheme,
-      [ThemeId.DARK]: themeProvider.onSetDarkTheme,
-    };
 
     return (
       <View>
