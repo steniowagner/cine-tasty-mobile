@@ -14,6 +14,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-CineTasty-CineTastyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-CineTasty-CineTastyTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A3292E1E34D3402F96D0E7C2 /* CircularStd-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 07D335C1093E415293756465 /* CircularStd-Black.otf */; };
+		DC7611B90E3C47E88957E985 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B9643EAF2E434042B1F38106 /* CircularStd-Bold.otf */; };
+		0395EB987AF2426C947393D1 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 39E95D33B4DC4C9583BAC929 /* CircularStd-Book.otf */; };
+		825912B2AB1443E885F60B65 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 676F8653BC574629B5F62A2E /* CircularStd-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = CineTasty/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-CineTasty-CineTastyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CineTasty-CineTastyTests.release.xcconfig"; path = "Target Support Files/Pods-CineTasty-CineTastyTests/Pods-CineTasty-CineTastyTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		07D335C1093E415293756465 /* CircularStd-Black.otf */ = {isa = PBXFileReference; name = "CircularStd-Black.otf"; path = "../assets/fonts/CircularStd-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B9643EAF2E434042B1F38106 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; name = "CircularStd-Bold.otf"; path = "../assets/fonts/CircularStd-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		39E95D33B4DC4C9583BAC929 /* CircularStd-Book.otf */ = {isa = PBXFileReference; name = "CircularStd-Book.otf"; path = "../assets/fonts/CircularStd-Book.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		676F8653BC574629B5F62A2E /* CircularStd-Medium.otf */ = {isa = PBXFileReference; name = "CircularStd-Medium.otf"; path = "../assets/fonts/CircularStd-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +130,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				60DE34A8D44B44C8B8977460 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +156,18 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		60DE34A8D44B44C8B8977460 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				07D335C1093E415293756465 /* CircularStd-Black.otf */,
+				B9643EAF2E434042B1F38106 /* CircularStd-Bold.otf */,
+				39E95D33B4DC4C9583BAC929 /* CircularStd-Book.otf */,
+				676F8653BC574629B5F62A2E /* CircularStd-Medium.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +265,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A3292E1E34D3402F96D0E7C2 /* CircularStd-Black.otf in Resources */,
+				DC7611B90E3C47E88957E985 /* CircularStd-Bold.otf in Resources */,
+				0395EB987AF2426C947393D1 /* CircularStd-Book.otf in Resources */,
+				825912B2AB1443E885F60B65 /* CircularStd-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
