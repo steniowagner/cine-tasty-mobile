@@ -1,6 +1,7 @@
 import i18next, { LanguageDetectorAsyncModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import { supportedLanguages } from './supported-languages';
 import { languageDetection } from './language-detection';
 import { pt } from './locale/pt';
 import { es } from './locale/es';
@@ -11,7 +12,7 @@ const FALLBACK_LANGUAGE = 'en';
 const languageDetector: LanguageDetectorAsyncModule = {
   type: 'languageDetector',
   async: true,
-  detect: async () => languageDetection(FALLBACK_LANGUAGE),
+  detect: async () => languageDetection(FALLBACK_LANGUAGE, supportedLanguages),
   cacheUserLanguage: () => {},
   init: () => {},
 };

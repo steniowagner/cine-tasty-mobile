@@ -23,8 +23,11 @@ module.exports = {
           '@common-components': './src/components/common/index.ts',
           '@utils': './src/utils/index.ts',
           '@navigation': './src/navigation/index.ts',
+          '@screens': './src/components/screens/index.ts',
+          '@i18n': './src/i18n',
         },
       },
     ],
+    'react-native-reanimated/plugin',
   ],
 };
