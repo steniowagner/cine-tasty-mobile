@@ -20,7 +20,11 @@ describe('i18n/language-detection', () => {
           },
         }));
         const { languageDetection } = require('./language-detection');
-        const language = languageDetection(FALLBACK_LANGUAGE);
+        const { supportedLanguages } = require('./supported-languages');
+        const language = languageDetection(
+          FALLBACK_LANGUAGE,
+          supportedLanguages,
+        );
         expect(language).toEqual(FALLBACK_LANGUAGE);
       });
     });
@@ -38,7 +42,11 @@ describe('i18n/language-detection', () => {
           },
         }));
         const { languageDetection } = require('./language-detection');
-        const language = languageDetection(FALLBACK_LANGUAGE);
+        const { supportedLanguages } = require('./supported-languages');
+        const language = languageDetection(
+          FALLBACK_LANGUAGE,
+          supportedLanguages,
+        );
         expect(language).toEqual('pt');
       });
     });
@@ -56,7 +64,11 @@ describe('i18n/language-detection', () => {
           },
         }));
         const { languageDetection } = require('./language-detection');
-        const language = languageDetection(FALLBACK_LANGUAGE);
+        const { supportedLanguages } = require('./supported-languages');
+        const language = languageDetection(
+          FALLBACK_LANGUAGE,
+          supportedLanguages,
+        );
         expect(language).toEqual('es');
       });
     });
@@ -74,7 +86,11 @@ describe('i18n/language-detection', () => {
           },
         }));
         const { languageDetection } = require('./language-detection');
-        const language = languageDetection(FALLBACK_LANGUAGE);
+        const { supportedLanguages } = require('./supported-languages');
+        const language = languageDetection(
+          FALLBACK_LANGUAGE,
+          supportedLanguages,
+        );
         expect(language).toEqual('en');
       });
     });
@@ -102,7 +118,11 @@ describe('i18n/language-detection', () => {
             },
           }));
           const { languageDetection } = require('./language-detection');
-          const language = languageDetection(FALLBACK_LANGUAGE);
+          const { supportedLanguages } = require('./supported-languages');
+          const language = languageDetection(
+            FALLBACK_LANGUAGE,
+            supportedLanguages,
+          );
           expect(language).toEqual(FALLBACK_LANGUAGE);
         });
       });
@@ -122,7 +142,11 @@ describe('i18n/language-detection', () => {
             },
           }));
           const { languageDetection } = require('./language-detection');
-          const language = languageDetection(FALLBACK_LANGUAGE);
+          const { supportedLanguages } = require('./supported-languages');
+          const language = languageDetection(
+            FALLBACK_LANGUAGE,
+            supportedLanguages,
+          );
           expect(language).toEqual('pt');
         });
       });
@@ -142,7 +166,11 @@ describe('i18n/language-detection', () => {
             },
           }));
           const { languageDetection } = require('./language-detection');
-          const language = languageDetection(FALLBACK_LANGUAGE);
+          const { supportedLanguages } = require('./supported-languages');
+          const language = languageDetection(
+            FALLBACK_LANGUAGE,
+            supportedLanguages,
+          );
           expect(language).toEqual('es');
         });
       });
@@ -162,7 +190,11 @@ describe('i18n/language-detection', () => {
             },
           }));
           const { languageDetection } = require('./language-detection');
-          const language = languageDetection(FALLBACK_LANGUAGE);
+          const { supportedLanguages } = require('./supported-languages');
+          const language = languageDetection(
+            FALLBACK_LANGUAGE,
+            supportedLanguages,
+          );
           expect(language).toEqual('en');
         });
       });
@@ -189,7 +221,11 @@ describe('i18n/language-detection', () => {
             },
           }));
           const { languageDetection } = require('./language-detection');
-          const language = languageDetection(FALLBACK_LANGUAGE);
+          const { supportedLanguages } = require('./supported-languages');
+          const language = languageDetection(
+            FALLBACK_LANGUAGE,
+            supportedLanguages,
+          );
           expect(language).toEqual(FALLBACK_LANGUAGE);
         });
       });
@@ -209,7 +245,11 @@ describe('i18n/language-detection', () => {
             },
           }));
           const { languageDetection } = require('./language-detection');
-          const language = languageDetection(FALLBACK_LANGUAGE);
+          const { supportedLanguages } = require('./supported-languages');
+          const language = languageDetection(
+            FALLBACK_LANGUAGE,
+            supportedLanguages,
+          );
           expect(language).toEqual('pt');
         });
       });
@@ -229,7 +269,11 @@ describe('i18n/language-detection', () => {
             },
           }));
           const { languageDetection } = require('./language-detection');
-          const language = languageDetection(FALLBACK_LANGUAGE);
+          const { supportedLanguages } = require('./supported-languages');
+          const language = languageDetection(
+            FALLBACK_LANGUAGE,
+            supportedLanguages,
+          );
           expect(language).toEqual('es');
         });
       });
@@ -249,7 +293,11 @@ describe('i18n/language-detection', () => {
             },
           }));
           const { languageDetection } = require('./language-detection');
-          const language = languageDetection(FALLBACK_LANGUAGE);
+          const { supportedLanguages } = require('./supported-languages');
+          const language = languageDetection(
+            FALLBACK_LANGUAGE,
+            supportedLanguages,
+          );
           expect(language).toEqual('en');
         });
       });
