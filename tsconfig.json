@@ -7,12 +7,16 @@
     "jsx": "react-native",
     "esModuleInterop": true,
     "paths": {
+      "@/*": ["./*"],
       "@styles/*": ["./styles/*"],
       "@app-types": ["./types/index.ts"],
       "@hooks": ["./hooks/index.ts"],
       "@providers": ["./providers/index.ts"],
       "@common-components": ["./components/common/index.ts"],
-      "@utils": ["./utils/index.ts"]
+      "@utils": ["./utils/index.ts"],
+      "@navigation": ["./navigation/index.ts"],
+      "@screens": ["./components/screens/index.ts"],
+      "@i18n/*": ["./i18n/*"]
     }
   }
 }
