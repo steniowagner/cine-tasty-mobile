@@ -80,9 +80,7 @@ describe('Navigation/components/TabNavigator', () => {
           expect(
             elements.titles(component)[indexCurrentTab].children[0],
           ).toEqual(
-            `${Translations.Tags.TABS}:${routes[
-              indexCurrentTab
-            ].id.toLowerCase()}`,
+            `${Translations.Tabs}:${routes[indexCurrentTab].id.toLowerCase()}`,
           );
           for (let i = 0; i < tabs.length; i++) {
             if (i === indexCurrentTab) {
@@ -113,9 +111,7 @@ describe('Navigation/components/TabNavigator', () => {
           expect(
             elements.titles(component)[indexCurrentTab].children[0],
           ).toEqual(
-            `${Translations.Tags.TABS}:${routes[
-              indexCurrentTab
-            ].id.toLowerCase()}`,
+            `${Translations.Tabs}:${routes[indexCurrentTab].id.toLowerCase()}`,
           );
         },
       );
