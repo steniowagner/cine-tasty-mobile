@@ -1,17 +1,20 @@
 import React from 'react';
-import { View } from 'react-native';
-import { ThemeProvider, styled, DefaultTheme } from 'styled-components/native';
+import { StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { dark } from '@styles/themes/dark';
-
-const C = styled(View)`
-  width: ${x => x.theme.metrics.largeSize}px;
-  height: ${x => x.theme.metrics.largeSize}px;
-  background-color: ${({ theme }) => theme.colors.red};
-`;
+import { ThemeContextProvider } from '@providers';
+import { Navigation } from '@navigation';
 
 export const App = () => (
-  <ThemeProvider theme={dark as DefaultTheme}>
-    <C />
-  </ThemeProvider>
+  <ThemeContextProvider>
+    <GestureHandlerRootView style={sheet.gestureHandler}>
+      <Navigation />
+    </GestureHandlerRootView>
+  </ThemeContextProvider>
 );
+
+const sheet = StyleSheet.create({
+  gestureHandler: {
+    flex: 1,
+  },
+});

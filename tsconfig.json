@@ -7,6 +7,7 @@
     "jsx": "react-native",
     "esModuleInterop": true,
     "paths": {
+      "@/*": ["./*"],
       "@styles/*": ["./styles/*"],
       "@app-types": ["./types/index.ts"],
       "@hooks": ["./hooks/index.ts"],
