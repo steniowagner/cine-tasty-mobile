@@ -60,9 +60,9 @@ export const useTabNavigator = (props: BottomTabBarProps) => {
     return items.map((item, index) => ({
       ...item,
       title: translations.translate(
-        `${Translations.Tags.TABS}:${tabTitles[
+        `${Translations.Tabs}:${tabTitles[
           index
-        ].toLowerCase()}` as Translations.Tags,
+        ].toLowerCase()}` as Translations.Tabs,
       ),
     }));
   }, []);
