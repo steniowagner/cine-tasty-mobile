@@ -18,13 +18,18 @@
     "test:integration": "npm test -- --watch --testMatch **/*.spec.tsx --runInBand",
     "test:unit": "npm test -- --watch --testMatch **/*.test.tsx **/*.test.ts",
     "test:coverage": "jest --coverage --passWithNoTests",
+    "schema:download": "npx apollo client:download-schema --endpoint=http://localhost:3000/!",
+    "schema:generate": "npx apollo codegen:generate src/types/schema.ts --localSchemaFile=schema.json --includes=src/**/*.ts,src/**/*.tsx --addTypename --target=typescript --outputFlat",
+    "types:generate": "npm run schema:download && npm run schema:generate",
     "prepare": "husky install"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.5",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/stack": "^6.3.18",
+    "graphql": "^15.8.0",
     "i18next": "^23.5.1",
     "react": "18.2.0",
     "react-i18next": "^13.2.2",
@@ -46,11 +51,13 @@
     "@rnx-kit/metro-resolver-symlinks": "^0.1.33",
     "@testing-library/react-native": "^12.3.0",
     "@tsconfig/react-native": "^3.0.0",
+    "@types/graphql": "^14.5.0",
     "@types/jest": "^29.5.5",
     "@types/react": "^18.0.24",
     "@types/react-native": "^0.72.3",
     "@types/react-test-renderer": "^18.0.0",
     "@types/styled-components": "^5.1.28",
+    "apollo": "^2.34.0",
     "babel-jest": "^29.2.1",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.19.0",
@@ -65,5 +72,10 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "overrides": {
+    "@apollographql/graphql-language-service-interface": {
+      "graphql": "^15.8.0"
+    }
   }
 }
