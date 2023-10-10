@@ -5,7 +5,7 @@ import { Typography } from '@common-components';
 import metrics from '@styles/metrics';
 import { dark } from '@styles/themes';
 
-import items from '../items';
+import items from '../tabs';
 
 export const DEFAULT_ICON_SIZE = metrics.getWidthFromDP('8%');
 
@@ -34,6 +34,6 @@ export const ItemText = styled(
   };
 })<ItemTextStyleProps>`
   margin-top: ${({ theme }) =>
-    Platform.OS === 'android' ? theme.metrics.md : theme.metrics.xs}px;
+    Platform.OS === 'android' ? theme.metrics.sm : theme.metrics.xs}px;
   font-size: ${({ theme }) => theme.metrics.getWidthFromDP('3.5%')}px;
 `;
