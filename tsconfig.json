@@ -10,6 +10,7 @@
       "@/*": ["./*"],
       "@styles/*": ["./styles/*"],
       "@app-types": ["./types/index.ts"],
+      "@schema-types": ["./types/schema.ts"],
       "@hooks": ["./hooks/index.ts"],
       "@providers": ["./providers/index.ts"],
       "@common-components": ["./components/common/index.ts"],
