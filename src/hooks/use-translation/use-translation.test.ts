@@ -26,9 +26,9 @@ describe('Hooks/use-translations', () => {
     });
     const { result } = renderHook(() => useTranslation());
     expect(mockT).toHaveBeenCalledTimes(0);
-    result.current.translate(Translations.Tags.TABS_HOME, { value: 1 });
+    result.current.translate(Translations.Tabs.TABS_HOME, { value: 1 });
     expect(mockT).toHaveBeenCalledTimes(1);
-    expect(mockT).toBeCalledWith(Translations.Tags.TABS_HOME, {
+    expect(mockT).toBeCalledWith(Translations.Tabs.TABS_HOME, {
       value: 1,
     });
   });
