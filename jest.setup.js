@@ -8,3 +8,5 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: key => key, i18n: { language: 'en' } }),
   getI18n: () => ({ language: 'en' }),
 }));
+
+require('react-native-reanimated').setUpTests();
