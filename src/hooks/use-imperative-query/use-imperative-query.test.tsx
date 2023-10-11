@@ -75,12 +75,13 @@ describe('Hooks/use-imperative-query', () => {
     });
     await waitFor(() => {
       expect(result.current.isLoading).toEqual(true);
+      expect(result.current.hasError).toEqual(false);
     });
   });
 
   describe('When querying successfuly', () => {
     it('should call "onCompleted" with the result', async () => {
-      const result = { result: 'value' };
+      const result = { data: { result: 'value' } };
       mockQuery.mockResolvedValueOnce(result);
       const onCompleted = jest.fn();
       const hook = renderImperativeQueryHook(onCompleted);
@@ -90,7 +91,7 @@ describe('Hooks/use-imperative-query', () => {
       });
       await waitFor(() => {
         expect(onCompleted).toHaveBeenCalledTimes(1);
-        expect(onCompleted).toHaveBeenCalledWith(result);
+        expect(onCompleted).toHaveBeenCalledWith(result.data);
       });
     });
 
