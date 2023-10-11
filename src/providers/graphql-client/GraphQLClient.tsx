@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-const {
+import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   HttpLink,
   ApolloLink,
-} = require('@apollo/client');
+} from '@apollo/client';
 
 type GraphQLClientProps = {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export const GraphQLClient = (props: GraphQLClientProps) => {
       uri: 'http://localhost:3000/!',
     });
     return new ApolloClient({
-      link: ApolloLink.from([httpLink]) as any,
+      link: ApolloLink.from([httpLink]),
       cache: new InMemoryCache(),
     });
   }, []);

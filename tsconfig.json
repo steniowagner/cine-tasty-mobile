@@ -2,8 +2,9 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./src",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "types": ["react-native", "jest"],
+    "module": "ES6",
+    "moduleResolution": "Bundler",
     "jsx": "react-native",
     "esModuleInterop": true,
     "paths": {
@@ -17,7 +18,8 @@
       "@utils": ["./utils/index.ts"],
       "@navigation": ["./navigation/index.ts"],
       "@screens": ["./components/screens/index.ts"],
-      "@i18n/*": ["./i18n/*"]
+      "@i18n/*": ["./i18n/*"],
+      "@mocks": ["../__mocks__/index.ts"]
     }
   }
 }
