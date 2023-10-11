@@ -6,13 +6,8 @@ import {
 } from '@apollo/client';
 import { DocumentNode } from 'graphql';
 
-type Result<TResult> = {
-  data: TResult;
-  loading: boolean;
-};
-
 type UseImperativeQueryParams<TResult> = {
-  onCompleted?: (result: Result<TResult>) => void;
+  onCompleted?: (result: TResult) => void;
   onError?: (error: Error) => void;
   fetchPolicy?: string;
   query: DocumentNode;
@@ -55,7 +50,7 @@ export const useImperativeQuery = <TResult, TVariables>(
       if (!params.onCompleted) {
         return;
       }
-      params.onCompleted(result);
+      params.onCompleted(result.data);
     },
     [params.onCompleted],
   );
@@ -73,8 +68,8 @@ export const useImperativeQuery = <TResult, TVariables>(
 
   const exec = useCallback(
     async (queryVariables: TVariables) => {
-      setQueryLoadingState();
       try {
+        setQueryLoadingState();
         await apolloClient
           .query<TResult>({
             fetchPolicy: params.fetchPolicy as FetchPolicy,
