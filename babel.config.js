@@ -19,6 +19,7 @@ module.exports = {
           '@': ['./src'],
           '@styles': './src/styles',
           '@app-types': './src/types/index.ts',
+          '@schema-types': './src/types/schema.ts',
           '@hooks': './src/hooks/index.ts',
           '@providers': './src/providers/index.ts',
           '@common-components': './src/components/common/index.ts',

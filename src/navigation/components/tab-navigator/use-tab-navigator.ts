@@ -60,12 +60,12 @@ export const useTabNavigator = (props: BottomTabBarProps) => {
     return items.map((item, index) => ({
       ...item,
       title: translations.translate(
-        `${Translations.Tabs}:${tabTitles[
+        `${Translations.Tabs.TABS}:${tabTitles[
           index
         ].toLowerCase()}` as Translations.Tabs,
       ),
     }));
-  }, []);
+  }, [translations.translate]);
 
   useEffect(() => {
     tabNavigatorPosition.value = withTiming(Number(shouldShowTabNavigator), {

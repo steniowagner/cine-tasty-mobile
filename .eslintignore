@@ -5,3 +5,5 @@ coverage
 *.test.ts
 *.test.tsx
 *.spec.tsx
+src/types/schema.ts
+
