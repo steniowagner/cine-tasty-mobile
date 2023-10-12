@@ -2,14 +2,20 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { ThemeContextProvider, GraphQLClient } from '@providers';
+import {
+  ThemeContextProvider,
+  GraphQLClient,
+  AlertMessageProvider,
+} from '@providers';
 import { Navigation } from '@navigation';
 
 export const App = () => (
   <ThemeContextProvider>
     <GestureHandlerRootView style={sheet.gestureHandler}>
       <GraphQLClient>
-        <Navigation />
+        <AlertMessageProvider>
+          <Navigation />
+        </AlertMessageProvider>
       </GraphQLClient>
     </GestureHandlerRootView>
   </ThemeContextProvider>
