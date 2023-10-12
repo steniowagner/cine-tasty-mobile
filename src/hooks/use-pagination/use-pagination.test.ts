@@ -1,13 +1,25 @@
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 
-jest.mock('../use-imperative-query/use-imperative-query');
-
 import { testQuery } from '../../../__mocks__';
 import { usePagination } from './use-pagination';
 
 const onGetData = jest.fn().mockImplementation(queryResult => queryResult);
 const PAGINATION_QUERY_ERROR = 'PAGINATION_QUERY_ERROR';
 const ENTRY_QUERY_ERROR = 'ENTRY_QUERY_ERROR';
+
+jest.mock('../use-imperative-query/use-imperative-query');
+
+const mockShow = jest.fn();
+
+jest.mock('@providers', () => {
+  const actualProvidersModule = jest.requireActual('@providers');
+  return {
+    ...actualProvidersModule,
+    useAlertMessage: () => ({
+      show: mockShow,
+    }),
+  };
+});
 
 describe('Hooks/use-pagination', () => {
   describe('Entry Query', () => {
@@ -293,6 +305,31 @@ describe('Hooks/use-pagination', () => {
     describe('When querying with failure', () => {
       beforeEach(() => {
         jest.clearAllMocks();
+      });
+
+      it('should call "alertMessage.show" correctly', () => {
+        const {
+          useImperativeQuery,
+        } = require('../use-imperative-query/use-imperative-query');
+        (useImperativeQuery as jest.Mock).mockReturnValue({
+          isLoading: false,
+          exec: jest.fn(),
+        });
+        const { result } = renderHook(() =>
+          usePagination({
+            onGetData: jest.fn(),
+            entryError: ENTRY_QUERY_ERROR,
+            paginationError: PAGINATION_QUERY_ERROR,
+            skipFirstRun: false,
+            query: testQuery,
+          }),
+        );
+        expect(mockShow).toBeCalledTimes(0);
+        act(() => {
+          useImperativeQuery.mock.calls[0][0].onError();
+        });
+        expect(mockShow).toBeCalledTimes(1);
+        expect(mockShow).toBeCalledWith(ENTRY_QUERY_ERROR);
       });
 
       it('should return correctly', () => {
@@ -841,6 +878,33 @@ describe('Hooks/use-pagination', () => {
     describe('When paginated with failure', () => {
       beforeEach(() => {
         jest.clearAllMocks();
+      });
+
+      it('should call "alertMessage.show" correctly', async () => {
+        const {
+          useImperativeQuery,
+        } = require('../use-imperative-query/use-imperative-query');
+        (useImperativeQuery as jest.Mock).mockReturnValueOnce({
+          isLoading: false,
+          exec: jest.fn(),
+        });
+        (useImperativeQuery as jest.Mock).mockReturnValue({
+          isLoading: false,
+          hasError: true,
+          exec: jest.fn(),
+        });
+        renderHook(() =>
+          usePagination({
+            onGetData: jest.fn(),
+            entryError: ENTRY_QUERY_ERROR,
+            paginationError: PAGINATION_QUERY_ERROR,
+            skipFirstRun: false,
+            query: testQuery,
+          }),
+        );
+        expect(mockShow).toBeCalledTimes(1);
+        expect(mockShow).toBeCalledWith(PAGINATION_QUERY_ERROR);
+        await waitFor(() => {});
       });
 
       it('should return correctly', async () => {
