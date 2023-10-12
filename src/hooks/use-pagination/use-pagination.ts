@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { DocumentNode } from 'graphql';
 
+import { useAlertMessage } from '@providers';
+
 import { useImperativeQuery } from '../use-imperative-query/use-imperative-query';
 import { usePaginateQuery } from './use-paginate-query';
 
@@ -42,6 +44,8 @@ export const usePagination = <TResult, TDataset, TVariables>(
   );
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState('');
+
+  const alertMessage = useAlertMessage();
 
   const handleEntryQueryError = useCallback(() => {
     setError(params.entryError);
@@ -129,6 +133,12 @@ export const usePagination = <TResult, TDataset, TVariables>(
       setError(params.paginationError);
     }
   }, [paginateQuery.hasError]);
+
+  useEffect(() => {
+    if (error) {
+      alertMessage.show(error);
+    }
+  }, [error]);
 
   return {
     isLoading: entryQuery.isLoading,
