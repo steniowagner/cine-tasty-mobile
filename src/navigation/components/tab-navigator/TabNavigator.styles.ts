@@ -5,8 +5,8 @@ import { isEqualsOrLargerThanIphoneX } from '@utils';
 import metrics from '@styles/metrics';
 
 export const WRAPPER_HEIGHT =
-  metrics.getWidthFromDP('18%') +
-  (isEqualsOrLargerThanIphoneX() ? metrics.getWidthFromDP('8%') : 0);
+  metrics.getWidthFromDP('18') +
+  (isEqualsOrLargerThanIphoneX() ? metrics.getWidthFromDP('8') : 0);
 
 export const Wrapper = styled(Animated.View)`
   width: ${({ theme }) => theme.metrics.width}px;

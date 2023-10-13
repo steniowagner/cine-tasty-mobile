@@ -8,5 +8,8 @@ module.exports = {
   },
   transformIgnorePatterns: [],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  setupFiles: ['./jest.setup.js'],
+  setupFiles: [
+    './jest.setup.js',
+    './node_modules/react-native-gesture-handler/jestSetup.js',
+  ],
 };

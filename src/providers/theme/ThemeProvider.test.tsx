@@ -13,9 +13,9 @@ import { ThemeId } from '@app-types';
 import { useThemeProvider, ThemeContextProvider } from './ThemeProvider';
 import { APP_THEME_STORAGE_KEY } from './use-app-theme';
 
-jest.mock('@utils');
+jest.mock('../../utils/storage/storage');
 
-const { storage } = require('@utils');
+const { storage } = require('../../utils/storage/storage');
 
 const mockColorScheme = jest.fn();
 

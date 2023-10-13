@@ -1,13 +1,17 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
+import { DefaultTheme } from 'styled-components/native';
 
 import { dark, light } from '@styles/themes';
 import { ThemeId } from '@app-types';
-import { storage } from '@utils';
 
-export const INITIAL_THEME = { ...dark, id: undefined };
+import { storage } from '../../utils/storage/storage';
 
 export const APP_THEME_STORAGE_KEY = 'APP_THEME';
+export const INITIAL_THEME = {
+  ...dark,
+  id: undefined,
+} as unknown as DefaultTheme;
 
 export const useAppTheme = () => {
   const [themeId, setThemeId] = useState<ThemeId | undefined>();
