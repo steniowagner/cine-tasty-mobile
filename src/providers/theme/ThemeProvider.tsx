@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { DefaultTheme, ThemeProvider } from 'styled-components';
+import { DefaultTheme, ThemeProvider } from 'styled-components/native';
 
 import { useAppTheme, INITIAL_THEME } from './use-app-theme';
 

@@ -1,6 +1,4 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import {
   ThemeContextProvider,
@@ -11,18 +9,10 @@ import { Navigation } from '@navigation';
 
 export const App = () => (
   <ThemeContextProvider>
-    <GestureHandlerRootView style={sheet.gestureHandler}>
-      <GraphQLClient>
-        <AlertMessageProvider>
-          <Navigation />
-        </AlertMessageProvider>
-      </GraphQLClient>
-    </GestureHandlerRootView>
+    <GraphQLClient>
+      <AlertMessageProvider>
+        <Navigation />
+      </AlertMessageProvider>
+    </GraphQLClient>
   </ThemeContextProvider>
 );
-
-const sheet = StyleSheet.create({
-  gestureHandler: {
-    flex: 1,
-  },
-});

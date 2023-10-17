@@ -1,7 +1,6 @@
 import React from 'react';
 import { RenderAPI, fireEvent, render } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components/native';
-import { DefaultTheme } from 'styled-components';
+import { ThemeProvider, DefaultTheme } from 'styled-components/native';
 
 import { dark, light } from '@styles/themes';
 

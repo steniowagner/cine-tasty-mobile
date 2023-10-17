@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import { useTheme } from 'styled-components/native';
 
 import { Icons } from '@common-components';
-import { renderSVGIconConditionally } from '@utils';
 import { dark } from '@styles/themes';
 
+import { renderSVGIconConditionally } from '../../../../utils/render-svg-icon-conditionally/render-svg-icon-conditionally';
 import * as Styles from './TabNavigatorItem.styles';
 
 type TabNavigatorItemProps = {

@@ -5,7 +5,7 @@ const { width, height } = Dimensions.get('window');
 const IPHONEX_WIDTH = 375;
 const IPHONEX_HEIGHT = 812;
 
-export const isEqualsOrLargerThanIphoneX = (): boolean => {
+export const isEqualsOrLargerThanIphoneX = () => {
   const isLargestThanIphoneXInPortraitMode =
     height >= IPHONEX_HEIGHT && width >= IPHONEX_WIDTH;
   const isLargestThanIphoneXInLandscapeMode =
