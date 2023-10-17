@@ -1,13 +1,15 @@
 import React from 'react';
-import { Modal, View } from 'react-native';
+import { Modal } from 'react-native';
 import {
   GestureHandlerRootView,
   PanGestureHandler,
 } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
+import { dark } from '@styles/themes';
+
 import { ModalSelectButton } from '../modal-select-button/ModalSelectButton';
-import { useModalSheet } from './use-modal-sheet';
+import { MAX_CLAMPING, useModalSheet } from './use-modal-sheet';
 import * as Styles from './ModalSheet.styles';
 
 export type ModalSheetProps = {
@@ -45,9 +47,17 @@ export const ModalSheet = (props: ModalSheetProps) => {
           modalSheet.darkLayerAnimatedStyle,
         ]}
       />
-      <Styles.BottomGapSection
-        height={modalSheet.bottomGapSectionHeight}
-        hasCtaButton={!!props.ctaButtonTitle}
+      <Animated.View
+        style={[
+          {
+            ...Styles.sheet.bottomGap,
+            height: MAX_CLAMPING,
+            backgroundColor: props.ctaButtonTitle
+              ? dark.colors.primary
+              : dark.colors.white,
+          },
+          modalSheet.bottomGapAnimatedStyle,
+        ]}
       />
       <GestureHandlerRootView style={Styles.sheet.gestureHandlerRootView}>
         <PanGestureHandler onGestureEvent={modalSheet.handleGestureEvent}>

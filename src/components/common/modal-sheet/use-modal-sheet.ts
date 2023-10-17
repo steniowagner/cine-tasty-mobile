@@ -40,8 +40,6 @@ export const useModalSheet = ({
   onCloseForcibly = () => {},
   ...props
 }: UseModalSheetProps) => {
-  const [bottomGapSectionHeight, setBottomGapSectionHeight] =
-    useState(MAX_CLAMPING);
   const [internalIsOpen, setInternalIsOpen] = useState(false);
 
   const dimensions = useWindowDimensions();
@@ -59,6 +57,23 @@ export const useModalSheet = ({
     () => dimensions.height - cardHeight,
     [cardHeight],
   );
+
+  // needed to copy dark-layer animation instead of reuse it, since use the same animation
+  // with two components that are totally different can cause some weird-behaviors
+  const bottomGapAnimatedStyle = useAnimatedStyle(() => {
+    const opacity = withTiming(
+      interpolate(
+        distanceFromTop.value,
+        [dimensions.height - 1.5 * MAX_CLAMPING, cardInitialPosition],
+        [0, 1],
+        Extrapolate.CLAMP,
+      ),
+      { duration: DARK_LAYER_OPACITY_ANIMATION_DURATION },
+    );
+    return {
+      opacity,
+    };
+  });
 
   const darkLayerAnimatedStyle = useAnimatedStyle(() => {
     const opacity = withTiming(
@@ -89,14 +104,10 @@ export const useModalSheet = ({
   }));
 
   const closeModal = useCallback((callback = () => {}) => {
-    const runOnJSCallback = () => {
-      setBottomGapSectionHeight(0);
-      callback();
-    };
     distanceFromTop.value = withTiming(
       dimensions.height + WRAPPER_HEIGHT,
       { duration: CLOSE_MODAL_ANIMATION_DURATION },
-      () => runOnJS(runOnJSCallback)(),
+      () => runOnJS(callback)(),
     );
   }, []);
 
@@ -105,9 +116,7 @@ export const useModalSheet = ({
   }, [props.onPressCTAButton]);
 
   const openModal = useCallback(() => {
-    distanceFromTop.value = withSpring(cardInitialPosition, SPRING_CONFIG, () =>
-      runOnJS(setBottomGapSectionHeight)(MAX_CLAMPING),
-    );
+    distanceFromTop.value = withSpring(cardInitialPosition, SPRING_CONFIG);
   }, [cardInitialPosition]);
 
   useEffect(() => {
@@ -138,8 +147,8 @@ export const useModalSheet = ({
   return {
     cardAnimatedStyle: distanceFromTopAnimatedStyle,
     onPressCTAButton: handlePressCTAButton,
-    bottomGapSectionHeight,
     darkLayerAnimatedStyle,
+    bottomGapAnimatedStyle,
     handleGestureEvent,
     internalIsOpen,
     cardHeight,

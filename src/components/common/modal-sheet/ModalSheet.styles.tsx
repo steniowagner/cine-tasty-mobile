@@ -1,6 +1,5 @@
-import { StyleSheet, ViewProps } from 'react-native';
-import styled, { IStyledComponent } from 'styled-components/native';
-import { Substitute } from 'styled-components/native/dist/types';
+import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
 import { Typography } from '@common-components';
 import { dark, light } from '@styles/themes';
@@ -8,12 +7,6 @@ import { borderRadius } from '@styles/border-radius';
 import metrics from '@styles/metrics';
 
 export const DEFAULT_MODAL_SHEET_HEIGHT = metrics.getHeightFromDP('60%');
-const DEFAULT_BACKGROUND_WHITE = dark.colors.text;
-
-type BottomGapSectionStyleProps = {
-  height: number;
-  hasCtaButton: boolean;
-};
 
 export const GripWrapper = styled.View`
   width: 100%;
@@ -47,29 +40,22 @@ export const ListHeaderWrapper = styled.View`
   margin-top: ${({ theme }) => theme.metrics.sm}px;
 `;
 
-export const BottomGapSection: IStyledComponent<
-  'native',
-  Substitute<ViewProps, BottomGapSectionStyleProps>
-> = styled.View<BottomGapSectionStyleProps>`
-  width: 100%;
-  height: ${({ height }) => height}px;
-  background-color: ${({ hasCtaButton, theme }) =>
-    hasCtaButton ? theme.colors.primary : DEFAULT_BACKGROUND_WHITE};
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-`;
-
 export const sheet = StyleSheet.create({
   backgroundDarkLayer: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: dark.colors.darkLayer,
   },
+  bottomGap: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
   card: {
     borderTopLeftRadius: borderRadius.md,
     borderTopRightRadius: borderRadius.md,
-    backgroundColor: DEFAULT_BACKGROUND_WHITE,
+    backgroundColor: dark.colors.white,
     bottom: 0,
     left: 0,
     right: 0,

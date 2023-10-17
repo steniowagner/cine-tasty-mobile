@@ -6,6 +6,8 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import metrics from '@/styles/metrics';
+
 const CLOSE_MODAL_GESTURE_ANIMATION_DURATION = 180;
 
 type HandleGestureEventProps = {
@@ -37,7 +39,8 @@ export const useGestureEvents = (props: UseGestureEventsProps) => {
       }
     },
     onEnd() {
-      const shouldCloseModal = props.distanceFromTop.value > props.cardHeight;
+      const shouldCloseModal =
+        props.distanceFromTop.value > metrics.height - props.cardHeight / 2;
       const nextDistanceFromTopValue = shouldCloseModal
         ? props.windowHeight
         : props.cardInitialPosition;
