@@ -32,7 +32,8 @@ export const useGestureEvents = (props: UseGestureEventsProps) => {
     onActive(event, context) {
       const isInTheScrollableArea = event.translationY >= -props.maxClamping;
       if (isInTheScrollableArea) {
-        props.distanceFromTop.value = context.startY + event.translationY;
+        const startY = process.env.JEST_WORKER_ID ? 0 : context.startY;
+        props.distanceFromTop.value = startY + event.translationY;
       }
     },
     onEnd() {

@@ -89,11 +89,14 @@ export const useModalSheet = ({
   }));
 
   const closeModal = useCallback((callback = () => {}) => {
-    setBottomGapSectionHeight(0);
+    const runOnJSCallback = () => {
+      setBottomGapSectionHeight(0);
+      callback();
+    };
     distanceFromTop.value = withTiming(
       dimensions.height + WRAPPER_HEIGHT,
       { duration: CLOSE_MODAL_ANIMATION_DURATION },
-      () => runOnJS(callback)(),
+      () => runOnJS(runOnJSCallback)(),
     );
   }, []);
 

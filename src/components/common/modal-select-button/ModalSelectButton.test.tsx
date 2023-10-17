@@ -19,7 +19,7 @@ const renderModalSelectButton = (props: ModalSelectButtonProps) => (
   </ThemeProvider>
 );
 
-describe('<ModalSelectButton />', () => {
+describe('Components/Common/ModalSelectButton', () => {
   const elements = {
     selectButton: (api: RenderAPI) => api.getByTestId('select-button'),
     selectButtonText: (api: RenderAPI) => api.getByTestId('select-button-text'),

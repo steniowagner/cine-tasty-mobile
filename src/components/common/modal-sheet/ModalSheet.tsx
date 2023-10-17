@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'react-native';
+import { Modal, View } from 'react-native';
 import {
   GestureHandlerRootView,
   PanGestureHandler,
@@ -10,7 +10,7 @@ import { ModalSelectButton } from '../modal-select-button/ModalSelectButton';
 import { useModalSheet } from './use-modal-sheet';
 import * as Styles from './ModalSheet.styles';
 
-type ModalSheetProps = {
+export type ModalSheetProps = {
   children: React.ReactNode;
   ctaButtonTitle?: string;
   forceClose?: boolean;
@@ -39,6 +39,7 @@ export const ModalSheet = (props: ModalSheetProps) => {
       transparent
       animationType="none">
       <Animated.View
+        testID="dark-layer"
         style={[
           Styles.sheet.backgroundDarkLayer,
           modalSheet.darkLayerAnimatedStyle,
@@ -51,6 +52,7 @@ export const ModalSheet = (props: ModalSheetProps) => {
       <GestureHandlerRootView style={Styles.sheet.gestureHandlerRootView}>
         <PanGestureHandler onGestureEvent={modalSheet.handleGestureEvent}>
           <Animated.View
+            testID="modal-card"
             style={[
               {
                 height: modalSheet.cardHeight,
