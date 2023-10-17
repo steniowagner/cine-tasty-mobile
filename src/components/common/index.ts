@@ -10,3 +10,4 @@ export {
 export { Typography };
 export { ModalSelectButton } from './modal-select-button/ModalSelectButton';
 export { ModalSheet } from './modal-sheet/ModalSheet';
+export { HeaderIconButton } from './header-icon-button/HeaderIconButton';
