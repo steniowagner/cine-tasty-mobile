@@ -7,5 +7,11 @@ export namespace Translations {
     TABS_FAMOUS = 'translations:tabs:famous',
   }
 
-  export type Tags = Tabs;
+  export enum News {
+    FILTER_LANGUAGES_CTA_TITLE = 'translations:news:filterLanguagesModal:ctaTitle',
+    FILTER_LANGUAGES_TITLE = 'translations:news:filterLanguagesModal:title',
+    LANGUAGES = 'translations:news:languages',
+  }
+
+  export type Tags = Tabs | News;
 }
