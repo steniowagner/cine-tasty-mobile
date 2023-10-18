@@ -1,21 +1,14 @@
 import React from 'react';
-import {
-  RenderAPI,
-  cleanup,
-  render,
-  act,
-  fireEvent,
-  waitFor,
-} from '@testing-library/react-native';
+import { RenderAPI, render, act } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components/native';
 
 import { dark as theme } from '@styles/themes/dark';
 import { NewsLanguage } from '@schema-types';
+import { Translations } from '@i18n/tags';
 
 import { ITEM_LIST_HEIGHT } from './list-item/LanguageListItem.styles';
 import { LanguageFilterList } from './LanguageFilterList';
 import { languages } from './filter-languages/languages';
-import { Translations } from '@i18n/tags';
 
 const mockScrollTo = jest.fn();
 
