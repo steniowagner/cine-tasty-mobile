@@ -6,6 +6,8 @@ import { ThemeId } from '@/types';
 export const DefaultText = styled(Typography.ExtraSmallText).attrs(
   ({ theme }) => ({
     color:
-      theme.id === ThemeId.DARK ? theme.colors.white : theme.colors.buttonText,
+      theme.id === ThemeId.DARK
+        ? theme.colors.subText
+        : theme.colors.buttonText,
   }),
 )``;
