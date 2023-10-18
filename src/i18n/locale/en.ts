@@ -7,6 +7,20 @@ export const en: Locale = {
     quiz: 'Quiz',
     news: 'News',
   },
+  time: {
+    year: '{{ value }}yr ago',
+    year_plural: '{{ value }}yr ago',
+    month: '{{ value }}mth ago',
+    month_plural: '{{ value }}mth ago',
+    day: '{{ value }}d ago',
+    day_plural: '{{ value }}d ago',
+    hour: '{{ value }}h ago',
+    hour_plural: '{{ value }}h ago',
+    minute: '{{ value }}m ago',
+    minute_plural: '{{ value }}m ago',
+    second: '{{ value }}s ago',
+    second_plural: '{{ value }}s ago',
+  },
   news: {
     filterLanguagesModal: {
       ctaTitle: 'SELECT',

@@ -7,6 +7,20 @@ export const es: Locale = {
     quiz: 'Quiz',
     news: 'Noticias',
   },
+  time: {
+    year: 'hace {{ value }}año',
+    year_plural: 'hace {{ value }}años',
+    month: ' hace {{ value }}mes',
+    month_plural: 'hace {{ value }}meses',
+    day: 'hace {{ value }}dia',
+    day_plural: 'hace {{ value }}dias',
+    hour: 'hace {{ value }}h',
+    hour_plural: 'hace {{ value }}hrs',
+    minute: 'hace {{ value }}m',
+    minute_plural: 'hace {{ value }}m',
+    second: 'hace {{ value }}s',
+    second_plural: 'hace {{ value }}s',
+  },
   news: {
     filterLanguagesModal: {
       ctaTitle: 'SELECCIONAR',
