@@ -11,7 +11,7 @@ type UseLanguageFilterProps = {
 };
 
 export const useLanguageFilter = (props: UseLanguageFilterProps) => {
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<ScrollView | null>(null);
 
   const filterLanguages = useNewsFilterLanguages();
 
@@ -49,7 +49,6 @@ export const useLanguageFilter = (props: UseLanguageFilterProps) => {
 
   return {
     handleSetScrollViewRef,
-    scrollViewRef,
     filterLanguages,
   };
 };

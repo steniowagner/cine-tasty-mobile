@@ -36,6 +36,7 @@ export const ModalSheet = (props: ModalSheetProps) => {
 
   return (
     <Modal
+      statusBarTranslucent
       testID="modal-sheet"
       visible={modalSheet.internalIsOpen}
       transparent
