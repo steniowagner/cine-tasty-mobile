@@ -5,7 +5,7 @@ import { es as SPANISH } from '@i18n/locale/es';
 import { en as ENGLISH } from '@i18n/locale/en';
 import { NewsFilterLanguage } from '@/types';
 
-import { useAvailableLanguages } from './use-available-languages';
+import { useNewsFilterLanguages } from './use-news-filter-languages';
 import { languages } from './languages';
 
 const languagesSortedInPortuguese = [
@@ -66,7 +66,7 @@ jest.mock('@hooks', () => ({
   }),
 }));
 
-describe('Screens/News/components/languages-filter-modal/language-filter/available-languages/use-available-languages', () => {
+describe('Screens/News/use-news-filter-languages', () => {
   describe('When the "language" is "Portuguese"', () => {
     beforeAll(() => {
       jest.resetAllMocks();
@@ -80,7 +80,7 @@ describe('Screens/News/components/languages-filter-modal/language-filter/availab
     });
 
     it('should show the items in the correct order', () => {
-      const { result } = renderHook(() => useAvailableLanguages());
+      const { result } = renderHook(() => useNewsFilterLanguages());
       expect(
         result.current.every(
           (language, index) =>
@@ -104,7 +104,7 @@ describe('Screens/News/components/languages-filter-modal/language-filter/availab
     });
 
     it('should show the items in the correct order', () => {
-      const { result } = renderHook(() => useAvailableLanguages());
+      const { result } = renderHook(() => useNewsFilterLanguages());
       expect(
         result.current.every(
           (language, index) =>
@@ -128,7 +128,7 @@ describe('Screens/News/components/languages-filter-modal/language-filter/availab
     });
 
     it('should show the items in the correct order', () => {
-      const { result } = renderHook(() => useAvailableLanguages());
+      const { result } = renderHook(() => useNewsFilterLanguages());
       expect(
         result.current.every(
           (language, index) =>

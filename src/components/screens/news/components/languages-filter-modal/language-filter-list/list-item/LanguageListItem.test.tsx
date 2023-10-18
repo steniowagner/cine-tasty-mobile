@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components/native';
 
 import { dark } from '@styles/themes/dark';
 
-import { languages } from '../available-languages/languages';
+import { languages } from '../filter-languages/languages';
 import LanguageListItem from './LanguageListItem';
 
 const language = languages[9];
