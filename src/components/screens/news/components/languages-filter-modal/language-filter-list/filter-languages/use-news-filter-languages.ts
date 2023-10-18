@@ -7,7 +7,7 @@ import { languages, Language } from './languages';
 
 type TranslatedLanguage = Omit<Language, 'name'> & { name: string };
 
-export const useAvailableLanguages = () => {
+export const useNewsFilterLanguages = () => {
   const translation = useTranslation();
 
   const sortLanguages = useCallback(
