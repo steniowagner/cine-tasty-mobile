@@ -15,6 +15,11 @@ type Time =
   | 'second'
   | 'second_plural';
 
+type Errors = {
+  pagination: string;
+  entry: string;
+};
+
 export type Locale = {
   tabs: Record<TabRouteIds, string>;
   time: Record<Time, string>;
@@ -24,5 +29,6 @@ export type Locale = {
       title: string;
     };
     languages: Record<NewsFilterLanguage, string>;
+    errors: Errors;
   };
 };

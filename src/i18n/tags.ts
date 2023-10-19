@@ -11,6 +11,8 @@ export namespace Translations {
     FILTER_LANGUAGES_CTA_TITLE = 'translations:news:filterLanguagesModal:ctaTitle',
     FILTER_LANGUAGES_TITLE = 'translations:news:filterLanguagesModal:title',
     LANGUAGES = 'translations:news:languages',
+    PAGINATION_QUERY_ERROR = 'translations:news:errors:pagination',
+    ENTRY_QUERY_ERROR = 'translations:news:errors:entry',
   }
 
   export enum Time {

@@ -41,5 +41,9 @@ export const en: Locale = {
       finnish: 'Finnish',
       spanish: 'Spanish',
     },
+    errors: {
+      pagination: "Couldn't load more news",
+      entry: "Couldn't load the news",
+    },
   },
 };
