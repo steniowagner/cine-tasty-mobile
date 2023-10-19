@@ -6,13 +6,13 @@ import metrics from '@styles/metrics';
 import * as Styles from './PaginatedListFooter.styles';
 import { SVGIcon } from '../svg-icon/SVGIcon';
 
-type PaginationFooterProps = {
+type PaginatedListFooterProps = {
   onPressReloadButton: () => void;
   isPaginating: boolean;
   hasError: boolean;
 };
 
-export const PaginationFooter = (props: PaginationFooterProps) => (
+export const PaginatedListFooter = (props: PaginatedListFooterProps) => (
   <Styles.Wrapper testID="pagination-footer-wrapper">
     {props.isPaginating && (
       <Styles.CustomActivityIndicator
