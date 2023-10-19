@@ -45,5 +45,10 @@ export const en: Locale = {
       pagination: "Couldn't load more news",
       entry: "Couldn't load the news",
     },
+    advice: {
+      description: 'We could not find any news for this language',
+      suggestion: 'Perhaps try with another language?',
+      title: 'Oops...',
+    },
   },
 };

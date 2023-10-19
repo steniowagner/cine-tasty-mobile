@@ -15,6 +15,12 @@ type Time =
   | 'second'
   | 'second_plural';
 
+type Advice = {
+  description: string;
+  suggestion: string;
+  title: string;
+};
+
 type Errors = {
   pagination: string;
   entry: string;
@@ -30,5 +36,6 @@ export type Locale = {
     };
     languages: Record<NewsFilterLanguage, string>;
     errors: Errors;
+    advice: Advice;
   };
 };

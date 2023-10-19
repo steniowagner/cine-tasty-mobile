@@ -13,6 +13,9 @@ export namespace Translations {
     LANGUAGES = 'translations:news:languages',
     PAGINATION_QUERY_ERROR = 'translations:news:errors:pagination',
     ENTRY_QUERY_ERROR = 'translations:news:errors:entry',
+    EMPTY_LIST_ADVICE_DESCRIPTION = 'translations:news:advice:description',
+    EMPTY_LIST_ADVICE_SUGGESTION = 'translations:news:advice:suggestion',
+    EMPTY_LIST_ADVICE_TITLE = 'translations:news:advice:title',
   }
 
   export enum Time {

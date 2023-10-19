@@ -45,5 +45,10 @@ export const pt: Locale = {
       pagination: 'Não foi possível carregar mais notícias',
       entry: 'Não foi possível carregar as notícias',
     },
+    advice: {
+      description: 'Não encontramos nenhuma notícia com este idioma',
+      suggestion: 'Talvez com um outro idioma?',
+      title: 'Oops...',
+    },
   },
 };
