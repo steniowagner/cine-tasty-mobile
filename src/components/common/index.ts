@@ -14,3 +14,4 @@ export { HeaderIconButton } from './header-icon-button/HeaderIconButton';
 export { LoadingPlaceholder } from './loading-placeholder/LoadingPlaceholder';
 export { PaginatedListFooter } from './paginated-list-footer/PaginatedListFooter';
 export { PaginatedListHeader } from './paginated-list-header/PaginatedListHeader';
+export { Advice } from './advice/Advice';
