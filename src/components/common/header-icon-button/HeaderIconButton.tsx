@@ -16,7 +16,7 @@ export type HeaderIconButtonProps = {
   iconName: Icons;
 };
 
-const iconSize = metrics.getWidthFromDP('6.5');
+const iconSize = metrics.getWidthFromDP('6');
 
 export const HeaderIconButton = (props: HeaderIconButtonProps) => (
   <Styles.Wrapper
