@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components/native';
 
 import { dark as theme } from '@styles/themes';
 import { NewsLanguage } from '@schema-types';
+import { Translations } from '@/i18n/tags';
 
 import { languages } from './language-filter-list/filter-languages/languages';
 import { LanguagesFilterModal } from './LanguagesFilterModal';
@@ -49,10 +50,28 @@ describe('Screens/News/LanguagesFilterModal', () => {
       component.getAllByTestId('language-filter-list-item'),
     selectButton: (component: RenderAPI) =>
       component.getByTestId('select-button'),
+    modalTitle: (component: RenderAPI) =>
+      component.getByTestId('modal-sheet-title'),
+    modalCTATitle: (component: RenderAPI) =>
+      component.getByTestId('select-button-text'),
   };
 
   beforeEach(() => {
     jest.useFakeTimers();
+  });
+
+  it('should show the correct "modal-title"', () => {
+    const component = render(renderLanguagesFilterModal());
+    expect(elements.modalTitle(component).children[0]).toEqual(
+      Translations.News.FILTER_LANGUAGES_TITLE,
+    );
+  });
+
+  it('should show the correct "modal-cta-title"', () => {
+    const component = render(renderLanguagesFilterModal());
+    expect(elements.modalCTATitle(component).children[0]).toEqual(
+      Translations.News.FILTER_LANGUAGES_CTA_TITLE,
+    );
   });
 
   test.each(languagesSortedInEnglish)(
