@@ -1,5 +1,5 @@
 /* tslint:disable */
-
+/* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
 
@@ -8,14 +8,20 @@
 // ====================================================
 
 export interface QueryNews_news_items {
-  __typename: 'NewsArticle';
-  author: string | null;
-  content: string | null;
+  __typename: "NewsArticle";
+  url: string | null;
+  title: string | null;
+  source: string | null;
+  publishedAt: string | null;
+  image: string | null;
+  id: string | null;
+  description: string | null;
 }
 
 export interface QueryNews_news {
-  __typename: 'NewsResult';
+  __typename: "NewsResult";
   items: QueryNews_news_items[];
+  hasMore: boolean;
 }
 
 export interface QueryNews {
@@ -28,7 +34,7 @@ export interface QueryNewsVariables {
 }
 
 /* tslint:disable */
-
+/* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
 
@@ -37,19 +43,19 @@ export interface QueryNewsVariables {
 //==============================================================
 
 export enum NewsLanguage {
-  AR = 'AR',
-  DE = 'DE',
-  EN = 'EN',
-  ES = 'ES',
-  FR = 'FR',
-  HE = 'HE',
-  IT = 'IT',
-  NL = 'NL',
-  NO = 'NO',
-  PT = 'PT',
-  RU = 'RU',
-  SE = 'SE',
-  ZH = 'ZH',
+  AR = "AR",
+  DE = "DE",
+  EN = "EN",
+  ES = "ES",
+  FR = "FR",
+  HE = "HE",
+  IT = "IT",
+  NL = "NL",
+  NO = "NO",
+  PT = "PT",
+  RU = "RU",
+  SE = "SE",
+  ZH = "ZH",
 }
 
 //==============================================================

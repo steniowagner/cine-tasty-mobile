@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { DocumentNode } from 'graphql';
 
 import { useAlertMessage } from '@providers';
+import { Icons } from '@/components/common';
 
 import { useImperativeQuery } from '../use-imperative-query/use-imperative-query';
 import { usePaginateQuery } from './use-paginate-query';
@@ -28,6 +29,7 @@ type Variables<TVariables> = Page | (Page & TVariables) | InputWithPaging;
 type UsePaginationParams<TResult, TDataset, TVariables> = {
   onGetData: (result: TResult) => ParsedQueryResult<TDataset>;
   variables?: ReceivedVariables<TVariables>;
+  errorMessageIcon?: Icons;
   initialDataset?: TDataset[];
   fetchPolicy?: string;
   entryError: string;
@@ -105,7 +107,6 @@ export const usePagination = <TResult, TDataset, TVariables>(
     skipFirstRun: params.skipFirstRun,
     fetchPolicy: params.fetchPolicy,
     query: params.query,
-    setError,
     getVariables,
     hasMore,
   });
@@ -122,6 +123,28 @@ export const usePagination = <TResult, TDataset, TVariables>(
     await entryQuery.exec(getVariables(1));
   }, [resetState, entryQuery.exec, getVariables]);
 
+  const handlePaginate = useCallback(() => {
+    const hasError = entryQuery.hasError || paginateQuery.hasError;
+    if (hasError || paginateQuery.isPaginating) {
+      return;
+    }
+    setError('');
+    paginateQuery.paginate();
+  }, [
+    paginateQuery.isPaginating,
+    paginateQuery.paginate,
+    paginateQuery.hasError,
+    entryQuery.hasError,
+  ]);
+
+  const handleRetryPagination = useCallback(() => {
+    if (entryQuery.hasError || paginateQuery.isPaginating) {
+      return;
+    }
+    setError('');
+    paginateQuery.paginate();
+  }, [paginateQuery.paginate, entryQuery.hasError, paginateQuery.isPaginating]);
+
   useEffect(() => {
     if (!params.skipFirstRun) {
       handleExecEntryQuery();
@@ -136,7 +159,7 @@ export const usePagination = <TResult, TDataset, TVariables>(
 
   useEffect(() => {
     if (error) {
-      alertMessage.show(error);
+      alertMessage.show(error, params.errorMessageIcon);
     }
   }, [error]);
 
@@ -144,8 +167,9 @@ export const usePagination = <TResult, TDataset, TVariables>(
     isLoading: entryQuery.isLoading,
     hasPaginationError: paginateQuery.hasError,
     isPaginating: paginateQuery.isPaginating,
-    paginate: paginateQuery.paginate,
+    paginate: handlePaginate,
     retryEntryQuery: handleExecEntryQuery,
+    retryPagination: handleRetryPagination,
     resetState,
     dataset,
     error,

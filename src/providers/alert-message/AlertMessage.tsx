@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Icons } from '@/components/common';
-import { dark } from '@styles/themes';
+import STYLES_CONSTANTS from '@styles/constants';
 
 import { useAlertMessage } from './use-alert-message';
 import * as Styles from './AlertMessage.styles';
@@ -20,7 +20,7 @@ export const AlertMessage = (props: AlertMessageProps) => {
   return (
     <Styles.Wrapper
       testID="alert-message-wrapper"
-      style={[alertMessage.animatedStyle, dark.colors.defaultShadow]}>
+      style={[alertMessage.animatedStyle, STYLES_CONSTANTS.defaultShadow]}>
       {props.icon && (
         <Styles.Icon size={0} id={props.icon} testID="alert-message-icon" />
       )}

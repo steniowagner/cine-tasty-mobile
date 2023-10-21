@@ -1,4 +1,4 @@
-export const flatListScrollEventData = {
+export const scrollFlatListToEnd = {
   nativeEvent: {
     contentOffset: {
       x: 0,

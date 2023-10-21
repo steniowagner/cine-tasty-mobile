@@ -10,6 +10,7 @@ import { TypographyStyle } from '@styles/typography';
 
 export type DefaultTypographyProps = {
   alignment?: 'auto' | 'left' | 'center' | 'right' | 'justify';
+  numberOfLines?: number;
   style?: StyleProp<TextStyle>;
   color?: string;
   bold?: boolean;

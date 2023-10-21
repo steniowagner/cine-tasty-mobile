@@ -6,7 +6,6 @@ import { useImperativeQuery } from '@hooks';
 type UsePaginateQueryParams<TResult, TVariables> = {
   onCompleted: (result: TResult) => void;
   getVariables: (page: number) => TVariables;
-  setError: (error: string) => void;
   fetchPolicy?: string;
   skipFirstRun: boolean;
   query: DocumentNode;
@@ -54,6 +53,7 @@ export const usePaginateQuery = <TResult, TVariables>(
       };
     });
   }, [
+    imperativeQuery.hasError,
     imperativeQuery.isLoading,
     imperativeQuery.hasError,
     params.hasMore,
@@ -61,19 +61,13 @@ export const usePaginateQuery = <TResult, TVariables>(
   ]);
 
   const paginate = useCallback(async () => {
-    params.setError('');
     const variables = params.getVariables(pagination.page);
     await imperativeQuery.exec(variables);
     setPagination((previousPagination: Pagination) => ({
       ...previousPagination,
       isPaginating: false,
     }));
-  }, [
-    params.setError,
-    params.getVariables,
-    pagination.page,
-    imperativeQuery.exec,
-  ]);
+  }, [params.getVariables, pagination.page, imperativeQuery.exec]);
 
   useEffect(() => {
     if (pagination.isPaginating) {
