@@ -18,7 +18,7 @@ const TabBar = (props: BottomTabBarProps) => <TabNavigator {...props} />;
 export const Tabs = () => (
   <>
     <Tab.Navigator
-      initialRouteName={Routes.Tabs.NEWS}
+      initialRouteName={Routes.Tabs.QUIZ}
       tabBar={TabBar}
       screenOptions={{
         headerShown: false,
