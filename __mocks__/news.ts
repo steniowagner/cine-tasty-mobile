@@ -4,8 +4,8 @@ import { GraphQLError } from 'graphql';
 import { QueryNews_news_items, NewsLanguage } from '@schema-types';
 import metrics from '@styles/metrics';
 
-import { GET_NEWS } from '../src/components/screens/news/components/use-news';
-import { LIST_ITEM_HEIGHT } from '../src/components/screens/news/components/News.styles';
+import { GET_NEWS } from '../src/components/stacks/news/components/use-news';
+import { LIST_ITEM_HEIGHT } from '../src/components/stacks/news/components/News.styles';
 
 type Errors = 'network' | 'graphql';
 

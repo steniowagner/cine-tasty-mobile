@@ -79,7 +79,7 @@ const renderNews = (mocks: readonly MockedResponse<Record<string, any>>[]) => {
   return <MockedNavigator component={NewsComponent} />;
 };
 
-describe('Screens/News', () => {
+describe('Stacks/News/Screens/News', () => {
   const elements = {
     newsList: (component: RenderAPI) => component.queryByTestId('news-list'),
     newsListItemsText: (component: RenderAPI) =>

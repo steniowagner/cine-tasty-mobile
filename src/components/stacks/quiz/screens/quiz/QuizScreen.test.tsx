@@ -22,7 +22,7 @@ const renderQuiz = (navigate = jest.fn()) => {
   return <MockedNavigator component={QuizComponent} />;
 };
 
-describe('Screens/Quiz/QuizScreen', () => {
+describe('Stacks/Quiz/QuizScreen', () => {
   const elements = {
     welcomeText: (api: RenderAPI) => api.getByTestId('quiz-welcome-text'),
     descriptionText: (api: RenderAPI) =>

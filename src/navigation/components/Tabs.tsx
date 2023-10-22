@@ -5,7 +5,7 @@ import {
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
 
-import * as Screens from '@screens';
+import * as Stacks from '@/components/stacks';
 
 import { AndroidNavigationBar } from './AndroidNavigationBar.android';
 import { TabNavigator } from './tab-navigator/TabNavigator';
@@ -23,10 +23,10 @@ export const Tabs = () => (
       screenOptions={{
         headerShown: false,
       }}>
-      <Tab.Screen component={Screens.HomeStack} name={Routes.Tabs.HOME} />
-      <Tab.Screen component={Screens.FamousStack} name={Routes.Tabs.FAMOUS} />
-      <Tab.Screen component={Screens.QuizStack} name={Routes.Tabs.QUIZ} />
-      <Tab.Screen component={Screens.NewsStack} name={Routes.Tabs.NEWS} />
+      <Tab.Screen component={Stacks.HomeStack} name={Routes.Tabs.HOME} />
+      <Tab.Screen component={Stacks.FamousStack} name={Routes.Tabs.FAMOUS} />
+      <Tab.Screen component={Stacks.QuizStack} name={Routes.Tabs.QUIZ} />
+      <Tab.Screen component={Stacks.NewsStack} name={Routes.Tabs.NEWS} />
     </Tab.Navigator>
     {Platform.OS === 'android' && <AndroidNavigationBar />}
   </>
