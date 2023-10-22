@@ -33,5 +33,45 @@ export namespace Translations {
     TIME_SECOND = 'translations:time:second',
   }
 
-  export type Tags = Tabs | News | Time;
+  export enum Quiz {
+    QUIZ = 'translations:quiz',
+    QUIZ_WELCOME = 'translations:quiz:welcome',
+    QUIZ_DESCRIPTION = 'translations:quiz:decription',
+    QUIZ_CHALLENGE = 'translations:quiz:challenge',
+    QUIZ_CHOOSE_QUESTIONS = 'translations:quiz:chooseQuestions',
+    QUIZ_START_BUTTON = 'translations:quiz:startButton',
+    QUIZ_CATEGORY = 'translations:quiz:category',
+    QUIZ_CATEGORY_MIXED = 'translations:quiz:categoryMixed',
+    QUIZ_CATEGORY_MOVIE = 'translations:quiz:categoryMovie',
+    QUIZ_CATEGORY_TV = 'translations:quiz:categoryTV',
+    QUIZ_TYPE = 'translations:quiz:type',
+    QUIZ_TYPE_MULTIPLE = 'translations:quiz:typeMultiple',
+    QUIZ_TYPE_BOOLEAN = 'translations:quiz:typeBoolean',
+    QUIZ_TYPE_MIXED = 'translations:quiz:typeMixed',
+    QUIZ_NUMBER_OF_QUESTIONS = 'translations:quiz:numberOfQuestions',
+    QUIZ_SET_DIFFICULTY = 'translations:quiz:setDifficulty',
+    QUIZ_SET_CATEGORY = 'translations:quiz:setCategory',
+    QUIZ_SET_TYPE = 'translations:quiz:setType',
+    QUIZ_MODAL_SELECT_TEXT = 'translations:quiz:modalSelectText',
+    QUIZ_DIFFICULTY = 'translations:quiz:difficulty',
+    QUIZ_DIFFICULTY_EASY = 'translations:quiz:difficultyEasy',
+    QUIZ_DIFFICULTY_MEDIUM = 'translations:quiz:difficultyMedium',
+    QUIZ_DIFFICULTY_HARD = 'translations:quiz:difficultyHard',
+    QUIZ_DIFFICULTY_MIXED = 'translations:quiz:difficultyMixed',
+    QUIZ_PLAY_AGAIN_DESCRIPTION = 'translations:quiz:playAgainDescription',
+    QUIZ_PLAY_AGAIN = 'translations:quiz:playAgain',
+    QUIZ_ANSWER = 'translations:quiz:answer',
+    QUIZ_YOUR_ANSWER = 'translations:quiz:yourAnswer',
+    QUIZ_SCORES = 'translations:quiz:scores',
+    QUIZ_YES = 'translations:quiz:yes',
+    QUIZ_NO = 'translations:quiz:no',
+    QUIZ_NO_QUESTIONS_ADVISE_DESCRIPTION = 'translations:quiz:noQuestionsAdviseDescription',
+    QUIZ_NO_QUESTIONS_ADVISE_SUGGESTION = 'translations:quiz:noQuestionsAdviseSuggestion',
+    QUIZ_NO_QUESTIONS_ADVISE_TITLE = 'translations:quiz:noQuestionsAdviseTitle',
+    QUIZ_NEXT = 'translations:quiz:next',
+    QUIZ_TRUE = 'translations:quiz:true',
+    QUIZ_FALSE = 'translations:quiz:false',
+  }
+
+  export type Tags = Tabs | News | Time | Quiz;
 }
