@@ -12,7 +12,7 @@ const renderPaginationFooter = (onPress = jest.fn()) => (
   </ThemeProvider>
 );
 
-describe('<PaginatedListHeader />', () => {
+describe('Common-components/PaginatedListHeader', () => {
   const elements = {
     reloadButton: (api: RenderAPI) => api.getByTestId('top-reload-button'),
     icon: (api: RenderAPI) => api.getByTestId('icon-restart'),
