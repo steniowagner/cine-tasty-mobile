@@ -8,18 +8,12 @@ export type QuizStackParams = {
   [Routes.Quiz.SETUP_QUESTIONS]: undefined;
 };
 
-/** Quiz-Screen-Props */
-export type QuizScreenPropsNavigationProp = StackNavigationProp<
+/** Quiz-Props */
+export type QuizPropsNavigationProp = StackNavigationProp<
   QuizStackParams,
   Routes.Quiz.QUIZ
 >;
 
-export type QuizScreenPropsRouteProp = RouteProp<
-  QuizStackParams,
-  Routes.Quiz.QUIZ
->;
+export type QuizPropsRouteProp = RouteProp<QuizStackParams, Routes.Quiz.QUIZ>;
 
-export type QuizScreenProps = StackScreenProps<
-  QuizStackParams,
-  Routes.Quiz.QUIZ
->;
+export type QuizProps = StackScreenProps<QuizStackParams, Routes.Quiz.QUIZ>;

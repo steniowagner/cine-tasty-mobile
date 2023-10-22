@@ -4,13 +4,13 @@ import { Translations } from '@i18n/tags';
 import { useTranslation } from '@hooks';
 import { Routes } from '@/navigation';
 
-import { QuizScreenPropsNavigationProp } from '../../routes/route-params-types';
+import { QuizPropsNavigationProp } from '../../routes/route-params-types';
 
-type UseQuizScreenProps = {
-  navigation: QuizScreenPropsNavigationProp;
+type UseQuizProps = {
+  navigation: QuizPropsNavigationProp;
 };
 
-export const useQuizScreen = (props: UseQuizScreenProps) => {
+export const useQuizScreen = (props: UseQuizProps) => {
   const translation = useTranslation();
 
   const texts = useMemo(

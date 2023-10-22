@@ -2,11 +2,11 @@ import React from 'react';
 
 import { RoundedButton } from '@common-components';
 
-import { QuizScreenProps } from '../../routes/route-params-types';
-import * as Styles from './QuizScreen.styles';
-import { useQuizScreen } from './use-quiz-screen';
+import { QuizProps } from '../../routes/route-params-types';
+import * as Styles from './Quiz.styles';
+import { useQuizScreen } from './use-quiz';
 
-export const QuizScreen = (props: QuizScreenProps) => {
+export const Quiz = (props: QuizProps) => {
   const quiz = useQuizScreen({ navigation: props.navigation });
 
   return (

@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Routes } from '@/navigation/routes';
 
 import { QuizStackParams } from './route-params-types';
-import { QuizScreen } from '../screens/quiz/QuizScreen';
+import { Quiz } from '../screens/quiz/Quiz';
 
 const Stack = createStackNavigator<QuizStackParams>();
 
@@ -16,7 +16,7 @@ export const QuizStack = () => {
           headerShown: false,
         }}
         name={Routes.Quiz.QUIZ}
-        component={QuizScreen}
+        component={Quiz}
       />
     </Stack.Navigator>
   );

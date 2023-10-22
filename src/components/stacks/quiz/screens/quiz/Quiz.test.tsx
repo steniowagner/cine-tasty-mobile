@@ -5,12 +5,12 @@ import { Translations } from '@i18n/tags';
 import { Routes } from '@navigation';
 
 import { MockedNavigator } from '../../../../../../__mocks__';
-import { QuizScreenProps } from '../../routes/route-params-types';
-import { QuizScreen } from './QuizScreen';
+import { QuizProps } from '../../routes/route-params-types';
+import { Quiz } from './Quiz';
 
 const renderQuiz = (navigate = jest.fn()) => {
-  const QuizComponent = (props: QuizScreenProps) => (
-    <QuizScreen
+  const QuizComponent = (props: QuizProps) => (
+    <Quiz
       {...props}
       navigation={{ ...props.navigation, navigate }}
       route={{
@@ -22,7 +22,7 @@ const renderQuiz = (navigate = jest.fn()) => {
   return <MockedNavigator component={QuizComponent} />;
 };
 
-describe('Stacks/Quiz/QuizScreen', () => {
+describe('Stacks/Quiz/Screens/Quiz', () => {
   const elements = {
     welcomeText: (api: RenderAPI) => api.getByTestId('quiz-welcome-text'),
     descriptionText: (api: RenderAPI) =>
