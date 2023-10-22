@@ -9,10 +9,10 @@ import {
 } from '@/components/common';
 import metrics from '@/styles/metrics';
 
-import { LanguagesFilterModal } from './languages-filter-modal/LanguagesFilterModal';
-import { NewsStackProps } from '../routes/route-params-types';
-import { NewsListItem } from './news-list-item/NewsListItem';
-import { NewsLoading } from './news-loading/NewsLoading';
+import { LanguagesFilterModal } from './components/languages-filter-modal/LanguagesFilterModal';
+import { NewsStackProps } from '../../routes/route-params-types';
+import { NewsListItem } from './components/news-list-item/NewsListItem';
+import { NewsLoading } from './components/news-loading/NewsLoading';
 import * as Styles from './News.styles';
 import { useNews } from './use-news';
 

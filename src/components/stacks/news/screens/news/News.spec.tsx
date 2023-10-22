@@ -12,8 +12,8 @@ import { AlertMessageProvider } from '@/providers';
 import { NewsLanguage } from '@/types/schema';
 import { Translations } from '@/i18n/tags';
 
-import { languages } from './languages-filter-modal/language-filter-list/filter-languages/languages';
-import { NewsStackProps } from '../routes/route-params-types';
+import { languages } from './components/languages-filter-modal/language-filter-list/filter-languages/languages';
+import { NewsStackProps } from '../../routes/route-params-types';
 import {
   MockedNavigator,
   mockNewsEntryQuerySuccessResponse,
@@ -24,7 +24,7 @@ import {
   scrollFlatListToEnd,
   randomPositiveNumber,
   randomArrayIndex,
-} from '../../../../../__mocks__';
+} from '../../../../../../__mocks__';
 import { News } from './News';
 
 // english is selected by default, and won't trigger the entry query if it's selected
