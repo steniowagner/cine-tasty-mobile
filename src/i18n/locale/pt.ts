@@ -64,7 +64,7 @@ export const pt: Locale = {
     numberOfQuestions: 'Número de perguntas',
     setDifficulty: 'Dificuldade das perguntas',
     setCategory: 'Categoria das perguntas',
-    setType: 'Tipo das pergutnas',
+    setType: 'Tipo das perguntas',
     modalSelectText: 'Selecionar',
     categoryMixed: 'Misturado',
     categoryMovie: 'Filmes',

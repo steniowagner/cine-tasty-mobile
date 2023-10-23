@@ -2,7 +2,7 @@ import { TouchableOpacityProps } from 'react-native';
 import styled, { IStyledComponent } from 'styled-components/native';
 import { Substitute } from 'styled-components/native/dist/types';
 
-import { Typography, SVGIcon } from '@common-components';
+import { Typography } from '@common-components';
 import { dark } from '@styles/themes';
 
 type ListItemStyleProps = {
@@ -27,8 +27,4 @@ export const ListItemText = styled(
   Typography.SmallText,
 ).attrs<ListItemStyleProps>(({ isSelected }) => ({
   color: isSelected ? dark.colors.text : dark.colors.buttonText,
-}))``;
-
-export const CheckboxIcon = styled(SVGIcon).attrs(({ theme }) => ({
-  size: theme.metrics.getWidthFromDP('8'),
 }))``;
