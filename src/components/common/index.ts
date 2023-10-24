@@ -15,3 +15,4 @@ export { LoadingPlaceholder } from './loading-placeholder/LoadingPlaceholder';
 export { PaginatedListFooter } from './paginated-list-footer/PaginatedListFooter';
 export { PaginatedListHeader } from './paginated-list-header/PaginatedListHeader';
 export { Advice } from './advice/Advice';
+export { RoundedButton } from './rounded-button/RoundedButton';

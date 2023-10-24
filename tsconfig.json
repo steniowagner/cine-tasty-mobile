@@ -17,7 +17,7 @@
       "@common-components": ["./components/common/index.ts"],
       "@utils": ["./utils/index.ts"],
       "@navigation": ["./navigation/index.ts"],
-      "@screens": ["./components/screens/index.ts"],
+      "@stacks": ["./components/stacks/index.ts"],
       "@i18n/*": ["./i18n/*"],
       "@mocks": ["../__mocks__/index.ts"]
     }

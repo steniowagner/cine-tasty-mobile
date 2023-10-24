@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { renderSVGIconConditionally } from '../../../../../../utils/render-svg-icon-conditionally/render-svg-icon-conditionally';
+import { renderSVGIconConditionally } from '../../../../../../../../utils/render-svg-icon-conditionally/render-svg-icon-conditionally';
 import * as Styles from './NewsImage.styles';
 import { useNewsImage } from './use-news-image';
 
