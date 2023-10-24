@@ -15,7 +15,7 @@ export type DefaultTypographyProps = {
   color?: string;
   bold?: boolean;
   testID?: string;
-  children: string;
+  children: string | boolean | number;
 };
 
 type TextParentProps = DefaultTypographyProps & {

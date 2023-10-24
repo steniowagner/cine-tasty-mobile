@@ -4,10 +4,10 @@ import { RoundedButton } from '@common-components';
 
 import { QuizProps } from '../../routes/route-params-types';
 import * as Styles from './Quiz.styles';
-import { useQuizScreen } from './use-quiz';
+import { useQuiz } from './use-quiz';
 
 export const Quiz = (props: QuizProps) => {
-  const quiz = useQuizScreen({ navigation: props.navigation });
+  const quiz = useQuiz({ navigation: props.navigation });
 
   return (
     <Styles.Wrapper>

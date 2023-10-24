@@ -10,7 +10,7 @@ type UseQuizProps = {
   navigation: QuizPropsNavigationProp;
 };
 
-export const useQuizScreen = (props: UseQuizProps) => {
+export const useQuiz = (props: UseQuizProps) => {
   const translation = useTranslation();
 
   const texts = useMemo(
