@@ -12,6 +12,8 @@ export const RoundedButtonWrapper = styled.View`
   align-items: center;
 `;
 
-export const SectionWrapper = styled.View`
+export const SectionWrapper = styled.View.attrs(() => ({
+  testID: 'section-wrapper',
+}))`
   margin-top: ${({ theme }) => theme.metrics.getWidthFromDP('8')}px;
 `;
