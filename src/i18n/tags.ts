@@ -71,6 +71,7 @@ export namespace Translations {
     QUIZ_NEXT = 'translations:quiz:next',
     QUIZ_TRUE = 'translations:quiz:true',
     QUIZ_FALSE = 'translations:quiz:false',
+    QUIZ_SETUP = 'translations:quiz:setupQuiz',
   }
 
   export type Tags = Tabs | News | Time | Quiz;

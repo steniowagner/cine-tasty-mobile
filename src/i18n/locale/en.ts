@@ -90,5 +90,6 @@ export const en: Locale = {
     next: 'NEXT',
     true: 'True',
     false: 'False',
+    setupQuiz: 'Setup Quiz',
   },
 };

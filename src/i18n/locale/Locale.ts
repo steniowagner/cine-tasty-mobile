@@ -75,5 +75,6 @@ export type Locale = {
     next: string;
     true: string;
     false: string;
+    setupQuiz: string;
   };
 };

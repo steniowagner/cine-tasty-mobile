@@ -90,5 +90,6 @@ export const pt: Locale = {
     next: 'PRÓXIMA',
     true: 'Verdadeiro',
     false: 'Falso',
+    setupQuiz: 'Configurar Quiz',
   },
 };
