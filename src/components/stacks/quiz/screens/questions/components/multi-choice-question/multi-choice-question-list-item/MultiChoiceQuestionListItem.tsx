@@ -33,12 +33,14 @@ const MultiChoiceQuestionListItem = (props: MultiChoiceListItemProps) => (
       },
     })}
     <Styles.AnswerTextWrapper>
-      <Typography.SmallText
+      <Typography.ExtraSmallText
         testID="multi-choice-option-text"
         color={dark.colors.buttonText}
-        alignment="center">
+        alignment="center"
+        numberOfLines={3}
+        bold>
         {props.answer}
-      </Typography.SmallText>
+      </Typography.ExtraSmallText>
     </Styles.AnswerTextWrapper>
   </Styles.ListItemWrapper>
 );
