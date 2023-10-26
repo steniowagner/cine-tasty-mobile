@@ -4,6 +4,7 @@ import { Typography } from '@common-components';
 import metrics from '@styles/metrics';
 
 export const DEFAULT_BORDER_RADIUS = metrics.sm;
+export const DEFAULT_CARD_WIDTH = metrics.getWidthFromDP('90');
 
 export const Wrapper = styled.View`
   width: ${({ theme }) => theme.metrics.width}px;
@@ -12,7 +13,7 @@ export const Wrapper = styled.View`
 `;
 
 export const CardWrapper = styled.View`
-  width: ${({ theme }) => theme.metrics.getWidthFromDP('90%')}px;
+  width: ${DEFAULT_CARD_WIDTH}px;
   border-radius: ${DEFAULT_BORDER_RADIUS}px;
   background-color: white;
 `;
@@ -30,11 +31,12 @@ export const QuestionsIndicatorText = styled(Typography.ExtraSmallText).attrs(
   }),
 )``;
 
-export const QuestionText = styled(Typography.SmallText).attrs(({ theme }) => ({
-  color: theme.colors.buttonText,
-  alignment: 'center',
-  numberOfLines: 4,
-  bold: true,
-}))`
+export const QuestionText = styled(Typography.ExtraSmallText).attrs(
+  ({ theme }) => ({
+    color: theme.colors.buttonText,
+    alignment: 'center',
+    bold: true,
+  }),
+)`
   margin-top: ${({ theme }) => theme.metrics.sm}px;
 `;

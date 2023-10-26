@@ -1,15 +1,23 @@
 import React, { useCallback } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
-import { Routes } from '@/navigation/routes';
+import { HeaderTitle, defaultHeaderStyle, Routes } from '@navigation';
+import { Translations } from '@/i18n/tags';
+import { HeaderIconButton } from '@common-components';
 
 import { SetupQuestions } from '../screens/setup-questions/SetupQuesionts';
 import { QuizStackParams } from './route-params-types';
 import { Quiz } from '../screens/quiz/Quiz';
-import { Translations } from '@/i18n/tags';
-import { HeaderTitle, defaultHeaderStyle } from '@/navigation';
+import { Questions } from '../screens/questions/Questions';
 
 const Stack = createStackNavigator<QuizStackParams>();
+
+type HeaderLeftBackButtonProps = {
+  navigation: StackNavigationProp<QuizStackParams>;
+};
 
 export const QuizStack = () => {
   const SetupQuestionsHeaderTitle = useCallback(
@@ -17,8 +25,20 @@ export const QuizStack = () => {
     [],
   );
 
+  const HeaderLeftBackButton = useCallback(
+    (props: HeaderLeftBackButtonProps) => (
+      <HeaderIconButton
+        onPress={props.navigation.goBack}
+        iconName="arrow-back"
+        withMarginLeft
+        color="text"
+      />
+    ),
+    [],
+  );
+
   return (
-    <Stack.Navigator initialRouteName={Routes.Quiz.QUIZ}>
+    <Stack.Navigator initialRouteName={Routes.Quiz.QUESTIONS}>
       <Stack.Screen
         options={{
           headerShown: false,
@@ -27,13 +47,31 @@ export const QuizStack = () => {
         component={Quiz}
       />
       <Stack.Screen
-        options={{
+        options={({ navigation }) => ({
           ...defaultHeaderStyle,
           headerTitle: SetupQuestionsHeaderTitle,
           headerTitleAlign: 'center',
-        }}
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => <HeaderLeftBackButton navigation={navigation} />,
+        })}
         name={Routes.Quiz.SETUP_QUESTIONS}
         component={SetupQuestions}
+      />
+      <Stack.Screen
+        options={({ navigation }) => ({
+          ...defaultHeaderStyle,
+          headerTitleAlign: 'center',
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => <HeaderLeftBackButton navigation={navigation} />,
+        })}
+        initialParams={{
+          numberOfQuestions: 5,
+          difficulty: 'HARD',
+          type: 'MULTIPLE',
+          category: 'MIXED',
+        }}
+        name={Routes.Quiz.QUESTIONS}
+        component={Questions}
       />
     </Stack.Navigator>
   );

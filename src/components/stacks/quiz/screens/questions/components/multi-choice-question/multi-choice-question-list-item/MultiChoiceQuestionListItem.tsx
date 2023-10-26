@@ -37,7 +37,6 @@ const MultiChoiceQuestionListItem = (props: MultiChoiceListItemProps) => (
         testID="multi-choice-option-text"
         color={dark.colors.buttonText}
         alignment="center"
-        numberOfLines={3}
         bold>
         {props.answer}
       </Typography.ExtraSmallText>
