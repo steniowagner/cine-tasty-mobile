@@ -5,20 +5,27 @@ import {
   QuizQuestionDifficulty,
   QuizQuestionCategory,
   QuizQuestionType,
+  QueryQuestions_quiz,
 } from '@schema-types';
 import { Routes } from '@navigation';
 
 export type QuizStackParams = {
   [Routes.Quiz.QUIZ]: undefined;
   [Routes.Quiz.SETUP_QUESTIONS]: undefined;
-  [Routes.Quiz.QUESTIONS]: QuestionsProps;
+  [Routes.Quiz.QUESTIONS]: QuestionsNavigationProps;
+  [Routes.Quiz.RESULTS]: ResultsNavigationProps;
 };
 
-type QuestionsProps = {
+type QuestionsNavigationProps = {
   difficulty: QuizQuestionDifficulty;
   category: QuizQuestionCategory;
   numberOfQuestions: number;
   type: QuizQuestionType;
+};
+
+type ResultsNavigationProps = {
+  questions: QueryQuestions_quiz[];
+  answers: string[];
 };
 
 /** Quiz-Props */
@@ -41,4 +48,18 @@ export type SetupQuestionsRouteProp = RouteProp<
 export type SetupQuestionsProps = StackScreenProps<
   QuizStackParams,
   Routes.Quiz.SETUP_QUESTIONS
+>;
+
+/** Questions-Props */
+export type QuestionsNavigationProp = StackNavigationProp<
+  QuizStackParams,
+  Routes.Quiz.QUESTIONS
+>;
+export type QuestionsRouteProp = RouteProp<
+  QuizStackParams,
+  Routes.Quiz.QUESTIONS
+>;
+export type QuestionsProps = StackScreenProps<
+  QuizStackParams,
+  Routes.Quiz.QUESTIONS
 >;

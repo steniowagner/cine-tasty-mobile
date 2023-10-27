@@ -77,4 +77,5 @@ export type Locale = {
     false: string;
     setupQuiz: string;
   };
+  error: Advice;
 };

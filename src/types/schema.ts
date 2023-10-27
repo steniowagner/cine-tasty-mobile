@@ -39,10 +39,10 @@ export interface QueryNewsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetQuizQuestions
+// GraphQL query operation: QueryQuestions
 // ====================================================
 
-export interface GetQuizQuestions_quiz {
+export interface QueryQuestions_quiz {
   __typename: "QuizQuestion";
   correctAnswer: string;
   category: string;
@@ -51,11 +51,11 @@ export interface GetQuizQuestions_quiz {
   type: string;
 }
 
-export interface GetQuizQuestions {
-  quiz: GetQuizQuestions_quiz[];
+export interface QueryQuestions {
+  quiz: QueryQuestions_quiz[];
 }
 
-export interface GetQuizQuestionsVariables {
+export interface QueryQuestionsVariables {
   input: QuizInput;
 }
 

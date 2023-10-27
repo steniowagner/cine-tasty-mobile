@@ -92,4 +92,9 @@ export const pt: Locale = {
     false: 'Falso',
     setupQuiz: 'Configurar Quiz',
   },
+  error: {
+    description: 'Algo deu errado',
+    suggestion: 'Por favor, tente novamente',
+    title: 'Oops...',
+  },
 };

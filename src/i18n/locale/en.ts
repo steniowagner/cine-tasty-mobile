@@ -92,4 +92,9 @@ export const en: Locale = {
     false: 'False',
     setupQuiz: 'Setup Quiz',
   },
+  error: {
+    description: 'Something went wrong',
+    suggestion: 'Please try again later',
+    title: 'Oops...',
+  },
 };

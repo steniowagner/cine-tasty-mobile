@@ -74,5 +74,11 @@ export namespace Translations {
     QUIZ_SETUP = 'translations:quiz:setupQuiz',
   }
 
-  export type Tags = Tabs | News | Time | Quiz;
+  export enum Error {
+    ERROR_ADVICE_DESCRIPTION = 'translations:error:description',
+    ERROR_ADVICE_SUGGESTION = 'translations:error:suggestion',
+    ERROR_ADVICE_TITLE = 'translations:error:title',
+  }
+
+  export type Tags = Tabs | News | Time | Quiz | Error;
 }
