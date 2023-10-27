@@ -63,3 +63,14 @@ export type QuestionsProps = StackScreenProps<
   QuizStackParams,
   Routes.Quiz.QUESTIONS
 >;
+
+/** Results-Props */
+export type ResultsNavigationProp = StackNavigationProp<
+  QuizStackParams,
+  Routes.Quiz.RESULTS
+>;
+export type ResultsRouteProp = RouteProp<QuizStackParams, Routes.Quiz.RESULTS>;
+export type ResultsProps = StackScreenProps<
+  QuizStackParams,
+  Routes.Quiz.RESULTS
+>;
