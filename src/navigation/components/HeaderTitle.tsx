@@ -20,7 +20,7 @@ export const HeaderTitle = (props: HeaderTitleProps) => {
   const translation = useTranslation();
 
   return (
-    <Typography.SmallText alignment="center">
+    <Typography.SmallText testID="header-title" alignment="center">
       {props.translationTag
         ? translation.translate(props.translationTag)
         : props.text}

@@ -38,7 +38,7 @@ export const Questions = (props: QuestionsProps) => {
 
   if (questions.isLoading) {
     return (
-      <Styles.Wrapper>
+      <Styles.Wrapper testID="loading">
         <Styles.LoadingWrapper>
           <Styles.VeryShortLineLoading indexToDelayAnimation={0} />
           <Styles.LongLineLoading indexToDelayAnimation={2} />

@@ -47,3 +47,6 @@ export const randomArrayIndex = <T>(array: T[], avoid?: number[]) => {
     }
   }
 };
+
+export const getErrorType = () =>
+  randomPositiveNumber(1) % 2 === 0 ? 'network' : 'graphql';

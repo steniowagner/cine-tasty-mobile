@@ -140,7 +140,7 @@ export const useQuestions = (params: QuestionsProps) => {
     onPressNext: handleAnswerQuestion,
     onPressRestart: handleRestart,
     isLoading: query.isLoading,
-    hasError: query.isLoading,
+    hasError: query.hasError,
     focusedQuestionIndex,
     questionsListRef,
     questions,

@@ -64,12 +64,6 @@ export const QuizStack = () => {
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => <HeaderLeftBackButton navigation={navigation} />,
         })}
-        initialParams={{
-          numberOfQuestions: 5,
-          difficulty: 'HARD',
-          type: 'MULTIPLE',
-          category: 'MIXED',
-        }}
         name={Routes.Quiz.QUESTIONS}
         component={Questions}
       />
