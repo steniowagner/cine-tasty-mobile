@@ -10,8 +10,9 @@ import { HeaderIconButton } from '@common-components';
 
 import { SetupQuestions } from '../screens/setup-questions/SetupQuesionts';
 import { QuizStackParams } from './route-params-types';
-import { Quiz } from '../screens/quiz/Quiz';
 import { Questions } from '../screens/questions/Questions';
+import { Results } from '../screens/results/Results';
+import { Quiz } from '../screens/quiz/Quiz';
 
 const Stack = createStackNavigator<QuizStackParams>();
 
@@ -38,7 +39,7 @@ export const QuizStack = () => {
   );
 
   return (
-    <Stack.Navigator initialRouteName={Routes.Quiz.QUESTIONS}>
+    <Stack.Navigator initialRouteName={Routes.Quiz.QUIZ}>
       <Stack.Screen
         options={{
           headerShown: false,
@@ -66,6 +67,15 @@ export const QuizStack = () => {
         })}
         name={Routes.Quiz.QUESTIONS}
         component={Questions}
+      />
+      <Stack.Screen
+        options={() => ({
+          ...defaultHeaderStyle,
+          headerTitleAlign: 'center',
+          headerLeft: () => null,
+        })}
+        name={Routes.Quiz.RESULTS}
+        component={Results}
       />
     </Stack.Navigator>
   );
