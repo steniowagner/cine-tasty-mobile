@@ -18,6 +18,10 @@ import { ModalSheet, ModalSheetProps } from './ModalSheet';
 
 type RenderModalSheetParams = Omit<ModalSheetProps, 'children'>;
 
+jest.mock('@utils', () => ({
+  isEqualsOrLargerThanIphoneX: jest.fn(),
+}));
+
 const renderModalSheet = (params: RenderModalSheetParams) => {
   const ChildrenComponent = () => <View testID="children" />;
 
