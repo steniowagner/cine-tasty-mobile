@@ -97,4 +97,17 @@ export const pt: Locale = {
     suggestion: 'Por favor, tente novamente',
     title: 'Oops...',
   },
+  famous: {
+    search: {
+      searchBarPlaceholder: 'Busque por um ator ou atriz',
+      errors: {
+        pagination: 'Não foi possível procurar mais famosos',
+        entry: 'Não foi possível procurar por famosos',
+      },
+    },
+    errors: {
+      pagination: 'Não foi possível carregar mais famosos',
+      entry: 'Não foi possível carregar os famosos',
+    },
+  },
 };
