@@ -1,22 +1,15 @@
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { Routes } from '@navigation';
 
 export type FamousStackRoutes = {
-  [Routes.Famous.FAMOUS]: undefined;
+  [Routes.Famous.TRENDING_FAMOUS]: undefined;
+  [Routes.Famous.DETAILS]: undefined;
+  [Routes.Famous.SEARCH]: undefined;
 };
 
-/** Famous-Props */
+/** Trending-Famous-Props */
 export type FamousNavigationProp = StackNavigationProp<
   FamousStackRoutes,
-  Routes.Famous.FAMOUS
->;
-export type FamousRouteProp = RouteProp<
-  FamousStackRoutes,
-  Routes.Famous.FAMOUS
->;
-export type FamousProps = StackScreenProps<
-  FamousStackRoutes,
-  Routes.Famous.FAMOUS
+  Routes.Famous.TRENDING_FAMOUS
 >;

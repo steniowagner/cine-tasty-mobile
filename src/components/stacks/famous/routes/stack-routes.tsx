@@ -8,7 +8,7 @@ import {
 } from '@navigation';
 import { Translations } from '@i18n/tags';
 
-import { Famous } from '../screens/famous/Famous';
+import { TrendingFamous } from '../screens/trending-famous/TrendingFamous';
 
 const Stack = createStackNavigator();
 
@@ -26,8 +26,8 @@ export const FamousStack = () => {
           headerTitle: HeaderTitle,
           headerTitleAlign: 'center',
         }}
-        name={Routes.Famous.FAMOUS}
-        component={Famous}
+        name={Routes.Famous.TRENDING_FAMOUS}
+        component={TrendingFamous}
       />
     </Stack.Navigator>
   );
