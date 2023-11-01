@@ -80,5 +80,13 @@ export namespace Translations {
     ERROR_ADVICE_TITLE = 'translations:error:title',
   }
 
-  export type Tags = Tabs | News | Time | Quiz | Error;
+  export enum TrendingFamous {
+    SEARCHBAR_PLACEHOLDER = 'translations:famous:search:searchBarPlaceholder',
+    SEARCH_PAGINATION_ERROR = 'translations:famous:search:errors:pagination',
+    SEARCH_ENTRY_ERROR = 'translations:famous:search:errors:entry',
+    ENTRY_ERROR = 'translations:famous:errors:entry',
+    PAGINATION_ERROR = 'translations:famous:errors:pagination',
+  }
+
+  export type Tags = Tabs | News | Time | Quiz | Error | TrendingFamous;
 }

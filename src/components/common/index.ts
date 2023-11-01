@@ -16,3 +16,4 @@ export { PaginatedListFooter } from './paginated-list-footer/PaginatedListFooter
 export { PaginatedListHeader } from './paginated-list-header/PaginatedListHeader';
 export { Advice } from './advice/Advice';
 export { RoundedButton } from './rounded-button/RoundedButton';
+export { TMDBImage } from './tmdb-image/TMDBImage';

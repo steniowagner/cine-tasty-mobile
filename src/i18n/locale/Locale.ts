@@ -78,4 +78,11 @@ export type Locale = {
     setupQuiz: string;
   };
   error: Advice;
+  famous: {
+    search: {
+      searchBarPlaceholder: string;
+      errors: Errors;
+    };
+    errors: Errors;
+  };
 };

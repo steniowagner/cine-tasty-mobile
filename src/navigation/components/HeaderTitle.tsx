@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Translations } from '@i18n/tags';
 import { useTranslation } from '@hooks';

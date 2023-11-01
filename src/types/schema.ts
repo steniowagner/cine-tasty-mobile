@@ -4,6 +4,36 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: QueryTrendingFamous
+// ====================================================
+
+export interface QueryTrendingFamous_trendingFamous_items {
+  __typename: "TrendingFamousItem";
+  profilePath: string | null;
+  name: string | null;
+  id: number | null;
+}
+
+export interface QueryTrendingFamous_trendingFamous {
+  __typename: "TrendingFamousResult";
+  hasMore: boolean;
+  items: QueryTrendingFamous_trendingFamous_items[];
+}
+
+export interface QueryTrendingFamous {
+  trendingFamous: QueryTrendingFamous_trendingFamous;
+}
+
+export interface QueryTrendingFamousVariables {
+  page: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: QueryNews
 // ====================================================
 

@@ -19,7 +19,7 @@ const TabBar = (props: BottomTabBarProps) => <TabNavigator {...props} />;
 export const Tabs = () => (
   <>
     <Tab.Navigator
-      initialRouteName={Routes.Tabs.QUIZ}
+      initialRouteName={Routes.Tabs.FAMOUS}
       // sceneContainerStyle={{
       //   paddingBottom: WRAPPER_HEIGHT,
       // }}
