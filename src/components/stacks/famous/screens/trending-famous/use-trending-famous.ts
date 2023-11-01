@@ -60,6 +60,7 @@ export const useTrendingFamous = (params: UseTrendingFamous) => {
     paginationError: texts.errors.pagination,
     entryError: texts.errors.entry,
     onGetData: handleGetData,
+    errorMessageIcon: 'alert-box',
     fetchPolicy: 'no-cache',
     skipFirstRun: false,
     query: QUERY_TRENDING_FAMOUS,
@@ -67,14 +68,13 @@ export const useTrendingFamous = (params: UseTrendingFamous) => {
 
   const handleNavigateToSearch = useCallback(() => {
     params.navigation.navigate(Routes.Famous.SEARCH);
-  }, []);
+  }, [params.navigation.navigate]);
 
   const handleSelectFamous = useCallback(
     (famous: QueryTrendingFamous_trendingFamous_items) => {
-      console.log(famous);
-      params.navigation.navigate(Routes.Famous.DETAILS);
+      params.navigation.navigate(Routes.Famous.DETAILS, famous);
     },
-    [],
+    [params.navigation.navigate],
   );
 
   return {

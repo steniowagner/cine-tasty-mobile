@@ -40,7 +40,7 @@ export const TrendingFamous = (props: FamousProps) => {
   }, [HeaderMaginifyIconButton]);
 
   const ListHeaderComponent = useCallback(
-    () =>
+    (): React.ReactNode | undefined =>
       trendingFamous.shouldShowTopReloadButton && (
         <PaginatedListHeader onPress={trendingFamous.onPressTopReloadButton} />
       ),
@@ -51,7 +51,7 @@ export const TrendingFamous = (props: FamousProps) => {
   );
 
   const ListFooterComponent = useCallback(
-    () =>
+    (): React.ReactNode | undefined =>
       trendingFamous.shouldShowBottomReloadButton && (
         <PaginatedListFooter
           onPressReloadButton={trendingFamous.onPressBottomReloadButton}
@@ -83,14 +83,14 @@ export const TrendingFamous = (props: FamousProps) => {
       numColumns={Styles.NUMBER_OF_COLUMNS}
       renderItem={({ item }) => (
         <TrendingFamousListItem
-          onPress={() => {}}
+          onPress={() => trendingFamous.onPressFamous(item)}
           image={item.profilePath || ''}
           title={item.name || '-'}
         />
       )}
       onEndReached={trendingFamous.onEndReached}
       keyExtractor={({ id }) => `${id}`}
-      testID="famous-list"
+      testID="trending-famous-list"
       data={trendingFamous.items}
     />
   );
