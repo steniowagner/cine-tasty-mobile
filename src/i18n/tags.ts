@@ -88,5 +88,16 @@ export namespace Translations {
     PAGINATION_ERROR = 'translations:famous:errors:pagination',
   }
 
-  export type Tags = Tabs | News | Time | Quiz | Error | TrendingFamous;
+  export enum Search {
+    SEARCH_RECENT = 'translations:recentSearches',
+  }
+
+  export type Tags =
+    | Tabs
+    | News
+    | Time
+    | Quiz
+    | Error
+    | TrendingFamous
+    | Search;
 }

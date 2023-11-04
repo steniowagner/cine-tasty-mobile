@@ -110,4 +110,5 @@ export const pt: Locale = {
       entry: 'Não foi possível carregar os famosos',
     },
   },
+  recentSearches: 'Recentes',
 };
