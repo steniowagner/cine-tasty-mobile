@@ -29,6 +29,7 @@ export const dark: DefaultTheme = {
     fallbackImageIcon: '#4d4d4d',
     buttonText: '#262626',
     inputBackground: '#4d4d4d',
+    searchBar: '#4d4d4d',
     red: '#D5233B',
     green: '#32BE70',
     white: '#FFFFFF',
