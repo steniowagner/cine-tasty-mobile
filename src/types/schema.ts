@@ -4,6 +4,36 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: SearchFamous
+// ====================================================
+
+export interface SearchFamous_searchFamous_items {
+  __typename: "SearchFamousItem";
+  profilePath: string | null;
+  name: string | null;
+  id: number | null;
+}
+
+export interface SearchFamous_searchFamous {
+  __typename: "SearchFamousResult";
+  items: SearchFamous_searchFamous_items[];
+  hasMore: boolean;
+}
+
+export interface SearchFamous {
+  searchFamous: SearchFamous_searchFamous;
+}
+
+export interface SearchFamousVariables {
+  input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: QueryTrendingFamous
 // ====================================================
 
@@ -98,6 +128,12 @@ export interface QueryQuestionsVariables {
 // START Enums and Input Objects
 //==============================================================
 
+export enum ISO6391Language {
+  en = "en",
+  es = "es",
+  pt = "pt",
+}
+
 export enum NewsLanguage {
   AR = "AR",
   DE = "DE",
@@ -138,6 +174,12 @@ export interface QuizInput {
   type: QuizQuestionType;
   category: QuizQuestionCategory;
   numberOfQuestions: number;
+}
+
+export interface SearchInput {
+  page: number;
+  query: string;
+  language?: ISO6391Language | null;
 }
 
 //==============================================================
