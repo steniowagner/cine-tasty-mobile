@@ -2,16 +2,16 @@ import React, { useCallback, useEffect } from 'react';
 import { FlatList, Platform } from 'react-native';
 
 import {
+  DefaultTMDBListItemLoadingPlaceholder,
   PaginatedListHeader,
   PaginatedListFooter,
   HeaderIconButton,
+  DefaultTMDBListItem,
 } from '@/components/common';
 
-import { TrendingFamousListItem } from './components/trending-famous-list-item/TrendingFamousListItem';
 import { useTrendingFamous } from './use-trending-famous';
 import { FamousNavigationProp } from '../../routes/route-params-types';
 import * as Styles from './TrendingFamous.styles';
-import { LoadingTrendingFamous } from './components/loading-trending-famous/LoadingTrendingFamous';
 
 type FamousProps = {
   navigation: FamousNavigationProp;
@@ -68,7 +68,18 @@ export const TrendingFamous = (props: FamousProps) => {
   );
 
   if (trendingFamous.isLoading) {
-    return <LoadingTrendingFamous />;
+    return (
+      <Styles.LoadingWrapper testID="trending-famous-loading-list">
+        {Array(Styles.NUMBER_OF_LOADING_ITEMS)
+          .fill({})
+          .map((_, index) => (
+            <DefaultTMDBListItemLoadingPlaceholder
+              indexToDelayAnimation={index}
+              key={`${index}`}
+            />
+          ))}
+      </Styles.LoadingWrapper>
+    );
   }
 
   return (
@@ -82,10 +93,13 @@ export const TrendingFamous = (props: FamousProps) => {
       })}
       numColumns={Styles.NUMBER_OF_COLUMNS}
       renderItem={({ item }) => (
-        <TrendingFamousListItem
+        <DefaultTMDBListItem
           onPress={() => trendingFamous.onPressFamous(item)}
           image={item.profilePath || ''}
           title={item.name || '-'}
+          iconImageLoading="account"
+          iconImageError="image-off"
+          testID="trending-famous-list-item-button"
         />
       )}
       onEndReached={trendingFamous.onEndReached}

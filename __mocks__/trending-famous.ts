@@ -1,7 +1,7 @@
 import { GraphQLError } from 'graphql';
 
 import { QUERY_TRENDING_FAMOUS } from '@/components/stacks/famous/screens/trending-famous/use-trending-famous';
-import { DEFAULT_HEIGHT } from '@/components/stacks/famous/screens/trending-famous/components/trending-famous-list-item/TrendingFamousListItem.styles';
+import { DEFAULT_HEIGHT } from '@/components/common/default-tmdb-list-item/DefaultTMDBListItem.styles';
 import { QueryTrendingFamous_trendingFamous_items } from '@/types/schema';
 import metrics from '@styles/metrics';
 
