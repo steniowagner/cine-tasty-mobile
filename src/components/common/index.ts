@@ -17,5 +17,5 @@ export { PaginatedListHeader } from './paginated-list-header/PaginatedListHeader
 export { Advice } from './advice/Advice';
 export { RoundedButton } from './rounded-button/RoundedButton';
 export { TMDBImage } from './tmdb-image/TMDBImage';
-export { DefaultTMDBListItemLoadingPlaceholder } from './default-tmdb-list-item/DefaultTMDBListItemLoadingPlaceholder';
 export { DefaultTMDBListItem } from './default-tmdb-list-item/DefaultTMDBListItem';
+export { DefaultTMDBListLoading } from './default-tmdb-list-loading/DefaultTMDBListLoading';
