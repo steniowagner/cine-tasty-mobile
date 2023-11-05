@@ -7,24 +7,84 @@
 // GraphQL query operation: SearchFamous
 // ====================================================
 
-export interface SearchFamous_searchFamous_items {
+export interface SearchFamous_search_items {
   __typename: "SearchFamousItem";
-  profilePath: string | null;
-  name: string | null;
+  image: string | null;
+  title: string | null;
   id: number | null;
 }
 
-export interface SearchFamous_searchFamous {
+export interface SearchFamous_search {
   __typename: "SearchFamousResult";
-  items: SearchFamous_searchFamous_items[];
+  items: SearchFamous_search_items[];
   hasMore: boolean;
 }
 
 export interface SearchFamous {
-  searchFamous: SearchFamous_searchFamous;
+  search: SearchFamous_search;
 }
 
 export interface SearchFamousVariables {
+  input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: SearchMovies
+// ====================================================
+
+export interface SearchMovies_search_items {
+  __typename: "SearchMovieItem";
+  image: string | null;
+  title: string | null;
+  id: number;
+}
+
+export interface SearchMovies_search {
+  __typename: "SearchMoviesResult";
+  items: SearchMovies_search_items[];
+  hasMore: boolean;
+}
+
+export interface SearchMovies {
+  search: SearchMovies_search;
+}
+
+export interface SearchMoviesVariables {
+  input: SearchInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: SearchTVShows
+// ====================================================
+
+export interface SearchTVShows_search_items {
+  __typename: "SearchTVShowItem";
+  image: string | null;
+  title: string | null;
+  id: number;
+}
+
+export interface SearchTVShows_search {
+  __typename: "SearchTVShowsResult";
+  hasMore: boolean;
+  items: SearchTVShows_search_items[];
+}
+
+export interface SearchTVShows {
+  search: SearchTVShows_search;
+}
+
+export interface SearchTVShowsVariables {
   input: SearchInput;
 }
 
