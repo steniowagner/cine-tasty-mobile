@@ -6,8 +6,8 @@ import { Typography } from '@/components/common';
 import metrics from '@styles/metrics';
 
 export const DEFAULT_ICON_SIZE = metrics.xl * 2;
-const IMAGE_WIDTH = metrics.xl * 3;
-const IMAGE_HEIGHT = metrics.xl * 3.5;
+const IMAGE_WIDTH = metrics.xl * 2.5;
+const IMAGE_HEIGHT = metrics.xl * 2.8;
 
 export const Wrapper = styled.View`
   width: 100%;

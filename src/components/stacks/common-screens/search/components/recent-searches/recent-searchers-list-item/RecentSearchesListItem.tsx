@@ -4,12 +4,12 @@ import { TMDBImage, SVGIcon } from '@common-components';
 import metrics from '@styles/metrics';
 
 import * as Styles from './RecentSearchesListItem.styles';
-import { RecentSearchItem } from '../../../types';
+import { SearchItem } from '../../../types';
 
 type RecentSearchesListItemProps = {
-  item: RecentSearchItem;
   onPressRemove: () => void;
   onPressItem: () => void;
+  item: SearchItem;
 };
 
 export const RecentSearchesListItem = (props: RecentSearchesListItemProps) => (

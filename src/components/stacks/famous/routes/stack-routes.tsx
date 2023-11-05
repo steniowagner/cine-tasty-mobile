@@ -9,6 +9,7 @@ import {
 import { Translations } from '@i18n/tags';
 
 import { TrendingFamous } from '../screens/trending-famous/TrendingFamous';
+import { Search } from '../../common-screens';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ export const FamousStack = () => {
   );
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={Routes.Famous.TRENDING_FAMOUS}>
       <Stack.Screen
         options={{
           ...defaultHeaderStyle,
@@ -28,6 +29,13 @@ export const FamousStack = () => {
         }}
         name={Routes.Famous.TRENDING_FAMOUS}
         component={TrendingFamous}
+      />
+      <Stack.Screen
+        name={Routes.Famous.SEARCH_FAMOUS}
+        options={{
+          header: () => null,
+        }}
+        component={Search}
       />
     </Stack.Navigator>
   );

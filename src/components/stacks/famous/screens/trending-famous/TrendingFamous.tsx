@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { FlatList, Platform } from 'react-native';
 
 import {
-  DefaultTMDBListItemLoadingPlaceholder,
+  DefaultTMDBListLoading,
   PaginatedListHeader,
   PaginatedListFooter,
   HeaderIconButton,
@@ -68,18 +68,7 @@ export const TrendingFamous = (props: FamousProps) => {
   );
 
   if (trendingFamous.isLoading) {
-    return (
-      <Styles.LoadingWrapper testID="trending-famous-loading-list">
-        {Array(Styles.NUMBER_OF_LOADING_ITEMS)
-          .fill({})
-          .map((_, index) => (
-            <DefaultTMDBListItemLoadingPlaceholder
-              indexToDelayAnimation={index}
-              key={`${index}`}
-            />
-          ))}
-      </Styles.LoadingWrapper>
-    );
+    return <DefaultTMDBListLoading />;
   }
 
   return (
@@ -91,7 +80,7 @@ export const TrendingFamous = (props: FamousProps) => {
         android: 0.5,
         ios: 0.1,
       })}
-      numColumns={Styles.NUMBER_OF_COLUMNS}
+      numColumns={3}
       renderItem={({ item }) => (
         <DefaultTMDBListItem
           onPress={() => trendingFamous.onPressFamous(item)}

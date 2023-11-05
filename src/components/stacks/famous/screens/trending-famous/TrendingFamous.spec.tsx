@@ -1,6 +1,5 @@
 import React from 'react';
 import { MockedResponse, MockedProvider } from '@apollo/client/testing';
-
 import {
   RenderAPI,
   act,
@@ -8,8 +7,11 @@ import {
   render,
   waitFor,
 } from '@testing-library/react-native';
+
 import { AlertMessageProvider } from '@/providers';
 import { Translations } from '@/i18n/tags';
+import { SearchType } from '@/components/stacks/common-screens/search/types';
+import { Routes } from '@/navigation';
 
 import {
   mockTrendingFamousEntryQuerySuccessResponse,
@@ -24,7 +26,6 @@ import {
 import { FamousNavigationProp } from '../../routes/route-params-types';
 import { MockedNavigator } from '../../../../../../__mocks__';
 import { TrendingFamous } from './TrendingFamous';
-import { Routes } from '@/navigation';
 
 type TrendingFamousComponent = {
   navigation: FamousNavigationProp;
@@ -57,8 +58,7 @@ describe('Stacks/News/Screens/TrendingFamous', () => {
       component.getByTestId('trending-famous-list'),
     headerCTA: (component: RenderAPI) =>
       component.getByTestId('header-icon-button-wrapper-magnify'),
-    loading: (api: RenderAPI) =>
-      api.queryByTestId('trending-famous-loading-list'),
+    loading: (api: RenderAPI) => api.queryByTestId('default-tmdb-list-loading'),
     alertMessageText: (api: RenderAPI) =>
       api.queryByTestId('alert-message-text'),
     alertMessageWrapper: (api: RenderAPI) =>
@@ -568,7 +568,9 @@ describe('Stacks/News/Screens/TrendingFamous', () => {
       expect(navigate).toBeCalledTimes(0);
       fireEvent.press(elements.headerCTA(component));
       expect(navigate).toBeCalledTimes(1);
-      expect(navigate).toBeCalledWith(Routes.Famous.SEARCH);
+      expect(navigate).toBeCalledWith(Routes.Famous.SEARCH_FAMOUS, {
+        type: SearchType.FAMOUS,
+      });
     });
 
     it('should navigate to "Famous-Details" when "pressing" the "some famous"', async () => {

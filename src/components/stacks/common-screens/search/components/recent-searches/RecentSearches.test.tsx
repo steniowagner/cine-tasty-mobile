@@ -13,12 +13,12 @@ import { Translations } from '@/i18n/tags';
 
 import { BASE_STORAGE_KEY, MAX_RECENT_SEARCHES } from './use-recent-searches';
 import { randomPositiveNumber } from '../../../../../../../__mocks__/utils';
-import { RecentSearchItem, SearchType } from '../../types';
+import { SearchItem, SearchType } from '../../types';
 import { RecentSearches } from './RecentSearches';
 
 const searchTypes = Object.keys(SearchType);
 
-const persistedItems: RecentSearchItem[] = Array(MAX_RECENT_SEARCHES)
+const persistedItems: SearchItem[] = Array(MAX_RECENT_SEARCHES)
   .fill({})
   .map((_, index) => ({
     title: `PERSISTED_ITEM_TITLE_${index}`,

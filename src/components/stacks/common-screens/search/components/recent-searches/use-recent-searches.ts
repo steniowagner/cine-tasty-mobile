@@ -4,7 +4,7 @@ import { Translations } from '@i18n/tags';
 import { useTranslation } from '@hooks';
 import { storage } from '@utils';
 
-import { SearchType, RecentSearchItem } from '../../types';
+import { SearchType, SearchItem } from '../../types';
 
 export const BASE_STORAGE_KEY = 'RECENT_SEARCHES';
 export const MAX_RECENT_SEARCHES = 3;
@@ -14,7 +14,7 @@ type UseRecentSearchesProps = {
 };
 
 export const useRecentSearches = (props: UseRecentSearchesProps) => {
-  const [recentSearches, setRecentSearches] = useState<RecentSearchItem[]>([]);
+  const [recentSearches, setRecentSearches] = useState<SearchItem[]>([]);
 
   const translation = useTranslation();
 
@@ -31,8 +31,8 @@ export const useRecentSearches = (props: UseRecentSearchesProps) => {
   );
 
   const add = useCallback(
-    async (item: RecentSearchItem) => {
-      const recentSearchesFromStorage = await storage.get<RecentSearchItem[]>(
+    async (item: SearchItem) => {
+      const recentSearchesFromStorage = await storage.get<SearchItem[]>(
         storageKey,
       );
       if (!recentSearchesFromStorage) {
@@ -60,7 +60,7 @@ export const useRecentSearches = (props: UseRecentSearchesProps) => {
   );
 
   const load = useCallback(async () => {
-    const recentSearchesFromStorage = await storage.get<RecentSearchItem[]>(
+    const recentSearchesFromStorage = await storage.get<SearchItem[]>(
       storageKey,
     );
     if (recentSearchesFromStorage) {

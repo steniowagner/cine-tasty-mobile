@@ -10,7 +10,6 @@ const PLACEHOLDER = 'PLACEHOLDER';
 
 type RenderSearchBarParams = {
   onTypeSearchQuery?: jest.Mock;
-  onPressSearch?: jest.Mock;
   onPressClose?: jest.Mock;
 };
 
@@ -19,7 +18,6 @@ const renderSearchBar = (params: RenderSearchBarParams) => (
     <SearchBar
       placeholder={PLACEHOLDER}
       onTypeSearchQuery={params.onTypeSearchQuery || jest.fn()}
-      onPressSearch={params.onPressSearch || jest.fn()}
       onPressClose={params.onPressClose || jest.fn()}
     />
   </ThemeProvider>
@@ -66,18 +64,6 @@ describe('Common-screens/Search/SearchBar', () => {
       fireEvent(elements.input(component), 'onChangeText', content);
       expect(onTypeSearchQuery).toBeCalledTimes(1);
       expect(onTypeSearchQuery).toBeCalledWith(content);
-    });
-
-    it('should call "onSubmitEditing" correctly when press the "keyboard-search-cta"', () => {
-      const onPressSearch = jest.fn();
-      const component = render(
-        renderSearchBar({
-          onPressSearch,
-        }),
-      );
-      expect(onPressSearch).toBeCalledTimes(0);
-      fireEvent(elements.input(component), 'onSubmitEditing');
-      expect(onPressSearch).toBeCalledTimes(1);
     });
   });
 });

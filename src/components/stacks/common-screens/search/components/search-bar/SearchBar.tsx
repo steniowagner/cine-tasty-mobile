@@ -9,7 +9,6 @@ import * as Styles from './SearchBar.styles';
 
 export type SearchBarProps = {
   onTypeSearchQuery: (query: string) => void;
-  onPressSearch: () => void;
   onPressClose: () => void;
   placeholder: string;
 };
@@ -35,7 +34,6 @@ export const SearchBar = (props: SearchBarProps) => {
           <Styles.Input
             testID="search-input"
             onChangeText={props.onTypeSearchQuery}
-            onSubmitEditing={props.onPressSearch}
             placeholder={props.placeholder}
             ref={searchBar.inputRef}
           />

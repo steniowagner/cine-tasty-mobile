@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 
 import { RecentSearchesListItem } from './recent-searchers-list-item/RecentSearchesListItem';
 import * as Styles from './RecentSearches.styles';
-import { RecentSearchItem, SearchType } from '../../types';
+import { SearchItem, SearchType } from '../../types';
 import { useRecentSearches } from './use-recent-searches';
 
 type RecentSearchesProps = {
-  onPressItem: (item: RecentSearchItem) => void;
+  onPressItem: (item: SearchItem) => void;
   searchType: SearchType;
 };
 
@@ -30,7 +30,7 @@ export const RecentSearches = (props: RecentSearchesProps) => {
       </Styles.RecentText>
       {recentSearches.items.map(recentSearch => (
         <RecentSearchesListItem
-          onPressRemove={() => recentSearches.remove(recentSearch.id)}
+          onPressRemove={() => recentSearches.remove(recentSearch.id ?? -1)}
           onPressItem={() => props.onPressItem(recentSearch)}
           key={recentSearch.id}
           item={recentSearch}
