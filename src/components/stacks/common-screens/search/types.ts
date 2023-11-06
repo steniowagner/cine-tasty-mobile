@@ -19,7 +19,7 @@ export type SearchItem = {
 
 type SearchStack = FamousStackRoutes & HomeStackRoutes;
 
-type SearchEntryRoutes =
+export type SearchEntryRoutes =
   | Routes.Famous.SEARCH_FAMOUS
   | Routes.Home.SEARCH_MOVIE
   | Routes.Home.SEARCH_TV_SHOW;

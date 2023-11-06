@@ -6,7 +6,7 @@ import { Routes } from '@/navigation';
 
 import { SearchItem, SearchNavigationProp } from '../types';
 
-const SEARCH_MOVIES_QUERY = gql`
+export const SEARCH_MOVIES_QUERY = gql`
   query SearchMovies($input: SearchInput!) {
     search: searchMovies(input: $input) {
       items {
@@ -24,11 +24,11 @@ export const searchMoviesConfig = () => ({
     searchItem: SearchItem,
     navigation: SearchNavigationProp,
   ) => {
-    navigation.navigate(Routes.Home.MOVIE_DETAILS);
+    navigation.navigate(Routes.Home.MOVIE_DETAILS, undefined);
   },
   searchPlaceholder: Translations.TrendingFamous.ENTRY_ERROR,
   searchByTextError: Translations.TrendingFamous.ENTRY_ERROR,
-  paginationError: Translations.TrendingFamous.ENTRY_ERROR,
+  paginationError: Translations.TrendingFamous.PAGINATION_ERROR,
   query: SEARCH_MOVIES_QUERY,
   iconImageLoading: 'video-vintage' as Icons,
 });

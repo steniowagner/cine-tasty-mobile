@@ -94,7 +94,7 @@ export const Search = (props: SearchProps) => {
       )}
       onEndReached={search.onEndReached}
       keyExtractor={({ id }) => `${id}`}
-      testID="famous-list"
+      testID="search-list"
       data={search.items}
     />
   );

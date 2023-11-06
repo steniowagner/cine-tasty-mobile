@@ -37,7 +37,7 @@ export const useTabNavigator = (props: BottomTabBarProps) => {
   const shouldShowTabNavigator = useMemo(() => {
     const screensAbleToShowTabNavigator: string[] = [
       Routes.Home.HOME,
-      Routes.Famous.FAMOUS,
+      Routes.Famous.TRENDING_FAMOUS,
       Routes.Quiz.QUIZ,
       Routes.News.NEWS,
     ];

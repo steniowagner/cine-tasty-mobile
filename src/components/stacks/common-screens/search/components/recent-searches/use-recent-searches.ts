@@ -6,7 +6,7 @@ import { storage } from '@utils';
 
 import { SearchType, SearchItem } from '../../types';
 
-export const BASE_STORAGE_KEY = 'RECENT_SEARCHES';
+export const BASE_STORAGE_KEY = '@CINE-TASTY/RECENT_SEARCHES';
 export const MAX_RECENT_SEARCHES = 3;
 
 type UseRecentSearchesProps = {
@@ -39,13 +39,13 @@ export const useRecentSearches = (props: UseRecentSearchesProps) => {
         return await storage.set(storageKey, [item]);
       }
       let recentSearchesUpdated = [item, ...recentSearchesFromStorage];
-      const isItemSearchedBefore = recentSearches.some(
+      const isItemSearchedBefore = recentSearchesFromStorage.some(
         recentSearch => recentSearch.id === item.id,
       );
       if (isItemSearchedBefore) {
         recentSearchesUpdated = [
           item,
-          ...recentSearches.filter(
+          ...recentSearchesFromStorage.filter(
             persistedItem => persistedItem.id !== item.id,
           ),
         ];

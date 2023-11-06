@@ -6,7 +6,7 @@ import { Routes } from '@/navigation';
 
 import { SearchItem, SearchNavigationProp } from '../types';
 
-const SEARCH_FAMOUS_QUERY = gql`
+export const SEARCH_FAMOUS_QUERY = gql`
   query SearchFamous($input: SearchInput!) {
     search: searchFamous(input: $input) {
       items {

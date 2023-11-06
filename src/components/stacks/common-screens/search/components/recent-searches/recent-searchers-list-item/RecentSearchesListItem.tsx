@@ -24,12 +24,12 @@ export const RecentSearchesListItem = (props: RecentSearchesListItemProps) => (
           imageType="profile"
           style={Styles.sheet.image}
           iconSize={Styles.DEFAULT_ICON_SIZE}
-          image={props.item.image}
+          image={props.item.image || ''}
           testID="recent-searches-list-item-image"
         />
       </>
       <Styles.ItemText testID="recent-searches-list-item-title">
-        {props.item.title}
+        {props.item.title || '-'}
       </Styles.ItemText>
     </Styles.PressableContent>
     <Styles.CloseButtonWrapper

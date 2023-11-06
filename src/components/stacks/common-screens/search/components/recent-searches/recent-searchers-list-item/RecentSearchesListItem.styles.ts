@@ -28,7 +28,7 @@ export const FallbackImageWrapper = styled(Animated.View)`
   justify-content: center;
   align-items: center;
   position: absolute;
-  border-radius: ${({ theme }) => theme.metrics.sm}px;
+  border-radius: ${({ theme }) => theme.borderRadius.sm}px;
   background-color: ${({ theme }) => theme.colors.fallbackImageBackground};
 `;
 
