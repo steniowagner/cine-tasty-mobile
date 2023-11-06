@@ -26,6 +26,7 @@ declare module 'styled-components/native' {
     inactiveWhite: string;
     darkLayer: string;
     inputBackground: string;
+    searchBar: string;
     red: string;
     green: string;
     white: string;

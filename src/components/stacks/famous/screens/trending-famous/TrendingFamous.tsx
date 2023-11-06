@@ -2,16 +2,16 @@ import React, { useCallback, useEffect } from 'react';
 import { FlatList, Platform } from 'react-native';
 
 import {
+  DefaultTMDBListLoading,
   PaginatedListHeader,
   PaginatedListFooter,
   HeaderIconButton,
+  DefaultTMDBListItem,
 } from '@/components/common';
 
-import { TrendingFamousListItem } from './components/trending-famous-list-item/TrendingFamousListItem';
 import { useTrendingFamous } from './use-trending-famous';
 import { FamousNavigationProp } from '../../routes/route-params-types';
 import * as Styles from './TrendingFamous.styles';
-import { LoadingTrendingFamous } from './components/loading-trending-famous/LoadingTrendingFamous';
 
 type FamousProps = {
   navigation: FamousNavigationProp;
@@ -68,7 +68,7 @@ export const TrendingFamous = (props: FamousProps) => {
   );
 
   if (trendingFamous.isLoading) {
-    return <LoadingTrendingFamous />;
+    return <DefaultTMDBListLoading />;
   }
 
   return (
@@ -80,12 +80,15 @@ export const TrendingFamous = (props: FamousProps) => {
         android: 0.5,
         ios: 0.1,
       })}
-      numColumns={Styles.NUMBER_OF_COLUMNS}
+      numColumns={3}
       renderItem={({ item }) => (
-        <TrendingFamousListItem
+        <DefaultTMDBListItem
           onPress={() => trendingFamous.onPressFamous(item)}
           image={item.profilePath || ''}
           title={item.name || '-'}
+          iconImageLoading="account"
+          iconImageError="image-off"
+          testID="trending-famous-list-item-button"
         />
       )}
       onEndReached={trendingFamous.onEndReached}

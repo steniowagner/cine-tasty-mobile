@@ -81,12 +81,27 @@ export namespace Translations {
   }
 
   export enum TrendingFamous {
-    SEARCHBAR_PLACEHOLDER = 'translations:famous:search:searchBarPlaceholder',
-    SEARCH_PAGINATION_ERROR = 'translations:famous:search:errors:pagination',
-    SEARCH_ENTRY_ERROR = 'translations:famous:search:errors:entry',
     ENTRY_ERROR = 'translations:famous:errors:entry',
     PAGINATION_ERROR = 'translations:famous:errors:pagination',
   }
 
-  export type Tags = Tabs | News | Time | Quiz | Error | TrendingFamous;
+  export enum SearchFamous {
+    SEARCHBAR = 'translations:famous:search:searchBarPlaceholder',
+    PAGINATION_ERROR = 'translations:famous:search:errors:pagination',
+    ENTRY_ERROR = 'translations:famous:search:errors:entry',
+  }
+
+  export enum Search {
+    SEARCH_RECENT = 'translations:recentSearches',
+  }
+
+  export type Tags =
+    | Tabs
+    | News
+    | Time
+    | Quiz
+    | Error
+    | TrendingFamous
+    | Search
+    | SearchFamous;
 }

@@ -27,6 +27,7 @@ export const light: DefaultTheme = {
     popup: 'rgba(0, 0, 0, 0.9)',
     fallbackImageBackground: '#cfcfcf',
     fallbackImageIcon: '#4d4d4d',
+    searchBar: '#4d4d4d',
     buttonText: '#262626',
     inputBackground: '#CCCCCC',
     red: '#D5233B',

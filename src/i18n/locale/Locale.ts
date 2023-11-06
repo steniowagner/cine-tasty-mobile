@@ -85,4 +85,5 @@ export type Locale = {
     };
     errors: Errors;
   };
+  recentSearches: string;
 };

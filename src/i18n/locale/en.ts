@@ -110,4 +110,5 @@ export const en: Locale = {
       entry: "Couldn't load this famous",
     },
   },
+  recentSearches: 'Recent',
 };

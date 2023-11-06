@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { gql } from '@apollo/client';
 
+import { SearchType } from '@/components/stacks/common-screens/search/types';
 import { usePagination, useTranslation } from '@/hooks';
 import {
   QueryTrendingFamous,
@@ -67,7 +68,9 @@ export const useTrendingFamous = (params: UseTrendingFamous) => {
   });
 
   const handleNavigateToSearch = useCallback(() => {
-    params.navigation.navigate(Routes.Famous.SEARCH);
+    params.navigation.navigate(Routes.Famous.SEARCH_FAMOUS, {
+      type: SearchType.FAMOUS,
+    });
   }, [params.navigation.navigate]);
 
   const handleSelectFamous = useCallback(
