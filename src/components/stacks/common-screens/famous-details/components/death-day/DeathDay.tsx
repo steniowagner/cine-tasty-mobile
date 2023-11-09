@@ -7,13 +7,13 @@ import * as Styles from './DeathDay.styles';
 import { useDeathDay } from './use-death-day';
 
 type DeathDayProps = {
-  day?: string | null;
+  day: string;
 };
 
 export const DeathDay = (props: DeathDayProps) => {
   const deathDay = useDeathDay({ day: props.day });
 
-  if (!props.day) {
+  if (!deathDay) {
     return null;
   }
 

@@ -4,17 +4,18 @@ import { ISO6391Language } from '@/types/schema';
 import { useTranslation } from '@hooks';
 
 type UseDeathDayParams = {
-  day?: string | null;
+  day: string;
 };
 
 export const useDeathDay = (params: UseDeathDayParams) => {
   const translation = useTranslation();
 
   const deathDay = useMemo(() => {
-    if (!params.day) {
-      return '-';
+    const splittedDate = params.day.split('-');
+    if (splittedDate.length !== 3) {
+      return;
     }
-    const [year, month, day] = params.day.split('-');
+    const [year, month, day] = splittedDate;
     const isCurrentLanguageEnglish =
       translation.currentLanguage.toLocaleLowerCase() ===
       ISO6391Language.en.toLocaleLowerCase();

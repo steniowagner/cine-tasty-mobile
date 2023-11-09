@@ -14,12 +14,13 @@ export const Wrapper = styled.View`
       android: theme.metrics.xl * 4,
       ios: theme.metrics.xl * 6,
     })}px;
+  margin-bottom: ${({ theme }) => theme.metrics.lg * 2}px;
   margin-horizontal: ${({ theme }) => theme.metrics.md}px;
 `;
 
 export const InfoWrapper = styled.View`
   flex-direction: row;
-  margin-top: ${({ theme }) => theme.metrics.xl}px;
+  margin-top: ${({ theme }) => theme.metrics.lg}px;
 `;
 
 export const InfoTextWrapper = styled.View`
