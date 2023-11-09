@@ -86,4 +86,7 @@ export type Locale = {
     errors: Errors;
   };
   recentSearches: string;
+  months: string[];
+  readLess: string;
+  readMore: string;
 };

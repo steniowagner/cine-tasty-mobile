@@ -95,6 +95,12 @@ export namespace Translations {
     SEARCH_RECENT = 'translations:recentSearches',
   }
 
+  export enum Miscellaneous {
+    MONTHS = 'translations:months',
+    READ_LESS = 'translations:readLess',
+    READ_MORE = 'translations:readMore',
+  }
+
   export type Tags =
     | Tabs
     | News
@@ -103,5 +109,6 @@ export namespace Translations {
     | Error
     | TrendingFamous
     | Search
-    | SearchFamous;
+    | SearchFamous
+    | Miscellaneous;
 }
