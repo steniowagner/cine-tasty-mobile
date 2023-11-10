@@ -105,6 +105,9 @@ export namespace Translations {
     BIOGRAPHY = 'translations:famousDetails:biography',
     CAST_MOVIES = 'translations:famousDetails:castMovies',
     CAST_TV_SHOWS = 'translations:famousDetails:castTVShows',
+    ERROR_ADVICE_DESCRIPTION = 'translations:famousDetails:error:description',
+    ERROR_ADVICE_SUGGESTION = 'translations:famousDetails:error:suggestion',
+    ERROR_ADVICE_TITLE = 'translations:famousDetails:error:title',
   }
 
   export type Tags =

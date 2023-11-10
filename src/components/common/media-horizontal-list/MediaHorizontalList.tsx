@@ -34,7 +34,7 @@ export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
           data={props.dataset}
           renderItem={({ item }) => (
             <MediaListItem
-              type={props.type}
+              mediaType={props.type}
               layoutSize="large"
               voteAverage={item.voteAverage}
               voteCount={item.voteCount}

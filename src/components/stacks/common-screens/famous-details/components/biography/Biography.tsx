@@ -11,7 +11,7 @@ type BiographyProps = {
 
 export const Biography = (props: BiographyProps) => (
   <Section title={props.sectionTitle}>
-    <Styles.Wrapper testID="media-item-description-wrapper">
+    <Styles.Wrapper testID="biography">
       <MediaItemDescription description={props.text} />
     </Styles.Wrapper>
   </Section>

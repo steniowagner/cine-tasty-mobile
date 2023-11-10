@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: FamousDetailS
+// GraphQL query operation: FamousDetails
 // ====================================================
 
-export interface FamousDetailS_famous_cast_movies {
+export interface FamousDetails_famous_cast_movies {
   __typename: "CastMovie";
   voteAverage: number | null;
   posterPath: string | null;
@@ -16,22 +16,22 @@ export interface FamousDetailS_famous_cast_movies {
   id: number;
 }
 
-export interface FamousDetailS_famous_cast_tvShows {
+export interface FamousDetails_famous_cast_tvShows {
   __typename: "CastTVShow";
   voteAverage: number | null;
   posterPath: string | null;
   voteCount: number | null;
-  name: string | null;
+  title: string | null;
   id: number;
 }
 
-export interface FamousDetailS_famous_cast {
+export interface FamousDetails_famous_cast {
   __typename: "FamousCast";
-  movies: FamousDetailS_famous_cast_movies[];
-  tvShows: FamousDetailS_famous_cast_tvShows[];
+  movies: FamousDetails_famous_cast_movies[];
+  tvShows: FamousDetails_famous_cast_tvShows[];
 }
 
-export interface FamousDetailS_famous {
+export interface FamousDetails_famous {
   __typename: "Famous";
   knownForDepartment: string | null;
   placeOfBirth: string | null;
@@ -39,14 +39,14 @@ export interface FamousDetailS_famous {
   birthday: string | null;
   deathday: string | null;
   images: string[];
-  cast: FamousDetailS_famous_cast;
+  cast: FamousDetails_famous_cast;
 }
 
-export interface FamousDetailS {
-  famous: FamousDetailS_famous;
+export interface FamousDetails {
+  famous: FamousDetails_famous;
 }
 
-export interface FamousDetailSVariables {
+export interface FamousDetailsVariables {
   id: number;
   language?: ISO6391Language | null;
 }

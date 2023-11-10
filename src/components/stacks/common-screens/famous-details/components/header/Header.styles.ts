@@ -5,15 +5,14 @@ import { Typography } from '@/components/common';
 import metrics from '@styles/metrics';
 
 export const PROFILE_IMAGE_ICON_SIZE = metrics.xl * 3;
-
+export const DEFAULT_MARGIN_TOP = Platform.select({
+  android: metrics.xl * 4,
+  ios: metrics.xl * 6,
+});
 export const Wrapper = styled.View`
   width: 100%;
   justify-content: flex-end;
-  margin-top: ${({ theme }) =>
-    Platform.select({
-      android: theme.metrics.xl * 4,
-      ios: theme.metrics.xl * 6,
-    })}px;
+  margin-top: ${DEFAULT_MARGIN_TOP}px;
   margin-bottom: ${({ theme }) => theme.metrics.lg * 2}px;
   margin-horizontal: ${({ theme }) => theme.metrics.md}px;
 `;
