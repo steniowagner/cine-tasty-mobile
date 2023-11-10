@@ -11,6 +11,19 @@ import {
   MediaHorizontalItem,
 } from './MediaHorizontalList';
 
+jest.mock('@react-navigation/native', () => {
+  const actualReactNavigationNative = jest.requireActual(
+    '@react-navigation/native',
+  );
+  return {
+    ...actualReactNavigationNative,
+    useNavigation: () => ({
+      push: jest.fn(),
+      getState: jest.fn(),
+    }),
+  };
+});
+
 const renderMediaHorizontalList = (
   props: Omit<MediaHorizontalListProps, 'title'>,
 ) => {
