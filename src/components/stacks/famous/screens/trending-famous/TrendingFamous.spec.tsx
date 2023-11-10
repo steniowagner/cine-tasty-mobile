@@ -593,11 +593,13 @@ describe('Stacks/News/Screens/TrendingFamous', () => {
       fireEvent.press(
         elements.trendingFamousListItems(component)[indexItemSelected],
       );
+      const itemSelected = trendingFamousList()[indexItemSelected];
       expect(navigate).toBeCalledTimes(1);
-      expect(navigate).toBeCalledWith(
-        Routes.Famous.DETAILS,
-        trendingFamousList()[indexItemSelected],
-      );
+      expect(navigate).toBeCalledWith(Routes.Famous.DETAILS, {
+        id: itemSelected.id,
+        profileImage: itemSelected.profilePath,
+        name: itemSelected.name,
+      });
     });
   });
 });
