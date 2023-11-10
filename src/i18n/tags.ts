@@ -101,6 +101,12 @@ export namespace Translations {
     READ_MORE = 'translations:readMore',
   }
 
+  export enum FamousDetails {
+    BIOGRAPHY = 'translations:famousDetails:biography',
+    CAST_MOVIES = 'translations:famousDetails:castMovies',
+    CAST_TV_SHOWS = 'translations:famousDetails:castTVShows',
+  }
+
   export type Tags =
     | Tabs
     | News
@@ -110,5 +116,6 @@ export namespace Translations {
     | TrendingFamous
     | Search
     | SearchFamous
-    | Miscellaneous;
+    | Miscellaneous
+    | FamousDetails;
 }

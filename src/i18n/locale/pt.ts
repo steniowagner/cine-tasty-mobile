@@ -127,4 +127,14 @@ export const pt: Locale = {
   ],
   readLess: 'Ler menos',
   readMore: 'Ler mais',
+  famousDetails: {
+    biography: 'Biografia',
+    castMovies: 'Participações em filmes',
+    castTVShows: 'Participações em séries',
+    error: {
+      description: 'Algo deu errado',
+      suggestion: 'Por favor, tente novamente',
+      title: 'Oops...',
+    },
+  },
 };
