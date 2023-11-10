@@ -1,5 +1,11 @@
 import React from 'react';
-import { Text as TextNative, StyleProp, TextStyle } from 'react-native';
+import {
+  Text as TextNative,
+  StyleProp,
+  TextStyle,
+  NativeSyntheticEvent,
+  TextLayoutEventData,
+} from 'react-native';
 import {
   DefaultTheme,
   TypographyValues,
@@ -9,6 +15,7 @@ import {
 import { TypographyStyle } from '@styles/typography';
 
 export type DefaultTypographyProps = {
+  onTextLayout?: (event: NativeSyntheticEvent<TextLayoutEventData>) => void;
   alignment?: 'auto' | 'left' | 'center' | 'right' | 'justify';
   numberOfLines?: number;
   style?: StyleProp<TextStyle>;

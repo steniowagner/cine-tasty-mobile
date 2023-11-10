@@ -86,4 +86,13 @@ export type Locale = {
     errors: Errors;
   };
   recentSearches: string;
+  months: string[];
+  readLess: string;
+  readMore: string;
+  famousDetails: {
+    biography: string;
+    castMovies: string;
+    castTVShows: string;
+    error: Advice;
+  };
 };

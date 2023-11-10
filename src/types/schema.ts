@@ -4,6 +4,59 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FamousDetails
+// ====================================================
+
+export interface FamousDetails_famous_cast_movies {
+  __typename: "CastMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number;
+}
+
+export interface FamousDetails_famous_cast_tvShows {
+  __typename: "CastTVShow";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number;
+}
+
+export interface FamousDetails_famous_cast {
+  __typename: "FamousCast";
+  movies: FamousDetails_famous_cast_movies[];
+  tvShows: FamousDetails_famous_cast_tvShows[];
+}
+
+export interface FamousDetails_famous {
+  __typename: "Famous";
+  knownForDepartment: string | null;
+  placeOfBirth: string | null;
+  biography: string | null;
+  birthday: string | null;
+  deathday: string | null;
+  images: string[];
+  cast: FamousDetails_famous_cast;
+}
+
+export interface FamousDetails {
+  famous: FamousDetails_famous;
+}
+
+export interface FamousDetailsVariables {
+  id: number;
+  language?: ISO6391Language | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: SearchFamous
 // ====================================================
 

@@ -75,7 +75,11 @@ export const useTrendingFamous = (params: UseTrendingFamous) => {
 
   const handleSelectFamous = useCallback(
     (famous: QueryTrendingFamous_trendingFamous_items) => {
-      params.navigation.navigate(Routes.Famous.DETAILS, famous);
+      params.navigation.navigate(Routes.Famous.DETAILS, {
+        profileImage: famous.profilePath,
+        name: famous.name,
+        id: famous.id,
+      });
     },
     [params.navigation.navigate],
   );
