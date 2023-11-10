@@ -4,7 +4,6 @@ import { Typography } from '..';
 
 export const Wrapper = styled.View`
   width: 100%;
-  margin-bottom: ${({ theme }) => theme.metrics.xl}px;
 `;
 
 export const Title = styled(Typography.SmallText).attrs({ bold: true })`

@@ -7,6 +7,7 @@ import {
   FamousDetails_famous_cast_tvShows,
 } from '@schema-types';
 
+import { MediaType } from '../media-list-item/use-media-list-item';
 import * as Styles from './MediaHorizontalList.style';
 
 export type MediaHorizontalItem =
@@ -15,7 +16,7 @@ export type MediaHorizontalItem =
 
 export type MediaHorizontalListProps = {
   dataset: MediaHorizontalItem[];
-  type: 'MOVIE' | 'TV_SHOW';
+  type: MediaType;
   title: string;
 };
 
@@ -33,6 +34,7 @@ export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
           data={props.dataset}
           renderItem={({ item }) => (
             <MediaListItem
+              type={props.type}
               layoutSize="large"
               voteAverage={item.voteAverage}
               voteCount={item.voteCount}
