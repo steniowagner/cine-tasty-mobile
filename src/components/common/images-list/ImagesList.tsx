@@ -18,17 +18,19 @@ export const ImagesList = (props: ImagesListProps) => {
 
   return (
     <Styles.Wrapper
-      showsHorizontalScrollIndicator={false}
-      testID="images-list"
-      horizontal>
-      {props.images.map((image, index) => (
+      renderItem={({ item, index }) => (
         <ImageListItem
           onPress={() => imagesList.onPressImage(index)}
           orientation={props.orientation}
-          image={image}
-          key={image}
+          image={item}
+          key={item}
         />
-      ))}
-    </Styles.Wrapper>
+      )}
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={item => item}
+      horizontal
+      data={props.images}
+      testID="images-list"
+    />
   );
 };
