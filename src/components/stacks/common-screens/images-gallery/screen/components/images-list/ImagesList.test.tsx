@@ -12,7 +12,6 @@ import { ThemeProvider } from 'styled-components/native';
 import { TMDBImageQualitiesProvider } from '@/providers';
 import { dark as theme } from '@styles/themes';
 
-import { randomPositiveNumber } from '../../../../../../../../__mocks__/utils';
 import { ImagesList } from './ImagesList';
 
 jest.mock('@providers', () => {

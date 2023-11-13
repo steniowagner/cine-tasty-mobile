@@ -102,7 +102,10 @@ describe('Components/Common/ImagesList', () => {
           expect(mockNavigate).toBeCalledTimes(0);
           fireEvent.press(elements.listItems(component)[indexImageSelected]);
           expect(mockNavigate).toBeCalledTimes(1);
-          expect(mockNavigate).toBeCalledWith(Routes.Home.IMAGES_GALLERY);
+          expect(mockNavigate).toBeCalledWith(Routes.Home.IMAGES_GALLERY, {
+            indexSelected: indexImageSelected,
+            images,
+          });
         });
       });
 
@@ -124,7 +127,10 @@ describe('Components/Common/ImagesList', () => {
           expect(mockNavigate).toBeCalledTimes(0);
           fireEvent.press(elements.listItems(component)[indexImageSelected]);
           expect(mockNavigate).toBeCalledTimes(1);
-          expect(mockNavigate).toBeCalledWith(Routes.Famous.IMAGES_GALLERY);
+          expect(mockNavigate).toBeCalledWith(Routes.Famous.IMAGES_GALLERY, {
+            indexSelected: indexImageSelected,
+            images,
+          });
         });
       });
     });
@@ -181,7 +187,10 @@ describe('Components/Common/ImagesList', () => {
           expect(mockNavigate).toBeCalledTimes(0);
           fireEvent.press(elements.listItems(component)[indexImageSelected]);
           expect(mockNavigate).toBeCalledTimes(1);
-          expect(mockNavigate).toBeCalledWith(Routes.Home.IMAGES_GALLERY);
+          expect(mockNavigate).toBeCalledWith(Routes.Home.IMAGES_GALLERY, {
+            indexSelected: indexImageSelected,
+            images,
+          });
         });
       });
 
@@ -203,7 +212,10 @@ describe('Components/Common/ImagesList', () => {
           expect(mockNavigate).toBeCalledTimes(0);
           fireEvent.press(elements.listItems(component)[indexImageSelected]);
           expect(mockNavigate).toBeCalledTimes(1);
-          expect(mockNavigate).toBeCalledWith(Routes.Famous.IMAGES_GALLERY);
+          expect(mockNavigate).toBeCalledWith(Routes.Famous.IMAGES_GALLERY, {
+            indexSelected: indexImageSelected,
+            images,
+          });
         });
       });
     });

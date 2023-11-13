@@ -1,3 +1,4 @@
+import metrics from '@/styles/metrics';
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -8,6 +9,6 @@ export const PlaceholderListItem = styled.View`
 
 export const sheet = StyleSheet.create({
   flatlist: {
-    alignItems: 'center',
+    marginTop: metrics.getHeightFromDP('20'),
   },
 });

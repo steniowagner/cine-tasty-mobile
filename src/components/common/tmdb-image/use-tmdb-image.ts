@@ -34,11 +34,11 @@ export const useTMDBImage = (props: UseTMDBImageProps) => {
   const uri = useMemo(
     () =>
       tmdbImageURI.uri({
-        isThumbnail: !!props.isThumbnail,
+        isThumbnail: props.isThumbnail,
         image: props.image,
         imageType: props.imageType,
       }),
-    [props.isThumbnail, props.imageType, props.image],
+    [props.isThumbnail, props.imageType, props.image, tmdbImageURI.uri],
   );
 
   const imageFallbackStyle = useAnimatedStyle(
