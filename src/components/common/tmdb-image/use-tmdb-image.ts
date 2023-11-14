@@ -9,9 +9,8 @@ import { useTheme } from 'styled-components/native';
 import { ImageStyle } from 'react-native-fast-image';
 
 import { ImageType } from '@/providers/tmdb-image-qualities/types';
-import { useTMDBImageQualities } from '@providers';
+import { useTMDBImageURI } from '@hooks';
 
-import { getImageURI } from './get-image-uri';
 import * as Styles from './TMDBImage.styles';
 
 export const ANIMATION_DURATION = 400;
@@ -28,25 +27,18 @@ export const useTMDBImage = (props: UseTMDBImageProps) => {
   const [hasError, setImageHasError] = useState(false);
   const [isLoaded, setIsImageLoaded] = useState(false);
 
-  const tmdbImagesQualities = useTMDBImageQualities();
+  const tmdbImageURI = useTMDBImageURI();
   const opacity = useSharedValue(1);
   const theme = useTheme();
 
   const uri = useMemo(
     () =>
-      getImageURI({
-        mappingImageTypeToImageSize:
-          tmdbImagesQualities.mappingImageTypeToImageSize,
-        isThumbnail: !!props.isThumbnail,
+      tmdbImageURI.uri({
+        isThumbnail: props.isThumbnail,
         image: props.image,
         imageType: props.imageType,
       }),
-    [
-      tmdbImagesQualities.mappingImageTypeToImageSize,
-      props.isThumbnail,
-      props.imageType,
-      props.image,
-    ],
+    [props.isThumbnail, props.imageType, props.image, tmdbImageURI.uri],
   );
 
   const imageFallbackStyle = useAnimatedStyle(

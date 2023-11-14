@@ -1,7 +1,6 @@
 jest.unmock('react-native-reanimated');
 import React from 'react';
 import { ThemeProvider } from 'styled-components/native';
-import FastImage from 'react-native-fast-image';
 import {
   RenderAPI,
   render,
@@ -21,6 +20,14 @@ jest.mock('react-native-reanimated', () => {
   Reanimated.default.call = () => {};
   return Reanimated;
 });
+
+const mockUri = jest.fn();
+
+jest.mock('@hooks', () => ({
+  useTMDBImageURI: () => ({
+    uri: mockUri,
+  }),
+}));
 
 const IMAGE = '/IMAGE';
 const ERROR_ICON = 'image-off';
@@ -60,7 +67,12 @@ describe('Components/Common/TMDBImage', () => {
   };
 
   describe('Rendering', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('should show the "loading-state" while is loading the image', async () => {
+      mockUri.mockReturnValueOnce(undefined);
       const component = render(renderTMDBImage());
       expect(elements.image(component)).toBeNull();
       expect(elements.fallbackImage(component)).not.toBeNull();
@@ -70,6 +82,7 @@ describe('Components/Common/TMDBImage', () => {
     });
 
     it('should show the "loaded-state" when "load the image successfuly', async () => {
+      mockUri.mockReturnValueOnce('SOME_URI');
       const component = render(renderTMDBImage());
       await waitFor(() => {
         expect(elements.image(component)).not.toBeNull();
@@ -84,6 +97,7 @@ describe('Components/Common/TMDBImage', () => {
     });
 
     it('should show the "error-state" when an "error happened" when "loading the image"', async () => {
+      mockUri.mockReturnValueOnce('SOME_URI');
       const component = render(renderTMDBImage());
       await waitFor(() => {
         expect(elements.image(component)).not.toBeNull();

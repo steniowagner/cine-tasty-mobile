@@ -4,6 +4,7 @@ import { Routes } from '@navigation';
 
 import { FamousDetailsProps } from '../../common-screens/famous-details/routes/route-params-types';
 import { SearchProps } from '../../common-screens/search/types';
+import { ImagesGalleryNavigationProps } from '../../common-screens/images-gallery/routes/route-params-types';
 
 export type FamousStackRoutes = {
   [Routes.Famous.TRENDING_FAMOUS]: undefined;
@@ -11,7 +12,7 @@ export type FamousStackRoutes = {
   [Routes.Famous.SEARCH_FAMOUS]: SearchProps;
   [Routes.Famous.TV_SHOW_DETAILS]: undefined;
   [Routes.Famous.MOVIE_DETAILS]: undefined;
-  [Routes.Famous.IMAGES_GALLERY]: undefined;
+  [Routes.Famous.IMAGES_GALLERY]: ImagesGalleryNavigationProps;
 };
 
 /** Trending-Famous-Props */

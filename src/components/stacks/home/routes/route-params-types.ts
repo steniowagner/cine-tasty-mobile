@@ -2,6 +2,7 @@ import { Routes } from '@/navigation';
 
 import { FamousDetailsProps } from '../../common-screens/famous-details/routes/route-params-types';
 import { SearchProps } from '../../common-screens/search/types';
+import { ImagesGalleryNavigationProps } from '../../common-screens/images-gallery/routes/route-params-types';
 
 export type HomeStackRoutes = {
   [Routes.Home.SEARCH_MOVIE]: SearchProps;
@@ -9,5 +10,5 @@ export type HomeStackRoutes = {
   [Routes.Home.TV_SHOW_DETAILS]: undefined;
   [Routes.Home.FAMOUS_DETAILS]: FamousDetailsProps;
   [Routes.Home.MOVIE_DETAILS]: undefined;
-  [Routes.Home.IMAGES_GALLERY]: undefined;
+  [Routes.Home.IMAGES_GALLERY]: ImagesGalleryNavigationProps;
 };
