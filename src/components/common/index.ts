@@ -25,3 +25,4 @@ export { Section } from './section/Section';
 export { ImagesList } from './images-list/ImagesList';
 export { MediaListItem } from './media-list-item/MediaListItem';
 export { MediaHorizontalList } from './media-horizontal-list/MediaHorizontalList';
+export { StatusBarStyled as StatusBar } from './status-bar/StatusBar';
