@@ -110,6 +110,17 @@ export namespace Translations {
     ERROR_ADVICE_TITLE = 'translations:famousDetails:error:title',
   }
 
+  export enum MediaDetails {
+    MEDIA_DETAILS_VOTES = 'translations:mediaDetails:votes',
+    MEDIA_DETAILS_OVERVIEW = 'translations:mediaDetails:overview',
+    MEDIA_DETAILS_VIDEOS = 'translations:mediaDetails:videos',
+    MEDIA_DETAILS_SIMILAR = 'translations:mediaDetails:similar',
+  }
+
+  export enum TVShowDetails {
+    TV_SHOW = 'translations:tvShow:tvShow',
+  }
+
   export type Tags =
     | Tabs
     | News
@@ -120,5 +131,7 @@ export namespace Translations {
     | Search
     | SearchFamous
     | Miscellaneous
-    | FamousDetails;
+    | FamousDetails
+    | MediaDetails
+    | TVShowDetails;
 }

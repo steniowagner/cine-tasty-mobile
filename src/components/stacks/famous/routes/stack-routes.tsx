@@ -13,9 +13,13 @@ import {
 } from '@navigation';
 import { Translations } from '@i18n/tags';
 
-import { FamousDetails, ImagesGallery } from '../../common-screens';
+import {
+  FamousDetails,
+  ImagesGallery,
+  Search,
+  TVShowDetails,
+} from '../../common-screens';
 import { TrendingFamous } from '../screens/trending-famous/TrendingFamous';
-import { Search } from '../../common-screens';
 
 const Stack = createStackNavigator();
 
@@ -62,16 +66,13 @@ export const FamousStack = () => {
       <Stack.Screen
         name={Routes.Famous.IMAGES_GALLERY}
         component={ImagesGallery}
-        initialParams={{
-          images: [
-            '/whNwkEQYWLFJA8ij0WyOOAD5xhQ.jpg',
-            '/lldeQ91GwIVff43JBrpdbAAeYWj.jpg',
-            '/dqsoVOHWyK4YfxdY0odIyZxhuDB.jpg',
-            '/qrRIGfZ4ikHMMIRbBQAXjPkGPst.jpg',
-            '/dyTg1DxmBmTahRw4g0ImwseXS5H.jpg',
-          ],
-          indexSelected: 0,
-        }}
+      />
+      <Stack.Screen
+        name={Routes.Famous.TV_SHOW_DETAILS}
+        // initialParams={{
+        //   id: 78191,
+        // }}
+        component={TVShowDetails}
       />
     </Stack.Navigator>
   );

@@ -1,10 +1,26 @@
-import styled from 'styled-components/native';
+import { Platform, ViewProps } from 'react-native';
+import styled, { IStyledComponent } from 'styled-components/native';
+import { Substitute } from 'styled-components/native/dist/types';
 
 import { Typography } from '..';
 
-export const Wrapper = styled.View`
+type WrapperStyleProps = {
+  withMarginTop?: boolean;
+};
+
+export const Wrapper: IStyledComponent<
+  'native',
+  Substitute<ViewProps, WrapperStyleProps>
+> = styled.View<WrapperStyleProps>`
   flex: 1;
   align-items: center;
+  margin-top: ${({ withMarginTop, theme }) => {
+    const marginTop = Platform.select({
+      android: theme.metrics.xl * 4,
+      ios: theme.metrics.xl * 6,
+    });
+    return withMarginTop ? marginTop : 0;
+  }}px;
   padding-horizontal: ${({ theme }) => theme.metrics.xl}px;
 `;
 

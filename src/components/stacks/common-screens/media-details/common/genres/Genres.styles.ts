@@ -10,7 +10,7 @@ export const Wrapper = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding-horizontal: ${({ theme }) => theme.metrics.md}px;
+  align-items: center;
 `;
 
 export const Item: IStyledComponent<
@@ -19,7 +19,7 @@ export const Item: IStyledComponent<
 > = styled.View<ExtraTagStyleProp>`
   margin-right: ${({ theme }) => theme.metrics.sm}px;
   margin-top: ${({ theme }) => theme.metrics.md}px;
-  padding-horizontal: ${({ theme }) => theme.metrics.lg}px;
+  padding-horizontal: ${({ theme }) => theme.metrics.md}px;
   padding-vertical: ${({ theme }) => theme.metrics.md}px;
   background-color: ${({ isGenre, theme }) =>
     isGenre ? theme.colors.primary : theme.colors.contrast};

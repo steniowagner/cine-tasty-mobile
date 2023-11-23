@@ -12,21 +12,19 @@ import { useFamousDetails } from './use-famous-details';
 import { Header } from './components/header/Header';
 import { DeathDay } from './components/death-day/DeathDay';
 import { Biography } from './components/biography/Biography';
-import * as Styles from './FamousDetails.styles';
 
 export const FamousDetails = (props: FamousDetailsProps) => {
   const famousDetails = useFamousDetails({ id: props.route.params.id });
 
   if (famousDetails.hasError) {
     return (
-      <Styles.AdviceWrapper>
-        <Advice
-          description={famousDetails.texts.advice.description}
-          suggestion={famousDetails.texts.advice.suggestion}
-          title={famousDetails.texts.advice.title}
-          icon="alert-box"
-        />
-      </Styles.AdviceWrapper>
+      <Advice
+        description={famousDetails.texts.advice.description}
+        suggestion={famousDetails.texts.advice.suggestion}
+        title={famousDetails.texts.advice.title}
+        withMarginTop
+        icon="alert-box"
+      />
     );
   }
 

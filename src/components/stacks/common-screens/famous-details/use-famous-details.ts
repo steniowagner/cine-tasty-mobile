@@ -24,7 +24,7 @@ export const FAMOUS_DETAILS_QUERY = gql`
       birthday
       deathday
       images
-      cast {
+      cast(language: $language) {
         movies: moviesCast {
           voteAverage
           posterPath

@@ -40,6 +40,7 @@ export const MediaHorizontalList = (props: MediaHorizontalListProps) => {
               voteCount={item.voteCount}
               image={item.posterPath}
               title={item.title}
+              id={item.id}
               key={item.id}
             />
           )}

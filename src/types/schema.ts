@@ -57,6 +57,55 @@ export interface FamousDetailsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TVShowDetails
+// ====================================================
+
+export interface TVShowDetails_tvShow_createdBy {
+  __typename: "CreatedBy";
+  profilePath: string | null;
+  name: string | null;
+  id: number;
+}
+
+export interface TVShowDetails_tvShow {
+  __typename: "TVShow";
+  genres: string[];
+  voteAverage: number | null;
+  voteCount: number | null;
+  backdropPath: string | null;
+  createdBy: TVShowDetails_tvShow_createdBy[];
+  episodeRunTime: number[];
+  firstAirDate: string | null;
+  lastAirDate: string | null;
+  title: string | null;
+  id: number;
+  originalLanguage: string | null;
+  originalName: string | null;
+  originCountry: string[];
+  overview: string | null;
+  posterPath: string | null;
+  numberOfEpisodes: number | null;
+  numberOfSeasons: number | null;
+}
+
+export interface TVShowDetails {
+  tvShow: TVShowDetails_tvShow;
+}
+
+export interface TVShowDetailsVariables {
+  id: number;
+  language?: ISO6391Language | null;
+  includeVoteAverage: boolean;
+  includeGenres: boolean;
+  includeVoteCount: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: SearchFamous
 // ====================================================
 

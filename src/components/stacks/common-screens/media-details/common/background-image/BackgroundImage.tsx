@@ -9,7 +9,7 @@ type BackgroundImageProps = {
 };
 
 export const BackgroundImage = (props: BackgroundImageProps) => {
-  const backgroundImage = useBackgroundImage();
+  const backgroundImage = useBackgroundImage({ image: props.image });
 
   return (
     <Animated.View
@@ -19,7 +19,7 @@ export const BackgroundImage = (props: BackgroundImageProps) => {
         blurRadius={2}
         onLoad={backgroundImage.onLoad}
         testID="background-image"
-        source={{ uri: props.image }}
+        source={{ uri: backgroundImage.uri }}
       />
       <Styles.SmokeShadow testID="smoke-shadow" colors={[]} />
     </Animated.View>
