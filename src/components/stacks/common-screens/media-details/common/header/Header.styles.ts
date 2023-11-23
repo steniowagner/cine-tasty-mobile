@@ -41,6 +41,7 @@ export const SmokeShadow = styled(LinearGradient).attrs(({ theme }) => ({
 export const MiddleContent = styled.View`
   justify-content: center;
   align-items: center;
+  padding-horizontal: ${({ theme }) => theme.metrics.md}px;
 `;
 
 export const StarsWrapper = styled.View`

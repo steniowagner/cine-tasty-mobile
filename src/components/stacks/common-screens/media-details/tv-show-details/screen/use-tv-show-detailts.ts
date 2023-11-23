@@ -3,6 +3,7 @@ import { useTheme } from 'styled-components/native';
 import gql from 'graphql-tag';
 
 import { useImperativeQuery, useTranslation } from '@hooks';
+import { formatDate } from '@utils';
 import {
   TVShowDetailsVariables,
   TVShowDetails_tvShow,
@@ -68,11 +69,6 @@ export const TV_SHOW_DETAILS_QUERY = gql`
       # }
       numberOfEpisodes
       numberOfSeasons
-      # reviews {
-      #   author
-      #   content
-      #   id
-      # }
     }
   }
 `;
@@ -87,7 +83,7 @@ type UseTVShowDetailsParams = {
 export const useTVShowDetails = (params: UseTVShowDetailsParams) => {
   const [details, setDetails] = useState<TVShowDetails_tvShow | undefined>();
 
-  const tvShowTranslations = useTVShowTranslations();
+  const texts = useTVShowTranslations();
   const translation = useTranslation();
   const theme = useTheme();
 
@@ -119,20 +115,68 @@ export const useTVShowDetails = (params: UseTVShowDetailsParams) => {
     });
   }, [translation.currentLanguage, params]);
 
+  const genres = useMemo(
+    () => [texts.tvShowTag, ...(params.genres || details?.genres || [])],
+    [texts, params.genres, details],
+  );
+
+  const infos = useMemo(
+    () => [
+      {
+        title: texts.sections.info.originalTitle,
+        value: details?.title || '-',
+      },
+      {
+        title: texts.sections.info.originalLanguage,
+        value: details?.originalLanguage || '-',
+      },
+      {
+        title: texts.sections.info.numberOfEpisodes,
+        value: details?.numberOfEpisodes
+          ? String(details?.numberOfEpisodes)
+          : '-',
+      },
+      {
+        title: texts.sections.info.numberOfSeasons,
+        value: details?.numberOfSeasons ? String(details.numberOfSeasons) : '-',
+      },
+      {
+        title: texts.sections.info.episodeRuntime,
+        value: details?.episodeRunTime.length
+          ? details.episodeRunTime.join(', ').concat('min')
+          : '-',
+      },
+      {
+        title: texts.sections.info.originalCountry,
+        value: details?.originCountry ? details?.originCountry.join(', ') : '-',
+      },
+      {
+        title: texts.sections.info.firstAirDate,
+        value: formatDate(translation.currentLanguage, details?.firstAirDate),
+      },
+      {
+        title: texts.sections.info.lastAirDate,
+        value: formatDate(translation.currentLanguage, details?.lastAirDate),
+      },
+    ],
+    [translation.currentLanguage, texts, details],
+  );
+
   useEffect(() => {
     queryTVShowDetails();
   }, []);
 
   return {
-    texts: tvShowTranslations.texts,
+    texts,
     isLoading: query.isLoading,
     headerInterpolationValues,
     hasError: query.hasError,
     voteCount: params.voteCount || details?.voteCount || 0,
     voteAverage: params.voteAverage || details?.voteAverage || 0,
     shouldShowBackgroundImage: !query.isLoading && !query.hasError && details,
-    genres: params.genres || details?.genres || [],
+    genres,
     details,
     theme,
+    infos,
   };
 };

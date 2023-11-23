@@ -27,7 +27,9 @@ export const MediaListItem = memo(
           iconSize={metrics.xl * 2}
           image={props.image || ''}
         />
-        <Typography.ExtraSmallText testID="media-list-item-title">
+        <Typography.ExtraSmallText
+          testID="media-list-item-title"
+          numberOfLines={2}>
           {props.title || '-'}
         </Typography.ExtraSmallText>
         {mediaListItem.canShowVotesData && (

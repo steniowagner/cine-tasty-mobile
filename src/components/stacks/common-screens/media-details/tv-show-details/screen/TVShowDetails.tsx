@@ -2,15 +2,24 @@ import React from 'react';
 
 import {
   ScrollWithAnimatedHeader,
+  MediaItemDescription,
   StatusBar,
   Advice,
+  Section,
 } from '@common-components';
 
-import { MediaDetailsLoading, BackgroundImage, Header } from '../../common';
 import { TVShowDetailsProps } from '../routes/route-params-types';
 import { useTVShowDetails } from './use-tv-show-detailts';
-import { Genres } from '../../common/genres/Genres';
-import * as Styles from './TVShowDetails.styles';
+import {
+  MediaDetailsLoading,
+  BackgroundImage,
+  Header,
+  SectionContentWrapper,
+  TextContentWrapper,
+  MediaInfo,
+  SectionWrapper,
+} from '../../common';
+import { SeasonsSection } from './components/seasons-section/SeasonsSection';
 
 export const TVShowDetails = (props: TVShowDetailsProps) => {
   const tvShowDetails = useTVShowDetails({
@@ -61,11 +70,29 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 poster={props.route.params.image || ''}
                 title={tvShowDetails.details.title || '-'}
                 mediaType={tvShowDetails.texts.tvShowTag}
-              />
-              <Genres
-                mediaType={tvShowDetails.texts.tvShowTag}
                 genres={tvShowDetails.genres}
               />
+              <TextContentWrapper>
+                <SectionWrapper>
+                  <Section title={tvShowDetails.texts.sections.overview}>
+                    <SectionContentWrapper>
+                      <MediaItemDescription
+                        description={tvShowDetails.details.overview || '-'}
+                      />
+                    </SectionContentWrapper>
+                  </Section>
+                </SectionWrapper>
+                <SectionWrapper>
+                  <MediaInfo infos={tvShowDetails.infos} />
+                </SectionWrapper>
+                <SectionWrapper>
+                  <SeasonsSection
+                    numberOfSeasons={
+                      tvShowDetails?.details.numberOfSeasons || 0
+                    }
+                  />
+                </SectionWrapper>
+              </TextContentWrapper>
             </>
           )}
         </>

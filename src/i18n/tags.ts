@@ -99,6 +99,7 @@ export namespace Translations {
     MONTHS = 'translations:months',
     READ_LESS = 'translations:readLess',
     READ_MORE = 'translations:readMore',
+    OVERVIEW = 'translations:overview',
   }
 
   export enum FamousDetails {
@@ -119,6 +120,16 @@ export namespace Translations {
 
   export enum TVShowDetails {
     TV_SHOW = 'translations:tvShow:tvShow',
+    OVERVIEW = 'translations:tvShow:overview',
+    SEASONS = 'translations:tvShow:seasons',
+    ORIGINAL_TITLE = 'translations:tvShow:originalTitle',
+    ORIGINAL_LANGUAGE = 'translations:tvShow:originalLanguage',
+    NUMBER_OF_EPISODES = 'translations:tvShow:numberOfEpisodes',
+    NUMBER_OF_SEASONS = 'translations:tvShow:numberOfSeasons',
+    EPISODE_RUNTIME = 'translations:tvShow:episodeRuntime',
+    ORIGINAL_COUNTRY = 'translations:tvShow:originalCountry',
+    FIRST_AIR_DATE = 'translations:tvShow:firstAirDate',
+    LAST_AIR_DATE = 'translations:tvShow:lastAirDate',
   }
 
   export type Tags =
