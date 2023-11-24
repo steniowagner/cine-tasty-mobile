@@ -6,6 +6,7 @@ import {
   StatusBar,
   Advice,
   Section,
+  ImagesList,
 } from '@common-components';
 
 import { TVShowDetailsProps } from '../routes/route-params-types';
@@ -85,6 +86,14 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 <SectionWrapper>
                   <MediaInfo infos={tvShowDetails.infos} />
                 </SectionWrapper>
+                {tvShowDetails.details?.images.length && (
+                  <SectionWrapper>
+                    <ImagesList
+                      images={tvShowDetails?.details.images}
+                      orientation="LANDSCAPE"
+                    />
+                  </SectionWrapper>
+                )}
                 <SectionWrapper>
                   <SeasonsSection
                     numberOfSeasons={

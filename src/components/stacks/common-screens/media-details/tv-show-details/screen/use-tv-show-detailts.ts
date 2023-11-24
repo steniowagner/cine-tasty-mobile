@@ -26,7 +26,7 @@ export const TV_SHOW_DETAILS_QUERY = gql`
       genres(language: $language) @include(if: $includeGenres)
       voteAverage @include(if: $includeVoteAverage)
       voteCount @include(if: $includeVoteCount)
-      # images(id: $id)
+      images(id: $id)
       createdBy {
         profilePath
         name

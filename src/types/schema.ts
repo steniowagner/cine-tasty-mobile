@@ -72,7 +72,7 @@ export interface TVShowDetails_tvShow {
   genres: string[];
   voteAverage: number | null;
   voteCount: number | null;
-  backdropPath: string | null;
+  images: string[];
   createdBy: TVShowDetails_tvShow_createdBy[];
   episodeRunTime: number[];
   firstAirDate: string | null;
@@ -83,7 +83,6 @@ export interface TVShowDetails_tvShow {
   originalName: string | null;
   originCountry: string[];
   overview: string | null;
-  posterPath: string | null;
   numberOfEpisodes: number | null;
   numberOfSeasons: number | null;
 }
