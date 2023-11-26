@@ -37,6 +37,9 @@ export const useTVShowTranslations = () => {
             Translations.TVShowDetails.LAST_AIR_DATE,
           ),
         },
+        similar: translation.translate(
+          Translations.TVShowDetails.FIRST_AIR_DATE,
+        ),
       },
       advice: {
         description: translation.translate(

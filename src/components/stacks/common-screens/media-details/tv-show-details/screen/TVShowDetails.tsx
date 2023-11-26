@@ -7,6 +7,7 @@ import {
   Advice,
   Section,
   ImagesList,
+  MediaHorizontalList,
 } from '@common-components';
 
 import { TVShowDetailsProps } from '../routes/route-params-types';
@@ -74,33 +75,44 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 genres={tvShowDetails.genres}
               />
               <TextContentWrapper>
-                <SectionWrapper>
-                  <Section title={tvShowDetails.texts.sections.overview}>
-                    <SectionContentWrapper>
-                      <MediaItemDescription
-                        description={tvShowDetails.details.overview || '-'}
-                      />
-                    </SectionContentWrapper>
-                  </Section>
-                </SectionWrapper>
+                {tvShowDetails.details.overview && (
+                  <SectionWrapper>
+                    <Section title={tvShowDetails.texts.sections.overview}>
+                      <SectionContentWrapper>
+                        <MediaItemDescription
+                          description={tvShowDetails.details.overview}
+                        />
+                      </SectionContentWrapper>
+                    </Section>
+                  </SectionWrapper>
+                )}
                 <SectionWrapper>
                   <MediaInfo infos={tvShowDetails.infos} />
                 </SectionWrapper>
-                {tvShowDetails.details?.images.length && (
+                {!!tvShowDetails.details.images.length && (
                   <SectionWrapper>
                     <ImagesList
-                      images={tvShowDetails?.details.images}
+                      images={tvShowDetails.details.images}
                       orientation="LANDSCAPE"
                     />
                   </SectionWrapper>
                 )}
-                <SectionWrapper>
-                  <SeasonsSection
-                    numberOfSeasons={
-                      tvShowDetails?.details.numberOfSeasons || 0
-                    }
-                  />
-                </SectionWrapper>
+                {!!tvShowDetails.details.numberOfSeasons && (
+                  <SectionWrapper>
+                    <SeasonsSection
+                      numberOfSeasons={tvShowDetails.details.numberOfSeasons}
+                    />
+                  </SectionWrapper>
+                )}
+                {!!tvShowDetails.details.similar.length && (
+                  <SectionWrapper>
+                    <MediaHorizontalList
+                      dataset={tvShowDetails.details.similar}
+                      type="TV_SHOW"
+                      title={'Similar'}
+                    />
+                  </SectionWrapper>
+                )}
               </TextContentWrapper>
             </>
           )}

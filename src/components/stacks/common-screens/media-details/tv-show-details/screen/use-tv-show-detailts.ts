@@ -60,13 +60,13 @@ export const TV_SHOW_DETAILS_QUERY = gql`
       #   id
       #   job
       # }
-      # similar {
-      #   voteAverage
-      #   posterPath
-      #   voteCount
-      #   name
-      #   id
-      # }
+      similar(id: $id, language: $language) {
+        voteAverage
+        posterPath
+        voteCount
+        title: name
+        id
+      }
       numberOfEpisodes
       numberOfSeasons
     }

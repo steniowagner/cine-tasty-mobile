@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface FamousDetails_famous_cast_movies {
-  __typename: "CastMovie";
+  __typename: "FamousCastMovie";
   voteAverage: number | null;
   posterPath: string | null;
   voteCount: number | null;
@@ -17,7 +17,7 @@ export interface FamousDetails_famous_cast_movies {
 }
 
 export interface FamousDetails_famous_cast_tvShows {
-  __typename: "CastTVShow";
+  __typename: "FamousCastTVShow";
   voteAverage: number | null;
   posterPath: string | null;
   voteCount: number | null;
@@ -67,6 +67,15 @@ export interface TVShowDetails_tvShow_createdBy {
   id: number;
 }
 
+export interface TVShowDetails_tvShow_similar {
+  __typename: "SimilarTVShow";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number;
+}
+
 export interface TVShowDetails_tvShow {
   __typename: "TVShow";
   genres: string[];
@@ -83,6 +92,7 @@ export interface TVShowDetails_tvShow {
   originalName: string | null;
   originCountry: string[];
   overview: string | null;
+  similar: TVShowDetails_tvShow_similar[];
   numberOfEpisodes: number | null;
   numberOfSeasons: number | null;
 }
