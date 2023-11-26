@@ -41,13 +41,13 @@ export const TV_SHOW_DETAILS_QUERY = gql`
       originalName
       originCountry
       overview
-      # videos {
-      #   thumbnail {
-      #     extraSmall
-      #   }
-      #   key
-      #   id
-      # }
+      videos(id: $id) {
+        thumbnail {
+          extraSmall
+        }
+        key
+        id
+      }
       # cast {
       #   profilePath
       #   character

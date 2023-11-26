@@ -67,6 +67,21 @@ export interface TVShowDetails_tvShow_createdBy {
   id: number;
 }
 
+export interface TVShowDetails_tvShow_videos_thumbnail {
+  __typename: "Thumbnail";
+  /**
+   * 120x90
+   */
+  extraSmall: string | null;
+}
+
+export interface TVShowDetails_tvShow_videos {
+  __typename: "MediaVideo";
+  thumbnail: TVShowDetails_tvShow_videos_thumbnail | null;
+  key: string | null;
+  id: string | null;
+}
+
 export interface TVShowDetails_tvShow_similar {
   __typename: "SimilarTVShow";
   voteAverage: number | null;
@@ -92,6 +107,7 @@ export interface TVShowDetails_tvShow {
   originalName: string | null;
   originCountry: string[];
   overview: string | null;
+  videos: TVShowDetails_tvShow_videos[];
   similar: TVShowDetails_tvShow_similar[];
   numberOfEpisodes: number | null;
   numberOfSeasons: number | null;

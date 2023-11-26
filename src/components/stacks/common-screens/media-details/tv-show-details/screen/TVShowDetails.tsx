@@ -20,6 +20,7 @@ import {
   TextContentWrapper,
   MediaInfo,
   SectionWrapper,
+  Videos,
 } from '../../common';
 import { SeasonsSection } from './components/seasons-section/SeasonsSection';
 
@@ -102,6 +103,13 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                     <SeasonsSection
                       numberOfSeasons={tvShowDetails.details.numberOfSeasons}
                     />
+                  </SectionWrapper>
+                )}
+                {!!tvShowDetails.details.videos.length && (
+                  <SectionWrapper>
+                    <Section title={tvShowDetails.texts.sections.overview}>
+                      <Videos videos={tvShowDetails.details.videos} />
+                    </Section>
                   </SectionWrapper>
                 )}
                 {!!tvShowDetails.details.similar.length && (

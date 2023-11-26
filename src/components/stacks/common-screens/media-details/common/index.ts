@@ -4,6 +4,7 @@ export { BackgroundImage } from './background-image/BackgroundImage';
 export { MediaDetailsLoading } from './loading/MediaDetailsLoading';
 export { Header } from './header/Header';
 export { MediaInfo } from './media-info/MediaInfo';
+export { Videos } from './videos/Videos';
 
 export const TextContentWrapper = styled.View`
   background-color: ${({ theme }) => theme.colors.background};
