@@ -14,6 +14,4 @@ export const List = styled.ScrollView.attrs(({ theme }) => ({
     paddingLeft: theme.metrics.md,
   },
   horizontal: true,
-}))`
-  margin-top: ${({ theme }) => theme.metrics.md}px;
-`;
+}))``;

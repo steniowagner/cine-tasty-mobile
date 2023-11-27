@@ -8,9 +8,10 @@ export const useTVShowTranslations = () => {
 
   const texts = useMemo(
     () => ({
+      creator: translation.translate(Translations.TVShowDetails.CREATOR),
       tvShowTag: translation.translate(Translations.TVShowDetails.TV_SHOW),
       sections: {
-        overview: translation.translate(Translations.TVShowDetails.OVERVIEW),
+        overview: translation.translate(Translations.Miscellaneous.OVERVIEW),
         info: {
           originalTitle: translation.translate(
             Translations.TVShowDetails.ORIGINAL_TITLE,
@@ -37,9 +38,13 @@ export const useTVShowTranslations = () => {
             Translations.TVShowDetails.LAST_AIR_DATE,
           ),
         },
+        crew: translation.translate(Translations.TVShowDetails.CREW),
+        cast: translation.translate(Translations.TVShowDetails.CAST),
         similar: translation.translate(
           Translations.TVShowDetails.FIRST_AIR_DATE,
         ),
+        videos: translation.translate(Translations.Miscellaneous.VIDEOS),
+        seasons: translation.translate(Translations.TVShowDetails.SEASONS),
       },
       advice: {
         description: translation.translate(

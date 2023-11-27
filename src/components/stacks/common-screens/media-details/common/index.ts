@@ -8,14 +8,19 @@ export { Videos } from './videos/Videos';
 export { ParticipantsList } from './participants-list/ParticipantsList';
 
 export const TextContentWrapper = styled.View`
+  padding-top: ${({ theme }) => theme.metrics.lg * 2}px;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const SectionContentWrapper = styled.View`
-  padding-horizontal: ${({ theme }) => theme.metrics.md}px;
   margin-top: ${({ theme }) => theme.metrics.sm}px;
 `;
 
 export const SectionWrapper = styled.View`
-  margin-top: ${({ theme }) => theme.metrics.xl}px;
+  margin-top: ${({ theme }) => theme.metrics.lg * 2}px;
+`;
+
+export const OverviewWrapper = styled.View`
+  margin-top: ${({ theme }) => theme.metrics.sm}px;
+  padding-horizontal: ${({ theme }) => theme.metrics.md}px;
 `;

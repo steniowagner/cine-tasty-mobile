@@ -17,6 +17,7 @@ import {
   BackgroundImage,
   Header,
   SectionContentWrapper,
+  OverviewWrapper,
   TextContentWrapper,
   MediaInfo,
   SectionWrapper,
@@ -78,32 +79,16 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 genres={tvShowDetails.genres}
               />
               <TextContentWrapper>
-                {tvShowDetails.details.overview && (
-                  <SectionWrapper>
-                    <Section title={tvShowDetails.texts.sections.overview}>
-                      <SectionContentWrapper>
-                        <MediaItemDescription
-                          description={tvShowDetails.details.overview}
-                        />
-                      </SectionContentWrapper>
-                    </Section>
-                  </SectionWrapper>
-                )}
+                <Section title={tvShowDetails.texts.sections.overview}>
+                  <OverviewWrapper>
+                    <MediaItemDescription
+                      description={tvShowDetails.details.overview || '-'}
+                    />
+                  </OverviewWrapper>
+                </Section>
                 <SectionWrapper>
                   <MediaInfo infos={tvShowDetails.infos} />
                 </SectionWrapper>
-                {!!tvShowDetails.crew.length && (
-                  <ParticipantsList
-                    onPress={tvShowDetails.onPressParticipant}
-                    participants={tvShowDetails.crew}
-                  />
-                )}
-                {!!tvShowDetails.details.cast.length && (
-                  <ParticipantsList
-                    onPress={tvShowDetails.onPressParticipant}
-                    participants={tvShowDetails.details.cast}
-                  />
-                )}
                 {!!tvShowDetails.details.images.length && (
                   <SectionWrapper>
                     <ImagesList
@@ -112,16 +97,46 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                     />
                   </SectionWrapper>
                 )}
+                {!!tvShowDetails.crew.length && (
+                  <SectionWrapper>
+                    <Section title={tvShowDetails.texts.sections.crew}>
+                      <SectionContentWrapper>
+                        <ParticipantsList
+                          onPress={tvShowDetails.onPressParticipant}
+                          participants={tvShowDetails.crew}
+                        />
+                      </SectionContentWrapper>
+                    </Section>
+                  </SectionWrapper>
+                )}
+                {!!tvShowDetails.details.cast.length && (
+                  <SectionWrapper>
+                    <Section title={tvShowDetails.texts.sections.cast}>
+                      <SectionContentWrapper>
+                        <ParticipantsList
+                          onPress={tvShowDetails.onPressParticipant}
+                          participants={tvShowDetails.details.cast}
+                        />
+                      </SectionContentWrapper>
+                    </Section>
+                  </SectionWrapper>
+                )}
                 {!!tvShowDetails.details.numberOfSeasons && (
                   <SectionWrapper>
-                    <SeasonsSection
-                      numberOfSeasons={tvShowDetails.details.numberOfSeasons}
-                    />
+                    <Section title={tvShowDetails.texts.sections.seasons}>
+                      <SectionContentWrapper>
+                        <SeasonsSection
+                          numberOfSeasons={
+                            tvShowDetails.details.numberOfSeasons
+                          }
+                        />
+                      </SectionContentWrapper>
+                    </Section>
                   </SectionWrapper>
                 )}
                 {!!tvShowDetails.details.videos.length && (
                   <SectionWrapper>
-                    <Section title={tvShowDetails.texts.sections.overview}>
+                    <Section title={tvShowDetails.texts.sections.videos}>
                       <Videos videos={tvShowDetails.details.videos} />
                     </Section>
                   </SectionWrapper>

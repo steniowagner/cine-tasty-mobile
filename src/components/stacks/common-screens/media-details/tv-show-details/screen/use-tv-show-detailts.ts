@@ -119,7 +119,7 @@ export const useTVShowDetails = (params: UseTVShowDetailsParams) => {
     () => [
       {
         title: texts.sections.info.originalTitle,
-        value: details?.title || '-',
+        value: details?.originalName || '-',
       },
       {
         title: texts.sections.info.originalLanguage,
@@ -162,13 +162,13 @@ export const useTVShowDetails = (params: UseTVShowDetailsParams) => {
       return [];
     }
     const createdBy = details.createdBy.map(createdByItem => ({
-      subText: 'sub-text',
+      subText: texts.creator,
       image: createdByItem.image,
       name: createdByItem.name,
       id: createdByItem.id,
     }));
     return [...createdBy, ...details.crew];
-  }, [details]);
+  }, [details, texts]);
 
   const handleSelectParticipant = useCallback(
     (participant: HandleSelectParticipantParams) => {

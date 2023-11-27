@@ -100,6 +100,7 @@ export namespace Translations {
     READ_LESS = 'translations:readLess',
     READ_MORE = 'translations:readMore',
     OVERVIEW = 'translations:overview',
+    VIDEOS = 'translations:videos',
   }
 
   export enum FamousDetails {
@@ -111,25 +112,20 @@ export namespace Translations {
     ERROR_ADVICE_TITLE = 'translations:famousDetails:error:title',
   }
 
-  export enum MediaDetails {
-    MEDIA_DETAILS_VOTES = 'translations:mediaDetails:votes',
-    MEDIA_DETAILS_OVERVIEW = 'translations:mediaDetails:overview',
-    MEDIA_DETAILS_VIDEOS = 'translations:mediaDetails:videos',
-    MEDIA_DETAILS_SIMILAR = 'translations:mediaDetails:similar',
-  }
-
   export enum TVShowDetails {
-    TV_SHOW = 'translations:tvShow:tvShow',
-    OVERVIEW = 'translations:tvShow:overview',
-    SEASONS = 'translations:tvShow:seasons',
-    ORIGINAL_TITLE = 'translations:tvShow:originalTitle',
-    ORIGINAL_LANGUAGE = 'translations:tvShow:originalLanguage',
-    NUMBER_OF_EPISODES = 'translations:tvShow:numberOfEpisodes',
-    NUMBER_OF_SEASONS = 'translations:tvShow:numberOfSeasons',
-    EPISODE_RUNTIME = 'translations:tvShow:episodeRuntime',
-    ORIGINAL_COUNTRY = 'translations:tvShow:originalCountry',
-    FIRST_AIR_DATE = 'translations:tvShow:firstAirDate',
-    LAST_AIR_DATE = 'translations:tvShow:lastAirDate',
+    TV_SHOW = 'translations:tvShowDetails:tvShow',
+    SEASONS = 'translations:tvShowDetails:seasons',
+    ORIGINAL_TITLE = 'translations:tvShowDetails:originalTitle',
+    ORIGINAL_LANGUAGE = 'translations:tvShowDetails:originalLanguage',
+    NUMBER_OF_EPISODES = 'translations:tvShowDetails:numberOfEpisodes',
+    NUMBER_OF_SEASONS = 'translations:tvShowDetails:numberOfSeasons',
+    EPISODE_RUNTIME = 'translations:tvShowDetails:episodeRuntime',
+    ORIGINAL_COUNTRY = 'translations:tvShowDetails:originalCountry',
+    FIRST_AIR_DATE = 'translations:tvShowDetails:firstAirDate',
+    LAST_AIR_DATE = 'translations:tvShowDetails:lastAirDate',
+    CREW = 'translations:tvShowDetails:crew',
+    CAST = 'translations:tvShowDetails:cast',
+    CREATOR = 'translations:tvShowDetails:creator',
   }
 
   export type Tags =
@@ -143,6 +139,5 @@ export namespace Translations {
     | SearchFamous
     | Miscellaneous
     | FamousDetails
-    | MediaDetails
     | TVShowDetails;
 }

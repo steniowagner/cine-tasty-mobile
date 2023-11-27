@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
+import { ISO6391Language } from '@/types/schema';
 import { useTranslation } from '@hooks';
-import { Translations } from '@/i18n/tags';
 
 type UseSeasonsSectionParams = {
   numberOfSeasons: number;
@@ -10,23 +10,19 @@ type UseSeasonsSectionParams = {
 export const useSeasonsSection = (params: UseSeasonsSectionParams) => {
   const translation = useTranslation();
 
-  const texts = useMemo(
-    () => ({
-      seasons: translation.translate(Translations.TVShowDetails.SEASONS),
-    }),
-    [translation.translate],
-  );
-
   const seasons = useMemo(
     () =>
       Array(params.numberOfSeasons)
         .fill({})
-        .map((_, index) => `S${index + 1}`),
-    [texts],
+        .map((_, index) => {
+          const prefix =
+            translation.currentLanguage === ISO6391Language.en ? 'S' : 'T';
+          return `${prefix}${index + 1}`;
+        }),
+    [translation.currentLanguage],
   );
 
   return {
     seasons,
-    texts,
   };
 };
