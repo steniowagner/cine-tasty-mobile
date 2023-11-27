@@ -21,11 +21,13 @@ import {
   MediaInfo,
   SectionWrapper,
   Videos,
+  ParticipantsList,
 } from '../../common';
 import { SeasonsSection } from './components/seasons-section/SeasonsSection';
 
 export const TVShowDetails = (props: TVShowDetailsProps) => {
   const tvShowDetails = useTVShowDetails({
+    navigation: props.navigation,
     voteAverage: props.route.params.voteAverage,
     voteCount: props.route.params.voteCount,
     genres: props.route.params.genres,
@@ -90,6 +92,18 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 <SectionWrapper>
                   <MediaInfo infos={tvShowDetails.infos} />
                 </SectionWrapper>
+                {!!tvShowDetails.crew.length && (
+                  <ParticipantsList
+                    onPress={tvShowDetails.onPressParticipant}
+                    participants={tvShowDetails.crew}
+                  />
+                )}
+                {!!tvShowDetails.details.cast.length && (
+                  <ParticipantsList
+                    onPress={tvShowDetails.onPressParticipant}
+                    participants={tvShowDetails.details.cast}
+                  />
+                )}
                 {!!tvShowDetails.details.images.length && (
                   <SectionWrapper>
                     <ImagesList

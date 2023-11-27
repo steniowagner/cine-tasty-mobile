@@ -11,8 +11,10 @@ import {
   ISO6391Language,
 } from '@schema-types';
 
+import { TVShowDetailsProps } from '../routes/route-params-types';
 import { scrollWithAnimatedHeaderParams } from '../../common/scroll-with-animated-header-params';
 import { useTVShowTranslations } from './use-tv-show-translations';
+import { Routes } from '@/navigation';
 
 export const TV_SHOW_DETAILS_QUERY = gql`
   query TVShowDetails(
@@ -28,7 +30,7 @@ export const TV_SHOW_DETAILS_QUERY = gql`
       voteCount @include(if: $includeVoteCount)
       images(id: $id)
       createdBy {
-        profilePath
+        image: profilePath
         name
         id
       }
@@ -48,18 +50,18 @@ export const TV_SHOW_DETAILS_QUERY = gql`
         key
         id
       }
-      # cast {
-      #   profilePath
-      #   character
-      #   name
-      #   id
-      # }
-      # crew {
-      #   profilePath
-      #   name
-      #   id
-      #   job
-      # }
+      cast {
+        image: profilePath
+        subText: character
+        name
+        id
+      }
+      crew {
+        image: profilePath
+        name
+        id
+        subText: job
+      }
       similar(id: $id, language: $language) {
         voteAverage
         posterPath
@@ -73,7 +75,13 @@ export const TV_SHOW_DETAILS_QUERY = gql`
   }
 `;
 
-type UseTVShowDetailsParams = {
+type HandleSelectParticipantParams = {
+  image?: string | null;
+  name?: string | null;
+  id: number;
+};
+
+type UseTVShowDetailsParams = Pick<TVShowDetailsProps, 'navigation'> & {
   voteAverage?: number | null;
   genres?: string[] | null;
   voteCount?: number | null;
@@ -101,19 +109,6 @@ export const useTVShowDetails = (params: UseTVShowDetailsParams) => {
     onCompleted: handleCompleteQuery,
     fetchPolicy: 'cache-first',
   });
-
-  const queryTVShowDetails = useCallback(() => {
-    if (!params.id) {
-      return;
-    }
-    query.exec({
-      language: translation.currentLanguage as ISO6391Language,
-      includeVoteAverage: !params.voteAverage,
-      includeGenres: !params.genres,
-      includeVoteCount: !params.voteCount,
-      id: params.id,
-    });
-  }, [translation.currentLanguage, params]);
 
   const genres = useMemo(
     () => [texts.tvShowTag, ...(params.genres || details?.genres || [])],
@@ -162,6 +157,48 @@ export const useTVShowDetails = (params: UseTVShowDetailsParams) => {
     [translation.currentLanguage, texts, details],
   );
 
+  const crew = useMemo(() => {
+    if (!details) {
+      return [];
+    }
+    const createdBy = details.createdBy.map(createdByItem => ({
+      subText: 'sub-text',
+      image: createdByItem.image,
+      name: createdByItem.name,
+      id: createdByItem.id,
+    }));
+    return [...createdBy, ...details.crew];
+  }, [details]);
+
+  const handleSelectParticipant = useCallback(
+    (participant: HandleSelectParticipantParams) => {
+      const routeName = params.navigation.getState().routes[0].name;
+      const isHomeStack = /HOME/gi.test(routeName);
+      const famousDetailsRoute = isHomeStack
+        ? Routes.Home.FAMOUS_DETAILS
+        : Routes.Famous.DETAILS;
+      params.navigation.navigate(famousDetailsRoute, {
+        profileImage: participant.image,
+        name: participant.name,
+        id: participant.id,
+      });
+    },
+    [params.navigation],
+  );
+
+  const queryTVShowDetails = useCallback(() => {
+    if (!params.id) {
+      return;
+    }
+    query.exec({
+      language: translation.currentLanguage as ISO6391Language,
+      includeVoteAverage: !params.voteAverage,
+      includeGenres: !params.genres,
+      includeVoteCount: !params.voteCount,
+      id: params.id,
+    });
+  }, [translation.currentLanguage, params]);
+
   useEffect(() => {
     queryTVShowDetails();
   }, []);
@@ -174,9 +211,11 @@ export const useTVShowDetails = (params: UseTVShowDetailsParams) => {
     voteCount: params.voteCount || details?.voteCount || 0,
     voteAverage: params.voteAverage || details?.voteAverage || 0,
     shouldShowBackgroundImage: !query.isLoading && !query.hasError && details,
+    onPressParticipant: handleSelectParticipant,
     genres,
     details,
     theme,
     infos,
+    crew,
   };
 };

@@ -37,7 +37,7 @@ export const FamousStack = () => {
   );
 
   return (
-    <Stack.Navigator initialRouteName={Routes.Famous.TRENDING_FAMOUS}>
+    <Stack.Navigator initialRouteName={Routes.Famous.TV_SHOW_DETAILS}>
       <Stack.Screen
         options={{
           ...defaultHeaderStyle,
@@ -69,9 +69,9 @@ export const FamousStack = () => {
       />
       <Stack.Screen
         name={Routes.Famous.TV_SHOW_DETAILS}
-        // initialParams={{
-        //   id: 78191,
-        // }}
+        initialParams={{
+          id: 78191,
+        }}
         component={TVShowDetails}
       />
     </Stack.Navigator>

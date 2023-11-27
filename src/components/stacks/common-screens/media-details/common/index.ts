@@ -5,6 +5,7 @@ export { MediaDetailsLoading } from './loading/MediaDetailsLoading';
 export { Header } from './header/Header';
 export { MediaInfo } from './media-info/MediaInfo';
 export { Videos } from './videos/Videos';
+export { ParticipantsList } from './participants-list/ParticipantsList';
 
 export const TextContentWrapper = styled.View`
   background-color: ${({ theme }) => theme.colors.background};

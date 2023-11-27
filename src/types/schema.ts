@@ -62,7 +62,7 @@ export interface FamousDetailsVariables {
 
 export interface TVShowDetails_tvShow_createdBy {
   __typename: "CreatedBy";
-  profilePath: string | null;
+  image: string | null;
   name: string | null;
   id: number;
 }
@@ -80,6 +80,22 @@ export interface TVShowDetails_tvShow_videos {
   thumbnail: TVShowDetails_tvShow_videos_thumbnail | null;
   key: string | null;
   id: string | null;
+}
+
+export interface TVShowDetails_tvShow_cast {
+  __typename: "MediaCast";
+  image: string | null;
+  subText: string | null;
+  name: string | null;
+  id: number;
+}
+
+export interface TVShowDetails_tvShow_crew {
+  __typename: "MediaCrew";
+  image: string | null;
+  name: string | null;
+  id: number;
+  subText: string | null;
 }
 
 export interface TVShowDetails_tvShow_similar {
@@ -108,6 +124,8 @@ export interface TVShowDetails_tvShow {
   originCountry: string[];
   overview: string | null;
   videos: TVShowDetails_tvShow_videos[];
+  cast: TVShowDetails_tvShow_cast[];
+  crew: TVShowDetails_tvShow_crew[];
   similar: TVShowDetails_tvShow_similar[];
   numberOfEpisodes: number | null;
   numberOfSeasons: number | null;
