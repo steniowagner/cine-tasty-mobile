@@ -19,8 +19,11 @@ export const SeasonsSection = (props: SeasonsSectionProps) => {
   return (
     <Styles.List>
       {seasonsSection.seasons.map(season => (
-        <Styles.SeasonWrapper key={season}>
-          <Typography.MediumText bold color={theme.colors.buttonText}>
+        <Styles.SeasonWrapper testID="season-button" key={season}>
+          <Typography.MediumText
+            testID="season-title"
+            bold
+            color={theme.colors.buttonText}>
             {season}
           </Typography.MediumText>
         </Styles.SeasonWrapper>

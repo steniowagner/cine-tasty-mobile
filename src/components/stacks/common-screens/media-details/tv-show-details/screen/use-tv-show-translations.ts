@@ -39,9 +39,7 @@ export const useTVShowTranslations = () => {
         },
         crew: translation.translate(Translations.TVShowDetails.CREW),
         cast: translation.translate(Translations.TVShowDetails.CAST),
-        similar: translation.translate(
-          Translations.TVShowDetails.FIRST_AIR_DATE,
-        ),
+        similar: translation.translate(Translations.Miscellaneous.SIMILAR),
         videos: translation.translate(Translations.Miscellaneous.VIDEOS),
         seasons: translation.translate(Translations.TVShowDetails.SEASONS),
       },

@@ -128,6 +128,7 @@ export const pt: Locale = {
   readLess: 'Ler menos',
   readMore: 'Ler mais',
   videos: 'Vídeos',
+  similar: 'Similar',
   famousDetails: {
     biography: 'Biografia',
     castMovies: 'Participações em filmes',

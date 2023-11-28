@@ -3,6 +3,7 @@ import { useTheme } from 'styled-components/native';
 import gql from 'graphql-tag';
 
 import { useImperativeQuery, useTranslation } from '@hooks';
+import { Routes } from '@navigation';
 import { formatDate } from '@utils';
 import {
   TVShowDetailsVariables,
@@ -11,10 +12,9 @@ import {
   ISO6391Language,
 } from '@schema-types';
 
-import { TVShowDetailsProps } from '../routes/route-params-types';
 import { scrollWithAnimatedHeaderParams } from '../../common/scroll-with-animated-header-params';
+import { TVShowDetailsProps } from '../routes/route-params-types';
 import { useTVShowTranslations } from './use-tv-show-translations';
-import { Routes } from '@/navigation';
 
 export const TV_SHOW_DETAILS_QUERY = gql`
   query TVShowDetails(
@@ -177,7 +177,7 @@ export const useTVShowDetails = (params: UseTVShowDetailsParams) => {
       const famousDetailsRoute = isHomeStack
         ? Routes.Home.FAMOUS_DETAILS
         : Routes.Famous.DETAILS;
-      params.navigation.navigate(famousDetailsRoute, {
+      params.navigation.push(famousDetailsRoute, {
         profileImage: participant.image,
         name: participant.name,
         id: participant.id,

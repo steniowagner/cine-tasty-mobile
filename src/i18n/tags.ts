@@ -100,6 +100,7 @@ export namespace Translations {
     READ_LESS = 'translations:readLess',
     READ_MORE = 'translations:readMore',
     VIDEOS = 'translations:videos',
+    SIMILAR = 'translations:similar',
   }
 
   export enum FamousDetails {

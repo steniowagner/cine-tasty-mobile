@@ -78,7 +78,7 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 mediaType={tvShowDetails.texts.tvShowTag}
                 genres={tvShowDetails.genres}
               />
-              <TextContentWrapper>
+              <TextContentWrapper testID="tvshow-details">
                 <OverviewWrapper>
                   <MediaItemDescription
                     description={tvShowDetails.details.overview || '-'}
@@ -87,12 +87,17 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 <SectionWrapper>
                   <MediaInfo infos={tvShowDetails.infos} />
                 </SectionWrapper>
-                {!!tvShowDetails.details.images.length && (
+
+                {!!tvShowDetails.details.cast.length && (
                   <SectionWrapper>
-                    <ImagesList
-                      images={tvShowDetails.details.images}
-                      orientation="LANDSCAPE"
-                    />
+                    <Section title={tvShowDetails.texts.sections.cast}>
+                      <SectionContentWrapper>
+                        <ParticipantsList
+                          onPress={tvShowDetails.onPressParticipant}
+                          participants={tvShowDetails.details.cast}
+                        />
+                      </SectionContentWrapper>
+                    </Section>
                   </SectionWrapper>
                 )}
                 {!!tvShowDetails.crew.length && (
@@ -107,16 +112,12 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                     </Section>
                   </SectionWrapper>
                 )}
-                {!!tvShowDetails.details.cast.length && (
+                {!!tvShowDetails.details.images.length && (
                   <SectionWrapper>
-                    <Section title={tvShowDetails.texts.sections.cast}>
-                      <SectionContentWrapper>
-                        <ParticipantsList
-                          onPress={tvShowDetails.onPressParticipant}
-                          participants={tvShowDetails.details.cast}
-                        />
-                      </SectionContentWrapper>
-                    </Section>
+                    <ImagesList
+                      images={tvShowDetails.details.images}
+                      orientation="LANDSCAPE"
+                    />
                   </SectionWrapper>
                 )}
                 {!!tvShowDetails.details.numberOfSeasons && (
@@ -144,7 +145,7 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                     <MediaHorizontalList
                       dataset={tvShowDetails.details.similar}
                       type="TV_SHOW"
-                      title={'Similar'}
+                      title={tvShowDetails.texts.sections.similar}
                     />
                   </SectionWrapper>
                 )}

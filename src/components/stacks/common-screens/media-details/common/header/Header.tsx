@@ -9,7 +9,7 @@ type HeaderInfoProps = {
   voteCount: number;
   poster: string;
   title: string;
-  genres?: string[];
+  genres: string[];
   mediaType: string;
 };
 
@@ -38,7 +38,7 @@ export const Header = (props: HeaderInfoProps) => (
             withText
           />
         </Styles.StarsWrapper>
-        {props.genres?.length && (
+        {props.genres.length && (
           <Typography.ExtraSmallText testID="genres" alignment="center">
             {props.genres.join(' \u2022 ')}
           </Typography.ExtraSmallText>

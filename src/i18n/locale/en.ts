@@ -128,6 +128,7 @@ export const en: Locale = {
   readLess: 'Read less',
   readMore: 'Read more',
   videos: 'Videos',
+  similar: 'Similar',
   famousDetails: {
     biography: 'Biography',
     castMovies: 'Participations in series',

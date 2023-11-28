@@ -24,9 +24,7 @@ export const MediaInfo = (props: MediaInfoProps) => {
   return (
     <Styles.Wrapper testID="media-info-wrapper">
       {props.infos.map((info, index) => (
-        <Styles.InfoCellWrapper
-          testID={`media-info-wrapper-${index}`}
-          key={info.title}>
+        <Styles.InfoCellWrapper key={info.title}>
           <Typography.ExtraSmallText testID={`media-info-title-${index}`}>
             {info.title}
           </Typography.ExtraSmallText>

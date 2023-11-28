@@ -90,6 +90,7 @@ export type Locale = {
   readLess: string;
   readMore: string;
   videos: string;
+  similar: string;
   famousDetails: {
     biography: string;
     castMovies: string;
