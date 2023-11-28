@@ -79,13 +79,11 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 genres={tvShowDetails.genres}
               />
               <TextContentWrapper>
-                <Section title={tvShowDetails.texts.sections.overview}>
-                  <OverviewWrapper>
-                    <MediaItemDescription
-                      description={tvShowDetails.details.overview || '-'}
-                    />
-                  </OverviewWrapper>
-                </Section>
+                <OverviewWrapper>
+                  <MediaItemDescription
+                    description={tvShowDetails.details.overview || '-'}
+                  />
+                </OverviewWrapper>
                 <SectionWrapper>
                   <MediaInfo infos={tvShowDetails.infos} />
                 </SectionWrapper>

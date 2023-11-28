@@ -8,7 +8,7 @@ export { Videos } from './videos/Videos';
 export { ParticipantsList } from './participants-list/ParticipantsList';
 
 export const TextContentWrapper = styled.View`
-  padding-top: ${({ theme }) => theme.metrics.lg * 2}px;
+  padding-top: ${({ theme }) => theme.metrics.lg}px;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
@@ -21,6 +21,5 @@ export const SectionWrapper = styled.View`
 `;
 
 export const OverviewWrapper = styled.View`
-  margin-top: ${({ theme }) => theme.metrics.sm}px;
   padding-horizontal: ${({ theme }) => theme.metrics.md}px;
 `;

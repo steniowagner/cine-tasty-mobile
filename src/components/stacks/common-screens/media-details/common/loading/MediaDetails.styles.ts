@@ -14,10 +14,6 @@ export const Wrapper = styled.View`
   align-items: center;
 `;
 
-export const Row = styled.View`
-  flex-direction: row;
-`;
-
 export const sheet = StyleSheet.create({
   poster: {
     width: HeaderStyles.POSTER_IMAGE_DEFAULT_WIDTH,

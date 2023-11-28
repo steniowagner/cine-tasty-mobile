@@ -40,7 +40,7 @@ export const Header = (props: HeaderInfoProps) => (
         </Styles.StarsWrapper>
         {props.genres?.length && (
           <Typography.ExtraSmallText testID="genres" alignment="center">
-            {props.genres.join('  \u2022  ')}
+            {props.genres.join(' \u2022 ')}
           </Typography.ExtraSmallText>
         )}
       </Styles.MiddleContent>

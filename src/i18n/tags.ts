@@ -99,7 +99,6 @@ export namespace Translations {
     MONTHS = 'translations:months',
     READ_LESS = 'translations:readLess',
     READ_MORE = 'translations:readMore',
-    OVERVIEW = 'translations:overview',
     VIDEOS = 'translations:videos',
   }
 

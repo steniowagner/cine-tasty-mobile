@@ -11,7 +11,6 @@ export const useTVShowTranslations = () => {
       creator: translation.translate(Translations.TVShowDetails.CREATOR),
       tvShowTag: translation.translate(Translations.TVShowDetails.TV_SHOW),
       sections: {
-        overview: translation.translate(Translations.Miscellaneous.OVERVIEW),
         info: {
           originalTitle: translation.translate(
             Translations.TVShowDetails.ORIGINAL_TITLE,

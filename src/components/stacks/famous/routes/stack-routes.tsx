@@ -1,15 +1,10 @@
-import React, { useCallback, useMemo } from 'react';
-import { useTheme } from 'styled-components/native';
-import {
-  TransitionPresets,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import React, { useCallback } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import {
   defaultHeaderStyle,
   Routes,
   HeaderTitle as CustomHeaderTitle,
-  getTransparentHeaderOptions,
 } from '@navigation';
 import { Translations } from '@i18n/tags';
 
@@ -24,13 +19,6 @@ import { TrendingFamous } from '../screens/trending-famous/TrendingFamous';
 const Stack = createStackNavigator();
 
 export const FamousStack = () => {
-  const theme = useTheme();
-
-  const transparentHeaderOptions = useMemo(
-    () => getTransparentHeaderOptions(theme),
-    [theme],
-  );
-
   const HeaderTitle = useCallback(
     () => <CustomHeaderTitle translationTag={Translations.Tabs.TABS_FAMOUS} />,
     [],
@@ -54,24 +42,13 @@ export const FamousStack = () => {
         }}
         component={Search}
       />
-      <Stack.Screen
-        name={Routes.Famous.DETAILS}
-        options={{
-          ...transparentHeaderOptions,
-          ...TransitionPresets.SlideFromRightIOS,
-          header: () => null,
-        }}
-        component={FamousDetails}
-      />
+      <Stack.Screen name={Routes.Famous.DETAILS} component={FamousDetails} />
       <Stack.Screen
         name={Routes.Famous.IMAGES_GALLERY}
         component={ImagesGallery}
       />
       <Stack.Screen
         name={Routes.Famous.TV_SHOW_DETAILS}
-        // initialParams={{
-        //   id: 78191,
-        // }}
         component={TVShowDetails}
       />
     </Stack.Navigator>
