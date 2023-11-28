@@ -6,3 +6,4 @@ export * from './quiz-questions';
 export * from './trending-famous';
 export * from './search';
 export * from './famous-details';
+export * from './tv-show-details';
