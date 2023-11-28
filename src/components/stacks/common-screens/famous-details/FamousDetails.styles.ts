@@ -6,5 +6,5 @@ export const ImagesListWrapper = styled.View`
 
 export const CastGap = styled.View`
   width: 1px;
-  height: ${({ theme }) => theme.metrics.xl}px;
+  height: ${({ theme }) => theme.metrics.lg * 2}px;
 `;

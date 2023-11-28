@@ -13,7 +13,6 @@ export const Wrapper = styled.View`
 export const ImageWrapper = styled.View`
   height: 100%;
   width: 100%;
-  background-color: 'rgba(242, 242, 242, 0.5)';
   justify-content: center;
   align-items: center;
 `;

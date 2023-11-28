@@ -4,7 +4,7 @@ import { ImageType } from '@/providers/tmdb-image-qualities/types';
 import { useTMDBImageQualities } from '@providers';
 
 export const BASE_URL = 'https://image.tmdb.org/t/p';
-export const THUMBNAIL_URL = `${BASE_URL}/w45`;
+export const THUMBNAIL_URL = `${BASE_URL}/w154`;
 
 type GetURIParams = {
   isThumbnail?: boolean;
