@@ -18,6 +18,16 @@ import { MediaListItem } from './MediaListItem';
 
 const mockPush = jest.fn();
 const mockGetState = jest.fn();
+const params = {
+  voteAverage: randomPositiveNumber(10, 1),
+  genres: Array(randomPositiveNumber(10, 1))
+    .fill('')
+    .map((_, index) => `GENRE_ID_${index}`),
+  image: 'SOME_IMAGE',
+  voteCount: randomPositiveNumber(10, 1),
+  title: 'SOME_TITLE',
+  id: randomPositiveNumber(10, 1),
+};
 
 jest.mock('@react-navigation/native', () => {
   const actualReactNavigationNative = jest.requireActual(
@@ -217,6 +227,7 @@ describe('Components/Common/MediaListItem', () => {
         it('should call "navigation.push" correctly', async () => {
           const component = render(
             renderMediaListItem({
+              ...params,
               layoutSize:
                 randomPositiveNumber(2, 1) % 2 === 0 ? 'large' : 'medium',
               mediaType: 'MOVIE',
@@ -232,7 +243,7 @@ describe('Components/Common/MediaListItem', () => {
           expect(mockPush).toBeCalledTimes(0);
           fireEvent.press(elements.button(component));
           expect(mockPush).toBeCalledTimes(1);
-          expect(mockPush).toBeCalledWith(Routes.Home.MOVIE_DETAILS);
+          expect(mockPush).toBeCalledWith(Routes.Home.MOVIE_DETAILS, params);
           await waitFor(() => {});
         });
       });
@@ -245,6 +256,7 @@ describe('Components/Common/MediaListItem', () => {
         it('should call "navigation.push" correctly', async () => {
           const component = render(
             renderMediaListItem({
+              ...params,
               layoutSize:
                 randomPositiveNumber(2, 1) % 2 === 0 ? 'large' : 'medium',
               mediaType: 'TV_SHOW',
@@ -260,7 +272,7 @@ describe('Components/Common/MediaListItem', () => {
           expect(mockPush).toBeCalledTimes(0);
           fireEvent.press(elements.button(component));
           expect(mockPush).toBeCalledTimes(1);
-          expect(mockPush).toBeCalledWith(Routes.Home.TV_SHOW_DETAILS);
+          expect(mockPush).toBeCalledWith(Routes.Home.TV_SHOW_DETAILS, params);
           await waitFor(() => {});
         });
       });
@@ -275,6 +287,7 @@ describe('Components/Common/MediaListItem', () => {
         it('should call "navigation.push" correctly', async () => {
           const component = render(
             renderMediaListItem({
+              ...params,
               layoutSize:
                 randomPositiveNumber(2, 1) % 2 === 0 ? 'large' : 'medium',
               mediaType: 'MOVIE',
@@ -290,7 +303,7 @@ describe('Components/Common/MediaListItem', () => {
           expect(mockPush).toBeCalledTimes(0);
           fireEvent.press(elements.button(component));
           expect(mockPush).toBeCalledTimes(1);
-          expect(mockPush).toBeCalledWith(Routes.Famous.MOVIE_DETAILS);
+          expect(mockPush).toBeCalledWith(Routes.Famous.MOVIE_DETAILS, params);
           await waitFor(() => {});
         });
       });
@@ -303,6 +316,7 @@ describe('Components/Common/MediaListItem', () => {
         it('should call "navigation.push" correctly', async () => {
           const component = render(
             renderMediaListItem({
+              ...params,
               layoutSize:
                 randomPositiveNumber(2, 1) % 2 === 0 ? 'large' : 'medium',
               mediaType: 'TV_SHOW',
@@ -318,7 +332,10 @@ describe('Components/Common/MediaListItem', () => {
           expect(mockPush).toBeCalledTimes(0);
           fireEvent.press(elements.button(component));
           expect(mockPush).toBeCalledTimes(1);
-          expect(mockPush).toBeCalledWith(Routes.Famous.TV_SHOW_DETAILS);
+          expect(mockPush).toBeCalledWith(
+            Routes.Famous.TV_SHOW_DETAILS,
+            params,
+          );
           await waitFor(() => {});
         });
       });

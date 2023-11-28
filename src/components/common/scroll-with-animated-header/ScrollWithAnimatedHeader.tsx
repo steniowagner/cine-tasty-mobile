@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
 import Animated from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'styled-components/native';
+
+import { getTransparentHeaderOptions } from '@navigation';
 
 import { useScrollWithAnimatedHeader } from './use-scroll-with-animated-header';
 import { AnimatedHeader } from './animated-header/AnimatedHeader';
@@ -21,6 +24,7 @@ export const ScrollWithAnimatedHeader = (
 ) => {
   const scrollWithAnimatedHeader = useScrollWithAnimatedHeader();
   const navigation = useNavigation();
+  const theme = useTheme();
 
   const Header = useCallback(
     () => (
@@ -43,6 +47,7 @@ export const ScrollWithAnimatedHeader = (
 
   useEffect(() => {
     navigation.setOptions({
+      ...getTransparentHeaderOptions(theme),
       header: Header,
     });
   }, [Header]);

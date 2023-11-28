@@ -7,13 +7,14 @@ import * as Styles from './Advice.styles';
 
 type AdviceProps = {
   icon: Icons;
+  withMarginTop?: boolean;
   description: string;
   suggestion: string;
   title: string;
 };
 
 export const Advice = (props: AdviceProps) => (
-  <Styles.Wrapper testID="advice-wrapper">
+  <Styles.Wrapper withMarginTop={props.withMarginTop} testID="advice-wrapper">
     <Styles.IconWrapper testID="icon-wrapper">
       <SVGIcon
         size={metrics.getWidthFromDP('20')}

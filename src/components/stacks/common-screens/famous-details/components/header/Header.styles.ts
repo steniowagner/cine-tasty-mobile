@@ -9,6 +9,7 @@ export const DEFAULT_MARGIN_TOP = Platform.select({
   android: metrics.xl * 4,
   ios: metrics.xl * 6,
 });
+
 export const Wrapper = styled.View`
   width: 100%;
   justify-content: flex-end;

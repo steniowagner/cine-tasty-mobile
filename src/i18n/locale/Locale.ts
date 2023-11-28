@@ -89,10 +89,27 @@ export type Locale = {
   months: string[];
   readLess: string;
   readMore: string;
+  videos: string;
+  similar: string;
   famousDetails: {
     biography: string;
     castMovies: string;
     castTVShows: string;
     error: Advice;
+  };
+  tvShowDetails: {
+    tvShow: string;
+    seasons: string;
+    originalTitle: string;
+    originalLanguage: string;
+    numberOfEpisodes: string;
+    numberOfSeasons: string;
+    episodeRuntime: string;
+    originalCountry: string;
+    firstAirDate: string;
+    lastAirDate: string;
+    crew: string;
+    cast: string;
+    creator: string;
   };
 };

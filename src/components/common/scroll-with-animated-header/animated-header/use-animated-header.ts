@@ -34,7 +34,7 @@ export const useAnimatedHeader = (props: UseAnimatedHeaderProps) => {
     shadowColor: interpolateColor(
       props.scrollViewPosition.value,
       props.backgroundColorInterpolationInput,
-      ['transparent', '#000000'],
+      ['transparent', '#000000', '#000000'],
     ),
   }));
 

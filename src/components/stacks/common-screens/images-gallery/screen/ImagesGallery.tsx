@@ -43,16 +43,11 @@ export const ImagesGallery = (props: ImagesGalleryProps) => {
   useEffect(() => {
     props.navigation.setOptions({
       ...getTransparentHeaderOptions(theme),
+      headerTitle: ImagesGalleryHeaderTitle,
       headerTitleAlign: 'center',
       headerLeft: HeaderLeft,
     });
-  }, [theme]);
-
-  useEffect(() => {
-    props.navigation.setOptions({
-      headerTitle: ImagesGalleryHeaderTitle,
-    });
-  }, [ImagesGalleryHeaderTitle]);
+  }, [ImagesGalleryHeaderTitle, theme]);
 
   return (
     <Styles.Wrapper>

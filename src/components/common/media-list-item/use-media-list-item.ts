@@ -22,10 +22,12 @@ type Navigation = StackNavigationProp<
 export type UseMediaListItemParams = {
   layoutSize: LayoutSize;
   voteAverage?: number | null;
+  genres?: string[] | null;
   voteCount?: number | null;
   image?: string | null;
   title?: string | null;
   mediaType: MediaType;
+  id?: number | null;
 };
 
 export const useMediaListItem = (params: UseMediaListItemParams) => {
@@ -56,8 +58,15 @@ export const useMediaListItem = (params: UseMediaListItemParams) => {
 
   const handlePressItem = useCallback(() => {
     const mediaDetailsRoute = getMediaDetailsRoute();
-    navigation.push(mediaDetailsRoute);
-  }, [getMediaDetailsRoute]);
+    navigation.push(mediaDetailsRoute, {
+      voteAverage: params.voteAverage,
+      genres: params.genres,
+      image: params.image,
+      voteCount: params.voteCount,
+      title: params.title,
+      id: params.id,
+    });
+  }, [getMediaDetailsRoute, params]);
 
   return {
     canShowVotesData:
