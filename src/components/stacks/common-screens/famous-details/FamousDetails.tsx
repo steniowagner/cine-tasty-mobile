@@ -12,6 +12,7 @@ import { useFamousDetails } from './use-famous-details';
 import { Header } from './components/header/Header';
 import { DeathDay } from './components/death-day/DeathDay';
 import { Biography } from './components/biography/Biography';
+import * as Styles from './FamousDetails.styles';
 
 export const FamousDetails = (props: FamousDetailsProps) => {
   const famousDetails = useFamousDetails({ id: props.route.params.id });
@@ -65,15 +66,18 @@ export const FamousDetails = (props: FamousDetailsProps) => {
                 text={famousDetails.details.biography}
               />
             )}
-            <ImagesList
-              images={famousDetails.details.images}
-              orientation="PORTRAIT"
-            />
+            <Styles.ImagesListWrapper>
+              <ImagesList
+                images={famousDetails.details.images}
+                orientation="PORTRAIT"
+              />
+            </Styles.ImagesListWrapper>
             <MediaHorizontalList
               title={famousDetails.texts.castMovies}
               dataset={famousDetails.details.cast.movies}
               type="MOVIE"
             />
+            <Styles.CastGap />
             <MediaHorizontalList
               title={famousDetails.texts.castTVShows}
               dataset={famousDetails.details.cast.tvShows}
