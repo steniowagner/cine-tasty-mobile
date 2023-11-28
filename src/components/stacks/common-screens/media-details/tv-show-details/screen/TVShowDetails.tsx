@@ -87,7 +87,6 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 <SectionWrapper>
                   <MediaInfo infos={tvShowDetails.infos} />
                 </SectionWrapper>
-
                 {!!tvShowDetails.details.cast.length && (
                   <SectionWrapper>
                     <Section title={tvShowDetails.texts.sections.cast}>
