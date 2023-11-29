@@ -4,6 +4,7 @@ import { FamousDetailsProps } from '../../common-screens/famous-details/routes/r
 import { SearchProps } from '../../common-screens/search/types';
 import { ImagesGalleryNavigationProps } from '../../common-screens/images-gallery/routes/route-params-types';
 import { TVShowDetailsNavigationProps } from '../../common-screens/media-details/tv-show-details/routes/route-params-types';
+import { TVShowSeasonNavigationProps } from '../../common-screens/tv-show-season/routes/route-params-types';
 
 export type HomeStackRoutes = {
   [Routes.Home.SEARCH_MOVIE]: SearchProps;
@@ -12,4 +13,5 @@ export type HomeStackRoutes = {
   [Routes.Home.FAMOUS_DETAILS]: FamousDetailsProps;
   [Routes.Home.MOVIE_DETAILS]: undefined;
   [Routes.Home.IMAGES_GALLERY]: ImagesGalleryNavigationProps;
+  [Routes.Home.TV_SHOW_SEASON]: TVShowSeasonNavigationProps;
 };

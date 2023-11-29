@@ -13,6 +13,7 @@ import {
   ImagesGallery,
   Search,
   TVShowDetails,
+  TVShowSeason,
 } from '../../common-screens';
 import { TrendingFamous } from '../screens/trending-famous/TrendingFamous';
 
@@ -50,6 +51,10 @@ export const FamousStack = () => {
       <Stack.Screen
         name={Routes.Famous.TV_SHOW_DETAILS}
         component={TVShowDetails}
+      />
+      <Stack.Screen
+        name={Routes.Famous.TV_SHOW_SEASON}
+        component={TVShowSeason}
       />
     </Stack.Navigator>
   );
