@@ -8,6 +8,7 @@ import { Routes } from '@/navigation';
 import { randomPositiveNumber } from '../../../../../../../../../__mocks__/utils';
 import { SeasonsSection } from './SeasonsSection';
 
+const NAME = 'SOME_TV_SHOW';
 const ID = 1;
 
 const mockTranslation = jest.fn();
@@ -35,7 +36,11 @@ const renderSeasonsSection = (
   numberOfSeasons = randomPositiveNumber(10, 1),
 ) => (
   <ThemeProvider theme={theme}>
-    <SeasonsSection tvShowId={ID} numberOfSeasons={numberOfSeasons} />
+    <SeasonsSection
+      tvShowName={NAME}
+      tvShowId={ID}
+      numberOfSeasons={numberOfSeasons}
+    />
   </ThemeProvider>
 );
 
@@ -156,6 +161,7 @@ describe('Common-screens/TVShowDetails/SeasonsSection', () => {
         expect(mockNavigate).toBeCalledTimes(1);
         expect(mockNavigate).toBeCalledWith(Routes.Home.TV_SHOW_SEASON, {
           id: ID,
+          name: NAME,
           season: indexSeasonSelected + 1,
         });
       });
@@ -181,6 +187,7 @@ describe('Common-screens/TVShowDetails/SeasonsSection', () => {
         expect(mockNavigate).toBeCalledTimes(1);
         expect(mockNavigate).toBeCalledWith(Routes.Famous.TV_SHOW_SEASON, {
           id: ID,
+          name: NAME,
           season: indexSeasonSelected + 1,
         });
       });

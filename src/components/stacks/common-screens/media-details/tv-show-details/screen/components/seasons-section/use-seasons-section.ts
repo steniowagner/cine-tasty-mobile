@@ -16,6 +16,7 @@ type Navigation = StackNavigationProp<
 type UseSeasonsSectionParams = {
   numberOfSeasons: number;
   tvShowId?: number | null;
+  tvShowName?: string | null;
 };
 
 export const useSeasonsSection = (params: UseSeasonsSectionParams) => {
@@ -42,11 +43,12 @@ export const useSeasonsSection = (params: UseSeasonsSectionParams) => {
         ? Routes.Home.TV_SHOW_SEASON
         : Routes.Famous.TV_SHOW_SEASON;
       navigation.navigate(seasonsRoute, {
+        name: params.tvShowName,
         id: params.tvShowId,
         season,
       });
     },
-    [params.tvShowId],
+    [params.tvShowId, params.tvShowName],
   );
 
   return {

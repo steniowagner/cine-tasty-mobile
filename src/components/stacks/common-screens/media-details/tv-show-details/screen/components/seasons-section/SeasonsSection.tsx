@@ -9,11 +9,13 @@ import * as Styles from './SeasonsSection.styles';
 type SeasonsSectionProps = {
   numberOfSeasons: number;
   tvShowId?: number | null;
+  tvShowName?: string | null;
 };
 
 export const SeasonsSection = (props: SeasonsSectionProps) => {
   const seasonsSection = useSeasonsSection({
     numberOfSeasons: props.numberOfSeasons,
+    tvShowName: props.tvShowName,
     tvShowId: props.tvShowId,
   });
   const theme = useTheme();

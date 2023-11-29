@@ -239,6 +239,43 @@ export interface SearchTVShowsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: TvShowSeason
+// ====================================================
+
+export interface TvShowSeason_tvShowSeason_episodes {
+  __typename: "Episode";
+  airDate: string | null;
+  id: number;
+  name: string | null;
+  overview: string | null;
+  stillPath: string | null;
+  voteAverage: number | null;
+  voteCount: number | null;
+}
+
+export interface TvShowSeason_tvShowSeason {
+  __typename: "TVShowSeason";
+  episodes: TvShowSeason_tvShowSeason_episodes[];
+  name: string | null;
+  overview: string | null;
+  posterPath: string | null;
+  voteAverage: number | null;
+}
+
+export interface TvShowSeason {
+  tvShowSeason: TvShowSeason_tvShowSeason;
+}
+
+export interface TvShowSeasonVariables {
+  input: TVShowSeasonInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: QueryTrendingFamous
 // ====================================================
 
@@ -384,6 +421,12 @@ export interface QuizInput {
 export interface SearchInput {
   page: number;
   query: string;
+  language?: ISO6391Language | null;
+}
+
+export interface TVShowSeasonInput {
+  id: number;
+  season: number;
   language?: ISO6391Language | null;
 }
 

@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components/native';
 
-import * as HeaderStyles from './header/Header.styles';
+import * as HeaderStyles from '../../media-details/common/header/Header.styles';
 
 export const scrollWithAnimatedHeaderParams = (theme: DefaultTheme) => ({
   backgroudColor: {

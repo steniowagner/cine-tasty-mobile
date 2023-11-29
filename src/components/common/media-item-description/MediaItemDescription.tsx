@@ -6,7 +6,8 @@ import * as Styles from './MediaItemDescription.styles';
 import { Typography } from '..';
 
 type MediaItemDescriptionProps = {
-  description: string;
+  description?: string | null;
+  alignment?: 'auto' | 'left' | 'center' | 'right' | 'justify';
 };
 
 export const MediaItemDescription = (props: MediaItemDescriptionProps) => {
@@ -18,6 +19,7 @@ export const MediaItemDescription = (props: MediaItemDescriptionProps) => {
         onTextLayout={(event: NativeSyntheticEvent<TextLayoutEventData>) =>
           mediaItemDescription.onTextLayout(event.nativeEvent.lines.length)
         }
+        alignment={props.alignment}
         testID="description-text"
         numberOfLines={mediaItemDescription.numberOfLines}>
         {props.description || '-'}

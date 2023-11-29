@@ -82,6 +82,7 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 <OverviewWrapper>
                   <MediaItemDescription
                     description={tvShowDetails.details.overview || '-'}
+                    alignment="center"
                   />
                 </OverviewWrapper>
                 <SectionWrapper>
@@ -124,6 +125,8 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                     <Section title={tvShowDetails.texts.sections.seasons}>
                       <SectionContentWrapper>
                         <SeasonsSection
+                          tvShowId={tvShowDetails.details.id}
+                          tvShowName={tvShowDetails.details.title}
                           numberOfSeasons={
                             tvShowDetails.details.numberOfSeasons
                           }

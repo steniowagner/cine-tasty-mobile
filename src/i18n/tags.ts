@@ -115,6 +115,7 @@ export namespace Translations {
   export enum TVShowDetails {
     TV_SHOW = 'translations:tvShowDetails:tvShow',
     SEASONS = 'translations:tvShowDetails:seasons',
+    SEASON = 'translations:tvShowDetails:season',
     ORIGINAL_TITLE = 'translations:tvShowDetails:originalTitle',
     ORIGINAL_LANGUAGE = 'translations:tvShowDetails:originalLanguage',
     NUMBER_OF_EPISODES = 'translations:tvShowDetails:numberOfEpisodes',

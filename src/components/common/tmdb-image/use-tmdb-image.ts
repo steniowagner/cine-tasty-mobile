@@ -45,6 +45,7 @@ export const useTMDBImage = (props: UseTMDBImageProps) => {
     () => ({
       width: props.style.width,
       height: props.style.height,
+      marginLeft: props.style.marginLeft,
       justifyContent: Styles.sheet.fallbackImage.justifyContent,
       alignItems: Styles.sheet.fallbackImage.alignItems,
       position: Styles.sheet.fallbackImage.position,

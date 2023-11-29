@@ -12,4 +12,5 @@ export type TVShowSeasonProps = StackScreenProps<
 export type TVShowSeasonNavigationProps = {
   season: number;
   id?: number | null;
+  name?: string | null;
 };

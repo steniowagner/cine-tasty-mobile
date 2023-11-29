@@ -54,6 +54,12 @@ export const FamousStack = () => {
       />
       <Stack.Screen
         name={Routes.Famous.TV_SHOW_SEASON}
+        // initialParams={{
+        //   id: 94997,
+        //   name: 'The Fast and Furious - Tokyo Drift',
+        //   language: 'pt',
+        //   season: 1,
+        // }}
         component={TVShowSeason}
       />
     </Stack.Navigator>
