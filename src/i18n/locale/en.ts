@@ -142,6 +142,7 @@ export const en: Locale = {
   tvShowDetails: {
     tvShow: 'TV Serie',
     seasons: 'Seasons',
+    season: 'Season',
     originalTitle: 'Original title',
     originalLanguage: 'Original language',
     numberOfEpisodes: 'Episodes',

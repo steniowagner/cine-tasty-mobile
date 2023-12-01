@@ -100,6 +100,7 @@ export type Locale = {
   tvShowDetails: {
     tvShow: string;
     seasons: string;
+    season: string;
     originalTitle: string;
     originalLanguage: string;
     numberOfEpisodes: string;

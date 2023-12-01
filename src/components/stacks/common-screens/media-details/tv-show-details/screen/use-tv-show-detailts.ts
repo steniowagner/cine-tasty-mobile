@@ -12,7 +12,7 @@ import {
   ISO6391Language,
 } from '@schema-types';
 
-import { scrollWithAnimatedHeaderParams } from '../../common/scroll-with-animated-header-params';
+import { scrollWithAnimatedHeaderParams } from '../../../tv-show-season/screen/scroll-with-animated-header-params';
 import { TVShowDetailsProps } from '../routes/route-params-types';
 import { useTVShowTranslations } from './use-tv-show-translations';
 

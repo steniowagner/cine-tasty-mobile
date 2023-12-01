@@ -67,7 +67,7 @@ const renderTVShowDetails = (
   return <MockedNavigator component={TVShowDetailsComponent} />;
 };
 
-describe('Common-screens/FamousDetails', () => {
+describe('Common-screens/TVShowDetails', () => {
   const elements = {
     backgroundImage: (component: RenderAPI) =>
       component.queryByTestId('background-animated-view'),
