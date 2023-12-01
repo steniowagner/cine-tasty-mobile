@@ -35,7 +35,7 @@ export const EpisodeDetailsModal = (props: EpisodeDetailsModalProps) => (
           iconSize={Styles.IMAGE_ICON_SIZE}
         />
         <Styles.TextWrapper>
-          <Styles.EpisodeTitle>
+          <Styles.EpisodeTitle testID="episode-modal-title">
             {props.episode?.name || '-'}
           </Styles.EpisodeTitle>
           <StarsVotes

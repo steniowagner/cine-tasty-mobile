@@ -7,7 +7,7 @@ import * as Styles from './TVShowSeasonLoading.styles';
 
 export const TVShowSeasonLoading = () => (
   <>
-    <TVShowSeasonStyles.Header>
+    <TVShowSeasonStyles.Header testID="tvshow-season-loading">
       <LoadingPlaceholder style={TVShowSeasonStyles.sheet.headerImage} />
       <TVShowSeasonStyles.HeaderTextWrapper>
         <LoadingPlaceholder

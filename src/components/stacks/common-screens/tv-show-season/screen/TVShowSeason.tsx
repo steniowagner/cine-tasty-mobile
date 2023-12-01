@@ -29,7 +29,7 @@ export const TVShowSeason = (props: TVShowSeasonProps) => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView testID="tv-show-season-content">
         <Styles.Header>
           <TMDBImage
             iconImageLoading="video-vintage"
@@ -41,7 +41,7 @@ export const TVShowSeason = (props: TVShowSeasonProps) => {
             testID="image-list-item"
           />
           <Styles.HeaderTextWrapper>
-            <Typography.MediumText testID="season-title" bold>
+            <Typography.MediumText testID="tv-show-title" bold>
               {props.route.params.name || '-'}
             </Typography.MediumText>
             <Typography.SmallText
@@ -59,7 +59,6 @@ export const TVShowSeason = (props: TVShowSeasonProps) => {
               />
               <Typography.SmallText
                 style={Styles.sheet.seasonStarText}
-                testID="season-title"
                 color={tvShowSeason.theme.colors.subText}>
                 {(tvShowSeason.season?.voteAverage || 0).toFixed(1)}
               </Typography.SmallText>
@@ -73,11 +72,11 @@ export const TVShowSeason = (props: TVShowSeasonProps) => {
           return (
             <React.Fragment key={episode.id}>
               <Styles.EpisodeItem
-                onPress={() => tvShowSeason.onPressEpisode(episode)}>
+                onPress={() => tvShowSeason.onPressEpisode(episode)}
+                testID="season-episode">
                 <Styles.EpisodeIndexWrapper>
                   <Typography.SmallText
                     style={Styles.sheet.seasonStarText}
-                    testID="season-title"
                     bold
                     color={tvShowSeason.theme.colors.buttonText}>
                     {index + 1}
@@ -85,7 +84,7 @@ export const TVShowSeason = (props: TVShowSeasonProps) => {
                 </Styles.EpisodeIndexWrapper>
                 <Typography.SmallText
                   style={Styles.sheet.seasonTitleText}
-                  testID="season-title">
+                  testID="season-episode-title">
                   {episode.name || '-'}
                 </Typography.SmallText>
               </Styles.EpisodeItem>
