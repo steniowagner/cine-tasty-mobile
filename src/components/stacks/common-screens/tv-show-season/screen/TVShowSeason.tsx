@@ -3,7 +3,8 @@ import { ScrollView } from 'react-native';
 
 import { SVGIcon, TMDBImage, Typography } from '@common-components';
 
-import { EpisodeDetailsModal } from './components/EpisodeDetailsModal';
+import { TVShowSeasonLoading } from './components/tv-show-season-loading/TVShowSeasonLoading';
+import { EpisodeDetailsModal } from './components/episode-details-modal/EpisodeDetailsModal';
 import { TVShowSeasonProps } from '../routes/route-params-types';
 import { useTVShowSeason } from './use-tv-show-season';
 import * as Styles from './TVShowSeason.styles';
@@ -11,8 +12,8 @@ import * as Styles from './TVShowSeason.styles';
 export const TVShowSeason = (props: TVShowSeasonProps) => {
   const tvShowSeason = useTVShowSeason(props);
 
-  if (!tvShowSeason.season) {
-    return null;
+  if (tvShowSeason.isLoading) {
+    return <TVShowSeasonLoading />;
   }
 
   return (
@@ -25,7 +26,7 @@ export const TVShowSeason = (props: TVShowSeasonProps) => {
             imageType="poster"
             style={Styles.sheet.headerImage}
             iconSize={Styles.IMAGE_LOADING_ICON_SIZE}
-            image={tvShowSeason.season.posterPath || ''}
+            image={tvShowSeason.season?.posterPath || ''}
             testID="image-list-item"
           />
           <Styles.HeaderTextWrapper>
@@ -49,12 +50,12 @@ export const TVShowSeason = (props: TVShowSeasonProps) => {
                 style={Styles.sheet.seasonStarText}
                 testID="season-title"
                 color={tvShowSeason.theme.colors.subText}>
-                {(tvShowSeason.season.voteAverage || 0).toFixed(1)}
+                {(tvShowSeason.season?.voteAverage || 0).toFixed(1)}
               </Typography.SmallText>
             </Styles.Row>
           </Styles.HeaderTextWrapper>
         </Styles.Header>
-        {tvShowSeason.season.episodes.map((episode, index) => {
+        {tvShowSeason.season?.episodes.map((episode, index) => {
           const shouldRenderLineDivider =
             tvShowSeason.season &&
             index < tvShowSeason.season.episodes.length - 1;

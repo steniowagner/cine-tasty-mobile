@@ -124,6 +124,7 @@ export const useTVShowSeason = (params: UseTVShowSeasonParams) => {
     onPressEpisode: setEpisodeSelected,
     onCloseModal: handleCloseModal,
     headerInterpolationValues,
+    isLoading: query.isLoading,
     episodeSelected,
     theme,
     texts,
