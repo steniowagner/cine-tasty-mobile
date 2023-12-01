@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 
-import { SVGIcon, TMDBImage, Typography } from '@common-components';
+import { Advice, SVGIcon, TMDBImage, Typography } from '@common-components';
 
 import { TVShowSeasonLoading } from './components/tv-show-season-loading/TVShowSeasonLoading';
 import { EpisodeDetailsModal } from './components/episode-details-modal/EpisodeDetailsModal';
@@ -14,6 +14,17 @@ export const TVShowSeason = (props: TVShowSeasonProps) => {
 
   if (tvShowSeason.isLoading) {
     return <TVShowSeasonLoading />;
+  }
+
+  if (tvShowSeason.hasError) {
+    return (
+      <Advice
+        description={tvShowSeason.texts.advice.description}
+        suggestion={tvShowSeason.texts.advice.suggestion}
+        title={tvShowSeason.texts.advice.title}
+        icon="alert-box"
+      />
+    );
   }
 
   return (

@@ -65,6 +65,15 @@ export const useTVShowSeason = (params: UseTVShowSeasonParams) => {
       season: `${translation.translate(Translations.TVShowDetails.SEASON)} ${
         params.route.params.season
       }`,
+      advice: {
+        description: translation.translate(
+          Translations.Error.ERROR_ADVICE_DESCRIPTION,
+        ),
+        suggestion: translation.translate(
+          Translations.Error.ERROR_ADVICE_SUGGESTION,
+        ),
+        title: translation.translate(Translations.Error.ERROR_ADVICE_TITLE),
+      },
     }),
     [translation.currentLanguage, params.route.params.season],
   );
@@ -125,6 +134,7 @@ export const useTVShowSeason = (params: UseTVShowSeasonParams) => {
     onCloseModal: handleCloseModal,
     headerInterpolationValues,
     isLoading: query.isLoading,
+    hasError: query.hasError,
     episodeSelected,
     theme,
     texts,
