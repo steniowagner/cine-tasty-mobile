@@ -10,6 +10,7 @@ import {
   TvShowSeason,
   TvShowSeasonVariables,
   TvShowSeason_tvShowSeason,
+  TvShowSeason_tvShowSeason_episodes,
 } from '@schema-types';
 
 import { TVShowSeasonProps as UseTVShowSeasonParams } from '../routes/route-params-types';
@@ -37,6 +38,9 @@ export const TV_SHOW_SEASON_QUERY = gql`
 
 export const useTVShowSeason = (params: UseTVShowSeasonParams) => {
   const [season, setSeason] = useState<TvShowSeason_tvShowSeason | undefined>();
+  const [episodeSelected, setEpisodeSelected] = useState<
+    TvShowSeason_tvShowSeason_episodes | undefined
+  >();
 
   const translation = useTranslation();
   const theme = useTheme();
@@ -98,6 +102,10 @@ export const useTVShowSeason = (params: UseTVShowSeasonParams) => {
     handleQueryTVShowSeason();
   }, []);
 
+  const handleCloseModal = useCallback(() => {
+    setEpisodeSelected(undefined);
+  }, []);
+
   useEffect(() => {
     params.navigation.setOptions({
       headerBackTitleVisible: false,
@@ -111,10 +119,12 @@ export const useTVShowSeason = (params: UseTVShowSeasonParams) => {
       headerLeft: HeaderLeft,
     });
   }, [theme]);
-  console.log(query);
-  console.log(params.route.params);
+
   return {
+    onPressEpisode: setEpisodeSelected,
+    onCloseModal: handleCloseModal,
     headerInterpolationValues,
+    episodeSelected,
     theme,
     texts,
     season,
