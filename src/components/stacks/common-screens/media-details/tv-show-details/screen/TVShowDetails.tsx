@@ -75,7 +75,6 @@ export const TVShowDetails = (props: TVShowDetailsProps) => {
                 voteCount={tvShowDetails.voteCount}
                 poster={props.route.params.image || ''}
                 title={tvShowDetails.details.title || '-'}
-                mediaType={tvShowDetails.texts.tvShowTag}
                 genres={tvShowDetails.genres}
               />
               <TextContentWrapper testID="tvshow-details">

@@ -3,3 +3,4 @@ export { renderSVGIconConditionally } from './render-svg-icon-conditionally/rend
 export { isEqualsOrLargerThanIphoneX } from './is-equals-or-larger-than-iphonex/is-equals-or-larger-than-iphonex';
 export { getStatusBarHeight } from './status-bar-height/get-statusbar-height';
 export { formatDate } from './format-date/format-date';
+export { formatCurrency } from './format-currency/format-currency';

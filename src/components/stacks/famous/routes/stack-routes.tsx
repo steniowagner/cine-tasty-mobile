@@ -14,6 +14,7 @@ import {
   Search,
   TVShowDetails,
   TVShowSeason,
+  MovieDetails,
 } from '../../common-screens';
 import { TrendingFamous } from '../screens/trending-famous/TrendingFamous';
 
@@ -54,13 +55,11 @@ export const FamousStack = () => {
       />
       <Stack.Screen
         name={Routes.Famous.TV_SHOW_SEASON}
-        // initialParams={{
-        //   id: 94997,
-        //   name: 'The Fast and Furious - Tokyo Drift',
-        //   language: 'pt',
-        //   season: 1,
-        // }}
         component={TVShowSeason}
+      />
+      <Stack.Screen
+        name={Routes.Famous.MOVIE_DETAILS}
+        component={MovieDetails}
       />
     </Stack.Navigator>
   );
