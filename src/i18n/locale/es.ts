@@ -155,4 +155,17 @@ export const es: Locale = {
     cast: 'Reparto de la serie',
     creator: 'Creador',
   },
+  movieDetails: {
+    movie: 'Película',
+    originalTitle: 'Titulo original',
+    releaseDate: 'Fecha de lanzamiento',
+    budget: 'Presupuesto',
+    revenue: 'Ganancia',
+    productionCountries: 'Países de producción',
+    spokenLanguages: 'Lenguajes hablados',
+    crew: 'Equipo de la pelicula ',
+    cast: 'Reparto de la pelicula',
+    videos: 'Vídeos',
+    similar: 'Similar',
+  },
 };

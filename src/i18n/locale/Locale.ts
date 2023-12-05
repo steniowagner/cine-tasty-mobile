@@ -113,4 +113,17 @@ export type Locale = {
     cast: string;
     creator: string;
   };
+  movieDetails: {
+    movie: string;
+    originalTitle: string;
+    releaseDate: string;
+    budget: string;
+    revenue: string;
+    productionCountries: string;
+    spokenLanguages: string;
+    cast: string;
+    crew: string;
+    videos: string;
+    similar: string;
+  };
 };

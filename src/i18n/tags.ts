@@ -129,6 +129,19 @@ export namespace Translations {
     CREATOR = 'translations:tvShowDetails:creator',
   }
 
+  export enum MovieDetails {
+    MOVIE = 'translations:movieDetails:movie',
+    ORIGINAL_TITLE = 'translations:movieDetails:originalTitle',
+    RELEASE_DATE = 'translations:movieDetails:releaseDate',
+    BUDGET = 'translations:movieDetails:budget',
+    REVENUE = 'translations:movieDetails:revenue',
+    PRODUCTION_COUNTRIES = 'translations:movieDetails:productionCountries',
+    SPOKEN_LANGUAGES = 'translations:movieDetails:spokenLanguages',
+    CAST = 'translations:movieDetails:cast',
+    CREW = 'translations:movieDetails:crew',
+    VIDEOS = 'translations:movieDetails:videos',
+  }
+
   export type Tags =
     | Tabs
     | News
@@ -140,5 +153,6 @@ export namespace Translations {
     | SearchFamous
     | Miscellaneous
     | FamousDetails
-    | TVShowDetails;
+    | TVShowDetails
+    | MovieDetails;
 }
