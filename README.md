@@ -76,8 +76,7 @@ Answer quizes about cinema. You can also add filter about the level (easy, mediu
 You can check how this flow behaves [here](https://drive.google.com/file/d/1qJTwyv5dWGTdfYUEg9sqnOD0ulR84dwn/view?usp=drive_link)
 
 ### Get latest news
-Get the latest news about movies, tv-shows and cinema, filtering by language (you can find the available languages [here](https://github.com/steniowagner/cine-tasty-mobile/blob/development/src/components/stacks/news/screens/news/components/languages-filter-modal/language-filter-list/filter-languages/languages.ts#L12))
-https://drive.google.com/file/d//view?usp=drive_link
+Get the latest news about movies, tv-shows and cinema, filtering by language (you can find the available languages [here](https://github.com/steniowagner/cine-tasty-mobile/blob/development/src/components/stacks/news/screens/news/components/languages-filter-modal/language-filter-list/filter-languages/languages.ts#L12)
 
 | <img src="https://drive.google.com/uc?export=view&id=1TJms_SvX6cD_JMHSdgOZ_KINXMJCzHSa" width="250" />
 <img src="https://drive.google.com/uc?export=view&id=14lwkTw2fUReiZcILd5MxuGSYV5Emy5lo" width="250" />
