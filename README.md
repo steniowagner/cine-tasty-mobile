@@ -141,6 +141,57 @@ iOS
 $ npm run ios:run
 ```
 
+### Testing
+
+The tests are divided in `integration` and `unit`. The unit-tests files are the `.test.ts` files and the integration-test files are the `.spec.ts`.
+
+To only run the unit-tests:
+
+```
+$ npm run test:unit
+```
+
+To only run the integration-tests:
+
+```
+$ npm run test:integration
+```
+
+To run all tests:
+
+```
+$ npm run test
+```
+
+To run all tests in watch mode:
+
+```
+$ npm run test:watch
+```
+
+To run all tests with code-coverage metrics:
+
+```
+$ npm run test:coverage
+```
+
+### Download the GraphQL-schema from the server
+In order to type all the GraphQL operations performed client, we have to download all the data required to perform these operations on the server. To do this, we download the schema from the server, and we'll use it to create the types in the next step.
+
+```
+$ npm run schema:download
+```
+
+### Generate Typescript types based on the downloaded GraphQL-schema
+Now, with the schema in place, we can generate the typescript types, so we can better-type our graohql operations.
+
+```
+$ npm run schema:generate
+```
+
+This command will output the generated results in this file: [src/types/schema.ts](https://github.com/steniowagner/cine-tasty-mobile/blob/development/src/types/schema.ts) - but you can change to your desired destination by chaning the `schema:generate` script.
+
+
 ### Roadmap - future features
 
 Even with all the interactions with the datasources in place, I would like to add more complexity to this application. At the moment, I'm thinking about the following:
