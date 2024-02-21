@@ -14,7 +14,7 @@ type GraphQLClientProps = {
 export const GraphQLClient = (props: GraphQLClientProps) => {
   const client = useMemo(() => {
     const httpLink = new HttpLink({
-      uri: 'http://192.168.18.228:3000/!',
+      uri: process.env.SERVER_URL,
     });
     return new ApolloClient({
       link: ApolloLink.from([httpLink]),

@@ -10,7 +10,6 @@ type HeaderInfoProps = {
   poster: string;
   title: string;
   genres: string[];
-  mediaType: string;
 };
 
 export const Header = (props: HeaderInfoProps) => (

@@ -155,4 +155,17 @@ export const en: Locale = {
     cast: 'Cast',
     creator: 'Creator',
   },
+  movieDetails: {
+    movie: 'Movie',
+    originalTitle: 'Original title',
+    releaseDate: 'Release date',
+    budget: 'Budget',
+    revenue: 'Revenue',
+    productionCountries: 'Production Countries',
+    spokenLanguages: 'Spoken languages',
+    cast: 'Cast',
+    crew: 'Crew',
+    videos: 'Vídeos',
+    similar: 'Similar',
+  },
 };

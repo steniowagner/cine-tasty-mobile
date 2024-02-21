@@ -155,4 +155,17 @@ export const pt: Locale = {
     cast: 'Elenco',
     creator: 'Criador',
   },
+  movieDetails: {
+    movie: 'Filme',
+    originalTitle: 'Título original',
+    releaseDate: 'Data de lançamento',
+    budget: 'Orçamento',
+    revenue: 'Receita',
+    productionCountries: 'Países produtores',
+    spokenLanguages: 'Idiomas falados',
+    cast: 'Elenco',
+    crew: 'Equipe',
+    videos: 'Vídeos',
+    similar: 'Similar',
+  },
 };

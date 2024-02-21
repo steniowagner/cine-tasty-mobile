@@ -6,6 +6,7 @@ import {
   FamousDetails_famous_cast_movies,
   FamousDetails_famous_cast_tvShows,
   TVShowDetails_tvShow_similar,
+  MovieDetails_movie_similar,
 } from '@schema-types';
 
 import { MediaType } from '../media-list-item/use-media-list-item';
@@ -14,7 +15,8 @@ import * as Styles from './MediaHorizontalList.style';
 export type MediaHorizontalItem =
   | FamousDetails_famous_cast_movies
   | FamousDetails_famous_cast_tvShows
-  | TVShowDetails_tvShow_similar;
+  | TVShowDetails_tvShow_similar
+  | MovieDetails_movie_similar;
 
 export type MediaHorizontalListProps = {
   dataset: MediaHorizontalItem[];

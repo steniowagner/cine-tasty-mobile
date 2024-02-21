@@ -1,28 +1,28 @@
 import React from 'react';
-import { MockedResponse, MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { RenderAPI, render, waitFor } from '@testing-library/react-native';
 
-import { AlertMessageProvider } from '@/providers';
-import { Translations } from '@/i18n/tags';
 import { Routes } from '@/navigation';
+import { Translations } from '@/i18n/tags';
 
-import {
-  MockedNavigator,
-  randomPositiveNumber,
-  mockQueryTVShowDetailsSuccess,
-  mockQueryTVShowDetailsError,
-  tvShow,
-} from '../../../../../../../__mocks__';
-import { TVShowDetailsProps } from '../routes/route-params-types';
-import { TVShowDetails } from './TVShowDetails';
 import { ParticipantListItem } from '../../common/participants-list/participants-list-item/ParticipantsListItem';
+import { MockedNavigator } from '../../../../../../../__mocks__/MockedNavigator';
+import { MovieDetailsProps } from '../routes/route-params-types';
+import { MovieDetails } from './MovieDetails';
+import {
+  mockQueryMovieDetailsSuccess,
+  mockQueryMovieDetailsError,
+  randomPositiveNumber,
+  movie,
+} from '../../../../../../../__mocks__';
+import { formatCurrency } from '@/utils';
 
 const DEFAULT_ROUTE_PARAMS = {
   title: 'DEFAULT_ROUTE_PARAMS_TITLE',
   id: 1,
 };
 
-type RenderTVShowDetailsProps = {
+type RenderMovieDetailsProps = {
   mocks: readonly MockedResponse<Record<string, any>>[];
   genres?: string[];
   voteAverage?: number;
@@ -30,43 +30,41 @@ type RenderTVShowDetailsProps = {
   push?: jest.Mock;
 };
 
-const renderTVShowDetails = (
-  renderTVShowDetailsProps: RenderTVShowDetailsProps,
+const renderMovieDetails = (
+  renderMovieDetailsProps: RenderMovieDetailsProps,
 ) => {
-  const TVShowDetailsComponent = (
-    tvShowDetailsComponentProps: TVShowDetailsProps,
+  const MovieDetailsComponent = (
+    movieDetailsComponentProps: MovieDetailsProps,
   ) => (
     <MockedProvider
-      mocks={renderTVShowDetailsProps.mocks}
+      mocks={renderMovieDetailsProps.mocks}
       defaultOptions={{
         watchQuery: { fetchPolicy: 'no-cache' },
         query: { fetchPolicy: 'no-cache' },
       }}>
-      <AlertMessageProvider>
-        <TVShowDetails
-          navigation={{
-            ...tvShowDetailsComponentProps.navigation,
-            push: renderTVShowDetailsProps.push || jest.fn(),
-          }}
-          route={{
-            name: Routes.Famous.TV_SHOW_DETAILS,
-            key: `${Routes.Famous.TV_SHOW_DETAILS}-key`,
-            params: {
-              ...DEFAULT_ROUTE_PARAMS,
-              genres: renderTVShowDetailsProps.genres,
-              voteAverage: renderTVShowDetailsProps.voteAverage,
-              voteCount: renderTVShowDetailsProps.voteCount,
-              image: 'SOME_IMAGE',
-            },
-          }}
-        />
-      </AlertMessageProvider>
+      <MovieDetails
+        navigation={{
+          ...movieDetailsComponentProps.navigation,
+          push: renderMovieDetailsProps.push || jest.fn(),
+        }}
+        route={{
+          name: Routes.Famous.MOVIE_DETAILS,
+          key: `${Routes.Famous.MOVIE_DETAILS}-key`,
+          params: {
+            ...DEFAULT_ROUTE_PARAMS,
+            genres: renderMovieDetailsProps.genres,
+            voteAverage: renderMovieDetailsProps.voteAverage,
+            voteCount: renderMovieDetailsProps.voteCount,
+            image: 'SOME_IMAGE',
+          },
+        }}
+      />
     </MockedProvider>
   );
-  return <MockedNavigator component={TVShowDetailsComponent} />;
+  return <MockedNavigator component={MovieDetailsComponent} />;
 };
 
-describe('Common-screens/TVShowDetails', () => {
+describe('Common-screens/MovieDetails', () => {
   const elements = {
     backgroundImage: (component: RenderAPI) =>
       component.queryByTestId('background-animated-view'),
@@ -83,8 +81,7 @@ describe('Common-screens/TVShowDetails', () => {
       component.queryByTestId('media-details-loading'),
     header: (component: RenderAPI) =>
       component.queryByTestId('header-info-wrapper'),
-    details: (component: RenderAPI) =>
-      component.queryByTestId('tvshow-details'),
+    details: (component: RenderAPI) => component.queryByTestId('movie-details'),
     voteCount: (component: RenderAPI) => component.queryByTestId('vote-count'),
     votes: (component: RenderAPI) => component.queryByTestId('votes-text'),
     genres: (component: RenderAPI) => component.queryByTestId('genres'),
@@ -116,14 +113,14 @@ describe('Common-screens/TVShowDetails', () => {
 
   describe('Rendering', () => {
     it('should show the "loading-state" by default', async () => {
-      const mocks = mockQueryTVShowDetailsSuccess({
+      const mocks = mockQueryMovieDetailsSuccess({
         includeVoteAverage: true,
         includeGenres: true,
         includeVoteCount: true,
         id: DEFAULT_ROUTE_PARAMS.id,
       });
       const component = render(
-        renderTVShowDetails({
+        renderMovieDetails({
           mocks,
         }),
       );
@@ -137,7 +134,7 @@ describe('Common-screens/TVShowDetails', () => {
     describe('Header', () => {
       describe('Vote-count', () => {
         it('should render correctly when "vote-count" is provided', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: false,
@@ -145,7 +142,7 @@ describe('Common-screens/TVShowDetails', () => {
           });
           const voteCount = randomPositiveNumber(10, 1);
           const component = render(
-            renderTVShowDetails({
+            renderMovieDetails({
               voteCount,
               mocks,
             }),
@@ -159,14 +156,14 @@ describe('Common-screens/TVShowDetails', () => {
         });
 
         it('should render correctly when "vote-count" is not provided', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
           const component = render(
-            renderTVShowDetails({
+            renderMovieDetails({
               mocks,
             }),
           );
@@ -174,14 +171,14 @@ describe('Common-screens/TVShowDetails', () => {
             expect(elements.loading(component)).toBeNull();
           });
           expect(elements.voteCount(component)!.children[0]).toEqual(
-            `(${tvShow.voteCount})`,
+            `(${movie.voteCount})`,
           );
         });
       });
 
       describe('Vote-average', () => {
         it('should render correctly when "votes" is provided', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: false,
             includeGenres: true,
             includeVoteCount: true,
@@ -189,7 +186,7 @@ describe('Common-screens/TVShowDetails', () => {
           });
           const voteAverage = randomPositiveNumber(10, 1);
           const component = render(
-            renderTVShowDetails({
+            renderMovieDetails({
               voteAverage,
               mocks,
             }),
@@ -203,14 +200,14 @@ describe('Common-screens/TVShowDetails', () => {
         });
 
         it('should render correctly when "vote-count" is not provided', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
           const component = render(
-            renderTVShowDetails({
+            renderMovieDetails({
               mocks,
             }),
           );
@@ -218,14 +215,14 @@ describe('Common-screens/TVShowDetails', () => {
             expect(elements.loading(component)).toBeNull();
           });
           expect(elements.votes(component)!.children[0]).toEqual(
-            `${tvShow.voteAverage.toFixed(1)}`,
+            `${movie.voteAverage.toFixed(1)}`,
           );
         });
       });
 
       describe('Genres', () => {
         it('should render correctly when "genres" is provided', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: false,
             includeVoteCount: true,
@@ -235,7 +232,7 @@ describe('Common-screens/TVShowDetails', () => {
             .fill('')
             .map((_, index) => `GENRE_${index + 1}`);
           const component = render(
-            renderTVShowDetails({
+            renderMovieDetails({
               genres,
               mocks,
             }),
@@ -244,19 +241,19 @@ describe('Common-screens/TVShowDetails', () => {
             expect(elements.loading(component)).toBeNull();
           });
           expect(elements.genres(component)!.children[0]).toEqual(
-            [Translations.TVShowDetails.TV_SHOW, ...genres].join(' \u2022 '),
+            [Translations.MovieDetails.MOVIE, ...genres].join(' \u2022 '),
           );
         });
 
         it('should render correctly when "genres" is not provided', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
           const component = render(
-            renderTVShowDetails({
+            renderMovieDetails({
               mocks,
             }),
           );
@@ -264,7 +261,7 @@ describe('Common-screens/TVShowDetails', () => {
             expect(elements.loading(component)).toBeNull();
           });
           expect(elements.genres(component)!.children[0]).toEqual(
-            `${[Translations.TVShowDetails.TV_SHOW, ...tvShow.genres].join(
+            `${[Translations.MovieDetails.MOVIE, ...movie.genres].join(
               ' \u2022 ',
             )}`,
           );
@@ -274,324 +271,268 @@ describe('Common-screens/TVShowDetails', () => {
 
     describe('Sections', () => {
       it('should render the "overview-section" correctly', async () => {
-        const mocks = mockQueryTVShowDetailsSuccess({
+        const mocks = mockQueryMovieDetailsSuccess({
           includeVoteAverage: true,
           includeGenres: true,
           includeVoteCount: true,
           id: DEFAULT_ROUTE_PARAMS.id,
         });
-        const component = render(renderTVShowDetails({ mocks }));
+        const component = render(renderMovieDetails({ mocks }));
         await waitFor(() => {
           expect(elements.loading(component)).toBeNull();
         });
         expect(elements.overview(component)?.children[0]).toEqual(
-          tvShow.overview,
+          movie.overview,
         );
       });
 
       it('should render the "media-info-section" correctly', async () => {
-        const mocks = mockQueryTVShowDetailsSuccess({
+        const mocks = mockQueryMovieDetailsSuccess({
           includeVoteAverage: true,
           includeGenres: true,
           includeVoteCount: true,
           id: DEFAULT_ROUTE_PARAMS.id,
         });
-        const component = render(renderTVShowDetails({ mocks }));
+        const component = render(renderMovieDetails({ mocks }));
         await waitFor(() => {
           expect(elements.loading(component)).toBeNull();
         });
         // original-title
         expect(elements.mediaInfoTitles(component)[0].children[0]).toEqual(
-          Translations.TVShowDetails.ORIGINAL_TITLE,
+          Translations.MovieDetails.ORIGINAL_TITLE,
         );
         expect(elements.mediaInfoValues(component)[0].children[0]).toEqual(
-          tvShow.originalName,
+          movie.originalTitle,
         );
-        // original-language
+        // release-date
         expect(elements.mediaInfoTitles(component)[1].children[0]).toEqual(
-          Translations.TVShowDetails.ORIGINAL_LANGUAGE,
+          Translations.MovieDetails.RELEASE_DATE,
         );
         expect(elements.mediaInfoValues(component)[1].children[0]).toEqual(
-          tvShow.originalLanguage,
+          movie.releaseDate,
         );
-        // number-of-episodes
+        // budget
         expect(elements.mediaInfoTitles(component)[2].children[0]).toEqual(
-          Translations.TVShowDetails.NUMBER_OF_EPISODES,
+          Translations.MovieDetails.BUDGET,
         );
         expect(elements.mediaInfoValues(component)[2].children[0]).toEqual(
-          `${tvShow.numberOfEpisodes}`,
+          formatCurrency(movie.budget),
         );
-        // seasons
+        // revenue
         expect(elements.mediaInfoTitles(component)[3].children[0]).toEqual(
-          Translations.TVShowDetails.NUMBER_OF_SEASONS,
+          Translations.MovieDetails.REVENUE,
         );
         expect(elements.mediaInfoValues(component)[3].children[0]).toEqual(
-          String(tvShow.numberOfSeasons),
+          formatCurrency(movie.revenue),
         );
-        // episode-length
+        // production-countries
         expect(elements.mediaInfoTitles(component)[4].children[0]).toEqual(
-          Translations.TVShowDetails.EPISODE_RUNTIME,
+          Translations.MovieDetails.PRODUCTION_COUNTRIES,
         );
         expect(elements.mediaInfoValues(component)[4].children[0]).toEqual(
-          tvShow.episodeRunTime.join(', ').concat('min'),
+          movie.productionCountries.join(', '),
         );
-        // original-country
+        // spoken-languages
         expect(elements.mediaInfoTitles(component)[5].children[0]).toEqual(
-          Translations.TVShowDetails.ORIGINAL_COUNTRY,
+          Translations.MovieDetails.SPOKEN_LANGUAGES,
         );
         expect(elements.mediaInfoValues(component)[5].children[0]).toEqual(
-          tvShow.originCountry.join(', '),
-        );
-        // first-air
-        expect(elements.mediaInfoTitles(component)[6].children[0]).toEqual(
-          Translations.TVShowDetails.FIRST_AIR_DATE,
-        );
-        expect(elements.mediaInfoValues(component)[6].children[0]).toEqual(
-          tvShow.firstAirDate,
-        );
-        // last-air
-        expect(elements.mediaInfoTitles(component)[7].children[0]).toEqual(
-          Translations.TVShowDetails.LAST_AIR_DATE,
-        );
-        expect(elements.mediaInfoValues(component)[7].children[0]).toEqual(
-          tvShow.lastAirDate,
+          movie.spokenLanguages.join(', '),
         );
       });
 
       describe('Cast-section', () => {
         it('should render the "section-title" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
           expect(elements.sectionTitles(component)[0].children[0]).toEqual(
-            Translations.TVShowDetails.CAST,
+            Translations.MovieDetails.CAST,
           );
         });
 
         it('should render the "crew-list" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
           const castList = elements
             .sectionWrappers(component)[0]
             .findAllByType(ParticipantListItem);
-          expect(castList.length).toEqual(tvShow.cast.length);
+          expect(castList.length).toEqual(movie.cast.length);
         });
 
         it('should render the "cast-list-items" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
-          for (let i = 0; i < tvShow.cast.length; i++) {
+          for (let i = 0; i < movie.cast.length; i++) {
             expect(elements.participantName(component)[i]!.children[0]).toEqual(
-              tvShow.cast[i].name,
+              movie.cast[i].name,
             );
             expect(
               elements.participantSubtext(component)[i]!.children[0],
-            ).toEqual(tvShow.cast[i].subText);
+            ).toEqual(movie.cast[i].subText);
           }
         });
       });
 
       describe('Crew-section', () => {
         it('should render the "section-title" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
           expect(elements.sectionTitles(component)[1].children[0]).toEqual(
-            Translations.TVShowDetails.CREW,
+            Translations.MovieDetails.CREW,
           );
         });
 
         it('should render the "crew-list" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
           const crewList = elements
             .sectionWrappers(component)[1]
             .findAllByType(ParticipantListItem);
-          expect(crewList.length).toEqual(
-            tvShow.crew.length + tvShow.createdBy.length,
-          );
+          expect(crewList.length).toEqual(movie.crew.length);
         });
 
         it('should render the "crew-list-items" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
-          const crew = [...tvShow.createdBy, ...tvShow.crew];
-          for (let i = 0; i < crew.length; i++) {
+          for (let i = 0; i < movie.crew.length; i++) {
             expect(
-              elements.participantName(component)[i + tvShow.cast.length]!
+              elements.participantName(component)[i + movie.cast.length]
                 .children[0],
-            ).toEqual(crew[i].name);
-            const subtext =
-              i < tvShow.createdBy.length
-                ? Translations.TVShowDetails.CREATOR
-                : tvShow.crew[i - tvShow.createdBy.length].subText;
+            ).toEqual(movie.crew[i].name);
             expect(
-              elements.participantSubtext(component)[i + tvShow.cast.length]!
-                .children[0],
-            ).toEqual(subtext);
+              elements.participantSubtext(component)[i].children[0],
+            ).toEqual(movie.cast[i].subText);
           }
         });
       });
 
       it('should render the "images-list-section" correctly', async () => {
-        const mocks = mockQueryTVShowDetailsSuccess({
+        const mocks = mockQueryMovieDetailsSuccess({
           includeVoteAverage: true,
           includeGenres: true,
           includeVoteCount: true,
           id: DEFAULT_ROUTE_PARAMS.id,
         });
-        const component = render(renderTVShowDetails({ mocks }));
+        const component = render(renderMovieDetails({ mocks }));
         await waitFor(() => {
           expect(elements.loading(component)).toBeNull();
         });
         expect(elements.imagesList(component)).not.toBeNull();
-        expect(elements.images(component).length).toEqual(tvShow.images.length);
-      });
-
-      describe('Seasons-section', () => {
-        it('should render the "section-title" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
-            includeVoteAverage: true,
-            includeGenres: true,
-            includeVoteCount: true,
-            id: DEFAULT_ROUTE_PARAMS.id,
-          });
-          const component = render(renderTVShowDetails({ mocks }));
-          await waitFor(() => {
-            expect(elements.loading(component)).toBeNull();
-          });
-          expect(elements.sectionTitles(component)[2].children[0]).toEqual(
-            Translations.TVShowDetails.SEASONS,
-          );
-        });
-
-        it('should render the correct "number-of-sections"', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
-            includeVoteAverage: true,
-            includeGenres: true,
-            includeVoteCount: true,
-            id: DEFAULT_ROUTE_PARAMS.id,
-          });
-          const component = render(renderTVShowDetails({ mocks }));
-          await waitFor(() => {
-            expect(elements.loading(component)).toBeNull();
-          });
-          expect(elements.seasonTitles(component).length).toEqual(
-            tvShow.numberOfSeasons,
-          );
-        });
+        expect(elements.images(component).length).toEqual(movie.images.length);
       });
 
       describe('Videos-section', () => {
         it('should render the "section-title" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
-          expect(elements.sectionTitles(component)[3].children[0]).toEqual(
+          expect(elements.sectionTitles(component)[2].children[0]).toEqual(
             Translations.Miscellaneous.VIDEOS,
           );
         });
 
         it('should render the correct "number-of-videos"', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
           expect(elements.videos(component).length).toEqual(
-            tvShow.videos.length,
+            movie.videos.length,
           );
         });
       });
 
       describe('Similar-section', () => {
         it('should render the "section-title" correclty', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
-          expect(elements.sectionTitles(component)[4].children[0]).toEqual(
+          expect(elements.sectionTitles(component)[3].children[0]).toEqual(
             Translations.Miscellaneous.SIMILAR,
           );
         });
 
         it('should render the correct "number-of-similar"', async () => {
-          const mocks = mockQueryTVShowDetailsSuccess({
+          const mocks = mockQueryMovieDetailsSuccess({
             includeVoteAverage: true,
             includeGenres: true,
             includeVoteCount: true,
             id: DEFAULT_ROUTE_PARAMS.id,
           });
-          const component = render(renderTVShowDetails({ mocks }));
+          const component = render(renderMovieDetails({ mocks }));
           await waitFor(() => {
             expect(elements.loading(component)).toBeNull();
           });
           expect(elements.similarItems(component).length).toEqual(
-            tvShow.similar.length,
+            movie.similar.length,
           );
         });
       });
@@ -599,9 +540,9 @@ describe('Common-screens/TVShowDetails', () => {
 
     describe('When querying with "error"', () => {
       it('should show the "error-state" correctly', async () => {
-        const mocks = mockQueryTVShowDetailsError(DEFAULT_ROUTE_PARAMS.id);
+        const mocks = mockQueryMovieDetailsError(DEFAULT_ROUTE_PARAMS.id);
         const component = render(
-          renderTVShowDetails({
+          renderMovieDetails({
             mocks,
           }),
         );

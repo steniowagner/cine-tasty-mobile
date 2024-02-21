@@ -57,6 +57,89 @@ export interface FamousDetailsVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: MovieDetails
+// ====================================================
+
+export interface MovieDetails_movie_cast {
+  __typename: "MediaCast";
+  image: string | null;
+  subText: string | null;
+  name: string | null;
+  id: number;
+}
+
+export interface MovieDetails_movie_crew {
+  __typename: "MediaCrew";
+  image: string | null;
+  name: string | null;
+  id: number;
+  subText: string | null;
+}
+
+export interface MovieDetails_movie_videos_thumbnail {
+  __typename: "Thumbnail";
+  /**
+   * 120x90
+   */
+  extraSmall: string | null;
+}
+
+export interface MovieDetails_movie_videos {
+  __typename: "MediaVideo";
+  thumbnail: MovieDetails_movie_videos_thumbnail | null;
+  key: string | null;
+  id: string | null;
+}
+
+export interface MovieDetails_movie_similar {
+  __typename: "SimilarMovie";
+  voteAverage: number | null;
+  posterPath: string | null;
+  voteCount: number | null;
+  title: string | null;
+  id: number;
+}
+
+export interface MovieDetails_movie {
+  __typename: "Movie";
+  genres: string[];
+  voteAverage: number | null;
+  voteCount: number | null;
+  images: string[];
+  backdropPath: string | null;
+  id: number;
+  originalTitle: string | null;
+  overview: string | null;
+  title: string | null;
+  releaseDate: string | null;
+  budget: number | null;
+  revenue: number | null;
+  spokenLanguages: string[];
+  productionCountries: string[];
+  cast: MovieDetails_movie_cast[];
+  crew: MovieDetails_movie_crew[];
+  videos: MovieDetails_movie_videos[];
+  similar: MovieDetails_movie_similar[];
+}
+
+export interface MovieDetails {
+  movie: MovieDetails_movie;
+}
+
+export interface MovieDetailsVariables {
+  id: number;
+  language?: ISO6391Language | null;
+  includeVoteAverage: boolean;
+  includeGenres: boolean;
+  includeVoteCount: boolean;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: TVShowDetails
 // ====================================================
 
