@@ -15,7 +15,7 @@ import { MovieDetailsProps as UseMovieDetailsParams } from '../routes/route-para
 import { formatCurrency, formatDate } from '@/utils';
 import { Translations } from '@/i18n/tags';
 
-const MOVIE_DETAILS_QUERY = gql`
+export const MOVIE_DETAILS_QUERY = gql`
   query MovieDetails(
     $id: Int!
     $language: ISO6391Language
