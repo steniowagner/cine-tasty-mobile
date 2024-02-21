@@ -1,79 +1,177 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+# Cine-Tasty
 
-To start Metro, run the following command from the _root_ of your React Native project:
+If you want to take a look on all screens of the App, they are [here](https://drive.google.com/drive/folders/1QBRMz2XTn9lfqmGEoJ1UqVNI8EbLgy4W?usp=sharing).
 
-```bash
-# using npm
-npm start
 
-# OR using Yarn
-yarn start
+## About this Project
+
+The idea of the App is:
+
+_"Access the latest trends about movies, tv shows and cinema in one place"._
+
+This project consists of a react-native app that queries data from the [cine-tasty-server](https://github.com/steniowagner/cine-tasty-server). 
+
+## 🚧 This project is not finished 🚧
+
+This project is still under development, and you can check the Roadmap of planned features [here](https://github.com/steniowagner/cine-tasty-mobile/blob/development/README.md#roadmap---future-features).
+
+## Functionalities
+
+### Get details of a Movie
+Get the details of a certain Movie. You'll be able to see things like budget, revenue, seasons, crew, cast and more.
+
+<img src="https://drive.google.com/uc?export=view&id=1vuPFXe-gfQWBnJCAG6R5BbXn6oe7U-4C" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=156wj9YmozWx4ejVncXXcK215aGApqcgb" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1h4iJ27NUFLp45_IqZvjSQLjZJn3Ardli" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=11O_IIKSZs0h65T8HNqRqwQ-k0NatAGCT" width="250" /> _
+
+You can check how this flow behaves [here](https://drive.google.com/file/d/1tg-QMSW1PTyblDW302W77k9UclG4Zy_C/view?usp=drive_link)
+
+### Get details of a TV-Show
+Get the details of a certain tv-show. Here, you'll be able to see things like seasons, crew, cast and more.
+
+<img src="https://drive.google.com/uc?export=view&id=11zxnSRIdU6Jg_ZttjHrFOITxkK7mDjyG" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1jqzoA2J_1UM12OkWslLpH9FvyHURzdsg" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1nsYwkCYV-fwmeWZKCKsI3WKZ-H_6nSVs" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1u_ykvh1RU6tK2CHmfHH6f1glR_owRsLV" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1uCQj33kA-zcev4E4PIa21g0eIsHOMQDO" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=13nCiiAiGoZ2fL5ITljUETAhUtvV03utc" width="250" /> _
+
+You can check how this flow behaves [here](https://drive.google.com/file/d/1XR-wj01HLS1Rec5msY3TwjQl44ygn35N/view?usp=drive_link)
+
+### Get the trending Actors/Actresses
+Get trending actors and actresses.
+
+<img src="https://drive.google.com/uc?export=view&id=1m3dKZ1yOCMSLPPj3XN2RDz6LcVb_t2ap" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1zY5XE3zerCKeT3S8oMR01mzgBoEnwAyp" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1DVRF2ZMiNOdvjM3UXGfhh-JXSiylNfcK" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1BzP4nyHDs61OBQpovqFqPFsrtl3-9zCF" width="250" />
+
+You can check how this flow behaves [here](https://drive.google.com/file/d/1iOI4d4GZY-O1O3qNThlJ3P13VufTpZ-r/view?usp=drive_link)
+
+### Search for an Actor/Actress
+Search for actors/actresses by name.
+
+<img src="https://drive.google.com/uc?export=view&id=1sHY5A8UpAO5t2DYhjvaKqObGeNFKW2hv" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1I_us1bBCPHJNT1KmRbQBCvCDCTVLHJ1U" width="250" /> 
+
+You can check how this flow behaves [here](https://drive.google.com/file/d/1TbFrRkJ88LV1cTvGdc0CJ6RsthOzQzSZ/view?usp=drive_link)
+
+### Answer quizes
+Answer quizes about cinema. You can also add filter about the level (easy, medium, hard, mixed) and the type (multiple-choice, true/false or mixed) of the questions, as well as select the category of the questions (movies, tv-shows or both).
+
+<img src="https://drive.google.com/uc?export=view&id=1ZYgo2kOQ6BSVpS6QTYRWnacXvPUSV_kS" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1qJTwyv5dWGTdfYUEg9sqnOD0ulR84dwn" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1_z-H-uYQbcL0E419TlgH0hGDLjhEwiNJ" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1s3EDYutq2dohycTZWb7h4bqSVabqabvZ" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=16hc-WlO82JJJ20pE9Wp1X7wIIAKIA_sT" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1FxXjM9tuIExMNrVlCwL_sEPlCyso9P36" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=1ipYT_0SOylHqww59_6CSIMhGBtNcYkKw" width="250" /> _
+<img src="https://drive.google.com/uc?export=view&id=14nIzKi7QnDYJTrRpDUa_bu_tYt-ko-se" width="250" />
+
+You can check how this flow behaves [here](https://drive.google.com/file/d/1qJTwyv5dWGTdfYUEg9sqnOD0ulR84dwn/view?usp=drive_link)
+
+### Get latest news
+Get the latest news about movies, tv-shows and cinema, filtering by language (you can find the available languages [here](https://github.com/steniowagner/cine-tasty-mobile/blob/development/src/components/stacks/news/screens/news/components/languages-filter-modal/language-filter-list/filter-languages/languages.ts#L12))
+https://drive.google.com/file/d//view?usp=drive_link
+
+| <img src="https://drive.google.com/uc?export=view&id=1TJms_SvX6cD_JMHSdgOZ_KINXMJCzHSa" width="250" />
+<img src="https://drive.google.com/uc?export=view&id=14lwkTw2fUReiZcILd5MxuGSYV5Emy5lo" width="250" />
+<img src="https://drive.google.com/uc?export=view&id=1JxDqWEsapcH-DET5iWnA4Ve-d41GN897" width="250" /> | 
+
+You can check how this flow behaves [here](https://drive.google.com/file/d/1WHj10zvgiwMkO97VxhoOtGi0RytXUbrc/view?usp=drive_link)
+
+## Getting Started
+
+### Prerequisites
+
+To run this project in the development mode, you'll need to have a basic environment to run a React-Native App, that can be found [here](https://facebook.github.io/react-native/docs/getting-started).
+
+Also, you'll need to the server running locally on your machine with the mock data. You can find the server and all the instructions to start the server [here](https://github.com/steniowagner/cine-tasty-server).
+
+### Installing
+
+**Cloning the Repository**
+
+```
+$ git clone https://github.com/steniowagner/cine-tasty-server
+
+$ cd cine-tasty-mobile
 ```
 
-## Step 2: Start your Application
+> For sake of simplicify, I'll be using npm as the package-manager for this tutorial. But you can use your favorite one as well.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+**Installing dependencies**
 
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```
+$ npm install
 ```
 
-### For iOS
+### Connecting the App with the Server
 
-```bash
-# using npm
-npm run ios
+1 - Follow the instructions on the [cine-tasty-server](https://github.com/steniowagner/cine-tasty-server) to have the server up and running.
 
-# OR using Yarn
-yarn ios
+2 - With the server up and running, go to the [/.env.development](https://github.com/steniowagner/mindCast/blob/master/.env.development) file and edit the SERVER_URL value for the IP of your machine (you can have some issues with _localhost_ if you're running on an android physical device, but you can use localhost safely on iOS).
+
+It should looks like this:
+
+SERVER_URL=http://**_IP_OF_YOUR_MACHINE_**:<PORT you exposed to run the server>
+
+*or*
+
+SERVER_URL=http://localhost:<PORT you exposed to run the server>
+
+### Running
+
+With all dependencies installed and the environment properly configured, you can now run the app:
+
+Android
+
+```
+$ npm run android:run
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+iOS
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+```
+$ npm run ios:run
+```
 
-## Step 3: Modifying your App
+### Roadmap - future features
 
-Now that you have successfully run the app, let's modify it.
+Even with all the interactions with the datasources in place, I would like to add more complexity to this application. At the moment, I'm thinking about the following:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+### Functional features
+- Add authentication
+- Allow the user to create and manage lists of favorite movies/tv-shows/actors/actresses
+- Allow the user to create and manage lists of movies/tv-shows to watch-later
+- Add reviews of movies and tv-shows
+- Keep a track of the results in the questionnaires
+- Create a ranking of the scores in the questionnaires
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+### Non-functional features
+- Analytics
+- Continuous deployment to the stores using fastlane
 
-## Congratulations! :tada:
 
-You've successfully run and modified your React Native App. :partying_face:
+## Why create this project?
 
-### Now what?
+This project is part of my personal portfolio. So, I would be happy if you could provide me any feedback about the project, code, structure or anything that you can report that could make me a better developer!
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+Email-me: stenio.wagner1@gmail.com
 
-# Troubleshooting
+Connect with me at [LinkedIn](https://www.linkedin.com/in/steniowagner/).
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Also, you can use this Project as you wish, be for study, be for make improvements or earn money with it!
 
-# Learn More
+It's free!
 
-To learn more about React Native, take a look at the following resources:
+## Contributing
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+You can send how many PR's do you want, I'll be glad to analyse and accept them!
+
+Thank you!
